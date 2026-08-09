@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mis impuestos | NUVIA Family Wealth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body class="nuvia-friendly">
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <link rel="stylesheet" href="friendly-sections.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    select option { background: var(--color-surface); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="tema" data-screen-label="Cabecera Mis impuestos" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
+      <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
+      <div style="display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr); gap:48px; align-items:end">
+        <div>
+          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Decisiones con impacto fiscal</span>
+          <h1 style="color:#ffffff; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">Tus impuestos, sin sorpresas</h1>
+          <p style="max-width:56ch; color:rgba(255,255,255,.82); font-size:17px; line-height:1.65; margin:0">Descubre qué te afecta, qué fecha importa y qué conviene preparar antes de mover tu patrimonio.</p>
+          <div class="friendly-hero-actions">
+            <a class="friendly-hero-actions__primary" href="#que-quieres-resolver">Ver qué me afecta →</a>
+            <a class="friendly-hero-actions__secondary" href="#guias">Consultar fechas clave</a>
+          </div>
+        </div>
+        <div style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:20px">
+          <label for="residencia-fiscal" style="display:block; color:rgba(255,255,255,.72); font-size:12.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:9px">Primero, dinos dónde tributas</label>
+          <div style="position:relative">
+            <select id="residencia-fiscal" data-dc-value="{{ seleccion }}" onChange="{{ cambiarTerritorio }}" aria-describedby="ayuda-residencia" style="width:100%; appearance:none; border:1px solid rgba(255,255,255,.25); border-radius:var(--radius-md); background:#ffffff; color:#0B2347; cursor:pointer; font-size:14.5px; font-weight:500; padding:12px 40px 12px 14px; transition:border-color .2s ease" style-focus="border-color:#9DB861">
+              <option value="sin-seleccion" disabled="{{ true }}">Selecciona tu territorio</option>
+              <option value="bizkaia">Bizkaia</option>
+              <option value="araba">Araba / Álava</option>
+              <option value="gipuzkoa">Gipuzkoa</option>
+              <option value="navarra">Navarra</option>
+              <option value="common-territory">Territorio común</option>
+              <option value="unsure">No estoy seguro</option>
+            </select>
+            <span style="position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#0B2347; font-size:11px; pointer-events:none">▾</span>
+          </div>
+          <div id="ayuda-residencia" aria-live="polite" style="display:flex; align-items:flex-start; gap:11px; border-top:1px solid rgba(255,255,255,.22); margin-top:16px; padding-top:15px">
+            <sc-if value="{{ hayTerritorio }}" hint-placeholder-val="{{ true }}">
+              <span style="color:#9DB861; font-size:13px; line-height:1.3">◆</span>
+              <div>
+                <span style="display:block; color:rgba(255,255,255,.52); font-size:10px; letter-spacing:.12em; text-transform:uppercase">{{ regimen }}</span>
+                <span style="display:block; color:#ffffff; font-size:13px; font-weight:500; margin-top:3px">{{ autoridad }}</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ sinTerritorio }}" hint-placeholder-val="{{ false }}">
+              <span style="color:#9DB861; font-size:13px; line-height:1.3">?</span>
+              <p style="color:rgba(255,255,255,.70); font-size:12.5px; line-height:1.55; margin:0">{{ ayudaSinTerritorio }}</p>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+      <div style="height:1px; margin-top:40px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+    </div>
+    </section>
+
+    <sc-if value="{{ estadoVacio }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Primer paso" style="max-width:1240px; margin:0 auto; padding:56px 48px 84px">
+        <div style="max-width:720px; margin:0 auto; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); text-align:center; padding:42px 46px">
+          <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:20px; margin-bottom:18px">§</span>
+          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Primer paso</p>
+          <h2 style="font-size:30px; font-weight:500; line-height:1.12; margin:0 0 14px">¿Dónde tributas?</h2>
+          <p style="max-width:52ch; margin:0 auto; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.65">Elige tu territorio y adaptaremos las fechas, los trámites y las respuestas a tu caso.</p>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{ estadoInseguro }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Antes de continuar" style="max-width:1240px; margin:0 auto; padding:56px 48px 84px">
+        <div style="max-width:860px; margin:0 auto; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:38px 42px; display:flex; gap:22px; align-items:flex-start">
+          <span style="flex-shrink:0; display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:22px">?</span>
+          <div>
+            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Antes de continuar</p>
+            <h2 style="font-size:28px; font-weight:500; line-height:1.15; margin:0 0 16px">¿No tienes claro qué territorio te corresponde?</h2>
+            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.65; margin:0 0 12px">La residencia fiscal no depende únicamente del domicilio. También pueden influir la permanencia, el centro de intereses económicos y la situación familiar.</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.65; margin:0">No mostraremos contenido territorial hasta que puedas identificarlo. Si existen dudas, confirma tu situación con la Hacienda correspondiente o con un profesional.</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ hayTerritorio }}" hint-placeholder-val="{{ true }}">
+      <section id="que-quieres-resolver" data-screen-label="Qué quieres resolver" style="max-width:1240px; margin:0 auto; padding:42px 48px 12px; scroll-margin-top:90px">
+        <p style="color:var(--color-accent-300); font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0 0 9px">Empieza por tu decisión</p>
+        <h2 style="font-size:34px; font-weight:500; line-height:1.15; margin:0 0 10px">¿Qué quieres resolver hoy?</h2>
+        <p style="max-width:62ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; margin:0 0 26px">No necesitas leerlo todo. Elige la situación que más se parece a la tuya y ve directamente a lo importante.</p>
+        <div class="friendly-choice-grid">
+          <a class="friendly-choice-card" href="guia-impuestos.html?guia=calendar&amp;territorio={{ seleccion }}">
+            <span class="friendly-choice-card__number">01 · Renta y fechas</span>
+            <strong>Preparar mi renta</strong>
+            <span>Ver mis fechas importantes →</span>
+          </a>
+          <a class="friendly-choice-card" href="guia-impuestos.html?guia=savings&amp;territorio={{ seleccion }}">
+            <span class="friendly-choice-card__number">02 · Ahorro e inversión</span>
+            <strong>Entender qué pago al invertir</strong>
+            <span>Ver qué me afecta →</span>
+          </a>
+          <a class="friendly-choice-card" href="guia-impuestos.html?guia=inheritance&amp;territorio={{ seleccion }}">
+            <span class="friendly-choice-card__number">03 · Patrimonio familiar</span>
+            <strong>Organizar una herencia o donación</strong>
+            <span>Preparar los próximos pasos →</span>
+          </a>
+        </div>
+      </section>
+
+      <section data-screen-label="Marco de referencia" style="margin-top:28px; background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section)">
+        <div style="max-width:1240px; margin:0 auto; padding:28px 48px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:44px; align-items:center">
+          <div>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0 0 6px">Tu marco de referencia</p>
+            <h2 style="font-size:28px; font-weight:500; line-height:1; margin:0; white-space:nowrap">{{ nombre }}</h2>
+          </div>
+          <p aria-live="polite" style="max-width:66ch; color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; line-height:1.6; margin:0">{{ intro }}</p>
+          <a href="{{ fuenteHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:6px; border-bottom:1px solid color-mix(in srgb, var(--color-accent-300) 50%, transparent); color:var(--color-accent-200); font-size:12.5px; font-weight:500; padding-bottom:4px; text-decoration:none; white-space:nowrap; transition:border-color .2s ease, color .2s ease" style-hover="border-color:var(--color-accent-200); color:var(--color-accent-100)">{{ fuenteLabel }} ↗</a>
+        </div>
+      </section>
+
+      <section id="guias" data-screen-label="Guías del territorio" style="max-width:1240px; margin:0 auto; padding:44px 48px 0">
+        <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px">
+          <sc-for list="{{ tarjetas }}" as="tarjeta" hint-placeholder-count="3">
+            <article style="display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px; transition:transform .25s ease, box-shadow .25s ease" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:20px">
+                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="" data-nuvia-path="{{ tarjeta.icono }}" fill="none" stroke="#4A5D23" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </span>
+                <span style="text-align:right; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; font-feature-settings:'tnum' 1">{{ tarjeta.eyebrow }}</span>
+              </div>
+              <h3 style="font-size:23px; font-weight:500; line-height:1.15; margin:0 0 12px">{{ tarjeta.titulo }}</h3>
+              <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 20px">{{ tarjeta.descripcion }}</p>
+              <dl style="margin:0; border-top:1px solid var(--color-divider)">
+                <sc-for list="{{ tarjeta.datos }}" as="dato" hint-placeholder-count="3">
+                  <div style="border-bottom:1px solid var(--color-divider); padding:12px 0">
+                    <dt style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px">{{ dato.etiqueta }}</dt>
+                    <dd style="color:var(--color-text); font-size:13px; font-weight:500; line-height:1.45; margin:0; font-variant-numeric:tabular-nums">{{ dato.valor }}</dd>
+                  </div>
+                </sc-for>
+              </dl>
+              <p style="border-left:2px solid var(--color-accent-700); color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:11.5px; line-height:1.6; margin:16px 0 0; padding-left:12px">{{ tarjeta.nota }}</p>
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:auto; padding-top:22px">
+                <a href="{{ tarjeta.guiaHref }}" class="btn btn-primary" style="text-decoration:none; font-size:12.5px">Ver qué me afecta →</a>
+                <a href="{{ tarjeta.fuenteHref }}" target="_blank" rel="noopener noreferrer" style="color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:10px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Fuente oficial ↗</a>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+
+      <section data-screen-label="Nota editorial" style="max-width:1240px; margin:0 auto; padding:28px 48px 84px">
+        <div style="display:grid; grid-template-columns:auto minmax(0,1fr); gap:14px; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 22px">
+          <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px"><path d="M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z M8.5 11.5 L11 14 L15.5 9.5" fill="none" stroke="#2568A9" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11.5px; line-height:1.6">
+            <p style="margin:0">{{ notaOrientativa }}</p>
+            <p style="margin:4px 0 0; font-weight:500; color:color-mix(in srgb, var(--color-text) 80%, transparent)">Utiliza esta información como punto de partida y confirma los detalles antes de presentar o transmitir.</p>
+            <p style="margin:4px 0 0">La selección adapta el contenido al territorio, pero no determina jurídicamente tu residencia fiscal.</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;territorioInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;bizkaia&quot;, &quot;options&quot;: [&quot;bizkaia&quot;, &quot;araba&quot;, &quot;gipuzkoa&quot;, &quot;navarra&quot;, &quot;common-territory&quot;, &quot;sin-seleccion&quot;, &quot;unsure&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Territorio&quot;}}">
+class Component extends DCLogic {
+  state = { seleccion: null };
+  datos() {
+    const IC = {
+      calendar: 'M7 3 V6 M17 3 V6 M4 5 H20 V21 H4 Z M4 9 H20 M8 13 H10 M14 13 H16 M8 17 H10',
+      savings: 'M4 18 L9.5 12.5 L13.5 15.5 L20 7.5 M15 7.5 H20 V12.5',
+      inheritance: 'M4 21 H20 M5 9.5 H19 M6.5 9.5 V17.5 M10.2 9.5 V17.5 M13.8 9.5 V17.5 M17.5 9.5 V17.5 M12 3 L19.5 8 H4.5 Z M5 19 H19',
+    };
+    const t = (id, et, v) => ({ etiqueta: et, valor: v, _k: id });
+    return {
+      'bizkaia': {
+        nombre: 'Bizkaia', regimen: 'Normativa foral', autoridad: 'Hacienda Foral de Bizkaia',
+        intro: 'Tu punto de partida es la normativa foral vizcaína. Los modelos, los plazos y la tributación del ahorro no deben tomarse del calendario estatal sin comprobar antes la competencia foral.',
+        fuenteLabel: 'Portal tributario de Bizkaia', fuenteHref: 'https://www.bizkaia.eus/es/hacienda-y-finanzas',
+        tarjetas: [
+          { icono: IC.calendar, eyebrow: '01 · Agenda 2026', titulo: 'Calendario fiscal', descripcion: 'Ordena tus obligaciones ante la Hacienda Foral y separa los vencimientos de las decisiones que conviene anticipar.', datos: [t(1,'Renta 2025','15 abril — 30 junio 2026'), t(2,'Autónomos · modelo 130','Enero, abril, julio y octubre'), t(3,'Punto de control','La domiciliación puede cerrar antes')], nota: 'El calendario foral permite consultar los modelos y descargar fechas para la agenda.', fuenteHref: 'https://www.bizkaia.eus/es/renta-bizkaia' },
+          { icono: IC.savings, eyebrow: '02 · Inversión', titulo: 'Fiscalidad del ahorro', descripcion: 'Intereses, dividendos y ganancias por transmisiones se integran en la base del ahorro conforme al IRPF foral.', datos: [t(1,'Renta 2025 · campaña 2026','Cinco tramos: del 20 % al 25 %'), t(2,'Operaciones de 2026','Nueve tramos: del 19 % al 28 %'), t(3,'Antes de vender','Revisar pérdidas y fechas de adquisición')], nota: 'La nueva tarifa rige desde el 1 de enero de 2026 y se declarará por primera vez en la campaña de 2027.', fuenteHref: 'https://www.bizkaia.eus/es/normativa-tributaria/normativa-vigente/irpf' },
+          { icono: IC.inheritance, eyebrow: '03 · Patrimonio familiar', titulo: 'Sucesiones y donaciones', descripcion: 'Antes de transmitir, confirma parentesco, residencia, valor de los bienes y si la operación queda bajo competencia de Bizkaia.', datos: [t(1,'Herencia · modelo 650','Plazo general en Bizkaia: un año'), t(2,'Donación · modelo 651','30 días hábiles'), t(3,'Familia directa','Revisar reducción y tipo foral aplicables')], nota: 'Donar inmuebles o valores también puede generar una ganancia en el IRPF de quien dona.', fuenteHref: 'https://www.bizkaia.eus/es/normativa-tributaria/normativa-vigente/sucesiones-y-donaciones' },
+        ],
+      },
+      'araba': {
+        nombre: 'Araba / Álava', regimen: 'Normativa foral', autoridad: 'Hacienda Foral de Álava',
+        intro: 'La normativa y el calendario de la Hacienda Foral de Álava tienen fechas y procedimientos propios. Confirma la competencia territorial y no reutilices automáticamente los plazos de otro territorio foral.',
+        fuenteLabel: 'Portal tributario de Álava', fuenteHref: 'https://web.araba.eus/es/hacienda',
+        tarjetas: [
+          { icono: IC.calendar, eyebrow: '01 · Agenda 2026', titulo: 'Calendario fiscal', descripcion: 'Distingue los plazos generales de Renta de las fechas específicas de cada modalidad y de los pagos fraccionados alaveses.', datos: [t(1,'Renta 2025','7 abril — 25 junio 2026'), t(2,'Autónomos · modelo 130','Febrero, mayo, agosto y noviembre'), t(3,'Domiciliación de Renta','Puede finalizar el 17 de junio')], nota: 'El plazo concreto de Renta depende de la modalidad, del resultado y de la forma de pago elegida.', fuenteHref: 'https://web.araba.eus/es/hacienda/calendario-fiscal' },
+          { icono: IC.savings, eyebrow: '02 · Inversión', titulo: 'Fiscalidad del ahorro', descripcion: 'Intereses, dividendos y ganancias por transmisiones se integran conforme al IRPF foral alavés y a sus reglas de compensación.', datos: [t(1,'Renta 2025 · campaña 2026','Cinco tramos: del 20 % al 25 %'), t(2,'Operaciones de 2026','Nueve tramos: del 19 % al 28 %'), t(3,'Antes de vender','Revisar pérdidas y fechas de adquisición')], nota: 'La escala de nueve tramos rige desde el 1 de enero de 2026 y se declarará por primera vez en la campaña de 2027.', fuenteHref: 'https://web.araba.eus/documents/d/araba/indice_norma-foral_irpf_cas-4-pdf' },
+          { icono: IC.inheritance, eyebrow: '03 · Patrimonio familiar', titulo: 'Sucesiones y donaciones', descripcion: 'Antes de transmitir, confirma parentesco, residencia, localización de los bienes, valoración y competencia de la Hacienda alavesa.', datos: [t(1,'Herencia · modelo 650','Plazo ordinario: seis meses'), t(2,'Prórroga ordinaria','Otros seis meses, con intereses'), t(3,'Donación · modelo 651','30 días hábiles')], nota: 'La prórroga ordinaria de sucesiones es automática, pero genera intereses desde el fin del plazo ordinario.', fuenteHref: 'https://web.araba.eus/es/hacienda/sucesiones-y-donaciones' },
+        ],
+      },
+      'gipuzkoa': {
+        nombre: 'Gipuzkoa', regimen: 'Normativa foral', autoridad: 'Hacienda Foral de Gipuzkoa',
+        intro: 'Gipuzkoa aplica normativa, campaña de Renta y procedimientos propios. Comprueba la competencia de la Hacienda Foral y utiliza sus fechas, modelos y canales antes de actuar.',
+        fuenteLabel: 'Sede electrónica de Gipuzkoa', fuenteHref: 'https://egoitza.gipuzkoa.eus/es/',
+        tarjetas: [
+          { icono: IC.calendar, eyebrow: '01 · Agenda 2026', titulo: 'Calendario fiscal', descripcion: 'Combina la campaña guipuzcoana de Renta con los pagos fraccionados y las decisiones patrimoniales que conviene preparar.', datos: [t(1,'Renta 2025','7 abril — 2 julio 2026'), t(2,'Autónomos · modelo 130','Febrero, mayo, agosto y noviembre'), t(3,'Pago de Renta','3 julio; segundo plazo 10 noviembre')], nota: 'Las propuestas, la presentación telemática y las modalidades asistidas tienen hitos propios dentro de la campaña.', fuenteHref: 'https://egoitza.gipuzkoa.eus/documents/39465/862574/Errenta_zk2025-es.pdf' },
+          { icono: IC.savings, eyebrow: '02 · Inversión', titulo: 'Fiscalidad del ahorro', descripcion: 'Intereses, dividendos y ganancias por transmisiones se integran conforme al IRPF foral guipuzcoano y sus reglas de compensación.', datos: [t(1,'Renta 2025 · campaña 2026','Cinco tramos: del 20 % al 25 %'), t(2,'Operaciones de 2026','Nueve tramos: del 19 % al 28 %'), t(3,'Antes de vender','Revisar pérdidas y fechas de adquisición')], nota: 'La nueva escala rige desde el 1 de enero de 2026 y se declarará por primera vez en la campaña de 2027.', fuenteHref: 'https://egoitza.gipuzkoa.eus/es/bog' },
+          { icono: IC.inheritance, eyebrow: '03 · Patrimonio familiar', titulo: 'Sucesiones y donaciones', descripcion: 'Antes de transmitir, confirma parentesco, residencia, localización y valoración de los bienes, además de la competencia territorial.', datos: [t(1,'Herencia · modelo 670','Un año desde el fallecimiento'), t(2,'Prórroga','No existe'), t(3,'Donación · modelo 671','30 días hábiles')], nota: 'El plazo de un año se aplica a devengos desde el 21 de febrero de 2019. Gipuzkoa utiliza los modelos 670, 671 y 672.', fuenteHref: 'https://egoitza.gipuzkoa.eus/es/listado-tramites/-/tramiteak/xehetasuna/3006' },
+        ],
+      },
+      'navarra': {
+        nombre: 'Navarra', regimen: 'Normativa foral navarra', autoridad: 'Hacienda Foral de Navarra',
+        intro: 'Navarra cuenta con normativa, modelos y calendario propios. Utiliza la información de la Hacienda Foral de Navarra y confirma su competencia antes de aplicar fechas o reglas de otros territorios.',
+        fuenteLabel: 'Portal de la Hacienda de Navarra', fuenteHref: 'https://www.navarra.es/es/hacienda',
+        tarjetas: [
+          { icono: IC.calendar, eyebrow: '01 · Agenda 2026', titulo: 'Calendario fiscal', descripcion: 'Reúne la campaña navarra de Renta y Patrimonio, los pagos fraccionados y las revisiones que conviene anticipar.', datos: [t(1,'Renta 2025','9 abril — 25 junio 2026'), t(2,'Autónomos · modelo 130','Febrero, abril, agosto y octubre'), t(3,'Pago de Renta','3 julio; segundo plazo 20 noviembre')], nota: 'La presentación termina el 25 de junio, mientras que el ingreso general puede vencer posteriormente.', fuenteHref: 'https://www.navarra.es/es/hacienda/renta-y-patrimonio' },
+          { icono: IC.savings, eyebrow: '02 · Inversión', titulo: 'Fiscalidad del ahorro', descripcion: 'Intereses, dividendos e incrementos patrimoniales se integran conforme al IRPF navarro y a sus reglas de compensación.', datos: [t(1,'Escala del ahorro','Seis tramos progresivos'), t(2,'Tipos marginales','Del 20 % al 28 %'), t(3,'Antes de vender','Revisar pérdidas y fechas de adquisición')], nota: 'El artículo 60 del texto refundido establece una escala propia distinta de la foral vasca y de la estatal.', fuenteHref: 'https://www.navarra.es/es/web/normativa-hacienda/-/texto-refundido-de-la-ley-foral-del-impuesto-sobre-la-renta-de-las-personas-f%C3%ADsicas-dfl-4/2008-de-2-de-junio-' },
+          { icono: IC.inheritance, eyebrow: '03 · Patrimonio familiar', titulo: 'Sucesiones y donaciones', descripcion: 'Antes de transmitir, confirma competencia, parentesco, residencia, localización y valoración de los bienes.', datos: [t(1,'Herencia · modelo 660','Plazo general: seis meses'), t(2,'Fallecimiento fuera de España','Plazo general: diez meses'), t(3,'Donación','Plazo general: dos meses')], nota: 'La solicitud de prórroga sucesoria debe presentarse dentro de los cinco primeros meses del plazo ordinario.', fuenteHref: 'https://www.navarra.es/es/hacienda/sucesiones-y-donaciones' },
+        ],
+      },
+      'common-territory': {
+        nombre: 'Territorio común', regimen: 'Normativa estatal y autonómica', autoridad: 'Agencia Estatal de Administración Tributaria (AEAT)',
+        intro: 'La AEAT gestiona el IRPF estatal y su calendario general. En Sucesiones y Donaciones, la normativa, los beneficios y la administración competente dependen de la comunidad autónoma y de los puntos de conexión de cada operación.',
+        fuenteLabel: 'Sede electrónica de la AEAT', fuenteHref: 'https://sede.agenciatributaria.gob.es/',
+        tarjetas: [
+          { icono: IC.calendar, eyebrow: '01 · Agenda 2026', titulo: 'Calendario fiscal', descripcion: 'Reúne la campaña estatal de Renta y Patrimonio, los pagos fraccionados y las revisiones patrimoniales que conviene anticipar.', datos: [t(1,'Renta 2025','8 abril — 30 junio 2026'), t(2,'Autónomos · modelo 130','Enero, abril, julio y octubre'), t(3,'Domiciliación de Renta','Hasta el 25 de junio')], nota: 'El plazo de domiciliación termina antes que la campaña general; el segundo plazo del fraccionamiento vence el 5 de noviembre.', fuenteHref: 'https://sede.agenciatributaria.gob.es/Sede/ayuda/calendario-contribuyente/calendario-contribuyente-2026/recuerde/fechas-campana-renta-patrimonio.html' },
+          { icono: IC.savings, eyebrow: '02 · Inversión', titulo: 'Fiscalidad del ahorro', descripcion: 'Intereses, dividendos y ganancias por transmisiones se integran en la base del ahorro estatal conforme a sus reglas de compensación.', datos: [t(1,'Escala del ahorro','Cinco tramos progresivos'), t(2,'Tipos estatal + autonómico','Del 19 % al 30 %'), t(3,'Antes de vender','Revisar pérdidas y fechas de adquisición')], nota: 'La escala conjunta estatal y autonómica alcanza el 30 % a partir de 300.000 euros de base liquidable del ahorro.', fuenteHref: 'https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-ayuda-presentacion/irpf-2025/8-cumplimentacion-irpf/8_4-cuota-integra/8_4_4-gravamen-base-liquidable-ahorro.html' },
+          { icono: IC.inheritance, eyebrow: '03 · Patrimonio familiar', titulo: 'Sucesiones y donaciones', descripcion: 'Primero identifica la comunidad autónoma competente: de ella dependen la gestión, los modelos, las reducciones, las bonificaciones y la cuota final.', datos: [t(1,'Herencia · marco general','Seis meses'), t(2,'Donación · marco general','30 días hábiles'), t(3,'Competencia','Confirmar comunidad autónoma')], nota: 'No existe un régimen único de Sucesiones y Donaciones para todo el territorio común. Los plazos indicados son referencias estatales.', fuenteHref: 'https://sede.agenciatributaria.gob.es/Sede/no-residentes/impuesto-sobre-sucesiones-donaciones/delimitacion-competencias-estado-comunidades-autonomas.html' },
+        ],
+      },
+    };
+  }
+  syncSvgPaths() {
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll('[data-nuvia-path]').forEach((node) => {
+        node.setAttribute('d', node.getAttribute('data-nuvia-path') || '');
+      });
+    });
+  }
+  componentDidMount() {
+    document.title = 'Mis impuestos | NUVIA Family Wealth';
+    this.syncSvgPaths();
+  }
+  componentDidUpdate() { this.syncSvgPaths(); }
+  renderVals() {
+    const jur = this.datos();
+    const seleccion = this.state.seleccion ?? this.props.territorioInicial ?? 'bizkaia';
+    const t = jur[seleccion] || null;
+    const estadoVacio = seleccion === 'sin-seleccion';
+    const estadoInseguro = seleccion === 'unsure';
+    const guiaPorTitulo = {
+      'Calendario fiscal': 'calendar',
+      'Fiscalidad del ahorro': 'savings',
+      'Sucesiones y donaciones': 'inheritance',
+    };
+    const lenguajeAmable = {
+      'Calendario fiscal': {
+        titulo: 'Mis fechas importantes',
+        descripcion: 'Ten a mano los plazos que afectan a tu renta y prepara con tiempo las decisiones que no conviene dejar para el final.',
+      },
+      'Fiscalidad del ahorro': {
+        titulo: 'Qué pago cuando invierto',
+        descripcion: 'Entiende de forma sencilla cómo tributan intereses, dividendos y ventas antes de tomar una decisión.',
+      },
+      'Sucesiones y donaciones': {
+        titulo: 'Herencias y donaciones, paso a paso',
+        descripcion: 'Ordena parentesco, residencia, bienes y plazos para transmitir patrimonio con menos incertidumbre.',
+      },
+    };
+    return {
+      seleccion,
+      cambiarTerritorio: (e) => this.setState({ seleccion: e.target.value }),
+      hayTerritorio: !!t,
+      sinTerritorio: !t,
+      estadoVacio,
+      estadoInseguro,
+      ayudaSinTerritorio: estadoInseguro
+        ? 'Te ayudamos a identificar el territorio antes de mostrar contenido fiscal.'
+        : 'La selección adapta el contenido, las fechas y las fuentes oficiales.',
+      nombre: t ? t.nombre : '',
+      regimen: t ? t.regimen : '',
+      autoridad: t ? t.autoridad : '',
+      intro: t ? `Estas son las fechas, reglas y fuentes que conviene tener presentes si tributas en ${t.nombre}.` : '',
+      fuenteLabel: t ? t.fuenteLabel : '',
+      fuenteHref: t ? t.fuenteHref : '#',
+      tarjetas: t ? t.tarjetas.map((tarjeta) => ({
+        ...tarjeta,
+        titulo: lenguajeAmable[tarjeta.titulo]?.titulo || tarjeta.titulo,
+        descripcion: lenguajeAmable[tarjeta.titulo]?.descripcion || tarjeta.descripcion,
+        guiaHref: 'guia-impuestos.html?guia=' + guiaPorTitulo[tarjeta.titulo] + '&territorio=' + seleccion,
+      })) : [],
+      notaOrientativa: t ? 'Información adaptada a ' + t.nombre + ' · Ejercicio 2026 · Revisión informativa de agosto de 2026.' : '',
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Guía de planificación de jubilación | NUVIA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body class="nuvia-friendly">
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <link rel="stylesheet" href="friendly-sections.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <!-- ============ HEADER ============ -->
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ CABECERA ============ -->
+    <section id="guia" data-screen-label="Cabecera guía" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
+      <div style="max-width:1240px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr); gap:0">
+        <div style="padding:64px 48px 56px 0">
+          <span style="display:inline-block; white-space:nowrap; border:1px solid rgba(201,220,160,.45); border-radius:999px; background:color-mix(in srgb, #9DB861 8%, transparent); color:#e8f0d5; font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; padding:6px 14px">Ruta práctica · Paso a paso</span>
+          <p style="color:rgba(255,255,255,.56); font-size:11px; font-weight:500; letter-spacing:.23em; text-transform:uppercase; margin:28px 0 0">Guía NUVIA · Jubilación</p>
+          <h1 style="color:#ffffff; max-width:15em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:12px 0 0">Tu jubilación necesita una hoja de ruta, no una cifra aislada</h1>
+          <p style="max-width:36em; color:rgba(255,255,255,.74); font-size:16px; line-height:1.65; margin:20px 0 0">Ordena objetivos, ingresos, gastos y patrimonio. Al terminar tendrás una lista clara de decisiones y próximos pasos para llevar al simulador.</p>
+        </div>
+        <div style="border-left:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.18); padding:64px 0 56px 44px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          <h2 style="color:#ffffff; font-size:24px; font-weight:500; line-height:1.25; margin:24px 0 0">Tu avance en esta guía</h2>
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-top:26px">
+            <p style="color:rgba(255,255,255,.60); font-size:12px; margin:0">Plan completado</p>
+            <p aria-live="polite" style="color:#4A5D23; font-size:34px; line-height:1; margin:0">{{ progresoTotal }} %</p>
+          </div>
+          <div role="progressbar" aria-label="Progreso total de la guía" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progresoTotalNum }}" style="height:6px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin-top:12px">
+            <div style="height:100%; border-radius:999px; background:#7C9A44; transition:width .3s ease; width:{{ progresoTotal }}%"></div>
+          </div>
+          <p style="border-top:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.56); font-size:12px; line-height:1.6; margin:24px 0 0; padding-top:18px">No se guardan datos personales. Tu selección permanece únicamente mientras mantengas abierta esta página.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RECORRIDO ============ -->
+    <section data-screen-label="Recorrido" aria-label="Recorrido de las herramientas de jubilación" style="background:var(--color-surface); border-bottom:1px solid var(--color-divider)">
+      <div style="max-width:1240px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div style="display:flex; align-items:flex-start; gap:14px; border-right:1px solid var(--color-divider); padding:20px 28px 20px 0">
+          <span style="color:#7C9A44; font-size:21px; line-height:1.1">01</span>
+          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Ordenar</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">Esta guía estructura las decisiones.</p></div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px; border-right:1px solid var(--color-divider); padding:20px 28px">
+          <span style="color:#7C9A44; font-size:21px; line-height:1.1">02</span>
+          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Calcular</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">El simulador convierte el plan en escenarios.</p></div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:14px; padding:20px 0 20px 28px">
+          <span style="color:#7C9A44; font-size:21px; line-height:1.1">03</span>
+          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Ejecutar</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">La guía fiscal prepara el rescate.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 01 PUNTO DE PARTIDA ============ -->
+    <section data-screen-label="01 Punto de partida" style="max-width:1240px; margin:0 auto; padding:64px 40px 0">
+      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">01 · Punto de partida</p>
+      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Empieza por lo que ya sabes</h2>
+      <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No necesitas tenerlo todo resuelto. Identifica qué conoces, qué te falta y cuál es la siguiente pregunta que merece respuesta.</p>
+
+      <p style="color:var(--color-text); font-size:12px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px">¿A qué distancia está tu jubilación?</p>
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px">
+        <sc-for list="{{ horizontes }}" as="h" hint-placeholder-count="4">
+          <button type="button" onClick="{{ h.abrir }}" aria-pressed="{{ h.pressed }}" style="{{ h.estilo }}">
+            <span style="display:block; font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; opacity:.75">{{ h.label }}</span>
+            <span style="display:block; font-size:19px; line-height:1.2; margin-top:7px">{{ h.period }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ haySeleccion }}" hint-placeholder-val="{{ false }}">
+        <aside style="display:grid; grid-template-columns:220px minmax(0,1fr); gap:20px; border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:#F4F0E7; margin-top:14px; padding:20px 26px">
+          <div>
+            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Prioridad de esta etapa</p>
+            <p style="color:var(--color-text); font-size:19px; line-height:1.25; margin:0">{{ prioridad }}</p>
+          </div>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.65; margin:0; align-self:center">{{ descripcionHorizonte }}</p>
+        </aside>
+      </sc-if>
+
+      <div style="display:grid; grid-template-columns:minmax(0,.66fr) minmax(0,1.34fr); gap:24px; margin-top:36px">
+        <div style="border-radius:var(--radius-md); background:var(--color-neutral-900); padding:30px 32px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
+          <h3 style="color:var(--color-text); font-size:25px; font-weight:500; margin:22px 0 0">Lo que ya tienes claro</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Marca únicamente lo que conoces o puedes comprobar. Lo pendiente formará parte de tu hoja de ruta.</p>
+          <p style="color:#4A5D23; font-size:38px; line-height:1; margin:30px 0 0">{{ progresoInfo }} %</p>
+          <p style="color:rgba(255,255,255,.4); font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin:6px 0 0">del punto de partida preparado</p>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px">
+          <sc-for list="{{ piezas }}" as="p" hint-placeholder-count="6">
+            <button type="button" role="checkbox" aria-checked="{{ p.checked }}" onClick="{{ p.abrir }}" style="{{ p.estilo }}">
+              <span style="{{ p.caja }}">{{ p.marca }}</span>
+              <span style="min-width:0; text-align:left">
+                <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ p.label }}</span>
+                <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin-top:3px">{{ p.detail }}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 HOJA DE RUTA ============ -->
+    <section data-screen-label="02 Hoja de ruta" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
+      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">02 · Hoja de ruta</p>
+      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Seis decisiones que ponen orden</h2>
+      <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">Avanza a tu ritmo. Las preguntas sirven para pensar en familia, preparar una conversación profesional o decidir qué dato buscar después.</p>
+
+      <div style="display:grid; grid-template-columns:minmax(0,.44fr) minmax(0,.56fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+        <div style="border-right:1px solid var(--color-divider); display:flex; flex-direction:column">
+          <sc-for list="{{ pasos }}" as="p" hint-placeholder-count="6">
+            <button type="button" onClick="{{ p.abrir }}" aria-pressed="{{ p.pressed }}" style="{{ p.estilo }}">
+              <span style="font-size:19px; color:{{ p.numColor }}">{{ p.number }}</span>
+              <span style="font-size:17.5px; line-height:1.25; text-align:left">{{ p.title }}</span>
+              <span aria-hidden="true" style="margin-left:auto; font-size:12px; opacity:.55">›</span>
+            </button>
+          </sc-for>
+        </div>
+        <article aria-live="polite" style="padding:34px 38px">
+          <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">{{ pasoEyebrow }}</p>
+          <h3 style="color:var(--color-text); font-size:28px; font-weight:500; line-height:1.15; margin:12px 0 0">{{ pasoTitulo }}</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:14px 0 0">{{ pasoDescripcion }}</p>
+          <div style="border-top:1px solid var(--color-divider); margin-top:24px; padding-top:20px">
+            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px">Preguntas para ayudarte a decidir</p>
+            <sc-for list="{{ pasoPreguntas }}" as="q" hint-placeholder-count="3">
+              <p style="display:flex; gap:11px; align-items:flex-start; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:0 0 10px"><span style="color:var(--color-accent); font-size:13px; line-height:1.4">✓</span>{{ q }}</p>
+            </sc-for>
+          </div>
+          <div style="border-radius:var(--radius-md); background:#F4F0E7; margin-top:20px; padding:16px 20px">
+            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Al terminar este paso</p>
+            <p style="color:#394755; font-size:13px; line-height:1.6; margin:0">{{ pasoResultado }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 03 ETAPAS ============ -->
+    <section data-screen-label="03 Etapas" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
+      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">03 · Planificación por etapas</p>
+      <h2 style="max-width:25em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Qué conviene mirar según el tiempo que te queda</h2>
+      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--color-divider); border-bottom:1px solid var(--color-divider)">
+        <article style="border-right:1px solid var(--color-divider); padding:26px 24px 26px 0">
+          <p style="color:#7C9A44; font-size:26px; margin:0">01</p>
+          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Construcción</p>
+          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Más de 10 años</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Objetivo y disciplina de ahorro.</p>
+        </article>
+        <article style="border-right:1px solid var(--color-divider); padding:26px 24px">
+          <p style="color:#7C9A44; font-size:26px; margin:0">02</p>
+          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Concreción</p>
+          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Entre 5 y 10 años</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Ingresos, patrimonio y brecha.</p>
+        </article>
+        <article style="border-right:1px solid var(--color-divider); padding:26px 24px">
+          <p style="color:#7C9A44; font-size:26px; margin:0">03</p>
+          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Preparación</p>
+          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Menos de 5 años</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Liquidez y calendario de cobro.</p>
+        </article>
+        <article style="padding:26px 0 26px 24px">
+          <p style="color:#7C9A44; font-size:26px; margin:0">04</p>
+          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Seguimiento</p>
+          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Ya jubilado/a</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Sostenibilidad y revisión anual.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 04 RIESGOS ============ -->
+    <section data-screen-label="04 Riesgos" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
+      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">04 · Riesgos que conviene anticipar</p>
+      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Un buen plan también prepara lo inesperado</h2>
+      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px">
+        <sc-for list="{{ riesgos }}" as="r" hint-placeholder-count="6">
+          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 24px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 16px 36px -24px rgba(11,35,71,.4)">
+            <span style="display:inline-flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300); font-size:16px">{{ r.inicial }}</span>
+            <h3 style="color:var(--color-text); font-size:19px; font-weight:500; margin:16px 0 0">{{ r.titulo }}</h3>
+            <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12.5px; line-height:1.6; margin:7px 0 0">{{ r.descripcion }}</p>
+            <p style="border-top:1px solid var(--color-divider); color:#394755; font-size:12.5px; line-height:1.6; margin:14px 0 0; padding-top:13px"><strong style="color:var(--color-text)">Cómo prepararlo:</strong> {{ r.respuesta }}</p>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- ============ 05 PLAN EN UNA PÁGINA ============ -->
+    <section data-screen-label="05 Plan en una página" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
+      <div style="display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+        <div style="border-right:1px solid var(--color-divider); padding:32px 34px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
+          <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:24px 0 0">05 · Tu plan en una página</p>
+          <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Convierte tus decisiones en una hoja de ruta</h2>
+          <p style="color:#6b7686; font-size:12.5px; line-height:1.6; margin:14px 0 0">Marca lo que ya has decidido y llévate una lista clara de próximos pasos. No hace falta completarlo todo hoy.</p>
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:18px">
+            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 8px">Próxima acción sugerida</p>
+            <p aria-live="polite" style="color:var(--color-text); font-size:18px; line-height:1.35; margin:0">{{ proximaAccion }}</p>
+          </div>
+        </div>
+        <div style="padding:32px 34px">
+          <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 26px">
+            <sc-for list="{{ acciones }}" as="a" hint-placeholder-count="8">
+              <button type="button" role="checkbox" aria-checked="{{ a.checked }}" onClick="{{ a.abrir }}" style="display:flex; gap:11px; align-items:flex-start; border:0; border-bottom:1px solid var(--color-divider); background:none; cursor:pointer; font-family:var(--font-body); padding:12px 0; text-align:left">
+                <span style="{{ a.caja }}">{{ a.marca }}</span>
+                <span style="{{ a.texto }}">{{ a.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <button type="button" onClick="{{ imprimir }}" style="display:inline-flex; align-items:center; gap:10px; border:0; border-radius:var(--radius-md); border:1px solid var(--color-accent); background:transparent; color:var(--color-accent); cursor:pointer; font-family:var(--font-body); font-size:12.5px; font-weight:500; margin-top:26px; padding:12px 22px; transition:background .25s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 12%, transparent)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Imprimir mi hoja de ruta
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SIGUIENTES PASOS ============ -->
+    <section data-screen-label="Siguientes pasos" aria-label="Siguientes pasos" style="max-width:1240px; margin:0 auto; padding:56px 40px 20px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
+      <article style="border-radius:var(--radius-md); background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); box-shadow:var(--shadow-sm); padding:32px 36px">
+        <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Siguiente paso · Calcular</p>
+        <h2 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.2; margin:12px 0 0">Convierte la hoja de ruta en escenarios</h2>
+        <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Introduce tus datos en el simulador para estimar ingresos, necesidades y brecha.</p>
+        <a href="jubilacion.html" style="display:inline-flex; align-items:center; gap:10px; border-radius:var(--radius-md); background:transparent; border:1px solid var(--color-accent-400); color:var(--color-accent-200); font-size:15px; font-weight:500; text-decoration:none; margin-top:24px; padding:12px 24px; box-shadow:0 12px 28px -10px rgba(197,164,109,.55); transition:transform .25s ease, background .25s ease" style-hover="transform:translateY(-2px); background:color-mix(in srgb, var(--color-accent-400) 14%, transparent); color:var(--color-accent-100)">Abrir simulador <span aria-hidden="true">→</span></a>
+      </article>
+      <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:32px 36px">
+        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Último paso · Ejecutar</p>
+        <h2 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.2; margin:12px 0 0">Prepara la forma de rescatar tu EPSV</h2>
+        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Compara capital, renta y modalidad mixta, junto con su tratamiento fiscal en Bizkaia.</p>
+        <a href="guia-fiscal.html" style="display:inline-flex; align-items:center; gap:10px; margin-top:24px; border:1px solid rgba(11,35,71,.25); border-radius:var(--radius-md); background:var(--color-surface); color:var(--color-text); font-size:15px; text-decoration:none; padding:12px 24px; transition:background .25s ease, border-color .25s ease" style-hover="background:color-mix(in srgb, var(--color-text) 5%, transparent); border-color:var(--color-text); color:var(--color-text)">Ver fiscalidad y rescate <span aria-hidden="true">→</span></a>
+      </article>
+    </section>
+
+    <section data-screen-label="Aviso" style="max-width:1240px; margin:0 auto; padding:0 40px 84px">
+      <div style="display:flex; gap:16px; align-items:flex-start; border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, var(--color-accent) 7%, transparent); padding:18px 24px">
+        <span style="color:var(--color-accent-300); font-size:17px; line-height:1.3">!</span>
+        <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:12.5px; line-height:1.6; margin:0">Esta guía es educativa y orientativa. No constituye asesoramiento financiero, fiscal o jurídico y debe adaptarse a la situación personal, familiar y patrimonial de cada usuario.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = { horizonte: null, listas: {}, hechas: {}, paso: 0 };
+  datos() {
+    if (this._d) return this._d;
+    this._d = {
+      horizontes: [
+        { id: 'more-than-10', period: 'Más de 10 años', label: 'Construcción', priority: 'Objetivo y disciplina de ahorro', description: 'Define el nivel de vida deseado, construye el hábito de ahorro y revisa el plan cuando cambie tu situación.' },
+        { id: 'five-to-10', period: 'Entre 5 y 10 años', label: 'Concreción', priority: 'Ingresos, patrimonio y brecha', description: 'Afina la pensión esperada, ordena el patrimonio y cuantifica la diferencia respecto a tus gastos futuros.' },
+        { id: 'less-than-5', period: 'Menos de 5 años', label: 'Preparación', priority: 'Liquidez y calendario de cobro', description: 'Reduce incertidumbres, prepara documentación y coordina pensión, ahorro privado y necesidades de liquidez.' },
+        { id: 'retired', period: 'Ya jubilado/a', label: 'Seguimiento', priority: 'Sostenibilidad y revisión anual', description: 'Contrasta el gasto real con lo previsto y adapta los cobros a la evolución familiar, patrimonial y fiscal.' },
+      ],
+      piezas: [
+        { id: 'retirement-age', label: 'Edad o fecha objetivo', detail: 'Cuándo te gustaría iniciar esta etapa.' },
+        { id: 'public-pension', label: 'Estimación de pensión pública', detail: 'Una cifra actualizada o un rango razonable.' },
+        { id: 'savings', label: 'Ahorro y previsión acumulados', detail: 'EPSV, planes y otros recursos destinados a jubilación.' },
+        { id: 'expenses', label: 'Presupuesto de vida futura', detail: 'Gastos esenciales, discrecionales y extraordinarios.' },
+        { id: 'housing', label: 'Vivienda y deudas previstas', detail: 'Hipoteca, alquiler, reformas o cambio de residencia.' },
+        { id: 'family', label: 'Compromisos familiares', detail: 'Personas dependientes, ayuda a hijos o legado.' },
+      ],
+      acciones: [
+        { id: 'objective', label: 'He definido cómo quiero vivir la jubilación.' },
+        { id: 'income-map', label: 'He reunido todas mis fuentes de ingresos futuros.' },
+        { id: 'expense-map', label: 'He separado gastos esenciales y discrecionales.' },
+        { id: 'gap', label: 'He estimado la diferencia entre ingresos y gastos.' },
+        { id: 'liquidity', label: 'He previsto una reserva para imprevistos.' },
+        { id: 'longevity', label: 'He considerado longevidad, salud y dependencia.' },
+        { id: 'withdrawal', label: 'He comparado capital, renta y modalidad mixta.' },
+        { id: 'review', label: 'He fijado una fecha anual para revisar el plan.' },
+      ],
+      pasos: [
+        { number: '01', eyebrow: 'Visión personal', title: 'Define tu jubilación', description: 'La planificación empieza por una vida concreta, no por una cifra aislada.', questions: ['¿A qué edad quieres jubilarte?', '¿Dónde y cómo imaginas tu vida cotidiana?', '¿Qué compromisos familiares seguirán activos?'], outcome: 'Una fecha objetivo y una descripción sencilla del nivel de vida deseado.' },
+        { number: '02', eyebrow: 'Fuentes de ingreso', title: 'Construye tu mapa de ingresos', description: 'Reúne todos los flujos que podrán sostener el presupuesto de jubilación.', questions: ['Pensión pública estimada', 'EPSV y otros sistemas de previsión', 'Alquileres, rentas u otros ingresos recurrentes'], outcome: 'Una visión mensual y anual de los ingresos previsibles.' },
+        { number: '03', eyebrow: 'Coste de vida', title: 'Estima tus gastos futuros', description: 'Separa el presupuesto estable de los gastos que pueden aparecer de forma puntual.', questions: ['Gastos esenciales del hogar', 'Ocio, viajes y ayuda familiar', 'Salud, dependencia, reformas e imprevistos'], outcome: 'Un presupuesto base, otro deseado y una reserva extraordinaria.' },
+        { number: '04', eyebrow: 'Suficiencia', title: 'Identifica la brecha', description: 'Compara ingresos y gastos para saber qué debe cubrir tu ahorro acumulado.', questions: ['Diferencia mensual entre ingresos y gastos', 'Duración prudente del horizonte', 'Efecto de la inflación sobre el presupuesto'], outcome: 'Una necesidad anual que puedas llevar al simulador de NUVIA.' },
+        { number: '05', eyebrow: 'Arquitectura patrimonial', title: 'Ordena el patrimonio', description: 'Asigna una función clara a la liquidez, la vivienda y el ahorro de largo plazo.', questions: ['Reserva para los próximos años', 'Deudas que seguirán vigentes', 'Patrimonio destinado a uso, renta o legado'], outcome: 'Un mapa patrimonial por función, sin necesidad de elegir productos concretos.' },
+        { number: '06', eyebrow: 'Ejecución', title: 'Prepara el calendario de cobro', description: 'Coordina las necesidades de liquidez con la forma de rescatar la previsión privada.', questions: ['Capital inicial realmente necesario', 'Ingresos periódicos deseados', 'Impacto fiscal y documentación disponible'], outcome: 'Una primera decisión entre capital, renta o modalidad mixta para revisar fiscalmente.' },
+      ],
+      riesgos: [
+        { inicial: 'L', titulo: 'Longevidad', descripcion: 'La jubilación puede durar más de lo previsto.', respuesta: 'Trabaja con un horizonte prudente y revisa el ritmo de gasto.' },
+        { inicial: 'I', titulo: 'Inflación', descripcion: 'El mismo presupuesto compra menos con el paso del tiempo.', respuesta: 'Actualiza gastos e ingresos en términos de poder adquisitivo.' },
+        { inicial: 'S', titulo: 'Salud y dependencia', descripcion: 'Pueden aparecer necesidades difíciles de anticipar.', respuesta: 'Reserva liquidez y documenta preferencias y apoyos familiares.' },
+        { inicial: 'F', titulo: 'Apoyo familiar', descripcion: 'La ayuda a hijos o dependientes puede prolongarse.', respuesta: 'Separa los compromisos previstos de las ayudas extraordinarias.' },
+        { inicial: 'Q', titulo: 'Falta de liquidez', descripcion: 'Un patrimonio elevado no siempre permite pagar gastos inmediatos.', respuesta: 'Asigna una reserva específica a los primeros años y contingencias.' },
+        { inicial: 'C', titulo: 'Concentración fiscal', descripcion: 'Cobrar demasiado en un ejercicio puede alterar la tributación.', respuesta: 'Compara el calendario de rescate antes de ordenar el cobro.' },
+      ],
+    };
+    return this._d;
+  }
+  componentDidMount() { document.title = 'Guía de planificación para la jubilación | NUVIA Family Wealth'; }
+  toggle(campo, id) {
+    const m = Object.assign({}, this.state[campo]);
+    m[id] = !m[id];
+    this.setState({ [campo]: m });
+  }
+  renderVals() {
+    const d = this.datos();
+    const st = this.state;
+    const sel = d.horizontes.find(h => h.id === st.horizonte) || null;
+    const nList = Object.values(st.listas).filter(Boolean).length;
+    const nAcc = Object.values(st.hechas).filter(Boolean).length;
+    const progresoInfo = Math.round((nList / d.piezas.length) * 100);
+    const progresoTotal = Math.round(((nList + nAcc + (sel ? 1 : 0)) / (d.piezas.length + d.acciones.length + 1)) * 100);
+    let proximaAccion = 'Seleccionar el horizonte hasta tu jubilación.';
+    if (sel) {
+      const faltaInfo = d.piezas.find(p => !st.listas[p.id]);
+      const faltaAcc = d.acciones.find(a => !st.hechas[a.id]);
+      proximaAccion = faltaInfo ? 'Reunir: ' + faltaInfo.label.toLocaleLowerCase('es-ES') + '.'
+        : faltaAcc ? faltaAcc.label
+        : 'Revisar el plan una vez al año o cuando cambie tu situación.';
+    }
+    const paso = d.pasos[st.paso];
+    const cajaOn = 'flex-shrink:0; display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:5px; border:1px solid var(--color-accent); background:var(--color-accent); color:var(--color-text); font-size:11px; line-height:1; margin-top:2px';
+    const cajaOff = 'flex-shrink:0; display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:5px; border:1px solid #6b7686; background:var(--color-surface); color:transparent; font-size:11px; line-height:1; margin-top:2px';
+    return {
+      horizontes: d.horizontes.map(h => ({
+        label: h.label, period: h.period, pressed: h.id === st.horizonte,
+        abrir: () => this.setState({ horizonte: h.id }),
+        estilo: 'border-radius:var(--radius-md); cursor:pointer; font-family:Figtree,sans-serif; padding:16px 18px; text-align:left; transition:background .25s ease, color .25s ease, border-color .25s ease; ' + (h.id === st.horizonte ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:var(--color-text)'),
+      })),
+      haySeleccion: !!sel,
+      prioridad: sel ? sel.priority : '',
+      descripcionHorizonte: sel ? sel.description : '',
+      piezas: d.piezas.map(p => {
+        const on = !!st.listas[p.id];
+        return {
+          label: p.label, detail: p.detail, checked: on, marca: on ? '✓' : '',
+          abrir: () => this.toggle('listas', p.id),
+          caja: on ? cajaOn : cajaOff,
+          estilo: 'display:flex; gap:12px; align-items:flex-start; border-radius:var(--radius-md); cursor:pointer; font-family:Figtree,sans-serif; padding:15px 17px; transition:border-color .25s ease, background .25s ease; ' + (on ? 'border:1px solid var(--color-accent); background:var(--color-accent-900)' : 'border:1px solid var(--color-divider); background:var(--color-surface)'),
+        };
+      }),
+      progresoInfo, progresoTotal, progresoTotalNum: progresoTotal,
+      pasos: d.pasos.map((p, i) => ({
+        number: p.number, title: p.title, pressed: i === st.paso,
+        abrir: () => this.setState({ paso: i }),
+        numColor: i === st.paso ? '#4A5D23' : '#7C9A44',
+        estilo: 'display:flex; gap:14px; align-items:center; border:0; border-bottom:1px solid var(--color-divider); cursor:pointer; font-family:Figtree,sans-serif; padding:16px 22px; transition:background .2s ease, color .2s ease; ' + (i === st.paso ? 'background:var(--color-neutral-900); color:var(--color-text)' : 'background:none; color:var(--color-text)'),
+      })),
+      pasoEyebrow: paso.eyebrow, pasoTitulo: paso.title, pasoDescripcion: paso.description,
+      pasoPreguntas: paso.questions, pasoResultado: paso.outcome,
+      riesgos: d.riesgos,
+      acciones: d.acciones.map(a => {
+        const on = !!st.hechas[a.id];
+        return {
+          label: a.label, checked: on, marca: on ? '✓' : '',
+          abrir: () => this.toggle('hechas', a.id),
+          caja: on ? cajaOn : cajaOff,
+          texto: 'font-size:12.5px; line-height:1.55; ' + (on ? 'color:color-mix(in srgb, var(--color-text) 50%, transparent); text-decoration:line-through' : 'color:color-mix(in srgb, var(--color-text) 72%, transparent)'),
+        };
+      }),
+      proximaAccion,
+      imprimir: () => window.print(),
+    };
+  }
+}
+</script>
+</body>
+</html>

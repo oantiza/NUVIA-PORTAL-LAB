@@ -1,0 +1,17 @@
+{
+  "name": "nuvia-web-3",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "update:news": "node scripts/update-daily-news.mjs",
+    "update:macro": "node scripts/update-macro-data.mjs",
+    "update:daily": "npm run update:news && npm run update:macro",
+    "validate": "node scripts/check-parity.mjs . && node scripts/check-static-site.mjs .",
+    "build": "npm run validate && node scripts/build-site.mjs && node scripts/check-static-site.mjs dist",
+    "serve": "npm run build && node scripts/serve-local.mjs dist"
+  }
+}

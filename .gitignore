@@ -1,0 +1,7 @@
+.serena/
+.firebase/
+dist/
+node_modules/
+npm-debug.log*
+firebase-debug.log*
+tmp/

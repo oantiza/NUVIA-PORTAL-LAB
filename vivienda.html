@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vivienda y coste de vida | NUVIA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    input, select { font-family: var(--font-body); }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    select option { background: var(--color-surface); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="vivienda" data-screen-label="Cabecera vivienda" style="position:relative; overflow:hidden; background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
+      <div aria-hidden="true" style="position:absolute; right:-80px; top:-120px; width:420px; height:420px; border-radius:999px; border:1px solid rgba(255,255,255,.06)"></div>
+      <div aria-hidden="true" style="position:absolute; right:-8px; top:-80px; width:300px; height:300px; border-radius:999px; border:1px solid color-mix(in srgb, #9DB861 22%, transparent)"></div>
+      <div style="position:relative; max-width:1240px; margin:0 auto; padding:64px 48px 0">
+        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tema clave · Vivienda y coste de vida</span>
+        <h1 style="color:#ffffff; max-width:15em; font-size:46px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:22px 0 0">La casa que encaja también en tu vida</h1>
+        <p style="max-width:56ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.65; margin:18px 0 0">Calcula, compara y somete la decisión a escenarios exigentes antes de comprometer el presupuesto familiar.</p>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:24px 0 0">
+          <button type="button" onClick="{{ guardar }}" class="btn btn-primary" style="white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Guardar escenario</button>
+          <button type="button" onClick="{{ recuperar }}" class="btn btn-secondary" style="white-space:nowrap; color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.3)">Recuperar</button>
+          <span role="status" style="color:rgba(255,255,255,.58); font-size:11.5px">{{ mensaje }}</span>
+        </div>
+        <div style="height:1px; margin-top:26px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+        <nav aria-label="Herramientas de vivienda" style="display:flex; gap:10px; flex-wrap:wrap; padding:18px 0 6px">
+          <sc-for list="{{ pestanas }}" as="t" hint-placeholder-count="5">
+            <button type="button" onClick="{{ t.abrir }}" aria-pressed="{{ t.pressed }}" style="{{ t.estilo }}">{{ t.label }}</button>
+          </sc-for>
+        </nav>
+      </div>
+    </section>
+
+    <section data-screen-label="Intro de herramienta" style="max-width:1240px; margin:0 auto; padding:28px 48px 0">
+      <div style="display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+        <div style="background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); padding:26px 30px">
+          <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.19em; text-transform:uppercase; margin:0">Antes de empezar</p>
+          <h2 style="font-size:26px; font-weight:500; line-height:1.15; margin:10px 0 0">{{ tabTitulo }}</h2>
+          <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13.5px; line-height:1.65; margin:12px 0 0">{{ tabResumen }}</p>
+          <div aria-label="Datos necesarios" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:18px">
+            <sc-for list="{{ tabChips }}" as="c" hint-placeholder-count="3">
+              <span class="tag tag-neutral">{{ c }}</span>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr))">
+          <article style="border-right:1px solid var(--color-divider); padding:26px 28px">
+            <span style="display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:999px; background:var(--color-accent-900); color:var(--color-accent-300); font-size:12px; font-feature-settings:'tnum' 1">1</span>
+            <h3 style="font-size:20px; font-weight:500; margin:14px 0 0">Qué es</h3>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.65; margin:10px 0 0">{{ tabQue }}</p>
+          </article>
+          <article style="padding:26px 28px">
+            <span style="display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:999px; background:var(--color-accent-900); color:var(--color-accent-300); font-size:12px; font-feature-settings:'tnum' 1">2</span>
+            <h3 style="font-size:20px; font-weight:500; margin:14px 0 0">Cómo funciona</h3>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.65; margin:10px 0 0">{{ tabComo }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <sc-if value="{{ tabHipoteca }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Calculadora de hipoteca" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+          <div style="border-bottom:1px solid var(--color-divider); padding:24px 30px">
+            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Calculadora de hipoteca</p>
+            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Una cuota que refleja el tipo de préstamo</h2>
+            <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0">Distingue entre tipo fijo, variable y mixto. En los dos últimos casos, el tipo variable resulta de sumar el índice de referencia y el diferencial.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)">
+            <div style="padding:26px 30px">
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Precio de la vivienda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchasePrice" type="number" step="5000" data-dc-value="{{ v.purchasePrice }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Entrada prevista</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="downPayment" type="number" step="5000" data-dc-value="{{ v.downPayment }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Impuestos de compra</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchaseTaxPercent" type="number" step="0.5" max="20" data-dc-value="{{ v.purchaseTaxPercent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div><p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px; line-height:1.5; margin:5px 0 0">Dependen de vivienda nueva/usada y del territorio.</p></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Notaría y otros gastos</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchaseOtherCosts" type="number" step="100" data-dc-value="{{ v.purchaseOtherCosts }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Tasación</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="appraisalCost" type="number" step="50" data-dc-value="{{ v.appraisalCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Plazo</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="years" type="number" min="1" max="40" data-dc-value="{{ v.years }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
+                <div style="grid-column:span 2">
+                  <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin:0 0 8px">Modalidad</p>
+                  <div style="display:flex; gap:10px; flex-wrap:wrap">
+                    <sc-for list="{{ modalidades }}" as="m" hint-placeholder-count="3">
+                      <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" style="{{ m.estilo }}">{{ m.label }}</button>
+                    </sc-for>
+                  </div>
+                </div>
+                <sc-if value="{{ noEsVariable }}" hint-placeholder-val="{{ true }}">
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">{{ etiquetaTinFijo }}</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="fixedRate" type="number" step="0.05" max="20" data-dc-value="{{ v.fixedRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+                </sc-if>
+                <sc-if value="{{ esMixta }}" hint-placeholder-val="{{ true }}">
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Duración del tramo fijo</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="fixedYears" type="number" min="1" max="40" data-dc-value="{{ v.fixedYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
+                </sc-if>
+                <sc-if value="{{ noEsFija }}" hint-placeholder-val="{{ true }}">
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Índice de referencia</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="referenceRate" type="number" step="0.05" max="20" data-dc-value="{{ v.referenceRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div><p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px; line-height:1.5; margin:5px 0 0">Introduce el valor de referencia que quieras simular.</p></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Diferencial</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="spread" type="number" step="0.05" max="10" data-dc-value="{{ v.spread }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+                </sc-if>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Ingresos netos del hogar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="annualHouseholdIncome" type="number" step="1000" data-dc-value="{{ v.annualHouseholdIncome }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Otras cuotas de deuda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="monthlyOtherDebt" type="number" step="25" data-dc-value="{{ v.monthlyOtherDebt }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              </div>
+              <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11.5px; line-height:1.6; margin:18px 0 0; padding:13px 16px">La entrada, impuestos, compraventa y tasación se pagan con recursos propios. Conserva además un colchón separado. La revisión variable se representa con un índice constante: es un escenario, no una predicción.</p>
+            </div>
+            <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
+              <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0">Resultado estimado</p>
+              <p style="font-size:22px; font-weight:500; margin:8px 0 0">Tu escenario de compra</p>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:20px">
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Cuota inicial</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rCuota }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rCuotaNota }}</p></div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Préstamo</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rPrestamo }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rLtv }}</p></div>
+                <sc-if value="{{ esMixta }}" hint-placeholder-val="{{ true }}">
+                  <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">{{ rCuotaTrasLabel }}</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rCuotaTras }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rCuotaTrasNota }}</p></div>
+                </sc-if>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Intereses estimados</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rIntereses }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Con los tipos introducidos</p></div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Efectivo inicial</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEfectivo }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Entrada + impuestos + gastos + tasación</p></div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Tipo variable simulado</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rTipoVar }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rTipoVarNota }}</p></div>
+              </div>
+              <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:14px; padding:16px 19px">
+                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px">
+                  <div><p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0">Esfuerzo mensual inicial</p><p style="font-size:30px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEsfuerzo }}</p></div>
+                  <span style="{{ rEsfuerzoEstilo }}">{{ rEsfuerzoBadge }}</span>
+                </div>
+                <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">Hipoteca y otras deudas sobre ingresos netos. Es una referencia orientativa, no un criterio de concesión.</p>
+              </div>
+              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); margin-top:14px; padding:16px 19px">
+                <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">{{ rEstresTitulo }}</p>
+                <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-top:10px">
+                  <p style="font-size:24px; font-weight:500; line-height:1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEstresCuota }}<span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px"> /mes</span></p>
+                  <p style="font-size:13px; font-weight:500; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEstresEsfuerzo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--color-divider); padding:20px 30px 26px">
+            <p style="font-size:12.5px; font-weight:500; margin:0 0 14px">Tabla anual de amortización</p>
+            <div style="display:grid; grid-template-columns:56px repeat(4,minmax(0,1fr)) 90px; gap:0 18px; border-bottom:1px solid var(--color-divider); padding-bottom:8px">
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Año</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Saldo inicial</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Capital amortizado</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Intereses</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Saldo final</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Tipo medio</span>
+            </div>
+            <div style="max-height:280px; overflow-y:auto">
+              <sc-for list="{{ filas }}" as="f" hint-placeholder-count="10">
+                <div style="display:grid; grid-template-columns:56px repeat(4,minmax(0,1fr)) 90px; gap:0 18px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); padding:9px 0">
+                  <span style="color:var(--color-text); font-size:12px; font-weight:500; font-variant-numeric:tabular-nums">{{ f.year }}</span>
+                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.inicial }}</span>
+                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.capital }}</span>
+                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.intereses }}</span>
+                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.final }}</span>
+                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.tipo }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ tabOfertas }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Comparador de ofertas" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px">
+          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap">
+            <div>
+              <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Comparador de hipotecas</p>
+              <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Copia las condiciones completas de cada FEIN</h2>
+              <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0">{{ ofertasIntro }}</p>
+            </div>
+            <a href="https://clientebancario.bde.es/pcb/es/menu-horizontal/actualidadeducac/educacion-financiera/comparadores-y-simuladores/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-decoration:none; white-space:nowrap; font-size:12px">Comparadores oficiales ↗</a>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:26px">
+            <sc-for list="{{ ofertas }}" as="o" hint-placeholder-count="3">
+              <article style="{{ o.estiloCard }}">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
+                  <div style="display:flex; align-items:center; gap:12px; min-width:0">
+                    <span style="flex-shrink:0; display:inline-flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:15px; font-feature-settings:'tnum' 1">{{ o.num }}</span>
+                    <span style="font-size:19px; font-weight:500">{{ o.name }}</span>
+                  </div>
+                  <span style="{{ o.badgeEstilo }}">{{ o.badge }}</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; margin-top:16px">
+                  <div style="grid-column:span 2"><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Modalidad</label><select name="{{ o.campoKind }}" data-dc-value="{{ o.kind }}" onChange="{{ setOfertaStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); color:var(--color-text); font-size:13px; font-weight:500; padding:8px 10px; cursor:pointer"><option value="Fija">Fija</option><option value="Variable">Variable</option><option value="Mixta">Mixta</option></select></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">TIN fijo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoFixedRate }}" type="number" step="0.05" data-dc-value="{{ o.fixedRate }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Tramo fijo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoFixedYears }}" type="number" min="0" max="40" data-dc-value="{{ o.fixedYears }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">años</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Índice</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoReferenceRate }}" type="number" step="0.05" data-dc-value="{{ o.referenceRate }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Diferencial</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoSpread }}" type="number" step="0.05" data-dc-value="{{ o.spread }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">TAE</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoTae }}" type="number" step="0.05" data-dc-value="{{ o.tae }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Plazo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoYears }}" type="number" min="1" max="40" data-dc-value="{{ o.years }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">años</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Apertura</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoOpeningFee }}" type="number" step="100" data-dc-value="{{ o.openingFee }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">€</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Tasación</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoAppraisalCost }}" type="number" step="50" data-dc-value="{{ o.appraisalCost }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">€</span></div></div>
+                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Productos</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoAnnualProductsCost }}" type="number" step="50" data-dc-value="{{ o.annualProductsCost }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">€/año</span></div></div>
+                </div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 70%, var(--color-surface)); margin-top:16px; padding:14px 17px">
+                  <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px">
+                    <div><p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:9px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0">Cuota inicial</p><p style="font-size:19px; font-weight:500; margin:6px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rCuota }}</p></div>
+                    <div><p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:9px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0">Coste conocido</p><p style="font-size:19px; font-weight:500; margin:6px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rCoste }}</p></div>
+                  </div>
+                  <p style="display:flex; justify-content:space-between; gap:10px; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; margin:11px 0 0; padding-top:10px"><span>Desembolso conocido</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rDesembolso }}</strong></p>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; min-height:22px">
+                  <span style="{{ o.chipTaeEstilo }}">{{ o.chipTae }}</span>
+                  <span style="{{ o.chipVarEstilo }}">{{ o.chipVar }}</span>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+          <p style="border-left:2px solid var(--color-accent); border-radius:0 var(--radius-sm) var(--radius-sm) 0; background:color-mix(in srgb, var(--color-accent) 6%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:11.5px; line-height:1.6; margin:18px 0 0; padding:13px 16px"><strong style="color:var(--color-text); font-weight:500">Alcance:</strong> la TAE sigue siendo la referencia contractual principal. Las comisiones por amortización son contingentes y no se suman al coste conocido. NUVIA no presenta los ejemplos como ofertas comerciales vigentes.</p>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ tabCompra }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Compra o alquiler" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr)">
+          <div style="padding:26px 30px">
+            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Compra o alquiler</p>
+            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Compara patrimonio, no solo mensualidades</h2>
+            <p style="max-width:58ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 22px">El modelo asigna al alquiler la entrada y los gastos que no desembolsa, e invierte cada mes la diferencia de coste. La compra acumula la revalorización de la vivienda y el capital amortizado.</p>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Alquiler comparable</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="monthlyRent" type="number" step="50" data-dc-value="{{ v.monthlyRent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Horizonte</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="comparisonYears" type="number" min="1" max="30" data-dc-value="{{ v.comparisonYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Revalorización vivienda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="homeAppreciation" type="number" step="0.25" max="15" data-dc-value="{{ v.homeAppreciation }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Crecimiento alquiler</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="rentGrowth" type="number" step="0.25" max="15" data-dc-value="{{ v.rentGrowth }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Rentabilidad alternativa</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="investmentReturn" type="number" step="0.25" max="20" data-dc-value="{{ v.investmentReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Costes de venta</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="saleCostsPercent" type="number" step="0.25" max="15" data-dc-value="{{ v.saleCostsPercent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+            </div>
+            <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; line-height:1.55; margin:16px 0 0">La hipoteca, la entrada y los costes de propietario se toman de las pestañas Hipoteca y Presupuesto.</p>
+          </div>
+          <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
+            <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">{{ bvResultadoLabel }}</p>
+            <h3 style="font-size:26px; font-weight:500; line-height:1.15; margin:10px 0 0">{{ bvTitulo }}</h3>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:20px">
+              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Patrimonio comprando</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvComprando }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ bvComprandoNota }}</p></div>
+              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Patrimonio alquilando</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvAlquilando }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Entrada, gastos y diferencias mensuales invertidas</p></div>
+            </div>
+            <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:14px; padding:16px 19px">
+              <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Diferencia patrimonial</p>
+              <p style="font-size:31px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvDiferencia }}</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">Resultado sensible a revalorización, alquiler, rentabilidad, costes de propietario y venta. No incluye fiscalidad individual.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ tabAmort }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Amortización anticipada" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px">
+          <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Amortización anticipada</p>
+          <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Reducir cuota o terminar antes</h2>
+          <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 26px">Simula una aportación extraordinaria sobre una hipoteca existente y descuenta la compensación indicada en tu contrato.</p>
+          <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:24px; align-items:start">
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Capital pendiente</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentBalance" type="number" step="5000" data-dc-value="{{ v.repaymentBalance }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">TIN actual</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentRate" type="number" step="0.05" data-dc-value="{{ v.repaymentRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Plazo restante</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentYears" type="number" min="1" max="40" data-dc-value="{{ v.repaymentYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Importe a amortizar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentAmount" type="number" step="1000" data-dc-value="{{ v.repaymentAmount }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Compensación aplicable</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentFee" type="number" step="0.05" data-dc-value="{{ v.repaymentFee }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+              <div>
+                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin:0 0 8px">Objetivo</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap">
+                  <sc-for list="{{ modosAmort }}" as="m" hint-placeholder-count="2">
+                    <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" style="{{ m.estilo }}">{{ m.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+            <div style="border-radius:var(--radius-md); background:radial-gradient(600px 380px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:24px 28px">
+              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Resultado estimado</p>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:18px">
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Cuota actual</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arCuotaActual }}</p></div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Nueva cuota</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arNuevaCuota }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ arNuevaCuotaNota }}</p></div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Nuevo plazo</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arNuevoPlazo }}</p></div>
+                <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 12%, transparent); padding:14px 16px"><p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Ahorro neto</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arAhorroNeto }}</p><p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ arAhorroNota }}</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ tabPresupuesto }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Presupuesto mensual" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)">
+          <div style="padding:26px 30px">
+            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Presupuesto del hogar</p>
+            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Lo que queda después de la casa</h2>
+            <p style="max-width:58ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 22px">Los ingresos, la cuota y otras deudas se toman de la pestaña Hipoteca. Añade aquí los costes de propietario y de vida diaria.</p>
+            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px">Costes de propietario</p>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Comunidad</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="communityFees" type="number" step="10" data-dc-value="{{ v.communityFees }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">IBI</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="propertyTaxAnnual" type="number" step="50" data-dc-value="{{ v.propertyTaxAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Seguro de hogar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="homeInsuranceAnnual" type="number" step="50" data-dc-value="{{ v.homeInsuranceAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Mantenimiento</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="maintenanceAnnual" type="number" step="100" data-dc-value="{{ v.maintenanceAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
+            </div>
+            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:22px 0 12px">Gastos de vida diaria</p>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Alimentación y suministros</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="essentials" type="number" step="25" data-dc-value="{{ v.essentials }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Transporte</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="transport" type="number" step="25" data-dc-value="{{ v.transport }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Seguros y cuidados</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="insuranceCare" type="number" step="25" data-dc-value="{{ v.insuranceCare }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Ocio y otros</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="leisureOther" type="number" step="25" data-dc-value="{{ v.leisureOther }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+            </div>
+          </div>
+          <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
+            <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0">Cada mes, con la casa incluida</p>
+            <div style="display:flex; flex-direction:column; margin-top:18px">
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Ingresos netos</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ pIngresos }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Cuota hipotecaria y otras deudas</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pHipoteca }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Costes de propietario</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pCostesProp }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Gastos de vida diaria</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pVida }}</strong></p>
+            </div>
+            <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:18px; padding:16px 19px">
+              <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Margen mensual disponible</p>
+              <p style="font-size:32px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums; color:{{ pMargenColor }}">{{ pMargen }}</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">{{ pCapacidad }}</p>
+            </div>
+            <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; line-height:1.6; margin:16px 0 0">Un margen estable permite sostener ahorro, objetivos e imprevistos sin renunciar a la casa elegida.</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = { tab: 'mortgage', s: null, ofertas: null, msg: '' };
+  defaults() {
+    return { purchasePrice:350000, downPayment:70000, purchaseTaxPercent:8, purchaseOtherCosts:2500, appraisalCost:350,
+      mortgageKind:'Mixta', fixedRate:2.45, fixedYears:5, referenceRate:2.25, spread:0.75, years:25,
+      annualHouseholdIncome:65000, monthlyOtherDebt:0,
+      communityFees:110, propertyTaxAnnual:650, homeInsuranceAnnual:300, maintenanceAnnual:2500,
+      essentials:750, transport:300, insuranceCare:350, leisureOther:450,
+      monthlyRent:1250, comparisonYears:10, homeAppreciation:2, rentGrowth:2, investmentReturn:4, saleCostsPercent:3,
+      repaymentBalance:200000, repaymentRate:3, repaymentYears:20, repaymentAmount:20000, repaymentFee:0, repaymentMode:'term' };
+  }
+  ofertasDefault() {
+    return [
+      { id:'offer-a', name:'Oferta A', kind:'Fija', fixedRate:2.8, fixedYears:25, referenceRate:0, spread:0, tae:3.12, years:25, openingFee:0, appraisalCost:350, switchingCosts:0, annualProductsCost:420 },
+      { id:'offer-b', name:'Oferta B', kind:'Variable', fixedRate:0, fixedYears:0, referenceRate:2.25, spread:0.65, tae:3.18, years:25, openingFee:500, appraisalCost:300, switchingCosts:0, annualProductsCost:120 },
+      { id:'offer-c', name:'Oferta C', kind:'Mixta', fixedRate:2.45, fixedYears:5, referenceRate:2.25, spread:0.75, tae:3.26, years:30, openingFee:0, appraisalCost:400, switchingCosts:0, annualProductsCost:540 },
+    ];
+  }
+  // Motor portado sin cambios funcionales desde housingCalculations.ts
+  motor() {
+    if (this._eng) return this._eng;
+    const safePositive=(v)=>Number.isFinite(v)?Math.max(0,v):0;
+    const round=(v)=>Math.round(v*100)/100;
+    const clampRate=(v)=>Math.max(0,Number.isFinite(v)?v:0);
+    function paymentForBalance(principal,annualRate,months){const p=safePositive(principal);const m=Math.max(1,Math.round(safePositive(months)));const r=clampRate(annualRate)/100/12;if(r===0)return p/m;return p*(r*Math.pow(1+r,m))/(Math.pow(1+r,m)-1);}
+    function calculateMortgage({principal,annualRate,years}){const p=safePositive(principal);const months=Math.max(1,Math.round(safePositive(years)*12));const monthlyPayment=paymentForBalance(p,annualRate,months);const totalPayment=monthlyPayment*months;return{monthlyPayment:round(monthlyPayment),totalPayment:round(totalPayment),totalInterest:round(Math.max(0,totalPayment-p))};}
+    function calculateMortgageProfile(input){const principal=safePositive(input.principal);const months=Math.max(1,Math.round(safePositive(input.years)*12));const fixedMonths=input.kind==='Mixta'?Math.min(months,Math.max(1,Math.round(safePositive(input.fixedYears||0)*12))):input.kind==='Fija'?months:0;const variableRate=input.kind==='Fija'?0:clampRate(safePositive(input.referenceRate||0)+safePositive(input.spread||0)+(Number.isFinite(input.referenceShift)?input.referenceShift||0:0));
+      let balance=principal,currentPayment=0,previousRate=-1,totalPayment=0,totalInterest=0,firstMonthlyPayment=0,paymentAfterFixedPeriod=0;const years=new Map();
+      for(let month=0;month<months&&balance>0.005;month+=1){const rate=input.kind==='Fija'||(input.kind==='Mixta'&&month<fixedMonths)?clampRate(input.fixedRate):variableRate;const remainingMonths=months-month;
+        if(month===0||Math.abs(rate-previousRate)>0.000001){currentPayment=paymentForBalance(balance,rate,remainingMonths);previousRate=rate;}
+        if(month===0)firstMonthlyPayment=currentPayment;
+        if(input.kind==='Mixta'&&month===fixedMonths)paymentAfterFixedPeriod=currentPayment;
+        if(input.kind!=='Mixta')paymentAfterFixedPeriod=currentPayment;
+        const monthlyRate=rate/100/12;const interest=balance*monthlyRate;const principalPaid=Math.min(balance,Math.max(0,currentPayment-interest));const actualPayment=interest+principalPaid;const yearNumber=Math.floor(month/12)+1;const year=years.get(yearNumber)||{opening:balance,principal:0,interest:0,closing:balance,rateTotal:0,months:0};
+        balance=Math.max(0,balance-principalPaid);totalPayment+=actualPayment;totalInterest+=interest;year.principal+=principalPaid;year.interest+=interest;year.closing=balance;year.rateTotal+=rate;year.months+=1;years.set(yearNumber,year);}
+      return{firstMonthlyPayment:round(firstMonthlyPayment),paymentAfterFixedPeriod:round(paymentAfterFixedPeriod||firstMonthlyPayment),totalPayment:round(totalPayment),totalInterest:round(totalInterest),variableRate:round(variableRate),schedule:[...years.entries()].map(([year,v])=>({year,openingBalance:round(v.opening),principalPaid:round(v.principal),interestPaid:round(v.interest),closingBalance:round(v.closing),averageRate:round(v.rateTotal/v.months)}))};}
+    function calculatePurchaseScenario(input){const purchasePrice=safePositive(input.purchasePrice);const downPayment=Math.min(purchasePrice,safePositive(input.downPayment));const loanAmount=Math.max(0,purchasePrice-downPayment);const purchaseTaxes=purchasePrice*safePositive(input.purchaseTaxPercent)/100;const mortgage=calculateMortgageProfile(Object.assign({},input.mortgage,{principal:loanAmount}));const stressedMortgage=calculateMortgageProfile(Object.assign({},input.mortgage,{principal:loanAmount,referenceShift:input.mortgage.kind==='Fija'?0:2}));const monthlyIncome=safePositive(input.annualHouseholdIncome)/12;const monthlyOtherDebt=safePositive(input.monthlyOtherDebt);const stressedPayment=input.mortgage.kind==='Mixta'?stressedMortgage.paymentAfterFixedPeriod:stressedMortgage.firstMonthlyPayment;
+      return Object.assign({},mortgage,{loanAmount:round(loanAmount),purchaseTaxes:round(purchaseTaxes),initialCashNeeded:round(downPayment+purchaseTaxes+safePositive(input.purchaseOtherCosts)+safePositive(input.appraisalCost)),loanToValue:purchasePrice>0?round((loanAmount/purchasePrice)*100):0,monthlyIncome:round(monthlyIncome),effortRate:monthlyIncome>0?round(((mortgage.firstMonthlyPayment+monthlyOtherDebt)/monthlyIncome)*100):0,stressedMonthlyPayment:stressedPayment,stressedEffortRate:monthlyIncome>0?round(((stressedPayment+monthlyOtherDebt)/monthlyIncome)*100):0});}
+    function calculateMortgageOffer(principal,input){const mortgage=calculateMortgageProfile({principal,years:input.years,kind:input.kind,fixedRate:input.fixedRate,fixedYears:input.fixedYears,referenceRate:input.referenceRate,spread:input.spread});const extras=safePositive(input.openingFee)+safePositive(input.appraisalCost)+safePositive(input.switchingCosts)+safePositive(input.annualProductsCost)*safePositive(input.years);const knownTotalOutlay=mortgage.totalPayment+extras;return Object.assign({},mortgage,{monthlyPayment:mortgage.firstMonthlyPayment,knownTotalOutlay:round(knownTotalOutlay),knownOfferCost:round(Math.max(0,knownTotalOutlay-safePositive(principal)))});}
+    function calculateEarlyRepayment(input){const principal=safePositive(input.principal);const lumpSum=Math.min(principal,safePositive(input.lumpSum));const remainingPrincipal=principal-lumpSum;const original=calculateMortgage({principal,annualRate:input.annualRate,years:input.remainingYears});const originalMonths=Math.max(1,Math.round(safePositive(input.remainingYears)*12));const fee=lumpSum*safePositive(input.feePercent)/100;
+      let newPayment=original.monthlyPayment,newMonths=originalMonths,newInterest=0;
+      if(input.mode==='payment'){const revised=calculateMortgage({principal:remainingPrincipal,annualRate:input.annualRate,years:input.remainingYears});newPayment=revised.monthlyPayment;newInterest=revised.totalInterest;}
+      else{const monthlyRate=clampRate(input.annualRate)/100/12;let balance=remainingPrincipal;newMonths=0;
+        while(balance>0.005&&newMonths<originalMonths){const interest=balance*monthlyRate;const principalPaid=Math.min(balance,Math.max(0,original.monthlyPayment-interest));if(principalPaid<=0)break;balance-=principalPaid;newInterest+=interest;newMonths+=1;}}
+      const interestSaved=Math.max(0,original.totalInterest-newInterest);
+      return{originalPayment:original.monthlyPayment,newPayment:round(newPayment),originalMonths,newMonths,interestSaved:round(interestSaved),fee:round(fee),netSavings:round(Math.max(0,interestSaved-fee))};}
+    function calculateBuyVsRent(input){const horizonMonths=Math.max(1,Math.round(safePositive(input.horizonYears)*12));const mortgageMonths=Math.max(1,Math.round(safePositive(input.mortgageYears)*12));const fixedMonths=input.mortgageKind==='Mixta'?Math.min(mortgageMonths,Math.round(safePositive(input.fixedYears)*12)):input.mortgageKind==='Fija'?mortgageMonths:0;
+      const homeMonthlyGrowth=Math.pow(1+safePositive(input.homeAppreciationRate)/100,1/12)-1;const rentMonthlyGrowth=Math.pow(1+safePositive(input.rentGrowthRate)/100,1/12)-1;const investmentMonthlyReturn=Math.pow(1+safePositive(input.investmentReturnRate)/100,1/12)-1;
+      let homeValue=safePositive(input.purchasePrice),mortgageBalance=safePositive(input.mortgagePrincipal),rent=safePositive(input.monthlyRent),buyerInvestment=0,renterInvestment=safePositive(input.downPayment)+safePositive(input.purchaseCosts),mortgagePayment=0,previousMortgageRate=-1;
+      for(let month=0;month<horizonMonths;month+=1){homeValue*=1+homeMonthlyGrowth;rent*=1+rentMonthlyGrowth;buyerInvestment*=1+investmentMonthlyReturn;renterInvestment*=1+investmentMonthlyReturn;
+        let actualMortgagePayment=0;
+        if(mortgageBalance>0.005&&month<mortgageMonths){const mortgageRate=input.mortgageKind==='Fija'||(input.mortgageKind==='Mixta'&&month<fixedMonths)?clampRate(input.fixedRate):clampRate(safePositive(input.referenceRate)+safePositive(input.spread));
+          if(month===0||Math.abs(mortgageRate-previousMortgageRate)>0.000001){mortgagePayment=paymentForBalance(mortgageBalance,mortgageRate,mortgageMonths-month);previousMortgageRate=mortgageRate;}
+          const mortgageMonthlyRate=mortgageRate/100/12;const interest=mortgageBalance*mortgageMonthlyRate;const principalPaid=Math.min(mortgageBalance,Math.max(0,mortgagePayment-interest));mortgageBalance-=principalPaid;actualMortgagePayment=interest+principalPaid;}
+        const buyerHousingCost=actualMortgagePayment+safePositive(input.ownerMonthlyCosts);
+        if(buyerHousingCost>rent){renterInvestment+=buyerHousingCost-rent;}else{buyerInvestment+=rent-buyerHousingCost;}}
+      const saleCosts=homeValue*safePositive(input.saleCostsPercent)/100;const buyerNetWorth=homeValue-saleCosts-mortgageBalance+buyerInvestment;const renterNetWorth=renterInvestment;const difference=buyerNetWorth-renterNetWorth;
+      return{buyerNetWorth:round(buyerNetWorth),renterNetWorth:round(renterNetWorth),difference:round(Math.abs(difference)),winner:Math.abs(difference)<1?'tie':difference>0?'buy':'rent',finalHomeValue:round(homeValue),remainingMortgage:round(mortgageBalance)};}
+    this._eng = { calculatePurchaseScenario, calculateMortgageOffer, calculateEarlyRepayment, calculateBuyVsRent };
+    return this._eng;
+  }
+  componentDidMount() { document.title = 'Vivienda y coste de vida | NUVIA Family Wealth'; }
+  s() { return this.state.s || this.defaults(); }
+  ofs() { return this.state.ofertas || this.ofertasDefault(); }
+  upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }) }); }
+  tabs() {
+    return [
+      { id:'mortgage', label:'Hipoteca', title:'Calcula una cuota que puedas sostener', summary:'Empieza aquí para saber cuánto tendrías que pedir, qué efectivo necesitas al principio y cómo encajaría la cuota en los ingresos del hogar.', what:'Una hipoteca es un préstamo a largo plazo para financiar parte de la vivienda. La cuota devuelve cada mes una parte del capital y paga intereses.', how:'Introduce el precio, la entrada, los gastos, el plazo y el tipo. La calculadora estima la cuota, los intereses, el esfuerzo mensual y un escenario con tipos más altos.', chips:['Precio y entrada','Tipo y plazo','Ingresos y otras deudas'] },
+      { id:'offers', label:'Ofertas', title:'Compara hipotecas con la misma regla', summary:'Pasa de mirar solo la cuota a entender qué propuesta tiene el coste completo más competitivo y qué compromisos exige.', what:'El comparador coloca hasta tres propuestas bancarias una junto a otra. Así puedes revisar TIN, TAE, comisiones, productos vinculados y coste estimado en euros.', how:'Copia las condiciones de cada FEIN en su columna. NUVIA calcula todas sobre el mismo préstamo y destaca la menor TAE y el menor desembolso conocido.', chips:['FEIN de cada banco','TAE y comisiones','Seguros y vinculaciones'] },
+      { id:'buy-rent', label:'Compra o alquiler', title:'Compara las dos opciones a largo plazo', summary:'La mensualidad no cuenta toda la historia: esta vista compara el patrimonio que podrías acumular comprando o alquilando e invirtiendo la diferencia.', what:'Comprar crea patrimonio al amortizar deuda y puede beneficiarse de la revalorización. Alquilar conserva la entrada y los gastos de compra para otros objetivos o inversiones.', how:'Elige un horizonte y plantea supuestos para vivienda, alquiler e inversión. El resultado muestra el patrimonio estimado de cada opción y la diferencia entre ambas.', chips:['Alquiler comparable','Años previstos en la vivienda','Supuestos de evolución'] },
+      { id:'repayment', label:'Amortización', title:'Descubre si compensa adelantar capital', summary:'Simula qué ocurre al utilizar ahorro para reducir una hipoteca que ya está en marcha.', what:'Amortizar anticipadamente significa devolver una parte del préstamo antes de la fecha prevista. Puedes usarlo para pagar menos cada mes o para terminar antes.', how:'Indica el capital pendiente, el tipo, el plazo, la cantidad que aportarías y la posible comisión. Después elige si prefieres reducir cuota o reducir plazo.', chips:['Capital y plazo pendientes','Importe disponible','Comisión del contrato'] },
+      { id:'budget', label:'Presupuesto', title:'Comprueba lo que queda después de la casa', summary:'Convierte la decisión de vivienda en un presupuesto mensual completo, incluyendo costes que no aparecen en la cuota hipotecaria.', what:'El coste de vivir en una casa incluye hipoteca, comunidad, impuestos, seguro, mantenimiento y los gastos habituales del hogar.', how:'Añade los costes de propietario y de vida diaria. NUVIA los resta de los ingresos y muestra el margen mensual disponible para ahorro, objetivos e imprevistos.', chips:['Costes de la vivienda','Gastos de vida diaria','Ingresos del hogar'] },
+    ];
+  }
+  renderVals() {
+    const s = this.s();
+    const ofertas = this.ofs();
+    const eng = this.motor();
+    const euro = (x) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(x)) + ' €';
+    const euroP = (x) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x) + ' €';
+    const pct = (x) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 2 }).format(x);
+    const tab = this.tabs().find(t => t.id === this.state.tab) || this.tabs()[0];
+    const pill = (on) => 'border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ' + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
+    const pillClaro = (on) => 'border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ' + (on ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-accent-200)' : 'border:1px solid var(--color-divider); background:transparent; color:color-mix(in srgb, var(--color-text) 70%, transparent)');
+    const scenario = eng.calculatePurchaseScenario({
+      purchasePrice: s.purchasePrice, downPayment: s.downPayment, purchaseTaxPercent: s.purchaseTaxPercent,
+      purchaseOtherCosts: s.purchaseOtherCosts, appraisalCost: s.appraisalCost,
+      annualHouseholdIncome: s.annualHouseholdIncome, monthlyOtherDebt: s.monthlyOtherDebt,
+      mortgage: { years: s.years, kind: s.mortgageKind, fixedRate: s.fixedRate, fixedYears: s.fixedYears, referenceRate: s.referenceRate, spread: s.spread },
+    });
+    const efecto = scenario.effortRate <= 30 ? { label: 'Margen amplio', color: '#3C9A69', bg: 'color-mix(in srgb, #3C9A69 14%, transparent)' } : scenario.effortRate <= 35 ? { label: 'Margen ajustado', color: '#946E29', bg: 'color-mix(in srgb, #946E29 14%, transparent)' } : { label: 'Esfuerzo elevado', color: '#C2453A', bg: 'color-mix(in srgb, #C2453A 14%, transparent)' };
+    const ownerMonthly = s.communityFees + s.propertyTaxAnnual / 12 + s.homeInsuranceAnnual / 12 + s.maintenanceAnnual / 12;
+    const living = s.essentials + s.transport + s.insuranceCare + s.leisureOther;
+    const margen = scenario.monthlyIncome - scenario.firstMonthlyPayment - s.monthlyOtherDebt - living - ownerMonthly;
+    const capacidad = scenario.monthlyIncome > 0 ? margen / scenario.monthlyIncome * 100 : 0;
+    const resultados = ofertas.map(o => ({ o, r: eng.calculateMortgageOffer(scenario.loanAmount, Object.assign({ earlyRepaymentFeePercent: 0 }, o)) }));
+    const menorCoste = Math.min(...resultados.map(x => x.r.knownTotalOutlay));
+    const menorTae = Math.min(...ofertas.map(o => o.tae));
+    const bv = eng.calculateBuyVsRent({
+      purchasePrice: s.purchasePrice, downPayment: s.downPayment, purchaseCosts: scenario.initialCashNeeded - s.downPayment,
+      mortgagePrincipal: scenario.loanAmount, mortgageYears: s.years, mortgageKind: s.mortgageKind,
+      fixedRate: s.fixedRate, fixedYears: s.fixedYears, referenceRate: s.referenceRate, spread: s.spread,
+      ownerMonthlyCosts: ownerMonthly, monthlyRent: s.monthlyRent, horizonYears: s.comparisonYears,
+      homeAppreciationRate: s.homeAppreciation, rentGrowthRate: s.rentGrowth, investmentReturnRate: s.investmentReturn, saleCostsPercent: s.saleCostsPercent,
+    });
+    const ar = eng.calculateEarlyRepayment({ principal: s.repaymentBalance, annualRate: s.repaymentRate, remainingYears: s.repaymentYears, lumpSum: s.repaymentAmount, feePercent: s.repaymentFee, mode: s.repaymentMode });
+    const camposOferta = {};
+    ['Kind','FixedRate','FixedYears','ReferenceRate','Spread','Tae','Years','OpeningFee','AppraisalCost','AnnualProductsCost'].forEach(c => { camposOferta[c] = c.charAt(0).toLowerCase() + c.slice(1); });
+    return {
+      v: s,
+      mensaje: this.state.msg,
+      setNum: (e) => this.upd(e.target.name, Number(e.target.value) || 0),
+      guardar: () => { try { window.localStorage.setItem('nuvia-vivienda-maqueta-v1', JSON.stringify({ s, ofertas })); this.setState({ msg: 'Escenario guardado en este dispositivo' }); } catch (err) { this.setState({ msg: 'No se pudo guardar' }); } },
+      recuperar: () => { try { const raw = window.localStorage.getItem('nuvia-vivienda-maqueta-v1'); if (!raw) { this.setState({ msg: 'No hay ningún escenario guardado' }); return; } const d = JSON.parse(raw); this.setState({ s: Object.assign(this.defaults(), d.s || {}), ofertas: Array.isArray(d.ofertas) && d.ofertas.length === 3 ? d.ofertas : this.ofs(), msg: 'Escenario recuperado' }); } catch (err) { this.setState({ msg: 'No se pudo recuperar el escenario' }); } },
+      pestanas: this.tabs().map(t => ({ label: t.label, pressed: t.id === this.state.tab, abrir: () => this.setState({ tab: t.id }), estilo: pill(t.id === this.state.tab) })),
+      tabTitulo: tab.title, tabResumen: tab.summary, tabQue: tab.what, tabComo: tab.how, tabChips: tab.chips,
+      tabHipoteca: tab.id === 'mortgage', tabOfertas: tab.id === 'offers', tabCompra: tab.id === 'buy-rent', tabAmort: tab.id === 'repayment', tabPresupuesto: tab.id === 'budget',
+      modalidades: ['Fija','Variable','Mixta'].map(k => ({ label: k, pressed: s.mortgageKind === k, abrir: () => this.upd('mortgageKind', k), estilo: pillClaro(s.mortgageKind === k) })),
+      noEsVariable: s.mortgageKind !== 'Variable', noEsFija: s.mortgageKind !== 'Fija', esMixta: s.mortgageKind === 'Mixta',
+      etiquetaTinFijo: s.mortgageKind === 'Mixta' ? 'TIN del tramo fijo' : 'TIN fijo',
+      rCuota: euroP(scenario.firstMonthlyPayment), rCuotaNota: (s.years * 12) + ' mensualidades máximas',
+      rPrestamo: euro(scenario.loanAmount), rLtv: pct(scenario.loanToValue) + ' % del precio',
+      rCuotaTrasLabel: 'Cuota desde año ' + (s.fixedYears + 1), rCuotaTras: euroP(scenario.paymentAfterFixedPeriod), rCuotaTrasNota: 'Con tipo variable del ' + pct(scenario.variableRate) + ' %',
+      rIntereses: euro(scenario.totalInterest), rEfectivo: euro(scenario.initialCashNeeded),
+      rTipoVar: pct(scenario.variableRate) + ' %', rTipoVarNota: s.mortgageKind === 'Fija' ? 'No aplica a esta modalidad' : 'Índice + diferencial',
+      rEsfuerzo: pct(scenario.effortRate) + ' %',
+      rEsfuerzoBadge: efecto.label,
+      rEsfuerzoEstilo: 'flex-shrink:0; border-radius:999px; font-size:9.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:6px 12px; white-space:nowrap; color:' + efecto.color + '; background:' + efecto.bg,
+      rEstresTitulo: s.mortgageKind === 'Fija' ? 'Tipo fijo · cuota protegida frente a revisiones' : 'Escenario de tensión · referencia +2 puntos',
+      rEstresCuota: euroP(scenario.stressedMonthlyPayment), rEstresEsfuerzo: pct(scenario.stressedEffortRate) + ' %',
+      filas: scenario.schedule.map(f => ({ year: f.year, inicial: euro(f.openingBalance), capital: euro(f.principalPaid), intereses: euro(f.interestPaid), final: euro(f.closingBalance), tipo: pct(f.averageRate) + ' %' })),
+      ofertasIntro: 'Las tres ofertas se calculan sobre el mismo préstamo de ' + euro(scenario.loanAmount) + '. La TAE se compara como dato contractual; el coste conocido en euros se estima con los campos introducidos.',
+      setOferta: (e) => { const [id, campo] = e.target.name.split('|'); this.setState({ ofertas: this.ofs().map(o => o.id === id ? Object.assign({}, o, { [campo]: Number(e.target.value) || 0 }) : o) }); },
+      setOfertaStr: (e) => { const [id, campo] = e.target.name.split('|'); this.setState({ ofertas: this.ofs().map(o => o.id === id ? Object.assign({}, o, { [campo]: e.target.value }) : o) }); },
+      ofertas: resultados.map(({ o, r }, i) => {
+        const esMenor = r.knownTotalOutlay === menorCoste;
+        return Object.assign({}, o, {
+          num: i + 1,
+          campoKind: o.id + '|kind', campoFixedRate: o.id + '|fixedRate', campoFixedYears: o.id + '|fixedYears',
+          campoReferenceRate: o.id + '|referenceRate', campoSpread: o.id + '|spread', campoTae: o.id + '|tae',
+          campoYears: o.id + '|years', campoOpeningFee: o.id + '|openingFee', campoAppraisalCost: o.id + '|appraisalCost',
+          campoAnnualProductsCost: o.id + '|annualProductsCost',
+          estiloCard: 'border-radius:var(--radius-md); padding:20px 22px; ' + (esMenor ? 'box-shadow:inset 0 0 0 1px var(--color-accent); background:color-mix(in srgb, var(--color-accent) 6%, var(--color-surface))' : 'background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm)'),
+          badge: esMenor ? 'Menor coste conocido' : '',
+          badgeEstilo: esMenor ? 'flex-shrink:0; border-radius:999px; background:var(--color-accent-800); color:var(--color-accent-100); font-size:8.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; padding:5px 10px; white-space:nowrap' : 'display:none',
+          rCuota: euroP(r.firstMonthlyPayment), rCoste: euro(r.knownOfferCost), rDesembolso: euro(r.knownTotalOutlay),
+          chipTae: o.tae === menorTae ? 'Menor TAE' : '',
+          chipTaeEstilo: o.tae === menorTae ? 'border-radius:999px; background:color-mix(in srgb, #3C9A69 14%, transparent); color:#3C9A69; font-size:8.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px' : 'display:none',
+          chipVar: o.kind !== 'Fija' ? 'Cuota revisable' : '',
+          chipVarEstilo: o.kind !== 'Fija' ? 'border-radius:999px; background:color-mix(in srgb, #946E29 14%, transparent); color:#946E29; font-size:8.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px' : 'display:none',
+        });
+      }),
+      bvResultadoLabel: 'Resultado a ' + s.comparisonYears + ' años',
+      bvTitulo: bv.winner === 'tie' ? 'Escenarios muy próximos' : bv.winner === 'buy' ? 'Comprar acumula más patrimonio' : 'Alquilar e invertir acumula más',
+      bvComprando: euro(bv.buyerNetWorth), bvComprandoNota: 'Vivienda ' + euro(bv.finalHomeValue) + ' · deuda ' + euro(bv.remainingMortgage),
+      bvAlquilando: euro(bv.renterNetWorth), bvDiferencia: euro(bv.difference),
+      modosAmort: [['term','Reducir plazo'],['payment','Reducir cuota']].map(([m, label]) => ({ label, pressed: s.repaymentMode === m, abrir: () => this.upd('repaymentMode', m), estilo: pillClaro(s.repaymentMode === m) })),
+      arCuotaActual: euroP(ar.originalPayment), arNuevaCuota: euroP(ar.newPayment),
+      arNuevaCuotaNota: s.repaymentMode === 'term' ? 'Se mantiene aproximadamente' : 'Manteniendo el plazo',
+      arNuevoPlazo: Math.floor(ar.newMonths / 12) + ' años ' + (ar.newMonths % 12) + ' meses',
+      arAhorroNeto: euro(ar.netSavings), arAhorroNota: 'Intereses ahorrados ' + euro(ar.interestSaved) + ' · compensación ' + euro(ar.fee),
+      pIngresos: euro(scenario.monthlyIncome), pHipoteca: euro(scenario.firstMonthlyPayment + s.monthlyOtherDebt),
+      pCostesProp: euro(ownerMonthly), pVida: euro(living),
+      pMargen: (margen < 0 ? '−' : '') + euro(Math.abs(margen)),
+      pMargenColor: margen < 0 ? '#C2453A' : 'var(--color-text)',
+      pCapacidad: 'Capacidad de ahorro estimada: ' + pct(capacidad) + ' % de los ingresos netos.',
+    };
+  }
+}
+</script>
+</body>
+</html>

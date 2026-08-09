@@ -1,0 +1,22 @@
+{
+  "date_key": "20260613",
+  "date_label": "13/06/2026",
+  "title": "Flash semanal NUVIA",
+  "weekly_report_url": null,
+  "main_reading": "El mercado evalúa los últimos datos macroeconómicos con cautela, buscando direccionalidad tras un periodo de consolidación.",
+  "signals": [
+    {
+      "label": "Renta variable",
+      "status": "Pendiente de actualización",
+      "tone": "grey"
+    },
+    {
+      "label": "Renta fija",
+      "status": "Pendiente de actualización",
+      "tone": "grey"
+    }
+  ],
+  "key_ideas": [
+    "Idea clave pendiente de actualización."
+  ]
+}

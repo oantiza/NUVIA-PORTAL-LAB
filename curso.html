@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dinero con criterio | NUVIA Academy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    input, select { font-family: var(--font-body); }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    select option { background: var(--color-surface); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  @keyframes nv-pulse { 0% { box-shadow:0 0 0 0 rgba(124,154,68,.4); } 70% { box-shadow:0 0 0 6px transparent; } 100% { box-shadow:0 0 0 0 transparent; } }
+  </style>
+</helmet>
+
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <!-- ============ HEADER ============ -->
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html" class="is-active" aria-current="page">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ CABECERA CURSO ============ -->
+    <section id="curso" data-screen-label="Cabecera del curso" style="max-width:1240px; margin:0 auto; padding:56px 40px 0; scroll-margin-top:96px">
+      <span style="display:inline-block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.26em; text-transform:uppercase; margin-bottom:14px">Educación financiera</span>
+      <h1 style="color:var(--color-text); font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 14px">Dinero con criterio</h1>
+      <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.65; margin:0 0 26px">Cinco clases breves para ordenar tu dinero, ahorrar con propósito, invertir sin apostar y entender cómo la economía llega hasta tu bolsillo.</p>
+    </section>
+
+    <!-- ============ PROGRAMA ============ -->
+    <section data-screen-label="Programa del curso" aria-label="Programa del curso" style="max-width:1240px; margin:0 auto; padding:30px 40px 0">
+      <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px">
+        <sc-for list="{{ capitulos }}" as="cap" hint-placeholder-count="5">
+          <button type="button" onClick="{{ cap.abrir }}" aria-current="{{ cap.ariaCurrent }}" style="{{ cap.estiloTab }}">
+            <span style="font-size:19px; color:var(--color-accent)">{{ cap.numero }}</span>
+            <span style="min-width:0; text-align:left">
+              <strong style="display:block; color:var(--color-text); font-size:13px; font-weight:500; line-height:1.3">{{ cap.titulo }}</strong>
+              <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; margin-top:2px">{{ cap.estado }}</small>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- ============ HERO CAPÍTULO ============ -->
+    <section data-screen-label="Hero del capítulo" style="max-width:1240px; margin:0 auto; padding:22px 40px 0">
+      <div style="position:relative; overflow:hidden; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:38px 48px 30px">
+        <div style="position:absolute; left:0; right:0; top:0; height:2px; background:linear-gradient(90deg, transparent, #7C9A44 30%, #9DB861 70%, transparent)"></div>
+        <span aria-hidden="true" style="position:absolute; right:26px; top:2px; color:rgba(11,35,71,.06); font-size:150px; font-weight:500; line-height:1; font-variant-numeric:tabular-nums; pointer-events:none">{{ numeroCapitulo }}</span>
+        <div style="position:relative">
+          <p style="color:#4A5D23; font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">✦ Dinero con criterio · {{ metaCapitulo }} · Nivel inicial</p>
+          <h2 style="color:var(--color-text); font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.06; margin:0 0 12px; max-width:16em">{{ tituloCapitulo }}</h2>
+          <p style="max-width:52ch; color:rgba(11,35,71,.68); font-size:15px; line-height:1.6; margin:0 0 24px">{{ introCapitulo }}</p>
+          <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:26px">
+            <a href="#leccion-video" style="display:inline-flex; align-items:center; gap:9px; border:1px solid #7C9A44; border-radius:var(--radius-md); color:#3f501e; font-family:var(--font-heading); font-size:14.5px; font-weight:500; text-decoration:none; padding:11px 24px; white-space:nowrap; transition:background .25s ease" style-hover="background:color-mix(in srgb, #7C9A44 12%, transparent); color:#2c3817" style-active="background:color-mix(in srgb, #7C9A44 20%, transparent)">Empezar la clase →</a>
+            <span style="color:rgba(11,35,71,.5); font-size:12px">Tu progreso se guarda en este dispositivo.</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; border-top:1px solid rgba(11,35,71,.1); padding-top:16px">
+            <span style="color:rgba(11,35,71,.55); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap">Progreso</span>
+            <div style="flex:1; height:4px; border-radius:999px; background:#edf1f6"><span style="display:block; height:100%; width:{{ progresoAncho }}; border-radius:999px; background:linear-gradient(90deg,#7C9A44,#9DB861); transition:width .4s ease"></span></div>
+            <strong style="color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ progresoTexto }}</strong>
+          </div>
+        </div>
+      </div>
+      <nav aria-label="Progreso del capítulo" style="margin-top:16px; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:10px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px">
+            <sc-for list="{{ pasos }}" as="paso" hint-placeholder-count="5">
+              <a href="{{ paso.destino }}" style="display:inline-flex; align-items:center; gap:9px; border-radius:999px; color:var(--color-text); padding:7px 14px; text-decoration:none; transition:background .15s ease" style-hover="background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">
+                <span style="{{ paso.estiloCheck }}">{{ paso.marca }}</span>
+                <b style="font-size:12.5px; font-weight:500; color:var(--color-text); white-space:nowrap">{{ paso.etiqueta }}</b>
+              </a>
+            </sc-for>
+      </nav>
+    </section>
+
+    <!-- ============ INFOGRAFÍA ============ -->
+    <figure data-screen-label="Infografía" style="max-width:1240px; margin:0 auto; padding:22px 40px 0">
+      <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+        <div style="min-height:120px">{{ infografiaImg }}</div>
+        <figcaption style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; border-top:1px solid var(--color-divider); padding:14px 20px">
+          <div>
+            <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase">{{ infografiaKicker }}</span>
+            <strong style="color:var(--color-text); font-size:14px; font-weight:500">{{ tituloCapitulo }}</strong>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <a href="{{ infografiaSrc }}" target="_blank" rel="noopener noreferrer" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:11.5px; font-weight:500; padding:8px 16px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">Ver a tamaño completo ↗</a>
+            <a href="#apuntes" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:11.5px; font-weight:500; padding:8px 16px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">⤓ Descargar apuntes</a>
+          </div>
+        </figcaption>
+      </div>
+    </figure>
+
+    <!-- ============ 01 VÍDEO ============ -->
+    <section id="leccion-video" data-screen-label="01 Vídeo" style="max-width:1240px; margin:0 auto; padding:56px 40px 0; scroll-margin-top:96px">
+      <div class="compound-video" style="margin-bottom:0">
+        <div class="compound-video__header">
+          <span>01 · Introducción en vídeo</span>
+          <h3>{{ videoTitulo }}</h3>
+        </div>
+        <div class="compound-video__frame">
+          <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen="{{ true }}"></iframe>
+        </div>
+      </div>
+      <p style="max-width:52em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:16px 0 0">{{ videoDescripcion }}</p>
+      <button type="button" onClick="{{ marcarVideo }}" style="{{ estiloBotonVideo }}">{{ textoBotonVideo }}</button>
+    </section>
+
+    <!-- ============ 02 APUNTES ============ -->
+    <section id="apuntes" data-screen-label="02 Apuntes" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:44px; align-items:end; margin-bottom:22px">
+        <div>
+          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">{{ apuntesKicker }}</span>
+          <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0">{{ tituloCapitulo }}</h2>
+        </div>
+        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0">{{ subtituloCapitulo }}. Lee los apuntes a tu ritmo y conserva el informe para consultarlo cuando lo necesites.</p>
+      </div>
+      <div style="display:flex; gap:14px; align-items:flex-start; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 22px; margin-bottom:18px">
+        <span style="flex-shrink:0; display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:var(--color-accent-900); color:var(--color-accent-300); font-size:15px">i</span>
+        <div>
+          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Contexto de la clase</span>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.65; margin:0">{{ introCapitulo }}</p>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+        <sc-for list="{{ apuntes }}" as="nota" hint-placeholder-count="4">
+          <details open="{{ nota.abierta }}" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+            <summary style="display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:14px; padding:16px 20px">
+              <span style="display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:var(--color-accent-900); color:var(--color-accent-300); font-size:14px">{{ nota.numero }}</span>
+              <span style="min-width:0">
+                <strong style="display:block; color:var(--color-text); font-size:15px; font-weight:500">{{ nota.titulo }}</strong>
+                <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ nota.resumen }}</small>
+              </span>
+              <span class="curso-chevron" style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:11px; transition:transform .2s ease">▾</span>
+            </summary>
+            <div style="border-top:1px solid var(--color-divider); padding:18px 22px 22px">
+              <sc-for list="{{ nota.parrafos }}" as="parrafo" hint-placeholder-count="2">
+                <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.7; margin:0 0 12px">{{ parrafo.texto }}</p>
+              </sc-for>
+              <sc-if value="{{ nota.tieneVinetas }}" hint-placeholder-val="{{ false }}">
+                <ul style="margin:0 0 12px; padding-left:18px; display:flex; flex-direction:column; gap:7px">
+                  <sc-for list="{{ nota.vinetas }}" as="vineta" hint-placeholder-count="2">
+                    <li style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6">{{ vineta.texto }}</li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+              <sc-if value="{{ nota.tieneFormula }}" hint-placeholder-val="{{ false }}">
+                <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text); font-size:14.5px; margin:0 0 12px; padding:13px 18px">{{ nota.formula }}</p>
+              </sc-if>
+              <sc-if value="{{ nota.tieneApunte }}" hint-placeholder-val="{{ false }}">
+                <aside style="border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); padding:14px 18px">
+                  <strong style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px">{{ nota.apunteTitulo }}</strong>
+                  <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:0">{{ nota.apunte }}</p>
+                </aside>
+              </sc-if>
+            </div>
+          </details>
+        </sc-for>
+      </div>
+      <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px 28px; margin-top:18px">
+        <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Apuntes del capítulo</span>
+        <h3 style="color:var(--color-text); font-size:22px; font-weight:500; margin:0 0 16px">Cinco directrices de criterio</h3>
+        <ol style="margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:12px 34px; counter-reset:directriz">
+          <sc-for list="{{ directrices }}" as="directriz" hint-placeholder-count="5">
+            <li style="display:grid; grid-template-columns:26px minmax(0,1fr); gap:10px; align-items:baseline; border-top:1px solid var(--color-divider); padding-top:12px">
+              <span style="font-size:16px; color:var(--color-accent)">{{ directriz.numero }}</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6">{{ directriz.texto }}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:18px">
+        <button type="button" onClick="{{ marcarApuntes }}" style="{{ estiloBotonApuntes }}">{{ textoBotonApuntes }}</button>
+        <a href="#apuntes" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:12px; font-weight:500; padding:11px 20px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:var(--color-surface); color:var(--color-text)">⤓ {{ descargaTexto }}</a>
+      </div>
+    </section>
+
+    <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
+    <!-- ============ 03 HERRAMIENTA ============ -->
+    <section id="leccion-mapa" data-screen-label="03 Herramienta" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
+      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">03 · Herramienta práctica</span>
+      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">Diagnostica tus cuatro pilares</h2>
+      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">Introduce cifras aproximadas para revisar flujo de caja, deseos, patrimonio y fondo de emergencia. Los datos permanecen en tu dispositivo.</p>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
+          <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500; margin-bottom:14px">◍ Flujo mensual</span>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px">
+            <sc-for list="{{ camposFlujo }}" as="campo" hint-placeholder-count="4">
+              <label style="display:grid; grid-template-columns:minmax(0,1fr) 130px; gap:14px; align-items:center">
+                <span><b style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ campo.etiqueta }}</b><small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin-top:1px">{{ campo.ayuda }}</small></span>
+                <span style="position:relative"><input type="number" min="0" step="50" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}" style="width:100%; box-sizing:border-box; background:var(--color-bg); border:1px solid var(--color-divider); border-radius:var(--radius-md); color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; padding:9px 28px 9px 12px; transition:border-color .2s ease" style-focus="border-color:var(--color-accent)"><span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500">€</span></span>
+              </label>
+            </sc-for>
+          </div>
+          <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500; margin-bottom:14px">▣ Tu fotografía</span>
+          <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px">
+            <sc-for list="{{ camposFoto }}" as="campo" hint-placeholder-count="3">
+              <label style="display:grid; grid-template-columns:minmax(0,1fr) 130px; gap:14px; align-items:center">
+                <span><b style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ campo.etiqueta }}</b><small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin-top:1px">{{ campo.ayuda }}</small></span>
+                <span style="position:relative"><input type="number" min="0" step="100" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}" style="width:100%; box-sizing:border-box; background:var(--color-bg); border:1px solid var(--color-divider); border-radius:var(--radius-md); color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; padding:9px 28px 9px 12px; transition:border-color .2s ease" style-focus="border-color:var(--color-accent)"><span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500">€</span></span>
+              </label>
+            </sc-for>
+          </div>
+          <button type="button" onClick="{{ calcularMapa }}" style="width:100%; border:0; border-radius:999px; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:12px 20px; transition:transform .25s ease, background .25s ease" style-hover="background:#796cbf; transform:translateY(-2px)" style-active="transform:scale(.98)">Calcular mi mapa →</button>
+        </div>
+        <div aria-live="polite" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
+          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Tu punto de partida</span>
+          <h3 style="color:var(--color-text); font-size:22px; font-weight:500; margin:0 0 4px">{{ mapaTitulo }}</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.55; margin:0 0 18px">{{ mapaDescripcion }}</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+            <sc-for list="{{ resultados }}" as="res" hint-placeholder-count="4">
+              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:#ffffff; padding:16px">
+                <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px">{{ res.etiqueta }}</span>
+                <strong style="display:block; white-space:nowrap; font-size:26px; font-weight:500; color:var(--color-text); font-variant-numeric:tabular-nums">{{ res.valor }}</strong>
+                <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin-top:6px">{{ res.ayuda }}</small>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ mapaCalculado }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; gap:12px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); margin-top:16px; padding:14px 18px">
+              <span style="color:var(--color-accent-300); font-size:15px; line-height:1.3">◎</span>
+              <div>
+                <span style="display:block; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px">Primera prioridad orientativa</span>
+                <strong style="color:var(--color-text); font-size:14px; font-weight:500; line-height:1.45">{{ prioridad }}</strong>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 CASO ============ -->
+    <section id="leccion-caso" data-screen-label="04 Caso práctico" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
+      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">04 · Caso práctico</span>
+      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">Elena y Marcos: cuatro pilares, una prioridad</h2>
+      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">Lee su diagnóstico y decide cómo deberían ordenar el siguiente euro.</p>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start">
+        <article style="border-radius:var(--radius-md); background:linear-gradient(145deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-sm); padding:26px">
+          <span style="display:block; color:#C9D8A8; font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px">Diagnóstico familiar</span>
+          <h3 style="color:#ffffff; font-size:24px; font-weight:500; margin:0 0 18px">Ingresan 3.400 € al mes</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px">
+            <sc-for list="{{ cifrasCaso }}" as="cifra" hint-placeholder-count="6">
+              <div style="border:1px solid rgba(255,255,255,.14); border-radius:var(--radius-md); background:rgba(255,255,255,.08); padding:11px 12px">
+                <small style="display:block; color:rgba(255,255,255,.68); font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px">{{ cifra.etiqueta }}</small>
+                <strong style="color:#ffffff; font-size:15px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ cifra.valor }}</strong>
+              </div>
+            </sc-for>
+          </div>
+          <p style="color:rgba(255,255,255,.8); font-size:13px; line-height:1.65; margin:0">Además del ahorro tienen otros activos por 20.000 € y una deuda total de 18.000 €, parte de ella en una tarjeta con intereses elevados. El ahorro cubre menos de un mes de gastos indispensables: su patrimonio es positivo, pero todavía frágil.</p>
+        </article>
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
+          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px">Elige la primera acción más razonable</span>
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <sc-for list="{{ opcionesCaso }}" as="opcion" hint-placeholder-count="4">
+              <button type="button" onClick="{{ opcion.elegir }}" style="{{ opcion.estilo }}">
+                <span style="{{ opcion.estiloLetra }}">{{ opcion.letra }}</span>
+                <span style="text-align:left; font-size:13px; line-height:1.5">{{ opcion.texto }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ casoRespondido }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ estiloFeedbackCaso }}">
+              <strong style="display:block; font-size:13px; font-weight:500; margin-bottom:5px">{{ tituloFeedbackCaso }}</strong>
+              <p style="font-size:12.5px; line-height:1.6; margin:0">El margen ya es positivo, pero el airbag no llega a un mes y existe deuda cara. Revisar deseos libera más margen; conservar un colchón inicial evita nuevas deudas; y repartir el excedente entre seguridad y tarjeta fortalece a la vez el flujo de caja y el patrimonio.</p>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 COMPROBACIÓN ============ -->
+    <section id="leccion-quiz" data-screen-label="05 Comprobación" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
+      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:44px; align-items:end; margin-bottom:22px">
+        <div>
+          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">05 · Comprobación</span>
+          <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0">Cinco preguntas para cerrar</h2>
+        </div>
+        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0">No es un examen. Cada respuesta incluye una explicación para reforzar la idea.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:14px">
+        <sc-for list="{{ preguntas }}" as="pregunta" hint-placeholder-count="5">
+          <fieldset style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin:0; padding:20px 24px">
+            <legend style="display:flex; align-items:baseline; gap:12px; float:left; width:100%; color:var(--color-text); font-size:14.5px; font-weight:500; margin-bottom:14px; padding:0">
+              <span style="flex-shrink:0; font-size:17px; color:var(--color-accent)">{{ pregunta.numero }}</span>
+              {{ pregunta.texto }}
+            </legend>
+            <div style="clear:both; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px">
+              <sc-for list="{{ pregunta.opciones }}" as="opcion" hint-placeholder-count="3">
+                <label style="{{ opcion.estilo }}">
+                  <input type="radio" name="{{ pregunta.grupo }}" checked="{{ opcion.seleccionada }}" onChange="{{ opcion.marcar }}" style="accent-color:var(--color-accent)">
+                  <span style="font-size:13px; line-height:1.45">{{ opcion.texto }}</span>
+                </label>
+              </sc-for>
+            </div>
+            <sc-if value="{{ pregunta.mostrarExplicacion }}" hint-placeholder-val="{{ false }}">
+              <p style="border-left:2px solid #2568A9; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:14px 0 0; padding-left:12px">{{ pregunta.explicacion }}</p>
+            </sc-if>
+          </fieldset>
+        </sc-for>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:18px">
+        <button type="button" onClick="{{ comprobarQuiz }}" disabled="{{ quizIncompleto }}" style="{{ estiloBotonQuiz }}">Comprobar respuestas →</button>
+        <sc-if value="{{ quizComprobado }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex; align-items:center; gap:14px; border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); padding:12px 18px">
+            <span style="font-size:24px; font-weight:500; color:var(--color-accent-300); font-variant-numeric:tabular-nums">{{ puntuacion }}</span>
+            <div>
+              <strong style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ tituloQuiz }}</strong>
+              <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; margin:0">Puedes repetir la comprobación tantas veces como quieras.</p>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{ noEsCapituloUno }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Partes prácticas" style="max-width:1240px; margin:0 auto; padding:64px 40px 0">
+        <div style="display:flex; gap:16px; align-items:flex-start; border:1px dashed #6b7686; border-radius:var(--radius-md); background:var(--color-surface); padding:24px 28px">
+          <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:17px">◫</span>
+          <div>
+            <strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500; margin-bottom:4px">03 – 05 · Herramienta, caso práctico y comprobación</strong>
+            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:0">Las partes prácticas de este capítulo siguen la misma plantilla modernizada que se muestra en el capítulo 1.</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ CIERRE ============ -->
+    <section data-screen-label="Cierre del capítulo" style="max-width:1240px; margin:0 auto; padding:56px 40px 0">
+      <div style="{{ estiloCierre }}">
+        <div style="display:flex; gap:18px; align-items:flex-start">
+          <span style="{{ estiloPuntoCierre }}"></span>
+          <div>
+            <small style="display:block; font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:6px; opacity:.75">{{ kickerCierre }}</small>
+            <h2 style="font-size:26px; font-weight:500; margin:0 0 8px">{{ tituloCierre }}</h2>
+            <p style="max-width:44em; font-size:13.5px; line-height:1.6; margin:0; opacity:.85">{{ textoCierre }}</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+          <sc-if value="{{ capituloCompleto }}" hint-placeholder-val="{{ false }}">
+            <button type="button" style="border:0; border-radius:999px; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 20px; transition:background .25s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 12%, transparent)">Imprimir mi resumen ⎙</button>
+          </sc-if>
+          <button type="button" onClick="{{ reiniciar }}" style="border:1px solid rgba(11,35,71,.25); border-radius:999px; background:transparent; color:inherit; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 20px; transition:background .25s ease" style-hover="background:rgba(11,35,71,.06)">↺ Reiniciar capítulo</button>
+        </div>
+      </div>
+      <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.6; margin:22px 0 0; text-align:center">Contenido educativo general. No constituye asesoramiento financiero, fiscal o jurídico personalizado. Las cifras introducidas permanecen en este dispositivo.</p>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;capituloInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;1&quot;, &quot;options&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}, &quot;estadoProgreso&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;a-medias&quot;, &quot;options&quot;: [&quot;nuevo&quot;, &quot;a-medias&quot;, &quot;completado&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}}">
+class Component extends DCLogic {
+  state = {};
+  capitulosData() {
+    return [
+      { numero: '01', titulo: 'Pon orden a tu dinero', subtitulo: 'El punto de partida hacia tu tranquilidad financiera', video: '8bkXWpsZ1YI', videoTitulo: 'Pon orden a tu dinero', videoDesc: 'Una introducción visual para comprender las cifras que sostienen tu tranquilidad financiera.', intro: 'Descubre dónde estás, cuánto margen tienes y cuál debería ser tu primera prioridad antes de ahorrar o invertir.', img: 'src/assets/education/financial-course/chapter-01-health-pillars.webp', alt: 'Infografía sobre los cuatro pilares de la salud financiera: flujo de caja, necesidades y deseos, patrimonio neto y fondo de emergencia.' },
+      { numero: '02', titulo: 'Ahorrar con propósito', subtitulo: 'El arte de construir tu mañana de forma automática', video: 'cwHHU5okGqY', videoTitulo: 'Ahorrar con propósito', videoDesc: 'Descubre cómo convertir el ahorro en un sistema automático conectado con tus objetivos.', intro: 'Ahorrar suele percibirse como una renuncia, pero el ahorro inteligente es una herramienta de diseño financiero: permite decidir hoy qué proyectos y qué tranquilidad tendrá tu familia mañana.', img: 'src/assets/education/financial-course/chapter-02-automatic-saving.webp', alt: 'Infografía sobre ahorro automático, metas financieras, inflación e interés compuesto.' },
+      { numero: '03', titulo: 'Invertir sin apostar', subtitulo: 'Cómo poner tu dinero a trabajar con calma y método', video: 'K-AbB3tDmd0', videoTitulo: 'Invertir sin apostar', videoDesc: 'Una introducción al riesgo, el tiempo y la diversificación para invertir con criterio.', intro: 'Invertir con criterio es un proceso disciplinado que relaciona objetivos, plazo, riesgo, diversificación y comportamiento para poner el ahorro a trabajar a favor del bienestar futuro.', img: 'src/assets/education/financial-course/chapter-03-investment-pillars.webp', alt: 'Infografía sobre los cinco pilares de la inversión: mentalidad, riesgo, diversificación, tiempo y control emocional.' },
+      { numero: '04', titulo: 'La economía en tu día a día', subtitulo: 'Cómo entender lo que ocurre en el mundo sin complicarte la vida', video: 'uOrdz0Gi96A', videoTitulo: 'La economía en tu día a día', videoDesc: 'Aprende a traducir inflación, tipos y ciclos económicos a decisiones familiares concretas.', intro: 'Entender la economía significa distinguir lo que afecta realmente a tu bolsillo de lo que es ruido informativo para poder decidir con serenidad.', img: 'src/assets/education/financial-course/chapter-04-economic-survival.webp', alt: 'Infografía que explica tipos de interés, inflación, ciclos económicos y la diferencia entre señal y ruido.' },
+      { numero: '05', titulo: 'Construye tu plan', subtitulo: 'Tu hoja de ruta personal hacia la serenidad financiera', video: 'OoZXhp9sJ_0', videoTitulo: 'Construye tu plan financiero', videoDesc: 'Convierte lo aprendido en una hoja de ruta personal, sencilla y sostenible.', intro: 'El conocimiento financiero solo se vuelve útil cuando lo unes en una hoja de ruta propia, sencilla, escrita y adaptada a la realidad de tu hogar.', img: 'src/assets/education/financial-course/chapter-05-financial-roadmap.webp', alt: 'Infografía del capítulo cinco con la escalera financiera, el test de la almohada, el contrato de Ulises y la revisión anual del plan.' },
+    ];
+  }
+  apuntesCapitulo1() {
+    return [
+      { titulo: '1. El flujo de caja: el movimiento de tu dinero',
+        parrafos: ['Para entender la economía de un hogar debes ver el dinero como un flujo constante, no como una fotografía estática. Cada mes se producen dos movimientos básicos: entra dinero y sale dinero para sostener la vida cotidiana.', 'La salud financiera no exige cerrar todos los grifos ni renunciar a las comodidades básicas. Consiste en regular el caudal para que siempre quede un excedente. Ese margen mensual es el motor que permite ahorrar, reducir deuda y construir patrimonio.', 'Ganar más no resuelve por sí solo el problema: si las salidas crecen al mismo ritmo que las entradas, la situación de riesgo permanece. El primer objetivo es crear un margen de maniobra estable entre lo que ingresas y lo que gastas.'],
+        vinetas: ['Ingresos: el caudal que entra en la cuenta, como salarios, rentas, ingresos profesionales o pensiones.', 'Gastos: el caudal que sale para vivienda, alimentación, suministros, transporte, ocio y demás necesidades de la vida cotidiana.'],
+        formula: 'Margen mensual = ingresos netos − gastos totales',
+        apunteTitulo: 'La analogía del depósito',
+        apunte: 'Imagina que los ingresos son agua que entra en un depósito y los gastos son grifos abiertos. Si sale tanta agua como entra, el depósito nunca se llena. El objetivo no es cerrar todos los grifos, sino conservar siempre una reserva.' },
+      { titulo: '2. Necesidades frente a deseos: el arte de clasificar',
+        parrafos: ['Gestionar un presupuesto con seriedad exige categorizar las salidas de dinero. Clasificar los gastos permite decidir de manera consciente, evita que lo importante quede desplazado por lo inmediato y reduce el remordimiento posterior.'],
+        vinetas: ['Necesidades: vivienda, alimentación, suministros, calefacción, seguros y demás compromisos indispensables.', 'Deseos: restaurantes, ocio, viajes y otros gastos que mejoran la vida, pero pueden aplazarse sin poner en riesgo la estabilidad familiar.'],
+        apunteTitulo: 'La analogía de la maleta',
+        apunte: 'Al preparar un viaje colocas primero documentos, medicinas, abrigo y calzado. Solo después añades artículos de ocio. Priorizar no es tacañería: es asegurarte de que lo esencial siempre viaja contigo.' },
+      { titulo: '3. Tu patrimonio real: tu verdadero terreno propio',
+        parrafos: ['Existe una diferencia importante entre tener un nivel alto de consumo y poseer riqueza real. La brújula de tu salud financiera es el patrimonio neto.', 'El resultado muestra qué parte de tu vida financiera es realmente tuya. Si las deudas superan a los bienes, el patrimonio neto es negativo: estás construyendo sobre terreno ajeno. No es un juicio, sino un punto de partida.', 'El objetivo es reducir pasivos y aumentar activos para ampliar un terreno propio cada vez más grande, firme y resistente.'],
+        formula: 'Patrimonio neto = activos (lo que tienes) − pasivos (lo que debes)' },
+      { titulo: '4. El fondo de emergencia: tu airbag familiar',
+        parrafos: ['La vida no es una línea recta: incluye gastos y acontecimientos imprevistos. El fondo de emergencia es una reserva segura y accesible destinada a impedir que un contratiempo obligue a endeudarse o a vender inversiones con prisa o en un mal momento.', 'Como referencia inicial puede equivaler a entre tres y seis meses de gastos indispensables, aunque la cifra debe adaptarse a la estabilidad de los ingresos, las responsabilidades y la situación de cada familia.'],
+        vinetas: ['Qué es: una reserva de dinero líquido y de fácil acceso.', 'Cuánto tener: como orientación, entre tres y seis meses de gastos indispensables.', 'Dónde guardarlo: en soluciones seguras y líquidas; no está destinado a invertir ni a financiar caprichos.'],
+        apunteTitulo: 'La analogía del airbag',
+        apunte: 'Un airbag permanece oculto y no produce rendimiento, pero protege cuando llega un impacto. El fondo de emergencia cumple la misma función: no se crea para invertir ni para comprar caprichos, sino para absorber un imprevisto.' },
+    ];
+  }
+  directricesCapitulo1() {
+    return [
+      'Enfócate en tu balance, no solo en tus ingresos: el progreso se mide por el patrimonio neto, no por el tamaño de la nómina.',
+      'Identifica y detén las fugas de agua, especialmente las deudas de consumo con intereses elevados.',
+      'Planifica el presupuesto de forma inversa: automatiza el ahorro al cobrar y organiza después el gasto.',
+      'Respeta los límites del fondo de seguridad y úsalo exclusivamente para emergencias verdaderas.',
+      'Acepta la disciplina como una herramienta de libertad: asegurar la estabilidad permite disfrutar del dinero sin remordimientos.',
+    ];
+  }
+  preguntasQuiz() {
+    return [
+      { texto: 'Una persona ingresa 2.500 € y gasta 2.200 € al mes. ¿Cuál es su margen?', opciones: ['200 €', '300 €', '500 €'], correcta: 1, explicacion: 'El margen es la diferencia entre ingresos y gastos: 2.500 € − 2.200 € = 300 €.' },
+      { texto: '¿Cuál de estos gastos es normalmente un deseo y no una necesidad?', opciones: ['El seguro obligatorio', 'Una cena en un restaurante', 'La alimentación básica'], correcta: 1, explicacion: 'Una cena fuera mejora la calidad de vida, pero puede aplazarse sin poner en riesgo la estabilidad familiar.' },
+      { texto: 'Si tienes activos por 80.000 € y deudas por 45.000 €, ¿cuál es tu patrimonio neto?', opciones: ['35.000 €', '45.000 €', '125.000 €'], correcta: 0, explicacion: 'El patrimonio neto se calcula restando las deudas a los activos: 80.000 € − 45.000 €.' },
+      { texto: '¿Qué describe mejor un fondo de emergencia?', opciones: ['Dinero líquido para 3–6 meses de gastos esenciales', 'Una inversión para buscar máxima rentabilidad', 'Dinero reservado para ocio'], correcta: 0, explicacion: 'Es un colchón líquido y seguro para imprevistos. Como orientación, cubre entre tres y seis meses de gastos indispensables y no está destinado a invertir.' },
+      { texto: '¿Cuál es el orden más sensato para mejorar la salud financiera?', opciones: ['Invertir primero y calcular después', 'Crear margen, controlar deuda, formar el airbag y aumentar activos', 'Aumentar el consumo para motivarse'], correcta: 1, explicacion: 'El orden protege el plan: primero se crea margen y estabilidad; después se construye patrimonio con más seguridad.' },
+    ];
+  }
+  renderVals() {
+    const euro = (v) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+    const caps = this.capitulosData();
+    const seed = this.props.estadoProgreso ?? 'a-medias';
+    const capIdx = this.state.capitulo ?? (Number(this.props.capituloInicial ?? '1') - 1);
+    const cap = caps[capIdx] || caps[0];
+    const esC1 = capIdx === 0;
+    const seedCompletadas = seed === 'completado' ? ['video', 'notes', 'map', 'case', 'quiz'] : seed === 'a-medias' ? ['video', 'notes'] : [];
+    const completadas = this.state.completadas ?? (esC1 ? seedCompletadas : []);
+    const marcar = (id) => this.setState({ completadas: completadas.includes(id) ? completadas : completadas.concat([id]) });
+    const dinero = this.state.dinero ?? { income: 3200, essentials: 1750, flexible: 650, debtPayment: 250, savings: 3000, assets: 18500, debt: 9200 };
+    const calculado = this.state.calculado ?? (seed === 'completado' && esC1);
+    const casoSel = this.state.casoSel !== undefined ? this.state.casoSel : (seed === 'completado' && esC1 ? 2 : null);
+    const quizSel = this.state.quizSel ?? (seed === 'completado' && esC1 ? { 0: 1, 1: 1, 2: 0, 3: 0, 4: 1 } : {});
+    const quizComprobado = this.state.quizComprobado ?? (seed === 'completado' && esC1);
+    const gastoTotal = dinero.essentials + dinero.flexible + dinero.debtPayment;
+    const margen = dinero.income - gastoTotal;
+    const patrimonio = dinero.assets + dinero.savings - dinero.debt;
+    const baseEsencial = dinero.essentials + dinero.debtPayment;
+    const meses = baseEsencial > 0 ? dinero.savings / baseEsencial : 0;
+    const objetivo3m = baseEsencial * 3;
+    const pesoDeseos = gastoTotal > 0 ? Math.round((dinero.flexible / gastoTotal) * 100) : 0;
+    const prioridad = margen <= 0 ? 'Crear un margen estable entre ingresos y gastos'
+      : dinero.debt > 0 && meses < 1 ? 'Combinar un pequeño airbag con la reducción de deuda cara'
+      : dinero.debt > 0 ? 'Revisar el coste de tus deudas y reducir las más caras'
+      : meses < 3 ? 'Completar un fondo de emergencia de al menos tres meses'
+      : 'Aumentar activos y asignar el margen a tus objetivos';
+    const progreso = Math.round((completadas.length / 5) * 100);
+    const preguntasBase = this.preguntasQuiz();
+    const puntos = preguntasBase.reduce((total, p, i) => total + (quizSel[i] === p.correcta ? 1 : 0), 0);
+    const campo = (id, etiqueta, ayuda) => ({ etiqueta, ayuda, valor: dinero[id], cambiar: (e) => this.setState({ dinero: Object.assign({}, dinero, { [id]: Math.max(0, Number(e.target.value) || 0) }) }) });
+    const etiquetasPaso = ['Introducción', 'Clase y apuntes', 'Diagnóstico de 4 pilares', 'Caso práctico', 'Comprobación'];
+    const idsPaso = ['video', 'notes', 'map', 'case', 'quiz'];
+    const destinos = ['#leccion-video', '#apuntes', '#leccion-mapa', '#leccion-caso', '#leccion-quiz'];
+    return {
+      capitulos: caps.map((c, i) => ({
+        numero: c.numero, titulo: c.titulo,
+        estado: i === capIdx ? 'Capítulo actual' : 'Contenido disponible',
+        ariaCurrent: i === capIdx ? 'page' : undefined,
+        abrir: () => this.setState({ capitulo: i, completadas: i === 0 ? completadas : [], quizSel: {}, quizComprobado: false, casoSel: null, calculado: false }),
+        estiloTab: 'display:flex; align-items:center; gap:11px; border-radius:var(--radius-md); cursor:pointer; padding:13px 15px; transition:transform .2s ease, box-shadow .2s ease; ' + (i === capIdx ? 'border:1px solid var(--color-accent); background:var(--color-surface); box-shadow:var(--shadow-md)' : 'border:1px solid var(--color-divider); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface))'),
+      })),
+      metaCapitulo: 'Capítulo ' + Number(cap.numero) + ' de 5',
+      numeroCapitulo: String(Number(cap.numero)).padStart(2, '0'),
+      tituloCapitulo: cap.titulo,
+      subtituloCapitulo: cap.subtitulo,
+      introCapitulo: cap.intro,
+      infografiaImg: React.createElement('img', { src: cap.img, alt: cap.alt, style: { display: 'block', width: '100%', height: 'auto' } }),
+      infografiaSrc: cap.img,
+      infografiaAlt: cap.alt,
+      infografiaKicker: 'Infografía del capítulo ' + cap.numero,
+      apuntesKicker: '02 · Clase y apuntes · Capítulo ' + cap.numero,
+      descargaTexto: 'Descargar PDF del capítulo ' + cap.numero,
+      videoTitulo: cap.videoTitulo,
+      videoDescripcion: cap.videoDesc,
+      videoSrc: 'https://www.youtube-nocookie.com/embed/' + cap.video + '?rel=0',
+      progresoTexto: progreso + ' %',
+      progresoAncho: progreso + '%',
+      pasos: idsPaso.map((id, i) => ({
+        etiqueta: etiquetasPaso[i], destino: destinos[i],
+        marca: (esC1 && completadas.includes(id)) ? '✓' : '',
+        estiloCheck: 'display:inline-flex; width:20px; height:20px; align-items:center; justify-content:center; border-radius:999px; font-size:11px; ' + ((esC1 && completadas.includes(id)) ? 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)' : 'border:1.5px solid var(--color-divider); color:transparent'),
+      })),
+      esCapituloUno: esC1,
+      noEsCapituloUno: !esC1,
+      marcarVideo: () => { if (esC1) marcar('video'); },
+      textoBotonVideo: (esC1 && completadas.includes('video')) ? '✓ Vídeo completado' : 'Marcar vídeo como visto →',
+      estiloBotonVideo: 'margin-top:16px; border-radius:999px; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 22px; transition:background .2s ease, color .2s ease; ' + ((esC1 && completadas.includes('video')) ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:1px solid var(--color-accent); background:transparent; color:var(--color-text)'),
+      apuntes: this.apuntesCapitulo1().map((n, i) => ({
+        numero: '0' + (i + 1), titulo: n.titulo, resumen: n.parrafos[0], abierta: i === 0,
+        parrafos: n.parrafos.map((texto) => ({ texto })),
+        tieneVinetas: !!n.vinetas, vinetas: (n.vinetas || []).map((texto) => ({ texto })),
+        tieneFormula: !!n.formula, formula: n.formula || '',
+        tieneApunte: !!n.apunte, apunteTitulo: n.apunteTitulo || '', apunte: n.apunte || '',
+      })),
+      directrices: this.directricesCapitulo1().map((texto, i) => ({ numero: '0' + (i + 1), texto })),
+      marcarApuntes: () => { if (esC1) marcar('notes'); },
+      textoBotonApuntes: (esC1 && completadas.includes('notes')) ? '✓ Apuntes completados' : 'He leído estos apuntes →',
+      estiloBotonApuntes: 'border-radius:999px; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 22px; transition:background .2s ease, color .2s ease, transform .2s ease; ' + ((esC1 && completadas.includes('notes')) ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:0; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)'),
+      camposFlujo: [campo('income', 'Ingresos netos', 'Lo que entra cada mes'), campo('essentials', 'Gastos esenciales', 'Vivienda, alimentación, suministros…'), campo('flexible', 'Deseos y gastos prescindibles', 'Ocio, restaurantes, viajes, suscripciones…'), campo('debtPayment', 'Cuotas de deuda', 'Pagos mínimos mensuales')],
+      camposFoto: [campo('savings', 'Ahorro disponible', 'Dinero líquido y accesible'), campo('assets', 'Otros activos', 'Inversiones y bienes, sin incluir el ahorro anterior'), campo('debt', 'Deuda pendiente', 'Hipoteca, préstamos, tarjetas…')],
+      calcularMapa: () => { this.setState({ calculado: true }); marcar('map'); },
+      mapaCalculado: calculado,
+      mapaTitulo: calculado ? 'Este es tu mapa' : 'Completa los datos',
+      mapaDescripcion: calculado ? 'Las cifras son orientativas. Úsalas para identificar la primera prioridad.' : 'Al calcular verás los cuatro pilares de tu situación actual.',
+      resultados: [
+        { etiqueta: 'Margen mensual', valor: calculado ? euro(margen) : '—', ayuda: calculado ? (margen > 0 ? 'Tu economía genera espacio.' : 'Conviene recuperar equilibrio.') : 'Ingresos menos gastos' },
+        { etiqueta: 'Peso de los deseos', valor: calculado ? pesoDeseos + ' %' : '—', ayuda: calculado ? 'Parte del gasto que puedes revisar con mayor libertad.' : 'Deseos frente al gasto total' },
+        { etiqueta: 'Patrimonio neto', valor: calculado ? euro(patrimonio) : '—', ayuda: calculado ? 'Ahorro y activos menos deudas.' : 'Lo que tienes menos lo que debes' },
+        { etiqueta: 'Airbag familiar', valor: calculado ? meses.toFixed(1).replace('.', ',') : '—', ayuda: calculado ? 'Meses cubiertos · objetivo inicial: ' + euro(objetivo3m) : 'Ahorro líquido frente a gastos indispensables' },
+      ],
+      prioridad,
+      cifrasCaso: [
+        { etiqueta: 'Necesidades', valor: '1.900 €' }, { etiqueta: 'Deseos', valor: '800 €' }, { etiqueta: 'Cuotas de deuda', valor: '300 €' },
+        { etiqueta: 'Margen actual', valor: '400 €' }, { etiqueta: 'Ahorro líquido', valor: '1.500 €' }, { etiqueta: 'Patrimonio neto', valor: '3.500 €' },
+      ],
+      opcionesCaso: [
+        'Invertir inmediatamente todos sus ahorros.',
+        'Mantener todos los gastos y esperar a que aumenten los ingresos.',
+        'Reducir deseos, conservar un colchón inicial y repartir el nuevo margen entre la deuda cara y el fondo de emergencia.',
+        'Utilizar el ahorro para aumentar el gasto mensual.',
+      ].map((texto, i) => {
+        const sel = casoSel === i;
+        const correctaVisible = casoSel !== null && i === 2;
+        return {
+          letra: String.fromCharCode(65 + i), texto,
+          elegir: () => { this.setState({ casoSel: i }); marcar('case'); },
+          estilo: 'display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:start; width:100%; border-radius:var(--radius-md); cursor:pointer; padding:12px 14px; text-align:left; transition:border-color .2s ease, background .2s ease; ' + (correctaVisible ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:var(--color-text)' : sel ? 'border:1px solid var(--color-accent); background:rgba(11,35,71,.04); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
+          estiloLetra: 'display:inline-flex; width:24px; height:24px; align-items:center; justify-content:center; border-radius:999px; font-size:11px; font-weight:500; ' + (correctaVisible ? 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)' : 'background:#ffffff; color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
+        };
+      }),
+      casoRespondido: casoSel !== null,
+      tituloFeedbackCaso: casoSel === 2 ? 'Buena decisión' : 'Revísalo una vez más',
+      estiloFeedbackCaso: 'border-radius:var(--radius-md); margin-top:14px; padding:14px 18px; ' + (casoSel === 2 ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:1px solid rgba(148,110,41,.4); background:rgba(148,110,41,.08); color:#946E29'),
+      preguntas: preguntasBase.map((p, qi) => ({
+        numero: String(qi + 1), texto: p.texto, grupo: 'pregunta-' + qi,
+        explicacion: p.explicacion, mostrarExplicacion: quizComprobado,
+        opciones: p.opciones.map((texto, oi) => ({
+          texto, seleccionada: quizSel[qi] === oi,
+          marcar: () => this.setState({ quizSel: Object.assign({}, quizSel, { [qi]: oi }), quizComprobado: false }),
+          estilo: 'display:flex; align-items:flex-start; gap:9px; border-radius:var(--radius-md); cursor:pointer; padding:11px 13px; transition:border-color .2s ease, background .2s ease; ' + (quizComprobado && oi === p.correcta ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : quizSel[qi] === oi ? 'border:1px solid var(--color-accent); background:rgba(11,35,71,.04); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
+        })),
+      })),
+      quizIncompleto: Object.keys(quizSel).length !== preguntasBase.length,
+      comprobarQuiz: () => { this.setState({ quizComprobado: true }); marcar('quiz'); },
+      estiloBotonQuiz: 'border:0; border-radius:999px; font-size:12px; font-weight:500; letter-spacing:.05em; padding:12px 24px; transition:background .25s ease, transform .25s ease; ' + (Object.keys(quizSel).length !== preguntasBase.length ? 'background:var(--color-neutral-800); color:color-mix(in srgb, var(--color-text) 45%, transparent); cursor:not-allowed' : 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer'),
+      quizComprobado,
+      puntuacion: puntos + '/5',
+      tituloQuiz: puntos === 5 ? 'Has comprendido los cuatro pilares' : 'Buen comienzo. Revisa las explicaciones.',
+      capituloCompleto: esC1 && progreso === 100,
+      iconoCierre: esC1 && progreso === 100 ? '✓' : '◎',
+      kickerCierre: esC1 ? (progreso === 100 ? 'Capítulo completado' : 'Tu siguiente paso') : 'Contenido disponible',
+      tituloCierre: esC1 ? (progreso === 100 ? 'Ya tienes tu punto de partida' : 'Te falta completar ' + (5 - completadas.length) + (5 - completadas.length === 1 ? ' parte' : ' partes')) : 'Continúa con la clase y los apuntes',
+      textoCierre: esC1 && progreso === 100 ? 'Has revisado tu flujo de caja, tus deseos, tu patrimonio y tu fondo de emergencia. Ya tienes un diagnóstico para ordenar tus siguientes decisiones.' : 'Continúa la clase para guardar el capítulo como completado.',
+      estiloCierre: 'display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; border-radius:var(--radius-md); padding:28px 32px; ' + (esC1 && progreso === 100 ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:var(--color-text)' : 'background:var(--color-surface); color:var(--color-text); box-shadow:var(--shadow-sm)'),
+      estiloPuntoCierre: 'flex-shrink:0; width:10px; height:10px; border-radius:999px; margin-top:8px; ' + (esC1 && progreso === 100 ? 'background:#3C9A69' : 'background:#7C9A44; animation:nv-pulse 2.4s ease-out infinite'),
+      reiniciar: () => this.setState({ completadas: [], calculado: false, casoSel: null, quizSel: {}, quizComprobado: false, dinero: undefined }),
+    };
+  }
+}
+</script>
+</body>
+</html>

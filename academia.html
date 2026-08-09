@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>NUVIA Academy | NUVIA Family Wealth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    input, select { font-family: var(--font-body); }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    select option { background: var(--color-surface); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <!-- ============ HEADER ============ -->
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html" class="is-active" aria-current="page">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ CABECERA ============ -->
+    <section id="academy" data-screen-label="Cabecera Academy" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); padding:64px 0 0">
+      <div style="max-width:1240px; margin:0 auto; padding:0 40px">
+        <span style="display:inline-block; color:#dae5c1; font-size:11px; font-weight:500; letter-spacing:.26em; text-transform:uppercase; margin-bottom:16px">NUVIA Academy</span>
+        <h1 style="color:#ffffff; max-width:16em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 16px">Saber es patrimonio</h1>
+        <p style="max-width:38em; color:rgba(255,255,255,.76); font-size:17px; line-height:1.65; margin:0 0 40px">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
+        <nav aria-label="Secciones de la Academy" style="display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.16); padding:18px 0 22px">
+          <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="5">
+            <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}"><span>{{ p.label }}</span><span aria-hidden="true" style="font-size:11px">{{ p.sufijo }}</span></button>
+          </sc-for>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============ FUNDAMENTOS ============ -->
+    <sc-if value="{{ esFundamentos }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Fundamentos de inversión" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+          <div style="display:grid; grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr); gap:40px; align-items:end; padding:48px 48px 40px">
+            <div>
+              <p style="color:var(--color-accent-300); font-size:12px; font-weight:500; letter-spacing:.34em; text-transform:uppercase; margin:0 0 22px">Guía de inversión · En lenguaje claro</p>
+              <h2 style="color:var(--color-text); font-size:52px; font-weight:500; line-height:.98; letter-spacing:-.02em; margin:0">Dónde crece más<br>el <span style="color:var(--color-accent)">dinero</span></h2>
+              <p style="max-width:32em; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:16px; line-height:1.65; margin:26px 0 0">Una lectura visual sobre cómo se han comportado históricamente los principales activos: bolsa, bonos, liquidez, oro y vivienda. Qué ha protegido mejor el patrimonio, qué riesgos ha asumido y qué impacto tienen inflación e impuestos.</p>
+              <div style="width:80px; height:3px; background:#7C9A44; margin-top:32px"></div>
+            </div>
+            <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); padding:18px 22px">
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); border-bottom:1px solid var(--color-divider); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">01</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Cuánto ha crecido cada activo en casi un siglo</span></div>
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); border-bottom:1px solid var(--color-divider); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">02</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Nominal frente a real: el efecto de la inflación</span></div>
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); border-bottom:1px solid var(--color-divider); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">03</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Cuánto sube y baja cada uno, década a década</span></div>
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); border-bottom:1px solid var(--color-divider); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">04</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Qué impuestos se pagan en España (2026)</span></div>
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); border-bottom:1px solid var(--color-divider); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">05</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Bolsa: fondos, acciones o ETFs</span></div>
+              <div style="display:grid; grid-template-columns:42px minmax(0,1fr); padding:10px 0"><span style="color:var(--color-accent); font-size:16px">06</span><span style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; font-weight:500">Qué elegir: recomendación final</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:24px; padding:0 24px 24px">
+            <section aria-labelledby="video-dinero-con-criterio" style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:linear-gradient(145deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-md); overflow:hidden; padding:28px 32px 32px">
+              <div style="display:flex; align-items:end; justify-content:space-between; gap:28px; margin-bottom:20px">
+                <div>
+                  <p style="color:#C9D8A8; font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:0 0 9px">Aula NUVIA · Vídeo</p>
+                  <h3 id="video-dinero-con-criterio" style="color:#ffffff; font-size:29px; font-weight:500; line-height:1.1; margin:0">Dinero con criterio</h3>
+                </div>
+                <p style="max-width:42em; color:rgba(255,255,255,.68); font-size:13.5px; line-height:1.6; margin:0; text-align:right">Una introducción visual para comprender las decisiones de ahorro e inversión antes de recorrer la guía.</p>
+              </div>
+              <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:var(--radius-md); background:#020817; box-shadow:0 20px 48px -24px rgba(0,0,0,.72); overflow:hidden">
+                <iframe src="https://www.youtube-nocookie.com/embed/iqAv3WXCthY?rel=0" title="Dinero con criterio — vídeo de NUVIA Academy" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+              </div>
+            </section>
+
+            <!-- 01 -->
+            <section style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; border-bottom:1px solid var(--color-divider); margin-bottom:20px; padding-bottom:14px">
+                <div style="display:flex; align-items:baseline; gap:12px"><span style="color:var(--color-accent); font-size:24px">01</span><h3 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.1; margin:0">Cuánto ha crecido cada activo en casi un siglo</h3></div>
+                <span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; white-space:nowrap">100 $ en 1928</span>
+              </div>
+              <p style="max-width:56em; color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:15px; line-height:1.65; margin:0 0 24px">Imagina que en 1928 alguien guardó 100 dólares y no los tocó hasta finales de 2025. ¿Cuánto tendría hoy según dónde los pusiera? Es el periodo más largo del que existen datos fiables, casi un siglo, y la respuesta cambia muchísimo de un activo a otro.</p>
+              <div style="display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:26px; align-items:start">
+                <div>
+                  <div style="display:flex; flex-direction:column; gap:12px">
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Bolsa</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:100%; border-radius:0 12px 12px 0; background:#3B5BC4"></div><span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">1,16 M$</span></div></div>
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Bonos empresa</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:8%; border-radius:0 12px 12px 0; background:#2568A9"></div><span style="position:absolute; left:10%; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">53.952 $</span></div></div>
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Oro</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:8%; border-radius:0 12px 12px 0; background:#946E29"></div><span style="position:absolute; left:10%; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">21.025 $</span></div></div>
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Deuda pública</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:8%; border-radius:0 12px 12px 0; background:#3C9A69"></div><span style="position:absolute; left:10%; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">7.753 $</span></div></div>
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Vivienda</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:8%; border-radius:0 12px 12px 0; background:#C05621"></div><span style="position:absolute; left:10%; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">5.626 $</span></div></div>
+                    <div style="display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; align-items:center"><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; font-weight:500">Dinero banco</span><div style="position:relative; height:38px; border-radius:0 12px 12px 0; background:var(--color-neutral-800)"><div style="height:100%; width:8%; border-radius:0 12px 12px 0; background:#6b7686"></div><span style="position:absolute; left:10%; top:50%; transform:translateY(-50%); color:var(--color-text); font-size:13px; font-weight:500; white-space:nowrap">2.578 $</span></div></div>
+                  </div>
+                  <div style="border-radius:var(--radius-md); background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); margin-top:20px; padding:20px 24px">
+                    <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:10px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:0">La gran ganadora</p>
+                    <p style="font-size:40px; line-height:1; margin:10px 0 0">La bolsa ×11.500</p>
+                    <p style="color:color-mix(in srgb, var(--color-text) 78%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Convierte 100 $ en 1,16 millones. Ese es el interés compuesto: ganar también sobre lo ya ganado.</p>
+                  </div>
+                </div>
+                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:14px">
+                  <svg viewBox="0 0 720 350" style="display:block; width:100%" role="img" aria-label="Evolución histórica de los activos desde 1928">
+                    <rect x="8" y="24" width="16" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="8" y="16" fill="#C2453A" font-size="9" font-weight="700">Gran Depresión</text>
+                    <rect x="315" y="24" width="10" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="290" y="16" fill="#C2453A" font-size="9" font-weight="700">Crisis petróleo</text>
+                    <rect x="520" y="24" width="18" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="482" y="16" fill="#C2453A" font-size="9" font-weight="700">Crisis financiera</text>
+                    <rect x="620" y="24" width="18" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="600" y="16" fill="#C2453A" font-size="9" font-weight="700">COVID + tipos</text>
+                    <line x1="62" x2="682" y1="294" y2="294" stroke="#cbd5e1"></line><text x="8" y="298" fill="#6b7686" font-size="11">$100</text>
+                    <line x1="62" x2="682" y1="226.5" y2="226.5" stroke="#cbd5e1"></line><text x="8" y="230" fill="#6b7686" font-size="11">$1.000</text>
+                    <line x1="62" x2="682" y1="159" y2="159" stroke="#cbd5e1"></line><text x="8" y="163" fill="#6b7686" font-size="11">$10.000</text>
+                    <line x1="62" x2="682" y1="91.5" y2="91.5" stroke="#cbd5e1"></line><text x="8" y="95" fill="#6b7686" font-size="11">$100.000</text>
+                    <line x1="62" x2="682" y1="24" y2="24" stroke="#cbd5e1"></line><text x="8" y="28" fill="#6b7686" font-size="11">$1.000.000</text>
+                    <text x="50" y="330" fill="#6b7686" font-size="11">1928</text><text x="330" y="330" fill="#6b7686" font-size="11">1975</text><text x="650" y="330" fill="#6b7686" font-size="11">2025</text>
+                    <polyline points="" data-nuvia-points="{{ lineaDinero }}" fill="none" stroke="#6b7686" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="" data-nuvia-points="{{ lineaVivienda }}" fill="none" stroke="#C05621" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="" data-nuvia-points="{{ lineaDeuda }}" fill="none" stroke="#3C9A69" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="" data-nuvia-points="{{ lineaOro }}" fill="none" stroke="#946E29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="" data-nuvia-points="{{ lineaBonos }}" fill="none" stroke="#2568A9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="" data-nuvia-points="{{ lineaBolsa }}" fill="none" stroke="#3B5BC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <g transform="translate(500 200)">
+                      <line x1="0" x2="18" y1="0" y2="0" stroke="#3B5BC4" stroke-width="3"></line><text x="24" y="4" fill="#0B2347" font-size="11">Bolsa</text>
+                      <line x1="0" x2="18" y1="18" y2="18" stroke="#2568A9" stroke-width="3"></line><text x="24" y="22" fill="#0B2347" font-size="11">Bonos empresa</text>
+                      <line x1="0" x2="18" y1="36" y2="36" stroke="#946E29" stroke-width="3"></line><text x="24" y="40" fill="#0B2347" font-size="11">Oro</text>
+                      <line x1="0" x2="18" y1="54" y2="54" stroke="#3C9A69" stroke-width="3"></line><text x="24" y="58" fill="#0B2347" font-size="11">Deuda pública</text>
+                      <line x1="0" x2="18" y1="72" y2="72" stroke="#C05621" stroke-width="3"></line><text x="24" y="76" fill="#0B2347" font-size="11">Vivienda</text>
+                      <line x1="0" x2="18" y1="90" y2="90" stroke="#6b7686" stroke-width="3"></line><text x="24" y="94" fill="#0B2347" font-size="11">Dinero banco</text>
+                    </g>
+                  </svg>
+                  <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.55; text-align:center; margin:10px 0 0">Escala especial: cada marca vertical multiplica por diez. Las franjas rosadas señalan las grandes crisis.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- 02 -->
+            <section style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px">
+              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
+                <div style="display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--color-divider); margin-bottom:16px; padding-bottom:14px"><span style="color:var(--color-accent); font-size:24px">02</span><h3 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.1; margin:0">Nominal frente a real</h3></div>
+                <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:14px; line-height:1.65; margin:0 0 20px">Pero hay una trampa: el dinero pierde valor con los años por la subida de los precios. Un dólar de 1928 compraba mucho más que uno de hoy. El valor real muestra lo que de verdad podrías comprar con ese dinero.</p>
+                <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); overflow:hidden">
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; background:var(--color-neutral-900); color:var(--color-text); font-size:12px; font-weight:500; padding:11px 16px"><span>Activo</span><span style="text-align:right">Sube al año</span><span style="text-align:right">Sin inflación</span></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12.5px; padding:10px 16px"><span style="color:#3B5BC4; font-weight:500">Renta variable (S&amp;P 500)</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">10,02%</span><strong style="text-align:right; color:var(--color-text)">6,74%</strong></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12.5px; padding:10px 16px"><span style="color:#2568A9; font-weight:500">Bonos corp. Baa</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">6,63%</span><strong style="text-align:right; color:var(--color-text)">3,45%</strong></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12.5px; padding:10px 16px"><span style="color:#946E29; font-weight:500">Oro</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">5,61%</span><strong style="text-align:right; color:var(--color-text)">2,46%</strong></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12.5px; padding:10px 16px"><span style="color:#3C9A69; font-weight:500">Renta fija (T-Bond 10a)</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">4,54%</span><strong style="text-align:right; color:var(--color-text)">1,43%</strong></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12.5px; padding:10px 16px"><span style="color:#C05621; font-weight:500">Inmuebles (precio vivienda)</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">4,20%</span><strong style="text-align:right; color:var(--color-text)">1,09%</strong></div>
+                  <div style="display:grid; grid-template-columns:1.15fr .75fr .75fr; background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12.5px; padding:10px 16px"><span style="color:#6b7686; font-weight:500">Monetario (Letras 3m)</span><span style="text-align:right; color:color-mix(in srgb, var(--color-text) 68%, transparent)">3,37%</span><strong style="text-align:right; color:var(--color-text)">0,29%</strong></div>
+                </div>
+              </article>
+              <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); padding:28px 32px">
+                <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0">Poder adquisitivo real</p>
+                <h3 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.15; margin:10px 0 20px">Quién te hace más rico de verdad</h3>
+                <div style="display:flex; flex-direction:column; gap:12px">
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Bolsa</span><span style="color:var(--color-text); font-size:19px">6,74%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:100%; border-radius:999px; background:#3B5BC4"></div></div></div>
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Bonos empresa</span><span style="color:var(--color-text); font-size:19px">3,45%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:51%; border-radius:999px; background:#2568A9"></div></div></div>
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Oro</span><span style="color:var(--color-text); font-size:19px">2,46%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:36.5%; border-radius:999px; background:#946E29"></div></div></div>
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Deuda pública</span><span style="color:var(--color-text); font-size:19px">1,43%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:21.2%; border-radius:999px; background:#3C9A69"></div></div></div>
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Vivienda</span><span style="color:var(--color-text); font-size:19px">1,09%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:16.2%; border-radius:999px; background:#C05621"></div></div></div>
+                  <div style="border:1px solid #cbd5e1; border-radius:var(--radius-md); background:var(--color-surface); padding:12px 14px"><div style="display:flex; justify-content:space-between; margin-bottom:8px"><span style="color:var(--color-text); font-size:13px; font-weight:500">Dinero banco</span><span style="color:var(--color-text); font-size:19px">0,29%</span></div><div style="height:14px; border-radius:999px; background:var(--color-neutral-800); overflow:hidden"><div style="height:100%; width:5%; border-radius:999px; background:#6b7686"></div></div></div>
+                </div>
+              </article>
+            </section>
+
+            <!-- 03 -->
+            <section style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; border-bottom:1px solid var(--color-divider); margin-bottom:20px; padding-bottom:14px">
+                <div style="display:flex; align-items:baseline; gap:12px"><span style="color:var(--color-accent); font-size:24px">03</span><h3 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.1; margin:0">Cuánto sube y baja cada uno, década a década</h3></div>
+                <span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; white-space:nowrap">Nadie gana siempre</span>
+              </div>
+              <p style="max-width:56em; color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:15px; line-height:1.65; margin:0 0 20px">Las líneas de antes, vistas de lejos, parecen subir tranquilas. Pero el camino real está lleno de baches. Década a década se ve la verdadera cara de cada activo: cuánto sube en sus buenos tiempos y cuánto sufre en los malos. En rojo, las décadas en las que se perdió dinero.</p>
+              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); overflow-x:auto">
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); background:var(--color-neutral-900); color:var(--color-text); font-size:11px; font-weight:500; padding:11px 16px"><span>Activo</span><span style="text-align:right">30s</span><span style="text-align:right">40s</span><span style="text-align:right">50s</span><span style="text-align:right">60s</span><span style="text-align:right">70s</span><span style="text-align:right">80s</span><span style="text-align:right">90s</span><span style="text-align:right">00s</span><span style="text-align:right">10s</span><span style="text-align:right">20s</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Renta variable</span><span style="text-align:right; color:#C2453A; font-weight:500">−0,9</span><span style="text-align:right; color:#475569">+8,5</span><span style="text-align:right; color:#475569">+19,5</span><span style="text-align:right; color:#475569">+7,7</span><span style="text-align:right; color:#475569">+5,9</span><span style="text-align:right; color:#475569">+17,3</span><span style="text-align:right; color:#475569">+18,0</span><span style="text-align:right; color:#C2453A; font-weight:500">−1,0</span><span style="text-align:right; color:#475569">+13,4</span><span style="text-align:right; color:#475569">+14,9</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Bonos corp. Baa</span><span style="text-align:right; color:#475569">+7,2</span><span style="text-align:right; color:#475569">+5,2</span><span style="text-align:right; color:#475569">+2,3</span><span style="text-align:right; color:#475569">+3,2</span><span style="text-align:right; color:#475569">+7,1</span><span style="text-align:right; color:#475569">+14,1</span><span style="text-align:right; color:#475569">+9,5</span><span style="text-align:right; color:#475569">+8,3</span><span style="text-align:right; color:#475569">+7,0</span><span style="text-align:right; color:#475569">+1,9</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Oro</span><span style="text-align:right; color:#475569">+5,3</span><span style="text-align:right; color:#C2453A; font-weight:500">−0,8</span><span style="text-align:right; color:#475569">+1,0</span><span style="text-align:right; color:#475569">+1,6</span><span style="text-align:right; color:#475569">+28,6</span><span style="text-align:right; color:#C2453A; font-weight:500">−2,5</span><span style="text-align:right; color:#C2453A; font-weight:500">−3,1</span><span style="text-align:right; color:#475569">+14,1</span><span style="text-align:right; color:#475569">+3,4</span><span style="text-align:right; color:#475569">+19,1</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Renta fija (T-Bond)</span><span style="text-align:right; color:#475569">+4,0</span><span style="text-align:right; color:#475569">+2,5</span><span style="text-align:right; color:#475569">+0,8</span><span style="text-align:right; color:#475569">+2,4</span><span style="text-align:right; color:#475569">+5,4</span><span style="text-align:right; color:#475569">+12,0</span><span style="text-align:right; color:#475569">+7,4</span><span style="text-align:right; color:#475569">+6,3</span><span style="text-align:right; color:#475569">+4,1</span><span style="text-align:right; color:#C2453A; font-weight:500">−0,5</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Inmuebles</span><span style="text-align:right; color:#C2453A; font-weight:500">−1,2</span><span style="text-align:right; color:#475569">+8,1</span><span style="text-align:right; color:#475569">+3,0</span><span style="text-align:right; color:#475569">+2,2</span><span style="text-align:right; color:#475569">+8,7</span><span style="text-align:right; color:#475569">+5,9</span><span style="text-align:right; color:#475569">+2,7</span><span style="text-align:right; color:#475569">+4,0</span><span style="text-align:right; color:#475569">+3,8</span><span style="text-align:right; color:#475569">+7,5</span></div>
+                <div style="display:grid; grid-template-columns:170px repeat(10,minmax(52px,1fr)); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); font-size:12px; padding:10px 16px"><span style="color:var(--color-text); font-weight:500">Monetario</span><span style="text-align:right; color:#475569">+1,0</span><span style="text-align:right; color:#475569">+0,5</span><span style="text-align:right; color:#475569">+2,0</span><span style="text-align:right; color:#475569">+4,0</span><span style="text-align:right; color:#475569">+6,3</span><span style="text-align:right; color:#475569">+9,0</span><span style="text-align:right; color:#475569">+5,0</span><span style="text-align:right; color:#475569">+2,7</span><span style="text-align:right; color:#475569">+0,6</span><span style="text-align:right; color:#475569">+2,8</span></div>
+              </div>
+              <div style="border-left:4px solid #7C9A44; border-radius:0 10px 10px 0; background:var(--color-accent-900); margin-top:18px; padding:14px 18px">
+                <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Lo que nos enseña esta tabla</p>
+                <p style="color:#475569; font-size:13.5px; line-height:1.6; margin:0">El primero de la clase cambia todo el tiempo. El oro fue el gran ganador de los años 70 y el peor de los 90. La bolsa brilló en los 50 y los 90, pero perdió en los 30 y en la primera década de los 2000.</p>
+              </div>
+            </section>
+
+            <!-- 04 + 05 -->
+            <section style="display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:24px">
+              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); margin-bottom:16px; padding-bottom:14px"><div style="display:flex; align-items:baseline; gap:12px"><span style="color:var(--color-accent); font-size:24px">04</span><h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.12; margin:0">Qué impuestos se pagan en España</h3></div><span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase">2026</span></div>
+                <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:14px; line-height:1.65; margin:0 0 18px">Saber cuánto rinde algo es solo la mitad del cuento. La otra mitad es cuánto te quedas tú después de Hacienda. En casi todos estos activos solo pagas cuando vendes y ganas dinero.</p>
+                <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); overflow:hidden">
+                  <div style="display:flex; justify-content:space-between; background:var(--color-neutral-900); color:var(--color-text); font-size:12px; font-weight:500; padding:11px 16px"><span>Si tu ganancia es...</span><span>Pagas...</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); padding:9px 16px"><span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px">Hasta 6.000 €</span><span style="color:var(--color-accent); font-size:21px">19%</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); padding:9px 16px"><span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px">De 6.000 a 50.000 €</span><span style="color:var(--color-accent); font-size:21px">21%</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); padding:9px 16px"><span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px">De 50.000 a 200.000 €</span><span style="color:var(--color-accent); font-size:21px">23%</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); padding:9px 16px"><span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px">De 200.000 a 300.000 €</span><span style="color:var(--color-accent); font-size:21px">27%</span></div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 16px"><span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px">Más de 300.000 €</span><span style="color:var(--color-accent); font-size:21px">30%</span></div>
+                </div>
+              </article>
+              <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); padding:28px 32px">
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); margin-bottom:16px; padding-bottom:14px"><div style="display:flex; align-items:baseline; gap:12px"><span style="color:var(--color-accent); font-size:24px">05</span><h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.12; margin:0">Bolsa: fondos, acciones o ETFs</h3></div><span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase">Vehículo fiscal</span></div>
+                <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:14px; line-height:1.65; margin:0 0 18px">Las tres formas pagan lo mismo cuando vendes. La diferencia que de verdad importa con los años es una sola: si puedes cambiar de producto sin pagar impuestos por el camino.</p>
+                <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px">
+                  <div style="display:flex; flex-direction:column; min-height:210px; border-radius:var(--radius-md); background:#3C9A69; color:var(--color-text); padding:16px 18px"><span style="width:fit-content; border-radius:999px; background:rgba(255,255,255,.18); color:color-mix(in srgb, var(--color-text) 84%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:4px 11px">Traspaso libre</span><h4 style="font-size:24px; font-weight:500; margin:16px 0 0">Fondos</h4><p style="color:rgba(255,255,255,.86); font-size:12.5px; line-height:1.6; margin:10px 0 0">Puedes mover tu dinero de un fondo a otro sin pagar nada a Hacienda mientras no pase por tu cuenta. El impuesto queda aplazado.</p></div>
+                  <div style="display:flex; flex-direction:column; min-height:210px; border-radius:var(--radius-md); background:#6b7686; color:var(--color-text); padding:16px 18px"><span style="width:fit-content; border-radius:999px; background:rgba(255,255,255,.18); color:color-mix(in srgb, var(--color-text) 84%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:4px 11px">Sin traspaso</span><h4 style="font-size:24px; font-weight:500; margin:16px 0 0">Acciones</h4><p style="color:rgba(255,255,255,.86); font-size:12.5px; line-height:1.6; margin:10px 0 0">Cada vez que vendes con ganancia, pagas ese año. A cambio, tienes control directo y puedes compensar pérdidas con otras ganancias.</p></div>
+                  <div style="display:flex; flex-direction:column; min-height:210px; border-radius:var(--radius-md); background:#C2453A; color:var(--color-text); padding:16px 18px"><span style="width:fit-content; border-radius:999px; background:rgba(255,255,255,.18); color:color-mix(in srgb, var(--color-text) 84%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:4px 11px">Sin traspaso desde 2022</span><h4 style="font-size:24px; font-weight:500; margin:16px 0 0">ETFs</h4><p style="color:rgba(255,255,255,.86); font-size:12.5px; line-height:1.6; margin:10px 0 0">Baratos y transparentes, pero en España ya no permiten cambiar de ETF a ETF sin tributar. Fiscalmente se parecen más a las acciones.</p></div>
+                </div>
+              </article>
+            </section>
+
+            <!-- 06 -->
+            <section style="border-radius:var(--radius-md); background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:32px 38px">
+              <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:0">Qué elegir: recomendación final</p>
+              <p style="max-width:34em; color:var(--color-text); font-size:28px; font-weight:500; line-height:1.3; margin:14px 0 0">Para la mayoría: acumular con fondos de inversión, aplazar impuestos todo lo posible y retirar poco a poco cuando llegue el momento.</p>
+              <p style="max-width:52em; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13.5px; line-height:1.65; margin:16px 0 0">Juntando las dos mitades del informe — qué rinde más y qué te deja quedarte con más tras los impuestos — la respuesta para alguien que invierte pensando a largo plazo es bastante clara.</p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ INTERÉS COMPUESTO ============ -->
+    <sc-if value="{{ esInteres }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:32px 36px; margin-bottom:20px">
+          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 24px">El poder del interés compuesto</h2>
+          <div style="display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:28px; border-top:1px solid var(--color-divider); padding-top:24px">
+            <div>
+              <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 12px">El interés compuesto significa que tu dinero no solo genera rentabilidad sobre lo que invertiste al principio, sino también sobre las ganancias que se van acumulando con el tiempo.</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 16px">Si inviertes 10.000 € y obtienes rentabilidad, el primer crecimiento se calcula sobre esos 10.000 €. Pero más adelante, si tu inversión ya vale 12.000 €, la rentabilidad futura se calcula sobre una base mayor. El dinero acumulado también empieza a trabajar.</p>
+              <p style="border-left:4px solid #7C9A44; border-radius:0 10px 10px 0; background:var(--color-accent-900); color:var(--color-text); font-size:14px; font-weight:500; line-height:1.6; margin:0; padding:14px 18px">El interés compuesto no depende solo de cuánto inviertes, sino de cuánto tiempo dejas que el dinero trabaje.</p>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px">
+              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Capital inicial</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es el dinero con el que empiezas.</p></div>
+              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Aportaciones periódicas</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es lo que añades de forma recurrente para hacer crecer la inversión.</p></div>
+              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Tiempo</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es el factor que permite que las ganancias acumuladas generen nuevas ganancias.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <section class="compound-video" aria-label="Vídeo explicativo sobre interés compuesto">
+          <div class="compound-video__header">
+            <span>Vídeo explicativo</span>
+            <h3>El interés compuesto</h3>
+          </div>
+          <div class="compound-video__frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/N2MQm0Hvji4" title="El interés compuesto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </section>
+
+        <div class="compound-guide" aria-label="Guía ampliada sobre interés compuesto">
+          <div class="compound-guide__lead">
+            <div>
+              <span class="compound-guide__eyebrow">Guía ampliada · Crecimiento a largo plazo</span>
+              <h3>Entender qué hace crecer de verdad el patrimonio</h3>
+              <p>El interés compuesto aparece cuando los rendimientos se reinvierten y empiezan a generar nuevos rendimientos. Su fuerza depende de tres decisiones: dejar pasar tiempo, mantener la reinversión y evitar interrupciones innecesarias.</p>
+            </div>
+            <a class="compound-guide__download" href="src/assets/education/interes-compuesto-guia.pdf" download>Descargar la guía completa ↓</a>
+          </div>
+
+          <div class="compound-guide__grid">
+            <article class="compound-guide__panel">
+              <span class="compound-guide__eyebrow">01 · Capitalización</span>
+              <h3>No todos los productos acumulan igual</h3>
+              <p>El periodo de capitalización determina cuándo se incorporan los rendimientos al capital que vuelve a trabajar.</p>
+              <ul class="compound-guide__facts">
+                <li class="compound-guide__fact"><strong>Fondos</strong><span>En las clases de acumulación, dividendos, cupones y plusvalías permanecen dentro del fondo y se reflejan en su valor liquidativo.</span></li>
+                <li class="compound-guide__fact"><strong>Cuentas</strong><span>El abono de intereses suele ser mensual; desde ese momento pueden generar nuevos intereses.</span></li>
+                <li class="compound-guide__fact"><strong>Depósitos</strong><span>Capitalizan según lo pactado. Para prolongar el efecto puede ser necesario renovar capital e intereses al vencimiento.</span></li>
+                <li class="compound-guide__fact"><strong>Bonos</strong><span>Los cupones solo capitalizan si el inversor los reinvierte después de cobrarlos.</span></li>
+              </ul>
+            </article>
+
+            <article class="compound-guide__panel">
+              <span class="compound-guide__eyebrow">Ejemplo · 10.000 € al 6 %</span>
+              <h3>La frecuencia también cuenta</h3>
+              <p>Con el mismo tipo nominal, una capitalización más frecuente eleva ligeramente el resultado y explica parte de la diferencia entre tipo nominal y TAE.</p>
+              <div class="compound-guide__metrics">
+                <div class="compound-guide__metric"><span>Anual</span><strong>10.600 €</strong></div>
+                <div class="compound-guide__metric"><span>Mensual</span><strong>10.616,78 €</strong></div>
+                <div class="compound-guide__metric"><span>Diaria</span><strong>10.618,31 €</strong></div>
+              </div>
+              <p class="compound-guide__note">En un año la diferencia parece pequeña. Sostenida durante 30 años, la capitalización diaria rondaría los 60.500 €, frente a 57.435 € con capitalización anual.</p>
+            </article>
+          </div>
+
+          <div class="compound-guide__grid">
+            <article class="compound-guide__panel compound-guide__panel--navy">
+              <span class="compound-guide__eyebrow">02 · El valor del tiempo</span>
+              <h3>Empezar antes pesa más que aportar tarde</h3>
+              <p>Ana y Luis aportan 200 € al mes y obtienen una rentabilidad media ilustrativa del 5 %. La única gran diferencia es que Ana comienza diez años antes.</p>
+              <div class="compound-guide__people">
+                <div class="compound-guide__person"><span>Ana · 40 años aportando</span><strong>305.000 €</strong><small>96.000 € aportados · 209.000 € generados</small></div>
+                <div class="compound-guide__person"><span>Luis · 30 años aportando</span><strong>166.000 €</strong><small>72.000 € aportados · 94.000 € generados</small></div>
+              </div>
+              <p class="compound-guide__quote">Ana aporta 24.000 € más, pero termina con unos 139.000 € adicionales. Los primeros años financian el crecimiento de todos los siguientes.</p>
+            </article>
+
+            <article class="compound-guide__panel">
+              <span class="compound-guide__eyebrow">03 · Regla del 72</span>
+              <h3>Una forma rápida de estimar cuándo se duplica</h3>
+              <p>Divide 72 entre la rentabilidad anual. No es una fórmula exacta, pero ayuda a comprender el efecto del plazo.</p>
+              <div class="compound-guide__metrics">
+                <div class="compound-guide__metric"><span>Al 3 %</span><strong>24 años</strong></div>
+                <div class="compound-guide__metric"><span>Al 6 %</span><strong>12 años</strong></div>
+                <div class="compound-guide__metric"><span>Al 9 %</span><strong>8 años</strong></div>
+              </div>
+              <p class="compound-guide__note">En 24 años, una rentabilidad constante del 3 % duplicaría el capital una vez; al 6 %, aproximadamente dos veces; y al 9 %, tres veces.</p>
+            </article>
+          </div>
+
+          <article class="compound-guide__panel">
+            <span class="compound-guide__eyebrow">04 · Reinversión y fiscalidad</span>
+            <h3>Lo decisivo es qué ocurre con los rendimientos</h3>
+            <p>Un producto no es «compuesto» solo por su nombre. Si los rendimientos se cobran y se gastan, la base que trabaja no crece. Si se reinvierten, el proceso continúa. El diferimiento fiscal puede añadir una ventaja adicional, aunque normalmente menor que la propia reinversión.</p>
+            <div class="compound-guide__table-wrap">
+              <table class="compound-guide__table">
+                <thead><tr><th>Qué hace el inversor</th><th>Resultado a 20 años</th><th>Qué explica la diferencia</th></tr></thead>
+                <tbody>
+                  <tr><td>Compra Letras y gasta el rendimiento al vencimiento</td><td><strong>14.860 €</strong></td><td>El capital original sigue trabajando, pero las ganancias salen del proceso.</td></tr>
+                  <tr><td>Renueva las Letras y reinvierte lo ganado</td><td><strong>16.164 €</strong></td><td>La reinversión activa el efecto compuesto.</td></tr>
+                  <tr><td>Invierte mediante un fondo de acumulación sobre el mismo activo</td><td><strong>16.530 €</strong></td><td>Reinversión automática y tributación diferida hasta el reembolso.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="compound-guide__note">Ejemplo simplificado: 10.000 €, Letras a 12 meses al 3 %, horizonte de 20 años y un tipo del ahorro constante del 19 %. Las reglas fiscales pueden cambiar y deben revisarse según cada situación.</p>
+          </article>
+
+          <div class="compound-guide__grid">
+            <article class="compound-guide__panel">
+              <span class="compound-guide__eyebrow">Depósito frente a fondo de acumulación</span>
+              <h3>Certeza y riesgo no son lo mismo que capitalización</h3>
+              <p>Ambos vehículos pueden reinvertir. La diferencia está en la garantía, la variación del valor, la automatización y el momento en que se tributa.</p>
+              <div class="compound-guide__table-wrap">
+                <table class="compound-guide__table">
+                  <thead><tr><th>Aspecto</th><th>Depósito</th><th>Fondo de acumulación</th></tr></thead>
+                  <tbody>
+                    <tr><td>Rentabilidad</td><td>Conocida de antemano.</td><td>No garantizada; depende del mercado.</td></tr>
+                    <tr><td>Reinversión</td><td>Puede exigir renovar capital e intereses.</td><td>Automática dentro del fondo.</td></tr>
+                    <tr><td>Fiscalidad</td><td>Se tributa cuando se abonan los intereses.</td><td>Se difiere hasta el reembolso.</td></tr>
+                    <tr><td>Horizonte habitual</td><td>Dinero próximo o que no se quiere arriesgar.</td><td>Objetivos de largo plazo compatibles con su riesgo.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="compound-guide__panel">
+              <span class="compound-guide__eyebrow">05 · Lo que puede romper la cadena</span>
+              <h3>Interrupciones e inflación</h3>
+              <ul class="compound-guide__facts">
+                <li class="compound-guide__fact"><strong>Interrumpir</strong><span>Retirar las ganancias, dejar de aportar o abandonar tras una caída impide que los últimos años —los de mayor crecimiento acumulado— lleguen a producirse.</span></li>
+                <li class="compound-guide__fact"><strong>Inflación</strong><span>Es el interés compuesto funcionando en contra del poder de compra. Con una inflación media del 2 %, 100.000 € dentro de 25 años equivaldrían aproximadamente a 61.000 € actuales.</span></li>
+                <li class="compound-guide__fact"><strong>Riesgo</strong><span>El interés compuesto también amplifica pérdidas. El riesgo debe ajustarse al plazo y a la capacidad de mantener la inversión.</span></li>
+              </ul>
+              <p class="compound-guide__note">La rentabilidad que importa es la real: lo que queda después de descontar inflación, costes e impuestos.</p>
+            </article>
+          </div>
+
+          <article class="compound-guide__panel">
+            <span class="compound-guide__eyebrow">Cinco decisiones para proteger el proceso</span>
+            <div class="compound-guide__actions">
+              <div class="compound-guide__action"><strong>Empieza cuanto antes</strong><span>El primer año que se deja pasar es el que pierde más tiempo de capitalización.</span></div>
+              <div class="compound-guide__action"><strong>Automatiza</strong><span>Convierte la aportación en un hábito recurrente, no en una decisión mensual.</span></div>
+              <div class="compound-guide__action"><strong>Reinvierte</strong><span>Deja que los rendimientos permanezcan trabajando dentro de la inversión.</span></div>
+              <div class="compound-guide__action"><strong>Piensa en términos reales</strong><span>Compara el resultado con inflación, costes y fiscalidad.</span></div>
+              <div class="compound-guide__action"><strong>Ajusta riesgo y plazo</strong><span>No expongas a oscilaciones el dinero que vas a necesitar pronto.</span></div>
+            </div>
+            <p class="compound-guide__note">Los ejemplos utilizan rentabilidades constantes para facilitar la comprensión. Las rentabilidades reales varían y las pasadas no garantizan resultados futuros.</p>
+          </article>
+        </div>
+
+      </section>
+    </sc-if>
+
+    <!-- ============ SIMULADOR ============ -->
+    <sc-if value="{{ esCalculadora }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Simulador de interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; padding:28px 32px">
+          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin-bottom:10px">Herramienta interactiva</span>
+          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 10px">Simulador de interés compuesto</h2>
+          <p style="max-width:52em; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:0">Proyecta el crecimiento de tu patrimonio modificando las aportaciones, el plazo, la rentabilidad, la inflación y la fiscalidad estimada.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); gap:20px; align-items:start">
+          <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 28px">
+            <p style="border-bottom:1px solid var(--color-divider); color:var(--color-text); font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0 0 18px; padding-bottom:12px">Parámetros básicos</p>
+            <div style="display:flex; flex-direction:column; gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Capital inicial</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="initialCapital" type="number" step="1000" data-dc-value="{{ v.initialCapital }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">€</span></div></div>
+              <div style="display:grid; grid-template-columns:minmax(0,1fr) 120px; gap:12px">
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Aportación</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="periodicContribution" type="number" step="50" data-dc-value="{{ v.periodicContribution }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">€</span></div></div>
+                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Frecuencia</label><select name="contributionFrequency" data-dc-value="{{ v.contributionFrequency }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); color:var(--color-text); font-size:14px; font-weight:500; padding:11px 12px; cursor:pointer"><option value="monthly">Mensual</option><option value="yearly">Anual</option></select></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:9px"><label style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500">Horizonte temporal</label><span style="color:var(--color-accent-300); font-size:13px; font-weight:500; white-space:nowrap">{{ v.years }} años</span></div>
+                <input name="years" type="range" min="1" max="50" data-dc-value="{{ v.years }}" onChange="{{ setNum }}" style="width:100%; accent-color:var(--color-accent); cursor:pointer">
+              </div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Tasa de retorno anual esperada</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="expectedReturn" type="number" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">%</span></div></div>
+            </div>
+            <p style="border-top:1px solid var(--color-divider); color:var(--color-text); font-size:12px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:22px 0 16px; padding-top:16px">Ajustes avanzados</p>
+            <div style="display:flex; flex-direction:column; gap:16px">
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Inflación anual estimada</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="inflationRate" type="number" step="0.1" data-dc-value="{{ v.inflationRate }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">%</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Impuestos sobre beneficios</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="taxRate" type="number" step="0.1" data-dc-value="{{ v.taxRate }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">%</span></div></div>
+              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12px; font-weight:500; margin-bottom:7px">Incremento anual de aportaciones</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); padding:0 13px"><input name="annualIncrease" type="number" step="0.1" data-dc-value="{{ v.annualIncrease }}" onChange="{{ setNum }}" style="width:100%; border:0; outline:none; background:none; color:var(--color-text); font-size:15px; font-weight:500; padding:11px 0"><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px">%</span></div></div>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:20px">
+            <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px">
+              <div style="border-radius:var(--radius-md); background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:20px 22px"><p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:12px; font-weight:500; margin:0 0 6px">Capital final bruto</p><p style="color:var(--color-text); font-size:27px; line-height:1.05; margin:0; white-space:nowrap">{{ rBruto }}</p><span style="display:inline-block; border-radius:999px; background:color-mix(in srgb, var(--color-text) 9%, transparent); color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:10.5px; font-weight:500; margin-top:12px; padding:4px 11px">Sin descontar impuestos</span></div>
+              <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:20px 22px"><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500; margin:0 0 6px">Total aportado</p><p style="color:var(--color-text); font-size:25px; line-height:1.05; margin:0; white-space:nowrap">{{ rAportado }}</p><p style="color:#6b7686; font-size:11px; font-weight:500; margin:12px 0 0">Esfuerzo de ahorro real</p></div>
+              <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:20px 22px"><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500; margin:0 0 6px">Intereses generados</p><p style="color:var(--color-accent-300); font-size:25px; line-height:1.05; margin:0; white-space:nowrap">+{{ rIntereses }}</p><p style="color:#6b7686; font-size:11px; font-weight:500; margin:12px 0 0">El trabajo del tiempo</p></div>
+            </div>
+            <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px 28px">
+              <h3 style="color:var(--color-text); font-size:16px; font-weight:500; margin:0 0 6px">Evolución del patrimonio</h3>
+              <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12.5px; line-height:1.6; margin:0 0 16px">El gráfico muestra la diferencia entre lo que tú aportas y lo que se genera por el efecto acumulado de la rentabilidad.</p>
+              <svg viewBox="0 0 640 240" style="display:block; width:100%" role="img" aria-label="Evolución de aportaciones e intereses">
+                <line x1="52" y1="10" x2="52" y2="204" stroke="#cbd5e1"></line>
+                <line x1="52" y1="204" x2="632" y2="204" stroke="#cbd5e1"></line>
+                <line x1="52" y1="107" x2="632" y2="107" stroke="#edf1f6"></line>
+                <line x1="52" y1="10" x2="632" y2="10" stroke="#edf1f6"></line>
+                <text x="46" y="14" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMax }}</text>
+                <text x="46" y="111" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMid }}</text>
+                <text x="46" y="208" text-anchor="end" font-size="10" fill="#6b7686">0</text>
+                <text x="52" y="224" font-size="10" fill="#6b7686">Año 1</text>
+                <text x="632" y="224" text-anchor="end" font-size="10" fill="#6b7686">{{ chartFin }}</text>
+                <polygon points="" data-nuvia-points="{{ areaBruto }}" fill="rgba(124,154,68,.28)"></polygon>
+                <polygon points="" data-nuvia-points="{{ areaAportado }}" fill="rgba(100,116,139,.22)"></polygon>
+                <polyline points="" data-nuvia-points="{{ lineaBruto }}" fill="none" stroke="#7C9A44" stroke-width="2.4" stroke-linecap="round"></polyline>
+                <polyline points="" data-nuvia-points="{{ lineaAportado }}" fill="none" stroke="#6b7686" stroke-width="2" stroke-linecap="round"></polyline>
+              </svg>
+              <div style="display:flex; gap:18px; margin-top:12px">
+                <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:11.5px; font-weight:500"><span style="width:16px; height:3px; border-radius:2px; background:#6b7686"></span>Aportaciones</span>
+                <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:11.5px; font-weight:500"><span style="width:16px; height:3px; border-radius:2px; background:#7C9A44"></span>Aportaciones + intereses</span>
+              </div>
+            </div>
+            <div style="border-radius:var(--radius-md); background:#0B2347; color:#ffffff; padding:22px 26px">
+              <p style="display:flex; align-items:center; gap:9px; color:#ffffff; font-size:15px; font-weight:500; margin:0"><span style="color:#b8cc7c">◆</span>Valor real y fiscalidad</p>
+              <p style="color:rgba(255,255,255,.74); font-size:13px; line-height:1.65; margin:10px 0 0">{{ notaFiscal }}</p>
+              <p style="color:rgba(255,255,255,.74); font-size:13px; line-height:1.65; margin:8px 0 0">{{ notaInflacion }}</p>
+            </div>
+            <p style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.6; margin:0; padding:16px 20px">Simulación orientativa basada en los datos introducidos. No constituye asesoramiento financiero, fiscal ni una recomendación personalizada de inversión.</p>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ GLOSARIO ============ -->
+    <sc-if value="{{ esGlosario }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Glosario financiero" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="max-width:920px; margin:0 auto; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+          <div style="border-bottom:1px solid var(--color-divider); text-align:center; padding:32px 36px 26px">
+            <h2 style="color:var(--color-accent-300); font-size:32px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0 0 22px">Glosario financiero</h2>
+            <div role="tablist" aria-label="Secciones del glosario" style="display:inline-flex; gap:6px; border-radius:var(--radius-md); background:#cbd5e1; padding:6px">
+              <sc-for list="{{ subTabs }}" as="t" hint-placeholder-count="2">
+                <button type="button" role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.abrir }}" style="{{ t.estilo }}">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <sc-for list="{{ terminos }}" as="g" hint-placeholder-count="6">
+              <div style="border-bottom:1px solid var(--color-divider)">
+                <button type="button" aria-expanded="{{ g.abierto }}" onClick="{{ g.alternar }}" style="display:flex; width:100%; align-items:flex-start; justify-content:space-between; gap:16px; border:0; background:none; cursor:pointer; font-family:var(--font-body); text-align:left; padding:18px 32px; transition:background .2s ease" style-hover="background:color-mix(in srgb, var(--color-text) 5%, transparent)">
+                  <span style="min-width:0">
+                    <span style="display:block; color:var(--color-text); font-size:21px; line-height:1.25">{{ g.titulo }}</span>
+                    <span style="display:block; color:#6b7686; font-size:11.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-top:4px">{{ g.subtitulo }}</span>
+                  </span>
+                  <span aria-hidden="true" style="{{ g.flecha }}">▾</span>
+                </button>
+                <div style="{{ g.cuerpo }}">
+                  <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 20px">
+                    <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">{{ g.etiqueta1 }}</p>
+                    <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:0">{{ g.texto1 }}</p>
+                  </div>
+                  <div style="{{ g.bloque2 }}">
+                    <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">Por qué es importante</p>
+                    <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:0">{{ g.texto2 }}</p>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = { tab: 'fundamentos', sub: 'conceptos', abiertos: {}, c: null };
+  cDefaults() { return { initialCapital: 10000, periodicContribution: 300, contributionFrequency: 'monthly', years: 20, expectedReturn: 6.5, inflationRate: 2, taxRate: 21, annualIncrease: 0 }; }
+  syncSvgPoints() {
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll('[data-nuvia-points]').forEach((node) => {
+        node.setAttribute('points', node.getAttribute('data-nuvia-points') || '');
+      });
+    });
+  }
+  componentDidMount() {
+    document.title = 'NUVIA Academy | NUVIA Family Wealth';
+    const p = new URLSearchParams(window.location.search).get('tab');
+    if (p && ['fundamentos', 'interes', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
+    this.syncSvgPoints();
+  }
+  abrirTab(tab) {
+    this.setState({ tab });
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    window.history.replaceState({}, '', url);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  componentDidUpdate() { this.syncSvgPoints(); }
+  // Series históricas (100 $ en 1928) — datos de SavingsInvestmentGuide.tsx
+  historia() {
+    if (this._h) return this._h;
+    const paths = {
+      lineaBolsa: [100,58,110,95,190,420,1100,2500,4300,3800,7800,18500,42000,98000,160000,120000,185000,410000,680000,1157599],
+      lineaBonos: [100,145,230,290,340,410,520,670,850,980,1320,2100,3600,6200,9800,14500,20500,33000,52000,53952],
+      lineaOro: [100,105,120,110,125,132,145,155,180,2600,1200,2300,1100,1000,1600,5400,3800,6800,9200,21025],
+      lineaDeuda: [100,116,150,168,182,205,250,300,350,480,420,780,1150,1900,2700,3500,4600,6100,8200,7753],
+      lineaVivienda: [100,92,130,230,305,370,450,560,760,1180,1400,1800,2200,2500,2750,3200,3900,4400,5000,5626],
+      lineaDinero: [100,105,110,118,132,150,170,210,280,370,520,780,1100,1500,1800,1980,2140,2250,2380,2578],
+    };
+    const minLog = Math.log10(80), maxLog = Math.log10(1200000);
+    const out = {};
+    Object.keys(paths).forEach(k => {
+      out[k] = paths[k].map((v, i) => {
+        const x = 62 + (i / (paths[k].length - 1)) * 620;
+        const y = 24 + 270 - ((Math.log10(v) - minLog) / (maxLog - minLog)) * 270;
+        return x.toFixed(1) + ',' + y.toFixed(1);
+      }).join(' ');
+    });
+    this._h = out;
+    return out;
+  }
+  glosario() {
+    if (this._g) return this._g;
+    this._g = {
+      conceptos: [
+        { title: 'Interés compuesto', subtitle: 'El crecimiento sobre el crecimiento - ¿Cómo trabaja el tiempo a favor del dinero?', definition: 'Es el efecto por el cual los beneficios generados por una inversión se reinvierten y, a su vez, generan nuevos beneficios. No solo crece el capital inicial, también crecen los rendimientos acumulados.', importance: 'Es uno de los motores más poderosos de la inversión a largo plazo. Cuanto mayor es el horizonte temporal, más relevante se vuelve. Ayuda a entender por qué empezar pronto y mantener la disciplina puede tener un impacto muy significativo en el patrimonio final.' },
+        { title: 'Rentabilidad', subtitle: 'El resultado de la inversión - ¿Cuánto ha generado mi dinero?', definition: 'La rentabilidad mide la ganancia o pérdida obtenida por una inversión en relación con el capital invertido. Puede expresarse en porcentaje y calcularse para distintos periodos: mensual, anual o acumulado.', importance: 'Permite comparar inversiones y valorar si el capital está creciendo de forma adecuada. No debe analizarse de forma aislada: una rentabilidad alta puede ir acompañada de un riesgo elevado.' },
+        { title: 'Riesgo', subtitle: 'La incertidumbre del resultado - ¿Qué puede salir diferente a lo esperado?', definition: 'El riesgo es la posibilidad de que una inversión no obtenga el resultado previsto, fluctúe de forma relevante o incluso genere pérdidas. No significa necesariamente perder dinero, sino convivir con incertidumbre.', importance: 'Ayuda a elegir inversiones coherentes con el perfil del inversor. Una buena cartera no busca eliminar totalmente el riesgo, sino asumir un nivel razonable y compensado por la rentabilidad esperada.' },
+        { title: 'Volatilidad', subtitle: 'El movimiento del valor - ¿Cuánto sube y baja una inversión?', definition: 'La volatilidad mide la intensidad de las oscilaciones del precio o valor de una inversión. Una volatilidad alta implica movimientos más fuertes; una volatilidad baja indica un comportamiento más estable.', importance: 'Ayuda a entender la estabilidad de una cartera. Dos inversiones pueden tener una rentabilidad parecida, pero comportarse de manera muy distinta durante el camino. La volatilidad influye mucho en la tranquilidad del inversor.' },
+        { title: 'Diversificación', subtitle: 'No concentrarlo todo - ¿Cómo se reparte el riesgo?', definition: 'Diversificar consiste en repartir el capital entre distintos activos, regiones, sectores o estilos de inversión para reducir la dependencia de una única fuente de rentabilidad.', importance: 'Una cartera diversificada puede resistir mejor escenarios adversos. No garantiza beneficios ni elimina pérdidas, pero reduce el impacto de que una sola inversión o mercado tenga un mal comportamiento.' },
+        { title: 'Horizonte temporal', subtitle: 'El plazo de la inversión - ¿Cuándo necesitaré el dinero?', definition: 'El horizonte temporal es el periodo durante el cual se espera mantener una inversión antes de necesitar el capital. Puede ser corto, medio o largo plazo.', importance: 'Determina qué nivel de riesgo puede ser razonable. A mayor plazo, normalmente hay más capacidad para asumir oscilaciones; a menor plazo, suele ser más importante proteger el capital y mantener liquidez.' },
+        { title: 'Inflación', subtitle: 'La pérdida de poder adquisitivo - ¿Cuánto vale realmente mi dinero?', definition: 'La inflación es el aumento generalizado de los precios. Cuando los precios suben, el dinero pierde capacidad de compra si no crece al mismo ritmo.', importance: 'Una inversión debe analizarse en términos reales, no solo nominales. Ganar un 3% cuando la inflación es del 4% implica perder poder adquisitivo. Por eso el objetivo no es solo conservar dinero, sino proteger su valor real.' },
+        { title: 'Liquidez', subtitle: 'La facilidad de convertir en dinero - ¿Puedo disponer del capital cuando lo necesite?', definition: 'La liquidez mide la facilidad y rapidez con la que una inversión puede convertirse en efectivo sin sufrir una pérdida significativa de valor.', importance: 'Es clave para planificar imprevistos y necesidades de corto plazo. Una cartera puede ser rentable, pero si no tiene liquidez suficiente, puede obligar a vender en un mal momento.' },
+        { title: 'Fondo de inversión', subtitle: 'Invertir de forma colectiva - ¿Cómo accedo a una cartera gestionada?', definition: 'Un fondo de inversión agrupa el dinero de muchos inversores para invertirlo en una cartera de activos gestionada por profesionales, siguiendo una política de inversión concreta.', importance: 'Permite acceder a carteras diversificadas y gestión profesional con importes relativamente bajos. Es importante revisar sus costes, estrategia, riesgo y consistencia con los objetivos del inversor.' },
+        { title: 'ETF', subtitle: 'Un fondo que cotiza en bolsa - ¿Cómo invertir de forma indexada o flexible?', definition: 'Un ETF es un fondo cotizado que se compra y vende en mercado como una acción. Normalmente replica un índice, sector, región o clase de activo.', importance: 'Suele ofrecer diversificación, costes bajos y operativa flexible. Puede ser útil para construir carteras eficientes, aunque también exige entender su índice, liquidez, divisa y riesgo de mercado.' },
+        { title: 'Renta fija', subtitle: 'Prestar dinero a cambio de intereses - ¿Qué papel juega la estabilidad?', definition: 'La renta fija incluye activos como bonos, obligaciones o letras, en los que el inversor presta dinero a un emisor a cambio de pagos de intereses y devolución del principal en una fecha determinada.', importance: 'Puede aportar estabilidad, ingresos periódicos y menor volatilidad que la renta variable. Aun así, no está libre de riesgo: influyen los tipos de interés, la inflación, el plazo y la solvencia del emisor.' },
+        { title: 'Renta variable', subtitle: 'Participar en empresas - ¿Cómo capturo crecimiento?', definition: 'La renta variable representa la inversión en acciones o participaciones de empresas. Su valor depende de la evolución del negocio, los beneficios, las expectativas y las condiciones de mercado.', importance: 'Es una de las principales fuentes de crecimiento patrimonial a largo plazo, pero también puede sufrir caídas importantes. Requiere horizonte temporal, diversificación y tolerancia a la volatilidad.' },
+        { title: 'Perfil de riesgo', subtitle: 'La medida personal de tolerancia - ¿Qué nivel de oscilación puedo asumir?', definition: 'El perfil de riesgo refleja la capacidad y disposición de una persona para asumir fluctuaciones o pérdidas temporales en sus inversiones. Depende de factores financieros, emocionales y temporales.', importance: 'Es la base para construir una cartera adecuada. Una inversión puede ser buena en abstracto, pero inadecuada para una persona concreta si no encaja con su situación, objetivos o tolerancia a las caídas.' },
+      ],
+      indicadores: [
+        { title: 'Volatilidad', subtitle: 'El indicador de estabilidad - ¿Cuánto se mueve?', interpretation: 'A menudo se asocia erróneamente con “pérdida”, pero técnicamente mide la incertidumbre. Una volatilidad baja refleja un comportamiento estable y tranquilo; una volatilidad alta implica oscilaciones más fuertes en el corto plazo. El objetivo es mantenerla dentro del nivel de confort definido por el inversor.' },
+        { title: 'Ratio de Sharpe', subtitle: 'La calidad de la rentabilidad - ¿Vale la pena el riesgo?', interpretation: 'Indica cuánta rentabilidad extra se obtiene por cada unidad de riesgo asumida. Un ratio alto suele ser señal de una gestión eficiente: significa que los beneficios se logran mediante decisiones inteligentes y no simplemente exponiendo el capital a riesgos innecesarios.' },
+        { title: 'Max Drawdown / Caída máxima', subtitle: 'La prueba de resistencia - ¿Cuál es el peor escenario?', interpretation: 'Representa la máxima caída acumulada que ha registrado una cartera desde un máximo anterior hasta su recuperación. Un dato controlado indica que la cartera tiene buenos mecanismos de defensa y solidez para proteger el patrimonio en ciclos bajistas.' },
+        { title: 'Frontera eficiente', subtitle: 'El estándar de optimización - ¿Es eficiente mi cartera?', interpretation: 'Cualquier punto situado sobre esta línea indica que la cartera está obteniendo la máxima rentabilidad posible para ese nivel de riesgo. Estar en la frontera eficiente significa que el dinero está trabajando a su máximo potencial; estar muy por debajo puede indicar que sería posible obtener más retorno sin asumir más riesgo.' },
+        { title: 'Mapa de riesgo-retorno', subtitle: 'El contexto visual - ¿Dónde estoy situado?', interpretation: 'El eje horizontal representa el riesgo o volatilidad, y el eje vertical el retorno o rentabilidad. Hacia la derecha: mayor riesgo o movimiento. Hacia arriba: mayor ganancia esperada. La posición en este mapa permite ver de un vistazo cómo se comporta la cartera en comparación con el mercado o con otros perfiles.' },
+      ],
+    };
+    return this._g;
+  }
+  // Matemática portada de InvestmentCalculator.tsx
+  proyectar(p) {
+    let balance = Math.max(p.initialCapital, 0);
+    let aportado = Math.max(p.initialCapital, 0);
+    let cuota = Math.max(p.periodicContribution, 0);
+    const anual = p.expectedReturn / 100;
+    const filas = [];
+    const n = Math.max(Math.round(p.years), 0);
+    for (let year = 1; year <= n; year += 1) {
+      if (p.contributionFrequency === 'monthly') {
+        const rm = anual / 12;
+        for (let m = 1; m <= 12; m += 1) { balance += cuota; aportado += cuota; balance += balance * rm; }
+      } else { balance += cuota; aportado += cuota; balance += balance * anual; }
+      cuota *= 1 + p.annualIncrease / 100;
+      const beneficio = Math.max(0, balance - aportado);
+      const neto = balance - beneficio * (p.taxRate / 100);
+      const real = neto / Math.pow(1 + p.inflationRate / 100, year);
+      filas.push({ year, aportaciones: Math.round(aportado), bruto: Math.round(balance), neto: Math.round(neto), real: Math.round(real) });
+    }
+    const f = filas[filas.length - 1] || { aportaciones: Math.round(Math.max(p.initialCapital, 0)), bruto: Math.round(Math.max(p.initialCapital, 0)), neto: Math.round(Math.max(p.initialCapital, 0)), real: Math.round(Math.max(p.initialCapital, 0)) };
+    return { filas, aportado: f.aportaciones, bruto: f.bruto, intereses: f.bruto - f.aportaciones, neto: f.neto, real: f.real };
+  }
+  c() { return this.state.c || this.cDefaults(); }
+  renderVals() {
+    const fmt = (x) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(x)) + ' €';
+    const tab = this.state.tab;
+    const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
+    const pill = (on) => base + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
+    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['interes', 'Interés compuesto', ''], ['calculadora', 'Simulador', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
+    const c = this.c();
+    const pr = this.proyectar(c);
+    const maxY = Math.max(1, ...pr.filas.map(f => f.bruto));
+    const px = (i) => (52 + (pr.filas.length > 1 ? (i / (pr.filas.length - 1)) * 580 : 0)).toFixed(1);
+    const py = (v) => (204 - (v / maxY) * 194).toFixed(1);
+    const lineaDe = (campo) => pr.filas.map((f, i) => px(i) + ',' + py(f[campo])).join(' ');
+    const areaDe = (campo) => pr.filas.length ? '52,204 ' + lineaDe(campo) + ' ' + px(pr.filas.length - 1) + ',204' : '';
+    const g = this.glosario();
+    const lista = this.state.sub === 'conceptos' ? g.conceptos : g.indicadores;
+    const vals = {
+      pestanas: defs.map(([id, label, sufijo]) => ({
+        label, sufijo,
+        ariaCurrent: id === tab ? 'page' : undefined,
+        abrir: id === 'curso' ? () => { window.location.href = 'curso.html'; } : () => this.abrirTab(id),
+        estilo: pill(id === tab),
+      })),
+      esFundamentos: tab === 'fundamentos', esInteres: tab === 'interes', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
+      irFundamentos: () => this.abrirTab('fundamentos'),
+      irInteres: () => this.abrirTab('interes'),
+      irCalculadora: () => this.abrirTab('calculadora'),
+      irGlosario: () => this.abrirTab('glosario'),
+      v: c,
+      setNum: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: Number(e.target.value) || 0 }) }),
+      setStr: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: e.target.value }) }),
+      rBruto: fmt(pr.bruto), rAportado: fmt(pr.aportado), rIntereses: fmt(pr.intereses),
+      chartMax: fmt(maxY), chartMid: fmt(maxY / 2), chartFin: 'Año ' + c.years,
+      lineaBruto: lineaDe('bruto'), lineaAportado: lineaDe('aportaciones'),
+      areaBruto: areaDe('bruto'), areaAportado: areaDe('aportaciones'),
+      notaFiscal: 'Si decidieras rescatar el fondo el año ' + c.years + ', tras pagar un ' + c.taxRate + ' % de impuestos sobre las plusvalías, te quedarían ' + fmt(pr.neto) + ' netos.',
+      notaInflacion: c.inflationRate > 0 ? 'Ajustado a una inflación del ' + c.inflationRate + ' %, ese dinero tendría el poder adquisitivo equivalente a ' + fmt(pr.real) + ' de hoy.' : 'Sin inflación estimada, el valor neto coincide con el poder adquisitivo actual.',
+      subTabs: [['conceptos', 'Conceptos básicos'], ['indicadores', 'Indicadores de cartera']].map(([id, label]) => ({
+        label, selected: this.state.sub === id,
+        abrir: () => this.setState({ sub: id, abiertos: {} }),
+        estilo: 'border:0; border-radius:var(--radius-sm); cursor:pointer; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:11px 24px; transition:background .2s ease, color .2s ease; ' + (this.state.sub === id ? 'background:transparent; color:var(--color-text)' : 'background:transparent; color:color-mix(in srgb, var(--color-text) 50%, transparent)'),
+      })),
+      terminos: lista.map((item, i) => {
+        const abierto = !!this.state.abiertos[this.state.sub + i];
+        return {
+          titulo: item.title, subtitulo: item.subtitle, abierto,
+          alternar: () => { const a = Object.assign({}, this.state.abiertos); a[this.state.sub + i] = !abierto; this.setState({ abiertos: a }); },
+          flecha: 'flex-shrink:0; color:var(--color-accent-300); font-size:14px; margin-top:6px; transition:transform .3s ease; transform:rotate(' + (abierto ? '180deg' : '0deg') + ')',
+          cuerpo: (abierto ? 'display:flex' : 'display:none') + '; flex-direction:column; gap:12px; padding:0 32px 20px',
+          etiqueta1: item.definition ? 'Definición' : 'Interpretación',
+          texto1: item.definition || item.interpretation,
+          bloque2: item.importance ? 'border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); padding:16px 20px' : 'display:none',
+          texto2: item.importance || '',
+        };
+      }),
+    };
+    Object.assign(vals, this.historia());
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

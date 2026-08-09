@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Analítica de cartera | NUVIA Family Wealth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    @keyframes nv-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); } 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html" class="is-active" aria-current="page">Cartera</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <section data-screen-label="Cabecera Analítica de cartera" class="nuvia-standard-hero" style="display:none">
+    <div class="nuvia-standard-hero__inner">
+      <span class="nuvia-standard-hero__eyebrow">Suite NUVIA · Análisis patrimonial</span>
+      <h1>Analítica de cartera</h1>
+      <p>Comprende cómo está distribuido tu patrimonio, contrasta riesgos y examina cada posición con una visión conjunta.</p>
+    </div>
+  </section>
+
+  <main style="padding:24px 0 76px">
+    <div style="max-width:1520px; margin:0 auto; padding:0 40px">
+      <div aria-hidden="true" style="display:none">
+        <span style="display:inline-flex; align-items:center; gap:10px; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase"><span style="width:7px; height:7px; border-radius:999px; background:var(--color-accent); animation:nv-pulse 2.4s ease-out infinite"></span>Suite NUVIA conectada</span>
+        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px; text-align:right">Históricos reales · fundamentales EODHD · gráficos interactivos</span>
+      </div>
+      <section aria-label="Suite interactiva de analítica de cartera" style="overflow:hidden; width:100%; border-radius:28px; background:var(--color-surface); box-shadow:0 24px 70px rgba(11,35,71,.10)">
+        <iframe id="nuvia-portfolio-suite" src="{{ suiteSrc }}" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no" style="display:block; width:100%; min-height:1500px; border:0; background:transparent"></iframe>
+      </section>
+      <p style="display:none">Suite de analítica integrada desde el núcleo NUVIA.</p>
+    </div>
+  </main>
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    const requested = new URLSearchParams(window.location.search).get('vista');
+    const vista = ['portfolio', 'technical', 'fundamental'].includes(requested) ? requested : 'portfolio';
+    const titulos = { portfolio: 'Cartera', technical: 'Análisis técnico', fundamental: 'Análisis fundamental' };
+    document.title = 'Analítica de cartera · ' + titulos[vista] + ' | NUVIA';
+    const frame = document.getElementById('nuvia-portfolio-suite');
+    if (!frame) return;
+    const applyHeight = (height) => {
+      const safeHeight = Math.max(900, Math.min(Number(height) || 0, 12000));
+      if (safeHeight) frame.style.height = safeHeight + 'px';
+    };
+    this._onMsg = (event) => {
+      if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
+      if (event.data && event.data.source === 'nuvia-core' && event.data.type === 'resize') applyHeight(event.data.height);
+    };
+    window.addEventListener('message', this._onMsg);
+    frame.addEventListener('load', () => {
+      try { applyHeight(frame.contentDocument && frame.contentDocument.documentElement && frame.contentDocument.documentElement.scrollHeight); } catch (e) { /* el mensaje del núcleo mantiene el ajuste */ }
+    });
+  }
+  componentWillUnmount() { if (this._onMsg) window.removeEventListener('message', this._onMsg); }
+  renderVals() {
+    const requested = new URLSearchParams(window.location.search).get('vista');
+    const vista = ['portfolio', 'technical', 'fundamental'].includes(requested) ? requested : 'portfolio';
+    return {
+      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=5&suiteTab=' + vista,
+    };
+  }
+}
+</script>
+</body>
+</html>

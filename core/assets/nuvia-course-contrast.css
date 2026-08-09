@@ -1,0 +1,26 @@
+.fc-course .fc-case-story {
+  background: linear-gradient(145deg, #0b2347 0%, #071a38 100%);
+  color: #ffffff;
+}
+
+.fc-course .fc-case-story > span {
+  color: #c9d8a8;
+}
+
+.fc-course .fc-case-story h3,
+.fc-course .fc-case-story .fc-case-numbers strong {
+  color: #ffffff;
+}
+
+.fc-course .fc-case-story .fc-case-numbers div {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.fc-course .fc-case-story .fc-case-numbers small {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.fc-course .fc-case-story > p {
+  color: rgba(255, 255, 255, 0.8);
+}

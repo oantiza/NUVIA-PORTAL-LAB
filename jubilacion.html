@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Simulador de jubilación | NUVIA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body class="nuvia-friendly">
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <link rel="stylesheet" href="friendly-sections.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    input, select { font-family: var(--font-body); }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    select option { background: var(--color-surface); color: var(--color-text); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="simulador" data-screen-label="Cabecera simulador" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
+      <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
+      <div style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:48px; align-items:center">
+        <div>
+          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tu vida después del trabajo</span>
+          <h1 style="color:#ffffff; font-size:40px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 14px">¿Te dará tu patrimonio para vivir como quieres?</h1>
+          <p style="max-width:58ch; color:rgba(255,255,255,.82); font-size:17px; line-height:1.65; margin:0 0 20px">Calcula una renta mensual orientativa, comprueba cuánto tiempo podría durar tu dinero y descubre qué decisiones pueden mejorar el resultado.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <span class="tag tag-outline" style="font-size:12px; padding:5px 13px">◆ Solo Bizkaia</span>
+            <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Reglas fiscales 2026</span>
+            <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Cálculo local, sin envío de datos</span>
+          </div>
+        </div>
+        <aside aria-label="Lo que obtendrás" style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:24px 26px">
+          <p style="color:rgba(255,255,255,.66); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 16px">En pocos minutos verás</p>
+          <div style="display:flex; flex-direction:column; gap:14px">
+            <div style="display:flex; gap:13px; align-items:flex-start">
+              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">01</span>
+              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Tu renta mensual estimada</strong>Una cifra comprensible después de impuestos.</p>
+            </div>
+            <div style="display:flex; gap:13px; align-items:flex-start">
+              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">02</span>
+              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Hasta cuándo podría durar</strong>Con escenarios prudente, base y favorable.</p>
+            </div>
+            <div style="display:flex; gap:13px; align-items:flex-start">
+              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">03</span>
+              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Qué decisión pesa más</strong>Ahorro, forma de cobro y margen de seguridad.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div style="height:1px; margin-top:40px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+    </div>
+    </section>
+
+    <section data-screen-label="Ámbito territorial" style="max-width:1240px; margin:0 auto; padding:20px 48px 0">
+      <div style="display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:24px; align-items:center; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 24px">
+        <span style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-family:var(--font-heading); font-size:19px; font-weight:500">B</span>
+        <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:14px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Cálculo adaptado a Bizkaia.</strong> Utiliza las reglas fiscales de 2026. Si tributas en otro territorio, toma el resultado únicamente como referencia económica.</p>
+        <span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap">Solo Bizkaia</span>
+      </div>
+    </section>
+
+    <section data-screen-label="Formulario del simulador" style="max-width:1240px; margin:0 auto; padding:32px 48px 0">
+      <div style="border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, var(--color-accent) 7%, transparent); padding:14px 20px; margin-bottom:20px; display:flex; gap:14px; align-items:flex-start">
+        <span style="color:var(--color-accent-300); font-size:16px; line-height:1.3">!</span>
+        <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:14px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Una orientación, no una promesa:</strong> utiliza el resultado para comparar caminos y preparar mejores preguntas.</p>
+      </div>
+
+      <div class="friendly-progress" aria-label="Pasos del simulador">
+        <span><b>01</b> Tú</span>
+        <span><b>02</b> Lo que tienes</span>
+        <span><b>03</b> Cómo cobrar</span>
+        <span><b>04</b> Afinar el cálculo</span>
+      </div>
+
+      <details class="friendly-step" open>
+        <summary><span class="friendly-step__number">01</span><span><span class="friendly-step__title">Cuéntanos tu punto de partida</span><span class="friendly-step__help">Edad, pensión y hasta cuándo quieres planificar.</span></span></summary>
+      <article data-screen-label="01 Situación" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
+        <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
+          <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">01</span>
+          <div>
+            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tu situación y hasta cuándo quieres planificar</h2>
+            <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Empieza por tu edad, tu pensión y el horizonte del plan.</p>
+          </div>
+        </header>
+        <div style="padding:22px 26px 26px">
+          <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px">
+            <div>
+              <label for="age" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Qué edad tienes?</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
+                <input id="age" name="age" type="number" min="40" max="95" data-dc-value="{{ v.age }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
+              </div>
+            </div>
+            <div>
+              <label for="sex" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Referencia para estimar la longevidad</label>
+              <select id="sex" name="sex" data-dc-value="{{ v.sex }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+                <option value="male">Hombre</option>
+                <option value="female">Mujer</option>
+              </select>
+            </div>
+            <div>
+              <label for="pensionMonthly" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Qué pensión mensual esperas recibir?</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
+                <input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" data-dc-value="{{ v.pensionMonthly }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">€/mes</span>
+              </div>
+              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Antes de IRPF · 14 pagas.</p>
+            </div>
+            <div>
+              <label for="pensionRevalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Cómo podría evolucionar tu pensión?</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
+                <input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" data-dc-value="{{ v.pensionRevalPct }}" onChange="{{ setRev }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span>
+              </div>
+              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Si prefieres no suponer subidas, escribe 0.</p>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
+            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Hasta qué momento quieres que llegue el plan?</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <sc-for list="{{ hOpts }}" as="o" hint-placeholder-count="3">
+                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+              </sc-for>
+            </div>
+            <div style="margin-top:16px">
+              <sc-if value="{{ hTarget }}" hint-placeholder-val="{{ true }}">
+                <div style="max-width:280px">
+                  <label for="targetAge" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Quiero planificar hasta los</label>
+                  <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
+                    <input id="targetAge" name="targetAge" type="number" min="41" max="110" data-dc-value="{{ v.targetAge }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
+                    <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ hLongevity }}" hint-placeholder-val="{{ false }}">
+                <div style="max-width:280px">
+                  <label for="longevityMargin" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Margen de seguridad</label>
+                  <select id="longevityMargin" name="longevityMargin" data-dc-value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+                    <option value="0">Sin margen</option>
+                    <option value="5">+5 años</option>
+                    <option value="10">+10 años</option>
+                    <option value="15">+15 años</option>
+                  </select>
+                  <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; margin:6px 0 0">{{ expectativa }}</p>
+                </div>
+              </sc-if>
+              <sc-if value="{{ hPreserve }}" hint-placeholder-val="{{ false }}">
+                <p style="max-width:72ch; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.6; padding:13px 16px; margin:0">Esta opción intenta retirar únicamente la rentabilidad estimada. Aun así, el capital puede bajar por inflación, impuestos o años con pérdidas.</p>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </article>
+      </details>
+
+      <details class="friendly-step">
+        <summary><span class="friendly-step__number">02</span><span><span class="friendly-step__title">Añade tus ahorros e inversiones</span><span class="friendly-step__help">Si no tienes un producto, simplemente déjalo a cero.</span></span></summary>
+      <article data-screen-label="02 Patrimonio privado" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
+        <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
+          <div style="display:flex; align-items:flex-start; gap:16px">
+            <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">02</span>
+            <div>
+              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tus ahorros e inversiones</h2>
+              <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Indica cuánto vale hoy cada producto y cuánto dinero pusiste originalmente. Si no tienes un producto, déjalo en cero.</p>
+            </div>
+          </div>
+          <button type="button" onClick="{{ vaciarPatrimonio }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Borrar estos importes</button>
+        </header>
+        <div style="padding:8px 26px 22px">
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:12px 0 9px">
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Producto</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Cuánto vale hoy</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Lo que invertiste</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Cómo tributa la ganancia</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
+            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Liquidez y efectivo</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Cuentas corrientes y dinero disponible.</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de liquidez" name="cashValue" type="number" min="0" step="1000" data-dc-value="{{ v.cashValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:13px">—</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Retirada de principal no sujeta.</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
+            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Fondos de inversión</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Se estima qué parte de cada retirada es ganancia.</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de fondos" name="fundsValue" type="number" min="0" step="1000" data-dc-value="{{ v.fundsValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Aportado a fondos" name="fundsCost" type="number" min="0" step="1000" data-dc-value="{{ v.fundsCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Ganancia positiva a la base del ahorro.</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
+            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Acciones y ETF</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Estimación simplificada, sin FIFO por lotes.</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de acciones y ETF" name="sharesValue" type="number" min="0" step="1000" data-dc-value="{{ v.sharesValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Pagado por acciones y ETF" name="sharesCost" type="number" min="0" step="1000" data-dc-value="{{ v.sharesCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Ganancia positiva a la base del ahorro.</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
+            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Depósitos y renta fija</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">El capital no tributa; los intereses sí pueden.</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de depósitos" name="depositsValue" type="number" min="0" step="1000" data-dc-value="{{ v.depositsValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">Principal = valor actual</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Intereses a la base del ahorro.</span>
+          </div>
+          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; padding:14px 0 6px">
+            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Seguros de ahorro</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Rescates ordinarios; sin rentas vitalicias aseguradas.</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor de rescate del seguro" name="insuranceValue" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Primas aportadas al seguro" name="insuranceCost" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
+            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Rendimiento positivo a la base del ahorro.</span>
+          </div>
+          <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.55; border-top:1px solid var(--color-divider); margin:10px 0 0; padding-top:12px">Si un producto vale menos de lo que pagaste, el simulador no utiliza automáticamente esa pérdida para reducir el impuesto: esa compensación depende del resto de operaciones del año.</p>
+        </div>
+      </article>
+      </details>
+
+      <details class="friendly-step">
+        <summary><span class="friendly-step__number">03</span><span><span class="friendly-step__title">¿Tienes una EPSV?</span><span class="friendly-step__help">Ábrelo solo si quieres incluirla y comparar formas de cobro.</span></span></summary>
+      <article data-screen-label="03 EPSV" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
+        <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
+          <div style="display:flex; align-items:flex-start; gap:16px">
+            <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">03</span>
+            <div>
+              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tu EPSV y la forma de cobrarla</h2>
+              <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Solo si tienes una EPSV. Se diferencian los derechos anteriores y posteriores al 1 de enero de 2026.</p>
+            </div>
+          </div>
+          <button type="button" onClick="{{ cargarDFB }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Cargar caso práctico DFB</button>
+        </header>
+        <div style="padding:22px 26px 26px">
+          <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
+            <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
+              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos acumulados hasta 2025</h3>
+              <label for="epsvPre" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPre }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+              <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
+                <label for="epsvPreReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:14px 0 6px">Ganancias incluidas en ese saldo</label>
+                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPreReturn" name="epsvPreReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPreReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+              </sc-if>
+            </div>
+            <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
+              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos generados desde 2026</h3>
+              <label for="epsvPost" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+              <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
+                <label for="epsvPostReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:14px 0 6px">Ganancias incluidas en ese saldo</label>
+                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPostReturn" name="epsvPostReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPostReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Tu EPSV te ha facilitado el desglose por periodos?</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <sc-for list="{{ dmOpts }}" as="o" hint-placeholder-count="2">
+                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ dmQuick }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,.7fr); gap:18px; margin-top:16px">
+                <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
+                  <input type="checkbox" name="entityNoBreakdown" checked="{{ v.entityNoBreakdown }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
+                  <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Confirmo que la entidad no facilita el desglose</strong>Se aplicará una estimación fiscal: 1 % por año con un máximo del 35 %, o 25 % si tampoco conoces la antigüedad.</span>
+                </label>
+                <div>
+                  <label for="seniorityKnown" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Conoces los años de antigüedad?</label>
+                  <select id="seniorityKnown" name="seniorityKnown" data-dc-value="{{ v.seniorityKnown }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+                    <option value="yes">Sí</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+                <sc-if value="{{ seniorityYes }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <label for="seniorityYears" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Años desde la primera aportación</label>
+                    <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="seniorityYears" name="seniorityYears" type="number" min="1" max="60" data-dc-value="{{ v.seniorityYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span></div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:24px; align-items:start">
+            <div>
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Cómo quieres cobrar la EPSV?</p>
+              <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <sc-for list="{{ poOpts }}" as="o" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ poMixed }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:16px; max-width:420px">
+                  <label for="epsvCapitalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:9px">Parte que cobrarías de una sola vez</label>
+                  <div style="display:flex; align-items:center; gap:16px">
+                    <input id="epsvCapitalPct" name="epsvCapitalPct" type="range" min="0" max="100" step="5" data-dc-value="{{ v.epsvCapitalPct }}" onChange="{{ setNum }}" style="flex:1; accent-color:var(--color-accent); cursor:pointer">
+                    <span style="min-width:52px; text-align:right; color:var(--color-text); font-size:17px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ v.epsvCapitalPct }} %</span>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+            <div>
+              <label for="taxRegime" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Régimen del cobro anterior a 2026</label>
+              <select id="taxRegime" name="taxRegime" data-dc-value="{{ v.taxRegime }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+                <option value="auto">Automático: comparar y elegir menor impuesto</option>
+                <option value="transitory">Régimen transitorio: integrar el 60 %</option>
+                <option value="new">Régimen desde 2026: separar aportación y ganancia</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr); gap:18px; align-items:start">
+            <div>
+              <label for="contingency" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Motivo por el que cobras la EPSV</label>
+              <select id="contingency" name="contingency" data-dc-value="{{ v.contingency }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+                <option value="retirement">Jubilación</option>
+                <option value="disability">Invalidez</option>
+                <option value="dependency">Dependencia</option>
+                <option value="seriousIllness">Enfermedad grave</option>
+                <option value="longUnemployment">Desempleo de larga duración</option>
+                <option value="other">Otro rescate o baja</option>
+              </select>
+            </div>
+            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
+              <input type="checkbox" name="firstBenefit" checked="{{ v.firstBenefit }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
+              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Es el primer cobro en capital por este motivo</strong>Se consideran juntos los cobros del mismo año.</span>
+            </label>
+            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
+              <input type="checkbox" name="twoYears" checked="{{ v.twoYears }}" disabled="{{ twoYearsDisabled }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
+              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Han pasado más de dos años desde la primera aportación</strong>No se exige en invalidez o dependencia.</span>
+            </label>
+          </div>
+
+          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,.5fr) minmax(0,1fr); gap:18px; align-items:start">
+            <div>
+              <label for="epsvRentQualification" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Tipo de renta formalizada con la EPSV</label>
+              <select id="epsvRentQualification" name="epsvRentQualification" data-dc-value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+                <option value="none">Pagos ordinarios: la ganancia puede tributar</option>
+                <option value="temporary">Renta temporal formalizada de 15 años o más</option>
+                <option value="life">Renta vitalicia formalizada por la EPSV</option>
+              </select>
+            </div>
+            <sc-if value="{{ rentTemporary }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <label for="epsvRentYears" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Duración del contrato</label>
+                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvRentYears" name="epsvRentYears" type="number" min="15" max="50" data-dc-value="{{ v.epsvRentYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span></div>
+              </div>
+              <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
+                <input type="checkbox" name="constantRent" checked="{{ v.constantRent }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
+                <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">El contrato establece una cuantía constante</strong>Márcalo solo si figura así en la documentación de la EPSV.</span>
+              </label>
+            </sc-if>
+          </div>
+        </div>
+      </article>
+      </details>
+
+      <details class="friendly-step">
+        <summary><span class="friendly-step__number">04</span><span><span class="friendly-step__title">Ajusta la estimación</span><span class="friendly-step__help">Rentabilidad, inflación y un escenario prudente. Puedes dejar los valores propuestos.</span></span></summary>
+      <article data-screen-label="04 Hipótesis" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+        <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
+          <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">04</span>
+          <div>
+            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Cómo hacemos la estimación</h2>
+            <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Estas cifras no son garantías: sirven para comparar escenarios.</p>
+          </div>
+        </header>
+        <div style="padding:22px 26px 26px">
+          <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; align-items:start">
+            <div>
+              <label for="expectedReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Cómo podría crecer el patrimonio cada año</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
+              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Una cifra menor produce una estimación más prudente.</p>
+            </div>
+            <div>
+              <label for="incomeGrowth" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Cómo podrían subir tus retiradas cada año</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" data-dc-value="{{ v.incomeGrowth }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
+              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Para compensar parcialmente el coste de vida.</p>
+            </div>
+            <div>
+              <label for="otherDeductions" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Otras deducciones que quieras incluir</label>
+              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" data-dc-value="{{ v.otherDeductions }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">La deducción por edad se calcula automáticamente.</p>
+            </div>
+            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
+              <input type="checkbox" name="stressEnabled" checked="{{ v.stressEnabled }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
+              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Comprobar un comienzo desfavorable</strong>Caída del 12 % el primer año y del 5 % el segundo, manteniendo las retiradas.</span>
+            </label>
+          </div>
+          <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12.5px; line-height:1.6; padding:13px 16px; margin:18px 0 0"><strong style="color:var(--color-text); font-weight:500">Por qué importa:</strong> perder dinero al principio de la jubilación puede dañar más el plan que sufrir la misma caída años después, porque ya se están realizando retiradas.</p>
+        </div>
+      </article>
+      </details>
+
+      <sc-if value="{{ hayErrores }}" hint-placeholder-val="{{ false }}">
+        <div id="errores" role="alert" style="border-left:2px solid #C2453A; border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, #C2453A 8%, transparent); margin-top:20px; padding:16px 22px">
+          <p style="color:#C2453A; font-size:13px; font-weight:500; margin:0 0 8px">Revisa los siguientes datos:</p>
+          <sc-for list="{{ errores }}" as="err" hint-placeholder-count="1">
+            <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; line-height:1.55; margin:0 0 4px">· {{ err }}</p>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:24px">
+        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; margin:0">Comprueba que los importes son tuyos y pulsa para ver el resultado.</p>
+        <div style="display:flex; gap:12px">
+          <button type="button" onClick="{{ restablecer }}" class="btn btn-secondary">Restablecer</button>
+          <button type="button" onClick="{{ calcular }}" class="btn btn-primary" style="font-size:15px; padding:10px 24px">Ver mi estimación de jubilación →</button>
+        </div>
+      </div>
+    </section>
+
+    <sc-if value="{{ hayPlan }}" hint-placeholder-val="{{ false }}">
+      <section id="resultados" data-screen-label="Resultados" style="max-width:1240px; margin:0 auto; padding:44px 48px 84px">
+        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:12px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Tu estimación</span>
+        <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; margin:0 0 10px">Tu jubilación, en una cifra clara</h2>
+        <p style="max-width:64ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; margin:0 0 26px">Con los datos que has introducido, esta es una estimación de tus ingresos y del recorrido de tu patrimonio.</p>
+
+        <div style="border-radius:var(--radius-md); background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); box-shadow:var(--shadow-sm); padding:32px 38px; margin-bottom:20px; display:grid; grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,.63fr)); gap:32px; align-items:center">
+          <div>
+            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">Lo que podrías recibir al mes · Escenario base</p>
+            <p style="font-size:48px; font-weight:500; line-height:1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resNeta }}</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:12.5px; margin:10px 0 0">Suma la pensión y las retiradas de tus ahorros y EPSV después del IRPF estimado.</p>
+          </div>
+          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
+            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Renta bruta</p>
+            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resBruta }}</p>
+          </div>
+          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
+            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Horizonte</p>
+            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resHorizonte }}</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:11.5px; margin:5px 0 0; white-space:nowrap">{{ resHorizonteAnios }}</p>
+          </div>
+          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
+            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Patrimonio inicial</p>
+            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resPatrimonio }}</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat({{ numEscenarios }},minmax(0,1fr)); gap:18px; margin-bottom:20px">
+          <sc-for list="{{ escenarios }}" as="e" hint-placeholder-count="3">
+            <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:20px 22px">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px">
+                <h3 style="font-size:16px; font-weight:500; margin:0">{{ e.nombre }}</h3>
+                <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.hipotesis }}</span>
+              </div>
+              <p style="font-size:28px; font-weight:500; line-height:1; margin:0 0 4px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.neta }}</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin:0 0 14px">neto al mes · año 1</p>
+              <div style="border-top:1px solid var(--color-divider); padding-top:12px; display:flex; flex-direction:column; gap:5px">
+                <p style="display:flex; justify-content:space-between; gap:10px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; margin:0"><span>Saldo al final</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.saldoFinal }}</strong></p>
+                <p style="font-size:12.5px; font-weight:500; margin:2px 0 0; color:{{ e.estadoColor }}">{{ e.estado }}</p>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+
+        <div style="display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:18px; margin-bottom:20px">
+          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 26px">
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Proyección del patrimonio</p>
+            <h3 style="font-size:19px; font-weight:500; margin:0 0 18px">Cuánto podría durar tu dinero</h3>
+            <svg viewBox="0 0 640 210" style="display:block; width:100%" role="img" aria-label="Evolución del patrimonio por escenario">
+              <line x1="46" y1="10" x2="46" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
+              <line x1="46" y1="180" x2="632" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
+              <line x1="46" y1="95" x2="632" y2="95" stroke="#edf1f6" stroke-width="1"></line>
+              <line x1="46" y1="10" x2="632" y2="10" stroke="#edf1f6" stroke-width="1"></line>
+              <text x="40" y="14" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMax }}</text>
+              <text x="40" y="99" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMid }}</text>
+              <text x="40" y="184" text-anchor="end" font-size="10" fill="#6b7686">0</text>
+              <text x="46" y="200" font-size="10" fill="#6b7686">{{ edadInicio }}</text>
+              <text x="632" y="200" text-anchor="end" font-size="10" fill="#6b7686">{{ edadFin }}</text>
+              <polyline points="" data-nuvia-points="{{ lineaConservador }}" fill="none" stroke="#946E29" stroke-width="2" stroke-linecap="round"></polyline>
+              <polyline points="" data-nuvia-points="{{ lineaOptimista }}" fill="none" stroke="#3C9A69" stroke-width="2" stroke-linecap="round"></polyline>
+              <polyline points="" data-nuvia-points="{{ lineaEstres }}" fill="none" stroke="#C2453A" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
+              <polyline points="" data-nuvia-points="{{ lineaBase }}" fill="none" stroke="#7C9A44" stroke-width="2.6" stroke-linecap="round"></polyline>
+            </svg>
+            <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:14px">
+              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#7C9A44"></span>Base</span>
+              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#946E29"></span>Conservador</span>
+              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#3C9A69"></span>Optimista</span>
+              <sc-if value="{{ hayEstres }}" hint-placeholder-val="{{ true }}">
+                <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:0; border-top:3px dashed #C2453A"></span>Estrés de secuencia</span>
+              </sc-if>
+            </div>
+          </article>
+          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 26px">
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Escenario base · Año 1</p>
+            <h3 style="font-size:19px; font-weight:500; margin:0 0 16px">De dónde sale tu renta mensual</h3>
+            <div style="display:flex; flex-direction:column">
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Pensión pública neta</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1PensionNeta }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Retiradas netas de patrimonio y EPSV</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1RetiradasNetas }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>IRPF sobre la pensión</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1CuotaBase }}</strong></p>
+              <p style="display:flex; justify-content:space-between; gap:12px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>IRPF adicional por las retiradas</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1ImpuestoExtra }}</strong></p>
+            </div>
+            <p style="border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.55; margin:12px 0 0; padding-top:12px">{{ notaRatios }}</p>
+          </article>
+        </div>
+
+        <sc-if value="{{ hayCapital }}" hint-placeholder-val="{{ false }}">
+          <article data-screen-label="Cobro en capital" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px; margin-bottom:20px">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px">
+              <div>
+                <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Cobro en capital de la EPSV</p>
+                <h3 style="font-size:21px; font-weight:500; margin:0">Cómo cambia lo que recibes según la forma de cobro</h3>
+              </div>
+              <span class="tag tag-accent" style="white-space:nowrap">Aplicado: {{ regimenSel }}</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
+              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 22px">
+                <p style="color:var(--color-text); font-size:13px; font-weight:500; margin:0 0 12px">Régimen transitorio <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-weight:400">· integrar el 60 %</span></p>
+                <div style="display:flex; flex-direction:column; gap:6px">
+                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Capital bruto</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransBruto }}</strong></p>
+                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Impuesto estimado</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransImpuesto }}</strong></p>
+                  <p style="display:flex; justify-content:space-between; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:6px 0 0; padding-top:9px"><span>Neto</span><strong style="color:#3C9A69; font-size:15px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransNeto }}</strong></p>
+                </div>
+              </div>
+              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 22px">
+                <p style="color:var(--color-text); font-size:13px; font-weight:500; margin:0 0 12px">Régimen desde 2026 <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-weight:400">· aportación y ganancia por separado</span></p>
+                <div style="display:flex; flex-direction:column; gap:6px">
+                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Capital bruto</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoBruto }}</strong></p>
+                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Impuesto estimado</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoImpuesto }}</strong></p>
+                  <p style="display:flex; justify-content:space-between; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:6px 0 0; padding-top:9px"><span>Neto</span><strong style="color:#3C9A69; font-size:15px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoNeto }}</strong></p>
+                </div>
+              </div>
+            </div>
+            <p style="color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:12px; line-height:1.55; margin:14px 0 0">{{ notaReducciones }}</p>
+          </article>
+        </sc-if>
+
+        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; line-height:1.6; margin:0">Estimación orientativa con reglas fiscales de Bizkaia 2026 · El cálculo se realiza en tu navegador y no envía tus datos · No constituye asesoramiento fiscal ni financiero personalizado.</p>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = { s: null, errores: [], plan: null };
+  defaults() {
+    return { age:65, sex:'male', pensionMonthly:2000, pensionRevaluation:0.027, horizonMode:'target', targetAge:95, longevityMargin:5,
+      cashValue:50000, fundsValue:100000, fundsCost:75000, sharesValue:50000, sharesCost:40000, depositsValue:0, insuranceValue:0, insuranceCost:0,
+      epsvPre:0, epsvPreReturn:0, epsvPost:0, epsvPostReturn:0, epsvDataMode:'detailed', entityNoBreakdown:false, seniorityKnown:'yes', seniorityYears:20,
+      epsvPayout:'rent', epsvCapitalPct:0, taxRegime:'auto', contingency:'retirement', firstBenefit:true, twoYears:true,
+      epsvRentQualification:'none', epsvRentYears:15, constantRent:false, expectedReturn:3, incomeGrowth:2, otherDeductions:0, stressEnabled:true };
+  }
+  dfbCase() {
+    return Object.assign(this.defaults(), { pensionMonthly:0, cashValue:0, fundsValue:0, fundsCost:0, sharesValue:0, sharesCost:0, depositsValue:0, insuranceValue:0, insuranceCost:0,
+      epsvPre:89000, epsvPreReturn:0, epsvPost:11000, epsvPostReturn:3000, epsvDataMode:'detailed', epsvPayout:'capital', epsvCapitalPct:100, taxRegime:'transitory' });
+  }
+  // Motor fiscal portado sin cambios funcionales desde retirementEngine.ts (Bizkaia 2026)
+  motor() {
+    if (this._eng) return this._eng;
+    const GENERAL_BRACKETS=[{from:0,rate:.23},{from:18080,rate:.28},{from:36160,rate:.35},{from:54240,rate:.40},{from:77450,rate:.45},{from:107260,rate:.46},{from:142960,rate:.47},{from:208390,rate:.49}];
+    const SAVINGS_BRACKETS=[{from:0,rate:.19},{from:7500,rate:.20},{from:15000,rate:.22},{from:30000,rate:.24},{from:50000,rate:.255},{from:90000,rate:.26},{from:120000,rate:.265},{from:240000,rate:.27},{from:300000,rate:.28}];
+    const LIFE_TABLE={50:{male:33.0,female:37.6},55:{male:28.5,female:33.1},60:{male:24.1,female:28.5},65:{male:19.9,female:24.0},70:{male:16.1,female:19.9},75:{male:12.7,female:16.0},80:{male:9.7,female:12.6},85:{male:7.1,female:9.4},90:{male:5.0,female:6.6},95:{male:3.4,female:4.4}};
+    const clamp=(v,min,max)=>Math.min(max,Math.max(min,Number(v)||0));
+    function progressiveTax(base,brackets){const x=Math.max(0,Number(base)||0);let tax=0;for(let i=0;i<brackets.length;i++){const current=brackets[i],next=brackets[i+1];if(x<=current.from)break;tax+=(Math.min(x,next?next.from:x)-current.from)*current.rate;}return Math.max(0,tax);}
+    function workAllowance(workIncome,nonWorkIncome){const work=Math.max(0,Number(workIncome)||0),nonWork=Math.max(0,Number(nonWorkIncome)||0);if(nonWork>7500)return Math.min(work,3000);let allowance=3000;if(work<=14800)allowance=8000;else if(work<=23000)allowance=8000-.6098*(work-14800);return Math.min(work,Math.max(0,allowance));}
+    function ageDeduction(age,totalTaxBase){const a=Number(age)||0,b=Math.max(0,Number(totalTaxBase)||0);if(a<=65||b>=30000)return 0;const full=a>75?714:393;if(b<=20000)return full;const factor=a>75?.0714:.0393;return Math.max(0,full-factor*(b-20000));}
+    function taxBreakdown(workIncome,savingsIncome,age,otherDeductions){const work=Math.max(0,Number(workIncome)||0),savings=Math.max(0,Number(savingsIncome)||0);const allowance=workAllowance(work,savings);const generalBase=Math.max(0,work-allowance);const grossGeneralQuota=progressiveTax(generalBase,GENERAL_BRACKETS);const generalQuota=Math.max(0,grossGeneralQuota-1615);const savingsQuota=progressiveTax(savings,SAVINGS_BRACKETS);const ageDed=ageDeduction(age,generalBase+savings);const other=Math.max(0,Number(otherDeductions)||0);const total=Math.max(0,generalQuota+savingsQuota-ageDed-other);return{workIncome:work,savingsIncome:savings,workAllowance:allowance,generalBase,grossGeneralQuota,generalQuota,savingsQuota,ageDeduction:ageDed,otherDeductions:other,total};}
+    function annuityPayment(capital,rate,growth,years){const C=Math.max(0,Number(capital)||0),i=Number(rate)||0,g=Number(growth)||0,n=Math.max(1,Number(years)||1);if(!C)return 0;if(Math.abs(i-g)<1e-10)return C*(1+i)/n;const denominator=1-Math.pow((1+g)/(1+i),n);if(Math.abs(denominator)<1e-12)return C/n;return C*(i-g)/denominator;}
+    function lifeExpectancyYears(age,sex){const a=clamp(age,40,105),keys=Object.keys(LIFE_TABLE).map(Number).sort((x,y)=>x-y),s=sex==='female'?'female':'male';if(a<=keys[0])return LIFE_TABLE[keys[0]][s]+(keys[0]-a)*.8;if(a>=keys[keys.length-1])return Math.max(.5,LIFE_TABLE[95][s]-(a-95)*.4);for(let i=0;i<keys.length-1;i++)if(a>=keys[i]&&a<=keys[i+1]){const lo=keys[i],hi=keys[i+1],ratio=(a-lo)/(hi-lo);return LIFE_TABLE[lo][s]+ratio*(LIFE_TABLE[hi][s]-LIFE_TABLE[lo][s]);}return 20;}
+    function determineHorizon(state){const age=state.age;if(state.horizonMode==='longevity'){const expectancy=lifeExpectancyYears(age,state.sex),target=Math.min(110,Math.ceil(age+expectancy+state.longevityMargin));return{years:Math.max(1,target-age),targetAge:target,expectancyYears:expectancy};}return{years:Math.max(1,state.targetAge-age),targetAge:state.targetAge,expectancyYears:lifeExpectancyYears(age,state.sex)};}
+    function epsvReturnRatios(state){const total=state.epsvPre+state.epsvPost;if(!total)return{pre:0,post:0,method:'none',estimatedRatio:0};if(state.epsvDataMode==='detailed'){return{pre:state.epsvPre?clamp(state.epsvPreReturn/state.epsvPre,0,1):0,post:state.epsvPost?clamp(state.epsvPostReturn/state.epsvPost,0,1):0,method:'certified',estimatedRatio:null};}const ratio=state.seniorityKnown==='yes'?Math.min(state.seniorityYears/100,.35):.25;return{pre:ratio,post:ratio,method:state.seniorityKnown==='yes'?'1pct':'25pct',estimatedRatio:ratio};}
+    function reducedContributionIntegration(amount,rate,eligible,limit){const a=Math.max(0,amount||0),available=Math.max(0,limit||0);if(!eligible||!a)return{general:a,used:0};const reduced=Math.min(a,available),rest=a-reduced;return{general:reduced*rate+rest,used:reduced};}
+    function capitalBases(state,regime,ratios){const pct=state.epsvPayout==='capital'?1:state.epsvPayout==='rent'?0:state.epsvCapitalPct/100;const pre=state.epsvPre*pct,post=state.epsvPost*pct,gross=pre+post;const twoYearExempt=['disability','dependency'].includes(state.contingency);const eligible=state.firstBenefit&&(state.twoYears||twoYearExempt);let general=0,savings=0,limit=300000;if(regime==='transitory'){if(pre>0){const integrated=reducedContributionIntegration(pre,.60,eligible,limit);general+=integrated.general;limit-=integrated.used;}const postReturn=post*ratios.post,postContrib=Math.max(0,post-postReturn);savings+=postReturn;const postIntegrated=reducedContributionIntegration(postContrib,.70,eligible,limit);general+=postIntegrated.general;}else{const preReturn=pre*ratios.pre,postReturn=post*ratios.post;savings=preReturn+postReturn;const contrib=Math.max(0,gross-savings),integrated=reducedContributionIntegration(contrib,.70,eligible,limit);general=integrated.general;}return{gross,pre,post,general,savings,eligible,regime};}
+    function privateTaxableSavings(state,annualWithdrawal,rate){const assets=[{key:'cash',value:state.cashValue,cost:state.cashValue,type:'cash'},{key:'funds',value:state.fundsValue,cost:state.fundsCost,type:'gain'},{key:'shares',value:state.sharesValue,cost:state.sharesCost,type:'gain'},{key:'deposits',value:state.depositsValue,cost:state.depositsValue,type:'deposit'},{key:'insurance',value:state.insuranceValue,cost:state.insuranceCost,type:'gain'}];const total=assets.reduce((s,a)=>s+a.value,0);if(!total||!annualWithdrawal)return{taxable:0,exempt:annualWithdrawal,details:[]};let taxable=0,exempt=0;const details=[];for(const asset of assets){if(!asset.value)continue;const withdrawal=annualWithdrawal*(asset.value/total);let taxablePart=0;if(asset.type==='deposit')taxablePart=Math.min(withdrawal,asset.value*Math.max(0,rate));else if(asset.type==='gain'){const projected=Math.max(.01,asset.value*(1+rate));const ratio=clamp((projected-asset.cost)/projected,0,1);taxablePart=withdrawal*ratio;}taxable+=taxablePart;exempt+=Math.max(0,withdrawal-taxablePart);details.push({withdrawal,taxable:taxablePart});}return{taxable,exempt,details};}
+    function epsvRecurringBases(state,annualEpsvPayment,ratios){const pct=state.epsvPayout==='capital'?1:state.epsvPayout==='rent'?0:state.epsvCapitalPct/100;const preBalance=state.epsvPre*(1-pct),postBalance=state.epsvPost*(1-pct),total=preBalance+postBalance;if(!total||!annualEpsvPayment)return{gross:0,general:0,savings:0,exempt:0,returnPart:0,contributionPart:0};const prePay=annualEpsvPayment*(preBalance/total),postPay=annualEpsvPayment*(postBalance/total);const returnPart=prePay*ratios.pre+postPay*ratios.post,contributionPart=Math.max(0,annualEpsvPayment-returnPart);const qualified=state.epsvRentQualification==='life'||(state.epsvRentQualification==='temporary'&&state.epsvRentYears>=15&&state.constantRent);return{gross:annualEpsvPayment,general:contributionPart,savings:qualified?0:returnPart,exempt:qualified?returnPart:0,returnPart,contributionPart,qualified};}
+    function simulateBalance(initial,firstWithdrawal,growth,rate,years,stress){let balance=Math.max(0,initial),depletionYear=null;const points=[balance];for(let year=1;year<=years;year++){const annualRate=stress?(year===1?-.12:year===2?-.05:rate):rate;const withdrawal=firstWithdrawal*Math.pow(1+growth,year-1);balance=Math.max(0,balance*(1+annualRate)-withdrawal);points.push(balance);if(balance<=.01&&depletionYear===null)depletionYear=year;}return{points,depletionYear,endingBalance:balance};}
+    function calculateScenario(state,rate,label,stress){const horizon=determineHorizon(state),ratios=epsvReturnRatios(state),pct=state.epsvPayout==='capital'?1:state.epsvPayout==='rent'?0:state.epsvCapitalPct/100;const privateCapital=state.cashValue+state.fundsValue+state.sharesValue+state.depositsValue+state.insuranceValue;const epsvRentCapital=(state.epsvPre+state.epsvPost)*(1-pct);const baseRate=state.expectedReturn/100,growth=state.incomeGrowth/100;const withdrawalRateForFormula=stress?baseRate:rate;const privatePayment=state.horizonMode==='preserve'?privateCapital*Math.max(0,withdrawalRateForFormula):annuityPayment(privateCapital,withdrawalRateForFormula,growth,horizon.years);const epsvGrowth=(state.epsvRentQualification==='life'||(state.epsvRentQualification==='temporary'&&state.constantRent))?0:growth;const epsvPayment=state.horizonMode==='preserve'?epsvRentCapital*Math.max(0,withdrawalRateForFormula):annuityPayment(epsvRentCapital,withdrawalRateForFormula,epsvGrowth,horizon.years);const firstYearTaxRate=stress?-.12:rate;const privateTax=privateTaxableSavings(state,privatePayment,firstYearTaxRate),epsvRecurring=epsvRecurringBases(state,epsvPayment,ratios);const pensionAnnual=state.pensionMonthly*14;const baselineTax=taxBreakdown(pensionAnnual,0,state.age,state.otherDeductions);const recurringTax=taxBreakdown(pensionAnnual+epsvRecurring.general,privateTax.taxable+epsvRecurring.savings,state.age,state.otherDeductions);const incrementalRecurringTax=Math.max(0,recurringTax.total-baselineTax.total);const recurringGross=privatePayment+epsvPayment,recurringNet=Math.max(0,recurringGross-incrementalRecurringTax);const pensionNet=Math.max(0,pensionAnnual-baselineTax.total);const capitalTrans=capitalBases(state,'transitory',ratios),capitalNew=capitalBases(state,'new',ratios);const capitalTaxImpact=(bases)=>{const withCapital=taxBreakdown(pensionAnnual+epsvRecurring.general+bases.general,privateTax.taxable+epsvRecurring.savings+bases.savings,state.age,state.otherDeductions);return Math.max(0,withCapital.total-recurringTax.total);};const transTax=capitalTaxImpact(capitalTrans),newTax=capitalTaxImpact(capitalNew);let selectedRegime=state.taxRegime;if(selectedRegime==='auto')selectedRegime=transTax<=newTax?'transitory':'new';const capital=selectedRegime==='transitory'?capitalTrans:capitalNew,capitalTax=selectedRegime==='transitory'?transTax:newTax;const totalInitial=privateCapital+epsvRentCapital;const privateProjection=simulateBalance(privateCapital,privatePayment,growth,rate,horizon.years,stress);const epsvProjection=simulateBalance(epsvRentCapital,epsvPayment,epsvGrowth,rate,horizon.years,stress);const combinedPoints=privateProjection.points.map((v,i)=>v+(epsvProjection.points[i]||0));const depletionIndex=combinedPoints.findIndex((v,i)=>i>0&&v<=.01);return{label,rate,stress,horizon,ratios,privateCapital,epsvRentCapital,privatePayment,epsvPayment,privateTax,epsvRecurring,pensionAnnual,baselineTax,recurringTax,incrementalRecurringTax,recurringGross,recurringNet,pensionNet,totalNetMonthly:(pensionNet+recurringNet)/12,totalGrossMonthly:(pensionAnnual+recurringGross)/12,capital,capitalTax,capitalNet:Math.max(0,capital.gross-capitalTax),capitalComparisons:{transitory:{bases:capitalTrans,tax:transTax,net:Math.max(0,capitalTrans.gross-transTax)},new:{bases:capitalNew,tax:newTax,net:Math.max(0,capitalNew.gross-newTax)}},selectedRegime,totalInitial,projection:combinedPoints,depletionYear:depletionIndex>0?depletionIndex:null};}
+    function calculatePlan(state){const base=state.expectedReturn/100;const scenarios=[calculateScenario(state,Math.max(-.02,base-.015),'Conservador',false),calculateScenario(state,base,'Base',false),calculateScenario(state,Math.min(.15,base+.015),'Optimista',false)];if(state.stressEnabled)scenarios.push(calculateScenario(state,base,'Estrés de secuencia',true));return{state,scenarios,base:scenarios[1],horizon:determineHorizon(state)};}
+    function validate(state){const errors=[];if(state.age<40||state.age>95)errors.push('La edad actual debe estar entre 40 y 95 años.');const horizon=determineHorizon(state);if(horizon.targetAge<=state.age)errors.push('La edad objetivo debe ser superior a la edad actual.');if(horizon.targetAge>110)errors.push('La edad objetivo no puede superar 110 años.');if(state.pensionMonthly<0)errors.push('La pensión pública no puede ser negativa.');if(state.expectedReturn<=-100)errors.push('La rentabilidad debe ser superior a −100%.');if(state.fundsCost<0||state.sharesCost<0||state.insuranceCost<0)errors.push('Los costes fiscales o primas no pueden ser negativos.');if(state.epsvPreReturn>state.epsvPre)errors.push('La rentabilidad anterior a 2026 no puede superar los derechos económicos de ese bloque.');if(state.epsvPostReturn>state.epsvPost)errors.push('La rentabilidad desde 2026 no puede superar los derechos económicos de ese bloque.');if(state.epsvDataMode==='quick'&&!state.entityNoBreakdown&&state.epsvPre+state.epsvPost>0)errors.push('Para utilizar la estimación reglada debes confirmar que la entidad no facilita el desglose de rentabilidad.');if(state.epsvDataMode==='quick'&&state.seniorityKnown==='yes'&&(state.seniorityYears<1||state.seniorityYears>60))errors.push('Indica una antigüedad de la EPSV entre 1 y 60 años.');if(state.epsvRentQualification==='temporary'&&(state.epsvRentYears<15||!state.constantRent))errors.push('La exención de rentabilidad en una renta temporal exige al menos 15 años y cuantía contractual constante.');if(state.epsvPayout==='mixed'&&(state.epsvCapitalPct<=0||state.epsvCapitalPct>=100))errors.push('En modalidad mixta, el porcentaje de capital debe ser mayor que 0% y menor que 100%.');const privateTotal=state.cashValue+state.fundsValue+state.sharesValue+state.depositsValue+state.insuranceValue;const epsvTotal=state.epsvPre+state.epsvPost;if(privateTotal+epsvTotal<=0&&state.pensionMonthly<=0)errors.push('Introduce al menos una pensión, patrimonio privado o saldo de EPSV.');return errors;}
+    this._eng = { calculatePlan, validate, lifeExpectancyYears };
+    return this._eng;
+  }
+  syncSvgPoints() {
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll('[data-nuvia-points]').forEach((node) => {
+        node.setAttribute('points', node.getAttribute('data-nuvia-points') || '');
+      });
+    });
+  }
+  componentDidMount() {
+    document.title = 'Simulador de jubilación | NUVIA Family Wealth';
+    this.syncSvgPoints();
+  }
+  componentDidUpdate() { this.syncSvgPoints(); }
+  s() { return this.state.s || this.defaults(); }
+  upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }), errores: [] }); }
+  scrollA(id) { setTimeout(() => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); }, 60); }
+  fmt(x) { return new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(x)); }
+  linea(points, maxY, years) {
+    const x0 = 46, x1 = 632, y0 = 180, y1 = 10;
+    return points.map((p, i) => {
+      const x = x0 + (x1 - x0) * (years ? i / years : 0);
+      const y = y0 - (y0 - y1) * (maxY ? Math.min(1, p / maxY) : 0);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ');
+  }
+  renderVals() {
+    const s = this.s();
+    const eng = this.motor();
+    const fmt = (x) => this.fmt(x);
+    const pillBase = 'border-radius:999px; cursor:pointer; font-family:var(--font-body); font-size:13px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
+    const pill = (on) => pillBase + (on ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-accent-200)' : 'border:1px solid var(--color-divider); background:transparent; color:color-mix(in srgb, var(--color-text) 70%, transparent)');
+    const seg = (name, val, opts, extra) => opts.map(([value, label]) => ({
+      label, pressed: val === value, estilo: pill(val === value),
+      abrir: () => { if (extra) extra(value); else this.upd(name, value); },
+    }));
+    const setPayout = (value) => {
+      const pct = value === 'capital' ? 100 : value === 'rent' ? 0 : (s.epsvCapitalPct > 0 && s.epsvCapitalPct < 100 ? s.epsvCapitalPct : 50);
+      this.setState({ s: Object.assign({}, s, { epsvPayout: value, epsvCapitalPct: pct }), errores: [] });
+    };
+    const plan = this.state.plan;
+    const vals = {
+      v: Object.assign({}, s, { pensionRevalPct: Math.round(s.pensionRevaluation * 1000) / 10 }),
+      setNum: (e) => this.upd(e.target.name, Number(e.target.value) || 0),
+      setNumSel: (e) => this.upd(e.target.name, Number(e.target.value) || 0),
+      setStr: (e) => this.upd(e.target.name, e.target.value),
+      setChk: (e) => this.upd(e.target.name, e.target.checked),
+      setRev: (e) => this.upd('pensionRevaluation', (Number(e.target.value) || 0) / 100),
+      hOpts: seg('horizonMode', s.horizonMode, [['target','Hasta una edad concreta'],['longevity','Esperanza de vida + margen'],['preserve','Retirar solo la rentabilidad estimada']]),
+      dmOpts: seg('epsvDataMode', s.epsvDataMode, [['detailed','Sí, tengo el certificado'],['quick','No, necesito una estimación']]),
+      poOpts: seg('epsvPayout', s.epsvPayout, [['rent','Como pagos periódicos'],['capital','Todo de una vez'],['mixed','Una parte de cada forma']], setPayout),
+      hTarget: s.horizonMode === 'target', hLongevity: s.horizonMode === 'longevity', hPreserve: s.horizonMode === 'preserve',
+      dmDetailed: s.epsvDataMode === 'detailed', dmQuick: s.epsvDataMode === 'quick',
+      seniorityYes: s.seniorityKnown === 'yes',
+      poMixed: s.epsvPayout === 'mixed',
+      rentTemporary: s.epsvRentQualification === 'temporary',
+      twoYearsDisabled: s.contingency === 'disability' || s.contingency === 'dependency',
+      expectativa: 'Referencia demográfica aproximada: ' + (s.age + eng.lifeExpectancyYears(s.age, s.sex)).toFixed(1).replace('.', ',') + ' años de edad.',
+      errores: this.state.errores,
+      hayErrores: this.state.errores.length > 0,
+      hayPlan: !!plan,
+      vaciarPatrimonio: () => this.setState({ s: Object.assign({}, s, { cashValue:0, fundsValue:0, fundsCost:0, sharesValue:0, sharesCost:0, depositsValue:0, insuranceValue:0, insuranceCost:0 }), errores: [] }),
+      cargarDFB: () => this.setState({ s: this.dfbCase(), errores: [] }),
+      restablecer: () => this.setState({ s: this.defaults(), errores: [], plan: null }),
+      calcular: () => {
+        const errs = eng.validate(s);
+        if (errs.length) { this.setState({ errores: errs }); this.scrollA('errores'); return; }
+        this.setState({ errores: [], plan: eng.calculatePlan(s) });
+        this.scrollA('resultados');
+      },
+    };
+    if (plan) {
+      const b = plan.base;
+      const maxY = Math.max(1, ...plan.scenarios.map(sc => Math.max(...sc.projection)));
+      const years = plan.horizon.years;
+      const byLabel = (l) => plan.scenarios.find(sc => sc.label === l);
+      const estres = byLabel('Estrés de secuencia');
+      Object.assign(vals, {
+        resNeta: fmt(b.totalNetMonthly) + ' €/mes',
+        resBruta: fmt(b.totalGrossMonthly) + ' €/mes',
+        resHorizonte: 'Hasta los ' + plan.horizon.targetAge,
+        resHorizonteAnios: years + ' años de plan',
+        resPatrimonio: fmt(b.totalInitial) + ' €',
+        numEscenarios: plan.scenarios.length,
+        escenarios: plan.scenarios.map(sc => ({
+          nombre: sc.label,
+          hipotesis: sc.stress ? 'caída inicial −12 % / −5 %' : (sc.rate * 100).toFixed(1).replace('.', ',') + ' % anual',
+          neta: fmt(sc.totalNetMonthly) + ' €',
+          saldoFinal: fmt(sc.projection[sc.projection.length - 1] || 0) + ' €',
+          estado: sc.depletionYear ? 'Se agota en el año ' + sc.depletionYear + ' (edad ' + (plan.state.age + sc.depletionYear) + ')' : 'Cubre todo el horizonte',
+          estadoColor: sc.depletionYear ? '#C2453A' : '#3C9A69',
+        })),
+        chartMax: fmt(maxY) + ' €',
+        chartMid: fmt(maxY / 2) + ' €',
+        edadInicio: plan.state.age + ' años',
+        edadFin: plan.horizon.targetAge + ' años',
+        lineaBase: this.linea(b.projection, maxY, years),
+        lineaConservador: this.linea(byLabel('Conservador').projection, maxY, years),
+        lineaOptimista: this.linea(byLabel('Optimista').projection, maxY, years),
+        lineaEstres: estres ? this.linea(estres.projection, maxY, years) : '',
+        hayEstres: !!estres,
+        f1PensionNeta: fmt(b.pensionNet / 12) + ' €/mes',
+        f1RetiradasNetas: fmt(b.recurringNet / 12) + ' €/mes',
+        f1CuotaBase: '−' + fmt(b.baselineTax.total) + ' €/año',
+        f1ImpuestoExtra: '−' + fmt(b.incrementalRecurringTax) + ' €/año',
+        notaRatios: b.ratios.method === 'certified' ? 'Rentabilidad de la EPSV según el certificado de la entidad.'
+          : b.ratios.method === '1pct' ? 'Rentabilidad de la EPSV por estimación reglada: 1 % por año de antigüedad (máx. 35 %).'
+          : b.ratios.method === '25pct' ? 'Rentabilidad de la EPSV por estimación reglada del 25 %.'
+          : 'Sin EPSV: la renta procede de la pensión y del patrimonio privado.',
+        hayCapital: b.capital.gross > 0,
+        regimenSel: b.selectedRegime === 'transitory' ? 'Régimen transitorio' : 'Régimen desde 2026',
+        capTransBruto: fmt(b.capitalComparisons.transitory.bases.gross) + ' €',
+        capTransImpuesto: '−' + fmt(b.capitalComparisons.transitory.tax) + ' €',
+        capTransNeto: fmt(b.capitalComparisons.transitory.net) + ' €',
+        capNuevoBruto: fmt(b.capitalComparisons.new.bases.gross) + ' €',
+        capNuevoImpuesto: '−' + fmt(b.capitalComparisons.new.tax) + ' €',
+        capNuevoNeto: fmt(b.capitalComparisons.new.net) + ' €',
+        notaReducciones: b.capital.eligible
+          ? 'Se aplican las reducciones por primer cobro en capital (límite conjunto de 300.000 €). El impuesto mostrado es el efecto incremental del cobro en capital en el año 1.'
+          : 'No se aplican reducciones: revisa los requisitos de primer cobro y antigüedad de más de dos años. El impuesto mostrado es el efecto incremental del cobro en capital en el año 1.',
+      });
+    }
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

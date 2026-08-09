@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe Diario NUVIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Spectral:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nuvia-blue: #0B2347;
+            --nuvia-blue-dark: #07182F;
+            --nuvia-green: #4A5D23;
+            --nuvia-green-light: #F2F4E6;
+            --nuvia-gray: #f3f5f8;
+            --nuvia-border: #d8dce2;
+            --text-main: #1b1f2a;
+            --text-muted: #5f6673;
+            --text-light: #7a818c;
+            --text-color: #1b1f2a;
+            --amber: #e2a100;
+            --red: #c62828;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Figtree', Arial, sans-serif;
+            color: var(--text-color);
+            background: #F7F4ED;
+        }
+
+        /* A4 Setup */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 16mm 18mm 18mm;
+            margin: 10mm auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+            overflow: hidden;
+        }
+        .page-content {
+            padding-bottom: 24mm;
+        }
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body { background: none; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+
+        /* Headers & Footers */
+        .header {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--nuvia-blue);
+            padding-bottom: 9px;
+            margin-bottom: 13px;
+        }
+        .header-logo {
+            display: flex;
+            flex-direction: column;
+            color: var(--nuvia-blue);
+            margin-right: 16px;
+        }
+        .header-logo strong {
+            font-family: 'Spectral', Georgia, serif;
+            font-size: 26px;
+            letter-spacing: .12em;
+            line-height: 1;
+        }
+        .header-logo span {
+            color: var(--nuvia-green);
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: .18em;
+            margin-top: 4px;
+        }
+        .header-divider {
+            height: 38px;
+            width: 1px;
+            background-color: var(--nuvia-border);
+            margin-right: 16px;
+        }
+        .header-text {
+            flex: 1;
+        }
+        .header-title {
+            color: var(--nuvia-blue);
+            margin: 0;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+        .header-date {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .header-date::before {
+            content: "📅";
+            font-size: 12px;
+        }
+
+        .footer {
+          position: absolute;
+          left: 18mm;
+          right: 18mm;
+          bottom: 12mm;
+          border-top: 3px solid var(--nuvia-green);
+          padding-top: 7px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 12px;
+          background: #fff;
+          box-sizing: border-box;
+        }
+
+        .footer-legal {
+          flex: 1 1 auto;
+          min-width: 0;
+          display: flex;
+          align-items: flex-start;
+          gap: 6px;
+          color: var(--text-muted);
+          font-size: 8px;
+          line-height: 1.22;
+          text-align: left;
+          padding-right: 8px;
+          overflow: hidden;
+        }
+
+        .footer-icon {
+          flex: 0 0 auto;
+          font-size: 10px;
+          line-height: 1;
+          margin-top: 1px;
+        }
+
+        .footer-text {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
+
+        .footer-page {
+          flex: 0 0 84px;
+          text-align: right;
+          white-space: nowrap;
+          font-size: 10.5px;
+          font-weight: 800;
+          color: var(--nuvia-blue);
+          line-height: 1.1;
+        }
+
+        .page-number {
+          display: none;
+        }
+
+        /* Typography & Headings */
+        h2.section-title {
+            color: var(--nuvia-blue);
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--nuvia-green);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+        }
+        .section-icon {
+            width: 22px;
+            height: 22px;
+            border: 1.5px solid var(--nuvia-green);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--nuvia-green);
+            margin-right: 7px;
+            flex-shrink: 0;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 4px;
+            color: #fff;
+            margin-right: 5px;
+            vertical-align: middle;
+            text-transform: uppercase;
+        }
+        .badge-internacional { background-color: var(--nuvia-blue); }
+        .badge-espana { background-color: var(--nuvia-green); }
+        .badge-geopolitica { background-color: #8a5a00; }
+
+        /* Layouts */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 65% 33%;
+            gap: 2%;
+        }
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .flex-1 { flex: 1; }
+
+        /* Panels and Cards */
+        .panel {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--nuvia-border);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .panel-icon {
+            font-size: 12px;
+            margin-right: 6px;
+        }
+        .panel-header {
+            background-color: var(--nuvia-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            margin: -10px -14px 10px -14px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            font-size: 11.5px;
+            text-transform: uppercase;
+        }
+        .panel.green-light {
+            background-color: var(--nuvia-green-light);
+            border-color: #cce0c0;
+        }
+
+        /* Tables */
+        table.nuvia-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10.5px;
+            background: #fff;
+            margin-bottom: 15px;
+            border: 1px solid var(--nuvia-border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        table.nuvia-table th, table.nuvia-table td {
+            border: 1px solid var(--nuvia-border);
+            padding: 6px 8px;
+            text-align: left;
+        }
+        table.nuvia-table th {
+            background-color: var(--nuvia-blue);
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 9.5px;
+            letter-spacing: 0.3px;
+        }
+        table.nuvia-table tbody tr:nth-child(even) {
+            background-color: var(--nuvia-gray);
+        }
+        table.nuvia-table.compact th, table.nuvia-table.compact td {
+            padding: 4px 6px;
+            font-size: 10px;
+        }
+        
+        /* Column Widths */
+        .col-esp-comp { width: 22%; }
+        .col-esp-ev { width: 48%; }
+        .col-esp-imp { width: 30%; }
+
+        .col-glb-comp { width: 20%; }
+        .col-glb-reg { width: 12%; }
+        .col-glb-ev { width: 43%; }
+        .col-glb-imp { width: 25%; }
+        
+        .var-cell { font-weight: bold; color: var(--nuvia-blue); }
+
+        /* News Item */
+        .news-card {
+            display: flex;
+            gap: 9px;
+            margin-bottom: 8px;
+            background: #fff;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--nuvia-border);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .news-number {
+            background-color: var(--nuvia-green);
+            color: #fff;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 11px;
+        }
+        .news-content h3 {
+            color: var(--nuvia-blue);
+            margin: 0 0 4px 0;
+            font-size: 12.4px;
+            line-height: 1.22;
+        }
+        .news-content p {
+            margin: 0 0 5px 0;
+            font-size: 10.2px;
+            line-height: 1.3;
+            color: var(--text-color);
+        }
+        .news-source {
+            font-size: 8.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            border-top: 1px dashed var(--nuvia-border);
+            padding-top: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Traffic Light */
+        .traffic-light-container {
+            text-align: center;
+            padding: 8px 5px;
+        }
+        .traffic-circle {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            background-color: #ddd;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+            border: 3px solid #ccc;
+        }
+        .traffic-circle.verde { background-color: #4CAF50; border-color: #2E7D32; box-shadow: 0 0 15px rgba(76, 175, 80, 0.5); }
+        .traffic-circle.ambar { background-color: var(--amber); border-color: #F57C00; box-shadow: 0 0 15px rgba(226, 161, 0, 0.5); }
+        .traffic-circle.rojo { background-color: #F44336; border-color: #C62828; box-shadow: 0 0 15px rgba(244, 67, 54, 0.5); }
+        .traffic-score {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--nuvia-blue);
+            margin-bottom: 2px;
+        }
+        .traffic-label {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+        .traffic-desc {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Pills */
+        .pill-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .pill {
+            background-color: #fff;
+            border: 1px solid var(--nuvia-blue);
+            color: var(--nuvia-blue);
+            border-radius: 12px;
+            padding: 2px 6px;
+            font-size: 9.5px;
+            font-weight: 600;
+        }
+
+        .text-content {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: RESUMEN EJECUTIVO -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div class="header-logo" aria-label="NUVIA Family Wealth"><strong>NUVIA</strong><span>FAMILY WEALTH</span></div>
+                <div class="header-divider"></div>
+                <div class="header-text">
+                    <h1 class="header-title">Informe Diario</h1>
+                    <div class="header-date">Fecha: 09/06/2026</div>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <!-- Left Column -->
+                <div>
+                    <h2 class="section-title"><span class="section-icon">📰</span>Resumen Ejecutivo</h2>
+                    <div style="margin-bottom: 12px; font-size: 12px; color: var(--text-muted);">
+                        Resumen de los principales eventos que afectan a los mercados en la sesión de hoy.
+                    </div>
+                    
+                    
+        <div class="news-card">
+            <div class="news-number">1</div>
+            <div class="news-content">
+                <h3><span class="badge badge-internacional">Internacional</span> BCE anticipa dos subidas de tipos en 2026 por repunte inflacionario.</h3>
+                <p>El Banco Central Europeo prevé endurecer su política monetaria con dos alzas de tipos este año, citando la persistente presión inflacionaria. De Guindos insta a la prudencia.</p>
+                <div class="news-source">FT / Andbank &middot; URL no disponible</div>
+            </div>
+        </div>
+        
+        <div class="news-card">
+            <div class="news-number">2</div>
+            <div class="news-content">
+                <h3><span class="badge badge-espana">España</span> Telefónica reporta pérdidas netas en 1T por desinversiones, pero eleva ingresos y confi...</h3>
+                <p>Telefónica registró pérdidas de 411M€ en el primer trimestre debido a ventas en Latam, aunque sus ingresos subieron un 0.8% a 8.127M€, manteniendo sus objetivos para 2026.</p>
+                <div class="news-source">Andbank &middot; URL no disponible</div>
+            </div>
+        </div>
+        
+        <div class="news-card">
+            <div class="news-number">3</div>
+            <div class="news-content">
+                <h3><span class="badge badge-geopolitica">Geopolítica</span> Tensión en Ormuz: Reino Unido y Francia convocan reunión ante reivindicaciones de Irán.</h3>
+                <p>La situación en el Estrecho de Ormuz se mantiene en punto muerto, con Irán reivindicando derechos y EEUU manteniendo el bloqueo, generando preocupación internacional.</p>
+                <div class="news-source">Andbank &middot; URL no disponible</div>
+            </div>
+        </div>
+        
+
+                    <div class="panel green-light" style="margin-top: 10px; padding: 8px 12px;">
+                        <div style="color: var(--nuvia-green); font-weight: 800; text-transform: uppercase; margin-bottom: 3px; font-size: 11px;">Idea principal para el cliente</div>
+                        <div class="text-content" style="font-weight: 600; color: var(--nuvia-blue); font-size: 11px;">
+                            Los mercados europeos abren con alzas moderadas, impulsados por el sector financiero. La atención se centra en la macro de EEUU y la tensión geopolítica en O...
+                        </div>
+                    </div>
+
+                    <div class="panel" style="margin-top: 10px; background-color: var(--nuvia-gray); padding: 8px 12px;">
+                        <h3 style="color: var(--nuvia-blue); margin-top: 0; margin-bottom: 4px; font-size: 11.5px; border-bottom: 1px solid var(--nuvia-border); padding-bottom: 4px;">Lectura del día para clientes</h3>
+                        <div class="text-content" style="font-size: 10px; line-height: 1.35;">
+                            <p style="margin-top: 3px; margin-bottom: 4px;"><strong>Mensaje:</strong> La jornada se presenta con un tono mixto en los mercados, con Europa mostrando ligeras alzas. La atención se centrará en los datos macroeconómicos clave y la evolución de las tensiones geopolíticas.</p>
+                            <p style="margin-top: 0; margin-bottom: 0;"><strong>Sesgo:</strong> Sesgo de cautela con potencial de volatilidad, influenciado por datos macro y noticias corporativas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div class="panel" style="padding-top: 0;">
+                        <div class="panel-header"><span class="panel-icon">📊</span>Semáforo de Mercado</div>
+                        <div class="traffic-light-container">
+                            <div class="traffic-circle ambar"></div>
+                            <div class="traffic-label">Cautela</div>
+                            <div class="traffic-score">60/100</div>
+                            <div class="traffic-desc">Mercados europeos con subidas moderadas, pero persiste la incertidumbre macroeconómica y la tensión geopolítica en el Estrecho de Ormuz.</div>
+                        </div>
+                    </div>
+
+                    <div class="panel" style="padding-top: 0;">
+                        <div class="panel-header"><span class="panel-icon">🔎</span>Activos a Vigilar</div>
+                        <table class="nuvia-table compact" style="margin-bottom: 0;"><tbody><tr><td style='font-weight:bold;'>EUR/USD</td><td>Dólar se debilita ligeramente frente al euro.</td></tr><tr><td style='font-weight:bold;'>Ibex 35 <span style='font-weight:normal; color:var(--text-light);'>| 17654</span></td><td>Cierre previo en 17654 (+0.46%), con resultados de grandes compañías.</td></tr><tr><td style='font-weight:bold;'>Tipos de interés BCE</td><td>Previsión de dos subidas en 2026 por inflación.</td></tr><tr><td style='font-weight:bold;'>Petróleo (Ormuz)</td><td>Tensión geopolítica en el Estrecho de Ormuz, ruta clave para el crudo.</td></tr><tr><td style='font-weight:bold;'>NVIDIA</td><td>Reporta resultados al cierre de Wall Street, gran expectación por IA.</td></tr></tbody></table>
+                    </div>
+
+                    <div class="panel" style="padding-top: 0;">
+                        <div class="panel-header"><span class="panel-icon">⚡</span>Claves Rápidas</div>
+                        <div class="pill-container">
+                            <ul style='margin: 0; padding-left: 0; list-style-type: none; color: var(--text-color); font-size: 10.5px; line-height: 1.35;'><li style="margin-bottom: 5px; display: flex; align-items: flex-start; gap: 5px;"><span style="font-size: 10px; margin-top: 1px;">⚡</span><span style="flex:1;">BCE prevé dos subidas de tipos en 2026 por inflación.</span></li><li style="margin-bottom: 5px; display: flex; align-items: flex-start; gap: 5px;"><span style="font-size: 10px; margin-top: 1px;">⚡</span><span style="flex:1;">Telefónica reporta pérdidas netas en 1T, pero mejora ingresos y mantiene objetivos.</span></li><li style="margin-bottom: 5px; display: flex; align-items: flex-start; gap: 5px;"><span style="font-size: 10px; margin-top: 1px;">⚡</span><span style="flex:1;">Tensión geopolítica en el Estrecho de Ormuz sin resolución.</span></li><li style="margin-bottom: 5px; display: flex; align-items: flex-start; gap: 5px;"><span style="font-size: 10px; margin-top: 1px;">⚡</span><span style="flex:1;">Santander mejora calificación Fitch a A+, Sabadell ve regreso de bajistas.</span></li><li style="margin-bottom: 5px; display: flex; align-items: flex-start; gap: 5px;"><span style="font-size: 10px; margin-top: 1px;">⚡</span><span style="flex:1;">Sector constructor español con cartera récord de 200.000 millones.</span></li></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-legal">
+                <span class="footer-icon">🛡️</span>
+                <span class="footer-text">Este informe es solo para fines informativos y no constituye asesoramiento de inversión. La información se basa en fuentes consideradas fiables, pero NUVIA Family Invest no garantiza su exactitud o integridad. Las decisiones de inversión deben basarse en un análisis individual...</span>
+            </div>
+            <div class="footer-page">Página 1/5</div>
+        </div>
+        <div class="page-number">Página 1/5</div>
+    </div>
+
+    <!-- PAGE 2: MACRO Y MERCADOS -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div class="header-logo" aria-label="NUVIA Family Wealth"><strong>NUVIA</strong><span>FAMILY WEALTH</span></div>
+                <div class="header-divider"></div>
+                <div class="header-text">
+                    <h1 class="header-title">Informe Diario</h1>
+                    <div class="header-date">Fecha: 09/06/2026</div>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="section-icon">📅</span>Macro y Mercados</h2>
+            
+            <div class="flex-row">
+                <div class="flex-1">
+                    <table class="nuvia-table">
+                        <thead>
+                            <tr><th colspan="3">Agenda Europa</th></tr>
+                            <tr><th>Hora</th><th>Evento</th><th>Impacto</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>08:00</td><td>UK. PIB (1º trim.), Producción industrial (marzo), Balanza comercial (marzo)</td><td>Alto</td></tr><tr><td>09:00</td><td>IPC e IPC UE armonizado (abril)</td><td>Alto</td></tr><tr><td>11:15</td><td>Comparecencia de Lagarde (BCE)</td><td>Alto</td></tr><tr><td>12:00</td><td>Francia, Alemania, Italia. PCSI de Thomson Reuters en Ipsos (mayo)</td><td>Medio</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-1">
+                    <table class="nuvia-table">
+                        <thead>
+                            <tr><th colspan="3">Agenda Estados Unidos</th></tr>
+                            <tr><th>Hora</th><th>Evento</th><th>Impacto</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>14:30</td><td>Ventas minoristas (abril), Nuevas peticiones subsidio por desempleo, Índice de precios de ex...</td><td>Alto</td></tr><tr><td>16:00</td><td>Inventarios de negocios (abril), Inventarios minoristas exc. Automóviles (marzo)</td><td>Medio</td></tr><tr><td>16:30</td><td>Reservas de gas natural</td><td>Bajo</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <table class="nuvia-table">
+                <thead>
+                    <tr><th colspan="4"><span style="margin-right: 5px;">📊</span>Mercados al Inicio de la Sesión</th></tr>
+                    <tr><th>Activo</th><th>Nivel</th><th>Variación</th><th>Lectura</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Ibex 35</strong></td><td>17654</td><td class='var-cell'>+0.46%</td><td>Cierre previo.</td></tr><tr><td><strong>Futuros Europa</strong></td><td>N/A</td><td class='var-cell'>+0.4%</td><td>Inician la sesión con subidas moderadas, impulsados por finanzas y consumo.</td></tr><tr><td><strong>Futuros USA</strong></td><td>N/A</td><td class='var-cell'>Plana</td><td>Apuntan a una apertura plana, a la espera de datos de empleo.</td></tr><tr><td><strong>EUR/USD</strong></td><td>N/A</td><td class='var-cell'>Debilitamiento USD</td><td>El dólar se debilita ligeramente frente al euro.</td></tr>
+                </tbody>
+            </table>
+
+            <div class="panel">
+                <div style="color: var(--nuvia-blue); font-weight: bold; margin-bottom: 6px;">Qué puede mover mercado hoy</div>
+                <div class="text-content" style="margin-left: 15px;">
+                    <ul><li>Expectativas de subidas de tipos del BCE ante la inflación.</li><li>Resultados corporativos clave en España (Telefónica, Merlin) y Europa (National Grid, Mediobanca).</li><li>Tensiones geopolíticas en el Estrecho de Ormuz y sus implicaciones energéticas.</li><li>Datos macroeconómicos importantes en UK, Eurozona y EEUU (IPC, PIB, Ventas minoristas, Desempleo).</li></ul>
+                </div>
+            </div>
+
+            <div class="panel" style="border-left: 4px solid var(--nuvia-blue);">
+                <div style="color: var(--nuvia-blue); font-weight: bold; margin-bottom: 6px;"><span style="font-size: 12px; margin-right: 5px;">🎯</span>Foco para el Asesor</div>
+                <div class="text-content">
+                    La sesión estará marcada por la publicación de datos de IPC en la UE y PIB en UK, junto a la comparecencia de Lagarde. En EEUU, las ventas minoristas y peticiones de desempleo serán clave. La geopolítica en Ormuz sigu...
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-legal">
+                <span class="footer-icon">🛡️</span>
+                <span class="footer-text">Este informe es solo para fines informativos y no constituye asesoramiento de inversión. La información se basa en fuentes consideradas fiables, pero NUVIA Family Invest no garantiza su exactitud o integridad. Las decisiones de inversión deben basarse en un análisis individual...</span>
+            </div>
+            <div class="footer-page">Página 2/5</div>
+        </div>
+        <div class="page-number">Página 2/5</div>
+    </div>
+
+    <!-- PAGE 3: COMPAÑÍAS ESPAÑA -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div class="header-logo" aria-label="NUVIA Family Wealth"><strong>NUVIA</strong><span>FAMILY WEALTH</span></div>
+                <div class="header-divider"></div>
+                <div class="header-text">
+                    <h1 class="header-title">Informe Diario</h1>
+                    <div class="header-date">Fecha: 09/06/2026</div>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="section-icon">🏢</span>Compañías España</h2>
+
+            <table class="nuvia-table">
+                <thead>
+                    <tr><th colspan="3">Eventos Corporativos</th></tr>
+                    <tr>
+                        <th class="col-esp-comp">Compañía</th>
+                        <th class="col-esp-ev">Evento</th>
+                        <th class="col-esp-imp">Impacto / lectura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>TELEFONICA</strong></td><td>Pérdidas netas 1T de 411M€ por ventas en Latam; ingresos +0.8% a 8.127M€; confirma objetivos 2026.</td><td>Negativo por pérdidas netas, positivo por ingresos y confirmación de objetivos.</td></tr><tr><td><strong>MERLIN PROPERTIES</strong></td><td>Gana 87.4M€ hasta marzo (+3.9%); rentas brutas +10.3% a 146M€; acelera desarrollo de centros de datos.</td><td>Positivo por crecimiento de beneficios y rentas, estratégico por centros de datos.</td></tr><tr><td><strong>B SANTANDER</strong></td><td>Fitch mejora calificación a largo plazo de A a A+, con perspectiva estable.</td><td>Positivo por mejora de rating.</td></tr><tr><td><strong>B SABADELL</strong></td><td>Inversores bajistas (Marshall Wace) superan el 0.5% de ventas a corto por primera vez desde 2021.</td><td>Negativo por aumento de posiciones cortas.</td></tr><tr><td><strong>AENA</strong></td><td>Relega ofertas de Antonio Catalán y Grupo Lar para hoteles de Barajas; Barceló potencial adjudicatario.</td><td>Neutro/Positivo para Barceló, negativo para ofertas relegadas.</td></tr><tr><td><strong>Sector constructor</strong></td><td>ACS, Acciona, Ferrovial y Sacyr logran cartera récord de 200.000 millones de euros.</td><td>Positivo para el sector por solidez y perspectivas de negocio.</td></tr><tr><td><strong>TSK</strong></td><td>Avanzó un 5% en sesión tras debut en bolsa, subiendo hasta un 16% post-campana.</td><td>Muy positivo por fuerte debut bursátil.</td></tr><tr><td><strong>PUIG / Estée Lauder</strong></td><td>Logran vía libre del mercado para su fusión. Estée Lauder ofrece 18-19€/acción.</td><td>Positivo por avance de la operación.</td></tr>
+                </tbody>
+            </table>
+
+            <table class="nuvia-table" style="margin-top: 20px;">
+                <thead>
+                    <tr><th colspan="4"><span style="margin-right: 5px;">🗓️</span>Dividendos y Eventos Societarios</th></tr>
+                    <tr>
+                        <th>Compañía</th>
+                        <th>Evento</th>
+                        <th>Fecha</th>
+                        <th>Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>GRUPO SAN JOSE</strong></td><td>Pago de dividendo</td><td>21/05/2026</td><td>0,18€</td></tr><tr><td><strong>METROVACESA</strong></td><td>Retorno prima</td><td>22/05/2026</td><td>0,9€</td></tr><tr><td><strong>IBERDROLA</strong></td><td>Dividendo Especial</td><td>25/05/2026</td><td>0,05€</td></tr><tr><td><strong>MERLIN</strong></td><td>Pago de dividendo</td><td>25/05/2026</td><td>0,1507€</td></tr><tr><td><strong>TELEFONICA</strong></td><td>Pago de dividendo</td><td>18/06/2026</td><td>0,15€</td></tr><tr><td><strong>ENAGAS</strong></td><td>Pago de dividendo</td><td>02/07/2026</td><td>0,6€</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="footer-legal">
+                <span class="footer-icon">🛡️</span>
+                <span class="footer-text">Este informe es solo para fines informativos y no constituye asesoramiento de inversión. La información se basa en fuentes consideradas fiables, pero NUVIA Family Invest no garantiza su exactitud o integridad. Las decisiones de inversión deben basarse en un análisis individual...</span>
+            </div>
+            <div class="footer-page">Página 3/5</div>
+        </div>
+        <div class="page-number">Página 3/5</div>
+    </div>
+
+    <!-- PAGE 4: COMPAÑÍAS GLOBAL Y CIERRE -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div class="header-logo" aria-label="NUVIA Family Wealth"><strong>NUVIA</strong><span>FAMILY WEALTH</span></div>
+                <div class="header-divider"></div>
+                <div class="header-text">
+                    <h1 class="header-title">Informe Diario</h1>
+                    <div class="header-date">Fecha: 09/06/2026</div>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="section-icon">🌍</span>Compañías Europa / Global</h2>
+
+            <table class="nuvia-table">
+                <thead>
+                    <tr><th colspan="4">Eventos Globales</th></tr>
+                    <tr>
+                        <th class="col-glb-comp">Compañía</th>
+                        <th class="col-glb-reg">Región</th>
+                        <th class="col-glb-ev">Evento</th>
+                        <th class="col-glb-imp">Impacto / lectura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>SIEMENS</strong></td><td>Europa</td><td>Adquiere negocios clave de Mermec.</td><td>Positivo por expansión estratégica.</td></tr><tr><td><strong>GVS</strong></td><td>Europa</td><td>Lanza oferta de hasta 23.3 millones de acciones propias a 4.30€/acc.</td><td>Neutro/Positivo, depende de la aceptación y valoración.</td></tr><tr><td><strong>VEDANTA</strong></td><td>Global</td><td>S&P eleva su calificación a BB, mantiene perspectiva estable.</td><td>Positivo por mejora de rating crediticio.</td></tr><tr><td><strong>EPIROK</strong></td><td>Europa</td><td>Goldman Sachs inicia cobertura con recomendación de compra y PO de 315 SEK.</td><td>Positivo por respaldo de analistas.</td></tr><tr><td><strong>ADECCO</strong></td><td>Europa</td><td>Jefferies recorta su precio objetivo hasta los 13.50 Chf.</td><td>Negativo por recorte de precio objetivo.</td></tr><tr><td><strong>ABB</strong></td><td>Europa</td><td>Destinará 200 millones de dólares para impulsar fabricación de equipos de media tensión en Europa.</td><td>Positivo por inversión y crecimiento.</td></tr>
+                </tbody>
+            </table>
+
+            <table class="nuvia-table" style="margin-top: 8px;">
+                <thead>
+                    <tr><th colspan="3">Resultados Relevantes</th></tr>
+                    <tr>
+                        <th class="col-esp-comp">Compañía</th>
+                        <th class="col-esp-ev">Resumen</th>
+                        <th class="col-esp-imp">Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>NATIONAL GRID (Europa)</strong></td><td>Beneficio operativo subyacente FY 5680M GBP (vs 5800M est.); ingresos FY 17690M GBP (vs 18430M est.).</td><td>Ligeramente negativo por debajo de estimaciones, pero prevé aumento de BPA en 2027.</td></tr><tr><td><strong>MEDIOBANCA (Europa)</strong></td><td>Beneficio neto 1T 322.7M€ (-3.4%); ingresos +3.1% hasta 938.6M€.</td><td>Mixto, ingresos suben pero beneficio neto cae.</td></tr><tr><td><strong>BURBERRY (Europa)</strong></td><td>Ventas minoristas comparables 4T suben 5% (vs 4.6% est.).</td><td>Positivo por superar estimaciones de ventas.</td></tr><tr><td><strong>PREMIER FOODS (Europa)</strong></td><td>Beneficio operativo anual 220.8M Gbp (vs 16.3M est.); EBITDA adj. 1S 83.3M GBP.</td><td>Muy positivo por superar ampliamente las estimaciones.</td></tr>
+                </tbody>
+            </table>
+
+            <table class="nuvia-table" style="margin-top: 8px;">
+                <thead>
+                    <tr><th colspan="3">M&A / Operaciones Corporativas</th></tr>
+                    <tr>
+                        <th class="col-esp-comp">Compañía</th>
+                        <th class="col-esp-ev">Operación</th>
+                        <th class="col-esp-imp">Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Telefónica (Zeleris) (España)</strong></td><td>OnTime y CTDI se disputan la compra de Zeleris, filial logística de Telefónica (130M€).</td><td>Positivo para Telefónica por desinversión estratégica.</td></tr><tr><td><strong>PROSUS (Global)</strong></td><td>Vende el 5% de su participación en Delivery Hero a Aspex (Hong Kong).</td><td>Positivo por monetización de activos.</td></tr>
+                </tbody>
+            </table>
+
+            <div style="color: var(--nuvia-blue); font-size: 10px; margin-top: 10px; font-weight: bold; text-align: center;">
+                Ver anexo para resultados y operaciones adicionales.
+            </div>
+
+            <div class="panel" style="margin-top: 10px; padding: 8px 12px;">
+                <div style="color: var(--text-muted); font-size: 10px;">
+                    <strong>Fuentes y notas:</strong> Información recopilada de Andbank, MarketScreener, S&P, FT, Bloomberg, Reuters, WSJ, Expansión, Cinco Días y El Economista.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-legal">
+                <span class="footer-icon">🛡️</span>
+                <span class="footer-text">Este informe es solo para fines informativos y no constituye asesoramiento de inversión. La información se basa en fuentes consideradas fiables, pero NUVIA Family Invest no garantiza su exactitud o integridad. Las decisiones de inversión deben basarse en un análisis individual...</span>
+            </div>
+            <div class="footer-page">Página 4/5</div>
+        </div>
+        <div class="page-number">Página 4/5</div>
+    </div>
+
+
+    <!-- PAGE 5: ANEXO -->
+    <div class="page">
+        <div class="page-content">
+            <div class="header">
+                <div class="header-logo" aria-label="NUVIA Family Wealth"><strong>NUVIA</strong><span>FAMILY WEALTH</span></div>
+                <div class="header-divider"></div>
+                <div class="header-text">
+                    <h1 class="header-title">Informe Diario</h1>
+                    <div class="header-date">Fecha: 09/06/2026</div>
+                </div>
+            </div>
+            <h2 class="section-title"><span class="section-icon">📎</span>Anexo: Resultados, dividendos y operaciones</h2>
+            
+            <table class="nuvia-table compact" style="margin-top: 10px;">
+                <thead>
+                    <tr><th colspan="4">Eventos Globales - Continuación</th></tr>
+                    <tr><th class="col-glb-comp">Compañía</th><th class="col-glb-reg">Región</th><th class="col-glb-ev">Evento</th><th class="col-glb-imp">Impacto / lectura</th></tr>
+                </thead>
+                <tbody><tr><td><strong>ARMANI</strong></td><td>Europa</td><td>Podría repartir su participación del 15% a partes iguales entre L'Oréal, EssilorLuxottica y LVMH.</td><td>Especulativo, potencial impacto en el sector lujo.</td></tr><tr><td><strong>BP</strong></td><td>Europa</td><td>RBC la eleva a Sobreponderar; PO 700GBp.</td><td>Positivo por mejora de recomendación.</td></tr></tbody>
+            </table>
+            <table class="nuvia-table compact" style="margin-top: 10px;">
+                <thead>
+                    <tr><th colspan="3">Resultados Relevantes - Continuación</th></tr>
+                    <tr><th class="col-esp-comp">Compañía</th><th class="col-esp-ev">Resumen</th><th class="col-esp-imp">Impacto</th></tr>
+                </thead>
+                <tbody><tr><td><strong>HANNOVER RE (Europa)</strong></td><td>Beneficio neto 1T 710.6M€ (vs 721M€ previstos); confirma previsiones FY.</td><td>Ligeramente negativo por debajo de consenso, pero previsiones FY confirmadas.</td></tr></tbody>
+            </table>
+            <table class="nuvia-table compact" style="margin-top: 10px;">
+                <thead>
+                    <tr><th colspan="3">M&A / Operaciones Corporativas - Continuación</th></tr>
+                    <tr><th class="col-esp-comp">Compañía</th><th class="col-esp-ev">Operación</th><th class="col-esp-imp">Impacto</th></tr>
+                </thead>
+                <tbody><tr><td><strong>STABILUS (Europa)</strong></td><td>Vende Fabreeka y productos tecnológicos al grupo VMC por aprox. 92 millones de dólares.</td><td>Positivo por reestructuración de cartera.</td></tr></tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <div class="footer-legal">
+                <span class="footer-icon">🛡️</span>
+                <span class="footer-text">Este informe es solo para fines informativos y no constituye asesoramiento de inversión. La información se basa en fuentes consideradas fiables, pero NUVIA Family Invest no garantiza su exactitud o integridad. Las decisiones de inversión deben basarse en un análisis individual...</span>
+            </div>
+            <div class="footer-page">Página 5/5</div>
+        </div>
+        <div class="page-number">Página 5/5</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mercados | NUVIA Family Wealth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
+  <link rel="stylesheet" href="tema-claro.css">
+  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    a { color: var(--color-accent-600); }
+    a:hover { color: var(--color-accent-200); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      </a>
+      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html" class="is-active" aria-current="page">Mercados</a>
+        <a href="cartera.html">Cartera</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a href="academia.html">Academy</a>
+        <a href="lecturas.html">Lecturas</a>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="mercados" data-screen-label="Cabecera mercados" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
+      <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
+      <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Mercados NUVIA</span>
+      <h1 style="color:#ffffff; max-width:16em; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">El pulso de los mercados, sin ruido</h1>
+      <p style="max-width:52ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0 0 32px">Informe diario, archivo histórico y una lectura semanal para conectar los mercados con las decisiones patrimoniales de tu familia.</p>
+      <nav aria-label="Vistas de mercados" style="display:inline-flex; overflow:hidden; border:1px solid rgba(255,255,255,.22); border-radius:var(--radius-md)">
+        <sc-for list="{{ vistas }}" as="p" hint-placeholder-count="3">
+          <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}" style-hover="{{ p.estiloHover }}">{{ p.label }}</button>
+        </sc-for>
+      </nav>
+      <div style="height:1px; margin-top:36px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+    </div>
+    </section>
+
+    <sc-if value="{{ esDiario }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Informe diario" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr)">
+          <div style="position:relative; min-height:320px">
+            <img src="src/assets/home/daily-report-preview.webp" alt="Informe diario NUVIA" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.8) saturate(.9)">
+            <div style="position:absolute; inset:0; background:linear-gradient(90deg, transparent 60%, var(--color-surface) 100%)"></div>
+          </div>
+          <div style="display:flex; flex-direction:column; padding:34px 40px">
+            <p style="color:var(--color-accent); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Último informe</p>
+            <h2 style="font-size:30px; font-weight:500; letter-spacing:-.012em; line-height:1.12; margin:0 0 12px">Informe diario</h2>
+            <p style="display:inline-flex; align-items:center; gap:8px; color:color-mix(in srgb, var(--color-text) 54%, transparent); font-size:13px; margin:0 0 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Miércoles, 5 de agosto de 2026</p>
+            <h3 style="font-size:21px; font-weight:500; line-height:1.3; margin:0 0 10px; color:color-mix(in srgb, var(--color-text) 92%, transparent)">Los mercados abren pendientes de los resultados tecnológicos y del dato de empleo americano</h3>
+            <p style="flex:1; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 22px">Resumen de apertura, claves del día, renta fija, renta variable, divisas y materias primas.</p>
+            <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap">
+              <a href="#mercados" title="Contenido de ejemplo en esta maqueta" class="btn btn-primary" style="text-decoration:none">Leer informe →</a>
+              <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:11.5px">Maqueta: el informe real se genera y publica a diario.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ esArchivo }}" hint-placeholder-val="{{ false }}">
+      <section id="archivo" data-screen-label="Archivo de informes" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+        <div style="max-width:880px">
+          <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; line-height:1.1; margin:0 0 8px">Archivo de informes diarios</h2>
+          <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 8px">Accede al histórico de informes diarios generados y listos para su lectura.</p>
+          <div style="display:flex; align-items:center; gap:0; margin:0 0 26px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span></div>
+          <div style="display:flex; flex-direction:column; gap:12px">
+            <sc-for list="{{ informes }}" as="r" hint-placeholder-count="4">
+              <article style="display:flex; align-items:center; justify-content:space-between; gap:18px; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 22px; transition:transform .25s ease, box-shadow .25s ease" style-hover="transform:translateY(-2px); box-shadow:var(--shadow-md)">
+                <div style="min-width:0">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px">
+                    <span class="tag tag-accent" style="font-size:10px; letter-spacing:.12em; text-transform:uppercase">Diario</span>
+                    <span class="tag tag-neutral" style="font-variant-numeric:tabular-nums">{{ r.fecha }}</span>
+                  </div>
+                  <h3 style="font-size:15px; font-weight:500; line-height:1.45; margin:0 0 4px; color:color-mix(in srgb, var(--color-text) 90%, transparent)">{{ r.titulo }}</h3>
+                  <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; margin:0">Documento fechado y disponible para consulta.</p>
+                </div>
+                <a href="#mercados" title="Contenido de ejemplo en esta maqueta" class="btn btn-secondary" style="flex-shrink:0; text-decoration:none; font-size:12px; letter-spacing:.06em; text-transform:uppercase">Abrir informe ↗</a>
+              </article>
+            </sc-for>
+          </div>
+          <p style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:11.5px; margin:18px 0 0">Maqueta con entradas de ejemplo · En producción, el archivo se alimenta del manifiesto de informes generado a diario.</p>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ esSemanal }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Barómetro semanal" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+          <div style="background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:38px 42px">
+            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">Resumen estratégico</p>
+            <h2 style="font-size:36px; font-weight:500; letter-spacing:-.012em; line-height:1.08; margin:0 0 12px">Barómetro semanal</h2>
+            <p style="max-width:52ch; color:color-mix(in srgb, var(--color-text) 78%, transparent); font-size:15.5px; line-height:1.65; margin:0">Una lectura breve para distinguir las señales relevantes del ruido y mantener el foco en el plan familiar.</p>
+          </div>
+          <div style="padding:30px 42px 38px">
+            <span style="display:inline-flex; align-items:center; gap:8px; border:1px solid var(--color-accent-700); border-radius:999px; background:color-mix(in srgb, var(--color-accent) 8%, transparent); color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2 2"></path><path d="M5 3 2 6M22 6l-3-3"></path></svg>Próxima publicación en preparación</span>
+            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin-top:24px">
+              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:24px 26px">
+                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
+                <h3 style="font-size:20px; font-weight:500; line-height:1.25; margin:16px 0 0">Contexto antes que titulares</h3>
+                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:10px 0 0">El barómetro conectará mercados, economía y geopolítica con las decisiones patrimoniales de largo plazo.</p>
+              </article>
+              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:24px 26px">
+                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <h3 style="font-size:20px; font-weight:500; line-height:1.25; margin:16px 0 0">Fuentes y fechas visibles</h3>
+                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:10px 0 0">Cada edición identificará con claridad la fecha de corte, las fuentes utilizadas y el alcance de la información.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h4>Navegación</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h4>Recursos</h4>
+          <div class="nuvia-site-footer__links">
+            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h4>Información</h4>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = { vista: 'diario', temasOpen: false };
+  componentDidMount() {
+    document.title = 'Mercados | NUVIA Family Wealth';
+    const p = new URLSearchParams(window.location.search).get('vista');
+    if (p && ['diario', 'archivo', 'semanal'].includes(p)) this.setState({ vista: p });
+  }
+  ir(v) { this.setState({ vista: v }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  renderVals() {
+    const vista = this.state.vista;
+    const base = 'display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:var(--font-heading); font-weight:500; font-size:13.5px; padding:9px 18px; border:0; border-left:1px solid rgba(255,255,255,.25); transition:background .2s ease, color .2s ease, box-shadow .2s ease; ';
+    const defs = [['diario', 'Informe diario'], ['archivo', 'Archivo de informes'], ['semanal', 'Barómetro semanal']];
+    return {
+      temasOpen: this.state.temasOpen,
+      abrirTemas: () => this.setState({ temasOpen: true }),
+      cerrarTemas: () => this.setState({ temasOpen: false }),
+      vistas: defs.map(([id, label], i) => ({
+        label,
+        ariaCurrent: id === vista ? 'page' : undefined,
+        abrir: () => this.ir(id),
+        estilo: base + (i === 0 ? 'border-left:0; ' : '') + (id === vista ? 'background:rgba(255,255,255,.95); color:#0B2347' : 'background:transparent; color:rgba(255,255,255,.78)'),
+        estiloHover: id === vista ? '' : 'background:rgba(255,255,255,.12)',
+      })),
+      esDiario: vista === 'diario',
+      esArchivo: vista === 'archivo',
+      esSemanal: vista === 'semanal',
+      informes: [
+        { fecha: 'Miércoles, 5 de agosto de 2026', titulo: 'Los mercados abren pendientes de los resultados tecnológicos y del dato de empleo americano' },
+        { fecha: 'Martes, 4 de agosto de 2026', titulo: 'La renta fija recoge las palabras del BCE mientras el crudo modera su avance semanal' },
+        { fecha: 'Lunes, 3 de agosto de 2026', titulo: 'Semana de bancos centrales: qué vigilar en tipos, divisas y beneficios empresariales' },
+        { fecha: 'Viernes, 31 de julio de 2026', titulo: 'Cierre de mes: balance de julio en renta variable europea y americana' },
+      ],
+      irDiario: () => this.ir('diario'),
+      irArchivo: () => this.ir('archivo'),
+      irSemanal: () => this.ir('semanal'),
+    };
+  }
+}
+</script>
+</body>
+</html>
