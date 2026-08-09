@@ -1,19 +1,18 @@
-# NUVIA Web 3
+# NUVIA Web 2
 
-Proyecto local e independiente de NUVIA. Reúne el rediseño visual completo entregado, mantiene la suite de cartera y conserva las rutas, calculadoras y contenidos dinámicos de la versión anterior.
+Proyecto autónomo de la segunda web de NUVIA. Su código de trabajo está exclusivamente en esta carpeta y se publica en Firebase Hosting. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
 
-La experiencia está diseñada para escritorio y tablet. La portada y su hero definen el lenguaje visual común del resto de páginas.
+## Entornos
 
-## Entorno local
+- **Local:** desarrollo y revisión en `http://127.0.0.1:4173`.
+- **Vista previa:** canal temporal de Firebase para revisar cambios sin afectar a los usuarios.
+- **Producción:** `https://nuvia-family-wealth.web.app/`.
 
-- **Dirección:** `http://127.0.0.1:4173`.
-- **Carpeta de publicación local:** `dist/`.
-
-Este proyecto no incluye acciones de publicación en Firebase ni modifica otras versiones de NUVIA.
+Git se mantiene como historial local. GitHub no forma parte del proceso de compilación ni de publicación.
 
 ## Trabajo local
 
-Requisito: Node.js 20 o posterior.
+Requisitos: Node.js 20 o posterior y Firebase CLI con acceso al proyecto `nuvia-family-wealth`.
 
 ```powershell
 npm run serve
@@ -30,10 +29,26 @@ npm run build
 
 La validación comprueba las rutas funcionales, informes, materiales de Academy, contenido diario, indicadores macroeconómicos y referencias locales de todas las páginas.
 
+## Publicación segura
+
+Primero se crea una vista previa temporal:
+
+```powershell
+npm run firebase:preview
+```
+
+Solo después de revisarla se publica en producción:
+
+```powershell
+npm run firebase:deploy
+```
+
+Firebase publica únicamente `dist/`. Los scripts, configuraciones, archivos de trabajo y el repositorio Git nunca se envían a la web.
+
 ## Contenido diario
 
-GitHub Actions comprueba y renueva automáticamente la noticia económica de portada todos los días, incluida su imagen editorial vinculada a la fuente seleccionada. Los cinco indicadores macroeconómicos oficiales se actualizan de lunes a viernes. Los datos se guardan en `data/daily-content.json` y la imagen vigente en `src/assets/home/daily-news/`.
+La noticia económica y los cinco indicadores macroeconómicos se mantienen directamente en `data/daily-content.json`. La imagen editorial estable de portada está en `src/assets/home/daily-news/daily-news-desktop.webp`.
 
 ## Alcance
 
-`core/` forma parte del contenido funcional de NUVIA Web 3 y se trata como un componente local consolidado. No se descarga ni se reconstruye desde otra web durante el trabajo local.
+`core/` forma parte del contenido funcional de NUVIA Web 2 y se trata como un componente local consolidado. No se descarga ni se reconstruye desde otra web durante el trabajo o la publicación.

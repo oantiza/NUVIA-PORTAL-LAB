@@ -7,13 +7,12 @@
 <script src="./web2-integration.js"></script>
 <script src="./support.js"></script>
 </head>
-<body class="nuvia-friendly">
+<body>
 <x-dc>
 <helmet>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css?v=desktop-tablet-3">
-  <link rel="stylesheet" href="friendly-sections.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -25,39 +24,22 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:30px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent)">Analítica de cartera</a>
+        <a href="fiscalidad.html" aria-current="page" style="white-space:nowrap; font-size:14px; text-decoration:none; color:var(--color-accent)">Mis impuestos</a>
+        <a href="academia.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent)">Academy</a>
+        <a href="index.html#que-es-nuvia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent)">Qué es NUVIA</a>
       </nav>
     </div>
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
   </header>
 
   <main>
@@ -81,45 +63,20 @@
     </section>
   </main>
 
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
-        </div>
+  <footer data-screen-label="Footer" style="padding:0 0 22px">
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+    <div style="max-width:1240px; margin:0 auto; padding:34px 48px 0">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:34px; margin-bottom:26px">
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
+          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95; margin-bottom:12px">
+          <p style="max-width:42em; color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:12.5px; line-height:1.7; margin:0">Información patrimonial y fiscal para comprender mejor las decisiones familiares.</p>
         </div>
-        <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-          </div>
-        </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
-          </div>
-        </div>
+        <a href="fiscalidad.html#guias" class="btn btn-ghost" style="text-decoration:none; font-size:12.5px">Ver las tres guías</a>
       </div>
-      <div class="nuvia-site-footer__legal">
-        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      <div style="height:1px; background:var(--color-divider)"></div>
+      <div style="display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 40%, transparent); font-size:11px; padding-top:16px">
+        <span>© 2026 NUVIA Family Wealth.</span>
+        <span>Contenido educativo e informativo; no constituye asesoramiento personalizado.</span>
       </div>
     </div>
   </footer>
@@ -133,18 +90,18 @@ class Component extends DCLogic {
     const guias = {
       calendar: {
         eyebrow: 'Planificación fiscal',
-        titulo: 'Mis fechas importantes',
-        descripcion: 'Consulta los plazos que te afectan y prepara con tiempo lo que no conviene dejar para el final.',
+        titulo: 'Calendario fiscal',
+        descripcion: 'Revisa obligaciones, fechas oficiales y decisiones que conviene preparar con tiempo.',
       },
       savings: {
         eyebrow: 'Inversión y patrimonio',
-        titulo: 'Qué pago cuando invierto',
-        descripcion: 'Entiende cuándo tributan intereses, dividendos, ganancias y pérdidas, y qué conviene conservar.',
+        titulo: 'Fiscalidad del ahorro',
+        descripcion: 'Comprende cuándo tributan rendimientos, ganancias y pérdidas, y qué documentación conviene conservar.',
       },
       inheritance: {
         eyebrow: 'Planificación patrimonial',
-        titulo: 'Herencias y donaciones, paso a paso',
-        descripcion: 'Ordena las decisiones, los documentos y los plazos de una transmisión familiar.',
+        titulo: 'Sucesiones y donaciones',
+        descripcion: 'Ordena los aspectos fiscales, patrimoniales y documentales de una transmisión familiar.',
       },
     };
     const key = Object.prototype.hasOwnProperty.call(guias, id) ? id : 'calendar';
@@ -170,12 +127,10 @@ class Component extends DCLogic {
   componentWillUnmount() { if (this._onMsg) window.removeEventListener('message', this._onMsg); }
   renderVals() {
     const guia = this.guia();
-    const territorio = new URLSearchParams(window.location.search).get('territorio') || 'bizkaia';
-    const coreSrc = 'core/index.html?topic=mis-impuestos&taxPage=' + guia.key + '&embedded=web2';
     return {
       ...guia,
       iframeTitle: guia.titulo + ' — guía fiscal NUVIA',
-      iframeSrc: coreSrc + '&jurisdiction=' + encodeURIComponent(territorio) + '&ui=homogeneous-1',
+      iframeSrc: 'core/index.html?topic=mis-impuestos&taxPage=' + guia.key + '&embedded=web2',
     };
   }
 }

@@ -86,7 +86,7 @@ if (!coreBridge.includes("params.get('embedded') === 'web2'") || !coreBridge.inc
 
 const cloudDesignMarkers = [
   'background:#1C3A5E',
-  'padding:100px 48px calc(48px - .5cm); min-height:calc(460px - .5cm)',
+  'padding:100px 48px 48px; min-height:460px',
   'font-size:56px; line-height:1.08',
   'Información clara,<br>decisiones con propósito.',
   'background:linear-gradient(95deg, rgba(28,58,94,.94)',

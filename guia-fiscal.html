@@ -2,17 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Fiscalidad y rescate de EPSV | NUVIA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía fiscal | NUVIA</title>
 <script src="./support.js"></script>
 </head>
-<body class="nuvia-friendly">
+<body>
 <x-dc>
 <helmet>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css">
-  <link rel="stylesheet" href="friendly-sections.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -24,39 +23,20 @@
 </helmet>
 
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
   <!-- ============ HEADER ============ -->
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px); border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:36px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="temas.html?topic=jubilacion" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Temas clave</a>
+        <a href="index.html#que-es-nuvia" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
@@ -71,24 +51,24 @@
             <span style="display:inline-block; white-space:nowrap; border:1px solid rgba(201,220,160,.45); border-radius:999px; background:color-mix(in srgb, #9DB861 8%, transparent); color:#e8f0d5; font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; padding:6px 14px">Reglas fiscales 2026</span>
           </div>
           <p style="color:rgba(255,255,255,.56); font-size:11px; font-weight:500; letter-spacing:.23em; text-transform:uppercase; margin:28px 0 0">Guía NUVIA · Jubilación</p>
-          <h1 style="color:#ffffff; max-width:16em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:12px 0 0">Tu EPSV: cómo cobrarla sin llevarte sorpresas</h1>
-          <p style="max-width:38em; color:rgba(255,255,255,.80); font-size:17px; line-height:1.65; margin:20px 0 0">Compara capital, renta o una combinación de ambas y entiende cuánto recibes, qué tributa y qué necesitas preparar.</p>
+          <h1 style="color:#ffffff; max-width:16em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:12px 0 0">Fiscalidad y rescate de tu EPSV, explicado antes de decidir</h1>
+          <p style="max-width:36em; color:rgba(255,255,255,.74); font-size:16px; line-height:1.65; margin:20px 0 0">Una guía práctica para comparar capital, renta y modalidad mixta, preparar la documentación y entender qué cambia con el marco fiscal de Bizkaia en 2026.</p>
         </div>
         <div style="border-left:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.18); padding:64px 0 56px 44px">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
-          <h2 style="color:#ffffff; font-size:24px; font-weight:500; line-height:1.25; margin:24px 0 0">Una decisión, tres preguntas</h2>
+          <h2 style="color:#ffffff; font-size:24px; font-weight:500; line-height:1.25; margin:24px 0 0">Una decisión, tres planos</h2>
           <div style="display:flex; flex-direction:column; margin-top:24px">
             <div style="display:flex; gap:13px; align-items:flex-start; padding:0 0 16px">
               <span style="color:#dae5c1; font-size:16px">01</span>
-              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.70)"><strong style="display:block; color:#ffffff; font-size:13px">¿Cuánto necesitas?</strong>Cuándo y cuánto quieres cobrar.</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.58)"><strong style="display:block; color:#ffffff; font-size:13px">Liquidez</strong>Cuándo y cuánto necesitas cobrar.</p>
             </div>
             <div style="display:flex; gap:13px; align-items:flex-start; border-top:1px solid rgba(255,255,255,.12); padding:16px 0">
               <span style="color:#dae5c1; font-size:16px">02</span>
-              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.70)"><strong style="display:block; color:#ffffff; font-size:13px">¿Qué recibirás neto?</strong>Qué parte tributa y cómo cambia el resultado.</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.58)"><strong style="display:block; color:#ffffff; font-size:13px">Fiscalidad</strong>Qué parte tributa y en qué base.</p>
             </div>
             <div style="display:flex; gap:13px; align-items:flex-start; border-top:1px solid rgba(255,255,255,.12); padding:16px 0 0">
               <span style="color:#dae5c1; font-size:16px">03</span>
-              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.70)"><strong style="display:block; color:#ffffff; font-size:13px">¿Qué debes preparar?</strong>Documentos, fechas y solicitud ante tu EPSV.</p>
+              <p style="margin:0; font-size:13px; line-height:1.55; color:rgba(255,255,255,.58)"><strong style="display:block; color:#ffffff; font-size:13px">Tramitación</strong>Qué debes acreditar ante tu EPSV.</p>
             </div>
           </div>
         </div>
@@ -114,8 +94,8 @@
       <!-- ============ 01 CÓMO ELEGIR ============ -->
       <section id="ayuda-rescate" data-screen-label="01 Cómo elegir" style="scroll-margin-top:96px; padding-top:60px">
         <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">01 · Ayuda para decidir</p>
-        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Capital, renta o una combinación: ¿qué encaja contigo?</h2>
-        <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No hay una opción mejor para todo el mundo. La respuesta depende de cuánto necesitas ahora, qué otros ingresos tendrás ese año y cuánto quieres reservar para después.</p>
+        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Tres formas de cobrar. Tres perfiles de decisión</h2>
+        <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No existe una modalidad universalmente mejor. La elección depende de tus ingresos del año, tu necesidad de liquidez, la antigüedad de las aportaciones y el modo en que quieras ordenar el patrimonio durante la jubilación.</p>
 
         <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px">
           <article style="border-top:2px solid var(--color-accent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 28px">
@@ -158,7 +138,7 @@
         <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:26px">
           <div>
             <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">02 · Fiscalidad de Bizkaia</p>
-            <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0">No todo tu ahorro puede tributar igual</h2>
+            <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0">La fecha de generación de los derechos importa</h2>
           </div>
           <span style="border:1px solid var(--color-accent-700); border-radius:999px; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; padding:7px 15px; white-space:nowrap">Reglas fiscales 2026</span>
         </div>
@@ -166,13 +146,13 @@
         <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
           <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:28px 32px">
             <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Derechos anteriores a 2026</p>
-            <h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.2; margin:10px 0 0">Una parte podría tener un tratamiento distinto</h3>
+            <h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.2; margin:10px 0 0">Posible régimen transitorio</h3>
             <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.65; margin:14px 0 0">El caso práctico de la Hacienda Foral contempla que la parte consolidada hasta el 31 de diciembre de 2025 pueda integrarse como rendimiento del trabajo al 60 % cuando el rescate en capital reúne las condiciones aplicables.</p>
             <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.6; margin:14px 0 0">No se aplica automáticamente: deben comprobarse contingencia, modalidad, primera prestación y antecedentes del contribuyente.</p>
           </article>
           <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
             <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Derechos desde 2026</p>
-            <h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.2; margin:10px 0 0">Lo aportado y lo ganado se calculan por separado</h3>
+            <h3 style="color:var(--color-text); font-size:24px; font-weight:500; line-height:1.2; margin:10px 0 0">Aportación y rendimiento se separan</h3>
             <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.65; margin:14px 0 0">En el ejemplo oficial de cobro en capital, la parte procedente de aportaciones se integra como rendimiento del trabajo al 70 %, mientras que el rendimiento generado se integra al 100 % como rendimiento del capital mobiliario.</p>
             <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.6; margin:14px 0 0">Por eso es esencial pedir a la EPSV un certificado que desglose aportaciones, rendimientos y periodos.</p>
           </article>
@@ -211,7 +191,7 @@
           <div style="background:var(--color-section); padding:32px 36px">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><path d="m9 9.5 2 2 4-4"></path></svg>
             <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:24px 0 0">Caso práctico DFB 2026</p>
-            <h3 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Un ejemplo para entender qué parte tributa de cada forma</h3>
+            <h3 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Un ejemplo para ver la separación fiscal</h3>
             <a href="https://gidak.bizkaia.eus/content/imagenes/Renta/CASO-PRACTICO-EPSV-26.pdf" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,.3); color:var(--color-accent-200); font-size:12px; font-weight:500; margin-top:24px; padding-bottom:4px; text-decoration:none; transition:border-color .2s ease" style-hover="border-color:var(--color-accent-200); color:var(--color-accent-200)">Abrir documento oficial ↗</a>
           </div>
           <div style="background:var(--color-surface); padding:32px 36px">
@@ -228,9 +208,9 @@
 
       <!-- ============ 03 TRAMITACIÓN ============ -->
       <section id="tramite-administrativo" data-screen-label="03 Tramitación" style="scroll-margin-top:96px; padding-top:72px">
-        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">03 · Preparar el cobro</p>
-        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Qué pedir a tu EPSV antes de firmar</h2>
-        <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">Una solicitud bien preparada evita retrasos y ayuda a comprobar el resultado fiscal antes de elegir importe, modalidad y fecha de cobro.</p>
+        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">03 · Regulación administrativa</p>
+        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Del derecho al cobro: cómo preparar la solicitud</h2>
+        <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">La prestación debe solicitarse a la entidad gestora y acompañarse de documentación completa y suficiente para acreditar la contingencia y la condición de beneficiario.</p>
 
         <div style="display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:28px; align-items:start">
           <div style="border-top:1px solid var(--color-divider); border-bottom:1px solid var(--color-divider)">
@@ -285,7 +265,7 @@
           <div style="border-right:1px solid var(--color-divider); padding:32px 34px">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
             <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:24px 0 0">Control previo</p>
-            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Antes de firmar, comprueba esto</h2>
+            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Checklist antes de firmar el rescate</h2>
           </div>
           <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px 30px; padding:32px 34px">
             <p style="display:flex; gap:12px; align-items:flex-start; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.6; margin:0"><span aria-hidden="true" style="flex-shrink:0; width:16px; height:16px; border:1px solid var(--color-accent-600); border-radius:var(--radius-sm); background:transparent; margin-top:2px"></span>He confirmado que tributo en Bizkaia.</p>
@@ -302,8 +282,8 @@
 
       <!-- ============ 04 NORMATIVA ============ -->
       <section id="normativa-oficial" data-screen-label="04 Normativa" style="scroll-margin-top:96px; padding-top:72px">
-        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">04 · Fuentes oficiales</p>
-        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Si quieres comprobar la fuente</h2>
+        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">04 · Normativa y fuentes</p>
+        <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">La referencia oficial, a un clic</h2>
         <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 28px">La fiscalidad corresponde a la normativa foral de Bizkaia; la organización, supervisión y régimen administrativo de las EPSV se apoya en la normativa de Euskadi y en los estatutos de cada entidad.</p>
 
         <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
@@ -377,45 +357,42 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:44px 0 22px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent) no-repeat top / 100% 1px">
+    <div style="max-width:1240px; margin:0 auto; padding:0 40px">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:36px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px"><img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95"></div>
+          <p style="max-width:24em; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Inicio</a>
+            <a href="temas.html?topic=jubilacion" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Jubilación</a>
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Temas clave</a>
+            <a href="jubilacion.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Simulador de jubilación</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Recursos</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="guia-planificacion.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Guía de planificación</a>
+            <a href="fiscalidad.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Mis impuestos</a>
+            <a href="academia.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">NUVIA Academy</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+        <div>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.55">
+            <span>Guía educativa · Solo Bizkaia · Revisada en agosto de 2026.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); padding-top:4px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12) 48px, rgba(255,255,255,.12) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 42%, transparent); font-size:11.5px; padding-top:18px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+        <span>Confirma el régimen aplicable con tu entidad y tu asesor.</span>
       </div>
     </div>
   </footer>

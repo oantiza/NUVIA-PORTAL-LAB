@@ -2,17 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Temas clave | NUVIA Family Wealth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temas clave | NUVIA</title>
 <script src="./support.js"></script>
 </head>
-<body class="nuvia-friendly">
+<body>
 <x-dc>
 <helmet>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css">
-  <link rel="stylesheet" href="friendly-sections.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -23,40 +22,23 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:30px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="#tema" aria-current="page" style="white-space:nowrap; font-size:14px; text-decoration:none; color:var(--color-accent)">Temas clave</a>
+        <a href="academia.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Academy</a>
+        <a href="index.html#que-es-nuvia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Qué es NUVIA</a>
       </nav>
     </div>
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
   </header>
 
   <main>
@@ -65,37 +47,21 @@
       <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px; font-feature-settings:'tnum' 1"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tema NUVIA · {{ numeroDe }}</span>
       <h1 style="color:#ffffff; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">{{ titulo }}</h1>
       <p style="max-width:52ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0 0 32px">{{ intro }}</p>
-      <sc-if value="{{ esJubilacion }}" hint-placeholder-val="{{ false }}">
-        <div class="friendly-hero-actions" style="margin-top:-10px; margin-bottom:28px">
-          <a class="friendly-hero-actions__primary" href="jubilacion.html">Hacer una estimación rápida →</a>
-          <a class="friendly-hero-actions__secondary" href="guia-planificacion.html">Planificar paso a paso</a>
-        </div>
-      </sc-if>
-      <sc-if value="{{ esAhorro }}" hint-placeholder-val="{{ true }}">
-        <nav aria-label="Secciones de Ahorro e inversión" style="display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.16); padding:18px 0 0">
-          <a href="#suite-nuvia" aria-current="location" style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.92); border-radius:999px; background:rgba(255,255,255,.95); color:#0B2347; font-size:13.5px; font-weight:500; padding:9px 18px; text-decoration:none; white-space:nowrap">Suite NUVIA · Análisis de cartera</a>
-          <a href="#nuvia-academy" style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:transparent; color:rgba(255,255,255,.84); font-size:13.5px; font-weight:500; padding:9px 18px; text-decoration:none; white-space:nowrap; transition:background .2s ease, color .2s ease" style-hover="background:rgba(255,255,255,.12); color:#ffffff">NUVIA Academy</a>
-          <a href="#fundamentos-inversion" style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:transparent; color:rgba(255,255,255,.84); font-size:13.5px; font-weight:500; padding:9px 18px; text-decoration:none; white-space:nowrap; transition:background .2s ease, color .2s ease" style-hover="background:rgba(255,255,255,.12); color:#ffffff">Fundamentos de inversión</a>
-          <a href="#interes-compuesto" style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.3); border-radius:999px; background:transparent; color:rgba(255,255,255,.84); font-size:13.5px; font-weight:500; padding:9px 18px; text-decoration:none; white-space:nowrap; transition:background .2s ease, color .2s ease" style-hover="background:rgba(255,255,255,.12); color:#ffffff">Interés compuesto</a>
-        </nav>
-      </sc-if>
-      <sc-if value="{{ mostrarSelectorTemas }}" hint-placeholder-val="{{ false }}">
-        <nav aria-label="Selector de tema" data-screen-label="Selector de temas" style="display:flex; flex-wrap:wrap; gap:10px; padding:0 0 8px">
-          <sc-for list="{{ pildoras }}" as="p" hint-placeholder-count="6">
-            <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}" style-hover="{{ p.estiloHover }}">
-              <span style="font-size:12px; font-feature-settings:'tnum' 1; opacity:.75">{{ p.num }}</span>
-              <span>{{ p.nombre }}</span>
-              <span aria-hidden="true" style="font-size:11px">{{ p.sufijo }}</span>
-            </button>
-          </sc-for>
-        </nav>
-        <div style="height:1px; margin-top:28px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
-      </sc-if>
+      <nav aria-label="Selector de tema" data-screen-label="Selector de temas" style="display:flex; flex-wrap:wrap; gap:10px; padding:0 0 8px">
+        <sc-for list="{{ pildoras }}" as="p" hint-placeholder-count="6">
+          <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}" style-hover="{{ p.estiloHover }}">
+            <span style="font-size:12px; font-feature-settings:'tnum' 1; opacity:.75">{{ p.num }}</span>
+            <span>{{ p.nombre }}</span>
+            <span aria-hidden="true" style="font-size:11px">{{ p.sufijo }}</span>
+          </button>
+        </sc-for>
+      </nav>
+      <div style="height:1px; margin-top:28px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
     </div>
     </section>
 
     <sc-if value="{{ esAhorro }}" hint-placeholder-val="{{ true }}">
-      <section id="suite-nuvia" data-screen-label="Suite NUVIA" style="max-width:1240px; margin:0 auto; padding:48px 48px 0; scroll-margin-top:84px">
+      <section data-screen-label="Suite NUVIA" style="max-width:1240px; margin:0 auto; padding:48px 48px 0">
         <div style="position:relative; overflow:hidden; border-radius:var(--radius-md); background:radial-gradient(760px 420px at 88% -30%, rgba(157,184,97,.22), transparent 62%), linear-gradient(160deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-md)">
           <div style="display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: 44px; padding: 44px 46px; align-items: center">
             <div>
@@ -103,21 +69,27 @@
               <h2 style="color:#ffffff; font-size:38px; font-weight:500; line-height:1.06; letter-spacing:-.012em; margin:0 0 14px">Tu cartera,<br>vista por dentro</h2>
               <p style="max-width:44ch; color:rgba(255,255,255,.78); font-size:15px; line-height:1.65; margin:0 0 22px">Riesgo, tendencia y calidad del negocio en un mismo panel. Prueba con una cartera de ejemplo y descubre qué preguntas le harías a la tuya.</p>
               <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap">
-                <a href="cartera.html?vista=portfolio" class="btn" style="text-decoration:none; color:#E8F0D5; border:1px solid #9DB861" style-hover="background:rgba(157,184,97,.16)" style-active="background:rgba(157,184,97,.26)">Explorar la suite →</a>
+                <a href="cartera.html" class="btn" style="text-decoration:none; color:#E8F0D5; border:1px solid #9DB861" style-hover="background:rgba(157,184,97,.16)" style-active="background:rgba(157,184,97,.26)">Explorar la suite →</a>
+                <span style="display:inline-flex; flex-wrap:wrap; gap:8px">
+                  <a href="cartera.html?vista=portfolio" style="padding:7px 13px; border-radius:999px; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); font-size:12px; text-decoration:none" style-hover="border-color:#9DB861; color:#E8F0D5">Cartera</a>
+                  <a href="cartera.html?vista=technical" style="padding:7px 13px; border-radius:999px; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); font-size:12px; text-decoration:none" style-hover="border-color:#9DB861; color:#E8F0D5">Técnico</a>
+                  <a href="cartera.html?vista=fundamental" style="padding:7px 13px; border-radius:999px; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.8); font-size:12px; text-decoration:none" style-hover="border-color:#9DB861; color:#E8F0D5">Fundamental</a>
+                </span>
+                <span style="color:rgba(255,255,255,.55); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase">Entorno educativo</span>
               </div>
               <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:26px; padding-top:20px; background:linear-gradient(to right, transparent, rgba(255,255,255,.2) 48px, rgba(255,255,255,.2) calc(100% - 48px), transparent) no-repeat top / 100% 1px">
-                <a href="cartera.html?vista=portfolio" aria-label="Abrir análisis de cartera" style="display:flex; align-items:center; gap:10px; color:inherit; text-decoration:none">
+                <div style="display:flex; align-items:center; gap:10px">
                   <span style="flex-shrink:0; display:inline-flex; width:32px; height:32px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:rgba(255,255,255,.1); color:#C9D8A8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg></span>
                   <span style="min-width:0"><span style="display:block; color:#ffffff; font-size:14.5px; font-weight:500; line-height:1.2">Cartera</span><span style="display:block; color:rgba(255,255,255,.6); font-size:12px; line-height:1.35">¿Está bien repartida?</span></span>
-                </a>
-                <a href="cartera.html?vista=technical" aria-label="Abrir análisis técnico" style="display:flex; align-items:center; gap:10px; color:inherit; text-decoration:none">
+                </div>
+                <div style="display:flex; align-items:center; gap:10px">
                   <span style="flex-shrink:0; display:inline-flex; width:32px; height:32px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:rgba(255,255,255,.1); color:#C9D8A8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
                   <span style="min-width:0"><span style="display:block; color:#ffffff; font-size:14.5px; font-weight:500; line-height:1.2">Técnico</span><span style="display:block; color:rgba(255,255,255,.6); font-size:12px; line-height:1.35">¿Hacia dónde apunta?</span></span>
-                </a>
-                <a href="cartera.html?vista=fundamental" aria-label="Abrir análisis fundamental" style="display:flex; align-items:center; gap:10px; color:inherit; text-decoration:none">
+                </div>
+                <div style="display:flex; align-items:center; gap:10px">
                   <span style="flex-shrink:0; display:inline-flex; width:32px; height:32px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:rgba(255,255,255,.1); color:#C9D8A8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M8 10h.01M16 10h.01M12 14h.01M8 14h.01M16 14h.01"></path></svg></span>
                   <span style="min-width:0"><span style="display:block; color:#ffffff; font-size:14.5px; font-weight:500; line-height:1.2">Fundamental</span><span style="display:block; color:rgba(255,255,255,.6); font-size:12px; line-height:1.35">¿Vale lo que cuesta?</span></span>
-                </a>
+                </div>
               </div>
             </div>
             <div aria-hidden="true" style="border-radius:var(--radius-md); background:#ffffff; box-shadow:0 24px 50px -22px rgba(4,15,33,.55); padding:22px 24px">
@@ -148,103 +120,73 @@
         </div>
       </section>
 
-      <section id="nuvia-academy" data-screen-label="NUVIA Academy" style="max-width:1240px; margin:0 auto; padding:20px 48px 0; scroll-margin-top:84px">
-        <div style="position:relative; min-height:clamp(240px, 25vw, 300px); overflow:hidden; border-radius:var(--radius-md); background:#071a38; box-shadow:var(--shadow-md)">
-          <img src="src/assets/education/nuvia-academy/nuvia-academy-home-banner.jpg" alt="NUVIA Academy. Saber es patrimonio. Una fuente de conocimiento para entender el dinero con calma." style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block">
-          <a href="academia.html" class="btn btn-primary" style="position:absolute; right:32px; bottom:28px; z-index:2; border-color:rgba(183,139,59,.55); background:rgba(247,241,228,.94); color:#0B2347; box-shadow:0 10px 28px rgba(7,26,56,.22); text-decoration:none; white-space:nowrap">Entrar en la Academy →</a>
+      <section data-screen-label="NUVIA Academy" style="max-width:1240px; margin:0 auto; padding:20px 48px 0">
+        <div style="position:relative; overflow:hidden; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm)">
+          <div aria-hidden="true" style="position:absolute; left:0; right:0; bottom:0; height:2px; background:linear-gradient(90deg, transparent, var(--color-accent) 30%, var(--color-accent-300) 70%, transparent)"></div>
+          <div style="display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 36px; align-items: center; padding: 32px 40px 35px; background:radial-gradient(820px 380px at 88% -30%, #FAF7EE, transparent 62%), #F0EBDC">
+            <div>
+              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap">
+                <p style="color:var(--color-accent-300); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:0">NUVIA Academy</p>
+                <span style="width:1px; height:12px; background:rgba(11,35,71,.22)"></span>
+                <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px">Cursos, guías y conceptos · Siempre abierta</span>
+              </div>
+              <h2 style="font-size:30px; font-weight:500; line-height:1.1; letter-spacing:-.012em; margin:10px 0 10px">Saber es patrimonio</h2>
+              <p style="max-width:58ch; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:15px; line-height:1.65; margin:0">La academia de NUVIA: una fuente de conocimiento para entender el dinero con calma — desde la primera cuenta hasta el plan de toda una familia.</p>
+            </div>
+            <a href="academia.html" class="btn btn-primary" style="text-decoration:none; white-space:nowrap">Entrar en la Academy →</a>
+          </div>
         </div>
       </section>
 
-      <section id="fundamentos-inversion" data-screen-label="Aprender a invertir" style="max-width:1240px; margin:0 auto; padding:20px 48px 84px; scroll-margin-top:84px">
-        <div style="display:flex; align-items:end; justify-content:space-between; gap:32px; border-bottom:1px solid var(--color-divider); margin-bottom:22px; padding:0 4px 18px">
-          <div>
-            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Aprende con NUVIA</p>
-            <h2 style="color:var(--color-text); font-size:30px; font-weight:500; line-height:1.15; margin:0">Dos recorridos, con su vídeo y su guía</h2>
-          </div>
-          <p style="max-width:430px; color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:14px; line-height:1.55; margin:0; text-align:right">Empieza por la visión general o entra directamente en el efecto que hace crecer el patrimonio con el tiempo.</p>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px">
-          <a href="academia.html?tab=fundamentos" style="position:relative; overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) 170px; gap:22px; align-items:center; min-height:210px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:linear-gradient(145deg, #ffffff 0%, #F4F7EC 100%); box-shadow:var(--shadow-sm); color:inherit; text-decoration:none; padding:28px; transition:box-shadow .3s ease, transform .3s ease" style-hover="box-shadow:var(--shadow-md); transform:translateY(-3px)">
-            <span style="min-width:0">
-              <span style="display:inline-flex; align-items:center; gap:8px; color:var(--color-accent-300); font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase"><span style="width:7px; height:7px; border-radius:50%; background:var(--color-accent)"></span>Aula NUVIA · Vídeo</span>
-              <span style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:27px; font-weight:500; line-height:1.12; margin-top:12px">Fundamentos de inversión</span>
-              <span style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.55; margin-top:11px">Vídeo «Dinero con criterio» y guía visual sobre bolsa, bonos, liquidez, oro, vivienda, inflación e impuestos.</span>
-              <span style="display:inline-flex; align-items:center; gap:8px; color:var(--color-text); font-size:13.5px; font-weight:600; margin-top:18px">Ver vídeo y guía <span aria-hidden="true">→</span></span>
+      <section data-screen-label="Fundamentos de inversión" style="max-width:1240px; margin:0 auto; padding:20px 48px 84px">
+        <a href="academia.html?tab=fundamentos" style="display: grid; grid-template-columns: 46px minmax(0,1fr) auto; gap: 18px; align-items: center; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); text-decoration: none; padding: 20px 24px; transition: box-shadow .3s ease, transform .3s ease; background:linear-gradient(115deg, #F0F5E2 0%, #ffffff 60%)" style-hover="box-shadow:var(--shadow-md); transform:translateY(-2px)">
+          <span style="display:inline-flex; width:46px; height:46px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:linear-gradient(160deg, #7C9A44, #9DB861); color:#ffffff; box-shadow:0 8px 18px -8px rgba(124,154,68,.6)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+          <span style="min-width:0">
+            <span style="display:block; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase">¿Empiezas de cero?</span>
+            <span style="display:block; color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin-top:4px">Fundamentos de inversión</span>
+            <span style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px">
+              <span class="tag tag-neutral">¿Cuánto colchón necesito?</span>
+              <span class="tag tag-neutral">¿Cómo funciona el interés compuesto?</span>
             </span>
-            <span aria-hidden="true" style="position:relative; display:flex; aspect-ratio:16/10; align-items:center; justify-content:center; border-radius:var(--radius-md); background:radial-gradient(circle at 70% 20%, rgba(157,184,97,.32), transparent 44%), linear-gradient(150deg,#17345D,#071A38); box-shadow:0 16px 30px -18px rgba(7,26,56,.8)">
-              <span style="display:flex; width:54px; height:54px; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.62); border-radius:50%; background:rgba(255,255,255,.13); color:#ffffff; font-size:19px; padding-left:3px">▶</span>
-            </span>
-          </a>
-          <a id="interes-compuesto" href="academia.html?tab=interes" data-screen-label="Interés compuesto" style="position:relative; overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) 170px; gap:22px; align-items:center; min-height:210px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:linear-gradient(145deg, #ffffff 0%, #F8F3E8 100%); box-shadow:var(--shadow-sm); color:inherit; text-decoration:none; padding:28px; scroll-margin-top:84px; transition:box-shadow .3s ease, transform .3s ease" style-hover="box-shadow:var(--shadow-md); transform:translateY(-3px)">
-            <span style="min-width:0">
-              <span style="display:inline-flex; align-items:center; gap:8px; color:#946E29; font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase"><span style="width:7px; height:7px; border-radius:50%; background:#B58A3B"></span>Aula NUVIA · Vídeo</span>
-              <span style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:27px; font-weight:500; line-height:1.12; margin-top:12px">El poder del interés compuesto</span>
-              <span style="display:block; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.55; margin-top:11px">Vídeo explicativo, guía ampliada y una lectura clara sobre capital, aportaciones, tiempo, inflación y fiscalidad.</span>
-              <span style="display:inline-flex; align-items:center; gap:8px; color:var(--color-text); font-size:13.5px; font-weight:600; margin-top:18px">Ver vídeo y guía <span aria-hidden="true">→</span></span>
-            </span>
-            <span aria-hidden="true" style="position:relative; display:flex; aspect-ratio:16/10; align-items:center; justify-content:center; border-radius:var(--radius-md); background:radial-gradient(circle at 25% 18%, rgba(219,196,139,.34), transparent 45%), linear-gradient(150deg,#23446D,#0B2347); box-shadow:0 16px 30px -18px rgba(7,26,56,.8)">
-              <svg viewBox="0 0 140 78" style="position:absolute; inset:12px; width:calc(100% - 24px); height:calc(100% - 24px); opacity:.58"><path d="M5 67 C28 62 29 51 49 49 C70 47 66 35 88 32 C108 29 112 19 135 10" fill="none" stroke="#D7E4BC" stroke-width="3" stroke-linecap="round"></path></svg>
-              <span style="position:relative; display:flex; width:54px; height:54px; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.62); border-radius:50%; background:rgba(255,255,255,.13); color:#ffffff; font-size:19px; padding-left:3px">▶</span>
-            </span>
-          </a>
-        </div>
+          </span>
+          <span class="btn btn-secondary" style="white-space:nowrap; color:var(--color-text)">Empezar por lo básico →</span>
+        </a>
       </section>
     </sc-if>
 
     <sc-if value="{{ esJubilacion }}" hint-placeholder-val="{{ false }}">
       <section id="herramientas" data-screen-label="Herramientas de jubilación" style="max-width:1240px; margin:0 auto; padding:48px 48px 84px">
-        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:36px; padding-bottom:20px; margin-bottom:26px; border-bottom:1px solid var(--color-divider)">
-          <div>
-            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Hazlo a tu ritmo</p>
-            <h2 style="font-size:30px; font-weight:500; line-height:1.15; letter-spacing:-.012em; margin:0">Empieza por lo que necesitas hoy</h2>
-          </div>
-          <p style="max-width:430px; color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:14px; line-height:1.55; margin:0; text-align:right">No tienes que hacerlo todo de una vez. Elige una puerta de entrada y vuelve cuando quieras.</p>
-        </div>
+        <p style="color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:12.5px; margin:0 0 18px">Tres herramientas modernizadas · Válidas para contribuyentes de Bizkaia · Reglas fiscales 2026.</p>
         <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px">
-          <article style="position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:420px; border:1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-divider)); border-radius:var(--radius-md); background:linear-gradient(155deg, #F7F9F1 0%, var(--color-surface) 48%); box-shadow:0 14px 34px rgba(11,35,71,.06); padding:28px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:0 20px 44px rgba(11,35,71,.10)">
-            <div aria-hidden="true" style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--color-accent), var(--color-accent-300))"></div>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:26px">
-              <span style="color:var(--color-accent); font-family:var(--font-heading); font-size:30px; line-height:1">01</span>
-              <span style="display:inline-flex; align-items:center; gap:8px; color:var(--color-accent-300); font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase">Empieza aquí</span>
-              <span style="display:inline-flex; width:44px; height:44px; flex:0 0 44px; align-items:center; justify-content:center; border-radius:50%; background:#EEF2E3; color:var(--color-accent-300)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></span>
-            </div>
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0 0 9px">Si quieres verlo con calma</p>
-            <h3 style="font-size:25px; font-weight:500; line-height:1.2; margin:0 0 13px">Ordena tus ideas</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:0">Aclara qué quieres para esa etapa, qué información ya tienes y cuál debería ser tu siguiente decisión.</p>
-            <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:20px" aria-label="Ámbitos de la guía">
-              <span class="tag tag-neutral">Objetivos</span><span class="tag tag-neutral">Ingresos</span><span class="tag tag-neutral">Patrimonio</span>
-            </div>
-            <a href="guia-planificacion.html" class="btn btn-primary" style="display:flex; justify-content:space-between; width:100%; box-sizing:border-box; margin-top:auto; text-decoration:none">Trazar mi plan <span aria-hidden="true">→</span></a>
+          <article style="display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300); margin-bottom:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></svg></span>
+            <h2 style="font-size:20px; font-weight:500; line-height:1.25; margin:0 0 10px">Simulador de jubilación</h2>
+            <p style="flex:1; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:0">Herramienta para estimar escenarios de jubilación y necesidades futuras de ahorro.</p>
+            <a href="jubilacion.html" class="btn btn-primary" style="margin-top:20px; width:fit-content; text-decoration:none">Abrir simulador →</a>
           </article>
-          <article style="position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:420px; border:1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-divider)); border-radius:var(--radius-md); background:linear-gradient(155deg, #F7F9F1 0%, var(--color-surface) 48%); box-shadow:0 14px 34px rgba(11,35,71,.06); padding:28px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:0 20px 44px rgba(11,35,71,.10)">
-            <div aria-hidden="true" style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--color-accent), var(--color-accent-300))"></div>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:26px">
-              <span style="color:var(--color-accent); font-family:var(--font-heading); font-size:30px; line-height:1">02</span>
-              <span style="color:var(--color-accent-300); font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase">Después</span>
-              <span style="display:inline-flex; width:44px; height:44px; flex:0 0 44px; align-items:center; justify-content:center; border-radius:50%; background:#EEF2E3; color:var(--color-accent-300)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg></span>
+          <article style="display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300); margin-bottom:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></span>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0 0 8px">Ruta práctica · Paso a paso</p>
+            <h2 style="font-size:20px; font-weight:500; line-height:1.25; margin:0 0 10px">Guía de planificación</h2>
+            <p style="flex:1; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:0">Ordena las decisiones clave, identifica la información que necesitas y construye tu hoja de ruta personal.</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px" aria-label="Ámbitos de la guía">
+              <span class="tag tag-neutral">Objetivos</span>
+              <span class="tag tag-neutral">Ingresos</span>
+              <span class="tag tag-neutral">Patrimonio</span>
             </div>
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0 0 9px">Si tienes una EPSV</p>
-            <h3 style="font-size:25px; font-weight:500; line-height:1.2; margin:0 0 13px">Decide cómo cobrar</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:0">Compara capital, renta o una combinación de ambas sin perderte entre conceptos fiscales.</p>
-            <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:20px" aria-label="Modalidades explicadas">
-              <span class="tag tag-neutral">Capital</span><span class="tag tag-neutral">Renta</span><span class="tag tag-neutral">Mixta</span>
-            </div>
-            <a href="guia-fiscal.html" class="btn btn-primary" style="display:flex; justify-content:space-between; width:100%; box-sizing:border-box; margin-top:auto; text-decoration:none">Entender mis opciones <span aria-hidden="true">→</span></a>
+            <a href="guia-planificacion.html" class="btn btn-primary" style="margin-top:18px; width:fit-content; text-decoration:none">Crear mi hoja de ruta →</a>
           </article>
-          <article style="position:relative; overflow:hidden; display:flex; flex-direction:column; min-height:420px; border:1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-divider)); border-radius:var(--radius-md); background:linear-gradient(155deg, #F7F9F1 0%, var(--color-surface) 48%); box-shadow:0 14px 34px rgba(11,35,71,.06); padding:28px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:0 20px 44px rgba(11,35,71,.10)">
-            <div aria-hidden="true" style="position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--color-accent), var(--color-accent-300))"></div>
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:26px">
-              <span style="color:var(--color-accent); font-family:var(--font-heading); font-size:30px; line-height:1">03</span>
-              <span style="color:var(--color-accent-300); font-size:10.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase">Comprueba</span>
-              <span style="display:inline-flex; width:44px; height:44px; flex:0 0 44px; align-items:center; justify-content:center; border-radius:50%; background:#EEF2E3; color:var(--color-accent-300)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path></svg></span>
+          <article style="display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:42px; height:42px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300); margin-bottom:16px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg></span>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0 0 8px">Guía práctica · Solo Bizkaia</p>
+            <h2 style="font-size:20px; font-weight:500; line-height:1.25; margin:0 0 10px">Fiscalidad y rescate</h2>
+            <p style="flex:1; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:0">Compara el cobro en capital, renta o modalidad mixta y entiende su tratamiento fiscal antes de decidir.</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:14px" aria-label="Modalidades explicadas">
+              <span class="tag tag-neutral">Capital</span>
+              <span class="tag tag-neutral">Renta</span>
+              <span class="tag tag-neutral">Mixta</span>
             </div>
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0 0 9px">Si quieres una cifra orientativa</p>
-            <h3 style="font-size:25px; font-weight:500; line-height:1.2; margin:0 0 13px">Ponle números</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:0">Descubre qué renta mensual podrías tener y durante cuánto tiempo podría acompañarte tu patrimonio.</p>
-            <div style="display:flex; gap:7px; flex-wrap:wrap; margin-top:20px" aria-label="Ámbitos del simulador">
-              <span class="tag tag-neutral">Pensión</span><span class="tag tag-neutral">Ahorro</span><span class="tag tag-neutral">Escenarios</span>
-            </div>
-            <a href="jubilacion.html" class="btn btn-primary" style="display:flex; justify-content:space-between; width:100%; box-sizing:border-box; margin-top:auto; text-decoration:none">Hacer mi cálculo <span aria-hidden="true">→</span></a>
+            <a href="guia-fiscal.html" class="btn btn-primary" style="margin-top:18px; width:fit-content; text-decoration:none">Explorar opciones de rescate →</a>
           </article>
         </div>
       </section>
@@ -266,43 +208,45 @@
     </sc-if>
   </main>
 
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:0 0 22px">
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+    <div style="max-width:1240px; margin:0 auto; padding:40px 48px 0">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:34px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px">
+            <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95">
+          </div>
+          <p style="max-width:26em; color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+            <a href="cartera.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+            <a href="fiscalidad.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mis impuestos</a>
+            <a href="curso.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">NUVIA Academy</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Temas clave</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <button type="button" onClick="{{ irAhorro }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Ahorro e inversión</button>
+            <button type="button" onClick="{{ irVivienda }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Vivienda y coste de vida</button>
+            <button type="button" onClick="{{ irJubilacion }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Jubilación</button>
+            <button type="button" onClick="{{ irHijos }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Hijos y legado</button>
+            <button type="button" onClick="{{ irBienestar }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Cuerpo, mente y salud</button>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
+        <div>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.55">
             <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); padding-top:2px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 40%, transparent); font-size:11.5px; padding-top:16px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
         <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
       </div>
@@ -322,7 +266,7 @@ class Component extends DCLogic {
         R('Hipoteca y tipos', 'Cómo afectan el plazo, el tipo de interés y la cuota al coste total de la financiación.'),
         R('Presupuesto familiar', 'Una estructura sencilla para ordenar gastos, objetivos y margen de seguridad.') ] },
       { id: 'mis-impuestos', num: '03', nombre: 'Mis impuestos', link: 'fiscalidad.html' },
-      { id: 'jubilacion', num: '04', nombre: 'Tu jubilación', intro: 'No se trata solo de cuánto tendrás, sino de cómo quieres vivir. Ordena tus decisiones, ponles números y avanza sin hacerlo todo de golpe.', tipo: 'herramientas' },
+      { id: 'jubilacion', num: '04', nombre: 'Jubilación', intro: 'Planificación de ingresos, previsión privada, longevidad y decisiones patrimoniales para la etapa futura.', tipo: 'herramientas' },
       { id: 'hijos-legado', num: '05', nombre: 'Hijos y legado', intro: 'Educación financiera, ayuda familiar y planificación de la transmisión patrimonial entre generaciones.', tipo: 'recursos', recursos: [
         R('Ayuda a hijos', 'Enfoques para apoyar sin comprometer la estabilidad financiera familiar.'),
         R('Educación financiera', 'Ideas para enseñar a gestionar el dinero con autonomía y responsabilidad.'),
@@ -362,7 +306,6 @@ class Component extends DCLogic {
         estiloHover: p.id === activo ? '' : 'background:rgba(255,255,255,.12); color:#ffffff',
       })),
       esAhorro: t.tipo === 'ahorro',
-      mostrarSelectorTemas: t.tipo !== 'ahorro',
       esJubilacion: t.tipo === 'herramientas',
       esRecursos: t.tipo === 'recursos',
       recursos: t.recursos || [],

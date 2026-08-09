@@ -44,10 +44,14 @@ const referencePattern = /\b(?:href|src)=["']([^"']+)["']/gi;
 
 for (const htmlPath of htmlFiles) {
   const html = await readFile(htmlPath, 'utf8');
+  const usesDesignComponentRuntime = /<x-dc\b/i.test(html)
+    && /<script\b[^>]*data-dc-script/i.test(html);
   if (!/<title>[^<]+<\/title>/i.test(html)) {
     missing.push(`${htmlPath}: falta un título de página`);
   }
-  if (/\s(?:d|points)=["']\s*\{\{/i.test(html)) {
+  // En los Design Components, support.js resuelve las expresiones antes de
+  // entregarlas a React. La misma sintaxis sí sería inválida en HTML estático.
+  if (!usesDesignComponentRuntime && /\s(?:d|points)=["']\s*\{\{/i.test(html)) {
     missing.push(`${htmlPath}: contiene un atributo SVG dinámico que provoca errores al cargar`);
   }
   if (/<(?:input|select)\b[^>]*\svalue=["']\s*\{\{/i.test(html)) {
@@ -80,17 +84,8 @@ const daily = JSON.parse(await readFile(resolve(root, 'data/daily-content.json')
 if (!daily.dailyEconomicNews?.title || daily.dailyEconomicNews.impactPoints?.length !== 3) {
   throw new Error('La noticia diaria debe incluir titular y exactamente tres claves de impacto.');
 }
-if (!daily.dailyEconomicNews.imageUrl) {
-  throw new Error('La noticia diaria debe incluir una imagen editorial propia.');
-}
-const dailyImagePath = daily.dailyEconomicNews.imageUrl.split('?')[0];
-await access(resolve(root, dailyImagePath));
 if (!Array.isArray(daily.dailyMacroIndicators) || daily.dailyMacroIndicators.length !== 5) {
   throw new Error('Deben existir exactamente cinco indicadores macroeconómicos.');
-}
-const expectedMacroIds = ['inflation-spain', 'ecb-rate', 'euribor', 'gdp-spain', 'unemployment-spain'];
-if (daily.dailyMacroIndicators.some((indicator, index) => indicator.id !== expectedMacroIds[index])) {
-  throw new Error('Los indicadores macroeconómicos no mantienen el orden previsto.');
 }
 
 console.log(`Sitio estático verificado: ${htmlFiles.length} páginas y todas sus referencias locales.`);

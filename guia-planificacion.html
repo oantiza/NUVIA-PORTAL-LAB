@@ -2,17 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Guía de planificación de jubilación | NUVIA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planificación fiscal | NUVIA</title>
 <script src="./support.js"></script>
 </head>
-<body class="nuvia-friendly">
+<body>
 <x-dc>
 <helmet>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css">
-  <link rel="stylesheet" href="friendly-sections.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -24,39 +23,20 @@
 </helmet>
 
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
   <!-- ============ HEADER ============ -->
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px); border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:36px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="temas.html?topic=jubilacion" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Temas clave</a>
+        <a href="index.html#que-es-nuvia" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
@@ -107,8 +87,8 @@
     <!-- ============ 01 PUNTO DE PARTIDA ============ -->
     <section data-screen-label="01 Punto de partida" style="max-width:1240px; margin:0 auto; padding:64px 40px 0">
       <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">01 · Punto de partida</p>
-      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Empieza por lo que ya sabes</h2>
-      <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No necesitas tenerlo todo resuelto. Identifica qué conoces, qué te falta y cuál es la siguiente pregunta que merece respuesta.</p>
+      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Sitúa tu momento y reúne las piezas básicas</h2>
+      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No necesitas conocer todas las respuestas. Este diagnóstico identifica qué tienes preparado y qué información conviene obtener antes de hacer números.</p>
 
       <p style="color:var(--color-text); font-size:12px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px">¿A qué distancia está tu jubilación?</p>
       <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px">
@@ -132,8 +112,8 @@
       <div style="display:grid; grid-template-columns:minmax(0,.66fr) minmax(0,1.34fr); gap:24px; margin-top:36px">
         <div style="border-radius:var(--radius-md); background:var(--color-neutral-900); padding:30px 32px">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
-          <h3 style="color:var(--color-text); font-size:25px; font-weight:500; margin:22px 0 0">Lo que ya tienes claro</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Marca únicamente lo que conoces o puedes comprobar. Lo pendiente formará parte de tu hoja de ruta.</p>
+          <h3 style="color:var(--color-text); font-size:25px; font-weight:500; margin:22px 0 0">Información disponible</h3>
+          <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Marca solo aquello que ya conoces o puedes documentar.</p>
           <p style="color:#4A5D23; font-size:38px; line-height:1; margin:30px 0 0">{{ progresoInfo }} %</p>
           <p style="color:rgba(255,255,255,.4); font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin:6px 0 0">del punto de partida preparado</p>
         </div>
@@ -154,8 +134,8 @@
     <!-- ============ 02 HOJA DE RUTA ============ -->
     <section data-screen-label="02 Hoja de ruta" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
       <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">02 · Hoja de ruta</p>
-      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Seis decisiones que ponen orden</h2>
-      <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">Avanza a tu ritmo. Las preguntas sirven para pensar en familia, preparar una conversación profesional o decidir qué dato buscar después.</p>
+      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Seis decisiones, en el orden adecuado</h2>
+      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">Recorre cada etapa y utiliza las preguntas como preparación para una conversación familiar o profesional.</p>
 
       <div style="display:grid; grid-template-columns:minmax(0,.44fr) minmax(0,.56fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
         <div style="border-right:1px solid var(--color-divider); display:flex; flex-direction:column">
@@ -172,13 +152,13 @@
           <h3 style="color:var(--color-text); font-size:28px; font-weight:500; line-height:1.15; margin:12px 0 0">{{ pasoTitulo }}</h3>
           <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:14px 0 0">{{ pasoDescripcion }}</p>
           <div style="border-top:1px solid var(--color-divider); margin-top:24px; padding-top:20px">
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px">Preguntas para ayudarte a decidir</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px">Preguntas que debes responder</p>
             <sc-for list="{{ pasoPreguntas }}" as="q" hint-placeholder-count="3">
               <p style="display:flex; gap:11px; align-items:flex-start; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:0 0 10px"><span style="color:var(--color-accent); font-size:13px; line-height:1.4">✓</span>{{ q }}</p>
             </sc-for>
           </div>
           <div style="border-radius:var(--radius-md); background:#F4F0E7; margin-top:20px; padding:16px 20px">
-            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Al terminar este paso</p>
+            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Resultado de este paso</p>
             <p style="color:#394755; font-size:13px; line-height:1.6; margin:0">{{ pasoResultado }}</p>
           </div>
         </article>
@@ -188,7 +168,7 @@
     <!-- ============ 03 ETAPAS ============ -->
     <section data-screen-label="03 Etapas" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
       <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">03 · Planificación por etapas</p>
-      <h2 style="max-width:25em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Qué conviene mirar según el tiempo que te queda</h2>
+      <h2 style="max-width:24em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Las prioridades cambian a medida que se acerca la fecha</h2>
       <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--color-divider); border-bottom:1px solid var(--color-divider)">
         <article style="border-right:1px solid var(--color-divider); padding:26px 24px 26px 0">
           <p style="color:#7C9A44; font-size:26px; margin:0">01</p>
@@ -239,8 +219,8 @@
         <div style="border-right:1px solid var(--color-divider); padding:32px 34px">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
           <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:24px 0 0">05 · Tu plan en una página</p>
-          <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Convierte tus decisiones en una hoja de ruta</h2>
-          <p style="color:#6b7686; font-size:12.5px; line-height:1.6; margin:14px 0 0">Marca lo que ya has decidido y llévate una lista clara de próximos pasos. No hace falta completarlo todo hoy.</p>
+          <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Marca decisiones y genera tu resumen</h2>
+          <p style="color:#6b7686; font-size:12.5px; line-height:1.6; margin:14px 0 0">Utiliza este control como agenda de trabajo. Puedes imprimir el resultado aunque todavía tengas tareas pendientes.</p>
           <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:18px">
             <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 8px">Próxima acción sugerida</p>
             <p aria-live="polite" style="color:var(--color-text); font-size:18px; line-height:1.35; margin:0">{{ proximaAccion }}</p>
@@ -288,45 +268,41 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:44px 0 22px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent) no-repeat top / 100% 1px">
+    <div style="max-width:1240px; margin:0 auto; padding:0 40px">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:36px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px"><img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95"></div>
+          <p style="max-width:24em; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Inicio</a>
+            <a href="temas.html?topic=jubilacion" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Jubilación</a>
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Temas clave</a>
+            <a href="jubilacion.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Simulador de jubilación</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Recursos</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="fiscalidad.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Mis impuestos</a>
+            <a href="academia.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">NUVIA Academy</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+        <div>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.55">
+            <span>Guía educativa · No almacena datos personales.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); padding-top:4px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12) 48px, rgba(255,255,255,.12) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 42%, transparent); font-size:11.5px; padding-top:18px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+        <span>Revisa el plan anualmente y siempre que cambie tu situación.</span>
       </div>
     </div>
   </footer>

@@ -1,5 +1,5 @@
-import { r as React, a as jsxRuntime } from './index-yJ6vFdcR.js';
-import PortfolioAnalyticsSuite from './PortfolioAnalyticsSuite-CjO2wIpp.js?original=1';
+import { r as React, a as jsxRuntime } from './index-Bar5NDm1.js';
+import PortfolioAnalyticsSuite from './PortfolioAnalyticsSuite-Q5uiZ5Xr.js?original=1';
 
 const SUITE_TABS = new Set(['portfolio', 'technical', 'fundamental']);
 

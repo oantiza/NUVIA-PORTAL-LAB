@@ -40,5 +40,5 @@ const server = createServer(async (request, response) => {
 });
 
 server.listen(port, '127.0.0.1', () => {
-  console.log(`NUVIA Web 3 disponible en http://127.0.0.1:${port}`);
+  console.log(`NUVIA Web 2 disponible en http://127.0.0.1:${port}`);
 });

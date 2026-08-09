@@ -22,7 +22,6 @@ const topLevelFiles = [
   'web2-integration.js',
   'web2-core-bridge.js',
   'tema-claro.css',
-  'friendly-sections.css',
   'favicon.svg'
 ];
 

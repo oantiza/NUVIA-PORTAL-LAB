@@ -2,17 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Simulador de jubilación | NUVIA</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planificación de la jubilación | NUVIA</title>
 <script src="./support.js"></script>
 </head>
-<body class="nuvia-friendly">
+<body>
 <x-dc>
 <helmet>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css">
-  <link rel="stylesheet" href="friendly-sections.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -27,40 +26,23 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:30px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="temas.html?topic=jubilacion" aria-current="page" style="white-space:nowrap; font-size:14px; text-decoration:none; color:var(--color-accent)">Temas clave</a>
+        <a href="academia.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Academy</a>
+        <a href="index.html#que-es-nuvia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Qué es NUVIA</a>
       </nav>
     </div>
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
   </header>
 
   <main>
@@ -68,29 +50,29 @@
       <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
       <div style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:48px; align-items:center">
         <div>
-          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tu vida después del trabajo</span>
-          <h1 style="color:#ffffff; font-size:40px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 14px">¿Te dará tu patrimonio para vivir como quieres?</h1>
-          <p style="max-width:58ch; color:rgba(255,255,255,.82); font-size:17px; line-height:1.65; margin:0 0 20px">Calcula una renta mensual orientativa, comprueba cuánto tiempo podría durar tu dinero y descubre qué decisiones pueden mejorar el resultado.</p>
+          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Jubilación · Planificación patrimonial</span>
+          <h1 style="color:#ffffff; font-size:40px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 14px">Planifica cuánto dinero podrías tener cada mes al jubilarte</h1>
+          <p style="max-width:56ch; color:rgba(255,255,255,.74); font-size:16px; line-height:1.65; margin:0 0 20px">Introduce tu pensión, tus ahorros y tu EPSV. El simulador te mostrará una estimación sencilla de la renta mensual, los impuestos y el tiempo que podría durar tu patrimonio.</p>
           <div style="display:flex; gap:10px; flex-wrap:wrap">
             <span class="tag tag-outline" style="font-size:12px; padding:5px 13px">◆ Solo Bizkaia</span>
             <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Reglas fiscales 2026</span>
             <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Cálculo local, sin envío de datos</span>
           </div>
         </div>
-        <aside aria-label="Lo que obtendrás" style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:24px 26px">
-          <p style="color:rgba(255,255,255,.66); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 16px">En pocos minutos verás</p>
+        <aside aria-label="Cómo se utiliza" style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:24px 26px">
+          <p style="color:rgba(255,255,255,.58); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 16px">Cómo se utiliza</p>
           <div style="display:flex; flex-direction:column; gap:14px">
             <div style="display:flex; gap:13px; align-items:flex-start">
               <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">01</span>
-              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Tu renta mensual estimada</strong>Una cifra comprensible después de impuestos.</p>
+              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Reúne tus datos</strong>Pensión bruta, saldos actuales y certificado de la EPSV.</p>
             </div>
             <div style="display:flex; gap:13px; align-items:flex-start">
               <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">02</span>
-              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Hasta cuándo podría durar</strong>Con escenarios prudente, base y favorable.</p>
+              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Completa cuatro apartados</strong>Puedes dejar a cero los productos que no tengas.</p>
             </div>
             <div style="display:flex; gap:13px; align-items:flex-start">
               <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">03</span>
-              <p style="color:rgba(255,255,255,.82); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Qué decisión pesa más</strong>Ahorro, forma de cobro y margen de seguridad.</p>
+              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Lee el resultado</strong>Verás una estimación mensual y varios escenarios fáciles de comparar.</p>
             </div>
           </div>
         </aside>
@@ -102,7 +84,7 @@
     <section data-screen-label="Ámbito territorial" style="max-width:1240px; margin:0 auto; padding:20px 48px 0">
       <div style="display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:24px; align-items:center; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 24px">
         <span style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-family:var(--font-heading); font-size:19px; font-weight:500">B</span>
-        <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:14px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Cálculo adaptado a Bizkaia.</strong> Utiliza las reglas fiscales de 2026. Si tributas en otro territorio, toma el resultado únicamente como referencia económica.</p>
+        <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13.5px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Este simulador es válido únicamente para Bizkaia.</strong> Está preparado para personas que tributan conforme al IRPF de Bizkaia y utiliza las reglas fiscales de 2026. No debe utilizarse para Álava, Gipuzkoa, Navarra ni territorio común.</p>
         <span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap">Solo Bizkaia</span>
       </div>
     </section>
@@ -110,18 +92,9 @@
     <section data-screen-label="Formulario del simulador" style="max-width:1240px; margin:0 auto; padding:32px 48px 0">
       <div style="border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, var(--color-accent) 7%, transparent); padding:14px 20px; margin-bottom:20px; display:flex; gap:14px; align-items:flex-start">
         <span style="color:var(--color-accent-300); font-size:16px; line-height:1.3">!</span>
-        <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:14px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Una orientación, no una promesa:</strong> utiliza el resultado para comparar caminos y preparar mejores preguntas.</p>
+        <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Importante:</strong> el resultado es una estimación para ayudarte a planificar y entender distintas alternativas. No sustituye una liquidación tributaria, el certificado de la EPSV ni el asesoramiento individual.</p>
       </div>
 
-      <div class="friendly-progress" aria-label="Pasos del simulador">
-        <span><b>01</b> Tú</span>
-        <span><b>02</b> Lo que tienes</span>
-        <span><b>03</b> Cómo cobrar</span>
-        <span><b>04</b> Afinar el cálculo</span>
-      </div>
-
-      <details class="friendly-step" open>
-        <summary><span class="friendly-step__number">01</span><span><span class="friendly-step__title">Cuéntanos tu punto de partida</span><span class="friendly-step__help">Edad, pensión y hasta cuándo quieres planificar.</span></span></summary>
       <article data-screen-label="01 Situación" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
         <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
           <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">01</span>
@@ -133,21 +106,21 @@
         <div style="padding:22px 26px 26px">
           <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px">
             <div>
-              <label for="age" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Qué edad tienes?</label>
+              <label for="age" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Edad actual</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
                 <input id="age" name="age" type="number" min="40" max="95" data-dc-value="{{ v.age }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
                 <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
               </div>
             </div>
             <div>
-              <label for="sex" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Referencia para estimar la longevidad</label>
+              <label for="sex" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Sexo (referencia de longevidad)</label>
               <select id="sex" name="sex" data-dc-value="{{ v.sex }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
               </select>
             </div>
             <div>
-              <label for="pensionMonthly" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Qué pensión mensual esperas recibir?</label>
+              <label for="pensionMonthly" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Pensión pública bruta mensual</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
                 <input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" data-dc-value="{{ v.pensionMonthly }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
                 <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">€/mes</span>
@@ -155,7 +128,7 @@
               <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Antes de IRPF · 14 pagas.</p>
             </div>
             <div>
-              <label for="pensionRevalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Cómo podría evolucionar tu pensión?</label>
+              <label for="pensionRevalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Subida anual estimada de la pensión</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
                 <input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" data-dc-value="{{ v.pensionRevalPct }}" onChange="{{ setRev }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
                 <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span>
@@ -164,7 +137,7 @@
             </div>
           </div>
           <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
-            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Hasta qué momento quieres que llegue el plan?</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Cómo quieres fijar la duración del plan?</p>
             <div style="display:flex; gap:10px; flex-wrap:wrap">
               <sc-for list="{{ hOpts }}" as="o" hint-placeholder-count="3">
                 <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
@@ -173,7 +146,7 @@
             <div style="margin-top:16px">
               <sc-if value="{{ hTarget }}" hint-placeholder-val="{{ true }}">
                 <div style="max-width:280px">
-                  <label for="targetAge" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Quiero planificar hasta los</label>
+                  <label for="targetAge" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Planificar hasta la edad de</label>
                   <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
                     <input id="targetAge" name="targetAge" type="number" min="41" max="110" data-dc-value="{{ v.targetAge }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
                     <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
@@ -182,7 +155,7 @@
               </sc-if>
               <sc-if value="{{ hLongevity }}" hint-placeholder-val="{{ false }}">
                 <div style="max-width:280px">
-                  <label for="longevityMargin" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Margen de seguridad</label>
+                  <label for="longevityMargin" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Años de seguridad adicionales</label>
                   <select id="longevityMargin" name="longevityMargin" data-dc-value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
                     <option value="0">Sin margen</option>
                     <option value="5">+5 años</option>
@@ -199,27 +172,24 @@
           </div>
         </div>
       </article>
-      </details>
 
-      <details class="friendly-step">
-        <summary><span class="friendly-step__number">02</span><span><span class="friendly-step__title">Añade tus ahorros e inversiones</span><span class="friendly-step__help">Si no tienes un producto, simplemente déjalo a cero.</span></span></summary>
       <article data-screen-label="02 Patrimonio privado" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
         <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
           <div style="display:flex; align-items:flex-start; gap:16px">
             <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">02</span>
             <div>
-              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tus ahorros e inversiones</h2>
+              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tus ahorros e inversiones fuera de la EPSV</h2>
               <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Indica cuánto vale hoy cada producto y cuánto dinero pusiste originalmente. Si no tienes un producto, déjalo en cero.</p>
             </div>
           </div>
-          <button type="button" onClick="{{ vaciarPatrimonio }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Borrar estos importes</button>
+          <button type="button" onClick="{{ vaciarPatrimonio }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Vaciar patrimonio</button>
         </header>
         <div style="padding:8px 26px 22px">
           <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:12px 0 9px">
             <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Producto</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Cuánto vale hoy</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Lo que invertiste</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Cómo tributa la ganancia</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Valor actual</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Lo aportado o pagado</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Tratamiento aproximado</span>
           </div>
           <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
             <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Liquidez y efectivo</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Cuentas corrientes y dinero disponible.</span></div>
@@ -254,10 +224,7 @@
           <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.55; border-top:1px solid var(--color-divider); margin:10px 0 0; padding-top:12px">Si un producto vale menos de lo que pagaste, el simulador no utiliza automáticamente esa pérdida para reducir el impuesto: esa compensación depende del resto de operaciones del año.</p>
         </div>
       </article>
-      </details>
 
-      <details class="friendly-step">
-        <summary><span class="friendly-step__number">03</span><span><span class="friendly-step__title">¿Tienes una EPSV?</span><span class="friendly-step__help">Ábrelo solo si quieres incluirla y comparar formas de cobro.</span></span></summary>
       <article data-screen-label="03 EPSV" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
         <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
           <div style="display:flex; align-items:flex-start; gap:16px">
@@ -272,7 +239,7 @@
         <div style="padding:22px 26px 26px">
           <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
             <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
-              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos acumulados hasta 2025</h3>
+              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos anteriores al 1/1/2026</h3>
               <label for="epsvPre" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPre }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
@@ -281,7 +248,7 @@
               </sc-if>
             </div>
             <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
-              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos generados desde 2026</h3>
+              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos desde el 1/1/2026</h3>
               <label for="epsvPost" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
@@ -292,7 +259,7 @@
           </div>
 
           <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
-              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Tu EPSV te ha facilitado el desglose por periodos?</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Tienes el desglose facilitado por la EPSV?</p>
             <div style="display:flex; gap:10px; flex-wrap:wrap">
               <sc-for list="{{ dmOpts }}" as="o" hint-placeholder-count="2">
                 <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
@@ -393,32 +360,29 @@
           </div>
         </div>
       </article>
-      </details>
 
-      <details class="friendly-step">
-        <summary><span class="friendly-step__number">04</span><span><span class="friendly-step__title">Ajusta la estimación</span><span class="friendly-step__help">Rentabilidad, inflación y un escenario prudente. Puedes dejar los valores propuestos.</span></span></summary>
       <article data-screen-label="04 Hipótesis" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
         <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
           <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">04</span>
           <div>
-            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Cómo hacemos la estimación</h2>
+            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Supuestos para hacer la proyección</h2>
             <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Estas cifras no son garantías: sirven para comparar escenarios.</p>
           </div>
         </header>
         <div style="padding:22px 26px 26px">
           <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; align-items:start">
             <div>
-              <label for="expectedReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Cómo podría crecer el patrimonio cada año</label>
+              <label for="expectedReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Rentabilidad anual estimada</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
               <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Una cifra menor produce una estimación más prudente.</p>
             </div>
             <div>
-              <label for="incomeGrowth" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Cómo podrían subir tus retiradas cada año</label>
+              <label for="incomeGrowth" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Subida anual de las retiradas</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" data-dc-value="{{ v.incomeGrowth }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
               <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Para compensar parcialmente el coste de vida.</p>
             </div>
             <div>
-              <label for="otherDeductions" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Otras deducciones que quieras incluir</label>
+              <label for="otherDeductions" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Otras deducciones (opcional)</label>
               <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" data-dc-value="{{ v.otherDeductions }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
               <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">La deducción por edad se calcula automáticamente.</p>
             </div>
@@ -430,7 +394,6 @@
           <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12.5px; line-height:1.6; padding:13px 16px; margin:18px 0 0"><strong style="color:var(--color-text); font-weight:500">Por qué importa:</strong> perder dinero al principio de la jubilación puede dañar más el plan que sufrir la misma caída años después, porque ya se están realizando retiradas.</p>
         </div>
       </article>
-      </details>
 
       <sc-if value="{{ hayErrores }}" hint-placeholder-val="{{ false }}">
         <div id="errores" role="alert" style="border-left:2px solid #C2453A; border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, #C2453A 8%, transparent); margin-top:20px; padding:16px 22px">
@@ -441,7 +404,7 @@
         </div>
       </sc-if>
       <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:24px">
-        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; margin:0">Comprueba que los importes son tuyos y pulsa para ver el resultado.</p>
+        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; margin:0">Antes de calcular, revisa que los importes sean tuyos y no los valores de ejemplo.</p>
         <div style="display:flex; gap:12px">
           <button type="button" onClick="{{ restablecer }}" class="btn btn-secondary">Restablecer</button>
           <button type="button" onClick="{{ calcular }}" class="btn btn-primary" style="font-size:15px; padding:10px 24px">Ver mi estimación de jubilación →</button>
@@ -452,14 +415,13 @@
     <sc-if value="{{ hayPlan }}" hint-placeholder-val="{{ false }}">
       <section id="resultados" data-screen-label="Resultados" style="max-width:1240px; margin:0 auto; padding:44px 48px 84px">
         <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:12px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Tu estimación</span>
-        <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; margin:0 0 10px">Tu jubilación, en una cifra clara</h2>
-        <p style="max-width:64ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; margin:0 0 26px">Con los datos que has introducido, esta es una estimación de tus ingresos y del recorrido de tu patrimonio.</p>
+        <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; margin:0 0 24px">Lo que podrías cobrar cada mes</h2>
 
         <div style="border-radius:var(--radius-md); background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); box-shadow:var(--shadow-sm); padding:32px 38px; margin-bottom:20px; display:grid; grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,.63fr)); gap:32px; align-items:center">
           <div>
-            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">Lo que podrías recibir al mes · Escenario base</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">Renta neta mensual estimada · Escenario base</p>
             <p style="font-size:48px; font-weight:500; line-height:1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resNeta }}</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:12.5px; margin:10px 0 0">Suma la pensión y las retiradas de tus ahorros y EPSV después del IRPF estimado.</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:12.5px; margin:10px 0 0">Pensión pública + retiradas de patrimonio y EPSV, después de IRPF.</p>
           </div>
           <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
             <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Renta bruta</p>
@@ -507,10 +469,10 @@
               <text x="40" y="184" text-anchor="end" font-size="10" fill="#6b7686">0</text>
               <text x="46" y="200" font-size="10" fill="#6b7686">{{ edadInicio }}</text>
               <text x="632" y="200" text-anchor="end" font-size="10" fill="#6b7686">{{ edadFin }}</text>
-              <polyline points="" data-nuvia-points="{{ lineaConservador }}" fill="none" stroke="#946E29" stroke-width="2" stroke-linecap="round"></polyline>
-              <polyline points="" data-nuvia-points="{{ lineaOptimista }}" fill="none" stroke="#3C9A69" stroke-width="2" stroke-linecap="round"></polyline>
-              <polyline points="" data-nuvia-points="{{ lineaEstres }}" fill="none" stroke="#C2453A" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
-              <polyline points="" data-nuvia-points="{{ lineaBase }}" fill="none" stroke="#7C9A44" stroke-width="2.6" stroke-linecap="round"></polyline>
+              <polyline points="{{ lineaConservador }}" fill="none" stroke="#946E29" stroke-width="2" stroke-linecap="round"></polyline>
+              <polyline points="{{ lineaOptimista }}" fill="none" stroke="#3C9A69" stroke-width="2" stroke-linecap="round"></polyline>
+              <polyline points="{{ lineaEstres }}" fill="none" stroke="#C2453A" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
+              <polyline points="{{ lineaBase }}" fill="none" stroke="#7C9A44" stroke-width="2.6" stroke-linecap="round"></polyline>
             </svg>
             <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:14px">
               <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#7C9A44"></span>Base</span>
@@ -523,7 +485,7 @@
           </article>
           <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 26px">
             <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Escenario base · Año 1</p>
-            <h3 style="font-size:19px; font-weight:500; margin:0 0 16px">De dónde sale tu renta mensual</h3>
+            <h3 style="font-size:19px; font-weight:500; margin:0 0 16px">De dónde sale la renta</h3>
             <div style="display:flex; flex-direction:column">
               <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Pensión pública neta</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1PensionNeta }}</strong></p>
               <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Retiradas netas de patrimonio y EPSV</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1RetiradasNetas }}</strong></p>
@@ -539,7 +501,7 @@
             <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px">
               <div>
                 <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Cobro en capital de la EPSV</p>
-                <h3 style="font-size:21px; font-weight:500; margin:0">Cómo cambia lo que recibes según la forma de cobro</h3>
+                <h3 style="font-size:21px; font-weight:500; margin:0">Comparativa de regímenes fiscales</h3>
               </div>
               <span class="tag tag-accent" style="white-space:nowrap">Aplicado: {{ regimenSel }}</span>
             </div>
@@ -570,45 +532,44 @@
     </sc-if>
   </main>
 
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:0 0 22px; margin-top:64px">
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+    <div style="max-width:1240px; margin:0 auto; padding:40px 48px 0">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:34px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px">
+            <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95">
+          </div>
+          <p style="max-width:26em; color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+            <a href="temas.html?topic=jubilacion" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Jubilación</a>
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Temas clave</a>
+            <a href="cartera.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Recursos</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <a href="fiscalidad.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mis impuestos</a>
+            <a href="academia.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">NUVIA Academy</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+        <div>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.55">
+            <span>Simulador educativo · Solo Bizkaia · Reglas fiscales 2026.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); padding-top:2px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 40%, transparent); font-size:11.5px; padding-top:16px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+        <span>Cálculo local en tu navegador, sin envío de datos.</span>
       </div>
     </div>
   </footer>
@@ -654,18 +615,7 @@ class Component extends DCLogic {
     this._eng = { calculatePlan, validate, lifeExpectancyYears };
     return this._eng;
   }
-  syncSvgPoints() {
-    window.requestAnimationFrame(() => {
-      document.querySelectorAll('[data-nuvia-points]').forEach((node) => {
-        node.setAttribute('points', node.getAttribute('data-nuvia-points') || '');
-      });
-    });
-  }
-  componentDidMount() {
-    document.title = 'Simulador de jubilación | NUVIA Family Wealth';
-    this.syncSvgPoints();
-  }
-  componentDidUpdate() { this.syncSvgPoints(); }
+  componentDidMount() { document.title = 'Simulador de jubilación | NUVIA Family Wealth'; }
   s() { return this.state.s || this.defaults(); }
   upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }), errores: [] }); }
   scrollA(id) { setTimeout(() => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); }, 60); }

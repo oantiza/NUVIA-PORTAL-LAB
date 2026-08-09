@@ -3,211 +3,10 @@
   const params = new URLSearchParams(window.location.search);
   const embeddedInWeb2 = params.get('embedded') === 'web2';
   const requestedSuiteTab = params.get('suiteTab');
-  const requestedTaxJurisdiction = params.get('jurisdiction');
-  const taxJurisdictions = new Set(['bizkaia', 'araba', 'gipuzkoa', 'navarra', 'common-territory']);
-  if (params.get('taxPage') && taxJurisdictions.has(requestedTaxJurisdiction)) {
-    try {
-      window.localStorage.setItem('nuvia-tax-preference', JSON.stringify({
-        jurisdiction: requestedTaxJurisdiction,
-        taxYear: 2026,
-        selectedAt: new Date().toISOString(),
-        version: '1',
-      }));
-    } catch (error) {
-      /* La guía seguirá mostrando el selector si el navegador bloquea el almacenamiento local. */
-    }
-  }
-  if (['portfolio', 'technical', 'fundamental'].includes(requestedSuiteTab)) {
-    document.documentElement.dataset.suiteTab = requestedSuiteTab;
-  }
-
-  const friendlyText = new Map([
-    ['Fiscalidad del ahorro', 'Cómo tributa tu ahorro'],
-    ['Sucesiones y donaciones', 'Herencias y donaciones'],
-    ['Qué aprenderás', 'Al terminar esta guía podrás'],
-    ['En esta guía', 'Tu recorrido'],
-    ['Conceptos esenciales', 'Seis ideas para no perderte'],
-    ['Rendimiento del capital mobiliario', 'Ingresos que genera tu dinero'],
-    ['Ganancia patrimonial', 'Ganancia al vender'],
-    ['Pérdida patrimonial', 'Pérdida al vender'],
-    ['Base del ahorro', 'Dónde se agrupan estos resultados'],
-    ['Retención', 'Pago adelantado a Hacienda'],
-    ['Diferimiento', 'Tributar más adelante'],
-    ['Intereses y dividendos son ejemplos habituales. No son una venta y pueden llevar retención.', 'Son cobros que produce una inversión, como intereses o dividendos. Pueden llevar una retención antes de llegar a tu cuenta.'],
-    ['Aparece cuando una transmisión genera una diferencia positiva conforme a las reglas de valoración.', 'Surge cuando vendes o transmites por más de lo que fiscalmente te costó.'],
-    ['Existe cuando la pérdida se realiza fiscalmente; una caída de mercado sin venta suele seguir siendo latente.', 'La pérdida cuenta fiscalmente cuando vendes. Si el precio cae pero mantienes la inversión, todavía es una pérdida latente.'],
-    ['Agrupa categorías fiscales, pero no autoriza a compensarlas libremente entre sí.', 'Reúne determinados rendimientos y ganancias, aunque no todos se pueden compensar entre sí sin límites.'],
-    ['Es un pago a cuenta informado por la entidad, no necesariamente la cuota fiscal definitiva.', 'Es un adelanto que la entidad ingresa en Hacienda. No siempre coincide con el impuesto final.'],
-    ['Pospone el cómputo de una ganancia bajo requisitos concretos; no equivale a una exención.', 'Permite retrasar la tributación cuando se cumplen ciertas condiciones; no significa que la ganancia quede exenta.'],
-    ['Qué ejercicio estás viendo.', 'Primero, sitúa el año.'],
-    ['Diferenciar fechas oficiales de revisiones recomendadas por NUVIA.', 'Saber qué fechas son obligatorias y cuáles son recordatorios útiles.'],
-    ['Filtrar los eventos que pueden afectar a tu situación.', 'Ver solo los eventos que encajan con tu situación.'],
-    ['Preparar documentación y decisiones antes del vencimiento.', 'Reunir documentos y tomar decisiones antes de que llegue el plazo.'],
-    ['Marcar localmente lo revisado sin crear una cuenta ni enviar datos.', 'Llevar el control de lo revisado sin crear una cuenta.'],
-    ['Mi situación', '¿Qué situaciones te afectan?'],
-    ['Categoría', '¿Qué quieres consultar?'],
-    ['Eventos del ejercicio 2026', 'Tus fechas de 2026'],
-    ['Personas afectadas', 'A quién afecta'],
-    ['Decisión que conviene anticipar', 'Qué conviene decidir antes'],
-    ['Si no se revisa', 'Qué puede pasar si se deja'],
-    ['Marcar revisado', 'Marcar como revisado'],
-    ['Acciones y alcance', 'Cómo usar esta herramienta'],
-    ['Comparar heredar, donar o mantener atendiendo a control, liquidez y documentación.', 'Ver con claridad qué cambia entre heredar, donar o mantener.'],
-    ['Construir un inventario completo y seguir el proceso en el orden correcto.', 'Preparar un inventario y seguir los trámites en el orden correcto.'],
-    ['Detectar falta de liquidez y factores que aumentan la complejidad.', 'Saber si faltará liquidez o si hay factores que complican el reparto.'],
-    ['Preparar documentos y preguntas concretas antes de acudir a un profesional.', 'Llegar a la revisión profesional con documentos y preguntas concretas.'],
-    ['Comparar alternativas', 'Elegir el momento'],
-    ['Componer el patrimonio', 'Saber qué hay'],
-    ['Proceso sucesorio', 'Seguir los pasos'],
-    ['Donaciones', 'Transmitir en vida'],
-    ['Liquidez', 'Prever los gastos'],
-    ['Diagnóstico', 'Detectar complicaciones'],
-    ['Dimensión', 'Qué cambia'],
-    ['Inventario completo', 'Haz una lista completa'],
-    ['Valoraciones', 'Pon valor a cada bien'],
-    ['Aceptar o renunciar', 'Decide si aceptar'],
-    ['Partición', 'Acordad el reparto'],
-    ['Presentación fiscal', 'Presenta los impuestos'],
-    ['Pago y liquidez', 'Reserva el dinero necesario'],
-    ['Cambios de titularidad', 'Actualiza los titulares'],
-    ['Complejidad inicial baja', 'Pocos puntos especiales detectados'],
-    ['Complejidad inicial media', 'Hay varios puntos que revisar'],
-    ['Complejidad inicial alta', 'Conviene coordinarlo con profesionales'],
-    ['Resultado educativo', 'Resultado orientativo'],
-    ['Factores detectados', 'Puntos que requieren atención'],
-    ['Documentos para preparar', 'Qué conviene reunir'],
-    ['Preguntas para la revisión', 'Qué conviene preguntar'],
-    ['Define tu jubilación', 'Imagina cómo quieres vivir'],
-    ['Construye tu mapa de ingresos', 'Suma lo que podrías recibir'],
-    ['Estima tus gastos futuros', 'Calcula cuánto necesitarás'],
-    ['Identifica la brecha', 'Mira qué parte falta por cubrir'],
-    ['Ordena el patrimonio', 'Da una función a cada recurso'],
-    ['Prepara el calendario de cobro', 'Decide cuándo cobrar cada cosa'],
-    ['Longevidad', 'Vivir más de lo previsto'],
-    ['Inflación', 'Que el dinero pierda poder de compra'],
-    ['Salud y dependencia', 'Salud y cuidados'],
-    ['Apoyo familiar', 'Ayuda a la familia'],
-    ['Falta de liquidez', 'No tener efectivo cuando hace falta'],
-    ['Concentración fiscal', 'Cobrar demasiado en un solo año'],
-    ['Tu avance en esta guía', 'Lo que ya tienes preparado'],
-    ['Plan completado', 'Pasos completados'],
-    ['Esta guía estructura las decisiones.', 'Primero, ordena las decisiones.'],
-    ['El simulador convierte el plan en escenarios.', 'Después, prueba distintos escenarios.'],
-    ['La guía fiscal prepara el rescate.', 'Por último, decide cómo cobrar.'],
-    ['Sitúa tu momento y reúne las piezas básicas.', 'Empieza con lo que ya sabes.'],
-    ['Un buen plan también prepara lo inesperado.', 'Reserva espacio para lo que no puedes prever.'],
-    ['Próxima acción sugerida', 'Tu siguiente paso'],
-    ['Fiscalidad y rescate de tu EPSV, explicado antes de decidir.', 'Tu EPSV: decide cómo cobrarla sin sorpresas'],
-    ['Una decisión, tres planos', 'Antes de elegir, mira estas tres cosas'],
-    ['No existe una modalidad universalmente mejor. La elección depende de tus ingresos del año, tu necesidad de liquidez, la antigüedad de las aportaciones y el modo en que quieras ordenar el patrimonio durante la jubilación.', 'No hay una opción mejor para todo el mundo. La respuesta depende de cuánto necesitas ahora, qué otros ingresos tendrás ese año y cuánto quieres reservar para después.'],
-    ['03 · Regulación administrativa', '03 · Preparar el cobro'],
-    ['04 · Normativa y fuentes', '04 · Fuentes oficiales'],
-    ['Documentación habitual', 'Ten estos documentos a mano'],
-    ['Selector por producto', 'Elige qué tienes y mira qué ocurre'],
-    ['Fondos frente a ETF', 'Fondo o ETF: no funcionan igual'],
-    ['Compensación de ganancias y pérdidas', 'Cómo aprovechar las pérdidas sin improvisar'],
-    ['Checklist antes de vender', 'Antes de vender, comprueba esto'],
-    ['Casos prácticos', 'Ejemplos para verlo claro'],
-    ['Preguntas frecuentes', 'Dudas habituales'],
-    ['Calendario fiscal', 'Tus fechas fiscales, ordenadas'],
-    ['Vista y filtros', 'Qué quieres ver'],
-    ['Eventos fiscales', 'Lo que tienes por delante'],
-    ['Checklist de cierre fiscal', 'Cierra el año sin dejar cabos sueltos'],
-    ['Cómo utilizar este calendario', 'Cómo sacarle partido'],
-    ['Heredar, donar o mantener', '¿Heredar, donar o mantener?'],
-    ['¿Qué compone el patrimonio?', 'Empieza por saber qué hay'],
-    ['Proceso sucesorio en diez pasos', 'La herencia, paso a paso'],
-    ['Testamento y planificación', 'Deja las decisiones preparadas'],
-    ['Donaciones: qué revisar', 'Antes de donar, revisa esto'],
-    ['Liquidez antes de transmitir', '¿Habrá dinero suficiente para los gastos?'],
-    ['Diagnóstico de complejidad', 'Detecta dónde puede complicarse'],
-    ['Tres formas de cobrar. Tres perfiles de decisión.', 'Capital, renta o una combinación: ¿qué encaja contigo?'],
-    ['La fecha de generación de los derechos importa.', 'No todo tu ahorro puede tributar igual'],
-    ['Posible régimen transitorio', 'Una parte podría tener un tratamiento distinto'],
-    ['Aportación y rendimiento se separan', 'Lo aportado y lo ganado se calculan por separado'],
-    ['Un ejemplo para ver la separación fiscal.', 'Un ejemplo para entender qué parte tributa de cada forma'],
-    ['Del derecho al cobro: cómo preparar la solicitud.', 'Qué pedir a tu EPSV antes de firmar'],
-    ['Checklist antes de firmar el rescate', 'Antes de firmar, comprueba esto'],
-    ['La referencia oficial, a un clic', 'Si quieres comprobar la fuente'],
-    ['Distinguir rendimientos, ganancias, pérdidas, retenciones y diferimiento.', 'Saber qué tributa al cobrar y qué tributa al vender.'],
-    ['Reconocer las diferencias fiscales básicas entre fondos, acciones y ETF.', 'Distinguir de un vistazo fondos, acciones y ETF.'],
-    ['Ordenar pérdidas realizadas y pendientes sin confundirlas con caídas latentes.', 'Separar pérdidas ya realizadas de simples caídas de mercado.'],
-    ['Preparar una operación con documentación y preguntas concretas.', 'Llegar a cada operación con los documentos y las preguntas preparados.'],
-  ]);
-
-  const enhanceFriendlyContent = () => {
-    document.querySelectorAll('.tax-page-hero').forEach((hero) => {
-      hero.closest('article')?.classList.add('nuvia-tax-guide');
-    });
-
-    document.querySelectorAll('h1').forEach((heading) => {
-      if (heading.textContent.trim().startsWith('Fiscalidad y rescate de tu EPSV')) {
-        heading.closest('section')?.classList.add('retirement-fiscal-guide');
-      }
-    });
-
-    const guideRoots = document.querySelectorAll('.nuvia-tax-guide, .retirement-planning-guide, .retirement-fiscal-guide');
-    guideRoots.forEach((guideRoot) => {
-      const textWalker = document.createTreeWalker(guideRoot, NodeFilter.SHOW_TEXT);
-      let textNode = textWalker.nextNode();
-      while (textNode) {
-        const currentText = textNode.nodeValue.trim();
-        if (friendlyText.has(currentText)) {
-          const leadingSpace = textNode.nodeValue.match(/^\s*/)?.[0] || '';
-          const trailingSpace = textNode.nodeValue.match(/\s*$/)?.[0] || '';
-          textNode.nodeValue = leadingSpace + friendlyText.get(currentText) + trailingSpace;
-        }
-        textNode = textWalker.nextNode();
-      }
-
-      if (guideRoot.classList.contains('nuvia-tax-guide')) {
-        document.querySelectorAll('button').forEach((button) => {
-          if (button.textContent.trim() === 'Volver a Temas clave') button.classList.add('nuvia-embedded-redundant');
-        });
-      }
-
-      guideRoot.querySelectorAll('h1, h2, h3, p, a, button, span, li').forEach((element) => {
-        if (element.children.length) return;
-        const current = element.textContent.trim();
-        if (friendlyText.has(current)) element.textContent = friendlyText.get(current);
-
-        if (current.startsWith('Entiende qué hecho genera tributación')) {
-          element.textContent = 'Descubre qué ocurre con tus intereses, dividendos, ventas y traspasos antes de tomar una decisión.';
-        }
-        if (current.startsWith('Una herramienta anual para revisar obligaciones')) {
-          element.textContent = current.replace('Una herramienta anual para revisar obligaciones y decisiones con tiempo', 'Consulta lo que te afecta, filtra el ruido y prepara cada fecha con tiempo');
-        }
-        if (current.startsWith('Ordena las decisiones patrimoniales, fiscales y documentales')) {
-          element.textContent = current.replace('Ordena las decisiones patrimoniales, fiscales y documentales de una transmisión', 'Aclara qué decidir, qué documentos reunir y qué pasos seguir en una transmisión');
-        }
-        if (current.startsWith('Una guía práctica para comparar capital, renta y modalidad mixta')) {
-          element.textContent = 'Compara las tres formas de cobro, prepara los documentos y entiende qué puede cambiar en tus impuestos antes de firmar.';
-        }
-      });
-
-      guideRoot.querySelectorAll('[role="status"]').forEach((notice) => {
-        if (!notice.textContent.includes('Pendiente de revisión fiscal independiente')) return;
-        notice.innerHTML = '<strong>Antes de decidir.</strong> Esta guía es educativa; confirma cómo encaja en tu situación personal antes de realizar una operación relevante.';
-        notice.classList.add('nuvia-friendly-notice');
-      });
-    });
-  };
-
-  let friendlyFrame = 0;
-  const scheduleFriendlyContent = () => {
-    window.cancelAnimationFrame(friendlyFrame);
-    friendlyFrame = window.requestAnimationFrame(enhanceFriendlyContent);
-  };
-
-  const friendlyObserver = new MutationObserver(scheduleFriendlyContent);
-  friendlyObserver.observe(document.getElementById('root'), { childList: true, subtree: true });
-  scheduleFriendlyContent();
-
 
   const activateEmbeddedMode = () => {
     document.documentElement.classList.add('nuvia-web2-embedded');
     document.body.classList.add('nuvia-web2-embedded');
-    if (params.get('taxPage')) document.body.classList.add('nuvia-tax-embedded');
 
     const style = document.createElement('style');
     style.id = 'nuvia-web2-embedded-styles';
@@ -223,10 +22,6 @@
       body.nuvia-web2-embedded footer,
       body.nuvia-web2-embedded main.nuvia-portfolio > :nth-child(1),
       body.nuvia-web2-embedded main.nuvia-portfolio > :nth-child(2) {
-        display: none !important;
-      }
-      body.nuvia-web2-embedded.nuvia-tax-embedded .tax-page-hero,
-      body.nuvia-web2-embedded.nuvia-tax-embedded .nuvia-embedded-redundant {
         display: none !important;
       }
       body.nuvia-web2-embedded .nuvia-app {
@@ -475,6 +270,40 @@
         padding: 42px 44px 54px !important;
         background: #f2f5f7 !important;
       }
+      body.nuvia-web2-embedded [data-nuvia-fundamental-loading] {
+        display: grid !important;
+        grid-template-columns: auto minmax(0, 1fr) !important;
+        align-items: center !important;
+        gap: 16px !important;
+        margin: 0 0 24px !important;
+        padding: 18px 20px !important;
+        border: 1px solid #dbe5f2 !important;
+        border-radius: 18px !important;
+        background: linear-gradient(110deg, #fff 0%, #fbfaf6 100%) !important;
+        box-shadow: 0 12px 30px rgba(11,35,71,.055) !important;
+        color: #0b2347 !important;
+      }
+      body.nuvia-web2-embedded [data-nuvia-fundamental-loading]::before {
+        content: "";
+        width: 22px;
+        height: 22px;
+        border: 2px solid rgba(74,93,35,.2);
+        border-top-color: #4a5d23;
+        border-radius: 999px;
+        animation: nv-fundamental-spin .85s linear infinite;
+      }
+      body.nuvia-web2-embedded [data-nuvia-fundamental-loading] strong {
+        display: block;
+        margin-bottom: 3px;
+        font-family: Figtree, system-ui, sans-serif;
+        font-size: 14px;
+      }
+      body.nuvia-web2-embedded [data-nuvia-fundamental-loading] span {
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+      @keyframes nv-fundamental-spin { to { transform: rotate(360deg); } }
       body.nuvia-web2-embedded [data-nuvia-portfolio-lab] {
         display: flex !important;
         flex-direction: column !important;
@@ -1068,6 +897,25 @@
           panel.dataset.nuviaSuitePanel = '';
           const summary = panel.firstElementChild;
           if (summary) summary.dataset.nuviaActiveSummary = '';
+
+          const selectedTab = tabs.querySelector('[role="tab"][aria-selected="true"]');
+          const fundamentalSelected = selectedTab?.id === 'analytics-tab-fundamental';
+          const fundamentalModule = panel.querySelector('[data-testid="fundamental-module"]');
+          const fundamentalReady = !!fundamentalModule?.querySelector('[data-testid="fundamental-chart"]');
+          const fundamentalFailed = !!fundamentalModule?.querySelector('[role="alert"]');
+          let loadingNotice = panel.querySelector('[data-nuvia-fundamental-loading]');
+          if (fundamentalSelected && !fundamentalReady && !fundamentalFailed) {
+            if (!loadingNotice) {
+              loadingNotice = document.createElement('div');
+              loadingNotice.dataset.nuviaFundamentalLoading = '';
+              loadingNotice.setAttribute('role', 'status');
+              loadingNotice.setAttribute('aria-live', 'polite');
+              loadingNotice.innerHTML = '<div><strong>Preparando el análisis fundamental</strong><span>La primera consulta obtiene y ordena los datos reales de la compañía. Puede tardar unos segundos.</span></div>';
+              panel.insertBefore(loadingNotice, summary?.nextSibling || panel.firstChild);
+            }
+          } else if (loadingNotice) {
+            loadingNotice.remove();
+          }
         }
       }
 
@@ -1223,7 +1071,7 @@
     const link = document.createElement('a');
     link.id = 'nuvia-web2-back';
     link.href = '../index.html';
-    link.textContent = '← Volver a NUVIA Web 3';
+    link.textContent = '← Volver a NUVIA Web 2';
     link.setAttribute('aria-label', 'Volver a la portada de NUVIA Web 2');
     link.style.cssText = [
       'position:fixed',

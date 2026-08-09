@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Dinero con criterio | NUVIA Academy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dinero con criterio | NUVIA Academy</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -28,39 +28,20 @@
 </helmet>
 
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
   <!-- ============ HEADER ============ -->
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px); border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html" class="is-active" aria-current="page">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:36px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="temas.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Temas clave</a>
+        <a href="#curso" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Academy</a>
       </nav>
     </div>
   </header>
@@ -71,6 +52,12 @@
       <span style="display:inline-block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.26em; text-transform:uppercase; margin-bottom:14px">Educación financiera</span>
       <h1 style="color:var(--color-text); font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 14px">Dinero con criterio</h1>
       <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.65; margin:0 0 26px">Cinco clases breves para ordenar tu dinero, ahorrar con propósito, invertir sin apostar y entender cómo la economía llega hasta tu bolsillo.</p>
+      <div role="tablist" aria-label="Contenido de Dinero con criterio" style="display:inline-flex; gap:6px; border:1px solid var(--color-divider); border-radius:999px; padding:5px">
+        <a href="#curso" role="tab" aria-selected="true" style="border-radius:999px; background:var(--color-neutral-900); color:var(--color-text); font-size:12.5px; font-weight:500; padding:9px 18px; text-decoration:none" style-hover="color:var(--color-text)">Curso</a>
+        <a href="#curso" role="tab" aria-selected="false" style="border-radius:999px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; font-weight:500; padding:9px 18px; text-decoration:none; transition:background .2s ease, color .2s ease" style-hover="background:#ffffff; color:var(--color-text)">Guía de inversión</a>
+        <a href="#curso" role="tab" aria-selected="false" style="border-radius:999px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; font-weight:500; padding:9px 18px; text-decoration:none; transition:background .2s ease, color .2s ease" style-hover="background:#ffffff; color:var(--color-text)">Interés compuesto · Simulador</a>
+        <a href="#curso" role="tab" aria-selected="false" style="border-radius:999px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; font-weight:500; padding:9px 18px; text-decoration:none; transition:background .2s ease, color .2s ease" style-hover="background:#ffffff; color:var(--color-text)">Glosario</a>
+      </div>
     </section>
 
     <!-- ============ PROGRAMA ============ -->
@@ -137,16 +124,12 @@
 
     <!-- ============ 01 VÍDEO ============ -->
     <section id="leccion-video" data-screen-label="01 Vídeo" style="max-width:1240px; margin:0 auto; padding:56px 40px 0; scroll-margin-top:96px">
-      <div class="compound-video" style="margin-bottom:0">
-        <div class="compound-video__header">
-          <span>01 · Introducción en vídeo</span>
-          <h3>{{ videoTitulo }}</h3>
-        </div>
-        <div class="compound-video__frame">
-          <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen="{{ true }}"></iframe>
-        </div>
+      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">01 · Introducción en vídeo</span>
+      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">{{ videoTitulo }}</h2>
+      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">{{ videoDescripcion }}</p>
+      <div style="position:relative; border-radius:var(--radius-md); overflow:hidden; background:var(--color-neutral-900); box-shadow:var(--shadow-sm); aspect-ratio:16/9">
+        <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen="{{ true }}" style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
       </div>
-      <p style="max-width:52em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:16px 0 0">{{ videoDescripcion }}</p>
       <button type="button" onClick="{{ marcarVideo }}" style="{{ estiloBotonVideo }}">{{ textoBotonVideo }}</button>
     </section>
 
@@ -279,18 +262,18 @@
       <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">Elena y Marcos: cuatro pilares, una prioridad</h2>
       <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">Lee su diagnóstico y decide cómo deberían ordenar el siguiente euro.</p>
       <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start">
-        <article style="border-radius:var(--radius-md); background:linear-gradient(145deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-sm); padding:26px">
-          <span style="display:block; color:#C9D8A8; font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px">Diagnóstico familiar</span>
-          <h3 style="color:#ffffff; font-size:24px; font-weight:500; margin:0 0 18px">Ingresan 3.400 € al mes</h3>
+        <article style="border-radius:var(--radius-md); background:#262a60; box-shadow:var(--shadow-sm); padding:26px">
+          <span style="display:block; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px">Diagnóstico familiar</span>
+          <h3 style="color:var(--color-text); font-size:24px; font-weight:500; margin:0 0 18px">Ingresan 3.400 € al mes</h3>
           <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px">
             <sc-for list="{{ cifrasCaso }}" as="cifra" hint-placeholder-count="6">
-              <div style="border:1px solid rgba(255,255,255,.14); border-radius:var(--radius-md); background:rgba(255,255,255,.08); padding:11px 12px">
-                <small style="display:block; color:rgba(255,255,255,.68); font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px">{{ cifra.etiqueta }}</small>
-                <strong style="color:#ffffff; font-size:15px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ cifra.valor }}</strong>
+              <div style="border:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 6%, transparent); padding:11px 12px">
+                <small style="display:block; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px">{{ cifra.etiqueta }}</small>
+                <strong style="color:var(--color-text); font-size:15px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ cifra.valor }}</strong>
               </div>
             </sc-for>
           </div>
-          <p style="color:rgba(255,255,255,.8); font-size:13px; line-height:1.65; margin:0">Además del ahorro tienen otros activos por 20.000 € y una deuda total de 18.000 €, parte de ella en una tarjeta con intereses elevados. El ahorro cubre menos de un mes de gastos indispensables: su patrimonio es positivo, pero todavía frágil.</p>
+          <p style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; line-height:1.65; margin:0">Además del ahorro tienen otros activos por 20.000 € y una deuda total de 18.000 €, parte de ella en una tarjeta con intereses elevados. El ahorro cubre menos de un mes de gastos indispensables: su patrimonio es positivo, pero todavía frágil.</p>
         </article>
         <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
           <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px">Elige la primera acción más razonable</span>
@@ -391,43 +374,40 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="margin-top:84px; padding:44px 0 22px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent) no-repeat top / 100% 1px">
+    <div style="max-width:1240px; margin:0 auto; padding:0 40px">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:36px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px"><img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95"></div>
+          <p style="max-width:24em; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Inicio</a>
+            <a href="cartera.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Analítica de cartera</a>
+            <a href="fiscalidad.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Mis impuestos</a>
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Temas clave</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Recursos</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="#curso" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Dinero con criterio</a>
+            <a href="academia.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">NUVIA Academy</a>
+            <a href="academia.html?tab=glosario" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Glosario financiero</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
+        <div>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.55">
             <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); padding-top:4px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12) 48px, rgba(255,255,255,.12) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 42%, transparent); font-size:11.5px; padding-top:18px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
         <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
       </div>

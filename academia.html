@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>NUVIA Academy | NUVIA Family Wealth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NUVIA Academy | NUVIA</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -27,39 +27,20 @@
 </helmet>
 
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
   <!-- ============ HEADER ============ -->
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px); border-bottom:1px solid var(--color-divider)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="index.html" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html" class="is-active" aria-current="page">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:36px">
+        <a href="index.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+        <a href="mercados.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="cartera.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
+        <a href="temas.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Temas clave</a>
+        <a href="#academy" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Academy</a>
       </nav>
     </div>
   </header>
@@ -72,7 +53,7 @@
         <h1 style="color:#ffffff; max-width:16em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 16px">Saber es patrimonio</h1>
         <p style="max-width:38em; color:rgba(255,255,255,.76); font-size:17px; line-height:1.65; margin:0 0 40px">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
         <nav aria-label="Secciones de la Academy" style="display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.16); padding:18px 0 22px">
-          <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="5">
+          <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="4">
             <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}"><span>{{ p.label }}</span><span aria-hidden="true" style="font-size:11px">{{ p.sufijo }}</span></button>
           </sc-for>
         </nav>
@@ -101,19 +82,6 @@
           </div>
 
           <div style="display:flex; flex-direction:column; gap:24px; padding:0 24px 24px">
-            <section aria-labelledby="video-dinero-con-criterio" style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:linear-gradient(145deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-md); overflow:hidden; padding:28px 32px 32px">
-              <div style="display:flex; align-items:end; justify-content:space-between; gap:28px; margin-bottom:20px">
-                <div>
-                  <p style="color:#C9D8A8; font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:0 0 9px">Aula NUVIA · Vídeo</p>
-                  <h3 id="video-dinero-con-criterio" style="color:#ffffff; font-size:29px; font-weight:500; line-height:1.1; margin:0">Dinero con criterio</h3>
-                </div>
-                <p style="max-width:42em; color:rgba(255,255,255,.68); font-size:13.5px; line-height:1.6; margin:0; text-align:right">Una introducción visual para comprender las decisiones de ahorro e inversión antes de recorrer la guía.</p>
-              </div>
-              <div style="position:relative; width:100%; aspect-ratio:16/9; border-radius:var(--radius-md); background:#020817; box-shadow:0 20px 48px -24px rgba(0,0,0,.72); overflow:hidden">
-                <iframe src="https://www.youtube-nocookie.com/embed/iqAv3WXCthY?rel=0" title="Dinero con criterio — vídeo de NUVIA Academy" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
-              </div>
-            </section>
-
             <!-- 01 -->
             <section style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
               <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; border-bottom:1px solid var(--color-divider); margin-bottom:20px; padding-bottom:14px">
@@ -149,12 +117,12 @@
                     <line x1="62" x2="682" y1="91.5" y2="91.5" stroke="#cbd5e1"></line><text x="8" y="95" fill="#6b7686" font-size="11">$100.000</text>
                     <line x1="62" x2="682" y1="24" y2="24" stroke="#cbd5e1"></line><text x="8" y="28" fill="#6b7686" font-size="11">$1.000.000</text>
                     <text x="50" y="330" fill="#6b7686" font-size="11">1928</text><text x="330" y="330" fill="#6b7686" font-size="11">1975</text><text x="650" y="330" fill="#6b7686" font-size="11">2025</text>
-                    <polyline points="" data-nuvia-points="{{ lineaDinero }}" fill="none" stroke="#6b7686" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="" data-nuvia-points="{{ lineaVivienda }}" fill="none" stroke="#C05621" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="" data-nuvia-points="{{ lineaDeuda }}" fill="none" stroke="#3C9A69" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="" data-nuvia-points="{{ lineaOro }}" fill="none" stroke="#946E29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="" data-nuvia-points="{{ lineaBonos }}" fill="none" stroke="#2568A9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="" data-nuvia-points="{{ lineaBolsa }}" fill="none" stroke="#3B5BC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaDinero }}" fill="none" stroke="#6b7686" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaVivienda }}" fill="none" stroke="#C05621" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaDeuda }}" fill="none" stroke="#3C9A69" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaOro }}" fill="none" stroke="#946E29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaBonos }}" fill="none" stroke="#2568A9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline points="{{ lineaBolsa }}" fill="none" stroke="#3B5BC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
                     <g transform="translate(500 200)">
                       <line x1="0" x2="18" y1="0" y2="0" stroke="#3B5BC4" stroke-width="3"></line><text x="24" y="4" fill="#0B2347" font-size="11">Bolsa</text>
                       <line x1="0" x2="18" y1="18" y2="18" stroke="#2568A9" stroke-width="3"></line><text x="24" y="22" fill="#0B2347" font-size="11">Bonos empresa</text>
@@ -256,13 +224,15 @@
       </section>
     </sc-if>
 
-    <!-- ============ INTERÉS COMPUESTO ============ -->
-    <sc-if value="{{ esInteres }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+    <!-- ============ CALCULADORA ============ -->
+    <sc-if value="{{ esCalculadora }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Simulador de inversión" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
         <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:32px 36px; margin-bottom:20px">
-          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 24px">El poder del interés compuesto</h2>
+          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 10px">Proyección de patrimonio</h2>
+          <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 24px">Simula el crecimiento de tus inversiones con aportaciones periódicas, interés compuesto, inflación y fiscalidad estimada.</p>
           <div style="display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:28px; border-top:1px solid var(--color-divider); padding-top:24px">
             <div>
+              <h3 style="color:var(--color-text); font-size:23px; font-weight:500; margin:0 0 14px">El poder del interés compuesto</h3>
               <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 12px">El interés compuesto significa que tu dinero no solo genera rentabilidad sobre lo que invertiste al principio, sino también sobre las ganancias que se van acumulando con el tiempo.</p>
               <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 16px">Si inviertes 10.000 € y obtienes rentabilidad, el primer crecimiento se calcula sobre esos 10.000 €. Pero más adelante, si tu inversión ya vale 12.000 €, la rentabilidad futura se calcula sobre una base mayor. El dinero acumulado también empieza a trabajar.</p>
               <p style="border-left:4px solid #7C9A44; border-radius:0 10px 10px 0; background:var(--color-accent-900); color:var(--color-text); font-size:14px; font-weight:500; line-height:1.6; margin:0; padding:14px 18px">El interés compuesto no depende solo de cuánto inviertes, sino de cuánto tiempo dejas que el dinero trabaje.</p>
@@ -273,149 +243,6 @@
               <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Tiempo</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es el factor que permite que las ganancias acumuladas generen nuevas ganancias.</p></div>
             </div>
           </div>
-        </div>
-
-        <section class="compound-video" aria-label="Vídeo explicativo sobre interés compuesto">
-          <div class="compound-video__header">
-            <span>Vídeo explicativo</span>
-            <h3>El interés compuesto</h3>
-          </div>
-          <div class="compound-video__frame">
-            <iframe src="https://www.youtube-nocookie.com/embed/N2MQm0Hvji4" title="El interés compuesto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-        </section>
-
-        <div class="compound-guide" aria-label="Guía ampliada sobre interés compuesto">
-          <div class="compound-guide__lead">
-            <div>
-              <span class="compound-guide__eyebrow">Guía ampliada · Crecimiento a largo plazo</span>
-              <h3>Entender qué hace crecer de verdad el patrimonio</h3>
-              <p>El interés compuesto aparece cuando los rendimientos se reinvierten y empiezan a generar nuevos rendimientos. Su fuerza depende de tres decisiones: dejar pasar tiempo, mantener la reinversión y evitar interrupciones innecesarias.</p>
-            </div>
-            <a class="compound-guide__download" href="src/assets/education/interes-compuesto-guia.pdf" download>Descargar la guía completa ↓</a>
-          </div>
-
-          <div class="compound-guide__grid">
-            <article class="compound-guide__panel">
-              <span class="compound-guide__eyebrow">01 · Capitalización</span>
-              <h3>No todos los productos acumulan igual</h3>
-              <p>El periodo de capitalización determina cuándo se incorporan los rendimientos al capital que vuelve a trabajar.</p>
-              <ul class="compound-guide__facts">
-                <li class="compound-guide__fact"><strong>Fondos</strong><span>En las clases de acumulación, dividendos, cupones y plusvalías permanecen dentro del fondo y se reflejan en su valor liquidativo.</span></li>
-                <li class="compound-guide__fact"><strong>Cuentas</strong><span>El abono de intereses suele ser mensual; desde ese momento pueden generar nuevos intereses.</span></li>
-                <li class="compound-guide__fact"><strong>Depósitos</strong><span>Capitalizan según lo pactado. Para prolongar el efecto puede ser necesario renovar capital e intereses al vencimiento.</span></li>
-                <li class="compound-guide__fact"><strong>Bonos</strong><span>Los cupones solo capitalizan si el inversor los reinvierte después de cobrarlos.</span></li>
-              </ul>
-            </article>
-
-            <article class="compound-guide__panel">
-              <span class="compound-guide__eyebrow">Ejemplo · 10.000 € al 6 %</span>
-              <h3>La frecuencia también cuenta</h3>
-              <p>Con el mismo tipo nominal, una capitalización más frecuente eleva ligeramente el resultado y explica parte de la diferencia entre tipo nominal y TAE.</p>
-              <div class="compound-guide__metrics">
-                <div class="compound-guide__metric"><span>Anual</span><strong>10.600 €</strong></div>
-                <div class="compound-guide__metric"><span>Mensual</span><strong>10.616,78 €</strong></div>
-                <div class="compound-guide__metric"><span>Diaria</span><strong>10.618,31 €</strong></div>
-              </div>
-              <p class="compound-guide__note">En un año la diferencia parece pequeña. Sostenida durante 30 años, la capitalización diaria rondaría los 60.500 €, frente a 57.435 € con capitalización anual.</p>
-            </article>
-          </div>
-
-          <div class="compound-guide__grid">
-            <article class="compound-guide__panel compound-guide__panel--navy">
-              <span class="compound-guide__eyebrow">02 · El valor del tiempo</span>
-              <h3>Empezar antes pesa más que aportar tarde</h3>
-              <p>Ana y Luis aportan 200 € al mes y obtienen una rentabilidad media ilustrativa del 5 %. La única gran diferencia es que Ana comienza diez años antes.</p>
-              <div class="compound-guide__people">
-                <div class="compound-guide__person"><span>Ana · 40 años aportando</span><strong>305.000 €</strong><small>96.000 € aportados · 209.000 € generados</small></div>
-                <div class="compound-guide__person"><span>Luis · 30 años aportando</span><strong>166.000 €</strong><small>72.000 € aportados · 94.000 € generados</small></div>
-              </div>
-              <p class="compound-guide__quote">Ana aporta 24.000 € más, pero termina con unos 139.000 € adicionales. Los primeros años financian el crecimiento de todos los siguientes.</p>
-            </article>
-
-            <article class="compound-guide__panel">
-              <span class="compound-guide__eyebrow">03 · Regla del 72</span>
-              <h3>Una forma rápida de estimar cuándo se duplica</h3>
-              <p>Divide 72 entre la rentabilidad anual. No es una fórmula exacta, pero ayuda a comprender el efecto del plazo.</p>
-              <div class="compound-guide__metrics">
-                <div class="compound-guide__metric"><span>Al 3 %</span><strong>24 años</strong></div>
-                <div class="compound-guide__metric"><span>Al 6 %</span><strong>12 años</strong></div>
-                <div class="compound-guide__metric"><span>Al 9 %</span><strong>8 años</strong></div>
-              </div>
-              <p class="compound-guide__note">En 24 años, una rentabilidad constante del 3 % duplicaría el capital una vez; al 6 %, aproximadamente dos veces; y al 9 %, tres veces.</p>
-            </article>
-          </div>
-
-          <article class="compound-guide__panel">
-            <span class="compound-guide__eyebrow">04 · Reinversión y fiscalidad</span>
-            <h3>Lo decisivo es qué ocurre con los rendimientos</h3>
-            <p>Un producto no es «compuesto» solo por su nombre. Si los rendimientos se cobran y se gastan, la base que trabaja no crece. Si se reinvierten, el proceso continúa. El diferimiento fiscal puede añadir una ventaja adicional, aunque normalmente menor que la propia reinversión.</p>
-            <div class="compound-guide__table-wrap">
-              <table class="compound-guide__table">
-                <thead><tr><th>Qué hace el inversor</th><th>Resultado a 20 años</th><th>Qué explica la diferencia</th></tr></thead>
-                <tbody>
-                  <tr><td>Compra Letras y gasta el rendimiento al vencimiento</td><td><strong>14.860 €</strong></td><td>El capital original sigue trabajando, pero las ganancias salen del proceso.</td></tr>
-                  <tr><td>Renueva las Letras y reinvierte lo ganado</td><td><strong>16.164 €</strong></td><td>La reinversión activa el efecto compuesto.</td></tr>
-                  <tr><td>Invierte mediante un fondo de acumulación sobre el mismo activo</td><td><strong>16.530 €</strong></td><td>Reinversión automática y tributación diferida hasta el reembolso.</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="compound-guide__note">Ejemplo simplificado: 10.000 €, Letras a 12 meses al 3 %, horizonte de 20 años y un tipo del ahorro constante del 19 %. Las reglas fiscales pueden cambiar y deben revisarse según cada situación.</p>
-          </article>
-
-          <div class="compound-guide__grid">
-            <article class="compound-guide__panel">
-              <span class="compound-guide__eyebrow">Depósito frente a fondo de acumulación</span>
-              <h3>Certeza y riesgo no son lo mismo que capitalización</h3>
-              <p>Ambos vehículos pueden reinvertir. La diferencia está en la garantía, la variación del valor, la automatización y el momento en que se tributa.</p>
-              <div class="compound-guide__table-wrap">
-                <table class="compound-guide__table">
-                  <thead><tr><th>Aspecto</th><th>Depósito</th><th>Fondo de acumulación</th></tr></thead>
-                  <tbody>
-                    <tr><td>Rentabilidad</td><td>Conocida de antemano.</td><td>No garantizada; depende del mercado.</td></tr>
-                    <tr><td>Reinversión</td><td>Puede exigir renovar capital e intereses.</td><td>Automática dentro del fondo.</td></tr>
-                    <tr><td>Fiscalidad</td><td>Se tributa cuando se abonan los intereses.</td><td>Se difiere hasta el reembolso.</td></tr>
-                    <tr><td>Horizonte habitual</td><td>Dinero próximo o que no se quiere arriesgar.</td><td>Objetivos de largo plazo compatibles con su riesgo.</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </article>
-
-            <article class="compound-guide__panel">
-              <span class="compound-guide__eyebrow">05 · Lo que puede romper la cadena</span>
-              <h3>Interrupciones e inflación</h3>
-              <ul class="compound-guide__facts">
-                <li class="compound-guide__fact"><strong>Interrumpir</strong><span>Retirar las ganancias, dejar de aportar o abandonar tras una caída impide que los últimos años —los de mayor crecimiento acumulado— lleguen a producirse.</span></li>
-                <li class="compound-guide__fact"><strong>Inflación</strong><span>Es el interés compuesto funcionando en contra del poder de compra. Con una inflación media del 2 %, 100.000 € dentro de 25 años equivaldrían aproximadamente a 61.000 € actuales.</span></li>
-                <li class="compound-guide__fact"><strong>Riesgo</strong><span>El interés compuesto también amplifica pérdidas. El riesgo debe ajustarse al plazo y a la capacidad de mantener la inversión.</span></li>
-              </ul>
-              <p class="compound-guide__note">La rentabilidad que importa es la real: lo que queda después de descontar inflación, costes e impuestos.</p>
-            </article>
-          </div>
-
-          <article class="compound-guide__panel">
-            <span class="compound-guide__eyebrow">Cinco decisiones para proteger el proceso</span>
-            <div class="compound-guide__actions">
-              <div class="compound-guide__action"><strong>Empieza cuanto antes</strong><span>El primer año que se deja pasar es el que pierde más tiempo de capitalización.</span></div>
-              <div class="compound-guide__action"><strong>Automatiza</strong><span>Convierte la aportación en un hábito recurrente, no en una decisión mensual.</span></div>
-              <div class="compound-guide__action"><strong>Reinvierte</strong><span>Deja que los rendimientos permanezcan trabajando dentro de la inversión.</span></div>
-              <div class="compound-guide__action"><strong>Piensa en términos reales</strong><span>Compara el resultado con inflación, costes y fiscalidad.</span></div>
-              <div class="compound-guide__action"><strong>Ajusta riesgo y plazo</strong><span>No expongas a oscilaciones el dinero que vas a necesitar pronto.</span></div>
-            </div>
-            <p class="compound-guide__note">Los ejemplos utilizan rentabilidades constantes para facilitar la comprensión. Las rentabilidades reales varían y las pasadas no garantizan resultados futuros.</p>
-          </article>
-        </div>
-
-      </section>
-    </sc-if>
-
-    <!-- ============ SIMULADOR ============ -->
-    <sc-if value="{{ esCalculadora }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Simulador de interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; padding:28px 32px">
-          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin-bottom:10px">Herramienta interactiva</span>
-          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 10px">Simulador de interés compuesto</h2>
-          <p style="max-width:52em; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:0">Proyecta el crecimiento de tu patrimonio modificando las aportaciones, el plazo, la rentabilidad, la inflación y la fiscalidad estimada.</p>
         </div>
 
         <div style="display:grid; grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); gap:20px; align-items:start">
@@ -459,20 +286,20 @@
                 <text x="46" y="208" text-anchor="end" font-size="10" fill="#6b7686">0</text>
                 <text x="52" y="224" font-size="10" fill="#6b7686">Año 1</text>
                 <text x="632" y="224" text-anchor="end" font-size="10" fill="#6b7686">{{ chartFin }}</text>
-                <polygon points="" data-nuvia-points="{{ areaBruto }}" fill="rgba(124,154,68,.28)"></polygon>
-                <polygon points="" data-nuvia-points="{{ areaAportado }}" fill="rgba(100,116,139,.22)"></polygon>
-                <polyline points="" data-nuvia-points="{{ lineaBruto }}" fill="none" stroke="#7C9A44" stroke-width="2.4" stroke-linecap="round"></polyline>
-                <polyline points="" data-nuvia-points="{{ lineaAportado }}" fill="none" stroke="#6b7686" stroke-width="2" stroke-linecap="round"></polyline>
+                <polygon points="{{ areaBruto }}" fill="rgba(124,154,68,.28)"></polygon>
+                <polygon points="{{ areaAportado }}" fill="rgba(100,116,139,.22)"></polygon>
+                <polyline points="{{ lineaBruto }}" fill="none" stroke="#7C9A44" stroke-width="2.4" stroke-linecap="round"></polyline>
+                <polyline points="{{ lineaAportado }}" fill="none" stroke="#6b7686" stroke-width="2" stroke-linecap="round"></polyline>
               </svg>
               <div style="display:flex; gap:18px; margin-top:12px">
                 <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:11.5px; font-weight:500"><span style="width:16px; height:3px; border-radius:2px; background:#6b7686"></span>Aportaciones</span>
                 <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:11.5px; font-weight:500"><span style="width:16px; height:3px; border-radius:2px; background:#7C9A44"></span>Aportaciones + intereses</span>
               </div>
             </div>
-            <div style="border-radius:var(--radius-md); background:#0B2347; color:#ffffff; padding:22px 26px">
-              <p style="display:flex; align-items:center; gap:9px; color:#ffffff; font-size:15px; font-weight:500; margin:0"><span style="color:#b8cc7c">◆</span>Valor real y fiscalidad</p>
-              <p style="color:rgba(255,255,255,.74); font-size:13px; line-height:1.65; margin:10px 0 0">{{ notaFiscal }}</p>
-              <p style="color:rgba(255,255,255,.74); font-size:13px; line-height:1.65; margin:8px 0 0">{{ notaInflacion }}</p>
+            <div style="border-radius:var(--radius-md); background:#0B2347; color:var(--color-text); padding:22px 26px">
+              <p style="display:flex; align-items:center; gap:9px; font-size:15px; font-weight:500; margin:0"><span style="color:#946E29">◆</span>Valor real y fiscalidad</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.65; margin:10px 0 0">{{ notaFiscal }}</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.65; margin:8px 0 0">{{ notaInflacion }}</p>
             </div>
             <p style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.6; margin:0; padding:16px 20px">Simulación orientativa basada en los datos introducidos. No constituye asesoramiento financiero, fiscal ni una recomendación personalizada de inversión.</p>
           </div>
@@ -521,45 +348,42 @@
   </main>
 
   <!-- ============ FOOTER ============ -->
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:44px 0 22px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent) no-repeat top / 100% 1px">
+    <div style="max-width:1240px; margin:0 auto; padding:0 40px">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:36px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px"><img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95"></div>
+          <p style="max-width:24em; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Academy</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <button type="button" onClick="{{ irFundamentos }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Fundamentos de inversión</button>
+            <button type="button" onClick="{{ irCalculadora }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Simulador de inversión</button>
+            <button type="button" onClick="{{ irGlosario }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Glosario financiero</button>
+            <a href="curso.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Curso · Dinero con criterio</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
+            <a href="index.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Inicio</a>
+            <a href="cartera.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Analítica de cartera</a>
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Temas clave</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+        <div>
+          <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:11px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.55">
+            <span>Contenido educativo · Cursos, guías y conceptos.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); padding-top:4px">No constituye asesoramiento financiero personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.12) 48px, rgba(255,255,255,.12) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 42%, transparent); font-size:11.5px; padding-top:18px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+        <span>Saber es patrimonio.</span>
       </div>
     </div>
   </footer>
@@ -570,27 +394,11 @@
 class Component extends DCLogic {
   state = { tab: 'fundamentos', sub: 'conceptos', abiertos: {}, c: null };
   cDefaults() { return { initialCapital: 10000, periodicContribution: 300, contributionFrequency: 'monthly', years: 20, expectedReturn: 6.5, inflationRate: 2, taxRate: 21, annualIncrease: 0 }; }
-  syncSvgPoints() {
-    window.requestAnimationFrame(() => {
-      document.querySelectorAll('[data-nuvia-points]').forEach((node) => {
-        node.setAttribute('points', node.getAttribute('data-nuvia-points') || '');
-      });
-    });
-  }
   componentDidMount() {
     document.title = 'NUVIA Academy | NUVIA Family Wealth';
     const p = new URLSearchParams(window.location.search).get('tab');
-    if (p && ['fundamentos', 'interes', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
-    this.syncSvgPoints();
+    if (p && ['fundamentos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
   }
-  abrirTab(tab) {
-    this.setState({ tab });
-    const url = new URL(window.location.href);
-    url.searchParams.set('tab', tab);
-    window.history.replaceState({}, '', url);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  componentDidUpdate() { this.syncSvgPoints(); }
   // Series históricas (100 $ en 1928) — datos de SavingsInvestmentGuide.tsx
   historia() {
     if (this._h) return this._h;
@@ -670,7 +478,7 @@ class Component extends DCLogic {
     const tab = this.state.tab;
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
     const pill = (on) => base + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
-    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['interes', 'Interés compuesto', ''], ['calculadora', 'Simulador', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
+    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['calculadora', 'Simulador de inversión', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
     const c = this.c();
     const pr = this.proyectar(c);
     const maxY = Math.max(1, ...pr.filas.map(f => f.bruto));
@@ -684,14 +492,13 @@ class Component extends DCLogic {
       pestanas: defs.map(([id, label, sufijo]) => ({
         label, sufijo,
         ariaCurrent: id === tab ? 'page' : undefined,
-        abrir: id === 'curso' ? () => { window.location.href = 'curso.html'; } : () => this.abrirTab(id),
+        abrir: id === 'curso' ? () => { window.location.href = 'curso.html'; } : () => { this.setState({ tab: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
         estilo: pill(id === tab),
       })),
-      esFundamentos: tab === 'fundamentos', esInteres: tab === 'interes', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
-      irFundamentos: () => this.abrirTab('fundamentos'),
-      irInteres: () => this.abrirTab('interes'),
-      irCalculadora: () => this.abrirTab('calculadora'),
-      irGlosario: () => this.abrirTab('glosario'),
+      esFundamentos: tab === 'fundamentos', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
+      irFundamentos: () => { this.setState({ tab: 'fundamentos' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      irCalculadora: () => { this.setState({ tab: 'calculadora' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      irGlosario: () => { this.setState({ tab: 'glosario' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
       v: c,
       setNum: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: Number(e.target.value) || 0 }) }),
       setStr: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: e.target.value }) }),

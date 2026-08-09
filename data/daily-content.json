@@ -1,37 +1,48 @@
 {
-  "synchronizedAt": "2026-08-09T07:16:25.273Z",
-  "sourceRepository": "NUVIA-WEB-3",
+  "synchronizedAt": "2026-08-09T06:08:00.000Z",
+  "sourceRepository": "NUVIA-WEB-2",
   "dailyEconomicNews": {
     "selectionDate": "9 de agosto de 2026",
-    "sourcePublishedAt": "9 de agosto de 2026",
-    "sourceName": "EL PAÍS Economía",
-    "sourceUrl": "https://elpais.com/economia/2026-08-09/subidas-de-precios-y-calor-extremo-por-que-caen-las-cifras-de-franceses-y-alemanes-que-veranean-en-espana.html",
-    "imageUrl": "src/assets/home/daily-news/daily-news-current.jpg?v=20260809071625",
-    "imageAlt": "Imagen editorial asociada a la noticia «Subidas de precios y calor extremo: por qué caen las cifras de franceses y alemanes que veranean en España».",
-    "title": "Subidas de precios y calor extremo: por qué caen las cifras de franceses y alemanes que veranean en España",
-    "summary": "La información económica destacada de hoy pone el foco en los precios, el poder adquisitivo y las expectativas sobre los tipos de interés. NUVIA selecciona esta noticia de EL PAÍS Economía como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
-    "category": "Inflación y coste de vida",
-    "context": "La inflación afecta al presupuesto cotidiano y a la rentabilidad real del ahorro. También condiciona la respuesta de los bancos centrales y el coste de la financiación.",
-    "whyItMatters": "Para construir patrimonio importa lo que el dinero permite comprar después de la inflación. Por eso conviene distinguir entre rentabilidad nominal, rentabilidad real y necesidades de liquidez.",
+    "sourcePublishedAt": "8 de agosto de 2026",
+    "sourceName": "AP News",
+    "sourceUrl": "https://apnews.com/article/feb75871fb82c44b3f7fd0ee02bb24b4",
+    "imageAlt": "Ilustración editorial luminosa de un buque de gas avanzando por un estrecho entre costas rocosas al amanecer, con líneas abstractas de energía.",
+    "title": "Ormuz vuelve a tensarse y mantiene vivo el riesgo energético",
+    "summary": "Irán planteó nuevas condiciones para el tránsito por el estrecho de Ormuz y Emiratos Árabes Unidos informó de un ataque contra un buque comercial, sin víctimas. El incidente vuelve a poner el foco en una ruta crítica para el petróleo y el gas mundiales y mantiene la incertidumbre sobre energía, inflación y crecimiento.",
+    "category": "Energía y geopolítica",
+    "context": "El estrecho concentra una parte decisiva del comercio mundial de energía. Europa no afronta por ahora un problema inmediato de suministro, pero el FMI advierte de que los inventarios y las rutas alternativas ya han absorbido buena parte del impacto y ofrecen menos margen ante nuevas interrupciones.",
+    "whyItMatters": "Una tensión prolongada puede trasladarse a carburantes, transporte, electricidad y alimentos, y complicar el descenso de la inflación. Un episodio aislado no exige cambiar el plan financiero: la señal relevante será la duración del bloqueo, la evolución de los precios energéticos y la respuesta de los bancos centrales.",
     "impactPoints": [
-      "Puede alterar el poder de compra y la capacidad mensual de ahorro.",
-      "Influye en las expectativas sobre tipos, depósitos, bonos e hipotecas.",
-      "Refuerza la necesidad de medir objetivos y rentabilidades en términos reales."
+      "Una interrupción sostenida puede elevar el coste de los combustibles, el transporte y los productos importados.",
+      "Más presión energética dificultaría la vuelta de la inflación al objetivo y podría retrasar el alivio de los tipos de interés.",
+      "La liquidez de seguridad y una cartera diversificada reducen la necesidad de reaccionar a una geopolítica imprevisible."
     ]
   },
-  "macroIndicatorsUpdatedAt": "8 de agosto de 2026",
+  "macroIndicatorsUpdatedAt": "9 de agosto de 2026",
   "dailyMacroIndicators": [
     {
       "id": "inflation-spain",
       "label": "IPC España",
-      "value": "3,0%",
-      "period": "diciembre 2025 · interanual",
-      "change": "Baja 0,2 pp",
-      "direction": "down",
-      "context": "Última variación interanual oficial del índice armonizado de precios de consumo.",
+      "value": "3,5%",
+      "period": "Julio · interanual",
+      "change": "Sube 0,3 pp",
+      "direction": "up",
+      "context": "El avance refleja mayor presión de carburantes y electricidad.",
+      "sourceName": "INE",
+      "sourceUrl": "https://www.ine.es/dyngs/Prensa/adIPC0726.htm",
+      "referenceDate": "30 jul 2026"
+    },
+    {
+      "id": "inflation-euro-area",
+      "label": "IPC zona euro",
+      "value": "2,9%",
+      "period": "Julio · interanual",
+      "change": "Sube 0,1 pp",
+      "direction": "up",
+      "context": "La energía mantiene la inflación por encima del objetivo del BCE.",
       "sourceName": "Eurostat",
-      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=es",
-      "referenceDate": "dato diciembre 2025"
+      "sourceUrl": "https://ec.europa.eu/eurostat/en/web/products-euro-indicators/w/2-31072026-ap",
+      "referenceDate": "31 jul 2026"
     },
     {
       "id": "ecb-rate",
@@ -40,22 +51,10 @@
       "period": "Facilidad de depósito",
       "change": "Sin cambios",
       "direction": "stable",
-      "context": "Tipo oficial que remunera los depósitos de las entidades de crédito en el BCE.",
+      "context": "Referencia para el coste del dinero, el ahorro y la financiación.",
       "sourceName": "BCE",
-      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.D.U2.EUR.4F.KR.DFR.LEV",
-      "referenceDate": "dato 8 ago 2026"
-    },
-    {
-      "id": "euribor",
-      "label": "Euríbor a 1 año",
-      "value": "2,86%",
-      "period": "julio 2026 · media mensual",
-      "change": "Sube 0,06 pp",
-      "direction": "up",
-      "context": "Última media mensual disponible del Euríbor a 12 meses, referencia habitual de las hipotecas variables.",
-      "sourceName": "BCE · Refinitiv",
-      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
-      "referenceDate": "dato julio 2026"
+      "sourceUrl": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html",
+      "referenceDate": "23 jul 2026"
     },
     {
       "id": "gdp-spain",
@@ -64,24 +63,22 @@
       "period": "2T 2026 · trimestral",
       "change": "Acelera 0,1 pp",
       "direction": "up",
-      "context": "Última variación trimestral oficial del PIB real, corregida de estacionalidad.",
-      "sourceName": "Eurostat",
-      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=es",
-      "referenceDate": "dato 2T 2026"
+      "context": "La actividad avanzó apoyada por consumo, inversión y servicios.",
+      "sourceName": "INE",
+      "sourceUrl": "https://www.ine.es/dyngs/Prensa/avCNTR2T26.htm",
+      "referenceDate": "30 jul 2026"
     },
     {
       "id": "unemployment-spain",
       "label": "Paro España",
-      "value": "10,1%",
-      "period": "junio 2026 · desestacionalizado",
-      "change": "Baja 0,1 pp",
+      "value": "9,87%",
+      "period": "2T 2026",
+      "change": "Baja 0,96 pp",
       "direction": "down",
-      "context": "Última tasa de paro mensual armonizada y corregida de estacionalidad.",
-      "sourceName": "Eurostat",
-      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=es",
-      "referenceDate": "dato junio 2026"
+      "context": "El empleo aumentó en 486.000 personas durante el trimestre.",
+      "sourceName": "INE · EPA",
+      "sourceUrl": "https://www.ine.es/dyngs/Prensa/es/EPA2T26.htm",
+      "referenceDate": "28 jul 2026"
     }
-  ],
-  "macroIndicatorsCheckedAt": "2026-08-08T09:30:10.282Z",
-  "dailyEconomicNewsCheckedAt": "2026-08-09T07:16:25.273Z"
+  ]
 }

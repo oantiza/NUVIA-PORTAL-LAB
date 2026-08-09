@@ -45,7 +45,7 @@
 
   const hydrateDailyContent = async () => {
     try {
-      const response = await fetch(`./data/daily-content.json?v=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch('./data/daily-content.json', { cache: 'no-cache' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
       const news = payload.dailyEconomicNews;
@@ -61,17 +61,14 @@
         if (sourceLink && news.sourceUrl) sourceLink.href = news.sourceUrl;
 
         const image = document.querySelector('[data-daily-news="image"]');
-        if (image) {
-          if (news.imageUrl) image.src = news.imageUrl;
-          if (news.imageAlt) image.alt = news.imageAlt;
-        }
+        if (image && news.imageAlt) image.alt = news.imageAlt;
 
         document.querySelectorAll('[data-daily-impact]').forEach((element, index) => {
           if (news.impactPoints?.[index]) element.textContent = news.impactPoints[index];
         });
       }
 
-      setText('[data-macro-updated]', `Datos oficiales comprobados cada día laborable · ${payload.macroIndicatorsUpdatedAt}`);
+      setText('[data-macro-updated]', `Datos oficiales revisados a diario · ${payload.macroIndicatorsUpdatedAt}`);
       const indicators = Array.isArray(payload.dailyMacroIndicators) ? payload.dailyMacroIndicators : [];
       indicators.forEach((indicator) => {
         const card = document.querySelector(`[data-macro-id="${indicator.id}"]`);
@@ -110,11 +107,12 @@
     if (!container) return;
 
     container.innerHTML = '';
-    container.className = 'tradingview-widget-container';
-    container.style.cssText = 'position:relative;height:52px;min-height:52px;overflow:hidden';
     const widget = document.createElement('div');
     widget.className = 'tradingview-widget-container__widget';
-    widget.style.cssText = 'height:52px;min-height:52px;overflow:hidden';
+    const attribution = document.createElement('div');
+    attribution.className = 'tradingview-widget-copyright';
+    attribution.style.cssText = 'text-align:right;padding:2px 16px 7px;color:rgba(255,255,255,.42);font-size:10px;line-height:1.2';
+    attribution.innerHTML = '<a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:rgba(243,223,181,.7);text-decoration:none">Ticker tape</a> by TradingView';
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -139,35 +137,14 @@
       locale: 'es',
     });
 
-    container.append(widget, script);
+    container.append(widget, attribution, script);
   };
 
   const startHomeIntegration = () => {
-    let currentNewsNode = null;
-    let currentTickerNode = null;
-
-    const synchronizeRenderedHome = () => {
-      const newsNode = document.querySelector('[data-daily-news="title"]');
-      const tickerNode = document.getElementById('nuvia-live-market-ticker');
-
-      if (newsNode && newsNode !== currentNewsNode) {
-        currentNewsNode = newsNode;
-        hydrateDailyContent();
-      }
-      if (tickerNode && tickerNode !== currentTickerNode) {
-        currentTickerNode = tickerNode;
-        mountTradingView();
-      }
-    };
-
-    const observer = new MutationObserver(synchronizeRenderedHome);
-    observer.observe(document.body, { childList: true, subtree: true });
-    synchronizeRenderedHome();
-
     window.setTimeout(() => {
-      synchronizeRenderedHome();
-      observer.disconnect();
-    }, 10_000);
+      hydrateDailyContent();
+      mountTradingView();
+    }, 400);
   };
 
   if (document.readyState === 'complete') startHomeIntegration();

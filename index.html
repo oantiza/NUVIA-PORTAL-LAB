@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>NUVIA Family Wealth | Información financiera con criterio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NUVIA Family Wealth</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -24,49 +24,47 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
 
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+  <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px)">
+    <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
+      <a href="#inicio" aria-label="Inicio" style="display:inline-flex; align-items:center; text-decoration:none; white-space:nowrap; flex-shrink:0">
+        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth" style="height:54px; width:auto; display:block;">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
-        <a href="index.html" class="is-active" aria-current="page">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
-            <a href="temas.html?topic=hijos-legado">Hijos y legado</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a href="academia.html">Academy</a>
-        <a href="lecturas.html">Lecturas</a>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:30px">
+        <a href="#inicio" aria-current="page" style="white-space:nowrap; font-size:14px; text-decoration:none; color:var(--color-accent)">Inicio</a>
+        <a href="#mercados" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
+        <a href="#noticia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Noticia del día</a>
+        <div style="position:relative" onMouseEnter="{{ abrirTemas }}" onMouseLeave="{{ cerrarTemas }}">
+          <a href="#temas-clave" aria-haspopup="true" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease; display:inline-flex; align-items:center; gap:6px" style-hover="color:var(--color-accent)">Temas clave <span style="font-size:9px; color:var(--color-neutral-500)">▾</span></a>
+          <sc-if value="{{ temasOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute; top:100%; left:50%; transform:translateX(-50%); padding-top:12px; z-index:50">
+              <div style="width:260px; background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md); overflow:hidden; padding:6px">
+                <a href="temas.html?topic=ahorro-inversion" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Ahorro e inversión</a>
+                <a href="vivienda.html" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Vivienda y coste de vida</a>
+                <a href="fiscalidad.html" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Mis impuestos</a>
+                <a href="temas.html?topic=jubilacion" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Jubilación</a>
+                <a href="temas.html?topic=hijos-legado" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Hijos y legado</a>
+                <a href="temas.html?topic=bienestar" style="display:block; padding:9px 14px; font-size:13.5px; color:color-mix(in srgb, var(--color-text) 82%, transparent); text-decoration:none; border-radius:var(--radius-sm); transition:background .15s ease, color .15s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 10%, transparent); color:var(--color-accent-200)">Cuerpo, mente y salud</a>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <a href="academia.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Academy</a>
+        <a href="lecturas.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Lecturas</a>
+        <a href="#que-es-nuvia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Qué es NUVIA</a>
       </nav>
     </div>
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
   </header>
 
   <main>
     <section id="inicio" data-screen-label="Hero" style="position:relative; overflow:hidden; scroll-margin-top:80px; background:#1C3A5E">
       <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none">
-        <img src="src/assets/home/hero-family-finance-compact.webp" alt="" style="width:100%; height:calc(100% + .5cm); object-fit:cover; object-position:78% 36%;">
+        <img src="src/assets/home/hero-family-finance-compact.webp" alt="" style="width:100%; height:100%; object-fit:cover; object-position:78% 36%;">
       </div>
-      <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(95deg, rgba(28,58,94,.94) 0%, rgba(28,58,94,.85) 32%, rgba(28,58,94,.48) 56%, rgba(28,58,94,.14) 78%); pointer-events:none"></div>
-      <div style="position:relative; max-width:1240px; margin:0 auto; padding:100px 48px calc(48px - .5cm); min-height:calc(460px - .5cm); box-sizing:border-box">
+      <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(95deg, rgba(28,58,94,.94) 0%, rgba(28,58,94,.85) 32%, rgba(28,58,94,.48) 56%, rgba(28,58,94,.14) 78%), linear-gradient(0deg, #F4F6F9 0%, rgba(244,246,249,.6) 5%, rgba(244,246,249,0) 12%), linear-gradient(0deg, rgba(28,58,94,.55) 0%, rgba(28,58,94,0) 42%); pointer-events:none"></div>
+      <div style="position:relative; max-width:1240px; margin:0 auto; padding:100px 48px 48px; min-height:460px; box-sizing:border-box">
       <span style="display:block; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#c9dca0; font-feature-settings:'tnum' 1; margin-bottom:16px">Perspectiva · Disciplina · Legado</span>
       <h1 style="color:#ffffff; font-family:var(--font-heading); font-weight:500; font-size:56px; line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; max-width:15em">Información clara,<br>decisiones con propósito.</h1>
       <p style="max-width:52ch; color:rgba(255,255,255,.85); font-size:16.5px; line-height:1.6; margin:0 0 26px">Planificación patrimonial y financiera para familias que piensan a largo plazo.</p>
@@ -94,13 +92,12 @@
         </div>
       </sc-if>
       </div>
-      <div aria-hidden="true" style="position:absolute; z-index:2; left:0; right:0; bottom:0; height:24px; background:linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--color-bg) 20%, transparent) 58%, var(--color-bg) 100%); pointer-events:none"></div>
     </section>
 
     <section id="mercados" data-screen-label="Resumen macro" style="max-width:1240px; margin:0 auto; padding:72px 48px 0; scroll-margin-top:80px">
       <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px">
         <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent)"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Resumen estratégico</span>
-        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px" data-macro-updated>Datos oficiales comprobados cada día laborable · 8 de agosto de 2026</span>
+        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px" data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</span>
       </div>
       <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
       <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
@@ -113,7 +110,7 @@
           </div>
           <p style="color:rgba(255,255,255,.46); font-size:11px; letter-spacing:.04em; margin:0">Variación diaria · tiempo real, diferido o último cierre según mercado</p>
         </div>
-        <div style="position:relative; overflow:hidden; padding-bottom:12px">
+        <div style="position:relative; overflow:hidden">
           <div style="position:absolute; z-index:2; top:0; bottom:0; left:0; width:36px; background:linear-gradient(90deg, #0B2347, transparent); pointer-events:none"></div>
           <div style="position:absolute; z-index:2; top:0; bottom:0; right:0; width:36px; background:linear-gradient(270deg, #0B2347, transparent); pointer-events:none"></div>
           <div id="nuvia-live-market-ticker"><div style="display:flex; width:max-content; animation:nv-tape 46s linear infinite; animation-duration:{{ tickerDur }}; animation-play-state:{{ tickerPlay }}" style-hover="animation-play-state:paused">
@@ -142,7 +139,7 @@
               <div style="display:flex; align-items:baseline; gap:12px; padding:15px 24px; border-left:1px solid rgba(255,255,255,.12); white-space:nowrap"><span style="color:rgba(255,255,255,.58); font-size:11.5px; font-weight:500">USD / JPY</span><span style="color:#ffffff; font-size:14px; font-weight:600; font-variant-numeric:tabular-nums">151,42</span><span style="color:#72c99a; font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums">▲ +0,12%</span></div>
             </div>
           </div>
-          <div style="position:absolute; z-index:3; right:8px; bottom:3px; color:rgba(255,255,255,.34); font-size:7.5px; line-height:1; white-space:nowrap"><a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:rgba(184,202,140,.62); text-decoration:none" style-hover="color:#dae5c1">Ticker tape</a> by TradingView</div></div>
+          <div style="text-align:right; padding:2px 16px 7px; color:rgba(255,255,255,.38); font-size:10.5px; line-height:1.2"><a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:#b8ca8c; text-decoration:none" style-hover="color:#dae5c1">Ticker tape</a> by TradingView · datos simulados en esta maqueta</div></div>
         </div>
       </section>
 
@@ -160,21 +157,21 @@
             <p style="color:rgba(255,255,255,.58); font-size:12px; line-height:1.5; margin:10px 0 0" data-macro-field="context">El avance refleja mayor presión de carburantes y electricidad.</p>
             <a href="https://www.ine.es/dyngs/Prensa/adIPC0726.htm" target="_blank" rel="noreferrer" data-macro-field="source" style="width:fit-content; border-bottom:1px solid color-mix(in srgb, #9DB861 40%, transparent); color:#dae5c1; font-size:10.5px; line-height:1.4; margin-top:auto; padding-top:14px; text-decoration:none; transition:color .2s ease, border-color .2s ease" style-hover="border-color:#dae5c1; color:#e8f0d5">INE · 30 jul 2026</a>
           </article>
+          <article style="display:flex; flex-direction:column; border-left:1px solid rgba(255,255,255,.14); min-width:0; padding:4px 20px; transition:background .2s ease" style-hover="background:rgba(255,255,255,.04)" data-macro-id="inflation-euro-area">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px"><span style="overflow:hidden; color:rgba(255,255,255,.56); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap" data-macro-field="label">IPC zona euro</span><span aria-hidden="true" data-macro-field="direction" style="flex-shrink:0; font-size:11px; color:#e4bd67">↗</span></div>
+            <strong style="display:block; color:#ffffff; font-family:var(--font-heading); font-size:30px; font-weight:500; line-height:1; font-variant-numeric:tabular-nums" data-macro-field="value">2,9%</strong>
+            <span style="display:block; width:24px; height:3px; border-radius:999px; margin-top:10px; background:#9DB861"></span>
+            <div style="display:flex; align-items:center; gap:7px; margin-top:10px"><span style="font-size:10px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap; color:#e4bd67" data-macro-field="change">Sube 0,1 pp</span><span style="width:3px; height:3px; border-radius:999px; background:rgba(255,255,255,.28); flex-shrink:0"></span><span style="color:rgba(255,255,255,.46); font-size:10px; line-height:1.25" data-macro-field="period">Julio · interanual</span></div>
+            <p style="color:rgba(255,255,255,.58); font-size:12px; line-height:1.5; margin:10px 0 0" data-macro-field="context">La energía mantiene la inflación por encima del objetivo del BCE.</p>
+            <a href="https://ec.europa.eu/eurostat/en/web/products-euro-indicators/w/2-31072026-ap" target="_blank" rel="noreferrer" data-macro-field="source" style="width:fit-content; border-bottom:1px solid color-mix(in srgb, #9DB861 40%, transparent); color:#dae5c1; font-size:10.5px; line-height:1.4; margin-top:auto; padding-top:14px; text-decoration:none; transition:color .2s ease, border-color .2s ease" style-hover="border-color:#dae5c1; color:#e8f0d5">Eurostat · 31 jul 2026</a>
+          </article>
           <article style="display:flex; flex-direction:column; border-left:1px solid rgba(255,255,255,.14); min-width:0; padding:4px 20px; transition:background .2s ease" style-hover="background:rgba(255,255,255,.04)" data-macro-id="ecb-rate">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px"><span style="overflow:hidden; color:rgba(255,255,255,.56); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap" data-macro-field="label">Tipo BCE</span><span aria-hidden="true" data-macro-field="direction" style="flex-shrink:0; font-size:11px; color:#b9c7d8">→</span></div>
             <strong style="display:block; color:#ffffff; font-family:var(--font-heading); font-size:30px; font-weight:500; line-height:1; font-variant-numeric:tabular-nums" data-macro-field="value">2,25%</strong>
             <span style="display:block; width:24px; height:3px; border-radius:999px; margin-top:10px; background:#9DB861"></span>
             <div style="display:flex; align-items:center; gap:7px; margin-top:10px"><span style="font-size:10px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap; color:#75798c" data-macro-field="change">Sin cambios</span><span style="width:3px; height:3px; border-radius:999px; background:rgba(255,255,255,.28); flex-shrink:0"></span><span style="color:rgba(255,255,255,.46); font-size:10px; line-height:1.25" data-macro-field="period">Facilidad de depósito</span></div>
-            <p style="color:rgba(255,255,255,.58); font-size:12px; line-height:1.5; margin:10px 0 0" data-macro-field="context">Tipo oficial que remunera los depósitos de las entidades de crédito en el BCE.</p>
-            <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.D.U2.EUR.4F.KR.DFR.LEV" target="_blank" rel="noreferrer" data-macro-field="source" style="width:fit-content; border-bottom:1px solid color-mix(in srgb, #9DB861 40%, transparent); color:#dae5c1; font-size:10.5px; line-height:1.4; margin-top:auto; padding-top:14px; text-decoration:none; transition:color .2s ease, border-color .2s ease" style-hover="border-color:#dae5c1; color:#e8f0d5">BCE · dato vigente</a>
-          </article>
-          <article style="display:flex; flex-direction:column; border-left:1px solid rgba(255,255,255,.14); min-width:0; padding:4px 20px; transition:background .2s ease" style-hover="background:rgba(255,255,255,.04)" data-macro-id="euribor">
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px"><span style="overflow:hidden; color:rgba(255,255,255,.56); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap" data-macro-field="label">Euríbor a 1 año</span><span aria-hidden="true" data-macro-field="direction" style="flex-shrink:0; font-size:11px; color:#e4bd67">↗</span></div>
-            <strong style="display:block; color:#ffffff; font-family:var(--font-heading); font-size:30px; font-weight:500; line-height:1; font-variant-numeric:tabular-nums" data-macro-field="value">2,86%</strong>
-            <span style="display:block; width:24px; height:3px; border-radius:999px; margin-top:10px; background:#9DB861"></span>
-            <div style="display:flex; align-items:center; gap:7px; margin-top:10px"><span style="font-size:10px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap; color:#e4bd67" data-macro-field="change">Sube 0,06 pp</span><span style="width:3px; height:3px; border-radius:999px; background:rgba(255,255,255,.28); flex-shrink:0"></span><span style="color:rgba(255,255,255,.46); font-size:10px; line-height:1.25" data-macro-field="period">Julio 2026 · media mensual</span></div>
-            <p style="color:rgba(255,255,255,.58); font-size:12px; line-height:1.5; margin:10px 0 0" data-macro-field="context">Referencia habitual de las hipotecas variables.</p>
-            <a href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noreferrer" data-macro-field="source" style="width:fit-content; border-bottom:1px solid color-mix(in srgb, #9DB861 40%, transparent); color:#dae5c1; font-size:10.5px; line-height:1.4; margin-top:auto; padding-top:14px; text-decoration:none; transition:color .2s ease, border-color .2s ease" style-hover="border-color:#dae5c1; color:#e8f0d5">BCE · Refinitiv · julio 2026</a>
+            <p style="color:rgba(255,255,255,.58); font-size:12px; line-height:1.5; margin:10px 0 0" data-macro-field="context">Referencia para el coste del dinero, el ahorro y la financiación.</p>
+            <a href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html" target="_blank" rel="noreferrer" data-macro-field="source" style="width:fit-content; border-bottom:1px solid color-mix(in srgb, #9DB861 40%, transparent); color:#dae5c1; font-size:10.5px; line-height:1.4; margin-top:auto; padding-top:14px; text-decoration:none; transition:color .2s ease, border-color .2s ease" style-hover="border-color:#dae5c1; color:#e8f0d5">BCE · 23 jul 2026</a>
           </article>
           <article style="display:flex; flex-direction:column; border-left:1px solid rgba(255,255,255,.14); min-width:0; padding:4px 20px; transition:background .2s ease" style-hover="background:rgba(255,255,255,.04)" data-macro-id="gdp-spain">
             <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:10px"><span style="overflow:hidden; color:rgba(255,255,255,.56); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-overflow:ellipsis; text-transform:uppercase; white-space:nowrap" data-macro-field="label">PIB España</span><span aria-hidden="true" data-macro-field="direction" style="flex-shrink:0; font-size:11px; color:#e4bd67">↗</span></div>
@@ -367,43 +364,44 @@
     </section>
   </main>
 
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+  <footer data-screen-label="Footer" style="padding:0 0 22px">
+    <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+    <div style="max-width:1240px; margin:0 auto; padding:40px 48px 0">
+      <div style="display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:34px">
+        <div>
+          <div style="display:flex; align-items:baseline; gap:9px; margin-bottom:14px">
+            <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA" style="height:40px; width:auto; display:block; opacity:.95">
+          </div>
+          <p style="max-width:26em; color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:13px; line-height:1.65; margin:0">Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Navegación</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <a href="#inicio" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Inicio</a>
+            <a href="mercados.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Informe diario</a>
+            <a href="mercados.html?vista=archivo" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Archivo</a>
+            <a href="cartera.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
-          <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Recursos</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
+            <a href="temas.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Temas clave</a>
+            <a href="temas.html?topic=ahorro-inversion" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Ahorro e inversión</a>
+            <a href="academia.html" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">NUVIA Academy</a>
+            <a href="academia.html#glosario" style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Glosario financiero</a>
           </div>
         </div>
-        <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
-          <div class="nuvia-site-footer__info">
+        <div>
+          <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Información</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.55">
             <span>Contenido educativo e informativo.</span>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+            <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); padding-top:2px">No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
       </div>
-      <div class="nuvia-site-footer__legal">
+      <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; color:color-mix(in srgb, var(--color-text) 40%, transparent); font-size:11.5px; padding-top:16px">
         <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
         <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
       </div>
@@ -428,6 +426,5 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script src="./web2-integration.js?v=20260808-2" defer></script>
 </body>
 </html>
