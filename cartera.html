@@ -33,7 +33,14 @@
       <nav class="nuvia-site-nav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
-        <a href="cartera.html" class="is-active" aria-current="page">Cartera</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Cartera</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="cartera.html">Visión de cartera</a>
+            <a href="cartera.html?vista=technical">Análisis técnico</a>
+            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics">
           <summary>Temas clave</summary>
           <div class="nuvia-site-nav__menu">
@@ -86,6 +93,8 @@
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
             <a href="cartera.html">Analítica de cartera</a>
+            <a href="cartera.html?vista=technical">Análisis técnico</a>
+            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
             <a href="lecturas.html">Lecturas con criterio</a>
           </div>
         </div>
