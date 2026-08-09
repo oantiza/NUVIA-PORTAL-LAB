@@ -27,7 +27,14 @@ const header = (current) => `<header data-screen-label="Header" class="nuvia-sit
       <nav class="nuvia-site-nav" aria-label="Navegación principal">
         <a href="index.html"${active(current, 'inicio')}>Inicio</a>
         <a href="mercados.html"${active(current, 'mercados')}>Mercados</a>
-        <a href="cartera.html"${active(current, 'cartera')}>Cartera</a>
+        <details class="nuvia-site-nav__topics${current === 'cartera' ? ' is-active' : ''}">
+          <summary${current === 'cartera' ? ' aria-current="page"' : ''}>Cartera</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="cartera.html">Visión de cartera</a>
+            <a href="cartera.html?vista=technical">Análisis técnico</a>
+            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics${current === 'temas' ? ' is-active' : ''}">
           <summary${current === 'temas' ? ' aria-current="page"' : ''}>Temas clave</summary>
           <div class="nuvia-site-nav__menu">
@@ -59,6 +66,8 @@ const footer = `<footer data-screen-label="Footer" class="nuvia-site-footer">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
             <a href="cartera.html">Analítica de cartera</a>
+            <a href="cartera.html?vista=technical">Análisis técnico</a>
+            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
             <a href="lecturas.html">Lecturas con criterio</a>
           </div>
         </div>
