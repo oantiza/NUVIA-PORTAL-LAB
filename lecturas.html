@@ -104,10 +104,15 @@
       padding: 24px;
       box-shadow: 0 14px 38px rgba(11,35,71,.07);
       transition: transform .28s ease, box-shadow .28s ease;
+      cursor: pointer;
     }
     .lecturas-feature-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 20px 48px rgba(11,35,71,.12);
+    }
+    .lecturas-feature-card:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--color-accent) 78%, transparent);
+      outline-offset: 4px;
     }
     .lecturas-feature-cover {
       display: grid;
@@ -154,6 +159,132 @@
       color: var(--color-accent-300);
       border-color: var(--color-accent-300);
     }
+    .lecturas-book-dialog {
+      width: min(900px, calc(100vw - 80px));
+      max-height: calc(100vh - 80px);
+      overflow: auto;
+      border: 0;
+      border-radius: 16px;
+      background: #fdf6ed;
+      color: #0b2948;
+      padding: 0;
+      box-shadow: 0 30px 90px rgba(7,24,47,.34);
+    }
+    .lecturas-book-dialog::backdrop {
+      background: rgba(7,24,47,.64);
+      backdrop-filter: blur(7px);
+    }
+    .lecturas-dialog-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      min-height: 520px;
+    }
+    .lecturas-dialog-cover {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(150deg, #ede7d9, #faf7ef 58%, #e7eddd);
+      padding: 48px 34px;
+    }
+    .lecturas-dialog-cover img {
+      display: block;
+      width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 22px rgba(7,24,47,.22));
+    }
+    .lecturas-dialog-content {
+      padding: 48px 54px 44px;
+    }
+    .lecturas-dialog-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      z-index: 2;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(11,41,72,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.8);
+      color: #0b2948;
+      font-size: 23px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .lecturas-dialog-category {
+      color: #6f893a;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    .lecturas-dialog-title {
+      max-width: 12em;
+      color: #0b2948;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1.05;
+      margin: 0;
+    }
+    .lecturas-dialog-author {
+      color: #748e3d;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 10px 0 24px;
+    }
+    .lecturas-dialog-summary p {
+      color: #435267;
+      font-size: 14.5px;
+      line-height: 1.65;
+      margin: 0 0 12px;
+    }
+    .lecturas-dialog-heading {
+      color: #0b2948;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin: 24px 0 10px;
+    }
+    .lecturas-dialog-points {
+      display: grid;
+      gap: 8px;
+      color: #435267;
+      font-size: 13.5px;
+      line-height: 1.5;
+      margin: 0 0 28px;
+      padding: 0;
+      list-style: none;
+    }
+    .lecturas-dialog-points li {
+      position: relative;
+      padding-left: 17px;
+    }
+    .lecturas-dialog-points li::before {
+      position: absolute;
+      top: .58em;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #8ca44d;
+      content: "";
+    }
+    .lecturas-dialog-store {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #8ca44d;
+      border-radius: 999px;
+      color: #526d24;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 10px 17px;
+    }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
   </style>
 </helmet>
@@ -195,7 +326,7 @@
     <!-- ============ BLOQUES EDITORIALES ============ -->
     <section id="seleccion-lecturas" data-screen-label="Bloques editoriales" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px; scroll-margin-top:80px">
       <div class="lecturas-feature-grid">
-        <article class="lecturas-feature-card">
+        <article class="lecturas-feature-card" data-book-id="psicologia-dinero" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de La psicología del dinero">
           <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/la-psicologia-del-dinero.jpg" alt="Portada de La psicología del dinero, de Morgan Housel">
           </div>
@@ -214,7 +345,7 @@
             </div>
           </div>
         </article>
-        <article class="lecturas-feature-card">
+        <article class="lecturas-feature-card" data-book-id="inversor-inteligente" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de El inversor inteligente">
           <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/el-inversor-inteligente.webp" alt="Portada de El inversor inteligente, de Benjamin Graham">
           </div>
@@ -233,7 +364,7 @@
             </div>
           </div>
         </article>
-        <article class="lecturas-feature-card">
+        <article class="lecturas-feature-card" data-book-id="wall-street" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de Un paso por delante de Wall Street">
           <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/un-paso-por-delante-wall-street.webp" alt="Portada de Un paso por delante de Wall Street, de Peter Lynch">
           </div>
@@ -252,7 +383,7 @@
             </div>
           </div>
         </article>
-        <article class="lecturas-feature-card">
+        <article class="lecturas-feature-card" data-book-id="pensar-rapido" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de Pensar rápido, pensar despacio">
           <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/pensar-rapido-pensar-despacio.webp" alt="Portada de Pensar rápido, pensar despacio, de Daniel Kahneman">
           </div>
@@ -273,6 +404,24 @@
         </article>
       </div>
     </section>
+
+    <dialog class="lecturas-book-dialog" id="lecturas-book-dialog" aria-labelledby="lecturas-dialog-title">
+      <div class="lecturas-dialog-shell">
+        <button class="lecturas-dialog-close" type="button" aria-label="Cerrar ficha">×</button>
+        <div class="lecturas-dialog-cover">
+          <img id="lecturas-dialog-image" src="" alt="">
+        </div>
+        <div class="lecturas-dialog-content">
+          <p class="lecturas-dialog-category" id="lecturas-dialog-category"></p>
+          <h2 class="lecturas-dialog-title" id="lecturas-dialog-title"></h2>
+          <p class="lecturas-dialog-author" id="lecturas-dialog-author"></p>
+          <div class="lecturas-dialog-summary" id="lecturas-dialog-summary"></div>
+          <h3 class="lecturas-dialog-heading">Ideas principales</h3>
+          <ul class="lecturas-dialog-points" id="lecturas-dialog-points"></ul>
+          <a class="lecturas-dialog-store" id="lecturas-dialog-store" href="" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
+        </div>
+      </div>
+    </dialog>
 
   </main>
 
@@ -321,6 +470,120 @@
 class Component extends DCLogic {
   componentDidMount() { document.title = 'Lecturas con Criterio | NUVIA Family Wealth'; }
   renderVals() { return {}; }
+}
+</script>
+<script>
+const initLecturasBookDialog = () => {
+  const books = {
+    'psicologia-dinero': {
+      title: 'La psicología del dinero',
+      author: 'Morgan Housel',
+      category: 'Comportamiento financiero',
+      url: 'https://www.casadellibro.com/libro-la-psicologia-del-dinero-como-piensan-los-ricos/9788408268130/13344376',
+      summary: [
+        'Morgan Housel explica que gestionar bien el dinero depende menos de dominar fórmulas que de comprender nuestro comportamiento. Las decisiones financieras están condicionadas por la historia personal, las emociones, el entorno y la idea que cada persona tiene de la seguridad y del éxito.',
+        'A través de historias breves, el libro muestra por qué la paciencia, el ahorro y el interés compuesto suelen ser más decisivos que intentar anticipar cada movimiento del mercado. También invita a definir cuánto es suficiente y a construir una estrategia que podamos mantener durante muchos años.'
+      ],
+      points: ['El comportamiento pesa más que la inteligencia financiera.', 'La paciencia permite que el interés compuesto haga su trabajo.', 'Una buena estrategia debe dejar espacio para la incertidumbre y los errores.']
+    },
+    'inversor-inteligente': {
+      title: 'El inversor inteligente',
+      author: 'Benjamin Graham',
+      category: 'Inversión y disciplina',
+      url: 'https://www.casadellibro.com/libro-el-inversor-inteligente/9788423420971/13083916',
+      summary: [
+        'Benjamin Graham establece las bases de la inversión en valor y diferencia con claridad invertir de especular. Su propuesta consiste en analizar los activos con criterios objetivos, exigir un precio razonable y evitar que el entusiasmo o el miedo del mercado dicten nuestras decisiones.',
+        'La figura de “el señor Mercado” ayuda a entender que las cotizaciones ofrecen oportunidades, pero no siempre reflejan el valor real. El concepto central es el margen de seguridad: comprar con suficiente distancia entre precio y valor para reducir el impacto de errores e imprevistos.'
+      ],
+      points: ['Distinguir inversión de especulación.', 'Utilizar las fluctuaciones del mercado en lugar de obedecerlas.', 'Exigir siempre un margen de seguridad.']
+    },
+    'wall-street': {
+      title: 'Un paso por delante de Wall Street',
+      author: 'Peter Lynch',
+      category: 'Empresas e inversión',
+      url: 'https://www.casadellibro.com/libro-un-paso-por-delante-de-wall-street-renovacion/9788423440610/18067472',
+      summary: [
+        'Peter Lynch sostiene que el inversor particular puede descubrir buenas empresas observando productos, servicios y tendencias que conoce de primera mano. Esa ventaja cotidiana es solo el punto de partida: antes de invertir hay que estudiar el negocio, sus cuentas y sus perspectivas.',
+        'El libro propone clasificar las compañías según su etapa y ritmo de crecimiento, comprobar que la historia de inversión se apoya en datos y mantener una visión de largo plazo. La familiaridad con una empresa nunca sustituye al análisis, pero puede señalar dónde merece la pena investigar.'
+      ],
+      points: ['Observar negocios y productos que entendemos.', 'Comprobar la historia de inversión con cifras y fundamentos.', 'Dar tiempo a las buenas compañías para desarrollar su potencial.']
+    },
+    'pensar-rapido': {
+      title: 'Pensar rápido, pensar despacio',
+      author: 'Daniel Kahneman',
+      category: 'Decisiones y sesgos',
+      url: 'https://www.casadellibro.com/libro-pensar-rapido-pensar-despacio/9788483068618/1989599',
+      summary: [
+        'Daniel Kahneman describe dos formas complementarias de pensar. El sistema rápido responde de manera automática e intuitiva; el sistema lento requiere atención, cálculo y esfuerzo. La intuición resulta útil, pero también puede producir errores previsibles cuando decidimos bajo presión o incertidumbre.',
+        'El recorrido por heurísticas, exceso de confianza, aversión a la pérdida y efectos de encuadre ayuda a reconocer cómo construimos juicios. El objetivo no es eliminar la intuición, sino detectar las situaciones en las que conviene detenerse, contrastar la primera impresión y pensar con mayor cuidado.'
+      ],
+      points: ['Reconocer cuándo domina el pensamiento automático.', 'Identificar sesgos que alteran nuestra percepción del riesgo.', 'Activar una revisión más lenta en decisiones importantes.']
+    }
+  };
+
+  const dialog = document.getElementById('lecturas-book-dialog');
+  if (!dialog) {
+    window.setTimeout(initLecturasBookDialog, 0);
+    return;
+  }
+  if (dialog.dataset.initialized === 'true') return;
+  dialog.dataset.initialized = 'true';
+  const dialogImage = document.getElementById('lecturas-dialog-image');
+  const dialogCategory = document.getElementById('lecturas-dialog-category');
+  const dialogTitle = document.getElementById('lecturas-dialog-title');
+  const dialogAuthor = document.getElementById('lecturas-dialog-author');
+  const dialogSummary = document.getElementById('lecturas-dialog-summary');
+  const dialogPoints = document.getElementById('lecturas-dialog-points');
+  const dialogStore = document.getElementById('lecturas-dialog-store');
+  const closeButton = dialog.querySelector('.lecturas-dialog-close');
+  let lastCard = null;
+
+  const openBook = (card) => {
+    const book = books[card.dataset.bookId];
+    if (!book) return;
+    lastCard = card;
+    dialogImage.src = card.querySelector('.lecturas-feature-cover img').getAttribute('src');
+    dialogImage.alt = `Portada de ${book.title}, de ${book.author}`;
+    dialogCategory.textContent = book.category;
+    dialogTitle.textContent = book.title;
+    dialogAuthor.textContent = book.author;
+    dialogSummary.replaceChildren(...book.summary.map((text) => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      return paragraph;
+    }));
+    dialogPoints.replaceChildren(...book.points.map((text) => {
+      const item = document.createElement('li');
+      item.textContent = text;
+      return item;
+    }));
+    dialogStore.href = book.url;
+    dialog.showModal();
+  };
+
+  document.querySelectorAll('[data-book-id]').forEach((card) => {
+    card.addEventListener('click', (event) => {
+      if (event.target.closest('a, button')) return;
+      openBook(card);
+    });
+    card.addEventListener('keydown', (event) => {
+      if (event.target !== card || !['Enter', ' '].includes(event.key)) return;
+      event.preventDefault();
+      openBook(card);
+    });
+  });
+
+  closeButton.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => lastCard?.focus());
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLecturasBookDialog, { once: true });
+} else {
+  initLecturasBookDialog();
 }
 </script>
 </body>
