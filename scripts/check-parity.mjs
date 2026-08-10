@@ -18,6 +18,7 @@ const portfolioPage = await readFile(resolve(root, 'cartera.html'), 'utf8');
 const topicsPage = await readFile(resolve(root, 'temas.html'), 'utf8');
 const taxPage = await readFile(resolve(root, 'fiscalidad.html'), 'utf8');
 const taxGuidePage = await readFile(resolve(root, 'guia-impuestos.html'), 'utf8');
+const readingsPage = await readFile(resolve(root, 'lecturas.html'), 'utf8');
 const coreBridge = await readFile(resolve(root, 'web2-core-bridge.js'), 'utf8');
 const expectedRoutes = [
   'portfolioPreview',
@@ -52,6 +53,16 @@ const expectedHomeLinks = [
 ];
 for (const link of expectedHomeLinks) {
   if (!web2Home.includes(link)) throw new Error(`Falta el acceso de portada: ${link}`);
+}
+for (const cover of [
+  'la-psicologia-del-dinero.jpg',
+  'el-inversor-inteligente.webp',
+  'un-paso-por-delante-wall-street.webp',
+  'pensar-rapido-pensar-despacio.webp',
+]) {
+  if (!readingsPage.includes(`src/assets/lecturas/${cover}`)) {
+    throw new Error(`Falta el libro recomendado en Lecturas con Criterio: ${cover}`);
+  }
 }
 if (/onclick=["']location\.href/i.test(web2Home)) {
   throw new Error('La portada contiene botones de navegación que el renderizador no conserva');
