@@ -28,21 +28,29 @@
       background: #f7f1e4;
       text-decoration: none;
     }
-    .lecturas-hero-banner img {
-      position: absolute;
-      inset: 0;
-      display: block;
+    .lecturas-hero-inner {
+      position: relative;
       width: 100%;
+      max-width: 1240px;
       height: 100%;
-      object-fit: cover;
-      object-position: center;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .lecturas-hero-scene {
+      position: absolute;
+      inset: 0 40px 0 auto;
+      display: block;
+      width: 52%;
+      height: 100%;
+      object-fit: contain;
+      object-position: right center;
     }
     .lecturas-hero-copy {
       position: absolute;
-      inset: 0 auto 0 clamp(72px, 7.6vw, 150px);
+      inset: 0 auto 0 40px;
       z-index: 1;
       display: flex;
-      width: min(53vw, 900px);
+      width: 54%;
       flex-direction: column;
       justify-content: center;
       color: #0b2948;
@@ -146,11 +154,13 @@
     <!-- ============ CABECERA EDITORIAL ============ -->
     <section id="lecturas" data-screen-label="Cabecera Lecturas">
       <a class="lecturas-hero-banner" href="#seleccion-lecturas" aria-label="Explorar los libros de Lecturas con Criterio">
-        <img src="src/assets/home/lecturas-con-criterio-fondo-compacto-v2.webp" alt="" aria-hidden="true">
-        <div class="lecturas-hero-copy">
-          <h1 class="lecturas-hero-title">Lecturas con Criterio</h1>
-          <span class="lecturas-hero-rule" aria-hidden="true"></span>
-          <p class="lecturas-hero-subtitle">Historias sencillas de interés duradero</p>
+        <div class="lecturas-hero-inner">
+          <img class="lecturas-hero-scene" src="src/assets/home/lecturas-con-criterio-escena-compacta.webp" alt="" aria-hidden="true">
+          <div class="lecturas-hero-copy">
+            <h1 class="lecturas-hero-title">Lecturas con Criterio</h1>
+            <span class="lecturas-hero-rule" aria-hidden="true"></span>
+            <p class="lecturas-hero-subtitle">Historias sencillas de interés duradero</p>
+          </div>
         </div>
       </a>
     </section>
