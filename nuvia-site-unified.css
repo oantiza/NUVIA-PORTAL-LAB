@@ -174,7 +174,7 @@ body.nuvia-unified {
 }
 
 .nuvia-page-home #inicio {
-  min-height: calc(100vh - 72px);
+  min-height: 0;
 }
 
 .nuvia-page-home #inicio > div:last-child {
