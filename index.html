@@ -8,8 +8,8 @@
 <title>NUVIA Family Wealth</title>
 <script src="./web2-integration.js"></script>
 <script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260810-home4">
-<script defer src="nuvia-site-unified.js?v=20260810-home4"></script>
+<link rel="stylesheet" href="nuvia-site-unified.css">
+<script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
 <x-dc>
@@ -127,8 +127,8 @@
       <h1 style="color:#ffffff; font-family:var(--font-heading); font-weight:500; font-size:56px; line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; max-width:15em">Información clara,<br>decisiones con propósito.</h1>
       <p style="max-width:52ch; color:rgba(255,255,255,.85); font-size:16.5px; line-height:1.6; margin:0 0 26px">Planificación patrimonial y financiera para familias que piensan a largo plazo.</p>
       <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap">
-        <a href="#descubrir" class="btn btn-primary" style="text-decoration:none; white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Descubrir NUVIA</a>
-        <a href="mercados.html" class="btn btn-ghost" style="text-decoration:none; white-space:nowrap; color:#e8f0d5">Ver Mercados →</a>
+        <a href="#que-es-nuvia" class="btn btn-primary" style="text-decoration:none; white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Conoce el proyecto</a>
+        <a href="#mercados" class="btn btn-ghost" style="text-decoration:none; white-space:nowrap; color:#e8f0d5">Ver los mercados hoy →</a>
       </div>
       <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:52px">
@@ -149,135 +149,6 @@
           </div>
         </div>
       </sc-if>
-      </div>
-    </section>
-
-    <section class="nv-home-portal" id="descubrir" aria-labelledby="nv-home-portal-title">
-      <div class="nv-home-container">
-        <div class="nv-home-section-intro">
-          <div>
-            <span class="nv-home-eyebrow">Explora NUVIA</span>
-            <h2 id="nv-home-portal-title">Elige por dónde empezar</h2>
-          </div>
-          <p>Información, herramientas y conocimiento para entender mejor el dinero y tomar decisiones con perspectiva.</p>
-        </div>
-        <div class="nv-home-door-grid">
-          <a class="nv-home-door nv-home-door--markets" href="mercados.html">
-            <div class="nv-home-door-media">
-              <img src="src/assets/home/daily-report-preview.webp" alt="Vista del informe diario de mercados de NUVIA">
-            </div>
-            <span class="nv-home-door-number">01</span>
-            <span class="nv-home-door-label">Entender el contexto</span>
-            <h3>Mercados</h3>
-            <p>Las claves del día, explicadas con calma y conectadas con la economía familiar.</p>
-            <span class="nv-home-door-action">Ver Mercados <span aria-hidden="true">→</span></span>
-          </a>
-          <a class="nv-home-door nv-home-door--portfolio" href="cartera.html">
-            <div class="nv-home-door-media nv-home-door-media--chart" aria-hidden="true">
-              <div class="nv-home-mini-chart">
-                <div class="nv-home-mini-donut"></div>
-                <div class="nv-home-mini-bars"><span></span><span></span><span></span></div>
-              </div>
-            </div>
-            <span class="nv-home-door-number">02</span>
-            <span class="nv-home-door-label">Mirar por dentro</span>
-            <h3>Analítica de cartera</h3>
-            <p>Distribución, riesgo, tendencia y calidad fundamental en un mismo lenguaje visual.</p>
-            <span class="nv-home-door-action">Abrir la suite <span aria-hidden="true">→</span></span>
-          </a>
-          <a class="nv-home-door nv-home-door--academy" href="academia.html">
-            <div class="nv-home-door-media">
-              <img src="src/assets/education/nuvia-academy/nuvia-academy-home-banner.jpg" alt="Biblioteca de NUVIA Academy">
-            </div>
-            <span class="nv-home-door-number">03</span>
-            <span class="nv-home-door-label">Aprender con criterio</span>
-            <h3>NUVIA Academy</h3>
-            <p>Cursos, guías y simuladores para comprender el dinero paso a paso.</p>
-            <span class="nv-home-door-action">Entrar en Academy <span aria-hidden="true">→</span></span>
-          </a>
-          <a class="nv-home-door nv-home-door--reading" href="lecturas.html">
-            <div class="nv-home-door-media">
-              <img src="src/assets/home/lecturas-con-criterio-fondo-compacto.webp" alt="Paisaje editorial de Lecturas con criterio">
-            </div>
-            <span class="nv-home-door-number">04</span>
-            <span class="nv-home-door-label">Leer sin prisa</span>
-            <h3>Lecturas con criterio</h3>
-            <p>Libros e ideas que ayudan a pensar mejor sobre el patrimonio y el largo plazo.</p>
-            <span class="nv-home-door-action">Explorar Lecturas <span aria-hidden="true">→</span></span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="nv-home-feature" aria-labelledby="nv-home-feature-title">
-      <div class="nv-home-container nv-home-feature-grid">
-        <div class="nv-home-feature-copy">
-          <span class="nv-home-eyebrow nv-home-eyebrow--light">Esta semana en NUVIA</span>
-          <h2 id="nv-home-feature-title">Saber es patrimonio</h2>
-          <p>Una fuente de conocimiento para entender el dinero con calma: desde la primera cuenta hasta el plan de toda una familia.</p>
-          <div class="nv-home-feature-actions">
-            <a class="nv-home-button nv-home-button--light" href="academia.html">Empezar a aprender</a>
-            <a class="nv-home-text-link" href="lecturas.html">Ver la selección editorial <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-        <a class="nv-home-feature-art" href="academia.html" aria-label="Entrar en NUVIA Academy">
-          <img src="src/assets/education/nuvia-academy/nuvia-academy-home-banner.jpg" alt="Biblioteca de NUVIA Academy, un espacio para aprender sobre dinero y patrimonio">
-        </a>
-      </div>
-    </section>
-
-    <section class="nv-home-topics" aria-labelledby="nv-home-topics-title">
-      <div class="nv-home-container">
-        <div class="nv-home-section-intro nv-home-section-intro--compact">
-          <div>
-            <span class="nv-home-eyebrow">Temas para tu vida</span>
-            <h2 id="nv-home-topics-title">Decisiones que merecen tiempo</h2>
-          </div>
-          <a class="nv-home-all-link" href="temas.html">Ver todos los temas <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="nv-home-topic-grid">
-          <a href="temas.html?topic=ahorro-inversion">
-            <span>01</span><strong>Empezar a invertir</strong><small>Orden, horizonte y disciplina.</small>
-          </a>
-          <a href="jubilacion.html">
-            <span>02</span><strong>Preparar la jubilación</strong><small>Tiempo, ahorro y renta futura.</small>
-          </a>
-          <a href="temas.html?topic=hijos-legado">
-            <span>03</span><strong>Familia y legado</strong><small>Proteger, compartir y transmitir.</small>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="nv-home-about" id="que-es-nuvia" aria-labelledby="nv-home-about-title">
-      <div class="nv-home-container nv-home-about-grid">
-        <div>
-          <span class="nv-home-eyebrow">Qué es NUVIA</span>
-          <h2 id="nv-home-about-title">Una forma más serena de acercarse al patrimonio</h2>
-        </div>
-        <div class="nv-home-about-copy">
-          <p>NUVIA reúne conocimiento, herramientas y tecnología para ayudar a las familias a comprender, proteger y gestionar mejor su patrimonio.</p>
-          <a class="nv-home-all-link" href="temas.html">Conocer el proyecto <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="nv-home-pillars" aria-label="Pilares de NUVIA">
-          <span><b>01</b> Proteger</span>
-          <span><b>02</b> Crecer</span>
-          <span><b>03</b> Legado</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="nv-home-join" id="registro" aria-labelledby="nv-home-join-title">
-      <div class="nv-home-container nv-home-join-inner">
-        <div>
-          <span class="nv-home-eyebrow nv-home-eyebrow--light">Tu puerta de entrada</span>
-          <h2 id="nv-home-join-title">Empieza hoy, a tu ritmo</h2>
-          <p>Descubre una manera clara y tranquila de aprender, leer y explorar tus decisiones patrimoniales.</p>
-        </div>
-        <div class="nv-home-join-actions">
-          <a class="nv-home-button nv-home-button--light" href="academia.html">Entrar en NUVIA</a>
-          <a class="nv-home-text-link" href="lecturas.html">Prefiero empezar leyendo <span aria-hidden="true">→</span></a>
-        </div>
       </div>
     </section>
 
@@ -546,7 +417,7 @@
       </a>
     </section>
 
-    <section id="que-es-nuvia-anterior" data-screen-label="Qué es NUVIA" style="max-width:1240px; margin:0 auto; padding:80px 48px 96px; scroll-margin-top:80px">
+    <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" style="max-width:1240px; margin:0 auto; padding:80px 48px 96px; scroll-margin-top:80px">
       <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>El proyecto</span>
       <h2 style="font-size:34px; font-weight:500; letter-spacing:-.012em; margin:0 0 30px">Qué es NUVIA</h2>
       <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px">
