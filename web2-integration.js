@@ -110,10 +110,6 @@
     container.innerHTML = '';
     const widget = document.createElement('div');
     widget.className = 'tradingview-widget-container__widget';
-    const attribution = document.createElement('div');
-    attribution.className = 'tradingview-widget-copyright';
-    attribution.style.cssText = 'text-align:right;padding:2px 16px 7px;color:rgba(255,255,255,.42);font-size:10px;line-height:1.2';
-    attribution.innerHTML = '<a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:rgba(243,223,181,.7);text-decoration:none">Ticker tape</a> by TradingView';
 
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -138,7 +134,7 @@
       locale: 'es',
     });
 
-    container.append(widget, attribution, script);
+    container.append(widget, script);
   };
 
   const startHomeIntegration = () => {

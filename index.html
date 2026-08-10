@@ -23,6 +23,11 @@
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
+    .nuvia-compact-ticker #nuvia-live-market-ticker { height:30px; overflow:hidden; }
+    .nuvia-compact-ticker #nuvia-live-market-ticker > div[style*="width:max-content"] { height:30px; }
+    .nuvia-compact-ticker #nuvia-live-market-ticker [style*="padding:15px 24px"] { padding:6px 20px !important; }
+    .nuvia-compact-ticker .tradingview-widget-container__widget,
+    .nuvia-compact-ticker .tradingview-widget-container__widget iframe { height:30px !important; min-height:30px !important; }
     @keyframes nv-tape { to { transform: translateX(-50%); } }
     @keyframes nv-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); } 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
     .home-lecturas-banner-art {
@@ -160,15 +165,17 @@
       <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
       <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
 
-      <section aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0 0 20px; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:40px; padding:0 20px; border-bottom:1px solid rgba(255,255,255,.12)">
+      <section class="nuvia-compact-ticker" aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0 0 20px; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:32px; padding:0 16px; border-bottom:1px solid rgba(255,255,255,.12)">
           <div style="display:flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">
             <span aria-hidden="true" style="display:inline-block; width:7px; height:7px; border-radius:999px; background:#9DB861; animation:nv-pulse 2.4s ease-out infinite"></span>
             <span>Mercados</span>
+            <span aria-hidden="true" style="color:rgba(255,255,255,.24); letter-spacing:0">·</span>
+            <a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:rgba(218,229,193,.72); font-size:9px; font-weight:500; letter-spacing:.08em; text-decoration:none; text-transform:none" style-hover="color:#e8f0d5">Ticker tape by TradingView</a>
           </div>
-          <p style="color:rgba(255,255,255,.46); font-size:11px; letter-spacing:.04em; margin:0">Variación diaria · tiempo real, diferido o último cierre según mercado</p>
+          <p style="color:rgba(255,255,255,.46); font-size:10px; letter-spacing:.04em; margin:0">Variación diaria · tiempo real, diferido o último cierre según mercado</p>
         </div>
-        <div style="position:relative; overflow:hidden">
+        <div style="position:relative; height:30px; overflow:hidden">
           <div style="position:absolute; z-index:2; top:0; bottom:0; left:0; width:36px; background:linear-gradient(90deg, #0B2347, transparent); pointer-events:none"></div>
           <div style="position:absolute; z-index:2; top:0; bottom:0; right:0; width:36px; background:linear-gradient(270deg, #0B2347, transparent); pointer-events:none"></div>
           <div id="nuvia-live-market-ticker"><div style="display:flex; width:max-content; animation:nv-tape 46s linear infinite; animation-duration:{{ tickerDur }}; animation-play-state:{{ tickerPlay }}" style-hover="animation-play-state:paused">
@@ -197,7 +204,7 @@
               <div style="display:flex; align-items:baseline; gap:12px; padding:15px 24px; border-left:1px solid rgba(255,255,255,.12); white-space:nowrap"><span style="color:rgba(255,255,255,.58); font-size:11.5px; font-weight:500">USD / JPY</span><span style="color:#ffffff; font-size:14px; font-weight:600; font-variant-numeric:tabular-nums">151,42</span><span style="color:#72c99a; font-size:11.5px; font-weight:600; font-variant-numeric:tabular-nums">▲ +0,12%</span></div>
             </div>
           </div>
-          <div style="text-align:right; padding:2px 16px 7px; color:rgba(255,255,255,.38); font-size:10.5px; line-height:1.2"><a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:#b8ca8c; text-decoration:none" style-hover="color:#dae5c1">Ticker tape</a> by TradingView · datos simulados en esta maqueta</div></div>
+          </div>
         </div>
       </section>
 
