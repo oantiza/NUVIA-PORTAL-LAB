@@ -111,8 +111,9 @@ const coreIndex = await readFile(resolve(root, 'core/index.html'), 'utf8');
 if (!coreIndex.includes('../web2-core-bridge.js')) {
   throw new Error('El núcleo no incluye el enlace de regreso a Web 2');
 }
-if (!coreIndex.includes('PortfolioAnalyticsSuite-Web2.js')) {
-  throw new Error('El núcleo no activa la navegación Web 2 de la suite analítica');
+const suiteLoaderMatch = coreIndex.match(/PortfolioAnalyticsSuite-Web2-([a-f0-9]{8,})\.js/i);
+if (!suiteLoaderMatch) {
+  throw new Error('El núcleo no activa un cargador versionado de la navegación Web 2');
 }
 
 const assetFiles = await readdir(resolve(root, 'core/assets'));
@@ -121,7 +122,7 @@ for (const prefix of ['PortfolioAnalyticsSuite-', 'TechnicalAnalysisModule-', 'F
     throw new Error(`Falta el módulo analítico real: ${prefix}`);
   }
 }
-await access(resolve(root, 'core/assets/PortfolioAnalyticsSuite-Web2.js'));
+await access(resolve(root, 'core/assets', suiteLoaderMatch[0]));
 const courseBundles = await Promise.all(
   assetFiles
     .filter((filename) => filename.startsWith('FinancialCourseChapterOne-') && filename.endsWith('.js'))
