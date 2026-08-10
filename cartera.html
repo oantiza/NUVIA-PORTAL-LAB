@@ -108,7 +108,7 @@ class Component extends DCLogic {
     const frame = document.getElementById('nuvia-portfolio-suite');
     if (!frame) return;
     const suite = {
-      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=5&suiteTab=' + vista
+      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=' + vista
     };
     frame.setAttribute('src', suite.suiteSrc);
     SUITE_TABS.forEach((tab) => {
@@ -121,7 +121,21 @@ class Component extends DCLogic {
     };
     this._onMsg = (event) => {
       if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
-      if (event.data && event.data.source === 'nuvia-core' && event.data.type === 'resize') applyHeight(event.data.height);
+      if (!event.data || event.data.source !== 'nuvia-core') return;
+      if (event.data.type === 'resize') applyHeight(event.data.height);
+      if (event.data.type === 'suite-tab-change' && SUITE_TABS.includes(event.data.tab)) {
+        const tab = event.data.tab;
+        const url = new URL(window.location.href);
+        url.searchParams.set('vista', tab);
+        url.searchParams.delete('release');
+        url.searchParams.delete('verify');
+        window.history.replaceState(null, '', url);
+        document.title = 'Analítica de cartera · ' + titulos[tab] + ' | NUVIA';
+        SUITE_TABS.forEach((name) => {
+          const boton = document.getElementById('vista-' + name);
+          if (boton) boton.setAttribute('aria-current', name === tab ? 'page' : 'false');
+        });
+      }
     };
     window.addEventListener('message', this._onMsg);
     frame.addEventListener('load', () => {

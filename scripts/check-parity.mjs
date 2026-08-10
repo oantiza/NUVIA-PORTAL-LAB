@@ -57,7 +57,7 @@ if (/onclick=["']location\.href/i.test(web2Home)) {
   throw new Error('La portada contiene botones de navegación que el renderizador no conserva');
 }
 
-if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=5&suiteTab=' + vista")) {
+if (!/suiteSrc: 'core\/index\.html\?portfolioPreview=1&embedded=web2&web2Suite=\d+&suiteTab=' \+ vista/.test(portfolioPage)) {
   throw new Error('La página de cartera no integra la suite analítica real del núcleo');
 }
 for (const suiteView of ['portfolio', 'technical', 'fundamental']) {
@@ -123,6 +123,9 @@ for (const prefix of ['PortfolioAnalyticsSuite-', 'TechnicalAnalysisModule-', 'F
   }
 }
 await access(resolve(root, 'core/assets', suiteLoaderMatch[0]));
+if (!portfolioPage.includes('suite-tab-change') || !coreBridge.includes('suite-tab-change')) {
+  throw new Error('La suite analítica no sincroniza sus pestañas con la navegación exterior');
+}
 const courseBundles = await Promise.all(
   assetFiles
     .filter((filename) => filename.startsWith('FinancialCourseChapterOne-') && filename.endsWith('.js'))

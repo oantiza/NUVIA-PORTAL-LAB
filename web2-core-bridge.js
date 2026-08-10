@@ -3,6 +3,7 @@
   const params = new URLSearchParams(window.location.search);
   const embeddedInWeb2 = params.get('embedded') === 'web2';
   const requestedSuiteTab = params.get('suiteTab');
+  let requestedSuiteTabApplied = false;
 
   const activateEmbeddedMode = () => {
     document.documentElement.classList.add('nuvia-web2-embedded');
@@ -864,7 +865,27 @@
         const requestedIndex = { portfolio: 0, technical: 1, fundamental: 2 }[requestedSuiteTab];
         const tabButtons = [...tabs.querySelectorAll('[role="tab"]')];
         const requestedButton = Number.isInteger(requestedIndex) ? tabButtons[requestedIndex] : null;
-        if (requestedButton && requestedButton.getAttribute('aria-selected') !== 'true') requestedButton.click();
+        if (!requestedSuiteTabApplied && requestedButton) {
+          requestedSuiteTabApplied = true;
+          if (requestedButton.getAttribute('aria-selected') !== 'true') requestedButton.click();
+        }
+        if (!tabs.dataset.nuviaSuiteNavigationBound) {
+          tabs.dataset.nuviaSuiteNavigationBound = '';
+          tabs.addEventListener('click', (event) => {
+            const button = event.target.closest('[role="tab"]');
+            const tab = {
+              'analytics-tab-portfolio': 'portfolio',
+              'analytics-tab-technical': 'technical',
+              'analytics-tab-fundamental': 'fundamental',
+            }[button?.id];
+            if (!tab || window.parent === window) return;
+            window.parent.postMessage({
+              source: 'nuvia-core',
+              type: 'suite-tab-change',
+              tab,
+            }, window.location.origin);
+          });
+        }
         tabs.dataset.nuviaSuiteTabs = '';
         const hero = tabs.previousElementSibling;
         if (hero) {
