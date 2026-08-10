@@ -57,6 +57,9 @@ for (const link of expectedHomeLinks) {
 if (!web2Home.includes('<script src="./web2-integration.js"></script>')) {
   throw new Error('La portada no carga la integración de contenido diario y mercados');
 }
+if (!/<a href="mercados\.html"[^>]*>Mercados<\/a>/.test(web2Home)) {
+  throw new Error('El acceso principal de Mercados no abre la página de mercados');
+}
 if (!integration.includes('image.src = news.imageUrl')) {
   throw new Error('La integración diaria no actualiza la imagen editorial');
 }
