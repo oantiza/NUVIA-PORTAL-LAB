@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Analítica de cartera | NUVIA</title>
+<meta name="description" content="Analiza una cartera desde su distribución, tendencia técnica y calidad fundamental con la suite de NUVIA.">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/cartera.html">
+<title>Analítica de cartera | NUVIA Family Wealth</title>
 <script src="./support.js"></script>
+<link rel="stylesheet" href="nuvia-site-unified.css">
+<script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
 <x-dc>
@@ -104,7 +108,7 @@ class Component extends DCLogic {
     const requested = new URLSearchParams(window.location.search).get('vista');
     const vista = SUITE_TABS.indexOf(requested) >= 0 ? requested : 'portfolio';
     const titulos = { portfolio: 'Cartera', technical: 'Análisis técnico', fundamental: 'Análisis fundamental' };
-    document.title = 'Analítica de cartera · ' + titulos[vista] + ' | NUVIA';
+    document.title = 'Analítica de cartera | NUVIA Family Wealth';
     const frame = document.getElementById('nuvia-portfolio-suite');
     if (!frame) return;
     const suite = {
@@ -130,7 +134,7 @@ class Component extends DCLogic {
         url.searchParams.delete('release');
         url.searchParams.delete('verify');
         window.history.replaceState(null, '', url);
-        document.title = 'Analítica de cartera · ' + titulos[tab] + ' | NUVIA';
+        document.title = 'Analítica de cartera | NUVIA Family Wealth';
         SUITE_TABS.forEach((name) => {
           const boton = document.getElementById('vista-' + name);
           if (boton) boton.setAttribute('aria-current', name === tab ? 'page' : 'false');
