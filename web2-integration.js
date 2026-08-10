@@ -107,6 +107,7 @@
     const container = document.getElementById('nuvia-live-market-ticker');
     if (!container) return;
 
+    container.classList.add('tradingview-widget-container');
     container.innerHTML = '';
     const widget = document.createElement('div');
     widget.className = 'tradingview-widget-container__widget';

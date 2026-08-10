@@ -55,7 +55,7 @@ const expectedHomeLinks = [
 for (const link of expectedHomeLinks) {
   if (!web2Home.includes(link)) throw new Error(`Falta el acceso de portada: ${link}`);
 }
-if (!web2Home.includes('<script src="./web2-integration.js"></script>')) {
+if (!/<script src="\.\/web2-integration\.js(?:\?[^\"]+)?"><\/script>/.test(web2Home)) {
   throw new Error('La portada no carga la integración de contenido diario y mercados');
 }
 if (!/<a href="mercados\.html"[^>]*>Mercados<\/a>/.test(web2Home)) {
