@@ -21,6 +21,60 @@
     a:hover { color: var(--color-accent-200); }
     @keyframes nv-tape { to { transform: translateX(-50%); } }
     @keyframes nv-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); } 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+    .home-lecturas-banner-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(1.03) contrast(1.02) saturate(.97);
+    }
+    .home-lecturas-banner-copy {
+      position: absolute;
+      inset: 0 auto 0 5.85%;
+      display: flex;
+      width: 55%;
+      flex-direction: column;
+      justify-content: center;
+      color: #0b2948;
+      pointer-events: none;
+    }
+    .home-lecturas-banner-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 4.6vw, 58px);
+      font-weight: 400;
+      letter-spacing: -.025em;
+      line-height: .92;
+      white-space: nowrap;
+    }
+    .home-lecturas-banner-rule {
+      width: 30px;
+      height: 2px;
+      margin: 10px 0 7px;
+      background: #c2a15c;
+    }
+    .home-lecturas-banner-subtitle {
+      margin: 0 0 14px;
+      color: #323d45;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(12px, 1.18vw, 15px);
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+    .home-lecturas-banner-cta {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid #cdb171;
+      padding: 10px 16px;
+      color: #0b2948;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .13em;
+    }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
   </style>
 </helmet>
@@ -348,8 +402,14 @@
       <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Sección editorial</span>
       <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 10px">Un rincón NUVIA para leer con calma</h2>
       <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Conceptos breves, historias familiares y recomendaciones con criterio.</p>
-      <a href="lecturas.html" aria-label="Abrir Lecturas con Criterio" style="position:relative; display:block; overflow:hidden; width:100%; aspect-ratio:2879/546; border-radius:var(--radius-md); background:#ffffff; box-shadow:var(--shadow-sm); transition:transform .32s ease, box-shadow .32s ease" style-hover="box-shadow:var(--shadow-md); transform:translateY(-3px)">
-        <img src="src/assets/home/lecturas-con-criterio-banner.webp" alt="Lecturas con Criterio, historias sencillas de interés duradero" style="display:block; width:100%; height:100%; filter:brightness(1.03) contrast(1.02) saturate(.97); object-fit:contain; object-position:center">
+      <a href="lecturas.html" aria-label="Abrir Lecturas con Criterio: libros, artículos e ideas que comparten la mirada de NUVIA" style="position:relative; display:block; overflow:hidden; width:100%; aspect-ratio:2879/546; border-radius:var(--radius-md); background:#ffffff; box-shadow:var(--shadow-sm); transition:transform .32s ease, box-shadow .32s ease" style-hover="box-shadow:var(--shadow-md); transform:translateY(-3px)">
+        <img class="home-lecturas-banner-art" src="src/assets/home/lecturas-con-criterio-fondo-compacto.webp" alt="" aria-hidden="true">
+        <div class="home-lecturas-banner-copy">
+          <h3 class="home-lecturas-banner-title">Lecturas con Criterio</h3>
+          <span class="home-lecturas-banner-rule" aria-hidden="true"></span>
+          <p class="home-lecturas-banner-subtitle">Libros, artículos e ideas que comparten la mirada de NUVIA.</p>
+          <span class="home-lecturas-banner-cta">Explorar Lecturas <span aria-hidden="true">→</span></span>
+        </div>
       </a>
     </section>
 
