@@ -23,7 +23,7 @@
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
-    .nuvia-compact-ticker #nuvia-live-market-ticker { width:100%; height:46px; overflow:visible; transform:scaleY(.65); transform-origin:left top; }
+    .nuvia-compact-ticker #nuvia-live-market-ticker { width:100%; height:46px; overflow:visible; transform:scaleY(.78); transform-origin:left top; }
     @keyframes nv-tape { to { transform: translateX(-50%); } }
     @keyframes nv-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); } 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
     .home-lecturas-banner-art {
@@ -161,8 +161,8 @@
       <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
       <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
 
-      <section class="nuvia-compact-ticker" aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0 0 20px; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
-        <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:32px; padding:0 16px; border-bottom:1px solid rgba(255,255,255,.12)">
+      <section class="nuvia-compact-ticker" aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:36px; padding:0 18px; border-bottom:1px solid rgba(255,255,255,.12)">
           <div style="display:flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">
             <span aria-hidden="true" style="display:inline-block; width:7px; height:7px; border-radius:999px; background:#9DB861; animation:nv-pulse 2.4s ease-out infinite"></span>
             <span>Mercados</span>
@@ -171,7 +171,7 @@
           </div>
           <p style="color:rgba(255,255,255,.46); font-size:10px; letter-spacing:.04em; margin:0">Variación diaria · tiempo real, diferido o último cierre según mercado</p>
         </div>
-        <div style="position:relative; height:30px; overflow:hidden">
+        <div style="position:relative; height:36px; overflow:hidden">
           <div style="position:absolute; z-index:2; top:0; bottom:0; left:0; width:36px; background:linear-gradient(90deg, #0B2347, transparent); pointer-events:none"></div>
           <div style="position:absolute; z-index:2; top:0; bottom:0; right:0; width:36px; background:linear-gradient(270deg, #0B2347, transparent); pointer-events:none"></div>
           <div id="nuvia-live-market-ticker"><div style="display:flex; width:max-content; animation:nv-tape 46s linear infinite; animation-duration:{{ tickerDur }}; animation-play-state:{{ tickerPlay }}" style-hover="animation-play-state:paused">
@@ -206,7 +206,7 @@
 
     </section>
 
-    <section id="noticia" data-screen-label="Noticia del día" style="max-width:1240px; margin:0 auto; padding:72px 48px 0; scroll-margin-top:80px">
+    <section id="noticia" data-screen-label="Noticia del día" style="max-width:1240px; margin:0 auto; padding:36px 48px 0; scroll-margin-top:80px">
       <article style="position:relative; overflow:hidden; border-radius:var(--radius-md); box-shadow:var(--shadow-md); background:#dfe5e8">
         <div style="position:relative">
           <div style="position:absolute; inset:0">
