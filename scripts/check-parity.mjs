@@ -60,9 +60,13 @@ for (const cover of [
   'un-paso-por-delante-wall-street.webp',
   'pensar-rapido-pensar-despacio.webp',
 ]) {
-  if (!readingsPage.includes(`src/assets/lecturas/${cover}`)) {
-    throw new Error(`Falta el libro recomendado en Lecturas con Criterio: ${cover}`);
+  const occurrences = readingsPage.split(`src/assets/lecturas/${cover}`).length - 1;
+  if (occurrences !== 1) {
+    throw new Error(`El libro debe aparecer exactamente una vez en Lecturas con Criterio: ${cover}`);
   }
+}
+if ((readingsPage.match(/class="lecturas-feature-card"/g) || []).length !== 4) {
+  throw new Error('Lecturas con Criterio debe mostrar un libro en cada uno de sus cuatro bloques');
 }
 if (/onclick=["']location\.href/i.test(web2Home)) {
   throw new Error('La portada contiene botones de navegación que el renderizador no conserva');

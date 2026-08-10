@@ -16,10 +16,6 @@
   <style>
     html { scroll-behavior: smooth; }
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    main { display:flex; flex-direction:column; }
-    #lecturas { order:1; }
-    #biblioteca-nuvia { order:2; }
-    #seleccion-lecturas { order:3; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
     .lecturas-hero-banner {
@@ -63,63 +59,48 @@
       outline: 3px solid var(--color-accent);
       outline-offset: -3px;
     }
-    .lecturas-books {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 44px 40px 40px;
-    }
-    .lecturas-books-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 48px;
-      margin-bottom: 30px;
-      padding-top: 8px;
-      border-top: 1px solid var(--color-divider);
-    }
-    .lecturas-books-grid {
+    .lecturas-feature-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
     }
-    .lecturas-book-card {
-      display: flex;
+    .lecturas-feature-card {
+      display: grid;
       min-width: 0;
-      flex-direction: column;
+      grid-template-columns: 168px minmax(0, 1fr);
+      gap: 24px;
       overflow: hidden;
       border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
       border-radius: var(--radius-md);
       background: var(--color-surface);
+      padding: 24px;
       box-shadow: 0 14px 38px rgba(11,35,71,.07);
       transition: transform .28s ease, box-shadow .28s ease;
     }
-    .lecturas-book-card:hover {
+    .lecturas-feature-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 20px 48px rgba(11,35,71,.12);
     }
-    .lecturas-book-cover {
+    .lecturas-feature-cover {
       display: grid;
-      height: 350px;
+      height: 286px;
       place-items: center;
-      padding: 24px 18px;
+      overflow: hidden;
+      border-radius: calc(var(--radius-md) - 6px);
+      padding: 14px 10px;
       background: linear-gradient(145deg, #f3eee2 0%, #fbf8f0 58%, #eaf0e2 100%);
     }
-    .lecturas-book-cover img {
+    .lecturas-feature-cover img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 14px 14px rgba(11,35,71,.16));
+      filter: drop-shadow(0 10px 12px rgba(11,35,71,.18));
     }
-    .lecturas-book-copy {
+    .lecturas-feature-copy {
       display: flex;
-      flex: 1;
+      min-width: 0;
       flex-direction: column;
-      padding: 23px 24px 25px;
-    }
-    @media (max-width: 1180px) {
-      .lecturas-books-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .lecturas-book-cover { height: 390px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
   </style>
@@ -148,116 +129,81 @@
     <!-- ============ CABECERA EDITORIAL ============ -->
     <section id="lecturas" data-screen-label="Cabecera Lecturas">
       <h1 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap">Lecturas con Criterio</h1>
-      <a class="lecturas-hero-banner" href="#biblioteca-nuvia" aria-label="Explorar los libros de Lecturas con Criterio">
+      <a class="lecturas-hero-banner" href="#seleccion-lecturas" aria-label="Explorar los libros de Lecturas con Criterio">
         <img src="src/assets/home/lecturas-con-criterio-banner.webp" alt="Lecturas con Criterio. Historias sencillas de interés duradero.">
       </a>
     </section>
 
     <!-- ============ BLOQUES EDITORIALES ============ -->
     <section id="seleccion-lecturas" data-screen-label="Bloques editoriales" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px; scroll-margin-top:80px">
-      <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px">
-        <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:0 12px 36px rgba(11,35,71,.05); padding:30px 32px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 18px 44px rgba(11,35,71,.09)">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:26px">
-            <span style="color:var(--color-accent); font-size:34px; line-height:1">01</span>
-            <span style="flex:1; height:1px; background:#cbd5e1"></span>
-          </div>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Inflación y carrito de la compra</p>
-          <h2 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.15; margin:0">El Bocado Semanal</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.65; margin:16px 0 0">Una lectura breve sobre cómo la inflación se nota en el carrito de la compra, con una tabla sencilla de ayer frente a hoy para entender qué cambia en el presupuesto familiar.</p>
-          <span style="display:inline-flex; align-items:center; margin-top:22px; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 13px">Próximamente</span>
-        </article>
-        <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:0 12px 36px rgba(11,35,71,.05); padding:30px 32px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 18px 44px rgba(11,35,71,.09)">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:26px">
-            <span style="color:var(--color-accent); font-size:34px; line-height:1">02</span>
-            <span style="flex:1; height:1px; background:#cbd5e1"></span>
-          </div>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Manuel, Lucas y la familia García</p>
-          <h2 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.15; margin:0">Historias de Nuestra Comunidad</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.65; margin:16px 0 0">La historia de Manuel, Lucas y la familia García como punto de partida para hablar de decisiones patrimoniales, conversaciones entre generaciones y momentos familiares de cambio.</p>
-          <span style="display:inline-flex; align-items:center; margin-top:22px; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 13px">Próximamente</span>
-        </article>
-        <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:0 12px 36px rgba(11,35,71,.05); padding:30px 32px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 18px 44px rgba(11,35,71,.09)">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:26px">
-            <span style="color:var(--color-accent); font-size:34px; line-height:1">03</span>
-            <span style="flex:1; height:1px; background:#cbd5e1"></span>
-          </div>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Diversificación y rebalanceo</p>
-          <h2 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.15; margin:0">El Amigo Sabio</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.65; margin:16px 0 0">Una explicación cálida de diversificación y rebalanceo usando la imagen de un jardín mediterráneo, acompañada de una guía rápida para quedarse con las ideas esenciales sin jerga.</p>
-          <span style="display:inline-flex; align-items:center; margin-top:22px; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 13px">Próximamente</span>
-        </article>
-        <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:0 12px 36px rgba(11,35,71,.05); padding:30px 32px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 18px 44px rgba(11,35,71,.09)">
-          <div style="display:flex; align-items:center; gap:16px; margin-bottom:26px">
-            <span style="color:var(--color-accent); font-size:34px; line-height:1">04</span>
-            <span style="flex:1; height:1px; background:#cbd5e1"></span>
-          </div>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">La psicología del dinero</p>
-          <h2 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.15; margin:0">La Recomendación del Agente</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.65; margin:16px 0 0">Una recomendación breve de La psicología del dinero, de Morgan Housel, pensada para extraer aprendizajes útiles sobre comportamiento, paciencia y decisiones financieras cotidianas.</p>
-          <span style="display:inline-flex; align-items:center; margin-top:22px; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 13px">Próximamente</span>
-        </article>
-      </div>
-    </section>
-
-    <section id="biblioteca-nuvia" class="lecturas-books" data-screen-label="Biblioteca NUVIA" aria-labelledby="biblioteca-nuvia-title">
-      <div class="lecturas-books-head">
-        <div>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin:26px 0 10px">Biblioteca NUVIA</p>
-          <h2 id="biblioteca-nuvia-title" style="color:var(--color-text); font-size:40px; font-weight:500; line-height:1.08; margin:0">Libros para pensar con criterio</h2>
-        </div>
-        <p style="max-width:420px; color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:15px; line-height:1.65; margin:0">Una selección esencial sobre inversión, comportamiento y decisiones financieras para leer sin prisa y volver a consultar.</p>
-      </div>
-
-      <div class="lecturas-books-grid">
-        <article class="lecturas-book-card">
-          <div class="lecturas-book-cover">
+      <div class="lecturas-feature-grid">
+        <article class="lecturas-feature-card">
+          <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/la-psicologia-del-dinero.jpg" alt="Portada de La psicología del dinero, de Morgan Housel">
           </div>
-          <div class="lecturas-book-copy">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Comportamiento financiero</p>
-            <h3 style="color:var(--color-text); font-size:25px; font-weight:500; line-height:1.14; margin:0">La psicología del dinero</h3>
-            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:9px 0 0">Morgan Housel</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 65%, transparent); font-size:14px; line-height:1.62; margin:17px 0 0">Cómo la paciencia, las experiencias personales y el comportamiento influyen en nuestras decisiones sobre el dinero.</p>
+          <div class="lecturas-feature-copy">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+              <span style="color:var(--color-accent); font-size:30px; line-height:1">01</span>
+              <span style="flex:1; height:1px; background:#cbd5e1"></span>
+            </div>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 9px">Comportamiento financiero</p>
+            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.13; margin:0">La psicología del dinero</h2>
+            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:8px 0 0">Morgan Housel</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:15px 0 18px">Cómo la paciencia, las experiencias personales y el comportamiento influyen en nuestras decisiones sobre el dinero.</p>
+            <span style="display:inline-flex; align-items:center; align-self:flex-start; margin-top:auto; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px">Biblioteca NUVIA</span>
           </div>
         </article>
-
-        <article class="lecturas-book-card">
-          <div class="lecturas-book-cover">
+        <article class="lecturas-feature-card">
+          <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/el-inversor-inteligente.webp" alt="Portada de El inversor inteligente, de Benjamin Graham">
           </div>
-          <div class="lecturas-book-copy">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Inversión y disciplina</p>
-            <h3 style="color:var(--color-text); font-size:25px; font-weight:500; line-height:1.14; margin:0">El inversor inteligente</h3>
-            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:9px 0 0">Benjamin Graham</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 65%, transparent); font-size:14px; line-height:1.62; margin:17px 0 0">Un clásico para comprender el valor, el margen de seguridad y la importancia de mantener una estrategia disciplinada.</p>
+          <div class="lecturas-feature-copy">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+              <span style="color:var(--color-accent); font-size:30px; line-height:1">02</span>
+              <span style="flex:1; height:1px; background:#cbd5e1"></span>
+            </div>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 9px">Inversión y disciplina</p>
+            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.13; margin:0">El inversor inteligente</h2>
+            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:8px 0 0">Benjamin Graham</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:15px 0 18px">Un clásico para comprender el valor, el margen de seguridad y la importancia de mantener una estrategia disciplinada.</p>
+            <span style="display:inline-flex; align-items:center; align-self:flex-start; margin-top:auto; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px">Biblioteca NUVIA</span>
           </div>
         </article>
-
-        <article class="lecturas-book-card">
-          <div class="lecturas-book-cover">
+        <article class="lecturas-feature-card">
+          <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/un-paso-por-delante-wall-street.webp" alt="Portada de Un paso por delante de Wall Street, de Peter Lynch">
           </div>
-          <div class="lecturas-book-copy">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Empresas e inversión</p>
-            <h3 style="color:var(--color-text); font-size:25px; font-weight:500; line-height:1.14; margin:0">Un paso por delante de Wall Street</h3>
-            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:9px 0 0">Peter Lynch</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 65%, transparent); font-size:14px; line-height:1.62; margin:17px 0 0">Una mirada práctica para observar negocios cotidianos, investigar lo que entendemos y distinguir una historia atractiva de una buena inversión.</p>
+          <div class="lecturas-feature-copy">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+              <span style="color:var(--color-accent); font-size:30px; line-height:1">03</span>
+              <span style="flex:1; height:1px; background:#cbd5e1"></span>
+            </div>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 9px">Empresas e inversión</p>
+            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.13; margin:0">Un paso por delante de Wall Street</h2>
+            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:8px 0 0">Peter Lynch</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:15px 0 18px">Una mirada práctica para observar negocios cotidianos, investigar lo que entendemos y distinguir una historia atractiva de una buena inversión.</p>
+            <span style="display:inline-flex; align-items:center; align-self:flex-start; margin-top:auto; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px">Biblioteca NUVIA</span>
           </div>
         </article>
-
-        <article class="lecturas-book-card">
-          <div class="lecturas-book-cover">
+        <article class="lecturas-feature-card">
+          <div class="lecturas-feature-cover">
             <img src="src/assets/lecturas/pensar-rapido-pensar-despacio.webp" alt="Portada de Pensar rápido, pensar despacio, de Daniel Kahneman">
           </div>
-          <div class="lecturas-book-copy">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Decisiones y sesgos</p>
-            <h3 style="color:var(--color-text); font-size:25px; font-weight:500; line-height:1.14; margin:0">Pensar rápido, pensar despacio</h3>
-            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:9px 0 0">Daniel Kahneman</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 65%, transparent); font-size:14px; line-height:1.62; margin:17px 0 0">Claves para reconocer sesgos, entender cuándo domina la intuición y tomar decisiones más conscientes ante la incertidumbre.</p>
+          <div class="lecturas-feature-copy">
+            <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px">
+              <span style="color:var(--color-accent); font-size:30px; line-height:1">04</span>
+              <span style="flex:1; height:1px; background:#cbd5e1"></span>
+            </div>
+            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 9px">Decisiones y sesgos</p>
+            <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.13; margin:0">Pensar rápido, pensar despacio</h2>
+            <p style="color:var(--color-accent-600); font-size:13.5px; font-weight:500; margin:8px 0 0">Daniel Kahneman</p>
+            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:15px 0 18px">Claves para reconocer sesgos, entender cuándo domina la intuición y tomar decisiones más conscientes ante la incertidumbre.</p>
+            <span style="display:inline-flex; align-items:center; align-self:flex-start; margin-top:auto; border:1px solid #cbd5e1; border-radius:999px; background:#EEF2E3; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px">Biblioteca NUVIA</span>
           </div>
         </article>
       </div>
     </section>
+
   </main>
 
   <!-- ============ FOOTER ============ -->
@@ -286,7 +232,7 @@
         <div>
           <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Información</h4>
           <div style="display:flex; flex-direction:column; gap:11px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.55">
-            <span>Sección editorial en preparación.</span>
+            <span>Selección editorial de NUVIA.</span>
             <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); padding-top:4px">Contenido educativo; no constituye asesoramiento personalizado.</span>
           </div>
         </div>
