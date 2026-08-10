@@ -16,6 +16,10 @@
   <style>
     html { scroll-behavior: smooth; }
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
+    main { display:flex; flex-direction:column; }
+    #lecturas { order:1; }
+    #biblioteca-nuvia { order:2; }
+    #seleccion-lecturas { order:3; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
     .lecturas-hero-banner {
@@ -62,7 +66,7 @@
     .lecturas-books {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 0 40px 96px;
+      padding: 44px 40px 40px;
     }
     .lecturas-books-head {
       display: flex;
@@ -144,7 +148,7 @@
     <!-- ============ CABECERA EDITORIAL ============ -->
     <section id="lecturas" data-screen-label="Cabecera Lecturas">
       <h1 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap">Lecturas con Criterio</h1>
-      <a class="lecturas-hero-banner" href="#seleccion-lecturas" aria-label="Explorar Lecturas con Criterio">
+      <a class="lecturas-hero-banner" href="#biblioteca-nuvia" aria-label="Explorar los libros de Lecturas con Criterio">
         <img src="src/assets/home/lecturas-con-criterio-banner.webp" alt="Lecturas con Criterio. Historias sencillas de interés duradero.">
       </a>
     </section>
