@@ -54,6 +54,12 @@ const expectedHomeLinks = [
 for (const link of expectedHomeLinks) {
   if (!web2Home.includes(link)) throw new Error(`Falta el acceso de portada: ${link}`);
 }
+if (!web2Home.includes('<script src="./web2-integration.js"></script>')) {
+  throw new Error('La portada no carga la integración de contenido diario y mercados');
+}
+if (!integration.includes('image.src = news.imageUrl')) {
+  throw new Error('La integración diaria no actualiza la imagen editorial');
+}
 for (const cover of [
   'la-psicologia-del-dinero.jpg',
   'el-inversor-inteligente.webp',
@@ -114,6 +120,11 @@ for (const marker of cloudDesignMarkers) {
 const daily = JSON.parse(await readFile(resolve(root, 'data/daily-content.json'), 'utf8'));
 if (!daily.dailyEconomicNews?.title || !Array.isArray(daily.dailyMacroIndicators) || daily.dailyMacroIndicators.length < 5) {
   throw new Error('El contenido diario sincronizado está incompleto');
+}
+for (const indicator of daily.dailyMacroIndicators) {
+  if (!web2Home.includes(`data-macro-id="${indicator.id}"`)) {
+    throw new Error(`La portada no incluye una tarjeta para el indicador: ${indicator.id}`);
+  }
 }
 
 const manifest = JSON.parse(await readFile(resolve(root, 'core/reports/reports_manifest.json'), 'utf8'));

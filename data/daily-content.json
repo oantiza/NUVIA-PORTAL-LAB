@@ -33,16 +33,16 @@
       "referenceDate": "30 jul 2026"
     },
     {
-      "id": "inflation-euro-area",
-      "label": "IPC zona euro",
-      "value": "2,9%",
-      "period": "Julio · interanual",
-      "change": "Sube 0,1 pp",
+      "id": "euribor",
+      "label": "Euríbor a 1 año",
+      "value": "2,86%",
+      "period": "julio 2026 · media mensual",
+      "change": "Sube 0,06 pp",
       "direction": "up",
-      "context": "La energía mantiene la inflación por encima del objetivo del BCE.",
-      "sourceName": "Eurostat",
-      "sourceUrl": "https://ec.europa.eu/eurostat/en/web/products-euro-indicators/w/2-31072026-ap",
-      "referenceDate": "31 jul 2026"
+      "context": "Última media mensual disponible del Euríbor a 12 meses, referencia habitual de las hipotecas variables.",
+      "sourceName": "BCE · Refinitiv",
+      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
+      "referenceDate": "dato julio 2026"
     },
     {
       "id": "ecb-rate",

@@ -61,6 +61,7 @@
         if (sourceLink && news.sourceUrl) sourceLink.href = news.sourceUrl;
 
         const image = document.querySelector('[data-daily-news="image"]');
+        if (image && news.imageUrl) image.src = news.imageUrl;
         if (image && news.imageAlt) image.alt = news.imageAlt;
 
         document.querySelectorAll('[data-daily-impact]').forEach((element, index) => {
