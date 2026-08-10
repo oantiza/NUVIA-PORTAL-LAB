@@ -86,6 +86,22 @@
           </div>
 
           <div style="display:flex; flex-direction:column; gap:24px; padding:0 24px 24px">
+            <section style="display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:30px; align-items:center; border-radius:var(--radius-md); background:linear-gradient(145deg,#0B2347 0%,#071A38 100%); color:#ffffff; overflow:hidden; padding:30px 32px">
+              <div>
+                <p style="color:#dbe7c2; font-size:10.5px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">Vídeo introductorio · Dinero con criterio</p>
+                <h3 style="color:#ffffff; font-size:29px; font-weight:500; line-height:1.1; margin:0 0 14px">Entender antes de invertir</h3>
+                <p style="color:rgba(255,255,255,.76); font-size:14px; line-height:1.7; margin:0">Invertir no consiste en perseguir el activo que más sube, sino en comprender qué papel cumple cada inversión, qué riesgo puede asumir una familia y cuánto tiempo podrá mantener su estrategia.</p>
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:20px">
+                  <span style="border:1px solid rgba(255,255,255,.16); border-radius:999px; background:rgba(255,255,255,.07); color:rgba(255,255,255,.86); font-size:11px; padding:7px 11px">Rentabilidad y riesgo</span>
+                  <span style="border:1px solid rgba(255,255,255,.16); border-radius:999px; background:rgba(255,255,255,.07); color:rgba(255,255,255,.86); font-size:11px; padding:7px 11px">Inflación</span>
+                  <span style="border:1px solid rgba(255,255,255,.16); border-radius:999px; background:rgba(255,255,255,.07); color:rgba(255,255,255,.86); font-size:11px; padding:7px 11px">Largo plazo</span>
+                </div>
+              </div>
+              <div style="position:relative; aspect-ratio:16/9; border:1px solid rgba(255,255,255,.14); border-radius:var(--radius-md); background:#06172F; box-shadow:0 18px 45px rgba(0,0,0,.28); overflow:hidden">
+                <iframe src="https://www.youtube-nocookie.com/embed/iqAv3WXCthY?rel=0" title="Vídeo: fundamentos de inversión y dinero con criterio" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+              </div>
+            </section>
+
             <!-- 01 -->
             <section style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:28px 32px">
               <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; border-bottom:1px solid var(--color-divider); margin-bottom:20px; padding-bottom:14px">
@@ -228,25 +244,38 @@
       </section>
     </sc-if>
 
-    <!-- ============ CALCULADORA ============ -->
+    <!-- ============ INTERÉS COMPUESTO Y SIMULADOR ============ -->
     <sc-if value="{{ esCalculadora }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Simulador de inversión" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:32px 36px; margin-bottom:20px">
-          <h2 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.1; margin:0 0 10px">Proyección de patrimonio</h2>
-          <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 24px">Simula el crecimiento de tus inversiones con aportaciones periódicas, interés compuesto, inflación y fiscalidad estimada.</p>
-          <div style="display:grid; grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr); gap:28px; border-top:1px solid var(--color-divider); padding-top:24px">
+      <section data-screen-label="El poder del interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:20px">
+          <div style="display:grid; grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr); gap:34px; align-items:center; padding:38px 40px 30px">
             <div>
-              <h3 style="color:var(--color-text); font-size:23px; font-weight:500; margin:0 0 14px">El poder del interés compuesto</h3>
-              <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 12px">El interés compuesto significa que tu dinero no solo genera rentabilidad sobre lo que invertiste al principio, sino también sobre las ganancias que se van acumulando con el tiempo.</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.7; margin:0 0 16px">Si inviertes 10.000 € y obtienes rentabilidad, el primer crecimiento se calcula sobre esos 10.000 €. Pero más adelante, si tu inversión ya vale 12.000 €, la rentabilidad futura se calcula sobre una base mayor. El dinero acumulado también empieza a trabajar.</p>
-              <p style="border-left:4px solid #7C9A44; border-radius:0 10px 10px 0; background:var(--color-accent-900); color:var(--color-text); font-size:14px; font-weight:500; line-height:1.6; margin:0; padding:14px 18px">El interés compuesto no depende solo de cuánto inviertes, sino de cuánto tiempo dejas que el dinero trabaje.</p>
+              <p style="color:#7C9A44; font-size:10.5px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">Concepto esencial · Inversión a largo plazo</p>
+              <h2 style="color:var(--color-text); font-size:40px; font-weight:500; line-height:1.04; letter-spacing:-.015em; margin:0 0 18px">El poder del interés compuesto</h2>
+              <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:14.5px; line-height:1.72; margin:0 0 12px">El interés compuesto significa que tu dinero genera rentabilidad no solo sobre el capital que aportaste, sino también sobre las ganancias que se van acumulando. Cuando esas ganancias permanecen invertidas, se incorporan a la base que puede producir la siguiente rentabilidad: el crecimiento empieza a generar nuevo crecimiento.</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:14.5px; line-height:1.72; margin:0 0 16px">Por ejemplo, 10.000 € invertidos durante 30 años a una rentabilidad anual constante del 6 % crecerían hasta unos 57.400 €, antes de costes e impuestos y sin añadir nuevas aportaciones. No es una promesa de resultado: muestra por qué reinvertir, mantener la disciplina y disponer de tiempo puede cambiar la escala del patrimonio.</p>
+              <p style="border-left:4px solid #7C9A44; border-radius:0 12px 12px 0; background:#F2F4E6; color:#0B2347; font-size:14px; font-weight:600; line-height:1.65; margin:0; padding:15px 18px">La idea clave no es buscar una rentabilidad extraordinaria cada año, sino dar tiempo a una estrategia razonable para que las ganancias acumuladas también puedan trabajar.</p>
             </div>
-            <div style="display:flex; flex-direction:column; gap:12px">
-              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Capital inicial</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es el dinero con el que empiezas.</p></div>
-              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Aportaciones periódicas</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es lo que añades de forma recurrente para hacer crecer la inversión.</p></div>
-              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:16px 18px"><h4 style="color:var(--color-text); font-size:19px; font-weight:500; margin:0 0 6px">Tiempo</h4><p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.55; margin:0">Es el factor que permite que las ganancias acumuladas generen nuevas ganancias.</p></div>
+            <div>
+              <div style="position:relative; aspect-ratio:16/9; border-radius:var(--radius-md); background:#06172F; box-shadow:0 18px 44px rgba(11,35,71,.22); overflow:hidden">
+                <iframe src="https://www.youtube-nocookie.com/embed/N2MQm0Hvji4?rel=0" title="Vídeo: el poder del interés compuesto" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
+              </div>
+              <p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:11.5px; line-height:1.55; margin:10px 2px 0">En este vídeo se explica por qué el tiempo y la reinversión son dos de los factores más importantes para construir patrimonio.</p>
             </div>
           </div>
+          <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; border-top:1px solid var(--color-divider); padding:22px 40px 34px">
+            <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:#F8F8F3; padding:20px 21px"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#0B2347; color:#ffffff; font-size:11px; font-weight:600">01</span><h3 style="color:var(--color-text); font-size:21px; font-weight:500; margin:14px 0 7px">Capital inicial</h3><p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.62; margin:0">Es la base con la que empiezas. Ayuda, pero no determina por sí sola el resultado: una cantidad modesta puede crecer si dispone de plazo y constancia.</p></article>
+            <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:#F8F8F3; padding:20px 21px"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#7C9A44; color:#ffffff; font-size:11px; font-weight:600">02</span><h3 style="color:var(--color-text); font-size:21px; font-weight:500; margin:14px 0 7px">Aportaciones periódicas</h3><p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.62; margin:0">Añadir dinero de forma recurrente aumenta la base invertida y convierte el ahorro en un hábito. La regularidad suele ser más controlable que intentar acertar el mejor momento.</p></article>
+            <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:#F8F8F3; padding:20px 21px"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#B69152; color:#ffffff; font-size:11px; font-weight:600">03</span><h3 style="color:var(--color-text); font-size:21px; font-weight:500; margin:14px 0 7px">Tiempo y reinversión</h3><p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.62; margin:0">Son el verdadero multiplicador. Cuantos más ciclos de reinversión se completan, mayor puede ser la diferencia entre lo aportado y el patrimonio acumulado.</p></article>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:end; justify-content:space-between; gap:28px; margin:30px 0 18px; padding:0 4px">
+          <div>
+            <p style="color:#7C9A44; font-size:10.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 8px">Simulador interactivo</p>
+            <h3 style="color:var(--color-text); font-size:29px; font-weight:500; line-height:1.1; margin:0">Comprueba cómo cambia el resultado</h3>
+          </div>
+          <p style="max-width:38em; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; line-height:1.65; margin:0">Modifica capital, aportaciones, plazo y rentabilidad para distinguir cuánto procede de tu ahorro y cuánto del efecto acumulado. Añade inflación y fiscalidad para obtener una lectura más realista.</p>
         </div>
 
         <div style="display:grid; grid-template-columns:minmax(0,.36fr) minmax(0,.64fr); gap:20px; align-items:start">
@@ -363,7 +392,7 @@
           <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Academy</h4>
           <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
             <button type="button" onClick="{{ irFundamentos }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Fundamentos de inversión</button>
-            <button type="button" onClick="{{ irCalculadora }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Simulador de inversión</button>
+            <button type="button" onClick="{{ irCalculadora }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">El poder del interés compuesto</button>
             <button type="button" onClick="{{ irGlosario }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Glosario financiero</button>
             <a href="curso.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Curso · Dinero con criterio</a>
           </div>
@@ -482,7 +511,7 @@ class Component extends DCLogic {
     const tab = this.state.tab;
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
     const pill = (on) => base + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
-    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['calculadora', 'Simulador de inversión', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
+    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['calculadora', 'El poder del interés compuesto', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
     const c = this.c();
     const pr = this.proyectar(c);
     const maxY = Math.max(1, ...pr.filas.map(f => f.bruto));
