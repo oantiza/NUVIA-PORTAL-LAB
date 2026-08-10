@@ -60,6 +60,9 @@ if (!web2Home.includes('<script src="./web2-integration.js"></script>')) {
 if (!/<a href="mercados\.html"[^>]*>Mercados<\/a>/.test(web2Home)) {
   throw new Error('El acceso principal de Mercados no abre la página de mercados');
 }
+if (/<a href="#noticia"[^>]*>Noticia del día<\/a>/.test(web2Home)) {
+  throw new Error('La navegación principal todavía muestra el acceso Noticia del día');
+}
 if (!integration.includes('image.src = news.imageUrl')) {
   throw new Error('La integración diaria no actualiza la imagen editorial');
 }

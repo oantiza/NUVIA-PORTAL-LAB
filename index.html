@@ -35,7 +35,6 @@
       <nav aria-label="Navegación principal" style="display:flex; align-items:center; gap:30px">
         <a href="#inicio" aria-current="page" style="white-space:nowrap; font-size:14px; text-decoration:none; color:var(--color-accent)">Inicio</a>
         <a href="mercados.html" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
-        <a href="#noticia" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease" style-hover="color:var(--color-accent)">Noticia del día</a>
         <div style="position:relative" onMouseEnter="{{ abrirTemas }}" onMouseLeave="{{ cerrarTemas }}">
           <a href="#temas-clave" aria-haspopup="true" style="white-space:nowrap; font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); transition:color .2s ease; display:inline-flex; align-items:center; gap:6px" style-hover="color:var(--color-accent)">Temas clave <span style="font-size:9px; color:var(--color-neutral-500)">▾</span></a>
           <sc-if value="{{ temasOpen }}" hint-placeholder-val="{{ false }}">
