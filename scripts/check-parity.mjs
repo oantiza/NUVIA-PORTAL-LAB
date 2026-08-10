@@ -14,6 +14,7 @@ const required = [
 await Promise.all(required.map((entry) => access(resolve(root, entry))));
 const integration = await readFile(resolve(root, 'web2-integration.js'), 'utf8');
 const web2Home = await readFile(resolve(root, 'index.html'), 'utf8');
+const marketsPage = await readFile(resolve(root, 'mercados.html'), 'utf8');
 const portfolioPage = await readFile(resolve(root, 'cartera.html'), 'utf8');
 const topicsPage = await readFile(resolve(root, 'temas.html'), 'utf8');
 const taxPage = await readFile(resolve(root, 'fiscalidad.html'), 'utf8');
@@ -128,8 +129,8 @@ if (!daily.dailyEconomicNews?.title || !Array.isArray(daily.dailyMacroIndicators
   throw new Error('El contenido diario sincronizado está incompleto');
 }
 for (const indicator of daily.dailyMacroIndicators) {
-  if (!web2Home.includes(`data-macro-id="${indicator.id}"`)) {
-    throw new Error(`La portada no incluye una tarjeta para el indicador: ${indicator.id}`);
+  if (!marketsPage.includes(`data-macro-id="${indicator.id}"`)) {
+    throw new Error(`Mercados no incluye una tarjeta para el indicador: ${indicator.id}`);
   }
 }
 

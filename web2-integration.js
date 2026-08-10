@@ -3,8 +3,8 @@
   // NUVIA Web 2 — integración v2 (rediseño canónico).
   // Cambios vs v1: SIN redirecciones a core/ — las 12 páginas rediseñadas son las que se ven.
   // core/ sigue publicado y accesible directamente en ./core/index.html.
-  // En la portada: hidrata noticia del día + indicadores macro (data-*) y monta el ticker
-  // en vivo de TradingView DENTRO del panel navy del rediseño (#nuvia-live-market-ticker),
+  // En la portada hidrata la noticia del día y monta el ticker; en Mercados hidrata
+  // los indicadores macroeconómicos (data-*) con la misma fuente de datos diaria,
   // manteniendo su cabecera, bordes y fundidos laterales. Sin red, queda el contenido estático.
 
   const page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -30,7 +30,7 @@
   };
   window.NUVIA_CORE_LINKS = CORE_DEEP_LINKS;
 
-  if (page !== 'index.html' && page !== '') return;
+  if (page !== 'index.html' && page !== '' && page !== 'mercados.html') return;
 
   const DIRECTION = {
     up: { symbol: '↗', color: '#e4bd67' },
