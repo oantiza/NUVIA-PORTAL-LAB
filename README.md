@@ -1,18 +1,17 @@
 # NUVIA Web 2
 
-Proyecto autónomo de la segunda web de NUVIA. Su código de trabajo está exclusivamente en esta carpeta y se publica en Firebase Hosting. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
+Proyecto autónomo de la segunda web de NUVIA. Su código de trabajo está exclusivamente en esta carpeta y se publica oficialmente en GitHub Pages. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
 
 ## Entornos
 
 - **Local:** desarrollo y revisión en `http://127.0.0.1:4173`.
-- **Vista previa:** canal temporal de Firebase para revisar cambios sin afectar a los usuarios.
-- **Producción:** `https://nuvia-family-wealth.web.app/`.
+- **Producción:** `https://oantiza.github.io/NUVIA-WEB-/`.
 
-Git se mantiene como historial local. GitHub no forma parte del proceso de compilación ni de publicación.
+El repositorio oficial es `https://github.com/oantiza/NUVIA-WEB-.git`. Cada actualización de `main` ejecuta la validación, genera `dist/` y publica esa compilación en GitHub Pages.
 
 ## Trabajo local
 
-Requisitos: Node.js 20 o posterior y Firebase CLI con acceso al proyecto `nuvia-family-wealth`.
+Requisito: Node.js 20 o posterior.
 
 ```powershell
 npm run serve
@@ -29,21 +28,15 @@ npm run build
 
 La validación comprueba las rutas funcionales, informes, materiales de Academy, contenido diario, indicadores macroeconómicos y referencias locales de todas las páginas.
 
-## Publicación segura
+## Publicación
 
-Primero se crea una vista previa temporal:
-
-```powershell
-npm run firebase:preview
-```
-
-Solo después de revisarla se publica en producción:
+La publicación oficial se realiza automáticamente al enviar cambios a `main` mediante `.github/workflows/pages.yml`. Antes de enviar cambios se debe ejecutar:
 
 ```powershell
-npm run firebase:deploy
+npm run build
 ```
 
-Firebase publica únicamente `dist/`. Los scripts, configuraciones, archivos de trabajo y el repositorio Git nunca se envían a la web.
+GitHub Pages publica únicamente el artefacto generado en `dist/`. Firebase queda como infraestructura secundaria y no se publica salvo petición expresa.
 
 ## Contenido diario
 
