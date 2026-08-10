@@ -19,40 +19,19 @@
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
     .lecturas-hero-banner {
-      position: relative;
-      isolation: isolate;
       display: block;
       width: 100%;
-      height: clamp(210px, 16.5vw, 330px);
+      aspect-ratio: 2879 / 546;
+      height: auto;
       overflow: hidden;
       background: #f7f1e4;
       text-decoration: none;
     }
-    .lecturas-hero-banner::before {
-      content: "";
-      position: absolute;
-      inset: -24px;
-      z-index: 0;
-      background: url("src/assets/home/lecturas-con-criterio-banner.webp") center / cover no-repeat;
-      filter: blur(18px) brightness(.98) saturate(.82);
-      opacity: .78;
-      transform: scale(1.06);
-    }
-    .lecturas-hero-banner::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(90deg, rgba(247,241,228,.16), transparent 22%, transparent 78%, rgba(247,241,228,.16));
-      pointer-events: none;
-    }
     .lecturas-hero-banner img {
-      position: relative;
-      z-index: 2;
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
     }
     .lecturas-hero-banner:focus-visible {
