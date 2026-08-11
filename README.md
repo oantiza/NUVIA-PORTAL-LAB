@@ -1,13 +1,13 @@
-# NUVIA Web 2
+# NUVIA Portal Lab
 
-Proyecto autónomo de la segunda web de NUVIA. Su código de trabajo está exclusivamente en esta carpeta y se publica oficialmente en GitHub Pages. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
+Laboratorio oficial de NUVIA Portal. Su código de trabajo está exclusivamente en esta carpeta y se publica oficialmente en GitHub Pages. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
 
 ## Entornos
 
 - **Local:** desarrollo y revisión en `http://127.0.0.1:4173`.
-- **Producción:** `https://oantiza.github.io/NUVIA-WEB-/`.
+- **Producción:** `https://oantiza.github.io/NUVIA-PORTAL-LAB/`.
 
-El repositorio oficial es `https://github.com/oantiza/NUVIA-WEB-.git`. Cada actualización de `main` ejecuta la validación, genera `dist/` y publica esa compilación en GitHub Pages.
+El repositorio oficial es `https://github.com/oantiza/NUVIA-PORTAL-LAB.git`. Cada actualización de `main` ejecuta la validación, genera `dist/` y publica esa compilación en GitHub Pages.
 
 ## Trabajo local
 
@@ -44,4 +44,4 @@ La noticia económica y los cinco indicadores macroeconómicos se mantienen dire
 
 ## Alcance
 
-`core/` forma parte del contenido funcional de NUVIA Web 2 y se trata como un componente local consolidado. No se descarga ni se reconstruye desde otra web durante el trabajo o la publicación.
+`core/` forma parte del contenido funcional de NUVIA Portal Lab y se trata como un componente local consolidado. No se descarga ni se reconstruye desde otra web durante el trabajo o la publicación.

@@ -1,4 +1,4 @@
-name: Publicar NUVIA Web 2 en GitHub Pages
+name: Publicar NUVIA Portal Lab en GitHub Pages
 
 on:
   push:

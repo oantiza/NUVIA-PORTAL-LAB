@@ -50,7 +50,7 @@ function movement(current, previous, up = 'Sube', down = 'Baja') {
 
 async function fetchText(url) {
   const response = await fetch(url, {
-    headers: { 'user-agent': 'NUVIA-Web-2/1.0 (daily official-data updater)' },
+    headers: { 'user-agent': 'NUVIA-Portal-Lab/1.0 (daily official-data updater)' },
     signal: AbortSignal.timeout(30_000),
   });
   if (!response.ok) throw new Error(`${response.status} al consultar ${url}`);

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  // NUVIA Web 2 — integración v2 (rediseño canónico).
+  // NUVIA Portal Lab — integración v2 (rediseño canónico).
   // Cambios vs v1: SIN redirecciones a core/ — las 12 páginas rediseñadas son las que se ven.
   // core/ sigue publicado y accesible directamente en ./core/index.html.
   // En la portada hidrata la noticia del día y monta el ticker; en Mercados hidrata
@@ -99,7 +99,7 @@
         }
       });
     } catch (error) {
-      console.warn('NUVIA Web 2 mantiene el último contenido editorial disponible.', error);
+      console.warn('NUVIA Portal Lab mantiene el último contenido editorial disponible.', error);
     }
   };
 

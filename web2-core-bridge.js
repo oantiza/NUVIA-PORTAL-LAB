@@ -1092,8 +1092,8 @@
     const link = document.createElement('a');
     link.id = 'nuvia-web2-back';
     link.href = '../index.html';
-    link.textContent = '← Volver a NUVIA Web 2';
-    link.setAttribute('aria-label', 'Volver a la portada de NUVIA Web 2');
+    link.textContent = '← Volver a NUVIA Portal Lab';
+    link.setAttribute('aria-label', 'Volver a la portada de NUVIA Portal Lab');
     link.style.cssText = [
       'position:fixed',
       'right:16px',

@@ -101,7 +101,7 @@ function imageFromItem(item) {
 
 async function fetchText(url) {
   const response = await fetch(url, {
-    headers: { 'user-agent': 'NUVIA-Web-2/1.0 (daily economic-news updater)' },
+    headers: { 'user-agent': 'NUVIA-Portal-Lab/1.0 (daily economic-news updater)' },
     signal: AbortSignal.timeout(30_000),
   });
   if (!response.ok) throw new Error(`${response.status} al consultar ${url}`);
@@ -137,7 +137,7 @@ async function fetchCandidateImage(item) {
 
   const response = await fetch(remoteUrl, {
     headers: {
-      'user-agent': 'NUVIA-Web-2/1.0 (daily economic-news updater)',
+      'user-agent': 'NUVIA-Portal-Lab/1.0 (daily economic-news updater)',
       referer: item.url,
     },
     signal: AbortSignal.timeout(30_000),
@@ -302,7 +302,7 @@ const editorial = editorialFor(selected.title);
 const localImageUrl = await persistDailyImage(selectedImage, checkedAt);
 
 existing.synchronizedAt = checkedAt.toISOString();
-existing.sourceRepository = 'NUVIA-WEB-2';
+existing.sourceRepository = 'NUVIA-PORTAL-LAB';
 existing.dailyEconomicNewsCheckedAt = checkedAt.toISOString();
 existing.dailyEconomicNews = {
   selectionDate: formatDate(checkedAt),

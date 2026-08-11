@@ -1,9 +1,10 @@
-# Criterios del proyecto NUVIA
+# Criterios del proyecto NUVIA Portal Lab
 
-- El repositorio único y oficial del proyecto es `https://github.com/oantiza/NUVIA-WEB-.git`.
-- La carpeta local oficial de trabajo es `C:\Users\oanti\Documents\NUVIA-WEB-2`.
-- NUVIA Web 2 es la única versión activa: no se deben leer, modificar, sincronizar ni publicar otras carpetas o versiones de NUVIA.
-- La producción oficial se publica en GitHub Pages en `https://oantiza.github.io/NUVIA-WEB-/`.
+- El repositorio único y oficial del proyecto es `https://github.com/oantiza/NUVIA-PORTAL-LAB.git`.
+- La carpeta local única y oficial de trabajo es `C:\Users\oanti\Documents\NUVIA-PORTAL-LAB`.
+- NUVIA Portal Lab es la única versión activa de este proyecto: no se deben leer, modificar, sincronizar ni publicar otras carpetas o repositorios de NUVIA.
+- La producción oficial se publica en GitHub Pages en `https://oantiza.github.io/NUVIA-PORTAL-LAB/`.
+- Estas referencias deben utilizarse en todas las tareas relacionadas con este proyecto, sin recuperar rutas o repositorios anteriores.
 - Cada actualización de `main` debe compilar y desplegar `dist/` mediante GitHub Actions.
 - Firebase Hosting deja de ser el canal oficial y no debe publicarse salvo petición expresa del usuario.
 
