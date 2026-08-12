@@ -189,45 +189,9 @@
     }
   };
 
-  const mountTradingView = () => {
-    const container = document.getElementById('nuvia-live-market-ticker');
-    if (!container) return;
-
-    container.classList.add('tradingview-widget-container');
-    container.innerHTML = '';
-    const widget = document.createElement('div');
-    widget.className = 'tradingview-widget-container__widget';
-
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
-    script.text = JSON.stringify({
-      symbols: [
-        { proName: 'FOREXCOM:SPXUSD', title: 'S&P 500' },
-        { proName: 'NASDAQ:NDX', title: 'Nasdaq 100' },
-        { proName: 'DJ:DJI', title: 'Dow Jones' },
-        { proName: 'INDEX:SX5E', title: 'Euro Stoxx 50' },
-        { proName: 'XETR:DAX', title: 'DAX 40' },
-        { proName: 'BME:IBC', title: 'IBEX 35' },
-        { proName: 'FX_IDC:EURUSD', title: 'EUR/USD' },
-        { proName: 'FX_IDC:GBPUSD', title: 'GBP/USD' },
-        { proName: 'FX_IDC:USDJPY', title: 'USD/JPY' },
-      ],
-      showSymbolLogo: true,
-      isTransparent: true,
-      displayMode: 'adaptive',
-      colorTheme: 'dark',
-      locale: 'es',
-    });
-
-    container.append(widget, script);
-  };
-
   const startHomeIntegration = () => {
     window.setTimeout(() => {
       hydrateDailyContent();
-      mountTradingView();
     }, 400);
   };
 
