@@ -12,8 +12,28 @@
 .nuvia-analysis-hero {
   overflow: hidden;
   position: relative;
-  background: linear-gradient(160deg, #0b2347 0%, #071a38 100%);
+  background: linear-gradient(108deg, #071a38 0%, #0b2a50 58%, #23475f 100%);
   color: #fff;
+}
+
+.nuvia-analysis-hero::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7,26,56,.16), transparent 56%, rgba(95,139,153,.08));
+  content: "";
+  pointer-events: none;
+}
+
+.nuvia-analysis-hero::after {
+  position: absolute;
+  right: -460px;
+  bottom: -880px;
+  width: 1040px;
+  height: 1040px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
 }
 
 .nuvia-analysis-content {
@@ -23,6 +43,8 @@
 
 .nuvia-analysis-hero__inner {
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
   max-width: 1240px;
   margin-inline: auto;
   padding: 64px 48px 32px;
@@ -35,7 +57,7 @@
   margin: 0 0 16px;
   color: #9db861;
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: .2em;
   text-transform: uppercase;
 }
