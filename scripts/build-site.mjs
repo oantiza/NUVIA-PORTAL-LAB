@@ -43,5 +43,11 @@ for (const directory of directories) {
   await cp(resolve(root, directory), resolve(output, directory), { recursive: true });
 }
 
+await cp(
+  resolve(root, 'company-analysis', 'build'),
+  resolve(output, 'company-analysis'),
+  { recursive: true }
+);
+
 const published = await readdir(output);
 console.log(`Publicación preparada en dist/ con ${published.length} elementos de primer nivel.`);

@@ -22,7 +22,7 @@ async function listFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if (entry.isDirectory() && ['.firebase', '.git', 'dist', 'node_modules'].includes(entry.name)) continue;
+    if (entry.isDirectory() && ['.firebase', '.git', 'build', 'dist', 'node_modules', 'tmp'].includes(entry.name)) continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) files.push(...await listFiles(path));
     else files.push(path);

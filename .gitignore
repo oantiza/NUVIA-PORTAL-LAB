@@ -1,6 +1,7 @@
 .serena/
 .firebase/
 dist/
+company-analysis/build/
 node_modules/
 npm-debug.log*
 firebase-debug.log*

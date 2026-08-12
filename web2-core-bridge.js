@@ -515,6 +515,33 @@
         background: #154d72 !important;
         color: #fff !important;
       }
+      body.nuvia-web2-view-portfolio [data-nuvia-simulation-controls] h3 {
+        margin-bottom: 20px !important;
+        font-size: 22px !important;
+        line-height: 1.15 !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-simulation-controls] label {
+        font-size: 10px !important;
+        font-weight: 650 !important;
+        line-height: 1.35 !important;
+        letter-spacing: .16em !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-simulation-controls] button[aria-pressed] {
+        min-height: 66px;
+        padding: 10px 12px !important;
+        font-size: 11px !important;
+        font-weight: 650 !important;
+        line-height: 1.35 !important;
+        letter-spacing: .025em !important;
+        text-transform: none !important;
+        white-space: normal;
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-simulation-controls] input {
+        font-size: 15px !important;
+        font-variant-numeric: tabular-nums;
+      }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[class*="bg-[#003274]"] {
         background: #154d72 !important;
         font-size: 11px !important;
@@ -996,9 +1023,9 @@
         line-height: 1.4;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-plot] {
-        border: 1px solid #d9dde4 !important;
+        border: 0 !important;
         border-radius: 0 !important;
-        background-color: #fbfcfd !important;
+        background-color: transparent !important;
         box-shadow: none !important;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-plot="risk-return"],
@@ -1124,9 +1151,9 @@
       }
       body.nuvia-web2-view-portfolio .nv-comparison-drawing {
         margin: 22px 0 8px;
-        padding: 22px 22px 16px;
-        border: 1px solid #d9dde4;
-        background: #fbfcfd;
+        padding: 18px 0 8px;
+        border: 0;
+        background: transparent;
       }
       body.nuvia-web2-view-portfolio .nv-comparison-drawing__head {
         display: flex;
@@ -1268,10 +1295,6 @@
       const right = width - 26;
       const bottom = height - 40;
       const group = svgElement('g', { class: 'nv-pro-grid', 'aria-hidden': 'true' });
-      group.appendChild(svgElement('rect', {
-        x, y, width: Math.max(10, right - x), height: Math.max(10, bottom - y),
-        fill: `url(#${prefix}-plot)`, stroke: '#cfd6dd', 'stroke-width': '.8'
-      }));
       for (let step = 1; step < 6; step += 1) {
         const gx = x + ((right - x) * step / 6);
         const gy = y + ((bottom - y) * step / 6);
@@ -1348,7 +1371,8 @@
       const maxValue = Math.max(1, ...rows.flatMap((row) => [row.current, row.optimized]));
       const width = 820;
       const left = 78;
-      const right = 24;
+      const right = 112;
+      const valueX = width - right + 12;
       const top = 28;
       const rowHeight = 48;
       const height = top + rows.length * rowHeight + 34;
@@ -1361,7 +1385,7 @@
         const y = top + index * rowHeight;
         const currentWidth = plotWidth * row.current / maxValue;
         const optimizedWidth = plotWidth * row.optimized / maxValue;
-        return `<g><text x="0" y="${y + 20}" fill="#202735" font-size="12" font-weight="700">${row.ticker}</text><rect x="${left}" y="${y + 4}" width="${currentWidth}" height="9" fill="#153d5b"/><rect x="${left}" y="${y + 17}" width="${optimizedWidth}" height="9" fill="#779349"/><text x="${Math.min(width - 30, left + Math.max(currentWidth, optimizedWidth) + 8)}" y="${y + 19}" fill="#596575" font-size="10">${row.current.toFixed(1)} / ${row.optimized.toFixed(1)}%</text></g>`;
+        return `<g><text x="0" y="${y + 20}" fill="#202735" font-size="12" font-weight="700">${row.ticker}</text><rect x="${left}" y="${y + 4}" width="${currentWidth}" height="9" fill="#153d5b"/><rect x="${left}" y="${y + 17}" width="${optimizedWidth}" height="9" fill="#779349"/><text x="${valueX}" y="${y + 19}" fill="#596575" font-size="10">${row.current.toFixed(1)} / ${row.optimized.toFixed(1)}%</text></g>`;
       }).join('');
       const drawing = document.createElement('div');
       drawing.className = 'nv-comparison-drawing';
@@ -1652,6 +1676,10 @@
 
       const diagnostic = closestSection(findHeading('Diagnóstico rápido'));
       if (diagnostic) diagnostic.dataset.nuviaDiagnostic = '';
+
+      const simulationHeading = findHeading('Cómo quieres simularla');
+      const simulationControls = simulationHeading?.parentElement;
+      if (simulationControls) simulationControls.dataset.nuviaSimulationControls = '';
 
       const sectionMap = new Map([
         ['Propuesta optimizada', 'comparison'],
