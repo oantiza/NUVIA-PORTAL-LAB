@@ -23,6 +23,7 @@ const topLevelFiles = [
   'web2-core-bridge.js',
   'tema-claro.css',
   'nuvia-design-system.css',
+  'mercados-cotizaciones.css',
   'nuvia-site-unified.css',
   'nuvia-site-unified.js',
   'favicon.svg'

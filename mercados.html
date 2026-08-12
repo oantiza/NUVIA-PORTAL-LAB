@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Noticias financieras, indicadores, cotizaciones e informes diarios de los mercados en NUVIA.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/mercados.html">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/mercados.html">
 <title>Mercados | NUVIA</title>
 <script src="./web2-integration.js?v=20260811-markets-overview"></script>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
+<link rel="stylesheet" href="mercados-cotizaciones.css">
 <script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
@@ -76,7 +77,7 @@
   </style>
 </helmet>
 
-<div style="min-height:100vh; min-width:1080px; color:var(--color-text); font-family:var(--font-body)">
+<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
 
   <header data-screen-label="Header" style="position:sticky; top:0; z-index:40; background:color-mix(in srgb, var(--color-bg) 84%, transparent); backdrop-filter:blur(14px)">
     <div style="max-width:1240px; margin:0 auto; padding:0 48px; height:64px; display:flex; align-items:center; justify-content:space-between">
@@ -356,9 +357,82 @@
         </nav>
 
         <sc-if value="{{ esPanelCotizaciones }}" hint-placeholder-val="{{ true }}">
-          <div class="markets-quotes-view" style="overflow:hidden; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:12px">
-            <tv-market-overview symbol-sectors='[{"sectionName":"Índices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:SX5E","XETR:DAX","BME:IBC"]},{"sectionName":"Divisas","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY"]},{"sectionName":"Materias primas","symbols":["TVC:GOLD","TVC:UKOIL","TVC:USOIL"]}]'></tv-market-overview>
-            <p style="color:color-mix(in srgb, var(--color-text) 44%, transparent); font-size:10.5px; margin:8px 10px 4px">Datos en tiempo real, diferidos o último cierre según el mercado · Información facilitada por TradingView.</p>
+          <div class="markets-lab" aria-label="Cotizaciones de componentes de índices europeos">
+            <div class="markets-lab__overview">
+              <section class="markets-lab__switcher" aria-label="Selector de índice">
+                <span class="markets-lab__eyebrow">Índice en pantalla</span>
+                <div class="markets-lab__index-tabs">
+                  <sc-for list="{{ indicesCotizacion }}" as="indice" hint-placeholder-count="2">
+                    <button class="markets-lab__index-button" type="button" onClick="{{ indice.abrir }}" aria-pressed="{{ indice.activo }}">{{ indice.label }}</button>
+                  </sc-for>
+                </div>
+                <span class="markets-lab__index-note">{{ indiceDetalle }}</span>
+              </section>
+
+              <sc-for list="{{ resumenesCotizacion }}" as="resumen" hint-placeholder-count="2">
+                <article class="markets-lab__summary">
+                  <span class="markets-lab__summary-label">{{ resumen.label }}</span>
+                  <div class="markets-lab__summary-value">
+                    <strong>{{ resumen.valor }}</strong>
+                    <span class="{{ resumen.claseVariacion }}">{{ resumen.variacion }}</span>
+                  </div>
+                  <span class="markets-lab__summary-meta">{{ resumen.amplitud }}</span>
+                </article>
+              </sc-for>
+            </div>
+
+            <div class="markets-lab__controls">
+              <label class="markets-lab__search">
+                <span style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0)">Buscar empresa o ticker</span>
+                <input type="search" data-dc-value="{{ busquedaMercado }}" onInput="{{ cambiarBusquedaMercado }}" placeholder="Buscar empresa o ticker" autocomplete="off">
+              </label>
+              <div class="markets-lab__chips" aria-label="Filtrar por sector">
+                <sc-for list="{{ sectoresCotizacion }}" as="sector" hint-placeholder-count="5">
+                  <button class="markets-lab__chip" type="button" onClick="{{ sector.abrir }}" aria-pressed="{{ sector.activo }}">{{ sector.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+
+            <section class="markets-lab__table" aria-labelledby="markets-components-title">
+              <div class="markets-lab__table-title">
+                <div>
+                  <h3 id="markets-components-title">{{ tablaCotizacionTitulo }}</h3>
+                  <span class="markets-lab__table-subtitle">{{ resultadoCotizacion }}</span>
+                </div>
+                <span class="markets-lab__stamp">Datos ilustrativos · 12 AGO 2026 · 17:35 CET</span>
+              </div>
+              <div class="markets-lab__table-scroll">
+                <table>
+                  <colgroup>
+                    <col style="width:26%"><col style="width:12%"><col style="width:10%"><col class="markets-lab__col-year" style="width:10%"><col style="width:10%"><col class="markets-lab__col-volume" style="width:12%"><col style="width:20%">
+                  </colgroup>
+                  <thead class="markets-lab__table-head">
+                    <tr><th>Empresa</th><th>Último</th><th>Día</th><th class="markets-lab__col-year">Año</th><th>Peso</th><th class="markets-lab__col-volume">Volumen</th><th>Sector</th></tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ cotizacionesVisibles }}" as="cotizacion" hint-placeholder-count="8">
+                      <tr class="markets-lab__quote">
+                        <td class="markets-lab__company"><strong>{{ cotizacion.empresa }}</strong><span>{{ cotizacion.mercado }}</span></td>
+                        <td class="markets-lab__price">{{ cotizacion.precio }}</td>
+                        <td><span class="{{ cotizacion.claseVariacion }}">{{ cotizacion.variacion }}</span></td>
+                        <td class="markets-lab__col-year">{{ cotizacion.anual }}</td>
+                        <td>{{ cotizacion.peso }}</td>
+                        <td class="markets-lab__col-volume">{{ cotizacion.volumen }}</td>
+                        <td>{{ cotizacion.sector }}</td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+                <sc-if value="{{ sinCotizaciones }}" hint-placeholder-val="{{ false }}">
+                  <div class="markets-lab__empty">No hay compañías que coincidan con la búsqueda y el sector seleccionados.</div>
+                </sc-if>
+              </div>
+            </section>
+
+            <div class="markets-lab__footer">
+              <span>Precios, variaciones, pesos y volúmenes ilustrativos; no constituyen información de mercado en tiempo real.</span>
+              <span>Composición de referencia: BME y STOXX.</span>
+            </div>
           </div>
         </sc-if>
 
@@ -486,7 +560,7 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
-  state = { vista: 'portada', mercadoVista: 'cotizaciones', agendaPeriodo: 'dia', agendaImpacto: 'todos', empresaTipo: 'todos', temasOpen: false };
+  state = { vista: 'portada', mercadoVista: 'cotizaciones', agendaPeriodo: 'dia', agendaImpacto: 'todos', empresaTipo: 'todos', indiceMercado: 'ibex', sectorMercado: 'Todos', busquedaMercado: '', temasOpen: false };
   componentDidMount() {
     document.title = 'Mercados | NUVIA Family Wealth';
     const p = new URLSearchParams(window.location.search).get('vista');
@@ -502,6 +576,60 @@ class Component extends DCLogic {
     const mercadoVista = this.state.mercadoVista;
     const herramientaBase = 'cursor:pointer; border:0; border-left:1px solid color-mix(in srgb, var(--color-text) 11%, transparent); font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:11px 17px; transition:background .2s ease, color .2s ease; ';
     const herramientasDefs = [['cotizaciones', 'Cotizaciones'], ['economico', 'Calendario económico'], ['empresas', 'Calendario de empresas']];
+    const ibexCotizaciones = [
+      ['Inditex','ITX','ES','48,92 €','+0,64%','+6,8%','14,1%','2,1 M','Consumo'],
+      ['Iberdrola','IBE','ES','16,34 €','+0,42%','+21,7%','13,9%','8,7 M','Energía'],
+      ['BBVA','BBVA','ES','14,86 €','+1,02%','+27,5%','10,4%','18,4 M','Banca'],
+      ['Banco Santander','SAN','ES','8,24 €','+1,18%','+18,4%','8,7%','42,8 M','Banca'],
+      ['Ferrovial','FER','NL','45,20 €','−0,18%','+16,2%','7,8%','1,2 M','Infraestructura'],
+      ['Amadeus','AMS','ES','72,18 €','+0,26%','+8,1%','5,9%','0,8 M','Tecnología'],
+      ['Aena','AENA','ES','214,40 €','+0,37%','+12,6%','5,5%','0,2 M','Infraestructura'],
+      ['CaixaBank','CABK','ES','7,56 €','+0,92%','+25,4%','5,1%','11,6 M','Banca'],
+      ['Repsol','REP','ES','15,08 €','−0,56%','+5,4%','4,6%','6,5 M','Energía'],
+      ['Cellnex','CLNX','ES','36,42 €','+0,11%','−3,2%','3,2%','1,9 M','Telecom.'],
+      ['Naturgy','NTGY','ES','26,74 €','−0,22%','+8,7%','3,0%','0,5 M','Energía'],
+      ['ACS','ACS','ES','50,10 €','+0,45%','+15,8%','2,9%','0,7 M','Infraestructura'],
+      ['Banco Sabadell','SAB','ES','3,24 €','+1,34%','+34,2%','2,6%','28,7 M','Banca'],
+      ['Endesa','ELE','ES','27,18 €','+0,19%','+23,1%','2,5%','1,1 M','Energía'],
+      ['Grifols','GRF','ES','11,26 €','−0,71%','+9,4%','1,3%','2,4 M','Salud'],
+      ['Mapfre','MAP','ES','3,88 €','+0,31%','+18,9%','1,2%','3,6 M','Seguros']
+    ];
+    const euroCotizaciones = [
+      ['ASML Holding','ASML','NL','682,40 €','+1,22%','+8,9%','7,8%','3,8 M','Tecnología'],
+      ['SAP','SAP','DE','206,10 €','−0,14%','+3,1%','4,6%','1,3 M','Tecnología'],
+      ['TotalEnergies','TTE','FR','55,84 €','−0,32%','+4,2%','4,2%','4,7 M','Energía'],
+      ['Siemens','SIE','DE','238,10 €','+0,58%','+16,3%','4,1%','1,1 M','Industria'],
+      ['LVMH','MC','FR','486,70 €','+0,26%','−8,4%','3,9%','0,7 M','Consumo'],
+      ['Allianz','ALV','DE','366,20 €','+0,41%','+12,5%','3,6%','0,5 M','Seguros'],
+      ['Schneider Electric','SU','FR','236,80 €','+0,74%','+9,8%','3,5%','0,7 M','Industria'],
+      ['Banco Santander','SAN','ES','8,24 €','+1,18%','+18,4%','3,7%','42,8 M','Banca'],
+      ['Airbus','AIR','FR','179,32 €','+0,39%','+14,7%','3,2%','0,9 M','Industria'],
+      ['Deutsche Telekom','DTE','DE','31,28 €','−0,12%','+7,5%','3,1%','4,2 M','Telecom.'],
+      ['Iberdrola','IBE','ES','16,34 €','+0,42%','+21,7%','2,8%','8,7 M','Energía'],
+      ['Air Liquide','AI','FR','173,44 €','+0,28%','+6,6%','2,8%','0,6 M','Industria'],
+      ['BNP Paribas','BNP','FR','78,62 €','+0,83%','+17,2%','2,6%','2,1 M','Banca'],
+      ['Safran','SAF','FR','289,10 €','+0,52%','+20,4%','2,5%','0,4 M','Industria'],
+      ['L’Oréal','OR','FR','382,60 €','−0,21%','−2,8%','2,4%','0,3 M','Consumo'],
+      ['AXA','CS','FR','41,08 €','+0,36%','+11,2%','2,1%','2,8 M','Seguros']
+    ];
+    const normalizarCotizacion = ([empresa,ticker,pais,precio,variacion,anual,peso,volumen,sector]) => ({
+      empresa, ticker, pais, mercado: `${ticker} · ${pais}`, precio, variacion, anual, peso, volumen, sector,
+      claseVariacion: 'markets-lab__change ' + (variacion.startsWith('−') || variacion.startsWith('-') ? 'markets-lab__change--negative' : 'markets-lab__change--positive')
+    });
+    const indiceMercado = this.state.indiceMercado;
+    const sectorMercado = this.state.sectorMercado;
+    const busquedaMercado = this.state.busquedaMercado;
+    const cotizacionesIndice = (indiceMercado === 'ibex' ? ibexCotizaciones : euroCotizaciones).map(normalizarCotizacion);
+    const consultaMercado = busquedaMercado.trim().toLocaleLowerCase('es');
+    const cotizacionesVisibles = cotizacionesIndice.filter((c) =>
+      (sectorMercado === 'Todos' || c.sector === sectorMercado) &&
+      (!consultaMercado || `${c.empresa} ${c.ticker} ${c.pais}`.toLocaleLowerCase('es').includes(consultaMercado))
+    );
+    const sectoresDisponibles = ['Todos', ...Array.from(new Set(cotizacionesIndice.map((c) => c.sector)))];
+    const resumenesCotizacion = [
+      { label:'IBEX 35', valor:'17.842,6', variacion:'+0,74%', amplitud:'24 suben · 9 bajan · 2 sin cambio', claseVariacion:'markets-lab__change markets-lab__change--positive' },
+      { label:'EURO STOXX 50', valor:'5.618,4', variacion:'+0,42%', amplitud:'37 suben · 12 bajan · 1 sin cambio', claseVariacion:'markets-lab__change markets-lab__change--positive' },
+    ];
     const filtroBase = 'cursor:pointer; border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); border-radius:999px; font-family:var(--font-body); font-size:10.5px; padding:6px 11px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
     const filtroEstilo = (activo) => filtroBase + (activo ? 'background:#0B2347; border-color:#0B2347; color:#fff' : 'background:transparent; color:color-mix(in srgb, var(--color-text) 68%, transparent)');
     const eventosEconomicosBase = [
@@ -552,6 +680,24 @@ class Component extends DCLogic {
         estiloHover: id === mercadoVista ? '' : 'background:color-mix(in srgb, var(--color-accent) 6%, var(--color-surface))',
       })),
       esPanelCotizaciones: mercadoVista === 'cotizaciones',
+      indicesCotizacion: [['ibex','IBEX 35'],['euro','EURO STOXX 50']].map(([id,label]) => ({
+        label,
+        activo: indiceMercado === id,
+        abrir: () => this.setState({ indiceMercado: id, sectorMercado: 'Todos', busquedaMercado: '' }),
+      })),
+      indiceDetalle: indiceMercado === 'ibex' ? '35 compañías · Bolsa española' : '50 blue chips · Eurozona',
+      resumenesCotizacion,
+      busquedaMercado,
+      cambiarBusquedaMercado: (e) => this.setState({ busquedaMercado: e.target.value }),
+      sectoresCotizacion: sectoresDisponibles.map((label) => ({
+        label,
+        activo: sectorMercado === label,
+        abrir: () => this.setState({ sectorMercado: label }),
+      })),
+      tablaCotizacionTitulo: indiceMercado === 'ibex' ? 'Componentes del IBEX 35' : 'Componentes del EURO STOXX 50',
+      resultadoCotizacion: `${cotizacionesVisibles.length} valores visibles · filtros sobre ${cotizacionesIndice.length} componentes de referencia`,
+      cotizacionesVisibles,
+      sinCotizaciones: cotizacionesVisibles.length === 0,
       esCalendarioEconomico: mercadoVista === 'economico',
       esCalendarioEmpresas: mercadoVista === 'empresas',
       periodosAgenda: [['dia','Hoy'],['semana','Semana'],['mes','Mes']].map(([id,label]) => ({ label, activo: id === periodo, abrir: () => this.setState({ agendaPeriodo: id }), estilo: filtroEstilo(id === periodo) })),
