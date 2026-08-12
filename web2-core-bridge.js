@@ -54,13 +54,7 @@
         background: #f2f5f7 !important;
       }
       body.nuvia-web2-embedded [data-nuvia-suite-hero] {
-        min-height: 390px;
-        padding: 48px 54px !important;
-        background:
-          radial-gradient(circle at 76% 12%, rgba(167,196,105,.15), transparent 27%),
-          linear-gradient(112deg, #0a2445 0%, #123d68 100%) !important;
-        position: relative;
-        overflow: hidden;
+        display: none !important;
       }
       body.nuvia-web2-embedded [data-nuvia-suite-hero]::after {
         content: "";
@@ -980,28 +974,6 @@
         const hero = tabs.previousElementSibling;
         if (hero) {
           hero.dataset.nuviaSuiteHero = '';
-          const heroLayout = hero.firstElementChild;
-          if (heroLayout && !heroLayout.querySelector('[data-nuvia-hero-visual]')) {
-            const visual = document.createElement('div');
-            visual.dataset.nuviaHeroVisual = '';
-            visual.setAttribute('aria-hidden', 'true');
-            visual.innerHTML = `
-              <div class="nv-visual-head">
-                <span class="nv-visual-kicker">Lectura patrimonial</span>
-                <span class="nv-visual-status">Vista conectada</span>
-              </div>
-              <div class="nv-visual-body">
-                <div class="nv-visual-donut"></div>
-                <div class="nv-visual-bars">
-                  <div class="nv-visual-row"><span>Distribución</span><span class="nv-visual-track"><i style="width:82%"></i></span></div>
-                  <div class="nv-visual-row"><span>Riesgo</span><span class="nv-visual-track"><i style="width:61%"></i></span></div>
-                  <div class="nv-visual-row"><span>Eficiencia</span><span class="nv-visual-track"><i style="width:73%"></i></span></div>
-                </div>
-              </div>
-              <div class="nv-visual-foot"><span>Cartera</span><span>Técnico</span><span>Fundamental</span></div>
-            `;
-            heroLayout.appendChild(visual);
-          }
         }
         const panel = tabs.nextElementSibling;
         if (panel) {
