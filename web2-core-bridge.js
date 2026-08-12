@@ -392,7 +392,64 @@
       body.nuvia-web2-embedded [data-nuvia-portfolio-lab] {
         display: flex !important;
         flex-direction: column !important;
-        gap: 28px !important;
+        gap: 24px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-suite-shell],
+      body.nuvia-web2-view-portfolio [data-nuvia-suite-panel] {
+        background: #f4f5f8 !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-suite-panel] {
+        padding: 48px 44px 58px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] {
+        order: 0;
+        display: flex;
+        min-height: 292px;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border: 1px solid #d9dde4;
+        background: #fff;
+        padding: 48px 32px;
+        text-align: center;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] > div {
+        width: min(100%, 540px);
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] strong {
+        display: block;
+        color: #202735;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 44px;
+        font-weight: 400;
+        letter-spacing: .18em;
+        line-height: 1;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] span {
+        display: block;
+        margin-top: 14px;
+        color: #154d72;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .34em;
+        text-transform: uppercase;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] p {
+        max-width: 470px;
+        margin: 24px auto 0;
+        color: #596171;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] i {
+        display: block;
+        width: 88px;
+        height: 2px;
+        margin: 30px auto 0;
+        background: #154d72;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-layout] {
+        order: 1;
       }
       body.nuvia-web2-embedded [data-nuvia-portfolio-notice] {
         margin: 0 !important;
@@ -421,6 +478,56 @@
         border-color: #d9e0e5 !important;
         border-radius: 18px !important;
         box-shadow: 0 14px 36px rgba(11,35,71,.045) !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-build-controls] > *,
+      body.nuvia-web2-view-portfolio [data-nuvia-holdings],
+      body.nuvia-web2-view-portfolio [data-nuvia-diagnostic],
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section] {
+        border: 1px solid #d9dde4 !important;
+        border-radius: 2px !important;
+        background: #fff !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] h2,
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] h3 {
+        color: #202735 !important;
+        font-family: Georgia, 'Times New Roman', serif !important;
+        font-weight: 400 !important;
+        letter-spacing: -.01em !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] label,
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] [class*="uppercase"] {
+        letter-spacing: .14em !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] input,
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] select {
+        border-color: #cfd5dd !important;
+        border-radius: 2px !important;
+        background: #fafbfc !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button {
+        border-radius: 2px !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[aria-pressed="true"] {
+        border-color: #154d72 !important;
+        background: #154d72 !important;
+        color: #fff !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[class*="bg-[#003274]"] {
+        background: #154d72 !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: .13em !important;
+        text-transform: uppercase !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[class*="bg-[#003274]"]:hover {
+        background: #0d3d60 !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] [class*="rounded-xl"],
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] [class*="rounded-2xl"] {
+        border-radius: 2px !important;
       }
       body.nuvia-web2-embedded [data-nuvia-visual-story] {
         display: flex !important;
@@ -1041,7 +1148,17 @@
       const lab = notice?.parentElement;
       const layout = notice?.nextElementSibling;
       if (notice) notice.dataset.nuviaPortfolioNotice = '';
-      if (lab) lab.dataset.nuviaPortfolioLab = '';
+      if (lab) {
+        lab.dataset.nuviaPortfolioLab = '';
+        let masthead = lab.querySelector('[data-nuvia-portfolio-masthead]');
+        if (!masthead) {
+          masthead = document.createElement('section');
+          masthead.dataset.nuviaPortfolioMasthead = '';
+          masthead.setAttribute('aria-label', 'Laboratorio de cartera');
+          masthead.innerHTML = '<div><strong>NUVIA</strong><span>Laboratorio de cartera</span><p>Construye una cartera, compara su distribución y estudia el equilibrio entre riesgo y rentabilidad con una lectura clara y ordenada.</p><i aria-hidden="true"></i></div>';
+          lab.insertBefore(masthead, lab.firstChild);
+        }
+      }
       if (layout && layout.children.length >= 2) {
         layout.dataset.nuviaPortfolioLayout = '';
         layout.children[0].dataset.nuviaBuildControls = '';
