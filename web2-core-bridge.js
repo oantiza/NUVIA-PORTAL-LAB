@@ -893,6 +893,202 @@
         border-top: 4px solid #0b2347 !important;
         background: linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%) !important;
       }
+      /* Gráficos de inversión: lectura editorial, escala consistente y ficha técnica. */
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section] {
+        overflow: visible !important;
+        padding: 70px 34px 34px !important;
+        border-top: 1px solid #d9dde4 !important;
+        background: #fff !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section]::before {
+        left: 34px;
+        top: 30px;
+        color: #154d72;
+        font-size: 10px;
+        font-weight: 650;
+        letter-spacing: .22em;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section] h3 {
+        color: #202735 !important;
+        font-family: Georgia, 'Times New Roman', serif !important;
+        font-size: 31px !important;
+        font-weight: 400 !important;
+        letter-spacing: -.015em !important;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta {
+        display: grid;
+        grid-template-columns: minmax(190px, .55fr) minmax(0, 1.45fr);
+        margin: 24px 0 22px;
+        padding: 0;
+        border: 1px solid #d9dde4;
+        border-radius: 0;
+        background: #fff;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta-label {
+        min-height: 54px;
+        padding: 0 18px;
+        border-right: 1px solid #d9dde4;
+        color: #202735;
+        letter-spacing: .15em;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta-label::before {
+        width: 18px;
+        height: 2px;
+        border-radius: 0;
+        background: #154d72;
+        box-shadow: none;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta-items {
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0;
+        min-height: 54px;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta-item {
+        min-height: auto;
+        padding: 4px 16px;
+        border: 0;
+        border-left: 1px solid #e4e7eb;
+        border-radius: 0;
+        background: transparent;
+        color: #687181;
+        font-size: 10px;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-meta-item:first-child { border-left: 0; }
+      body.nuvia-web2-view-portfolio .nv-chart-insights {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin: 0 0 22px;
+        border: 1px solid #d9dde4;
+        background: #fff;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-insight {
+        min-height: 106px;
+        padding: 18px 20px;
+        border-left: 1px solid #d9dde4;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-insight:first-child { border-left: 0; }
+      body.nuvia-web2-view-portfolio .nv-chart-insight span {
+        display: block;
+        color: #727b89;
+        font-size: 9.5px;
+        font-weight: 650;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-insight strong {
+        display: block;
+        margin-top: 9px;
+        color: #153d5b !important;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 25px;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-insight small {
+        display: block;
+        margin-top: 8px;
+        color: #687181;
+        font-size: 10.5px;
+        line-height: 1.4;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-plot] {
+        border: 1px solid #d9dde4 !important;
+        border-radius: 0 !important;
+        background-color: #fbfcfd !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-plot="risk-return"],
+      body.nuvia-web2-view-portfolio [data-nuvia-plot="frontier"],
+      body.nuvia-web2-view-portfolio [data-nuvia-plot="evolution"],
+      body.nuvia-web2-view-portfolio [data-nuvia-plot="monte-carlo"] {
+        background-image:
+          linear-gradient(rgba(21,77,114,.045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(21,77,114,.045) 1px, transparent 1px) !important;
+        background-size: 52px 52px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section] svg text {
+        fill: #4e5968 !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        font-variant-numeric: tabular-nums;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section] svg line {
+        stroke: #d8dde3;
+        stroke-opacity: .9;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="evolution"] svg polyline,
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="frontier"] svg polyline {
+        stroke-width: 2.5px !important;
+      }
+      body.nuvia-web2-view-portfolio .nv-frontier-summary {
+        border: 1px solid #d9dde4;
+        gap: 0;
+      }
+      body.nuvia-web2-view-portfolio .nv-frontier-stat {
+        min-height: 104px;
+        border: 0;
+        border-left: 1px solid #d9dde4;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      body.nuvia-web2-view-portfolio .nv-frontier-stat:first-child { border-left: 0; }
+      body.nuvia-web2-view-portfolio .nv-frontier-stat:nth-child(2) {
+        border-top: 0;
+        box-shadow: inset 0 3px 0 #6f8d3c;
+      }
+      body.nuvia-web2-view-portfolio .nv-frontier-stat:nth-child(3) {
+        border-color: #d9dde4;
+        background: #f5f7f1;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-reading {
+        grid-template-columns: 120px 1fr;
+        margin-top: 22px;
+        padding: 17px 18px;
+        border: 1px solid #d9dde4;
+        border-left: 3px solid #154d72;
+        border-radius: 0;
+        background: #f7f8fa;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-reading strong { color: #154d72; }
+      body.nuvia-web2-view-portfolio .nv-chart-method {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid #e0e4e8;
+        color: #7a8290;
+        font-size: 9.5px;
+        line-height: 1.45;
+      }
+      body.nuvia-web2-view-portfolio .nv-chart-method strong {
+        color: #505a69;
+        font-weight: 650;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="correlation"] [role="grid"] > *,
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="correlation"] table {
+        border-radius: 0 !important;
+      }
+      @media (max-width: 1120px) and (min-width: 768px) {
+        body.nuvia-web2-view-portfolio .nv-chart-insights,
+        body.nuvia-web2-view-portfolio .nv-frontier-summary {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        body.nuvia-web2-view-portfolio .nv-chart-meta {
+          grid-template-columns: 1fr;
+        }
+        body.nuvia-web2-view-portfolio .nv-chart-meta-label {
+          border-right: 0;
+          border-bottom: 1px solid #d9dde4;
+        }
+      }
       @media (max-width: 1180px) {
         body.nuvia-web2-embedded [data-nuvia-suite-hero] > div {
           grid-template-columns: minmax(0, 1fr) minmax(330px, .72fr) !important;
@@ -934,6 +1130,14 @@
     const findHeading = (text) => [...document.querySelectorAll('h1, h2, h3')]
       .find((heading) => normalizedText(heading) === text);
     const closestSection = (heading) => heading?.closest('section');
+    const toNumber = (value) => Number(String(value || '').replace(',', '.'));
+    const addChartMethod = (section, detail) => {
+      if (!section || !detail || section.querySelector('.nv-chart-method')) return;
+      const method = document.createElement('div');
+      method.className = 'nv-chart-method';
+      method.innerHTML = `<span><strong>Ficha técnica</strong> · ${detail.method}</span><span>${detail.source}</span>`;
+      section.appendChild(method);
+    };
     const decorateRiskMap = (section) => {
       if (!section) return;
       const primaryLabels = new Set(['Cartera actual', 'Propuesta optimizada']);
@@ -1011,7 +1215,6 @@
       const actualMatch = sectionText.match(/Actual:\s*riesgo\s*([\d.,]+)%,\s*rent\.\s*([\d.,]+)%/i);
       const optimizedMatch = sectionText.match(/Optimizada:\s*riesgo\s*([\d.,]+)%,\s*rent\.\s*([\d.,]+)%/i);
       if (!actualMatch || !optimizedMatch) return;
-      const toNumber = (value) => Number(value.replace(',', '.'));
       const actualRisk = toNumber(actualMatch[1]);
       const actualReturn = toNumber(actualMatch[2]);
       const optimizedRisk = toNumber(optimizedMatch[1]);
@@ -1185,37 +1388,51 @@
         comparison: {
           label: 'Comparativa de cartera',
           items: ['Peso actual', 'Peso propuesto', 'Cambio neto'],
-          reading: 'Compara los pesos con la misma escala para identificar de inmediato qué posiciones aumentan, se mantienen o se reducen.'
+          reading: 'Compara los pesos con la misma escala para identificar de inmediato qué posiciones aumentan, se mantienen o se reducen.',
+          method: 'Pesos sobre capital · cartera actual frente a propuesta optimizada',
+          source: 'Escenario educativo NUVIA'
         },
         distribution: {
           label: 'Mapa de exposición',
           items: ['Activo subyacente', 'Geografía', 'Peso sobre capital'],
-          reading: 'Lee primero la concentración por clase de activo y después comprueba si la exposición geográfica refuerza o reduce esa concentración.'
+          reading: 'Lee primero la concentración por clase de activo y después comprueba si la exposición geográfica refuerza o reduce esa concentración.',
+          method: 'Unidad: % del capital · clasificación por activo y geografía',
+          source: 'Cartera introducida por el usuario'
         },
         correlation: {
           label: 'Matriz profesional',
           items: ['Escala −1 a +1', 'Diagonal = 1', 'Color por intensidad'],
-          reading: 'Los valores próximos a 1 se mueven de forma parecida; los valores más bajos aportan una mayor capacidad potencial de diversificación.'
+          reading: 'Los valores próximos a 1 se mueven de forma parecida; los valores más bajos aportan una mayor capacidad potencial de diversificación.',
+          method: 'Coeficientes estimados · escala de −1 a +1 · diagonal = 1',
+          source: 'Series ilustrativas del escenario'
         },
         'risk-return': {
           label: 'Plano riesgo / rendimiento',
           items: ['Eje X · volatilidad', 'Eje Y · rendimiento', 'Perfiles comparables'],
-          reading: 'Las posiciones más arriba ofrecen mayor rendimiento estimado; cuanto más a la izquierda, menor es la volatilidad asumida.'
+          reading: 'Las posiciones más arriba ofrecen mayor rendimiento estimado; cuanto más a la izquierda, menor es la volatilidad asumida.',
+          method: 'Rendimiento y volatilidad anualizados · perfiles solo comparativos',
+          source: 'Modelo educativo NUVIA'
         },
         frontier: {
           label: 'Frontera eficiente',
           items: ['Actual', 'Propuesta', 'Curva eficiente'],
-          reading: 'La curva muestra las combinaciones con mejor rendimiento estimado para cada nivel de riesgo dentro de este escenario educativo.'
+          reading: 'La curva muestra las combinaciones con mejor rendimiento estimado para cada nivel de riesgo dentro de este escenario educativo.',
+          method: 'Combinaciones riesgo/rendimiento · restricción al universo seleccionado',
+          source: 'Optimización ilustrativa, no recomendación'
         },
         evolution: {
           label: 'Evolución comparada',
           items: ['Base 100', 'Horizonte 5 años', 'Actual vs propuesta'],
-          reading: 'La separación entre las líneas permite observar cómo pequeñas diferencias de rentabilidad y volatilidad se acumulan con el tiempo.'
+          reading: 'La separación entre las líneas permite observar cómo pequeñas diferencias de rentabilidad y volatilidad se acumulan con el tiempo.',
+          method: 'Índice base 100 · horizonte 5 años · capitalización compuesta',
+          source: 'Trayectoria educativa determinista'
         },
         'monte-carlo': {
           label: 'Escenarios probabilísticos',
           items: ['Bandas p5–p95', 'Mediana', 'Horizonte 3 años'],
-          reading: 'Las bandas representan un rango de resultados posibles; no son una predicción, sino una forma de visualizar la incertidumbre.'
+          reading: 'Las bandas representan un rango de resultados posibles; no son una predicción, sino una forma de visualizar la incertidumbre.',
+          method: 'Bandas percentiles p5–p95 · frecuencia semanal · horizonte 3 años',
+          source: 'Simulación ilustrativa, no predicción'
         }
       };
       let chartStory = null;
@@ -1243,18 +1460,22 @@
           const plot = svg.parentElement;
           if (plot && !plot.dataset.nuviaPlot) plot.dataset.nuviaPlot = key;
         });
+        addChartMethod(section, detail);
         chartStory ||= section.parentElement;
       });
       if (chartStory) chartStory.dataset.nuviaChartStory = '';
-      decorateRiskMap(closestSection(findHeading('Mapa riesgo / rentabilidad')));
+      const riskSection = closestSection(findHeading('Mapa riesgo / rentabilidad'));
+      decorateRiskMap(riskSection);
       decorateFrontier(closestSection(findHeading('Frontera eficiente')));
     };
 
-    const layoutObserver = new MutationObserver(tagPortfolioLayout);
-    layoutObserver.observe(document.body, { childList: true, subtree: true });
-    tagPortfolioLayout();
-    window.setTimeout(tagPortfolioLayout, 250);
-    window.setTimeout(tagPortfolioLayout, 900);
+    const runLayoutPass = () => {
+      tagPortfolioLayout();
+    };
+    runLayoutPass();
+    window.setTimeout(runLayoutPass, 250);
+    window.setTimeout(runLayoutPass, 900);
+    document.addEventListener('click', () => window.setTimeout(runLayoutPass, 350), true);
 
     let animationFrame = 0;
     const reportHeight = () => {
