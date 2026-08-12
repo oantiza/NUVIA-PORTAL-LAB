@@ -49,8 +49,8 @@
         --nv-accent: #0b2347;
         --nv-navy: #0b2347;
         --nv-soft-panel: #f1f4f7;
-        --nv-complement: #9a6a35;
-        --nv-complement-soft: #f4eee7;
+        --nv-complement: #795264;
+        --nv-complement-soft: #f2edf0;
         border: 0 !important;
         border-radius: 24px !important;
         box-shadow: none !important;
@@ -124,7 +124,7 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        color: #7d542b;
+        color: #654252;
         font-size: 11px;
         font-weight: 650;
       }
@@ -133,8 +133,8 @@
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #9a6a35;
-        box-shadow: 0 0 0 4px rgba(154,106,53,.13);
+        background: #795264;
+        box-shadow: 0 0 0 4px rgba(121,82,100,.13);
       }
       body.nuvia-web2-embedded [data-nuvia-hero-visual] .nv-visual-body {
         display: grid;
@@ -147,7 +147,7 @@
         width: 132px;
         height: 132px;
         border-radius: 50%;
-        background: conic-gradient(#0b2347 0 35%, #9a6a35 35% 60%, #c5a968 60% 80%, #b8c5d4 80% 100%);
+        background: conic-gradient(#0b2347 0 35%, #795264 35% 60%, #c5a8b5 60% 80%, #b8c5d4 80% 100%);
         position: relative;
         box-shadow: 0 10px 24px rgba(11,35,71,.13);
       }
@@ -189,7 +189,7 @@
         border-radius: inherit;
         background: #0b2347;
       }
-      body.nuvia-web2-embedded [data-nuvia-hero-visual] .nv-visual-row:nth-child(2) i { background: #9a6a35; }
+      body.nuvia-web2-embedded [data-nuvia-hero-visual] .nv-visual-row:nth-child(2) i { background: #795264; }
       body.nuvia-web2-embedded [data-nuvia-hero-visual] .nv-visual-row:nth-child(3) i { background: #c5a968; }
       body.nuvia-web2-embedded [data-nuvia-hero-visual] .nv-visual-foot {
         display: grid;
@@ -237,13 +237,13 @@
         bottom: -1px;
         height: 4px;
         border-radius: 4px 4px 0 0;
-        background: #9a6a35;
+        background: #795264;
       }
       body.nuvia-web2-embedded [data-nuvia-suite-tabs] > button::before {
         position: absolute;
         left: 24px;
         top: 28px;
-        color: #9a6a35;
+        color: #795264;
         font-size: 12px;
         font-weight: 700;
         letter-spacing: .12em;
@@ -376,7 +376,7 @@
         width: 22px;
         height: 22px;
         border: 2px solid rgba(74,93,35,.2);
-        border-top-color: #9a6a35;
+        border-top-color: #795264;
         border-radius: 999px;
         animation: nv-fundamental-spin .85s linear infinite;
       }
@@ -556,8 +556,8 @@
         background: #0d3d60 !important;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[class*="bg-[#003274]/5"] {
-        border: 1px solid #7d542b !important;
-        background: #8b5e2f !important;
+        border: 1px solid #654252 !important;
+        background: #795264 !important;
         color: #ffffff !important;
         font-size: 10px !important;
         font-weight: 700 !important;
@@ -565,8 +565,8 @@
         text-transform: uppercase !important;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] button[class*="bg-[#003274]/5"]:hover {
-        border-color: #68431f !important;
-        background: #704821 !important;
+        border-color: #503342 !important;
+        background: #604052 !important;
         color: #ffffff !important;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] [class*="overflow-hidden"][class*="border-[#eef2f6]"] > [class*="bg-slate-50"] {
@@ -625,7 +625,7 @@
         border-top: 2px solid #d8e0e6 !important;
       }
       body.nuvia-web2-embedded [data-nuvia-diagnostic] > div:last-child > div:nth-child(1) {
-        border-top-color: #9a6a35 !important;
+        border-top-color: #795264 !important;
       }
       body.nuvia-web2-embedded [data-nuvia-diagnostic] > div:last-child > div:nth-child(4) {
         border-top-color: #b98b8f !important;
@@ -639,7 +639,7 @@
         position: absolute;
         left: 30px;
         top: 27px;
-        color: #8b5e2f;
+        color: #795264;
         font-size: 10px;
         font-weight: 750;
         letter-spacing: .2em;
@@ -815,8 +815,8 @@
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #9a6a35;
-        box-shadow: 0 0 0 4px rgba(154,106,53,.12);
+        background: #795264;
+        box-shadow: 0 0 0 4px rgba(121,82,100,.12);
       }
       body.nuvia-web2-embedded .nv-chart-meta-items {
         display: flex;
@@ -844,15 +844,15 @@
         align-items: start;
         margin-top: 20px;
         padding: 15px 17px;
-        border-left: 3px solid #9a6a35;
+        border-left: 3px solid #795264;
         border-radius: 0 12px 12px 0;
-        background: #f4eee7;
+        background: #f2edf0;
         color: #40546b;
         font-size: 12px;
         line-height: 1.55;
       }
       body.nuvia-web2-embedded .nv-chart-reading strong {
-        color: #7d542b;
+        color: #654252;
         font-size: 10px;
         letter-spacing: .14em;
         text-transform: uppercase;
@@ -875,11 +875,11 @@
         box-shadow: 0 8px 20px rgba(11,35,71,.035);
       }
       body.nuvia-web2-embedded .nv-frontier-stat:nth-child(2) {
-        border-top: 3px solid #9a6a35;
+        border-top: 3px solid #795264;
       }
       body.nuvia-web2-embedded .nv-frontier-stat:nth-child(3) {
-        background: #f4eee7;
-        border-color: #dfd1c1;
+        background: #f2edf0;
+        border-color: #ddcfd6;
       }
       body.nuvia-web2-embedded .nv-frontier-stat span {
         display: block;
@@ -923,14 +923,14 @@
         font-variant-numeric: tabular-nums;
       }
       body.nuvia-web2-embedded [data-nuvia-chart-section="distribution"] {
-        border-top: 4px solid #9a6a35 !important;
+        border-top: 4px solid #795264 !important;
         background: linear-gradient(145deg, #ffffff 0%, #f4f6f8 100%) !important;
       }
       body.nuvia-web2-embedded [data-nuvia-chart-section="risk-return"],
       body.nuvia-web2-embedded [data-nuvia-chart-section="frontier"],
       body.nuvia-web2-embedded [data-nuvia-chart-section="evolution"],
       body.nuvia-web2-embedded [data-nuvia-chart-section="monte-carlo"] {
-        --nv-accent: #9a6a35;
+        --nv-accent: #795264;
       }
       body.nuvia-web2-embedded [data-nuvia-chart-section="comparison"] {
         border-top: 4px solid #0b2347 !important;
@@ -1091,11 +1091,11 @@
       body.nuvia-web2-view-portfolio .nv-frontier-stat:first-child { border-left: 0; }
       body.nuvia-web2-view-portfolio .nv-frontier-stat:nth-child(2) {
         border-top: 0;
-        box-shadow: inset 0 3px 0 #9a6a35;
+        box-shadow: inset 0 3px 0 #795264;
       }
       body.nuvia-web2-view-portfolio .nv-frontier-stat:nth-child(3) {
         border-color: #d9dde4;
-        background: #f4eee7;
+        background: #f2edf0;
       }
       body.nuvia-web2-view-portfolio .nv-chart-reading {
         grid-template-columns: 120px 1fr;
@@ -1206,7 +1206,7 @@
         height: 3px;
         background: #153d5b;
       }
-      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend span:last-child i { background: #9a6a35; }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend span:last-child i { background: #795264; }
       body.nuvia-web2-view-portfolio .nv-comparison-drawing svg {
         display: block;
         width: 100%;
@@ -1297,8 +1297,8 @@
             <stop offset="1" stop-color="#153d5b" stop-opacity=".015"/>
           </linearGradient>
           <linearGradient id="${prefix}-green" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#9a6a35" stop-opacity=".27"/>
-            <stop offset="1" stop-color="#9a6a35" stop-opacity=".02"/>
+            <stop offset="0" stop-color="#795264" stop-opacity=".27"/>
+            <stop offset="1" stop-color="#795264" stop-opacity=".02"/>
           </linearGradient>
           <linearGradient id="${prefix}-plot" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#ffffff"/>
@@ -1411,7 +1411,7 @@
         const y = top + index * rowHeight;
         const currentWidth = plotWidth * row.current / maxValue;
         const optimizedWidth = plotWidth * row.optimized / maxValue;
-        return `<g><text x="0" y="${y + 16}" fill="#202735" font-size="12" font-weight="700">${row.ticker}</text><rect x="${left}" y="${y + 3}" width="${currentWidth}" height="6" fill="#153d5b"/><rect x="${left}" y="${y + 13}" width="${optimizedWidth}" height="6" fill="#9a6a35"/><text x="${valueX}" y="${y + 16}" fill="#596575" font-size="10">${row.current.toFixed(1)} / ${row.optimized.toFixed(1)}%</text></g>`;
+        return `<g><text x="0" y="${y + 16}" fill="#202735" font-size="12" font-weight="700">${row.ticker}</text><rect x="${left}" y="${y + 3}" width="${currentWidth}" height="6" fill="#153d5b"/><rect x="${left}" y="${y + 13}" width="${optimizedWidth}" height="6" fill="#795264"/><text x="${valueX}" y="${y + 16}" fill="#596575" font-size="10">${row.current.toFixed(1)} / ${row.optimized.toFixed(1)}%</text></g>`;
       }).join('');
       const drawing = document.createElement('div');
       drawing.className = 'nv-comparison-drawing';
@@ -1433,12 +1433,12 @@
           : null;
         if (key === 'evolution') {
           [...svg.querySelectorAll('polyline')].forEach((polyline, lineIndex) => {
-            addPolylineArea(svg, polyline, bounds, `url(#${prefix}-${lineIndex ? 'green' : 'navy'})`, prefix, lineIndex ? '#9a6a35' : '#153d5b');
+            addPolylineArea(svg, polyline, bounds, `url(#${prefix}-${lineIndex ? 'green' : 'navy'})`, prefix, lineIndex ? '#795264' : '#153d5b');
           });
         }
         if (key === 'frontier') {
           const frontier = svg.querySelector('polyline');
-          if (frontier) addPolylineArea(svg, frontier, bounds, `url(#${prefix}-green)`, prefix, '#9a6a35');
+          if (frontier) addPolylineArea(svg, frontier, bounds, `url(#${prefix}-green)`, prefix, '#795264');
         }
         if (key === 'risk-return') {
           svg.querySelectorAll('circle').forEach((circle) => circle.setAttribute('filter', `url(#${prefix}-shadow)`));
@@ -1720,7 +1720,7 @@
         comparison: {
           label: 'Comparativa de cartera',
           items: ['Peso actual', 'Peso propuesto', 'Cambio neto'],
-          reading: 'Cada pareja de barras muestra qué porcentaje de la cartera corresponde a una inversión. La barra azul representa el peso actual y la barra bronce el peso del escenario optimizado. Si la barra bronce es más larga, esa posición aumenta; si es más corta, se reduce. Así puedes ver con facilidad dónde se concentra más dinero y qué cambios plantea la simulación.',
+          reading: 'Cada pareja de barras muestra qué porcentaje de la cartera corresponde a una inversión. La barra azul marino representa el peso actual y la barra granate representa el peso del escenario optimizado. Si la barra granate es más larga, esa posición aumenta; si es más corta, se reduce. Así puedes ver con facilidad dónde se concentra más dinero y qué cambios plantea la simulación.',
           method: 'Pesos sobre capital · cartera actual frente a propuesta optimizada',
           source: 'Escenario educativo NUVIA'
         },
