@@ -1789,9 +1789,27 @@
       const riskSection = closestSection(findHeading('Mapa riesgo / rentabilidad'));
       decorateRiskMap(riskSection);
       decorateFrontier(closestSection(findHeading('Frontera eficiente')));
-      return true;
+      const portfolioReady = Boolean(
+        tabs
+        && tabs.querySelectorAll('[role="tab"]').length >= 3
+        && suiteShell
+        && tabs.nextElementSibling
+        && document.querySelector('[data-nuvia-portfolio-lab]')
+        && document.querySelector('[data-nuvia-portfolio-masthead]')
+        && document.querySelector('[data-nuvia-holdings]')
+        && document.querySelector('[data-nuvia-diagnostic]')
+        && document.querySelector('[data-nuvia-simulation-controls]')
+        && document.querySelector('[data-nuvia-chart-section="comparison"] .nv-comparison-drawing')
+      );
+      return portfolioReady;
     };
 
+    let bootLayoutFrame = 0;
+    let bootObserver = null;
+    const scheduleLayoutPass = () => {
+      window.cancelAnimationFrame(bootLayoutFrame);
+      bootLayoutFrame = window.requestAnimationFrame(runLayoutPass);
+    };
     const runLayoutPass = () => {
       const ready = tagPortfolioLayout();
       if (ready) {
@@ -1800,12 +1818,21 @@
           document.body.dataset.nuviaBridgeReady = 'true';
           document.documentElement.classList.remove('nuvia-embedded-pending');
         }
+        bootObserver?.disconnect();
+        bootObserver = null;
         window.parent.postMessage({
           source: 'nuvia-core',
           type: 'ready',
         }, window.location.origin);
       }
     };
+    const root = document.getElementById('root');
+    if (root) {
+      bootObserver = new MutationObserver(() => {
+        if (!document.body.dataset.nuviaBridgeReady) scheduleLayoutPass();
+      });
+      bootObserver.observe(root, { childList: true, subtree: true });
+    }
     runLayoutPass();
     window.setTimeout(runLayoutPass, 250);
     window.setTimeout(runLayoutPass, 900);
@@ -1835,7 +1862,6 @@
     const observer = new ResizeObserver(reportHeight);
     observer.observe(document.documentElement);
     observer.observe(document.body);
-    const root = document.getElementById('root');
     if (root) observer.observe(root);
 
     window.addEventListener('load', reportHeight);
