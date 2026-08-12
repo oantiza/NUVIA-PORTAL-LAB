@@ -24,6 +24,7 @@ const topLevelFiles = [
   'tema-claro.css',
   'nuvia-design-system.css',
   'mercados-cotizaciones.css',
+  'cartera-redesign.css',
   'nuvia-site-unified.css',
   'nuvia-site-unified.js',
   'favicon.svg'

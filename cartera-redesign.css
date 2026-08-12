@@ -1,0 +1,253 @@
+.nuvia-route-cartera main {
+  padding: 0 0 76px !important;
+  background: var(--nv-cloud);
+}
+
+.nuvia-route-cartera main > .nuvia-analysis-page {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.nuvia-analysis-hero {
+  background: var(--nv-white);
+  border-bottom: 1px solid var(--nv-line);
+}
+
+.nuvia-analysis-hero__inner,
+.nuvia-analysis-content {
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+}
+
+.nuvia-analysis-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(360px, .68fr);
+  gap: 72px;
+  align-items: center;
+  padding: 72px 0 64px;
+}
+
+.nuvia-analysis-eyebrow {
+  margin: 0 0 14px;
+  color: var(--nv-green-700);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.nuvia-analysis-hero h1 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--nv-navy-900);
+  font-family: var(--nv-font-serif);
+  font-size: clamp(46px, 4.4vw, 64px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1.02;
+}
+
+.nuvia-analysis-lead {
+  max-width: 650px;
+  margin: 20px 0 0;
+  color: var(--nv-copy);
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.nuvia-analysis-start {
+  padding: 28px;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  background: var(--nv-cloud);
+}
+
+.nuvia-analysis-start strong,
+.nuvia-analysis-start span {
+  display: block;
+}
+
+.nuvia-analysis-start strong {
+  margin-bottom: 8px;
+  color: var(--nv-navy-900);
+  font-size: 17px;
+}
+
+.nuvia-analysis-start span {
+  margin-bottom: 20px;
+  color: var(--nv-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.nuvia-analysis-start a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 12px;
+  background: var(--nv-green-700);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nuvia-analysis-start a:hover {
+  background: var(--nv-navy-800);
+  color: white;
+}
+
+.nuvia-suite-nav {
+  background: var(--nv-navy-900);
+}
+
+.nuvia-suite-nav__inner {
+  display: flex;
+  gap: 8px;
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+  padding: 12px 0;
+}
+
+.nuvia-suite-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: rgba(255,255,255,.72);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nuvia-suite-nav a[aria-current="page"] {
+  background: white;
+  color: var(--nv-navy-900);
+}
+
+.nuvia-analysis-content {
+  padding-top: 42px;
+}
+
+.nuvia-fundamental-guide {
+  margin-bottom: 28px;
+}
+
+.nuvia-fundamental-guide__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.nuvia-fundamental-guide h2 {
+  margin: 0 0 6px;
+  color: var(--nv-navy-900);
+  font-family: var(--nv-font-serif);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+
+.nuvia-fundamental-guide__top p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--nv-muted);
+  font-size: 14px;
+}
+
+.nuvia-fundamental-guide__note {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--nv-mist);
+  color: var(--nv-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.nuvia-question-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.nuvia-question-card {
+  min-height: 150px;
+  padding: 22px;
+  border: 1px solid var(--nv-line);
+  border-radius: 18px;
+  background: var(--nv-white);
+}
+
+.nuvia-question-card small {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--nv-green-700);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.nuvia-question-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--nv-navy-900);
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.nuvia-question-card p {
+  margin: 0;
+  color: var(--nv-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.nuvia-suite-shell {
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  background: var(--nv-white);
+  box-shadow: var(--nv-shadow-md);
+}
+
+.nuvia-suite-shell iframe {
+  display: block;
+  width: 100%;
+  min-height: 1320px;
+  border: 0;
+  background: transparent;
+}
+
+.nuvia-route-cartera[data-suite-vista="portfolio"] .nuvia-fundamental-guide,
+.nuvia-route-cartera[data-suite-vista="technical"] .nuvia-fundamental-guide {
+  display: none;
+}
+
+@media (max-width: 1120px) and (min-width: 768px) {
+  .nuvia-analysis-hero__inner,
+  .nuvia-analysis-content,
+  .nuvia-suite-nav__inner {
+    width: calc(100% - 56px);
+  }
+
+  .nuvia-analysis-hero__inner {
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 34px;
+    padding: 54px 0 48px;
+  }
+
+  .nuvia-analysis-hero h1 {
+    font-size: 46px;
+  }
+
+  .nuvia-question-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

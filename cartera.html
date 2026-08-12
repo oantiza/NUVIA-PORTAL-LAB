@@ -8,6 +8,7 @@
 <title>Analítica de cartera | NUVIA Family Wealth</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
+<link rel="stylesheet" href="cartera-redesign.css">
 <script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
@@ -46,22 +47,52 @@
     <div style="height:1px; background:linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)"></div>
   </header>
 
-  <main style="padding:36px 0 76px">
-    <div style="max-width:1520px; margin:0 auto; padding:0 40px">
-      <h1 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap">Analítica de cartera NUVIA</h1>
-      <div aria-hidden="true" style="display:none">
-        <span style="display:inline-flex; align-items:center; gap:10px; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase"><span style="width:7px; height:7px; border-radius:999px; background:var(--color-accent); animation:nv-pulse 2.4s ease-out infinite"></span>Suite NUVIA conectada</span>
-        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px; text-align:right">Históricos reales · fundamentales EODHD · gráficos interactivos</span>
-      </div>
-      <nav aria-label="Vistas de la suite analitica" style="display:none">
-        <a id="vista-portfolio" href="cartera.html?vista=portfolio" style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:999px; border:1px solid color-mix(in srgb, var(--color-text) 14%, transparent); background:transparent; color:var(--color-text); font-size:12.5px; font-weight:500; text-decoration:none; transition:border-color .2s ease, background .2s ease">Cartera</a>
-        <a id="vista-technical" href="cartera.html?vista=technical" style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:999px; border:1px solid color-mix(in srgb, var(--color-text) 14%, transparent); background:transparent; color:var(--color-text); font-size:12.5px; font-weight:500; text-decoration:none; transition:border-color .2s ease, background .2s ease">Análisis técnico</a>
-        <a id="vista-fundamental" href="cartera.html?vista=fundamental" style="display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:999px; border:1px solid color-mix(in srgb, var(--color-text) 14%, transparent); background:transparent; color:var(--color-text); font-size:12.5px; font-weight:500; text-decoration:none; transition:border-color .2s ease, background .2s ease">Análisis fundamental</a>
+  <main>
+    <div class="nuvia-analysis-page">
+      <nav class="nuvia-suite-nav" aria-label="Vistas de la suite analítica">
+        <div class="nuvia-suite-nav__inner">
+          <a id="vista-portfolio" href="cartera.html?vista=portfolio">Mi cartera</a>
+          <a id="vista-technical" href="cartera.html?vista=technical">Tendencia</a>
+          <a id="vista-fundamental" href="cartera.html?vista=fundamental">Empresas</a>
+        </div>
       </nav>
-      <section aria-label="Suite interactiva de analítica de cartera" style="overflow:hidden; width:100%; border-radius:28px; background:var(--color-surface); box-shadow:0 24px 70px rgba(11,35,71,.10)">
-        <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no" style="display:block; width:100%; min-height:1500px; border:0; background:transparent"></iframe>
+
+      <section class="nuvia-analysis-hero" aria-labelledby="analysis-title">
+        <div class="nuvia-analysis-hero__inner">
+          <div>
+            <p class="nuvia-analysis-eyebrow">Análisis financiero · en lenguaje claro</p>
+            <h1 id="analysis-title">Entiende tus inversiones antes de decidir</h1>
+            <p class="nuvia-analysis-lead">Datos y herramientas para saber qué tienes, cómo evoluciona y si una empresa es sólida, sin necesitar un diccionario financiero.</p>
+          </div>
+          <aside class="nuvia-analysis-start" aria-label="Comenzar el análisis">
+            <strong>¿Quieres analizar una empresa?</strong>
+            <span>Busca su nombre, ticker o ISIN en el buscador conectado de NUVIA.</span>
+            <a href="#suite-nuvia">Abrir el buscador</a>
+          </aside>
+        </div>
       </section>
-      <p style="display:none">Suite de analítica integrada desde el núcleo NUVIA.</p>
+
+      <div class="nuvia-analysis-content">
+        <section class="nuvia-fundamental-guide" aria-labelledby="fundamental-guide-title">
+          <div class="nuvia-fundamental-guide__top">
+            <div>
+              <h2 id="fundamental-guide-title">Las cuatro preguntas importantes</h2>
+              <p>El análisis reúne los ratios por ti y los convierte en respuestas que puedes usar para hablar de dinero en familia.</p>
+            </div>
+            <span class="nuvia-fundamental-guide__note">Datos conectados · actualización diaria</span>
+          </div>
+          <div class="nuvia-question-grid">
+            <article class="nuvia-question-card"><small>01 · CRECIMIENTO</small><strong>¿Crece el negocio?</strong><p>Comprueba si las ventas, el beneficio y la caja avanzan con consistencia.</p></article>
+            <article class="nuvia-question-card"><small>02 · RENTABILIDAD</small><strong>¿Gana dinero bien?</strong><p>Mide cuánto beneficio convierte la empresa por cada euro que vende.</p></article>
+            <article class="nuvia-question-card"><small>03 · BALANCE</small><strong>¿Tiene demasiada deuda?</strong><p>Valora si puede cumplir sus obligaciones sin comprometer el futuro.</p></article>
+            <article class="nuvia-question-card"><small>04 · PRECIO</small><strong>¿Está cara?</strong><p>Compara la calidad del negocio con el precio que pide hoy el mercado.</p></article>
+          </div>
+        </section>
+
+        <section id="suite-nuvia" class="nuvia-suite-shell" aria-label="Suite interactiva de analítica de cartera">
+          <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no"></iframe>
+        </section>
+      </div>
     </div>
   </main>
 
@@ -111,6 +142,7 @@ class Component extends DCLogic {
     document.title = 'Analítica de cartera | NUVIA Family Wealth';
     const frame = document.getElementById('nuvia-portfolio-suite');
     if (!frame) return;
+    document.body.dataset.suiteVista = vista;
     const suite = {
       suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=' + vista
     };
@@ -129,6 +161,7 @@ class Component extends DCLogic {
       if (event.data.type === 'resize') applyHeight(event.data.height);
       if (event.data.type === 'suite-tab-change' && SUITE_TABS.includes(event.data.tab)) {
         const tab = event.data.tab;
+        document.body.dataset.suiteVista = tab;
         const url = new URL(window.location.href);
         url.searchParams.set('vista', tab);
         url.searchParams.delete('release');
