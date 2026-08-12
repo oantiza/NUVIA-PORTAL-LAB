@@ -206,7 +206,7 @@
         border-left: 1px solid #dfe5e8;
       }
       body.nuvia-web2-embedded [data-nuvia-suite-tabs] {
-        display: grid !important;
+        display: none !important;
         grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 0 !important;
         padding: 0 34px !important;

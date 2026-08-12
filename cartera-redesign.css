@@ -123,82 +123,6 @@
   padding-top: 42px;
 }
 
-.nuvia-fundamental-guide {
-  margin-bottom: 28px;
-}
-
-.nuvia-fundamental-guide__top {
-  display: flex;
-  justify-content: space-between;
-  gap: 32px;
-  align-items: end;
-  margin-bottom: 22px;
-}
-
-.nuvia-fundamental-guide h2 {
-  margin: 0 0 6px;
-  color: var(--nv-navy-900);
-  font-family: var(--nv-font-serif);
-  font-size: 32px;
-  font-weight: 600;
-  letter-spacing: -.03em;
-}
-
-.nuvia-fundamental-guide__top p {
-  max-width: 620px;
-  margin: 0;
-  color: var(--nv-muted);
-  font-size: 14px;
-}
-
-.nuvia-fundamental-guide__note {
-  flex: 0 0 auto;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: var(--nv-mist);
-  color: var(--nv-muted);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.nuvia-question-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.nuvia-question-card {
-  min-height: 150px;
-  padding: 22px;
-  border: 1px solid var(--nv-line);
-  border-radius: 18px;
-  background: var(--nv-white);
-}
-
-.nuvia-question-card small {
-  display: block;
-  margin-bottom: 14px;
-  color: var(--nv-green-700);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .08em;
-}
-
-.nuvia-question-card strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--nv-navy-900);
-  font-size: 17px;
-  line-height: 1.25;
-}
-
-.nuvia-question-card p {
-  margin: 0;
-  color: var(--nv-muted);
-  font-size: 13px;
-  line-height: 1.55;
-}
-
 .nuvia-suite-shell {
   overflow: hidden;
   width: 100%;
@@ -216,9 +140,13 @@
   background: transparent;
 }
 
-.nuvia-route-cartera[data-suite-vista="portfolio"] .nuvia-fundamental-guide,
-.nuvia-route-cartera[data-suite-vista="technical"] .nuvia-fundamental-guide {
+.nuvia-suite-shell iframe[hidden] {
   display: none;
+}
+
+#nuvia-company-suite {
+  min-height: 1680px;
+  background: #f5f1e8;
 }
 
 @media (max-width: 1120px) and (min-width: 768px) {
@@ -235,7 +163,4 @@
     font-size: 46px;
   }
 
-  .nuvia-question-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }

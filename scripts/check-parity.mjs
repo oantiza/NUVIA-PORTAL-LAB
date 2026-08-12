@@ -85,10 +85,13 @@ if (/onclick=["']location\.href/i.test(web2Home)) {
   throw new Error('La portada contiene botones de navegación que el renderizador no conserva');
 }
 
-if (!/suiteSrc: 'core\/index\.html\?portfolioPreview=1&embedded=web2&web2Suite=\d+&suiteTab=' \+ vista/.test(portfolioPage)) {
+if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'")) {
   throw new Error('La página de cartera no integra la suite analítica real del núcleo');
 }
-for (const suiteView of ['portfolio', 'technical', 'fundamental']) {
+if (!portfolioPage.includes('https://oaa-analisis.web.app/') || !portfolioPage.includes('ANALISIS-Y-VALORACION-EMPRESAS.git')) {
+  throw new Error('La vista Análisis y valoración de empresas no integra su aplicación completa');
+}
+for (const suiteView of ['portfolio', 'companies']) {
   if (!topicsPage.includes(`cartera.html?vista=${suiteView}`)) {
     throw new Error(`Falta el acceso a la vista analítica: ${suiteView}`);
   }

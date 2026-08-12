@@ -31,8 +31,7 @@ const header = (current) => `<header data-screen-label="Header" class="nuvia-sit
           <summary${current === 'cartera' ? ' aria-current="page"' : ''}>Cartera</summary>
           <div class="nuvia-site-nav__menu">
             <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
         <details class="nuvia-site-nav__topics${current === 'temas' ? ' is-active' : ''}">
@@ -66,8 +65,7 @@ const footer = `<footer data-screen-label="Footer" class="nuvia-site-footer">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
             <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=technical">Análisis técnico</a>
-            <a href="cartera.html?vista=fundamental">Análisis fundamental</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
             <a href="lecturas.html">Lecturas con criterio</a>
           </div>
         </div>
