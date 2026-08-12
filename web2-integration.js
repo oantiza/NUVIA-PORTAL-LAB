@@ -43,6 +43,69 @@
     if (element && typeof value === 'string') element.textContent = value;
   };
 
+  const mountSecondaryNewsDialog = (newsItems) => {
+    const dialog = document.getElementById('market-news-dialog');
+    if (!dialog || dialog.dataset.mounted === 'true') return;
+
+    const newsById = new Map(newsItems.map((item) => [item.id, item]));
+    const dialogField = (field) => dialog.querySelector(`[data-news-dialog="${field}"]`);
+    const openNews = (newsId) => {
+      const newsItem = newsById.get(newsId);
+      if (!newsItem) return;
+
+      const image = dialogField('image');
+      if (image) {
+        image.src = newsItem.imageUrl || '';
+        image.alt = newsItem.imageAlt || '';
+      }
+      ['category', 'date', 'title', 'summary', 'why'].forEach((field) => {
+        const valueByField = {
+          category: newsItem.category,
+          date: newsItem.publishedAt,
+          title: newsItem.title,
+          summary: newsItem.summary,
+          why: newsItem.whyItMatters,
+        };
+        const element = dialogField(field);
+        if (element) element.textContent = valueByField[field] || '';
+      });
+
+      const body = dialogField('body');
+      if (body) {
+        body.replaceChildren();
+        (Array.isArray(newsItem.body) ? newsItem.body : []).forEach((paragraph) => {
+          const element = document.createElement('p');
+          element.textContent = paragraph;
+          body.appendChild(element);
+        });
+      }
+
+      const sourceLink = dialogField('source-link');
+      if (sourceLink) {
+        sourceLink.href = newsItem.sourceUrl;
+        sourceLink.setAttribute('aria-label', `Leer la noticia original en ${newsItem.sourceName}`);
+      }
+      const dialogSourceName = dialogField('source-name');
+      if (dialogSourceName) dialogSourceName.textContent = `Leer en ${newsItem.sourceName}`;
+
+      dialog.showModal();
+    };
+
+    document.querySelectorAll('[data-market-news-id]').forEach((card) => {
+      card.addEventListener('click', () => openNews(card.dataset.marketNewsId));
+      card.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openNews(card.dataset.marketNewsId);
+      });
+    });
+    dialog.querySelector('[data-news-dialog-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.dataset.mounted = 'true';
+  };
+
   const hydrateDailyContent = async () => {
     try {
       const response = await fetch('./data/daily-content.json', { cache: 'no-cache' });
@@ -109,17 +172,18 @@
         const headline = newsCard.querySelector('[data-market-news-field="headline"]');
         const context = newsCard.querySelector('[data-market-news-field="context"]');
         const change = newsCard.querySelector('[data-market-news-field="change"]');
-        const source = newsCard.querySelector('[data-market-news-field="source"]');
+        const image = newsCard.querySelector('[data-market-news-field="image"]');
+        const sourceName = newsCard.querySelector('[data-market-news-field="source-name"]');
         if (label) label.textContent = newsItem.category;
         if (headline) headline.textContent = newsItem.title;
         if (context) context.textContent = newsItem.summary;
         if (change) change.textContent = newsItem.publishedAt;
-        if (source) {
-          source.textContent = `${newsItem.sourceName} ↗`;
-          source.href = newsItem.sourceUrl;
-          source.setAttribute('aria-label', `Leer la noticia en ${newsItem.sourceName}`);
-        }
+        if (image && newsItem.imageUrl) image.src = newsItem.imageUrl;
+        if (image && newsItem.imageAlt) image.alt = newsItem.imageAlt;
+        if (sourceName) sourceName.textContent = newsItem.sourceName;
+        newsCard.setAttribute('aria-label', `Ampliar noticia: ${newsItem.title}`);
       });
+      mountSecondaryNewsDialog(secondaryNews);
     } catch (error) {
       console.warn('NUVIA Portal Lab mantiene el último contenido editorial disponible.', error);
     }

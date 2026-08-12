@@ -65,15 +65,34 @@
     .markets-lead-news__copy { position:relative; z-index:1; display:flex; min-height:258px; max-width:78%; box-sizing:border-box; flex-direction:column; justify-content:center; padding:28px 32px; color:#fff; }
     .markets-secondary-news { display:flex; min-height:0; flex-direction:column; }
     .markets-secondary-grid { display:grid; min-height:0; flex:1; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
-    .markets-secondary-card { display:flex; min-width:0; height:100%; box-sizing:border-box; flex-direction:column; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:19px 20px 17px; transition:transform .25s ease, box-shadow .25s ease; }
-    .markets-news-graphic { position:relative; height:72px; flex-shrink:0; overflow:hidden; border:1px solid color-mix(in srgb, var(--color-accent) 14%, transparent); border-radius:var(--radius-sm); color:var(--color-accent); margin:12px 0 0; }
-    .markets-news-graphic svg { display:block; width:100%; height:100%; }
-    .markets-secondary-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .markets-secondary-card { display:flex; min-width:0; height:100%; box-sizing:border-box; flex-direction:column; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:19px 20px 17px; cursor:pointer; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+    .markets-news-photo { display:block; width:100%; height:104px; flex-shrink:0; object-fit:cover; overflow:hidden; border-radius:var(--radius-sm); margin:12px 0 0; }
+    .markets-secondary-card:hover { transform:translateY(-2px); border-color:color-mix(in srgb, var(--color-accent) 34%, transparent); box-shadow:var(--shadow-md); }
+    .markets-secondary-card:focus-visible { outline:3px solid color-mix(in srgb, var(--color-accent) 40%, transparent); outline-offset:3px; }
+    .markets-news-source { display:inline-flex; align-items:center; gap:5px; color:var(--color-accent); font-size:9px; }
+    .markets-news-dialog { width:min(900px,calc(100vw - 64px)); max-height:calc(100vh - 64px); box-sizing:border-box; overflow:auto; border:0; border-radius:var(--radius-lg); background:var(--color-surface); color:var(--color-text); box-shadow:0 26px 80px rgba(5,22,48,.28); padding:0; }
+    .markets-news-dialog::backdrop { background:rgba(5,22,48,.7); backdrop-filter:blur(5px); }
+    .markets-news-dialog__image { display:block; width:100%; height:300px; object-fit:cover; }
+    .markets-news-dialog__body { position:relative; padding:34px 42px 38px; }
+    .markets-news-dialog__close { position:absolute; top:18px; right:20px; display:grid; width:38px; height:38px; place-items:center; border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); border-radius:50%; background:var(--color-surface); color:var(--color-text); cursor:pointer; font-size:20px; line-height:1; }
+    .markets-news-dialog__eyebrow { display:flex; align-items:center; gap:10px; color:var(--color-accent); font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
+    .markets-news-dialog__title { max-width:720px; font-family:var(--font-display); font-size:34px; font-weight:500; line-height:1.12; margin:14px 0 16px; }
+    .markets-news-dialog__lead { max-width:760px; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:16px; line-height:1.55; margin:0 0 24px; }
+    .markets-news-dialog__copy { display:grid; gap:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.65; }
+    .markets-news-dialog__copy p { margin:0; }
+    .markets-news-dialog__why { margin-top:24px; border-left:3px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 7%, var(--color-surface)); padding:16px 18px; }
+    .markets-news-dialog__why strong { display:block; color:var(--color-text); font-size:10px; letter-spacing:.12em; text-transform:uppercase; margin-bottom:6px; }
+    .markets-news-dialog__why p { color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.55; margin:0; }
+    .markets-news-dialog__footer { display:flex; align-items:center; justify-content:space-between; gap:20px; border-top:1px solid var(--color-divider); margin-top:26px; padding-top:20px; }
+    .markets-news-dialog__source { display:inline-flex; align-items:center; gap:8px; border-radius:999px; background:var(--color-accent); color:#fff; font-size:11px; font-weight:600; padding:11px 17px; text-decoration:none; }
     @media (max-width:1180px) {
       .markets-overview-grid { grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr); gap:18px; }
       .markets-secondary-grid { gap:10px; }
       .markets-secondary-card { padding:16px; }
+      .markets-news-photo { height:92px; }
       .markets-lead-news__copy { max-width:88%; padding:25px 28px; }
+      .markets-news-dialog__image { height:250px; }
+      .markets-news-dialog__body { padding:30px 34px 34px; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
   </style>
@@ -247,68 +266,61 @@
                 <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:10.5px">3 lecturas breves</span>
               </div>
               <div class="markets-secondary-grid">
-                <article class="markets-secondary-card" data-market-news-id="spanish-treasury-bills">
+                <article class="markets-secondary-card" data-market-news-id="spanish-treasury-bills" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="market-news-dialog" aria-label="Ampliar noticia: Las letras a tres meses alcanzan el 2,4 %">
                   <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Deuda española</span>
-                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #e4bd67 10%, var(--color-surface)), var(--color-surface))" aria-hidden="true">
-                    <svg viewBox="0 0 200 72" fill="none">
-                      <rect x="34" y="9" width="86" height="54" rx="5" stroke="currentColor" stroke-width="2.2" />
-                      <path d="M48 24H91M48 34H105M48 44H86" stroke="currentColor" stroke-opacity=".42" stroke-width="2" stroke-linecap="round" />
-                      <circle cx="104" cy="49" r="6" stroke="#e4bd67" stroke-width="2" />
-                      <path d="M101 52L107 46M102 46H102.1M106 52H106.1" stroke="#e4bd67" stroke-width="1.7" stroke-linecap="round" />
-                      <path d="M137 53V22M137 22L128 31M137 22L146 31" stroke="#9DB861" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                      <path d="M128 58H153" stroke="#9DB861" stroke-width="2.4" stroke-linecap="round" />
-                    </svg>
-                  </div>
+                  <img class="markets-news-photo" data-market-news-field="image" src="src/assets/markets/secondary-news/spanish-treasury-bills.jpg" alt="Analista revisando documentación de una subasta de letras del Tesoro español" loading="lazy">
                   <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Las letras a tres meses alcanzan el 2,4 %</h4>
                   <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">La incertidumbre sobre los tipos eleva su rentabilidad al máximo desde febrero de 2025.</p>
                   <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
                     <span data-market-news-field="change" style="color:#e4bd67; font-size:9px; font-weight:600; text-transform:uppercase">11 ago 2026</span>
-                    <a data-market-news-field="source" href="https://cincodias.elpais.com/mercados-financieros/2026-08-11/la-incertidumbre-sobre-los-tipos-impulsa-al-24-la-rentabilidad-de-las-letras-a-tres-meses-maximo-desde-febrero-de-2025.html" target="_blank" rel="noreferrer" aria-label="Leer la noticia en Cinco Días" style="color:var(--color-accent); font-size:9px; text-decoration:none">Cinco Días ↗</a>
+                    <span class="markets-news-source"><span data-market-news-field="source-name">Cinco Días</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>
-                <article class="markets-secondary-card" data-market-news-id="nvidia-ai-financing">
+                <article class="markets-secondary-card" data-market-news-id="nvidia-ai-financing" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="market-news-dialog" aria-label="Ampliar noticia: Nvidia moviliza 500.000 millones para infraestructura de IA">
                   <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Inteligencia artificial</span>
-                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #8aa1ba 12%, var(--color-surface)), var(--color-surface)); color:#7089a4" aria-hidden="true">
-                    <svg viewBox="0 0 200 72" fill="none">
-                      <rect x="72" y="15" width="56" height="42" rx="6" stroke="currentColor" stroke-width="2.4" />
-                      <rect x="84" y="24" width="32" height="24" rx="3" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="1.8" />
-                      <path d="M80 9V15M92 9V15M104 9V15M116 9V15M80 57V63M92 57V63M104 57V63M116 57V63M66 23H72M66 35H72M66 47H72M128 23H134M128 35H134M128 47H134" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                      <circle cx="37" cy="22" r="6" fill="#9DB861" fill-opacity=".28" stroke="#9DB861" stroke-width="2" />
-                      <circle cx="37" cy="50" r="6" fill="#9DB861" fill-opacity=".28" stroke="#9DB861" stroke-width="2" />
-                      <circle cx="163" cy="22" r="6" fill="#e4bd67" fill-opacity=".22" stroke="#e4bd67" stroke-width="2" />
-                      <circle cx="163" cy="50" r="6" fill="#e4bd67" fill-opacity=".22" stroke="#e4bd67" stroke-width="2" />
-                      <path d="M43 22H64L72 28M43 50H64L72 44M157 22H136L128 28M157 50H136L128 44" stroke="currentColor" stroke-opacity=".58" stroke-width="1.8" />
-                    </svg>
-                  </div>
+                  <img class="markets-news-photo" data-market-news-field="image" src="src/assets/markets/secondary-news/nvidia-ai-infrastructure.jpg" alt="Técnico recorriendo un centro de datos de gran escala para inteligencia artificial" loading="lazy">
                   <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Nvidia moviliza 500.000 millones para infraestructura de IA</h4>
                   <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">Se alía con seis gigantes financieros para acelerar centros de datos y capacidad de cómputo.</p>
                   <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
                     <span data-market-news-field="change" style="color:#b9c7d8; font-size:9px; font-weight:600; text-transform:uppercase">10 ago 2026</span>
-                    <a data-market-news-field="source" href="https://www.axios.com/2026/08/10/nvidia-financing-ai-goldman-sachs-blackrock" target="_blank" rel="noreferrer" aria-label="Leer la noticia en Axios" style="color:var(--color-accent); font-size:9px; text-decoration:none">Axios ↗</a>
+                    <span class="markets-news-source"><span data-market-news-field="source-name">Axios</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>
-                <article class="markets-secondary-card" data-market-news-id="wall-street-records">
+                <article class="markets-secondary-card" data-market-news-id="wall-street-records" tabindex="0" role="button" aria-haspopup="dialog" aria-controls="market-news-dialog" aria-label="Ampliar noticia: Wall Street aguanta cerca de sus máximos históricos">
                   <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Mercados globales</span>
-                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #9DB861 12%, var(--color-surface)), var(--color-surface))" aria-hidden="true">
-                    <svg viewBox="0 0 200 72" fill="none">
-                      <path d="M14 58H186M14 43H186M14 28H186M14 13H186" stroke="currentColor" stroke-opacity=".12" />
-                      <path d="M18 54L40 48L59 51L79 37L98 39L119 25L140 28L158 15L182 17" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-                      <path d="M174 13L182 17L178 25" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-                      <rect x="26" y="47" width="8" height="11" rx="1.5" fill="currentColor" fill-opacity=".2" />
-                      <rect x="46" y="42" width="8" height="16" rx="1.5" fill="currentColor" fill-opacity=".28" />
-                      <rect x="66" y="45" width="8" height="13" rx="1.5" fill="currentColor" fill-opacity=".36" />
-                      <path d="M151 49C151 42 159 35 159 35C159 35 167 42 167 49C167 53.5 163.4 57 159 57C154.6 57 151 53.5 151 49Z" fill="#e4bd67" fill-opacity=".32" stroke="#e4bd67" stroke-width="1.7" />
-                    </svg>
-                  </div>
+                  <img class="markets-news-photo" data-market-news-field="image" src="src/assets/markets/secondary-news/wall-street-records.jpg" alt="Profesionales caminando por el distrito financiero de Wall Street en Nueva York" loading="lazy">
                   <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Wall Street aguanta cerca de sus máximos históricos</h4>
                   <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">Las bolsas se mantienen firmes pese a las oscilaciones del crudo y la cautela sobre los tipos.</p>
                   <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
                     <span data-market-news-field="change" style="color:#e4bd67; font-size:9px; font-weight:600; text-transform:uppercase">11 ago 2026</span>
-                    <a data-market-news-field="source" href="https://apnews.com/article/3f3f2f2d49e4aa8744d21ecd0ce55a9c" target="_blank" rel="noreferrer" aria-label="Leer la noticia en AP News" style="color:var(--color-accent); font-size:9px; text-decoration:none">AP News ↗</a>
+                    <span class="markets-news-source"><span data-market-news-field="source-name">AP News</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>
               </div>
             </section>
+
+            <dialog class="markets-news-dialog" id="market-news-dialog" aria-labelledby="market-news-dialog-title">
+              <img class="markets-news-dialog__image" data-news-dialog="image" src="" alt="">
+              <div class="markets-news-dialog__body">
+                <button class="markets-news-dialog__close" type="button" data-news-dialog-close aria-label="Cerrar noticia ampliada">×</button>
+                <div class="markets-news-dialog__eyebrow">
+                  <span data-news-dialog="category"></span>
+                  <span aria-hidden="true">·</span>
+                  <time data-news-dialog="date"></time>
+                </div>
+                <h3 class="markets-news-dialog__title" id="market-news-dialog-title" data-news-dialog="title"></h3>
+                <p class="markets-news-dialog__lead" data-news-dialog="summary"></p>
+                <div class="markets-news-dialog__copy" data-news-dialog="body"></div>
+                <aside class="markets-news-dialog__why">
+                  <strong>Por qué importa</strong>
+                  <p data-news-dialog="why"></p>
+                </aside>
+                <div class="markets-news-dialog__footer">
+                  <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px">Contenido ampliado por NUVIA</span>
+                  <a class="markets-news-dialog__source" data-news-dialog="source-link" href="#" target="_blank" rel="noreferrer"><span data-news-dialog="source-name">Leer fuente original</span><span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </dialog>
           </div>
         </div>
       </section>

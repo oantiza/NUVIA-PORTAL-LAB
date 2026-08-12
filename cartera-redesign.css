@@ -16,14 +16,16 @@
   color: #fff;
 }
 
-.nuvia-analysis-hero__inner,
 .nuvia-analysis-content {
   width: min(var(--nv-container), calc(100% - 96px));
   margin-inline: auto;
 }
 
 .nuvia-analysis-hero__inner {
-  padding: 64px 0 54px;
+  box-sizing: border-box;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 64px 48px 32px;
 }
 
 .nuvia-analysis-eyebrow {
@@ -49,7 +51,7 @@
   max-width: 16em;
   margin: 0 0 14px;
   color: #fff;
-  font-family: var(--nv-font-serif);
+  font-family: var(--font-body);
   font-size: 44px;
   font-weight: 500;
   letter-spacing: -.015em;
@@ -58,10 +60,41 @@
 
 .nuvia-analysis-lead {
   max-width: 62ch;
-  margin: 0;
+  margin: 0 0 32px;
   color: rgba(255,255,255,.74);
   font-size: 16.5px;
   line-height: 1.6;
+}
+
+.nuvia-analysis-tabs {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: var(--radius-md);
+}
+
+.nuvia-analysis-tabs a {
+  display: inline-flex;
+  align-items: center;
+  border-left: 1px solid rgba(255,255,255,.25);
+  background: transparent;
+  color: rgba(255,255,255,.78);
+  font-family: var(--font-heading);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 9px 18px;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.nuvia-analysis-tabs a:first-child { border-left: 0; }
+.nuvia-analysis-tabs a:hover { background: rgba(255,255,255,.12); color: #fff; }
+.nuvia-analysis-tabs a[aria-current="page"] { background: rgba(255,255,255,.95); color: #0b2347; }
+
+.nuvia-analysis-hero__divider {
+  height: 1px;
+  margin-top: 36px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent);
 }
 
 .nuvia-analysis-content {
