@@ -118,49 +118,7 @@
   </header>
 
   <main>
-    <section id="inicio" data-screen-label="Hero" style="position:relative; overflow:hidden; scroll-margin-top:80px; background:#1C3A5E">
-      <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none">
-        <img src="src/assets/home/hero-family-finance-compact.webp" alt="" style="width:100%; height:100%; object-fit:cover; object-position:78% 36%;">
-      </div>
-      <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(95deg, rgba(28,58,94,.94) 0%, rgba(28,58,94,.85) 32%, rgba(28,58,94,.48) 56%, rgba(28,58,94,.14) 78%), linear-gradient(0deg, #F4F6F9 0%, rgba(244,246,249,.6) 5%, rgba(244,246,249,0) 12%), linear-gradient(0deg, rgba(28,58,94,.55) 0%, rgba(28,58,94,0) 42%); pointer-events:none"></div>
-      <div style="position:relative; max-width:1240px; margin:0 auto; padding:100px 48px 48px; min-height:460px; box-sizing:border-box">
-      <span style="display:block; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#c9dca0; font-feature-settings:'tnum' 1; margin-bottom:16px">Perspectiva · Disciplina · Legado</span>
-      <h1 style="color:#ffffff; font-family:var(--font-heading); font-weight:500; font-size:56px; line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; max-width:15em">Información clara,<br>decisiones con propósito.</h1>
-      <p style="max-width:52ch; color:rgba(255,255,255,.85); font-size:16.5px; line-height:1.6; margin:0 0 26px">Planificación patrimonial y financiera para familias que piensan a largo plazo.</p>
-      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap">
-        <a href="#que-es-nuvia" class="btn btn-primary" style="text-decoration:none; white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Conoce el proyecto</a>
-        <a href="#mercados" class="btn btn-ghost" style="text-decoration:none; white-space:nowrap; color:#e8f0d5">Ver los mercados hoy →</a>
-      </div>
-      <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
-        <div style="margin-top:52px">
-          <div style="height:1px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
-          <div style="display:flex; padding:16px 0 0">
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">01</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Proteger</span>
-            </div>
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">02</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Crecer</span>
-            </div>
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">03</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Legado</span>
-            </div>
-          </div>
-        </div>
-      </sc-if>
-      </div>
-    </section>
-
-    <section id="mercados" data-screen-label="Resumen macro" style="max-width:1240px; margin:0 auto; padding:72px 48px 0; scroll-margin-top:80px">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px">
-        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent)"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Resumen estratégico</span>
-        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px" data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</span>
-      </div>
-      <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
-      <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
-
+    <div data-screen-label="Cinta de mercados" style="max-width:1240px; margin:0 auto; padding:16px 48px">
       <section class="nuvia-compact-ticker" aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:36px; padding:0 18px; border-bottom:1px solid rgba(255,255,255,.12)">
           <div style="display:flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">
@@ -203,6 +161,50 @@
           </div>
         </div>
       </section>
+    </div>
+
+    <section id="inicio" data-screen-label="Hero" style="position:relative; overflow:hidden; scroll-margin-top:80px; background:#1C3A5E">
+      <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none">
+        <img src="src/assets/home/hero-family-finance-compact.webp" alt="" style="width:100%; height:100%; object-fit:cover; object-position:78% 36%;">
+      </div>
+      <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(95deg, rgba(28,58,94,.94) 0%, rgba(28,58,94,.85) 32%, rgba(28,58,94,.48) 56%, rgba(28,58,94,.14) 78%), linear-gradient(0deg, #F4F6F9 0%, rgba(244,246,249,.6) 5%, rgba(244,246,249,0) 12%), linear-gradient(0deg, rgba(28,58,94,.55) 0%, rgba(28,58,94,0) 42%); pointer-events:none"></div>
+      <div style="position:relative; max-width:1240px; margin:0 auto; padding:100px 48px 48px; min-height:460px; box-sizing:border-box">
+      <span style="display:block; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#c9dca0; font-feature-settings:'tnum' 1; margin-bottom:16px">Perspectiva · Disciplina · Legado</span>
+      <h1 style="color:#ffffff; font-family:var(--font-heading); font-weight:500; font-size:56px; line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; max-width:15em">Información clara,<br>decisiones con propósito.</h1>
+      <p style="max-width:52ch; color:rgba(255,255,255,.85); font-size:16.5px; line-height:1.6; margin:0 0 26px">Planificación patrimonial y financiera para familias que piensan a largo plazo.</p>
+      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap">
+        <a href="#que-es-nuvia" class="btn btn-primary" style="text-decoration:none; white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Conoce el proyecto</a>
+        <a href="#mercados" class="btn btn-ghost" style="text-decoration:none; white-space:nowrap; color:#e8f0d5">Ver los mercados hoy →</a>
+      </div>
+      <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:52px">
+          <div style="height:1px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+          <div style="display:flex; padding:16px 0 0">
+            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px">
+              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">01</span>
+              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Proteger</span>
+            </div>
+            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
+              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">02</span>
+              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Crecer</span>
+            </div>
+            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
+              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">03</span>
+              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Legado</span>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      </div>
+    </section>
+
+    <section id="mercados" data-screen-label="Resumen macro" style="max-width:1240px; margin:0 auto; padding:72px 48px 0; scroll-margin-top:80px">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px">
+        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent)"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Resumen estratégico</span>
+        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px" data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</span>
+      </div>
+      <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
+      <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
 
     </section>
 
