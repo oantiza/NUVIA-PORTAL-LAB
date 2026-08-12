@@ -25,6 +25,8 @@
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
+    .nuvia-compact-ticker #nuvia-live-market-ticker { width:100%; height:46px; overflow:visible; transform:scaleY(.78); transform-origin:left top; }
+    @keyframes nv-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); } 70% { box-shadow: 0 0 0 6px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
     .markets-macro-compact { padding-top:10px !important; }
     .markets-macro-compact > div { padding:8px 18px 7px !important; }
     .markets-macro-compact > div > div:first-child { margin-bottom:5px !important; }
@@ -125,6 +127,25 @@
       <div style="height:1px; margin-top:36px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
     </div>
     </section>
+
+    <div data-screen-label="Cinta de mercados" style="max-width:1240px; margin:0 auto; padding:16px 48px 0">
+      <section class="nuvia-compact-ticker" aria-label="Cotizaciones de los principales índices y divisas" style="position:relative; overflow:hidden; margin:0; border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45)">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; min-height:36px; padding:0 18px; border-bottom:1px solid rgba(255,255,255,.12)">
+          <div style="display:flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">
+            <span aria-hidden="true" style="display:inline-block; width:7px; height:7px; border-radius:999px; background:#9DB861; animation:nv-pulse 2.4s ease-out infinite"></span>
+            <span>Mercados</span>
+            <span aria-hidden="true" style="color:rgba(255,255,255,.24); letter-spacing:0">·</span>
+            <a href="https://www.tradingview.com/markets/" target="_blank" rel="noopener nofollow" style="color:rgba(218,229,193,.72); font-size:9px; font-weight:500; letter-spacing:.08em; text-decoration:none; text-transform:none" style-hover="color:#e8f0d5">Ticker tape by TradingView</a>
+          </div>
+          <p style="color:rgba(255,255,255,.46); font-size:10px; letter-spacing:.04em; margin:0">Variación diaria · tiempo real, diferido o último cierre según mercado</p>
+        </div>
+        <div style="position:relative; height:36px; overflow:hidden">
+          <div style="position:absolute; z-index:2; top:0; bottom:0; left:0; width:36px; background:linear-gradient(90deg, #0B2347, transparent); pointer-events:none"></div>
+          <div style="position:absolute; z-index:2; top:0; bottom:0; right:0; width:36px; background:linear-gradient(270deg, #0B2347, transparent); pointer-events:none"></div>
+          <div id="nuvia-live-market-ticker" aria-label="Cotizaciones en tiempo real facilitadas por TradingView"></div>
+        </div>
+      </section>
+    </div>
 
 
     <sc-if value="{{ esPortada }}" hint-placeholder-val="{{ true }}">
