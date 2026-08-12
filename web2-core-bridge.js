@@ -8,6 +8,9 @@
   const activateEmbeddedMode = () => {
     document.documentElement.classList.add('nuvia-web2-embedded');
     document.body.classList.add('nuvia-web2-embedded');
+    if (['portfolio', 'technical', 'fundamental'].includes(requestedSuiteTab)) {
+      document.body.classList.add(`nuvia-web2-view-${requestedSuiteTab}`);
+    }
 
     const style = document.createElement('style');
     style.id = 'nuvia-web2-embedded-styles';
@@ -270,6 +273,93 @@
       body.nuvia-web2-embedded [data-nuvia-suite-panel] {
         padding: 42px 44px 54px !important;
         background: #f2f5f7 !important;
+      }
+
+      /* La vista fundamental ya tiene contexto y navegación en el portal exterior. */
+      body.nuvia-web2-view-fundamental [data-nuvia-suite-hero],
+      body.nuvia-web2-view-fundamental [data-nuvia-suite-tabs],
+      body.nuvia-web2-view-fundamental [data-nuvia-active-summary] {
+        display: none !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-suite-shell] {
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-suite-panel] {
+        padding: 0 0 34px !important;
+        background: transparent !important;
+      }
+      body.nuvia-web2-view-fundamental [data-testid="fundamental-module"] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-search] {
+        border-color: #d9e3e1 !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-search] > div:first-child {
+        padding: 30px !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-result] {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-company],
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-consensus],
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-chart],
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-details] > section,
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-decision] > section {
+        border-color: #d9e3e1 !important;
+        border-radius: 20px !important;
+        box-shadow: none !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-decision] {
+        order: 1;
+        grid-template-columns: minmax(330px, .82fr) minmax(0, 1.18fr) !important;
+        gap: 18px !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-summary] {
+        overflow: hidden;
+        border-color: #153b59 !important;
+        background: #123750 !important;
+        color: white !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-summary] h3,
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-summary] > div:first-child p {
+        color: white !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-summary] > div:last-child {
+        border-color: rgba(255,255,255,.14) !important;
+        background: rgba(255,255,255,.06) !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-summary] > div:last-child > p:last-child {
+        color: rgba(255,255,255,.78) !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-pillars] {
+        background: white !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-pillars] > div:last-child > div > article {
+        min-height: 154px;
+        border-color: #dfe7e5 !important;
+        border-radius: 16px !important;
+        background: #f4f7f6 !important;
+      }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-company] { order: 0; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-metrics] { order: 2; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-consensus] { order: 3; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-chart] { order: 4; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-details] { order: 5; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-disclaimer] { order: 6; }
+      body.nuvia-web2-view-fundamental [data-nuvia-fundamental-metrics] > * {
+        border-color: #dfe7e5 !important;
+        border-radius: 16px !important;
+        background: white !important;
+        box-shadow: none !important;
       }
       body.nuvia-web2-embedded [data-nuvia-fundamental-loading] {
         display: grid !important;
@@ -922,6 +1012,38 @@
           const selectedTab = tabs.querySelector('[role="tab"][aria-selected="true"]');
           const fundamentalSelected = selectedTab?.id === 'analytics-tab-fundamental';
           const fundamentalModule = panel.querySelector('[data-testid="fundamental-module"]');
+          if (fundamentalModule) {
+            const search = fundamentalModule.querySelector(':scope > section:first-child');
+            const result = fundamentalModule.querySelector('[data-testid="fundamental-result"]');
+            if (search) search.dataset.nuviaFundamentalSearch = '';
+            if (result) {
+              result.dataset.nuviaFundamentalResult = '';
+              const company = result.children[0];
+              const metrics = result.children[1];
+              const consensusHeading = findHeading('Consenso de analistas');
+              const consensus = closestSection(consensusHeading);
+              const summaryHeading = findHeading('Indicador fundamental');
+              const summary = closestSection(summaryHeading);
+              const decision = summary?.parentElement;
+              const pillarsHeading = findHeading('DiagnÃ³stico por bloques');
+              const pillars = closestSection(pillarsHeading);
+              const chartHeading = findHeading('Ingresos, beneficio y caja');
+              const chart = closestSection(chartHeading);
+              const ratiosHeading = findHeading('MÃ©tricas clave');
+              const details = closestSection(ratiosHeading)?.parentElement;
+              const disclaimer = result.lastElementChild;
+
+              if (company) company.dataset.nuviaFundamentalCompany = '';
+              if (metrics) metrics.dataset.nuviaFundamentalMetrics = '';
+              if (consensus) consensus.dataset.nuviaFundamentalConsensus = '';
+              if (decision) decision.dataset.nuviaFundamentalDecision = '';
+              if (summary) summary.dataset.nuviaFundamentalSummary = '';
+              if (pillars) pillars.dataset.nuviaFundamentalPillars = '';
+              if (chart) chart.dataset.nuviaFundamentalChart = '';
+              if (details) details.dataset.nuviaFundamentalDetails = '';
+              if (disclaimer) disclaimer.dataset.nuviaFundamentalDisclaimer = '';
+            }
+          }
           const fundamentalReady = !!fundamentalModule?.querySelector('[data-testid="fundamental-chart"]');
           const fundamentalFailed = !!fundamentalModule?.querySelector('[role="alert"]');
           let loadingNotice = panel.querySelector('[data-nuvia-fundamental-loading]');
