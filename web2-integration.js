@@ -4,7 +4,7 @@
   // Cambios vs v1: SIN redirecciones a core/ — las 12 páginas rediseñadas son las que se ven.
   // core/ sigue publicado y accesible directamente en ./core/index.html.
   // En la portada hidrata la noticia del día y monta el ticker; en Mercados hidrata
-  // los indicadores macroeconómicos (data-*) con la misma fuente de datos diaria,
+  // los indicadores macroeconómicos y las tres lecturas editoriales (data-*) con la misma fuente de datos diaria,
   // manteniendo su cabecera, bordes y fundidos laterales. Sin red, queda el contenido estático.
 
   const page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
@@ -52,10 +52,12 @@
 
       if (news) {
         setText('[data-daily-news="date"]', news.selectionDate);
+        setText('[data-daily-news="category"]', news.category);
         setText('[data-daily-news="title"]', news.title);
         setText('[data-daily-news="summary"]', news.summary);
         setText('[data-daily-news="why"]', news.whyItMatters);
         setText('[data-daily-news="source"]', `Fuente: ${news.sourceName} · Publicada el ${news.sourcePublishedAt}`);
+        setText('[data-daily-news="source-name"]', news.sourceName);
 
         const sourceLink = document.querySelector('[data-daily-news="source-link"]');
         if (sourceLink && news.sourceUrl) sourceLink.href = news.sourceUrl;
@@ -96,6 +98,26 @@
           if (arrow) { arrow.textContent = direction.symbol; arrow.style.color = direction.color; }
           const change = card.querySelector('[data-macro-field="change"]');
           if (change) change.style.color = direction.color;
+        }
+      });
+
+      const secondaryNews = Array.isArray(payload.secondaryEconomicNews) ? payload.secondaryEconomicNews : [];
+      secondaryNews.forEach((newsItem) => {
+        const newsCard = document.querySelector(`[data-market-news-id="${newsItem.id}"]`);
+        if (!newsCard) return;
+        const label = newsCard.querySelector('[data-market-news-field="label"]');
+        const headline = newsCard.querySelector('[data-market-news-field="headline"]');
+        const context = newsCard.querySelector('[data-market-news-field="context"]');
+        const change = newsCard.querySelector('[data-market-news-field="change"]');
+        const source = newsCard.querySelector('[data-market-news-field="source"]');
+        if (label) label.textContent = newsItem.category;
+        if (headline) headline.textContent = newsItem.title;
+        if (context) context.textContent = newsItem.summary;
+        if (change) change.textContent = newsItem.publishedAt;
+        if (source) {
+          source.textContent = `${newsItem.sourceName} ↗`;
+          source.href = newsItem.sourceUrl;
+          source.setAttribute('aria-label', `Leer la noticia en ${newsItem.sourceName}`);
         }
       });
     } catch (error) {

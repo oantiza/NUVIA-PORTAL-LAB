@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Informe diario, archivo histórico y lectura semanal de los mercados con el criterio patrimonial de NUVIA.">
+<meta name="description" content="Noticias financieras, indicadores, cotizaciones e informes diarios de los mercados en NUVIA.">
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/mercados.html">
 <title>Mercados | NUVIA</title>
-<script src="./web2-integration.js?v=20260810-macro-mercados"></script>
+<script src="./web2-integration.js?v=20260811-markets-overview"></script>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
 <script defer src="nuvia-site-unified.js"></script>
@@ -18,11 +18,60 @@
   <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
   <link rel="stylesheet" href="tema-claro.css">
   <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
+  <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-market-overview.js"></script>
   <style>
     html { scroll-behavior: smooth; }
     body { margin:0; background: var(--color-bg); text-wrap: pretty; }
     a { color: var(--color-accent-600); }
     a:hover { color: var(--color-accent-200); }
+    .markets-macro-compact { padding-top:10px !important; }
+    .markets-macro-compact > div { padding:8px 18px 7px !important; }
+    .markets-macro-compact > div > div:first-child { margin-bottom:5px !important; }
+    .markets-macro-compact > div > div:first-child h2 { font-size:9px !important; }
+    .markets-macro-compact [data-macro-updated] { font-size:9px !important; }
+    .markets-macro-compact [aria-label="Indicadores macroeconómicos actualizados"] article { padding:0 12px !important; }
+    .markets-macro-compact [aria-label="Indicadores macroeconómicos actualizados"] article > div:first-child { margin-bottom:2px !important; }
+    .markets-macro-compact [data-macro-field="label"] { font-size:8.5px !important; }
+    .markets-macro-compact [data-macro-field="label"] + [data-macro-field="direction"] { font-size:9px !important; }
+    .markets-macro-compact [data-macro-field="value"] { font-size:20px !important; }
+    .markets-macro-compact [data-macro-field="value"] + span { height:2px !important; margin-top:3px !important; }
+    .markets-macro-compact [data-macro-field="value"] + span + div { margin-top:3px !important; }
+    .markets-macro-compact [data-macro-field="change"] { font-size:8px !important; }
+    .markets-macro-compact [data-macro-field="change"] + span { display:none !important; }
+    .markets-macro-compact [data-macro-field="period"] { display:none !important; }
+    .markets-macro-compact [data-macro-field="context"] { display:none !important; }
+    .markets-macro-compact [data-macro-field="source"] { display:none !important; }
+    .markets-overview-grid { display:grid; grid-template-columns:minmax(340px,.78fr) minmax(0,1.42fr); gap:24px; align-items:stretch; }
+    .markets-index-card { display:flex; min-width:0; flex-direction:column; overflow:hidden; border:1px solid color-mix(in srgb, var(--color-text) 10%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); }
+    .markets-index-widget { height:528px; min-height:528px; background:var(--color-surface); }
+    .markets-index-widget tv-market-overview { display:block; width:100%; height:100%; }
+    .markets-quotes-view tv-market-overview { display:block; width:100%; height:580px; }
+    .markets-tools-nav { display:inline-flex; overflow:hidden; border:1px solid color-mix(in srgb, var(--color-text) 13%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:22px; }
+    .markets-calendar-panel { overflow:hidden; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); }
+    .markets-calendar-toolbar { display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; border-bottom:1px solid var(--color-divider); padding:18px 22px; }
+    .markets-filter-group { display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap; }
+    .markets-calendar-list { display:flex; flex-direction:column; }
+    .markets-calendar-row { display:grid; grid-template-columns:150px minmax(0,1fr) 130px 108px; align-items:center; gap:18px; border-top:1px solid color-mix(in srgb, var(--color-text) 7%, transparent); padding:17px 22px; }
+    .markets-calendar-row:first-child { border-top:0; }
+    .markets-calendar-row:hover { background:color-mix(in srgb, var(--color-accent) 4%, transparent); }
+    .markets-calendar-source { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px; padding:14px 22px; }
+    .markets-news-column { display:grid; min-width:0; grid-template-rows:minmax(258px,.92fr) minmax(0,1.08fr); gap:18px; }
+    .markets-lead-news { position:relative; min-height:258px; overflow:hidden; border-radius:var(--radius-md); background:#0B2347; box-shadow:var(--shadow-md); }
+    .markets-lead-news__image { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; filter:brightness(.7) saturate(.86); }
+    .markets-lead-news__veil { position:absolute; inset:0; background:linear-gradient(90deg, rgba(7,26,56,.98) 0%, rgba(7,26,56,.92) 55%, rgba(7,26,56,.35) 100%); }
+    .markets-lead-news__copy { position:relative; z-index:1; display:flex; min-height:258px; max-width:78%; box-sizing:border-box; flex-direction:column; justify-content:center; padding:28px 32px; color:#fff; }
+    .markets-secondary-news { display:flex; min-height:0; flex-direction:column; }
+    .markets-secondary-grid { display:grid; min-height:0; flex:1; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
+    .markets-secondary-card { display:flex; min-width:0; height:100%; box-sizing:border-box; flex-direction:column; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:19px 20px 17px; transition:transform .25s ease, box-shadow .25s ease; }
+    .markets-news-graphic { position:relative; height:72px; flex-shrink:0; overflow:hidden; border:1px solid color-mix(in srgb, var(--color-accent) 14%, transparent); border-radius:var(--radius-sm); color:var(--color-accent); margin:12px 0 0; }
+    .markets-news-graphic svg { display:block; width:100%; height:100%; }
+    .markets-secondary-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    @media (max-width:1180px) {
+      .markets-overview-grid { grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr); gap:18px; }
+      .markets-secondary-grid { gap:10px; }
+      .markets-secondary-card { padding:16px; }
+      .markets-lead-news__copy { max-width:88%; padding:25px 28px; }
+    }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
   </style>
 </helmet>
@@ -65,8 +114,8 @@
     <section id="mercados" data-screen-label="Cabecera mercados" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
       <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
       <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Mercados NUVIA</span>
-      <h1 style="color:#ffffff; max-width:16em; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">El pulso de los mercados, sin ruido</h1>
-      <p style="max-width:52ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0 0 32px">Informe diario, archivo histórico y una lectura semanal para conectar los mercados con las decisiones patrimoniales de tu familia.</p>
+      <h1 style="color:#ffffff; max-width:16em; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">Información financiera y mercados</h1>
+      <p style="max-width:62ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0 0 32px">Noticias financieras, indicadores, cotizaciones e informes diarios para seguir la actualidad de los mercados.</p>
       <nav aria-label="Vistas de mercados" style="display:inline-flex; overflow:hidden; border:1px solid rgba(255,255,255,.22); border-radius:var(--radius-md)">
         <sc-for list="{{ vistas }}" as="p" hint-placeholder-count="3">
           <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}" style-hover="{{ p.estiloHover }}">{{ p.label }}</button>
@@ -76,7 +125,10 @@
     </div>
     </section>
 
-    <section data-screen-label="Principales indicadores macroeconómicos" style="max-width:1240px; margin:0 auto; padding:40px 48px 0">
+
+    <sc-if value="{{ esPortada }}" hint-placeholder-val="{{ true }}">
+
+    <section class="markets-macro-compact" data-screen-label="Principales indicadores macroeconómicos" style="max-width:1240px; margin:0 auto; padding:40px 48px 0">
       <div style="border-radius:var(--radius-md); background:linear-gradient(160deg, #0B2347 0%, #071A38 100%); color:#ffffff; box-shadow:0 22px 55px -30px rgba(7,26,56,.45); padding:28px 32px 26px">
         <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin:0 0 22px">
           <h2 style="display:flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0"><span aria-hidden="true" style="display:inline-block; width:7px; height:7px; border-radius:999px; background:#9DB861"></span><span>Principales indicadores macroeconómicos</span></h2>
@@ -127,8 +179,119 @@
       </div>
     </section>
 
-    <sc-if value="{{ esDiario }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Informe diario" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+      <section data-screen-label="Principales índices y noticias" style="max-width:1240px; margin:0 auto; padding:48px 48px 0">
+        <header style="display:flex; align-items:end; justify-content:space-between; gap:24px; margin:0 0 22px">
+          <div>
+            <span style="display:inline-flex; align-items:center; gap:12px; color:var(--color-accent); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin-bottom:10px"><span aria-hidden="true" style="display:inline-block; width:36px; height:1px; background:var(--color-accent)"></span>Mercados en directo</span>
+            <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; line-height:1.1; margin:0">Principales índices</h2>
+          </div>
+          <p style="max-width:52ch; color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:12px; line-height:1.55; text-align:right; margin:0">Cotizaciones, noticia económica del día y tres señales que ayudan a entender el contexto.</p>
+        </header>
+
+        <div class="markets-overview-grid">
+          <article class="markets-index-card" aria-labelledby="markets-index-card-title">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 10%, transparent); padding:16px 18px 13px">
+              <div>
+                <p style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; margin:0 0 4px">Mercados globales</p>
+                <h3 id="markets-index-card-title" style="font-size:17px; font-weight:500; margin:0">Índices de referencia</h3>
+              </div>
+              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10px"><span aria-hidden="true" style="width:6px; height:6px; border-radius:999px; background:#72c99a"></span>Datos de mercado</span>
+            </div>
+            <div class="markets-index-widget">
+              <tv-market-overview symbol-sectors='[{"sectionName":"Índices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:SX5E","XETR:DAX","BME:IBC"]},{"sectionName":"Divisas","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY"]},{"sectionName":"Materias primas","symbols":["TVC:GOLD","TVC:UKOIL","TVC:USOIL"]}]'></tv-market-overview>
+            </div>
+            <p style="border-top:1px solid color-mix(in srgb, var(--color-text) 8%, transparent); color:color-mix(in srgb, var(--color-text) 45%, transparent); font-size:9.5px; line-height:1.45; margin:0; padding:9px 18px">Tiempo real, diferido o último cierre según el mercado · Información facilitada por TradingView.</p>
+          </article>
+
+          <div class="markets-news-column">
+            <article class="markets-lead-news">
+              <img class="markets-lead-news__image" src="src/assets/home/daily-news/daily-news-current.jpg" alt="Imagen editorial de la noticia económica del día" data-daily-news="image">
+              <div class="markets-lead-news__veil"></div>
+              <div class="markets-lead-news__copy">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 11px">
+                  <span style="display:inline-flex; align-items:center; gap:8px; color:#dae5c1; font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase"><span aria-hidden="true" style="width:6px; height:6px; border-radius:999px; background:#9DB861"></span>Noticia económica del día</span>
+                  <span data-daily-news="date" style="color:rgba(255,255,255,.67); font-size:11px">9 de agosto de 2026</span>
+                </div>
+                <span data-daily-news="category" style="color:rgba(255,255,255,.72); font-size:10.5px; margin:0 0 7px">Energía y geopolítica</span>
+                <h3 data-daily-news="title" style="max-width:18em; color:#fff; font-size:27px; font-weight:500; letter-spacing:-.012em; line-height:1.13; text-wrap:balance; margin:0 0 11px">Ormuz vuelve a tensarse y mantiene vivo el riesgo energético</h3>
+                <p data-daily-news="summary" style="display:-webkit-box; overflow:hidden; max-width:54em; color:rgba(255,255,255,.82); font-size:12.5px; line-height:1.55; -webkit-box-orient:vertical; -webkit-line-clamp:3; margin:0 0 16px">La tensión vuelve a poner el foco en una ruta crítica para el petróleo y el gas mundiales y mantiene la incertidumbre sobre energía, inflación y crecimiento.</p>
+                <a href="https://apnews.com/article/feb75871fb82c44b3f7fd0ee02bb24b4" target="_blank" rel="noreferrer" data-daily-news="source-link" style="display:inline-flex; width:fit-content; align-items:center; gap:8px; color:#e8f0d5; font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; text-decoration:none; transition:gap .25s ease" style-hover="gap:13px">Leer en <span data-daily-news="source-name">AP News</span> <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+
+            <section class="markets-secondary-news" aria-labelledby="secondary-market-news-title">
+              <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; margin:0 0 10px">
+                <h3 id="secondary-market-news-title" style="font-size:17px; font-weight:500; margin:0">Otras noticias que importan</h3>
+                <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:10.5px">3 lecturas breves</span>
+              </div>
+              <div class="markets-secondary-grid">
+                <article class="markets-secondary-card" data-market-news-id="spanish-treasury-bills">
+                  <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Deuda española</span>
+                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #e4bd67 10%, var(--color-surface)), var(--color-surface))" aria-hidden="true">
+                    <svg viewBox="0 0 200 72" fill="none">
+                      <rect x="34" y="9" width="86" height="54" rx="5" stroke="currentColor" stroke-width="2.2" />
+                      <path d="M48 24H91M48 34H105M48 44H86" stroke="currentColor" stroke-opacity=".42" stroke-width="2" stroke-linecap="round" />
+                      <circle cx="104" cy="49" r="6" stroke="#e4bd67" stroke-width="2" />
+                      <path d="M101 52L107 46M102 46H102.1M106 52H106.1" stroke="#e4bd67" stroke-width="1.7" stroke-linecap="round" />
+                      <path d="M137 53V22M137 22L128 31M137 22L146 31" stroke="#9DB861" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M128 58H153" stroke="#9DB861" stroke-width="2.4" stroke-linecap="round" />
+                    </svg>
+                  </div>
+                  <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Las letras a tres meses alcanzan el 2,4 %</h4>
+                  <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">La incertidumbre sobre los tipos eleva su rentabilidad al máximo desde febrero de 2025.</p>
+                  <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
+                    <span data-market-news-field="change" style="color:#e4bd67; font-size:9px; font-weight:600; text-transform:uppercase">11 ago 2026</span>
+                    <a data-market-news-field="source" href="https://cincodias.elpais.com/mercados-financieros/2026-08-11/la-incertidumbre-sobre-los-tipos-impulsa-al-24-la-rentabilidad-de-las-letras-a-tres-meses-maximo-desde-febrero-de-2025.html" target="_blank" rel="noreferrer" aria-label="Leer la noticia en Cinco Días" style="color:var(--color-accent); font-size:9px; text-decoration:none">Cinco Días ↗</a>
+                  </div>
+                </article>
+                <article class="markets-secondary-card" data-market-news-id="nvidia-ai-financing">
+                  <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Inteligencia artificial</span>
+                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #8aa1ba 12%, var(--color-surface)), var(--color-surface)); color:#7089a4" aria-hidden="true">
+                    <svg viewBox="0 0 200 72" fill="none">
+                      <rect x="72" y="15" width="56" height="42" rx="6" stroke="currentColor" stroke-width="2.4" />
+                      <rect x="84" y="24" width="32" height="24" rx="3" fill="currentColor" fill-opacity=".16" stroke="currentColor" stroke-width="1.8" />
+                      <path d="M80 9V15M92 9V15M104 9V15M116 9V15M80 57V63M92 57V63M104 57V63M116 57V63M66 23H72M66 35H72M66 47H72M128 23H134M128 35H134M128 47H134" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      <circle cx="37" cy="22" r="6" fill="#9DB861" fill-opacity=".28" stroke="#9DB861" stroke-width="2" />
+                      <circle cx="37" cy="50" r="6" fill="#9DB861" fill-opacity=".28" stroke="#9DB861" stroke-width="2" />
+                      <circle cx="163" cy="22" r="6" fill="#e4bd67" fill-opacity=".22" stroke="#e4bd67" stroke-width="2" />
+                      <circle cx="163" cy="50" r="6" fill="#e4bd67" fill-opacity=".22" stroke="#e4bd67" stroke-width="2" />
+                      <path d="M43 22H64L72 28M43 50H64L72 44M157 22H136L128 28M157 50H136L128 44" stroke="currentColor" stroke-opacity=".58" stroke-width="1.8" />
+                    </svg>
+                  </div>
+                  <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Nvidia moviliza 500.000 millones para infraestructura de IA</h4>
+                  <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">Se alía con seis gigantes financieros para acelerar centros de datos y capacidad de cómputo.</p>
+                  <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
+                    <span data-market-news-field="change" style="color:#b9c7d8; font-size:9px; font-weight:600; text-transform:uppercase">10 ago 2026</span>
+                    <a data-market-news-field="source" href="https://www.axios.com/2026/08/10/nvidia-financing-ai-goldman-sachs-blackrock" target="_blank" rel="noreferrer" aria-label="Leer la noticia en Axios" style="color:var(--color-accent); font-size:9px; text-decoration:none">Axios ↗</a>
+                  </div>
+                </article>
+                <article class="markets-secondary-card" data-market-news-id="wall-street-records">
+                  <span data-market-news-field="label" style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase">Mercados globales</span>
+                  <div class="markets-news-graphic" style="background:linear-gradient(145deg, color-mix(in srgb, #9DB861 12%, var(--color-surface)), var(--color-surface))" aria-hidden="true">
+                    <svg viewBox="0 0 200 72" fill="none">
+                      <path d="M14 58H186M14 43H186M14 28H186M14 13H186" stroke="currentColor" stroke-opacity=".12" />
+                      <path d="M18 54L40 48L59 51L79 37L98 39L119 25L140 28L158 15L182 17" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M174 13L182 17L178 25" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+                      <rect x="26" y="47" width="8" height="11" rx="1.5" fill="currentColor" fill-opacity=".2" />
+                      <rect x="46" y="42" width="8" height="16" rx="1.5" fill="currentColor" fill-opacity=".28" />
+                      <rect x="66" y="45" width="8" height="13" rx="1.5" fill="currentColor" fill-opacity=".36" />
+                      <path d="M151 49C151 42 159 35 159 35C159 35 167 42 167 49C167 53.5 163.4 57 159 57C154.6 57 151 53.5 151 49Z" fill="#e4bd67" fill-opacity=".32" stroke="#e4bd67" stroke-width="1.7" />
+                    </svg>
+                  </div>
+                  <h4 data-market-news-field="headline" style="font-size:16px; font-weight:500; line-height:1.25; margin:10px 0 8px">Wall Street aguanta cerca de sus máximos históricos</h4>
+                  <p data-market-news-field="context" style="flex:1; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0 0 14px">Las bolsas se mantienen firmes pese a las oscilaciones del crudo y la cautela sobre los tipos.</p>
+                  <div style="display:flex; align-items:end; justify-content:space-between; gap:8px">
+                    <span data-market-news-field="change" style="color:#e4bd67; font-size:9px; font-weight:600; text-transform:uppercase">11 ago 2026</span>
+                    <a data-market-news-field="source" href="https://apnews.com/article/3f3f2f2d49e4aa8744d21ecd0ce55a9c" target="_blank" rel="noreferrer" aria-label="Leer la noticia en AP News" style="color:var(--color-accent); font-size:9px; text-decoration:none">AP News ↗</a>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Informe diario" style="max-width:1240px; margin:0 auto; padding:48px 48px 84px">
         <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,.38fr) minmax(0,.62fr)">
           <div style="position:relative; min-height:320px">
             <img src="src/assets/home/daily-report-preview.webp" alt="Informe diario NUVIA" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.8) saturate(.9)">
@@ -149,11 +312,12 @@
       </section>
     </sc-if>
 
-    <sc-if value="{{ esArchivo }}" hint-placeholder-val="{{ false }}">
-      <section id="archivo" data-screen-label="Archivo de informes" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+    <sc-if value="{{ esInformes }}" hint-placeholder-val="{{ false }}">
+      <section id="informes" data-screen-label="Informe diario" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
         <div style="max-width:880px">
-          <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; line-height:1.1; margin:0 0 8px">Archivo de informes diarios</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 8px">Accede al histórico de informes diarios generados y listos para su lectura.</p>
+          <p style="color:var(--color-accent); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Análisis de cada jornada</p>
+          <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; line-height:1.1; margin:0 0 8px">Informe diario</h2>
+          <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 8px">Las claves de apertura y cierre, con seguimiento de renta variable, renta fija, divisas y materias primas. Consulta la última edición o accede al archivo.</p>
           <div style="display:flex; align-items:center; gap:0; margin:0 0 26px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span></div>
           <div style="display:flex; flex-direction:column; gap:12px">
             <sc-for list="{{ informes }}" as="r" hint-placeholder-count="4">
@@ -175,32 +339,105 @@
       </section>
     </sc-if>
 
-    <sc-if value="{{ esSemanal }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Barómetro semanal" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-          <div style="background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:38px 42px">
-            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">Resumen estratégico</p>
-            <h2 style="font-size:36px; font-weight:500; letter-spacing:-.012em; line-height:1.08; margin:0 0 12px">Barómetro semanal</h2>
-            <p style="max-width:52ch; color:color-mix(in srgb, var(--color-text) 78%, transparent); font-size:15.5px; line-height:1.65; margin:0">Una lectura breve para distinguir las señales relevantes del ruido y mantener el foco en el plan familiar.</p>
+    <sc-if value="{{ esCotizaciones }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Mercados y cotizaciones" style="max-width:1240px; margin:0 auto; padding:40px 48px 84px">
+        <div style="display:flex; align-items:end; justify-content:space-between; gap:28px; margin:0 0 24px">
+          <div>
+            <p style="color:var(--color-accent); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">Datos de mercado</p>
+            <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; line-height:1.1; margin:0 0 8px">Mercados y cotizaciones</h2>
+            <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14.5px; line-height:1.6; margin:0">Consulta cotizaciones y revisa los acontecimientos económicos y empresariales que pueden mover los mercados.</p>
           </div>
-          <div style="padding:30px 42px 38px">
-            <span style="display:inline-flex; align-items:center; gap:8px; border:1px solid var(--color-accent-700); border-radius:999px; background:color-mix(in srgb, var(--color-accent) 8%, transparent); color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2 2"></path><path d="M5 3 2 6M22 6l-3-3"></path></svg>Próxima publicación en preparación</span>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin-top:24px">
-              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:24px 26px">
-                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
-                <h3 style="font-size:20px; font-weight:500; line-height:1.25; margin:16px 0 0">Contexto antes que titulares</h3>
-                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:10px 0 0">El barómetro conectará mercados, economía y geopolítica con las decisiones patrimoniales de largo plazo.</p>
-              </article>
-              <article style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); box-shadow:var(--shadow-sm); padding:24px 26px">
-                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300)"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
-                <h3 style="font-size:20px; font-weight:500; line-height:1.25; margin:16px 0 0">Fuentes y fechas visibles</h3>
-                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin:10px 0 0">Cada edición identificará con claridad la fecha de corte, las fuentes utilizadas y el alcance de la información.</p>
-              </article>
-            </div>
-          </div>
+          <span style="flex-shrink:0; color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:11px">Zona horaria: Madrid</span>
         </div>
+        <nav class="markets-tools-nav" aria-label="Herramientas de mercados">
+          <sc-for list="{{ herramientasMercado }}" as="h" hint-placeholder-count="3">
+            <button type="button" onClick="{{ h.abrir }}" aria-current="{{ h.ariaCurrent }}" style="{{ h.estilo }}" style-hover="{{ h.estiloHover }}">{{ h.label }}</button>
+          </sc-for>
+        </nav>
+
+        <sc-if value="{{ esPanelCotizaciones }}" hint-placeholder-val="{{ true }}">
+          <div class="markets-quotes-view" style="overflow:hidden; border:1px solid color-mix(in srgb, var(--color-text) 9%, transparent); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:12px">
+            <tv-market-overview symbol-sectors='[{"sectionName":"Índices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:SX5E","XETR:DAX","BME:IBC"]},{"sectionName":"Divisas","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY"]},{"sectionName":"Materias primas","symbols":["TVC:GOLD","TVC:UKOIL","TVC:USOIL"]}]'></tv-market-overview>
+            <p style="color:color-mix(in srgb, var(--color-text) 44%, transparent); font-size:10.5px; margin:8px 10px 4px">Datos en tiempo real, diferidos o último cierre según el mercado · Información facilitada por TradingView.</p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ esCalendarioEconomico }}" hint-placeholder-val="{{ false }}">
+          <div class="markets-calendar-panel">
+            <div class="markets-calendar-toolbar">
+              <div class="markets-filter-group" aria-label="Periodo del calendario económico">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-right:4px">Periodo</span>
+                <sc-for list="{{ periodosAgenda }}" as="p" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ p.abrir }}" aria-pressed="{{ p.activo }}" style="{{ p.estilo }}">{{ p.label }}</button>
+                </sc-for>
+              </div>
+              <div class="markets-filter-group" aria-label="Impacto del acontecimiento">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-right:4px">Impacto</span>
+                <sc-for list="{{ impactosAgenda }}" as="i" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ i.abrir }}" aria-pressed="{{ i.activo }}" style="{{ i.estilo }}">{{ i.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:20px 22px 12px">
+              <div>
+                <p style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; margin:0 0 6px">Agenda macroeconómica</p>
+                <h3 style="font-size:22px; font-weight:500; margin:0">Principales referencias económicas</h3>
+              </div>
+              <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:10.5px">Horas expresadas en CEST</span>
+            </div>
+            <div class="markets-calendar-list">
+              <sc-for list="{{ eventosEconomicos }}" as="e" hint-placeholder-count="4">
+                <article class="markets-calendar-row">
+                  <div><strong style="display:block; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums">{{ e.fecha }}</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; margin-top:3px">{{ e.hora }}</span></div>
+                  <div><span style="display:block; color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:5px">{{ e.region }}</span><h4 style="font-size:15px; font-weight:500; line-height:1.35; margin:0">{{ e.titulo }}</h4></div>
+                  <span style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:11.5px">{{ e.detalle }}</span>
+                  <span style="{{ e.estiloImpacto }}">{{ e.impacto }}</span>
+                </article>
+              </sc-for>
+            </div>
+            <div class="markets-calendar-source"><span>Selección de referencias con mayor seguimiento de mercado.</span><span>Fuentes: calendarios oficiales y medios financieros · Actualizado 11 ago 2026</span></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ esCalendarioEmpresas }}" hint-placeholder-val="{{ false }}">
+          <div class="markets-calendar-panel">
+            <div class="markets-calendar-toolbar">
+              <div class="markets-filter-group" aria-label="Periodo del calendario de empresas">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-right:4px">Periodo</span>
+                <sc-for list="{{ periodosAgenda }}" as="p" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ p.abrir }}" aria-pressed="{{ p.activo }}" style="{{ p.estilo }}">{{ p.label }}</button>
+                </sc-for>
+              </div>
+              <div class="markets-filter-group" aria-label="Tipo de acontecimiento empresarial">
+                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-right:4px">Tipo</span>
+                <sc-for list="{{ tiposEmpresa }}" as="t" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ t.abrir }}" aria-pressed="{{ t.activo }}" style="{{ t.estilo }}">{{ t.label }}</button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:20px 22px 12px">
+              <div>
+                <p style="color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; margin:0 0 6px">Agenda corporativa</p>
+                <h3 style="font-size:22px; font-weight:500; margin:0">Resultados y dividendos</h3>
+              </div>
+              <span style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:10.5px">Fechas sujetas a confirmación por cada compañía</span>
+            </div>
+            <div class="markets-calendar-list">
+              <sc-for list="{{ eventosEmpresas }}" as="e" hint-placeholder-count="5">
+                <article class="markets-calendar-row">
+                  <div><strong style="display:block; font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums">{{ e.fecha }}</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; margin-top:3px">{{ e.momento }}</span></div>
+                  <div><span style="display:block; color:var(--color-accent); font-size:9.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; margin-bottom:5px">{{ e.ticker }} · {{ e.mercado }}</span><h4 style="font-size:15px; font-weight:500; line-height:1.35; margin:0">{{ e.empresa }}</h4></div>
+                  <span style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:11.5px">{{ e.detalle }}</span>
+                  <span style="{{ e.estiloTipo }}">{{ e.tipoLabel }}</span>
+                </article>
+              </sc-for>
+            </div>
+            <div class="markets-calendar-source"><span>Resultados: estimaciones de consenso cuando están disponibles. Dividendos: fecha de pago e importe anunciado.</span><span>Fuentes: Kiplinger y calendarios de dividendos · Actualizado 11 ago 2026</span></div>
+          </div>
+        </sc-if>
       </section>
     </sc-if>
+
   </main>
 
   <footer data-screen-label="Footer" style="padding:0 0 22px">
@@ -216,9 +453,9 @@
         <div>
           <h4 style="font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 14px; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent)">Mercados</h4>
           <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-start">
-            <button type="button" onClick="{{ irDiario }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Informe diario</button>
-            <button type="button" onClick="{{ irArchivo }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Archivo de informes</button>
-            <button type="button" onClick="{{ irSemanal }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Barómetro semanal</button>
+            <button type="button" onClick="{{ irPortada }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Portada</button>
+            <button type="button" onClick="{{ irInformes }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Informe diario</button>
+            <button type="button" onClick="{{ irCotizaciones }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados y cotizaciones</button>
           </div>
         </div>
         <div>
@@ -249,17 +486,50 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
-  state = { vista: 'diario', temasOpen: false };
+  state = { vista: 'portada', mercadoVista: 'cotizaciones', agendaPeriodo: 'dia', agendaImpacto: 'todos', empresaTipo: 'todos', temasOpen: false };
   componentDidMount() {
     document.title = 'Mercados | NUVIA Family Wealth';
     const p = new URLSearchParams(window.location.search).get('vista');
-    if (p && ['diario', 'archivo', 'semanal'].includes(p)) this.setState({ vista: p });
+    const legacy = { diario: 'portada', archivo: 'informes', semanal: 'cotizaciones' };
+    const vista = legacy[p] || p;
+    if (vista && ['portada', 'informes', 'cotizaciones'].includes(vista)) this.setState({ vista });
   }
   ir(v) { this.setState({ vista: v }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   renderVals() {
     const vista = this.state.vista;
     const base = 'display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:var(--font-heading); font-weight:500; font-size:13.5px; padding:9px 18px; border:0; border-left:1px solid rgba(255,255,255,.25); transition:background .2s ease, color .2s ease, box-shadow .2s ease; ';
-    const defs = [['diario', 'Informe diario'], ['archivo', 'Archivo de informes'], ['semanal', 'Barómetro semanal']];
+    const defs = [['portada', 'Portada'], ['informes', 'Informe diario'], ['cotizaciones', 'Mercados y cotizaciones']];
+    const mercadoVista = this.state.mercadoVista;
+    const herramientaBase = 'cursor:pointer; border:0; border-left:1px solid color-mix(in srgb, var(--color-text) 11%, transparent); font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:11px 17px; transition:background .2s ease, color .2s ease; ';
+    const herramientasDefs = [['cotizaciones', 'Cotizaciones'], ['economico', 'Calendario económico'], ['empresas', 'Calendario de empresas']];
+    const filtroBase = 'cursor:pointer; border:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); border-radius:999px; font-family:var(--font-body); font-size:10.5px; padding:6px 11px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
+    const filtroEstilo = (activo) => filtroBase + (activo ? 'background:#0B2347; border-color:#0B2347; color:#fff' : 'background:transparent; color:color-mix(in srgb, var(--color-text) 68%, transparent)');
+    const eventosEconomicosBase = [
+      { periodos:['dia','semana','mes'], fecha:'Hoy · 11 ago', hora:'12:00', region:'Estados Unidos', titulo:'Índice NFIB de confianza de las pequeñas empresas', detalle:'Julio', impacto:'Medio', impactoId:'medio' },
+      { periodos:['dia','semana','mes'], fecha:'Hoy · 11 ago', hora:'16:00', region:'Estados Unidos', titulo:'Ventas de viviendas existentes', detalle:'Julio', impacto:'Alto', impactoId:'alto' },
+      { periodos:['semana','mes'], fecha:'Mié · 12 ago', hora:'14:30', region:'Estados Unidos', titulo:'IPC general y subyacente', detalle:'Julio', impacto:'Alto', impactoId:'alto' },
+      { periodos:['semana','mes'], fecha:'Vie · 14 ago', hora:'10:00', region:'Eurozona', titulo:'Reservas internacionales y liquidez en divisas del Eurosistema', detalle:'Julio', impacto:'Medio', impactoId:'medio' },
+      { periodos:['mes'], fecha:'Mar · 18 ago', hora:'11:05', region:'Alemania', titulo:'Expectativas económicas ZEW', detalle:'Agosto', impacto:'Alto', impactoId:'alto' },
+      { periodos:['mes'], fecha:'Jue · 27 ago', hora:'13:30', region:'Eurozona', titulo:'Actas de política monetaria del BCE', detalle:'Reunión de julio', impacto:'Alto', impactoId:'alto' },
+    ];
+    const eventosEmpresasBase = [
+      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'Hoy · 11 ago', momento:'Antes de apertura', ticker:'CAH', mercado:'NYSE', empresa:'Cardinal Health', detalle:'BPA estimado: 2,42 $' },
+      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'Hoy · 11 ago', momento:'Después del cierre', ticker:'CRWV', mercado:'Nasdaq', empresa:'CoreWeave', detalle:'Ingresos estimados: 2.560 M$' },
+      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'Hoy · 11 ago', momento:'Fecha de pago', ticker:'TXN', mercado:'Nasdaq', empresa:'Texas Instruments', detalle:'Dividendo: 1,42 $ por acción' },
+      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'Hoy · 11 ago', momento:'Fecha de pago', ticker:'NUE', mercado:'NYSE', empresa:'Nucor', detalle:'Dividendo: 0,56 $ por acción' },
+      { periodos:['semana','mes'], tipo:'resultados', fecha:'Mié · 12 ago', momento:'Después del cierre', ticker:'CSCO', mercado:'Nasdaq', empresa:'Cisco Systems', detalle:'BPA estimado: 1,17 $' },
+      { periodos:['semana','mes'], tipo:'dividendos', fecha:'Jue · 13 ago', momento:'Fecha de pago', ticker:'AAPL', mercado:'Nasdaq', empresa:'Apple', detalle:'Dividendo: 0,27 $ por acción' },
+      { periodos:['semana','mes'], tipo:'dividendos', fecha:'Vie · 14 ago', momento:'Fecha de pago', ticker:'ABBV', mercado:'NYSE', empresa:'AbbVie', detalle:'Dividendo: 1,73 $ por acción' },
+      { periodos:['mes'], tipo:'dividendos', fecha:'Mié · 19 ago', momento:'Fecha de pago', ticker:'CAT', mercado:'NYSE', empresa:'Caterpillar', detalle:'Dividendo: 1,63 $ por acción' },
+      { periodos:['mes'], tipo:'dividendos', fecha:'Vie · 28 ago', momento:'Fecha de pago', ticker:'SBUX', mercado:'Nasdaq', empresa:'Starbucks', detalle:'Dividendo: 0,62 $ por acción' },
+    ];
+    const impactoStyle = (impacto) => 'display:inline-flex; width:fit-content; justify-content:center; border-radius:999px; font-size:9.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:6px 9px; ' + (impacto === 'alto' ? 'background:rgba(177,90,67,.12); color:#9c4d3a' : 'background:rgba(228,189,103,.16); color:#9b7421');
+    const tipoStyle = (tipo) => 'display:inline-flex; width:fit-content; justify-content:center; border-radius:999px; font-size:9.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:6px 9px; ' + (tipo === 'resultados' ? 'background:rgba(11,35,71,.09); color:#0B2347' : 'background:rgba(157,184,97,.16); color:#617b2e');
+    const periodo = this.state.agendaPeriodo;
+    const impacto = this.state.agendaImpacto;
+    const empresaTipo = this.state.empresaTipo;
+    const eventosEconomicos = eventosEconomicosBase.filter((e) => e.periodos.includes(periodo) && (impacto === 'todos' || e.impactoId === impacto)).map((e) => ({ ...e, estiloImpacto: impactoStyle(e.impactoId) }));
+    const eventosEmpresas = eventosEmpresasBase.filter((e) => e.periodos.includes(periodo) && (empresaTipo === 'todos' || e.tipo === empresaTipo)).map((e) => ({ ...e, tipoLabel: e.tipo === 'resultados' ? 'Resultados' : 'Dividendo', estiloTipo: tipoStyle(e.tipo) }));
     return {
       temasOpen: this.state.temasOpen,
       abrirTemas: () => this.setState({ temasOpen: true }),
@@ -271,18 +541,33 @@ class Component extends DCLogic {
         estilo: base + (i === 0 ? 'border-left:0; ' : '') + (id === vista ? 'background:rgba(255,255,255,.95); color:#0B2347' : 'background:transparent; color:rgba(255,255,255,.78)'),
         estiloHover: id === vista ? '' : 'background:rgba(255,255,255,.12)',
       })),
-      esDiario: vista === 'diario',
-      esArchivo: vista === 'archivo',
-      esSemanal: vista === 'semanal',
+      esPortada: vista === 'portada',
+      esInformes: vista === 'informes',
+      esCotizaciones: vista === 'cotizaciones',
+      herramientasMercado: herramientasDefs.map(([id, label], i) => ({
+        label,
+        ariaCurrent: id === mercadoVista ? 'page' : undefined,
+        abrir: () => this.setState({ mercadoVista: id }),
+        estilo: herramientaBase + (i === 0 ? 'border-left:0; ' : '') + (id === mercadoVista ? 'background:#0B2347; color:#fff' : 'background:var(--color-surface); color:color-mix(in srgb, var(--color-text) 70%, transparent)'),
+        estiloHover: id === mercadoVista ? '' : 'background:color-mix(in srgb, var(--color-accent) 6%, var(--color-surface))',
+      })),
+      esPanelCotizaciones: mercadoVista === 'cotizaciones',
+      esCalendarioEconomico: mercadoVista === 'economico',
+      esCalendarioEmpresas: mercadoVista === 'empresas',
+      periodosAgenda: [['dia','Hoy'],['semana','Semana'],['mes','Mes']].map(([id,label]) => ({ label, activo: id === periodo, abrir: () => this.setState({ agendaPeriodo: id }), estilo: filtroEstilo(id === periodo) })),
+      impactosAgenda: [['todos','Todos'],['alto','Alto'],['medio','Medio']].map(([id,label]) => ({ label, activo: id === impacto, abrir: () => this.setState({ agendaImpacto: id }), estilo: filtroEstilo(id === impacto) })),
+      tiposEmpresa: [['todos','Todos'],['resultados','Resultados'],['dividendos','Dividendos']].map(([id,label]) => ({ label, activo: id === empresaTipo, abrir: () => this.setState({ empresaTipo: id }), estilo: filtroEstilo(id === empresaTipo) })),
+      eventosEconomicos,
+      eventosEmpresas,
       informes: [
         { fecha: 'Miércoles, 5 de agosto de 2026', titulo: 'Los mercados abren pendientes de los resultados tecnológicos y del dato de empleo americano' },
         { fecha: 'Martes, 4 de agosto de 2026', titulo: 'La renta fija recoge las palabras del BCE mientras el crudo modera su avance semanal' },
         { fecha: 'Lunes, 3 de agosto de 2026', titulo: 'Semana de bancos centrales: qué vigilar en tipos, divisas y beneficios empresariales' },
         { fecha: 'Viernes, 31 de julio de 2026', titulo: 'Cierre de mes: balance de julio en renta variable europea y americana' },
       ],
-      irDiario: () => this.ir('diario'),
-      irArchivo: () => this.ir('archivo'),
-      irSemanal: () => this.ir('semanal'),
+      irPortada: () => this.ir('portada'),
+      irInformes: () => this.ir('informes'),
+      irCotizaciones: () => this.ir('cotizaciones'),
     };
   }
 }

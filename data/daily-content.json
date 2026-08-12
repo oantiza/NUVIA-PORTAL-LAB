@@ -1,5 +1,5 @@
 {
-  "synchronizedAt": "2026-08-09T06:08:00.000Z",
+  "synchronizedAt": "2026-08-11T17:00:00.000Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
     "selectionDate": "9 de agosto de 2026",
@@ -18,6 +18,35 @@
       "La liquidez de seguridad y una cartera diversificada reducen la necesidad de reaccionar a una geopolítica imprevisible."
     ]
   },
+  "secondaryEconomicNews": [
+    {
+      "id": "spanish-treasury-bills",
+      "category": "Deuda española",
+      "title": "Las letras a tres meses alcanzan el 2,4 %",
+      "summary": "La incertidumbre sobre los tipos eleva su rentabilidad al máximo desde febrero de 2025.",
+      "publishedAt": "11 ago 2026",
+      "sourceName": "Cinco Días",
+      "sourceUrl": "https://cincodias.elpais.com/mercados-financieros/2026-08-11/la-incertidumbre-sobre-los-tipos-impulsa-al-24-la-rentabilidad-de-las-letras-a-tres-meses-maximo-desde-febrero-de-2025.html"
+    },
+    {
+      "id": "nvidia-ai-financing",
+      "category": "Inteligencia artificial",
+      "title": "Nvidia moviliza 500.000 millones para infraestructura de IA",
+      "summary": "Se alía con seis gigantes financieros para acelerar centros de datos y capacidad de cómputo.",
+      "publishedAt": "10 ago 2026",
+      "sourceName": "Axios",
+      "sourceUrl": "https://www.axios.com/2026/08/10/nvidia-financing-ai-goldman-sachs-blackrock"
+    },
+    {
+      "id": "wall-street-records",
+      "category": "Mercados globales",
+      "title": "Wall Street aguanta cerca de sus máximos históricos",
+      "summary": "Las bolsas se mantienen firmes pese a las oscilaciones del crudo y la cautela sobre los tipos.",
+      "publishedAt": "11 ago 2026",
+      "sourceName": "AP News",
+      "sourceUrl": "https://apnews.com/article/3f3f2f2d49e4aa8744d21ecd0ce55a9c"
+    }
+  ],
   "macroIndicatorsUpdatedAt": "9 de agosto de 2026",
   "dailyMacroIndicators": [
     {
