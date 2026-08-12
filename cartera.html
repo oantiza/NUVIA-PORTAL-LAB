@@ -8,7 +8,7 @@
 <title>Analítica de cartera | NUVIA Family Wealth</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
-<link rel="stylesheet" href="cartera-redesign.css?v=design-34">
+<link rel="stylesheet" href="cartera-redesign.css?v=design-35">
 <script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
@@ -146,6 +146,12 @@ class Component extends DCLogic {
       const boton = document.getElementById('vista-' + tab);
       if (boton) boton.setAttribute('aria-current', tab === vista ? 'page' : 'false');
     });
+    const shellElement = frame.closest('.nuvia-suite-shell');
+    const resetPortfolioFrame = () => {
+      frame.classList.remove('is-ready');
+      shellElement?.classList.remove('is-portfolio-ready');
+    };
+    resetPortfolioFrame();
     const applyHeight = (height) => {
       const safeHeight = Math.max(900, Math.min(Number(height) || 0, 12000));
       if (safeHeight) frame.style.height = safeHeight + 'px';
@@ -154,8 +160,13 @@ class Component extends DCLogic {
       if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
       if (!event.data || event.data.source !== 'nuvia-core') return;
       if (event.data.type === 'ready') {
-        frame.classList.add('is-ready');
-        frame.closest('.nuvia-suite-shell')?.classList.add('is-portfolio-ready');
+        if (this._portfolioRevealFrame) window.cancelAnimationFrame(this._portfolioRevealFrame);
+        this._portfolioRevealFrame = window.requestAnimationFrame(() => {
+          this._portfolioRevealFrame = window.requestAnimationFrame(() => {
+            frame.classList.add('is-ready');
+            shellElement?.classList.add('is-portfolio-ready');
+          });
+        });
       }
       if (event.data.type === 'resize') applyHeight(event.data.height);
       if (event.data.type === 'suite-tab-change' && SUITE_TABS.includes(event.data.tab)) {
@@ -174,11 +185,20 @@ class Component extends DCLogic {
       }
     };
     window.addEventListener('message', this._onMsg);
-    frame.addEventListener('load', () => {
-      try { applyHeight(frame.contentDocument && frame.contentDocument.documentElement && frame.contentDocument.documentElement.scrollHeight); } catch (e) { /* el mensaje del núcleo mantiene el ajuste */ }
-    });
+    this._onFrameLoad = () => {
+      try {
+        const embeddedReady = frame.contentDocument?.body?.dataset?.nuviaBridgeReady === 'true';
+        if (!embeddedReady) resetPortfolioFrame();
+        applyHeight(frame.contentDocument?.documentElement?.scrollHeight);
+      } catch (e) { resetPortfolioFrame(); }
+    };
+    frame.addEventListener('load', this._onFrameLoad);
   }
-  componentWillUnmount() { if (this._onMsg) window.removeEventListener('message', this._onMsg); }
+  componentWillUnmount() {
+    if (this._onMsg) window.removeEventListener('message', this._onMsg);
+    if (this._onFrameLoad) document.getElementById('nuvia-portfolio-suite')?.removeEventListener('load', this._onFrameLoad);
+    if (this._portfolioRevealFrame) window.cancelAnimationFrame(this._portfolioRevealFrame);
+  }
   renderVals() { return {}; }
 }
 </script>
