@@ -55,7 +55,7 @@
   align-items: center;
   gap: 14px;
   margin: 0 0 16px;
-  color: #9db861;
+  color: #c6a15f;
   font-size: 12.5px;
   font-weight: 400;
   letter-spacing: .2em;
@@ -66,7 +66,7 @@
   display: inline-block;
   width: 44px;
   height: 1px;
-  background: #9db861;
+  background: #c6a15f;
 }
 
 .nuvia-analysis-hero h1 {
@@ -98,12 +98,14 @@
 .nuvia-analysis-tabs a {
   display: inline-flex;
   align-items: center;
+  cursor: pointer;
   border-left: 1px solid rgba(255,255,255,.25);
   background: transparent;
   color: rgba(255,255,255,.78);
   font-family: var(--font-heading);
   font-size: 13.5px;
   font-weight: 500;
+  line-height: normal;
   padding: 9px 18px;
   text-decoration: none;
   transition: background .2s ease, color .2s ease, box-shadow .2s ease;
@@ -111,7 +113,11 @@
 
 .nuvia-analysis-tabs a:first-child { border-left: 0; }
 .nuvia-analysis-tabs a:hover { background: rgba(255,255,255,.12); color: #fff; }
-.nuvia-analysis-tabs a[aria-current="page"] { background: rgba(255,255,255,.95); color: #0b2347; }
+.nuvia-analysis-tabs a[aria-current="page"] {
+  border-color: rgba(255,255,255,.25) !important;
+  background: rgba(255,255,255,.95) !important;
+  color: #0b2347 !important;
+}
 
 .nuvia-analysis-hero__divider {
   height: 1px;
@@ -125,6 +131,7 @@
 
 .nuvia-suite-shell {
   overflow: hidden;
+  position: relative;
   width: 100%;
   border: 1px solid var(--nv-line);
   border-radius: 22px;
@@ -143,6 +150,49 @@
 .nuvia-suite-shell iframe[hidden] {
   display: none;
 }
+
+#nuvia-portfolio-suite {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+
+#nuvia-portfolio-suite.is-ready {
+  visibility: visible;
+  opacity: 1;
+}
+
+.nuvia-suite-loading {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 auto;
+  display: grid;
+  min-height: 280px;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  background: #f4f5f8;
+  color: #153d5b;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.nuvia-suite-loading span {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(21,61,91,.18);
+  border-top-color: #9a6a35;
+  border-radius: 50%;
+  animation: nuvia-suite-spin .8s linear infinite;
+}
+
+.nuvia-suite-shell.is-portfolio-ready .nuvia-suite-loading,
+body[data-suite-vista="companies"] .nuvia-suite-loading {
+  display: none;
+}
+
+@keyframes nuvia-suite-spin { to { transform: rotate(360deg); } }
 
 #nuvia-company-suite {
   min-height: 1680px;

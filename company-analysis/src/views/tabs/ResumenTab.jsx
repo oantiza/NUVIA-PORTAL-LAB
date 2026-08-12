@@ -3,10 +3,13 @@ import { api } from '../../api.js';
 import { KpiGrid, Kpi, Section, EstadoTag } from '../../components/Kpi.jsx';
 import { Sparkline, Range52 } from '../../components/SvgCharts.jsx';
 import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, clsPN, fmtDate, pct100 } from '../../lib/format.js';
+import { translateCompanyDescription } from '../../lib/translate.js';
 
 export default function ResumenTab({ symbol, fund, quote }) {
   const [eod, setEod] = useState(null);
   const [tech, setTech] = useState(null);
+  const [descriptionEs, setDescriptionEs] = useState('');
+  const [translationState, setTranslationState] = useState('idle');
 
   useEffect(() => {
     let alive = true;
@@ -22,6 +25,29 @@ export default function ResumenTab({ symbol, fund, quote }) {
   const ar = fund?.AnalystRatings;
   const currency = g.CurrencyCode;
   const price = quote?.price ?? null;
+  const description = String(g.Description || '').trim();
+
+  useEffect(() => {
+    let alive = true;
+    if (!description) {
+      setDescriptionEs('');
+      setTranslationState('idle');
+      return () => { alive = false; };
+    }
+    setDescriptionEs('');
+    setTranslationState('loading');
+    translateCompanyDescription(description)
+      .then((translated) => {
+        if (!alive) return;
+        setDescriptionEs(translated);
+        setTranslationState('ready');
+      })
+      .catch(() => {
+        if (!alive) return;
+        setTranslationState('error');
+      });
+    return () => { alive = false; };
+  }, [description]);
 
   const target = h.WallStreetTargetPrice ?? ar?.TargetPrice;
   const potencial = price && target ? ((target - price) / price) * 100 : null;
@@ -91,9 +117,15 @@ export default function ResumenTab({ symbol, fund, quote }) {
         </div>
       </div>
 
-      {g.Description && (
+      {description && (
         <Section eyebrow="La compañía" title={null}>
-          <p className="lead">{String(g.Description).slice(0, 900)}{String(g.Description).length > 900 ? '…' : ''}</p>
+          {translationState === 'loading' && <p className="lead muted">Traduciendo descripción al español…</p>}
+          {translationState === 'ready' && (
+            <p className="lead">{descriptionEs.slice(0, 900)}{descriptionEs.length > 900 ? '…' : ''}</p>
+          )}
+          {translationState === 'error' && (
+            <p className="lead muted">La descripción en español no está disponible temporalmente.</p>
+          )}
           <div className="tiny" style={{ marginTop: 10 }}>
             {g.FullTimeEmployees ? `${fmtNum(g.FullTimeEmployees, 0)} empleados · ` : ''}
             {g.WebURL && <a href={g.WebURL} target="_blank" rel="noreferrer">{g.WebURL}</a>}

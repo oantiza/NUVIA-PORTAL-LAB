@@ -10,6 +10,12 @@
       content="NUVIA Family Wealth: educación financiera, planificación patrimonial y herramientas para familias que piensan a largo plazo."
     />
     <title>NUVIA Family Wealth</title>
+    <script>
+      if (new URLSearchParams(window.location.search).get('embedded') === 'web2') {
+        document.documentElement.classList.add('nuvia-embedded-pending');
+      }
+    </script>
+    <style>html.nuvia-embedded-pending body { visibility: hidden; }</style>
     <script type="importmap">
       {
         "imports": {
@@ -22,7 +28,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script src="../web2-core-bridge.js?v=design-23"></script>
+    <script src="../web2-core-bridge.js?v=design-24"></script>
   </body>
 </html>
 

@@ -8,7 +8,7 @@
 <title>Analítica de cartera | NUVIA Family Wealth</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
-<link rel="stylesheet" href="cartera-redesign.css?v=design-27">
+<link rel="stylesheet" href="cartera-redesign.css?v=design-29">
 <script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
@@ -66,8 +66,12 @@
 
       <div class="nuvia-analysis-content">
         <section id="suite-nuvia" class="nuvia-suite-shell" aria-label="Suite interactiva de analítica de cartera">
-          <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no"></iframe>
+          <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2&amp;web2Suite=6&amp;suiteTab=portfolio" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no"></iframe>
           <iframe id="nuvia-company-suite" data-src="company-analysis/index.html" title="Análisis y valoración de empresas NUVIA" loading="lazy" hidden></iframe>
+          <div class="nuvia-suite-loading" role="status" aria-live="polite">
+            <span aria-hidden="true"></span>
+            <strong>Preparando el laboratorio de cartera</strong>
+          </div>
         </section>
       </div>
     </div>
@@ -135,7 +139,8 @@ class Component extends DCLogic {
     if (esAnalisisEmpresas) {
       if (!companyFrame.getAttribute('src')) companyFrame.setAttribute('src', companyFrame.dataset.src);
     } else {
-      frame.setAttribute('src', suite.suiteSrc);
+      const expectedSuiteSrc = new URL(suite.suiteSrc, window.location.href).href;
+      if (frame.src !== expectedSuiteSrc) frame.setAttribute('src', suite.suiteSrc);
     }
     SUITE_TABS.forEach((tab) => {
       const boton = document.getElementById('vista-' + tab);
@@ -148,6 +153,10 @@ class Component extends DCLogic {
     this._onMsg = (event) => {
       if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
       if (!event.data || event.data.source !== 'nuvia-core') return;
+      if (event.data.type === 'ready') {
+        frame.classList.add('is-ready');
+        frame.closest('.nuvia-suite-shell')?.classList.add('is-portfolio-ready');
+      }
       if (event.data.type === 'resize') applyHeight(event.data.height);
       if (event.data.type === 'suite-tab-change' && SUITE_TABS.includes(event.data.tab)) {
         const tab = event.data.tab;
