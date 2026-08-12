@@ -7,6 +7,8 @@ const required = [
   'core/reports/reports_manifest.json',
   'core/downloads/nuvia-academy/capitulo-01-pon-orden-a-tu-dinero.pdf',
   'data/daily-content.json',
+  'company-analysis/index.html',
+  'company-analysis/src/App.jsx',
   'web2-integration.js',
   'web2-core-bridge.js',
 ];
@@ -88,8 +90,8 @@ if (/onclick=["']location\.href/i.test(web2Home)) {
 if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'")) {
   throw new Error('La página de cartera no integra la suite analítica real del núcleo');
 }
-if (!portfolioPage.includes('https://oaa-analisis.web.app/') || !portfolioPage.includes('ANALISIS-Y-VALORACION-EMPRESAS.git')) {
-  throw new Error('La vista Análisis y valoración de empresas no integra su aplicación completa');
+if (!portfolioPage.includes('data-src="company-analysis/index.html"')) {
+  throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }
 for (const suiteView of ['portfolio', 'companies']) {
   if (!topicsPage.includes(`cartera.html?vista=${suiteView}`)) {
