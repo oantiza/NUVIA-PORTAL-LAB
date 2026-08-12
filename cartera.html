@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Analiza una cartera desde su distribución, tendencia técnica y calidad fundamental con la suite de NUVIA.">
+<meta name="description" content="Analiza la distribución de una cartera y estudia empresas cotizadas con las herramientas de NUVIA.">
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/cartera.html">
 <title>Analítica de cartera | NUVIA Family Wealth</title>
 <script src="./support.js"></script>
@@ -54,11 +54,10 @@
           <div>
             <p class="nuvia-analysis-eyebrow"><span aria-hidden="true"></span>Analítica NUVIA</p>
             <h1 id="analysis-title">Analítica de cartera</h1>
-            <p class="nuvia-analysis-lead">Tres perspectivas para analizar una inversión con el mismo lenguaje: asignación, tendencia técnica y calidad fundamental.</p>
+            <p class="nuvia-analysis-lead">Dos herramientas conectadas para estudiar cómo está distribuida una cartera y analizar en profundidad empresas cotizadas.</p>
             <nav class="nuvia-analysis-tabs" aria-label="Vistas de analítica de cartera">
               <a id="vista-portfolio" href="cartera.html?vista=portfolio#suite-nuvia" aria-current="page">Laboratorio de cartera</a>
-              <a id="vista-technical" href="cartera.html?vista=technical#suite-nuvia">Análisis técnico</a>
-              <a id="vista-fundamental" href="cartera.html?vista=fundamental#suite-nuvia">Análisis fundamental</a>
+              <a id="vista-companies" href="cartera.html?vista=companies#suite-nuvia">Análisis y valoración de empresas</a>
             </nav>
             <div class="nuvia-analysis-hero__divider" aria-hidden="true"></div>
           </div>
@@ -66,24 +65,9 @@
       </section>
 
       <div class="nuvia-analysis-content">
-        <section class="nuvia-fundamental-guide" aria-labelledby="fundamental-guide-title">
-          <div class="nuvia-fundamental-guide__top">
-            <div>
-              <h2 id="fundamental-guide-title">Las cuatro preguntas importantes</h2>
-              <p>El análisis reúne los ratios por ti y los convierte en respuestas que puedes usar para hablar de dinero en familia.</p>
-            </div>
-            <span class="nuvia-fundamental-guide__note">Datos conectados · actualización diaria</span>
-          </div>
-          <div class="nuvia-question-grid">
-            <article class="nuvia-question-card"><small>01 · CRECIMIENTO</small><strong>¿Crece el negocio?</strong><p>Comprueba si las ventas, el beneficio y la caja avanzan con consistencia.</p></article>
-            <article class="nuvia-question-card"><small>02 · RENTABILIDAD</small><strong>¿Gana dinero bien?</strong><p>Mide cuánto beneficio convierte la empresa por cada euro que vende.</p></article>
-            <article class="nuvia-question-card"><small>03 · BALANCE</small><strong>¿Tiene demasiada deuda?</strong><p>Valora si puede cumplir sus obligaciones sin comprometer el futuro.</p></article>
-            <article class="nuvia-question-card"><small>04 · PRECIO</small><strong>¿Está cara?</strong><p>Compara la calidad del negocio con el precio que pide hoy el mercado.</p></article>
-          </div>
-        </section>
-
         <section id="suite-nuvia" class="nuvia-suite-shell" aria-label="Suite interactiva de analítica de cartera">
           <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no"></iframe>
+          <iframe id="nuvia-company-suite" data-src="https://oaa-analisis.web.app/" data-source-repository="https://github.com/oantiza/ANALISIS-Y-VALORACION-EMPRESAS.git" title="Análisis y valoración de empresas" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
         </section>
       </div>
     </div>
@@ -128,18 +112,31 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
   componentDidMount() {
-    const SUITE_TABS = ['portfolio', 'technical', 'fundamental'];
-    const requested = new URLSearchParams(window.location.search).get('vista');
+    const SUITE_TABS = ['portfolio', 'companies'];
+    const requestedRaw = new URLSearchParams(window.location.search).get('vista');
+    const requested = ['technical', 'fundamental'].includes(requestedRaw) ? 'companies' : requestedRaw;
     const vista = SUITE_TABS.indexOf(requested) >= 0 ? requested : 'portfolio';
-    const titulos = { portfolio: 'Cartera', technical: 'Análisis técnico', fundamental: 'Análisis fundamental' };
+    if (requestedRaw !== requested && requested === 'companies') {
+      const canonicalUrl = new URL(window.location.href);
+      canonicalUrl.searchParams.set('vista', 'companies');
+      window.history.replaceState(null, '', canonicalUrl);
+    }
     document.title = 'Analítica de cartera | NUVIA Family Wealth';
     const frame = document.getElementById('nuvia-portfolio-suite');
-    if (!frame) return;
+    const companyFrame = document.getElementById('nuvia-company-suite');
+    if (!frame || !companyFrame) return;
     document.body.dataset.suiteVista = vista;
     const suite = {
-      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=' + vista
+      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'
     };
-    frame.setAttribute('src', suite.suiteSrc);
+    const esAnalisisEmpresas = vista === 'companies';
+    frame.hidden = esAnalisisEmpresas;
+    companyFrame.hidden = !esAnalisisEmpresas;
+    if (esAnalisisEmpresas) {
+      if (!companyFrame.getAttribute('src')) companyFrame.setAttribute('src', companyFrame.dataset.src);
+    } else {
+      frame.setAttribute('src', suite.suiteSrc);
+    }
     SUITE_TABS.forEach((tab) => {
       const boton = document.getElementById('vista-' + tab);
       if (boton) boton.setAttribute('aria-current', tab === vista ? 'page' : 'false');
