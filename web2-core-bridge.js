@@ -1076,6 +1076,90 @@
       body.nuvia-web2-view-portfolio [data-nuvia-chart-section="correlation"] table {
         border-radius: 0 !important;
       }
+      body.nuvia-web2-view-portfolio svg.nv-professional-chart {
+        overflow: visible;
+        shape-rendering: geometricPrecision;
+      }
+      body.nuvia-web2-view-portfolio svg.nv-professional-chart .nv-pro-grid line {
+        stroke: #d8dee5 !important;
+        stroke-width: .8px !important;
+        stroke-dasharray: 2 5;
+      }
+      body.nuvia-web2-view-portfolio svg.nv-professional-chart .nv-pro-axis {
+        stroke: #738093 !important;
+        stroke-width: 1.15px !important;
+      }
+      body.nuvia-web2-view-portfolio svg.nv-professional-chart .nv-pro-guide {
+        stroke: #8793a2 !important;
+        stroke-width: 1px !important;
+        stroke-dasharray: 6 6;
+      }
+      body.nuvia-web2-view-portfolio svg.nv-professional-chart .nv-pro-marker {
+        stroke: #fff !important;
+        stroke-width: 2px !important;
+        filter: drop-shadow(0 2px 3px rgba(11,35,71,.22));
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="evolution"] svg polyline {
+        fill: none !important;
+        stroke-width: 3.2px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="frontier"] svg polyline {
+        fill: none !important;
+        stroke-width: 3px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="risk-return"] svg circle {
+        stroke-width: 2.6px !important;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="monte-carlo"] svg path {
+        vector-effect: non-scaling-stroke;
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="correlation"] .nv-correlation-cell {
+        color: #fff !important;
+        font-weight: 700 !important;
+        text-shadow: 0 1px 1px rgba(0,0,0,.18);
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-chart-section="correlation"] .nv-correlation-cell[data-correlation-tone="low"] {
+        color: #163c59 !important;
+        text-shadow: none;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing {
+        margin: 22px 0 8px;
+        padding: 22px 22px 16px;
+        border: 1px solid #d9dde4;
+        background: #fbfcfd;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 14px;
+        color: #687181;
+        font-size: 10px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend {
+        display: flex;
+        gap: 16px;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend i {
+        width: 18px;
+        height: 3px;
+        background: #153d5b;
+      }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing__legend span:last-child i { background: #779349; }
+      body.nuvia-web2-view-portfolio .nv-comparison-drawing svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 250px;
+      }
       @media (max-width: 1120px) and (min-width: 768px) {
         body.nuvia-web2-view-portfolio .nv-chart-insights,
         body.nuvia-web2-view-portfolio .nv-frontier-summary {
@@ -1137,6 +1221,200 @@
       method.className = 'nv-chart-method';
       method.innerHTML = `<span><strong>Ficha técnica</strong> · ${detail.method}</span><span>${detail.source}</span>`;
       section.appendChild(method);
+    };
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const svgElement = (name, attributes = {}) => {
+      const element = document.createElementNS(SVG_NS, name);
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, String(value)));
+      return element;
+    };
+    const svgPoints = (polyline) => (polyline?.getAttribute('points') || '')
+      .trim()
+      .split(/\s+/)
+      .map((pair) => pair.split(',').map(Number))
+      .filter(([x, y]) => Number.isFinite(x) && Number.isFinite(y));
+    const ensureProfessionalDefs = (svg, key, index) => {
+      const prefix = `nv-${key}-${index}`;
+      let defs = svg.querySelector(`defs[data-nuvia-defs="${prefix}"]`);
+      if (!defs) {
+        defs = svgElement('defs', { 'data-nuvia-defs': prefix });
+        defs.innerHTML = `
+          <linearGradient id="${prefix}-navy" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#153d5b" stop-opacity=".24"/>
+            <stop offset="1" stop-color="#153d5b" stop-opacity=".015"/>
+          </linearGradient>
+          <linearGradient id="${prefix}-green" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#779349" stop-opacity=".27"/>
+            <stop offset="1" stop-color="#779349" stop-opacity=".02"/>
+          </linearGradient>
+          <linearGradient id="${prefix}-plot" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset="1" stop-color="#f3f6f8"/>
+          </linearGradient>
+          <filter id="${prefix}-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0b2347" flood-opacity=".18"/>
+          </filter>
+        `;
+        svg.insertBefore(defs, svg.firstChild);
+      }
+      return prefix;
+    };
+    const addProfessionalGrid = (svg, prefix, key) => {
+      const viewBox = (svg.getAttribute('viewBox') || '0 0 700 300').split(/\s+/).map(Number);
+      if (viewBox.length !== 4 || viewBox.some((value) => !Number.isFinite(value))) return null;
+      const [, , width, height] = viewBox;
+      const x = 48;
+      const y = 34;
+      const right = width - 26;
+      const bottom = height - 40;
+      const group = svgElement('g', { class: 'nv-pro-grid', 'aria-hidden': 'true' });
+      group.appendChild(svgElement('rect', {
+        x, y, width: Math.max(10, right - x), height: Math.max(10, bottom - y),
+        fill: `url(#${prefix}-plot)`, stroke: '#cfd6dd', 'stroke-width': '.8'
+      }));
+      for (let step = 1; step < 6; step += 1) {
+        const gx = x + ((right - x) * step / 6);
+        const gy = y + ((bottom - y) * step / 6);
+        group.appendChild(svgElement('line', { x1: gx, y1: y, x2: gx, y2: bottom }));
+        group.appendChild(svgElement('line', { x1: x, y1: gy, x2: right, y2: gy }));
+      }
+      if (key === 'risk-return') {
+        const midX = x + (right - x) * .5;
+        const midY = y + (bottom - y) * .5;
+        group.appendChild(svgElement('rect', { x, y, width: midX - x, height: midY - y, fill: '#eef4e8', opacity: '.5' }));
+        group.appendChild(svgElement('rect', { x: midX, y: midY, width: right - midX, height: bottom - midY, fill: '#f7ecec', opacity: '.42' }));
+        group.appendChild(svgElement('line', { class: 'nv-pro-guide', x1: midX, y1: y, x2: midX, y2: bottom }));
+        group.appendChild(svgElement('line', { class: 'nv-pro-guide', x1: x, y1: midY, x2: right, y2: midY }));
+      }
+      const insertionPoint = [...svg.children].find((child) => child.tagName.toLowerCase() !== 'defs');
+      svg.insertBefore(group, insertionPoint || null);
+      return { x, y, right, bottom, width, height };
+    };
+    const addPolylineArea = (svg, polyline, bounds, fill, prefix, markerColor) => {
+      const points = svgPoints(polyline);
+      if (points.length < 2 || !bounds) return;
+      const polygon = svgElement('polygon', {
+        points: `${points.map(([x, y]) => `${x},${y}`).join(' ')} ${points.at(-1)[0]},${bounds.bottom} ${points[0][0]},${bounds.bottom}`,
+        fill, stroke: 'none', 'aria-hidden': 'true'
+      });
+      svg.insertBefore(polygon, polyline);
+      [0, Math.floor((points.length - 1) / 2), points.length - 1].forEach((pointIndex) => {
+        const [cx, cy] = points[pointIndex];
+        const marker = svgElement('circle', {
+          class: 'nv-pro-marker', cx, cy, r: pointIndex === points.length - 1 ? 4.5 : 3.2,
+          fill: markerColor, filter: `url(#${prefix}-shadow)`, 'aria-hidden': 'true'
+        });
+        polyline.insertAdjacentElement('afterend', marker);
+      });
+      polyline.setAttribute('stroke-linecap', 'round');
+      polyline.setAttribute('stroke-linejoin', 'round');
+    };
+    const decorateCorrelationDrawing = (section) => {
+      if (!section || section.dataset.nuviaCorrelationDrawing) return;
+      const cells = [...section.querySelectorAll('*')].filter((element) =>
+        !element.children.length && /^-?\d+\.\d+$/.test(normalizedText(element))
+      );
+      if (cells.length < 4) return;
+      cells.forEach((cell) => {
+        const value = toNumber(normalizedText(cell));
+        const absolute = Math.abs(value);
+        let color = '#e8eef2';
+        if (value < 0) color = absolute > .35 ? '#4d8b91' : '#dcefed';
+        else if (absolute >= .999) color = '#0b2347';
+        else if (absolute >= .75) color = '#315b7a';
+        else if (absolute >= .5) color = '#7890a5';
+        else if (absolute >= .25) color = '#bcc8d2';
+        cell.classList.add('nv-correlation-cell');
+        cell.dataset.correlationTone = absolute < .5 && absolute < .999 ? 'low' : 'high';
+        cell.style.backgroundColor = color;
+      });
+      section.dataset.nuviaCorrelationDrawing = 'true';
+    };
+    const decorateComparisonDrawing = (section) => {
+      if (!section || section.querySelector('.nv-comparison-drawing')) return;
+      const rows = [...section.querySelectorAll('div')].map((row) => {
+        const identity = row.querySelector(':scope > div:first-child');
+        const values = row.querySelector(':scope > div:nth-child(2)');
+        const ticker = identity?.querySelector('span')?.textContent?.trim();
+        if (!ticker || !/^[A-Z][A-Z0-9.-]{1,8}$/.test(ticker) || !values) return null;
+        const percentages = [...values.querySelectorAll(':scope > span')]
+          .map((item) => normalizedText(item).match(/([+-]?[\d.,]+)%$/)?.[1])
+          .filter(Boolean)
+          .map(toNumber);
+        if (percentages.length < 2) return null;
+        return { ticker, current: percentages[0], optimized: percentages[1] };
+      }).filter(Boolean).slice(0, 10);
+      if (rows.length < 2) return;
+      const maxValue = Math.max(1, ...rows.flatMap((row) => [row.current, row.optimized]));
+      const width = 820;
+      const left = 78;
+      const right = 24;
+      const top = 28;
+      const rowHeight = 48;
+      const height = top + rows.length * rowHeight + 34;
+      const plotWidth = width - left - right;
+      const grid = [0, .25, .5, .75, 1].map((ratio) => {
+        const x = left + plotWidth * ratio;
+        return `<line x1="${x}" y1="${top - 8}" x2="${x}" y2="${height - 28}" stroke="#d8dee5" stroke-dasharray="2 5"/><text x="${x}" y="${height - 8}" text-anchor="middle" fill="#687181" font-size="10">${(maxValue * ratio).toFixed(0)}%</text>`;
+      }).join('');
+      const bars = rows.map((row, index) => {
+        const y = top + index * rowHeight;
+        const currentWidth = plotWidth * row.current / maxValue;
+        const optimizedWidth = plotWidth * row.optimized / maxValue;
+        return `<g><text x="0" y="${y + 20}" fill="#202735" font-size="12" font-weight="700">${row.ticker}</text><rect x="${left}" y="${y + 4}" width="${currentWidth}" height="9" fill="#153d5b"/><rect x="${left}" y="${y + 17}" width="${optimizedWidth}" height="9" fill="#779349"/><text x="${Math.min(width - 30, left + Math.max(currentWidth, optimizedWidth) + 8)}" y="${y + 19}" fill="#596575" font-size="10">${row.current.toFixed(1)} / ${row.optimized.toFixed(1)}%</text></g>`;
+      }).join('');
+      const drawing = document.createElement('div');
+      drawing.className = 'nv-comparison-drawing';
+      drawing.innerHTML = `<div class="nv-comparison-drawing__head"><span>Asignación por posición · % del capital</span><span class="nv-comparison-drawing__legend"><span><i></i>Actual</span><span><i></i>Optimizada</span></span></div><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Comparación gráfica de pesos actuales y optimizados">${grid}${bars}</svg>`;
+      const reading = section.querySelector('.nv-chart-reading');
+      section.insertBefore(drawing, reading || section.lastElementChild);
+    };
+    const decorateChartDrawing = (section, key) => {
+      if (!section) return;
+      if (key === 'comparison') decorateComparisonDrawing(section);
+      if (key === 'correlation') decorateCorrelationDrawing(section);
+      section.querySelectorAll('svg[viewBox]').forEach((svg, index) => {
+        if (svg.dataset.nuviaProfessionalDrawing) return;
+        svg.dataset.nuviaProfessionalDrawing = key;
+        svg.classList.add('nv-professional-chart');
+        const prefix = ensureProfessionalDefs(svg, key, index);
+        const bounds = ['risk-return', 'frontier', 'evolution', 'monte-carlo'].includes(key)
+          ? addProfessionalGrid(svg, prefix, key)
+          : null;
+        if (key === 'evolution') {
+          [...svg.querySelectorAll('polyline')].forEach((polyline, lineIndex) => {
+            addPolylineArea(svg, polyline, bounds, `url(#${prefix}-${lineIndex ? 'green' : 'navy'})`, prefix, lineIndex ? '#779349' : '#153d5b');
+          });
+        }
+        if (key === 'frontier') {
+          const frontier = svg.querySelector('polyline');
+          if (frontier) addPolylineArea(svg, frontier, bounds, `url(#${prefix}-green)`, prefix, '#779349');
+        }
+        if (key === 'risk-return') {
+          svg.querySelectorAll('circle').forEach((circle) => circle.setAttribute('filter', `url(#${prefix}-shadow)`));
+        }
+        if (key === 'monte-carlo' && bounds) {
+          const paths = [...svg.querySelectorAll('path')];
+          paths.forEach((path, pathIndex) => {
+            if (path.getAttribute('fill') && path.getAttribute('fill') !== 'none') path.setAttribute('opacity', pathIndex === 0 ? '.18' : '.3');
+            if (path.getAttribute('stroke')) {
+              path.setAttribute('stroke-width', pathIndex === paths.length - 1 ? '2.8' : '1.5');
+              path.setAttribute('stroke-linecap', 'round');
+              path.setAttribute('stroke-linejoin', 'round');
+            }
+          });
+          const median = svgElement('line', { class: 'nv-pro-guide', x1: bounds.x, y1: (bounds.y + bounds.bottom) / 2, x2: bounds.right, y2: (bounds.y + bounds.bottom) / 2, 'aria-hidden': 'true' });
+          svg.appendChild(median);
+        }
+        if (key === 'distribution') {
+          svg.querySelectorAll('path').forEach((path) => {
+            path.setAttribute('stroke', '#ffffff');
+            path.setAttribute('stroke-width', '1.15');
+            path.setAttribute('stroke-linejoin', 'round');
+            path.style.filter = `drop-shadow(0 1px 1px rgba(11,35,71,.12))`;
+          });
+        }
+      });
     };
     const decorateRiskMap = (section) => {
       if (!section) return;
@@ -1460,6 +1738,7 @@
           const plot = svg.parentElement;
           if (plot && !plot.dataset.nuviaPlot) plot.dataset.nuviaPlot = key;
         });
+        decorateChartDrawing(section, key);
         addChartMethod(section, detail);
         chartStory ||= section.parentElement;
       });
@@ -1475,7 +1754,10 @@
     runLayoutPass();
     window.setTimeout(runLayoutPass, 250);
     window.setTimeout(runLayoutPass, 900);
-    document.addEventListener('click', () => window.setTimeout(runLayoutPass, 350), true);
+    document.addEventListener('click', () => {
+      window.setTimeout(runLayoutPass, 350);
+      window.setTimeout(runLayoutPass, 1600);
+    }, true);
 
     let animationFrame = 0;
     const reportHeight = () => {
