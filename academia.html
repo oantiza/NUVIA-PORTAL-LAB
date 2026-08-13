@@ -244,6 +244,81 @@
       </section>
     </sc-if>
 
+    <!-- ============ ACTIVOS FINANCIEROS ============ -->
+    <sc-if value="{{ esActivos }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Los principales activos financieros" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
+        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; margin-bottom:22px">
+          <div style="display:grid; grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr); gap:42px; align-items:center; padding:46px 48px 38px">
+            <div>
+              <p style="color:#7C9A44; font-size:10.5px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 13px">Guía esencial · Construcción de patrimonio</p>
+              <h2 style="max-width:12em; color:var(--color-text); font-size:46px; font-weight:500; line-height:1.02; letter-spacing:-.018em; margin:0 0 20px">Los principales activos financieros</h2>
+              <p style="max-width:40em; color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:15.5px; line-height:1.72; margin:0 0 14px">Invertir significa destinar una parte del dinero a activos que pueden conservar su valor, generar rentas o crecer con el tiempo. Cada uno funciona de manera diferente: algunos ofrecen estabilidad y disponibilidad; otros permiten prestar dinero a un Estado o una empresa; y otros hacen posible participar en el crecimiento de compañías o acceder a activos reales.</p>
+              <p style="max-width:40em; color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:15.5px; line-height:1.72; margin:0">No existe un activo adecuado para todas las necesidades. Su utilidad depende del objetivo, el plazo, la liquidez necesaria y el riesgo que podamos asumir. Esta guía reúne las principales alternativas al alcance del inversor particular y las ordena según la función que pueden cumplir dentro del patrimonio.</p>
+            </div>
+            <aside style="border-radius:var(--radius-md); background:linear-gradient(145deg,#0B2347 0%,#071A38 100%); color:#ffffff; padding:28px 30px">
+              <p style="color:#dbe7c2; font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 18px">Una misma guía · Tres perspectivas</p>
+              <div style="display:flex; flex-direction:column; gap:16px">
+                <div style="display:grid; grid-template-columns:34px minmax(0,1fr); gap:12px; align-items:start; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:16px"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#7C9A44; color:#ffffff; font-size:11px; font-weight:600">01</span><div><h3 style="color:#ffffff; font-size:18px; font-weight:500; line-height:1.2; margin:1px 0 5px">Seguridad y estabilidad</h3><p style="color:rgba(255,255,255,.68); font-size:12.5px; line-height:1.55; margin:0">Efectivo, depósitos, letras y bonos.</p></div></div>
+                <div style="display:grid; grid-template-columns:34px minmax(0,1fr); gap:12px; align-items:start; border-bottom:1px solid rgba(255,255,255,.14); padding-bottom:16px"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#B69152; color:#ffffff; font-size:11px; font-weight:600">02</span><div><h3 style="color:#ffffff; font-size:18px; font-weight:500; line-height:1.2; margin:1px 0 5px">Crecimiento y diversificación</h3><p style="color:rgba(255,255,255,.68); font-size:12.5px; line-height:1.55; margin:0">Acciones, fondos de inversión y ETF.</p></div></div>
+                <div style="display:grid; grid-template-columns:34px minmax(0,1fr); gap:12px; align-items:start"><span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:999px; background:#657D9B; color:#ffffff; font-size:11px; font-weight:600">03</span><div><h3 style="color:#ffffff; font-size:18px; font-weight:500; line-height:1.2; margin:1px 0 5px">Activos complementarios</h3><p style="color:rgba(255,255,255,.68); font-size:12.5px; line-height:1.55; margin:0">Inmobiliario, oro, pensiones y activos de riesgo elevado.</p></div></div>
+              </div>
+            </aside>
+          </div>
+
+          <div style="display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:28px; border-top:1px solid var(--color-divider); background:color-mix(in srgb, var(--color-bg) 42%, var(--color-surface)); padding:28px 48px 34px">
+            <div>
+              <p style="color:#7C9A44; font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0 0 9px">Una distinción importante</p>
+              <h3 style="color:var(--color-text); font-size:25px; font-weight:500; line-height:1.15; margin:0 0 12px">Activos y vehículos de inversión</h3>
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13.5px; line-height:1.68; margin:0 0 10px">Un <strong>activo</strong> es aquello en lo que realmente está invertido el dinero: una acción, un bono, un inmueble o el oro.</p>
+              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13.5px; line-height:1.68; margin:0">Un <strong>vehículo</strong> es la estructura utilizada para acceder a uno o varios activos. Los fondos, los ETF y los planes de pensiones pueden contener acciones, bonos, liquidez u otras inversiones.</p>
+            </div>
+            <div>
+              <p style="color:#7C9A44; font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; margin:0 0 9px">Cómo compararlos</p>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px">
+                <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); padding:14px 16px"><h4 style="color:var(--color-text); font-size:14px; font-weight:600; margin:0 0 5px">Rentabilidad esperada</h4><p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0">Qué puede generar y de dónde procede el rendimiento.</p></article>
+                <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); padding:14px 16px"><h4 style="color:var(--color-text); font-size:14px; font-weight:600; margin:0 0 5px">Riesgo</h4><p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0">Cuánto puede fluctuar y qué pérdidas pueden producirse.</p></article>
+                <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); padding:14px 16px"><h4 style="color:var(--color-text); font-size:14px; font-weight:600; margin:0 0 5px">Liquidez</h4><p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0">Con qué facilidad puede volver a convertirse en dinero.</p></article>
+                <article style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); padding:14px 16px"><h4 style="color:var(--color-text); font-size:14px; font-weight:600; margin:0 0 5px">Horizonte temporal</h4><p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px; line-height:1.5; margin:0">Durante cuánto tiempo puede mantenerse la inversión.</p></article>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div role="tablist" aria-label="Grupos de activos financieros" style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:30px 0 20px">
+          <sc-for list="{{ activosTabs }}" as="t" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.abrir }}" style="{{ t.estilo }}"><span style="display:block; font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; margin-bottom:7px">{{ t.numero }}</span><span style="display:block; font-family:var(--font-heading); font-size:19px; line-height:1.2">{{ t.label }}</span><span style="display:block; font-size:11.5px; line-height:1.5; margin-top:6px; opacity:.7">{{ t.resumen }}</span></button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ esActivoSeguridad }}" hint-placeholder-val="{{ true }}">
+          <section role="tabpanel" data-screen-label="Seguridad y estabilidad" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+            <div style="display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:34px; align-items:center; padding:34px 38px">
+              <div><p style="color:#7C9A44; font-size:10.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 10px">Apartado 01</p><h3 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.08; margin:0 0 13px">Seguridad y estabilidad</h3><p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.68; margin:0">El punto de partida para entender qué parte del patrimonio necesita permanecer disponible y qué activos pueden aportar una mayor previsibilidad.</p><div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:18px"><span style="border-radius:999px; background:#F2F4E6; color:#4D6127; font-size:11px; font-weight:600; padding:7px 11px">Efectivo</span><span style="border-radius:999px; background:#F2F4E6; color:#4D6127; font-size:11px; font-weight:600; padding:7px 11px">Depósitos</span><span style="border-radius:999px; background:#F2F4E6; color:#4D6127; font-size:11px; font-weight:600; padding:7px 11px">Letras</span><span style="border-radius:999px; background:#F2F4E6; color:#4D6127; font-size:11px; font-weight:600; padding:7px 11px">Bonos</span></div></div>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px"><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:var(--radius-md); background:#0B2347; color:#ffffff; text-align:center; padding:20px"><span style="color:#dbe7c2; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Vídeo 1</span><strong style="font-family:var(--font-heading); font-size:20px; font-weight:500; margin-top:8px">El mapa del inversor</strong><span style="color:rgba(255,255,255,.58); font-size:11px; margin-top:7px">Pendiente de insertar</span></div><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed color-mix(in srgb, #7C9A44 60%, transparent); border-radius:var(--radius-md); background:#F8F8F3; color:var(--color-text); text-align:center; padding:20px"><span style="color:#7C9A44; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Infografía 1</span><strong style="font-family:var(--font-heading); font-size:18px; font-weight:500; margin-top:8px">Seguridad y estabilidad</strong><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; margin-top:7px">Espacio preparado</span></div></div>
+            </div>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ esActivoCrecimiento }}" hint-placeholder-val="{{ false }}">
+          <section role="tabpanel" data-screen-label="Crecimiento y diversificación" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+            <div style="display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:34px; align-items:center; padding:34px 38px">
+              <div><p style="color:#B69152; font-size:10.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 10px">Apartado 02</p><h3 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.08; margin:0 0 13px">Crecimiento y diversificación</h3><p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.68; margin:0">Una mirada a las inversiones que permiten participar en el crecimiento de empresas y mercados, de forma directa o mediante una cartera diversificada.</p><div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:18px"><span style="border-radius:999px; background:#F5EEE3; color:#795B2C; font-size:11px; font-weight:600; padding:7px 11px">Acciones</span><span style="border-radius:999px; background:#F5EEE3; color:#795B2C; font-size:11px; font-weight:600; padding:7px 11px">Fondos</span><span style="border-radius:999px; background:#F5EEE3; color:#795B2C; font-size:11px; font-weight:600; padding:7px 11px">ETF</span></div></div>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px"><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:var(--radius-md); background:#0B2347; color:#ffffff; text-align:center; padding:20px"><span style="color:#e8d8b9; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Vídeo 2</span><strong style="font-family:var(--font-heading); font-size:20px; font-weight:500; margin-top:8px">Invertir en crecimiento</strong><span style="color:rgba(255,255,255,.58); font-size:11px; margin-top:7px">Pendiente de insertar</span></div><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed color-mix(in srgb, #B69152 65%, transparent); border-radius:var(--radius-md); background:#F8F8F3; color:var(--color-text); text-align:center; padding:20px"><span style="color:#B69152; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Infografía 2</span><strong style="font-family:var(--font-heading); font-size:18px; font-weight:500; margin-top:8px">Tres formas de invertir</strong><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; margin-top:7px">Espacio preparado</span></div></div>
+            </div>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ esActivoComplementarios }}" hint-placeholder-val="{{ false }}">
+          <section role="tabpanel" data-screen-label="Activos complementarios y largo plazo" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
+            <div style="display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:34px; align-items:center; padding:34px 38px">
+              <div><p style="color:#657D9B; font-size:10.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 10px">Apartado 03</p><h3 style="color:var(--color-text); font-size:32px; font-weight:500; line-height:1.08; margin:0 0 13px">Activos complementarios y largo plazo</h3><p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.68; margin:0">Activos reales, vehículos para la jubilación y alternativas cuyo riesgo requiere una comprensión especialmente cuidadosa.</p><div style="display:flex; flex-wrap:wrap; gap:7px; margin-top:18px"><span style="border-radius:999px; background:#EAF0F5; color:#425C78; font-size:11px; font-weight:600; padding:7px 11px">Inmuebles</span><span style="border-radius:999px; background:#EAF0F5; color:#425C78; font-size:11px; font-weight:600; padding:7px 11px">SOCIMI</span><span style="border-radius:999px; background:#EAF0F5; color:#425C78; font-size:11px; font-weight:600; padding:7px 11px">Oro</span><span style="border-radius:999px; background:#EAF0F5; color:#425C78; font-size:11px; font-weight:600; padding:7px 11px">Pensiones</span><span style="border-radius:999px; background:#EAF0F5; color:#425C78; font-size:11px; font-weight:600; padding:7px 11px">Criptoactivos</span></div></div>
+              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px"><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:var(--radius-md); background:#0B2347; color:#ffffff; text-align:center; padding:20px"><span style="color:#cbd7e5; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Vídeo 3</span><strong style="font-family:var(--font-heading); font-size:20px; font-weight:500; margin-top:8px">Completar la cartera</strong><span style="color:rgba(255,255,255,.58); font-size:11px; margin-top:7px">Pendiente de insertar</span></div><div style="aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px dashed color-mix(in srgb, #657D9B 65%, transparent); border-radius:var(--radius-md); background:#F8F8F3; color:var(--color-text); text-align:center; padding:20px"><span style="color:#657D9B; font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase">Infografía 3</span><strong style="font-family:var(--font-heading); font-size:18px; font-weight:500; margin-top:8px">Activos complementarios</strong><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; margin-top:7px">Espacio preparado</span></div></div>
+            </div>
+          </section>
+        </sc-if>
+      </section>
+    </sc-if>
+
     <!-- ============ INTERÉS COMPUESTO Y SIMULADOR ============ -->
     <sc-if value="{{ esCalculadora }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="El poder del interés compuesto" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
@@ -392,6 +467,7 @@
           <h4 style="color:var(--color-text); font-size:11px; font-weight:500; letter-spacing:.16em; margin:0 0 16px; text-transform:uppercase">Academy</h4>
           <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start">
             <button type="button" onClick="{{ irFundamentos }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Fundamentos de inversión</button>
+            <button type="button" onClick="{{ irActivos }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Los principales activos financieros</button>
             <button type="button" onClick="{{ irCalculadora }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">El poder del interés compuesto</button>
             <button type="button" onClick="{{ irGlosario }}" style="border:0; background:none; padding:0; cursor:pointer; font-family:var(--font-body); color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-align:left; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Glosario financiero</button>
             <a href="curso.html" style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Curso · Dinero con criterio</a>
@@ -425,12 +501,12 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
-  state = { tab: 'fundamentos', sub: 'conceptos', abiertos: {}, c: null };
+  state = { tab: 'fundamentos', activosSub: 'seguridad', sub: 'conceptos', abiertos: {}, c: null };
   cDefaults() { return { initialCapital: 10000, periodicContribution: 300, contributionFrequency: 'monthly', years: 20, expectedReturn: 6.5, inflationRate: 2, taxRate: 21, annualIncrease: 0 }; }
   componentDidMount() {
     document.title = 'NUVIA Academy | NUVIA Family Wealth';
     const p = new URLSearchParams(window.location.search).get('tab');
-    if (p && ['fundamentos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
+    if (p && ['fundamentos', 'activos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
   }
   // Series históricas (100 $ en 1928) — datos de SavingsInvestmentGuide.tsx
   historia() {
@@ -511,7 +587,7 @@ class Component extends DCLogic {
     const tab = this.state.tab;
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
     const pill = (on) => base + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
-    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['calculadora', 'El poder del interés compuesto', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
+    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['activos', 'Activos financieros', ''], ['calculadora', 'El poder del interés compuesto', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
     const c = this.c();
     const pr = this.proyectar(c);
     const maxY = Math.max(1, ...pr.filas.map(f => f.bruto));
@@ -528,10 +604,24 @@ class Component extends DCLogic {
         abrir: id === 'curso' ? () => { window.location.href = 'curso.html'; } : () => { this.setState({ tab: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
         estilo: pill(id === tab),
       })),
-      esFundamentos: tab === 'fundamentos', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
+      esFundamentos: tab === 'fundamentos', esActivos: tab === 'activos', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
       irFundamentos: () => { this.setState({ tab: 'fundamentos' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      irActivos: () => { this.setState({ tab: 'activos' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
       irCalculadora: () => { this.setState({ tab: 'calculadora' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
       irGlosario: () => { this.setState({ tab: 'glosario' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      activosTabs: [
+        ['seguridad', '01', 'Seguridad y estabilidad', 'Efectivo, depósitos, letras y bonos'],
+        ['crecimiento', '02', 'Crecimiento y diversificación', 'Acciones, fondos de inversión y ETF'],
+        ['complementarios', '03', 'Activos complementarios', 'Inmobiliario, oro, pensiones y otros activos'],
+      ].map(([id, numero, label, resumen]) => ({
+        numero, label, resumen,
+        selected: this.state.activosSub === id,
+        abrir: () => this.setState({ activosSub: id }),
+        estilo: 'width:100%; border-radius:var(--radius-md); cursor:pointer; font-family:var(--font-body); text-align:left; padding:17px 19px; transition:background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; ' + (this.state.activosSub === id ? 'border:1px solid #0B2347; background:#0B2347; color:#ffffff; box-shadow:var(--shadow-sm)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:var(--color-text)'),
+      })),
+      esActivoSeguridad: this.state.activosSub === 'seguridad',
+      esActivoCrecimiento: this.state.activosSub === 'crecimiento',
+      esActivoComplementarios: this.state.activosSub === 'complementarios',
       v: c,
       setNum: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: Number(e.target.value) || 0 }) }),
       setStr: (e) => this.setState({ c: Object.assign({}, c, { [e.target.name]: e.target.value }) }),
