@@ -4,6 +4,7 @@ import { collection, onSnapshot, query, orderBy, deleteDoc, doc } from 'firebase
 import { db } from '../firebase.js';
 import { api } from '../api.js';
 import { Section } from '../components/Kpi.jsx';
+import SearchBox from '../components/SearchBox.jsx';
 import { fmtPrice, fmtPct, fmtNum, clsPN } from '../lib/format.js';
 
 function consLabel(r) {
@@ -63,8 +64,27 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="eyebrow">Panel de seguimiento</div>
-      <h1 className="page-title">Mis valores</h1>
+      <section className="analysis-intro" aria-labelledby="analysis-intro-title">
+        <div className="analysis-intro-copy">
+          <div className="eyebrow">NUVIA · Lectura empresarial</div>
+          <h1 id="analysis-intro-title">Análisis y valoración de empresas</h1>
+          <p>Estudia la calidad del negocio, su evolución financiera, la valoración del mercado y las expectativas de los analistas con una lectura clara y ordenada.</p>
+          <i aria-hidden="true" />
+        </div>
+      </section>
+
+      <section className="watchlist-head" aria-labelledby="watchlist-title">
+        <div className="watchlist-heading">
+          <div className="eyebrow">Panel de seguimiento</div>
+          <h2 id="watchlist-title" className="page-title">Mis valores</h2>
+          <p className="lead">Reúne las compañías que quieres seguir y accede a su ficha de análisis desde una sola vista.</p>
+        </div>
+        <div className="watchlist-search">
+          <label>Buscar empresa o ticker</label>
+          <SearchBox onPick={(item) => navigate(`/empresa/${item.symbol}`)} placeholder="Apple, SAN.MC, AIR.PA…" />
+          <p>Busca por nombre, ticker o ISIN para abrir la ficha y añadir la compañía a tu seguimiento.</p>
+        </div>
+      </section>
       <hr className="rule" />
 
       {items === null && <div className="loading">Cargando…</div>}
@@ -72,7 +92,7 @@ export default function Dashboard() {
       {items?.length === 0 && (
         <div className="empty">
           <div className="big">Todavía no sigues ningún valor</div>
-          Busca una empresa en la barra superior — por nombre, ticker o ISIN — y añádela
+          Busca una empresa en el panel de seguimiento — por nombre, ticker o ISIN — y añádela
           a tu lista desde su ficha.
         </div>
       )}

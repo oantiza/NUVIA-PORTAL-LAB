@@ -62,6 +62,7 @@ export default function SearchBox({ onPick, placeholder = 'Buscar empresa o tick
         onKeyDown={onKey}
         onFocus={() => items.length && setOpen(true)}
         placeholder={placeholder}
+        aria-label="Buscar empresa o ticker"
         spellCheck={false}
       />
       {open && (

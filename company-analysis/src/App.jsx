@@ -5,7 +5,6 @@ import { auth, ALLOWED_EMAILS } from './firebase.js';
 import Login from './views/Login.jsx';
 import Dashboard from './views/Dashboard.jsx';
 import Company from './views/Company.jsx';
-import SearchBox from './components/SearchBox.jsx';
 import { ThemeSelector } from './components/Theme.jsx';
 
 export default function App() {
@@ -36,7 +35,6 @@ export default function App() {
           <div className="b1">NUVIA<span className="slash"> ∕ </span></div>
           <div className="b2">Análisis de Empresas</div>
         </div>
-        <SearchBox onPick={(item) => navigate(`/empresa/${item.symbol}`)} />
         <div className="topbar-right">
           <ThemeSelector compact />
           <span className="user-mail">{user.email}</span>
