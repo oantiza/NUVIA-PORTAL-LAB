@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, ALLOWED_EMAILS } from './firebase.js';
 import Login from './views/Login.jsx';
@@ -10,7 +10,6 @@ import { ThemeSelector } from './components/Theme.jsx';
 export default function App() {
   const [user, setUser] = useState(undefined); // undefined = comprobando
   const [denegado, setDenegado] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     return onAuthStateChanged(auth, (u) => {
@@ -31,10 +30,6 @@ export default function App() {
   return (
     <div className="app">
       <header className="topbar no-print">
-        <div className="brand" onClick={() => navigate('/')}>
-          <div className="b1">NUVIA<span className="slash"> ∕ </span></div>
-          <div className="b2">Análisis de Empresas</div>
-        </div>
         <div className="topbar-right">
           <ThemeSelector compact />
           <span className="user-mail">{user.email}</span>
