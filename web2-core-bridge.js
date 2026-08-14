@@ -406,18 +406,53 @@
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] {
         order: 0;
+        position: relative;
+        isolation: isolate;
         display: flex;
         min-height: 292px;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
-        border: 1px solid #d9dde4;
-        background: #fff;
+        overflow: hidden;
+        border: 1px solid #d6dde3;
+        background:
+          repeating-radial-gradient(circle at 88% 14%, transparent 0 70px, rgba(11,35,71,.055) 71px 72px, transparent 73px 104px),
+          radial-gradient(circle at 12% 18%, rgba(124,154,68,.18) 0, rgba(124,154,68,.08) 17%, transparent 36%),
+          radial-gradient(circle at 87% 82%, rgba(21,77,114,.16) 0, rgba(21,77,114,.06) 22%, transparent 42%),
+          linear-gradient(135deg, #f7f4ea 0%, #eef3f5 52%, #f5f1e7 100%);
         padding: 48px 32px;
         text-align: center;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 18px 50px rgba(11,35,71,.07);
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead]::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: auto auto 0 0;
+        width: 46%;
+        height: 52%;
+        background: linear-gradient(135deg, rgba(124,154,68,.18), rgba(21,77,114,.045));
+        clip-path: polygon(0 78%, 18% 62%, 34% 69%, 51% 38%, 68% 48%, 84% 18%, 100% 4%, 100% 100%, 0 100%);
+      }
+      body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead]::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-image: linear-gradient(rgba(11,35,71,.032) 1px, transparent 1px), linear-gradient(90deg, rgba(11,35,71,.032) 1px, transparent 1px);
+        background-size: 42px 42px;
+        opacity: .7;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] > div {
-        width: min(100%, 540px);
+        position: relative;
+        width: min(100%, 620px);
+        box-sizing: border-box;
+        border: 1px solid rgba(255,255,255,.86);
+        border-radius: 24px;
+        background: rgba(255,255,255,.58);
+        padding: 34px 44px 32px;
+        box-shadow: 0 20px 55px rgba(11,35,71,.09);
+        backdrop-filter: blur(10px);
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] strong {
         display: block;
