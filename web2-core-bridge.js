@@ -409,7 +409,7 @@
         position: relative;
         isolation: isolate;
         display: flex;
-        min-height: 292px;
+        min-height: 262px;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
@@ -421,7 +421,7 @@
           radial-gradient(circle at 12% 18%, rgba(124,154,68,.18) 0, rgba(124,154,68,.08) 17%, transparent 36%),
           radial-gradient(circle at 87% 82%, rgba(21,77,114,.16) 0, rgba(21,77,114,.06) 22%, transparent 42%),
           linear-gradient(135deg, #f7f4ea 0%, #eef3f5 52%, #f5f1e7 100%);
-        padding: 48px 32px;
+        padding: 40px 32px;
         text-align: center;
         box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 18px 50px rgba(11,35,71,.07);
       }
