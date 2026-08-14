@@ -66,8 +66,10 @@ export default function Dashboard() {
     <>
       <section className="analysis-intro" aria-labelledby="analysis-intro-title">
         <div className="analysis-intro-copy">
-          <div className="eyebrow">NUVIA · Lectura empresarial</div>
-          <h1 id="analysis-intro-title">Análisis y valoración de empresas</h1>
+          <h1 id="analysis-intro-title">
+            <strong>NUVIA</strong>
+            <span>Análisis y valoración de empresas</span>
+          </h1>
           <p>Estudia la calidad del negocio, su evolución financiera, la valoración del mercado y las expectativas de los analistas con una lectura clara y ordenada.</p>
           <i aria-hidden="true" />
         </div>
