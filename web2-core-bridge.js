@@ -416,6 +416,7 @@
         overflow: hidden;
         border: 1px solid #d6dde3;
         background:
+          radial-gradient(ellipse at center, rgba(255,255,255,.64) 0%, rgba(255,255,255,.34) 34%, transparent 66%),
           repeating-radial-gradient(circle at 88% 14%, transparent 0 70px, rgba(11,35,71,.055) 71px 72px, transparent 73px 104px),
           radial-gradient(circle at 12% 18%, rgba(124,154,68,.18) 0, rgba(124,154,68,.08) 17%, transparent 36%),
           radial-gradient(circle at 87% 82%, rgba(21,77,114,.16) 0, rgba(21,77,114,.06) 22%, transparent 42%),
@@ -445,14 +446,11 @@
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] > div {
         position: relative;
-        width: min(100%, 620px);
+        width: min(100%, 690px);
         box-sizing: border-box;
-        border: 1px solid rgba(255,255,255,.86);
-        border-radius: 24px;
-        background: rgba(255,255,255,.58);
-        padding: 34px 44px 32px;
-        box-shadow: 0 20px 55px rgba(11,35,71,.09);
-        backdrop-filter: blur(10px);
+        border: 0;
+        background: transparent;
+        padding: 22px 34px 20px;
       }
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] strong {
         display: block;
