@@ -194,7 +194,8 @@ body[data-suite-vista="companies"] .nuvia-suite-loading {
 @keyframes nuvia-suite-spin { to { transform: rotate(360deg); } }
 
 #nuvia-company-suite {
-  min-height: 1680px;
+  height: 720px;
+  min-height: 720px;
   background: #f5f1e8;
 }
 

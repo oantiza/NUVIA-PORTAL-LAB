@@ -31,7 +31,27 @@ body.nuvia-unified {
   background: var(--nv-cloud);
   color: var(--nv-ink);
   font-family: var(--nv-font-sans);
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
+}
+
+/* Una sola voz tipográfica para toda la experiencia digital. */
+.nuvia-unified button,
+.nuvia-unified input,
+.nuvia-unified select,
+.nuvia-unified textarea,
+.nuvia-unified optgroup {
+  font-family: var(--nv-font-sans) !important;
+}
+
+.nuvia-unified h1,
+.nuvia-unified h2,
+.nuvia-unified h3,
+.nuvia-unified h4,
+.nuvia-unified h5,
+.nuvia-unified h6 {
+  font-family: var(--nv-font-sans) !important;
+  font-weight: 500;
 }
 
 .nuvia-unified *,
@@ -84,7 +104,7 @@ body.nuvia-unified {
   position: relative;
   flex: 0 0 auto;
   color: var(--nv-copy) !important;
-  font-size: 12.5px !important;
+  font-size: 13.5px !important;
   font-weight: 500 !important;
   line-height: 72px !important;
   text-decoration: none !important;
@@ -197,8 +217,13 @@ body.nuvia-unified {
 }
 
 .nuvia-page-editorial main h1,
+.nuvia-page-editorial .lecturas-hero-title,
+.nuvia-page-editorial .lecturas-hero-subtitle,
 .nuvia-page-editorial .lecturas-feature-copy h2,
-.nuvia-page-editorial .lecturas-dialog-copy h2 {
+.nuvia-page-editorial .lecturas-dialog-copy h2,
+.nuvia-page-editorial .lecturas-dialog-title,
+.nuvia-page-home .home-lecturas-banner-title,
+.nuvia-page-home .home-lecturas-banner-subtitle {
   font-family: var(--nv-font-serif) !important;
   font-weight: 500 !important;
   letter-spacing: -.03em !important;
@@ -267,8 +292,96 @@ body.nuvia-unified {
 }
 
 .nuvia-global-footer img {
+  display: block;
+  width: 156px;
+  height: auto;
   filter: brightness(0) invert(1);
   opacity: .84;
+}
+
+.nuvia-global-header > .nuvia-site-header__inner {
+  display: flex !important;
+  height: 72px;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 32px !important;
+}
+
+.nuvia-global-header .nuvia-site-header__brand {
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  align-items: center;
+  line-height: 0;
+}
+
+.nuvia-global-header .nuvia-site-header__brand img {
+  height: 67px !important;
+}
+
+.nuvia-global-header .nuvia-global-nav {
+  margin-left: auto;
+}
+
+.nuvia-global-footer .nuvia-site-footer__inner {
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+  padding: 48px 0 24px;
+}
+
+.nuvia-global-footer .nuvia-site-footer__grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.35fr) minmax(140px, .75fr) minmax(140px, .75fr) minmax(220px, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.nuvia-global-footer .nuvia-site-footer__brand img {
+  width: 180px;
+  height: auto;
+  background: transparent !important;
+}
+
+.nuvia-global-footer .nuvia-site-footer__brand p {
+  max-width: 30em;
+  margin: 18px 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.nuvia-global-footer h4 {
+  margin: 0 0 16px;
+  color: white !important;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.nuvia-global-footer .nuvia-site-footer__links,
+.nuvia-global-footer .nuvia-site-footer__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.nuvia-global-footer .nuvia-site-footer__links a,
+.nuvia-global-footer .nuvia-site-footer__info span {
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.nuvia-global-footer .nuvia-site-footer__legal {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 36px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  padding-top: 18px;
+  font-size: 11.5px;
+  line-height: 1.5;
 }
 
 @media (max-width: 1120px) and (min-width: 768px) {
@@ -295,7 +408,24 @@ body.nuvia-unified {
   }
 
   .nuvia-global-nav__link {
-    font-size: 11px !important;
+    font-size: 12px !important;
+  }
+
+  .nuvia-global-header > .nuvia-site-header__inner {
+    gap: 20px !important;
+  }
+
+  .nuvia-global-header .nuvia-site-header__brand img {
+    height: 62px !important;
+  }
+
+  .nuvia-global-footer .nuvia-site-footer__inner {
+    width: calc(100% - 56px);
+  }
+
+  .nuvia-global-footer .nuvia-site-footer__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 36px 48px;
   }
 
   .nuvia-unified [data-screen-label^="Cabecera"] h1,

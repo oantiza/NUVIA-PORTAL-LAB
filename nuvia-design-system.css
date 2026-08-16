@@ -194,7 +194,7 @@
 }
 
 .nv-header-preview__logo {
-  width: 88px;
+  width: 158px;
 }
 
 .nv-header-preview__nav {
@@ -632,7 +632,7 @@
 }
 
 .nv-footer-preview img {
-  width: 72px;
+  width: 124px;
   filter: brightness(0) invert(1);
   opacity: .84;
 }

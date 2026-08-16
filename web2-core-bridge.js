@@ -32,6 +32,15 @@
         min-height: 0 !important;
         overflow: visible !important;
         background: transparent !important;
+        font-family: Inter, system-ui, sans-serif !important;
+      }
+      body.nuvia-web2-embedded .nuvia-app .font-serif,
+      body.nuvia-web2-embedded .nuvia-zip3-nav-button,
+      body.nuvia-web2-embedded .nuvia-app button,
+      body.nuvia-web2-embedded .nuvia-app input,
+      body.nuvia-web2-embedded .nuvia-app select,
+      body.nuvia-web2-embedded .nuvia-app textarea {
+        font-family: Inter, system-ui, sans-serif !important;
       }
       body.nuvia-web2-embedded main.nuvia-portfolio {
         width: 100% !important;
@@ -79,7 +88,7 @@
       }
       body.nuvia-web2-embedded [data-nuvia-suite-hero] h1 {
         max-width: 680px;
-        font-family: Figtree, system-ui, sans-serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-size: clamp(46px, 4.8vw, 62px) !important;
         font-weight: 400 !important;
         letter-spacing: -.035em !important;
@@ -260,7 +269,7 @@
       }
       body.nuvia-web2-embedded [data-nuvia-suite-tabs] button span span:nth-child(2) {
         margin-top: 3px !important;
-        font-family: Figtree, system-ui, sans-serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-size: 20px !important;
         font-weight: 500 !important;
       }
@@ -383,7 +392,7 @@
       body.nuvia-web2-embedded [data-nuvia-fundamental-loading] strong {
         display: block;
         margin-bottom: 3px;
-        font-family: Figtree, system-ui, sans-serif;
+        font-family: Inter, system-ui, sans-serif;
         font-size: 14px;
       }
       body.nuvia-web2-embedded [data-nuvia-fundamental-loading] span {
@@ -455,7 +464,7 @@
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-masthead] strong {
         display: block;
         color: #202735;
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: Inter, system-ui, sans-serif;
         font-size: 44px;
         font-weight: 400;
         letter-spacing: .18em;
@@ -527,7 +536,7 @@
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] h2,
       body.nuvia-web2-view-portfolio [data-nuvia-portfolio-lab] h3 {
         color: #202735 !important;
-        font-family: Georgia, 'Times New Roman', serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-weight: 400 !important;
         letter-spacing: -.01em !important;
       }
@@ -623,7 +632,7 @@
       }
       body.nuvia-web2-embedded [data-nuvia-diagnostic] h3,
       body.nuvia-web2-embedded [data-nuvia-chart-section] h3 {
-        font-family: Figtree, system-ui, sans-serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-size: 28px !important;
         font-weight: 500 !important;
         letter-spacing: -.025em !important;
@@ -714,7 +723,7 @@
         width: 100% !important;
       }
       body.nuvia-web2-embedded [data-nuvia-chart-section] svg text {
-        font-family: Figtree, system-ui, sans-serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-size: 11.5px !important;
         fill: #53677e;
         font-weight: 500;
@@ -985,7 +994,7 @@
       }
       body.nuvia-web2-view-portfolio [data-nuvia-chart-section] h3 {
         color: #202735 !important;
-        font-family: Georgia, 'Times New Roman', serif !important;
+        font-family: Inter, system-ui, sans-serif !important;
         font-size: 31px !important;
         font-weight: 400 !important;
         letter-spacing: -.015em !important;
@@ -1057,7 +1066,7 @@
         display: block;
         margin-top: 9px;
         color: #153d5b !important;
-        font-family: Georgia, 'Times New Roman', serif;
+        font-family: Inter, system-ui, sans-serif;
         font-size: 25px;
         font-weight: 400;
         font-variant-numeric: tabular-nums;

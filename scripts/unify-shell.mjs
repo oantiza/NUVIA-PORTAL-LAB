@@ -19,10 +19,18 @@ const sectionFor = (file) => {
 
 const active = (current, section) => current === section ? ' class="is-active" aria-current="page"' : '';
 
-const header = (current) => `<header data-screen-label="Header" class="nuvia-site-header">
+const logoFor = () => ({
+  src: 'src/assets/brand/nuvia-three-leaf-final-2026/nuvia-family-wealth-horizontal-transparent.png',
+  alt: 'NUVIA Family Wealth',
+  label: 'Inicio de NUVIA',
+});
+
+const header = (current) => {
+  const logo = logoFor(current);
+  return `<header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA Family Wealth">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="${logo.label}">
+        <img src="${logo.src}" alt="${logo.alt}">
       </a>
       <nav class="nuvia-site-nav" aria-label="Navegación principal">
         <a href="index.html"${active(current, 'inicio')}>Inicio</a>
@@ -45,18 +53,21 @@ const header = (current) => `<header data-screen-label="Header" class="nuvia-sit
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="academia.html"${active(current, 'academy')}>Academia Nuvia</a>
+        <a href="academia.html"${active(current, 'academy')}>Academia</a>
         <a href="lecturas.html"${active(current, 'lecturas')}>Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>`;
+};
 
-const footer = `<footer data-screen-label="Footer" class="nuvia-site-footer">
+const footer = (current) => {
+  const logo = logoFor(current);
+  return `<footer data-screen-label="Footer" class="nuvia-site-footer">
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/home/nuvia-logo-transparent.webp" alt="NUVIA">
+          <img src="${logo.src}" alt="${logo.alt}">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
@@ -93,13 +104,14 @@ const footer = `<footer data-screen-label="Footer" class="nuvia-site-footer">
       </div>
     </div>
   </footer>`;
+};
 
 for (const file of pages) {
   const fullPath = path.join(root, file);
   let html = fs.readFileSync(fullPath, 'utf8');
   const next = html
     .replace(/<header data-screen-label="Header"[\s\S]*?<\/header>/, header(sectionFor(file)))
-    .replace(/<footer data-screen-label="Footer"[\s\S]*?<\/footer>/, footer)
+    .replace(/<footer data-screen-label="Footer"[\s\S]*?<\/footer>/, footer(sectionFor(file)))
     .replace(/min-width:1080px/g, 'min-width:768px');
   if (next === html) throw new Error(`No se pudo actualizar la estructura de ${file}`);
   fs.writeFileSync(fullPath, next);

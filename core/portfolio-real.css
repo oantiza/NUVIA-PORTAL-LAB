@@ -8,7 +8,7 @@
   --nrp-gold: #b78b3b;
   --nrp-wine: #74263c;
   color: var(--nrp-navy);
-  font-family: Figtree, Inter, system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 .nuvia-real-portfolio * { box-sizing: border-box; }
@@ -54,7 +54,7 @@
 }
 .nrp-hero h2 {
   margin: 0;
-  font-family: Fraunces, Georgia, serif;
+  font-family: Inter, system-ui, sans-serif;
   font-size: clamp(34px, 4vw, 54px);
   font-weight: 500;
   line-height: 1.02;
@@ -67,7 +67,7 @@
   background: rgba(255,255,255,.08);
   backdrop-filter: blur(10px);
 }
-.nrp-source-card strong { display: block; font-family: Fraunces, Georgia, serif; font-size: 23px; font-weight: 500; }
+.nrp-source-card strong { display: block; font-family: Inter, system-ui, sans-serif; font-size: 23px; font-weight: 500; }
 .nrp-source-card p { margin: 8px 0 0; color: rgba(255,255,255,.7); font-size: 12px; line-height: 1.55; }
 .nrp-source-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
 .nrp-chip {
@@ -116,7 +116,7 @@
 .nrp-workspace { display: grid; grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr); gap: 22px; align-items: start; }
 .nrp-card { padding: 22px; }
 .nrp-card h3,
-.nrp-chart-card h3 { margin: 0; font-family: Fraunces, Georgia, serif; font-size: 25px; font-weight: 500; }
+.nrp-chart-card h3 { margin: 0; font-family: Inter, system-ui, sans-serif; font-size: 25px; font-weight: 500; }
 .nrp-card-sub { margin: 6px 0 0; color: var(--nrp-muted); font-size: 12px; line-height: 1.55; }
 .nrp-section-label { margin: 0 0 7px; color: var(--nrp-wine); font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 
@@ -164,7 +164,7 @@
 .nrp-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
 .nrp-metric { min-height: 111px; padding: 16px; border: 1px solid #e0e7ed; border-radius: 17px; background: linear-gradient(145deg,#fff,#fafbf9); }
 .nrp-metric span { display: block; color: var(--nrp-muted); font-size: 9px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-.nrp-metric strong { display: block; margin-top: 12px; font-family: Fraunces, Georgia, serif; font-size: 28px; font-weight: 500; line-height: 1; }
+.nrp-metric strong { display: block; margin-top: 12px; font-family: Inter, system-ui, sans-serif; font-size: 28px; font-weight: 500; line-height: 1; }
 .nrp-metric small { display: block; margin-top: 9px; color: var(--nrp-muted); font-size: 10px; line-height: 1.35; }
 .nrp-metric.is-highlight { border-color: #d3dfbc; background: linear-gradient(145deg,#fbfcf7,#f2f5e9); }
 
@@ -195,7 +195,7 @@
 .nrp-correlation td { height: 49px; border-radius: 9px; color: #fff; font-size: 11px; font-weight: 750; text-align: center; }
 .nrp-correlation td:first-child { color: var(--nrp-navy); background: transparent !important; text-align: left; }
 .nrp-empty { display: grid; min-height: 420px; place-items: center; padding: 42px; border: 1px dashed #cfd9e3; border-radius: 21px; background: linear-gradient(145deg,#fff,#fafbf9); text-align: center; }
-.nrp-empty strong { display: block; font-family: Fraunces, Georgia, serif; font-size: 28px; font-weight: 500; }
+.nrp-empty strong { display: block; font-family: Inter, system-ui, sans-serif; font-size: 28px; font-weight: 500; }
 .nrp-empty p { max-width: 520px; margin: 10px auto 0; color: var(--nrp-muted); font-size: 13px; line-height: 1.6; }
 .nrp-footnote { padding: 15px 18px; border-radius: 15px; background: #f3f5ec; color: #56677c; font-size: 11px; line-height: 1.55; }
 
