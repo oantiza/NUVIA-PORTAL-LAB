@@ -171,7 +171,7 @@ const courseBundles = await Promise.all(
 );
 const courseBundle = courseBundles.join('\n');
 for (const videoId of expectedCourseVideos) {
-  if (!courseBundle.includes(videoId)) throw new Error(`Falta el vídeo de Academy: ${videoId}`);
+  if (!courseBundle.includes(videoId)) throw new Error(`Falta el vídeo de Academia Nuvia: ${videoId}`);
 }
 
 console.log(`Paridad funcional preparada: ${required.length} recursos, ${manifest.length} informes, ${expectedRoutes.length} rutas críticas, ${expectedHomeLinks.length} accesos y ${expectedCourseVideos.length} vídeos.`);

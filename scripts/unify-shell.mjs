@@ -45,7 +45,7 @@ const header = (current) => `<header data-screen-label="Header" class="nuvia-sit
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="academia.html"${active(current, 'academy')}>Academy</a>
+        <a href="academia.html"${active(current, 'academy')}>Academia Nuvia</a>
         <a href="lecturas.html"${active(current, 'lecturas')}>Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
@@ -73,7 +73,7 @@ const footer = `<footer data-screen-label="Footer" class="nuvia-site-footer">
           <h4>Recursos</h4>
           <div class="nuvia-site-footer__links">
             <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
-            <a href="academia.html">NUVIA Academy</a>
+            <a href="academia.html">Academia Nuvia</a>
             <a href="academia.html?tab=interes">Interés compuesto</a>
             <a href="academia.html?tab=calculadora">Simulador</a>
             <a href="curso.html">Curso · Dinero con criterio</a>

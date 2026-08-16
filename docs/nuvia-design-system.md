@@ -30,7 +30,7 @@ Estado: propuesta de fase 1. No aplicada todavía a las páginas públicas.
 ## Héroes
 
 - Fotográfico: solo portada.
-- Institucional azul: Mercados, Analítica de cartera, Academy, Temas y herramientas.
+- Institucional azul: Mercados, Analítica de cartera, Academia Nuvia, Temas y herramientas.
 - Editorial crema: Lecturas, guías e informes.
 
 Las tres variantes deben compartir contenedor, escala tipográfica, etiqueta superior, anchura de lectura y ritmo vertical.

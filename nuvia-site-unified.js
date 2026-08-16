@@ -4,7 +4,7 @@
     { id: 'mercados', label: 'Mercados', href: 'mercados.html' },
     { id: 'cartera', label: 'Analítica de cartera', href: 'cartera.html' },
     { id: 'temas', label: 'Temas clave', href: 'temas.html' },
-    { id: 'academy', label: 'Academy', href: 'academia.html' },
+    { id: 'academy', label: 'Academia Nuvia', href: 'academia.html' },
     { id: 'lecturas', label: 'Lecturas', href: 'lecturas.html' },
     { id: 'nuvia', label: 'Qué es NUVIA', href: 'index.html#que-es-nuvia' }
   ];

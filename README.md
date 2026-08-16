@@ -26,7 +26,7 @@ npm run validate
 npm run build
 ```
 
-La validación comprueba las rutas funcionales, informes, materiales de Academy, contenido diario, indicadores macroeconómicos y referencias locales de todas las páginas.
+La validación comprueba las rutas funcionales, informes, materiales de Academia Nuvia, contenido diario, indicadores macroeconómicos y referencias locales de todas las páginas.
 
 ## Publicación
 
