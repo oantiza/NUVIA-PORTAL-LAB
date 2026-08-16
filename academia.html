@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="NUVIA Academy reúne cursos, guías, simuladores y conceptos para entender el dinero con calma.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/academia.html">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/academia.html">
 <title>NUVIA Academy | NUVIA</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="nuvia-site-unified.css">
@@ -44,7 +44,7 @@
         <a href="mercados.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Mercados</a>
         <a href="cartera.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Analítica de cartera</a>
         <a href="temas.html" style="white-space:nowrap; font-size:14px; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent)">Temas clave</a>
-        <a href="#academy" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Academy</a>
+        <a href="academia.html" style="white-space:nowrap; font-size:14px; color:var(--color-accent); text-decoration:none">Academy</a>
       </nav>
     </div>
   </header>
@@ -56,16 +56,120 @@
         <span style="display:inline-block; color:#dae5c1; font-size:11px; font-weight:500; letter-spacing:.26em; text-transform:uppercase; margin-bottom:16px">NUVIA Academy</span>
         <h1 style="color:#ffffff; max-width:16em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 16px">Saber es patrimonio</h1>
         <p style="max-width:38em; color:rgba(255,255,255,.76); font-size:17px; line-height:1.65; margin:0 0 40px">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
-        <nav aria-label="Secciones de la Academy" style="display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.16); padding:18px 0 22px">
-          <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="4">
+        <nav aria-label="Áreas de NUVIA Academy" style="display:flex; flex-wrap:wrap; gap:10px; border-top:1px solid rgba(255,255,255,.16); padding:18px 0 22px">
+          <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="2">
             <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}"><span>{{ p.label }}</span><span aria-hidden="true" style="font-size:11px">{{ p.sufijo }}</span></button>
           </sc-for>
         </nav>
       </div>
     </section>
 
+    <!-- ============ PORTADA ACADEMY ============ -->
+    <sc-if value="{{ esInicio }}" hint-placeholder-val="{{ true }}">
+      <section data-screen-label="Áreas de NUVIA Academy" style="max-width:1240px; margin:0 auto; padding:52px 40px 84px">
+        <div style="max-width:760px; margin-bottom:28px">
+          <p style="color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 10px">Elige cómo quieres aprender</p>
+          <h2 style="color:var(--color-text); font-size:38px; font-weight:500; line-height:1.08; letter-spacing:-.015em; margin:0 0 12px">Dos formas de avanzar con criterio</h2>
+          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.7; margin:0">Sigue un curso completo paso a paso o consulta directamente los conocimientos esenciales que necesitas para entender las inversiones financieras.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px">
+          <button type="button" onClick="{{ irCursos }}" style="position:relative; min-height:320px; overflow:hidden; border:1px solid rgba(255,255,255,.12); border-radius:var(--radius-md); background:linear-gradient(145deg,#0B2347 0%,#071A38 100%); box-shadow:var(--shadow-md); color:#ffffff; cursor:pointer; font-family:var(--font-body); text-align:left; padding:34px 36px; transition:transform .25s ease, box-shadow .25s ease" style-hover="transform:translateY(-3px); box-shadow:0 22px 48px rgba(7,26,56,.22)">
+            <span aria-hidden="true" style="position:absolute; right:24px; top:12px; color:rgba(255,255,255,.06); font-size:118px; font-weight:500; line-height:1">01</span>
+            <span style="position:relative; display:flex; height:100%; flex-direction:column; align-items:flex-start">
+              <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.18); border-radius:999px; background:rgba(255,255,255,.08); color:#dbe7c2; font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:7px 12px">Aprende paso a paso</span>
+              <strong style="display:block; color:#ffffff; font-family:var(--font-heading); font-size:38px; font-weight:500; line-height:1.05; margin-top:54px">Cursos</strong>
+              <span style="display:block; max-width:31em; color:rgba(255,255,255,.72); font-size:14px; line-height:1.65; margin-top:14px">Itinerarios formativos para avanzar capítulo a capítulo, con vídeos, materiales y seguimiento del progreso.</span>
+              <span style="display:inline-flex; align-items:center; gap:9px; color:#ffffff; font-size:13px; font-weight:600; margin-top:auto; padding-top:28px">Ver cursos <span aria-hidden="true">→</span></span>
+            </span>
+          </button>
+          <button type="button" onClick="{{ irEsenciales }}" style="position:relative; min-height:320px; overflow:hidden; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:var(--color-text); cursor:pointer; font-family:var(--font-body); text-align:left; padding:34px 36px; transition:transform .25s ease, box-shadow .25s ease" style-hover="transform:translateY(-3px); box-shadow:var(--shadow-md)">
+            <span aria-hidden="true" style="position:absolute; right:24px; top:12px; color:color-mix(in srgb, var(--color-text) 5%, transparent); font-size:118px; font-weight:500; line-height:1">02</span>
+            <span style="position:relative; display:flex; height:100%; flex-direction:column; align-items:flex-start">
+              <span style="display:inline-flex; align-items:center; border:1px solid #D8DEC8; border-radius:999px; background:#F2F4E6; color:#4A5D23; font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:7px 12px">Consulta y comprende</span>
+              <strong style="display:block; max-width:10em; color:var(--color-text); font-family:var(--font-heading); font-size:38px; font-weight:500; line-height:1.05; margin-top:54px">Conocimientos esenciales</strong>
+              <span style="display:block; max-width:31em; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:14px; line-height:1.65; margin-top:14px">Guías, conceptos, activos financieros, interés compuesto y glosario para desenvolverte en el mundo de la inversión.</span>
+              <span style="display:inline-flex; align-items:center; gap:9px; color:var(--color-accent-300); font-size:13px; font-weight:600; margin-top:auto; padding-top:28px">Explorar conocimientos <span aria-hidden="true">→</span></span>
+            </span>
+          </button>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ CURSOS ============ -->
+    <sc-if value="{{ esCursos }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Cursos de NUVIA Academy" style="max-width:1240px; margin:0 auto; padding:52px 40px 84px">
+        <div style="display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:28px">
+          <div>
+            <p style="color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 10px">NUVIA Academy</p>
+            <h2 style="color:var(--color-text); font-size:40px; font-weight:500; line-height:1.05; letter-spacing:-.015em; margin:0 0 12px">Cursos</h2>
+            <p style="max-width:44em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.7; margin:0">Itinerarios estructurados para aprender a tu ritmo y avanzar de forma ordenada.</p>
+          </div>
+          <button type="button" onClick="{{ irInicio }}" style="border:1px solid var(--color-divider); border-radius:999px; background:var(--color-surface); color:var(--color-text); cursor:pointer; font-family:var(--font-body); font-size:12px; font-weight:600; padding:10px 17px">← Volver a la portada</button>
+        </div>
+        <article style="display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); min-height:370px; overflow:hidden; border-radius:var(--radius-md); background:linear-gradient(145deg,#0B2347 0%,#071A38 100%); box-shadow:var(--shadow-md)">
+          <div style="display:flex; flex-direction:column; align-items:flex-start; padding:42px 44px">
+            <span style="display:inline-flex; border:1px solid rgba(255,255,255,.18); border-radius:999px; background:rgba(255,255,255,.08); color:#dbe7c2; font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; padding:7px 12px">Curso disponible · Nivel inicial</span>
+            <h3 style="color:#ffffff; font-size:42px; font-weight:500; line-height:1.04; margin:34px 0 14px">Dinero con criterio</h3>
+            <p style="max-width:35em; color:rgba(255,255,255,.74); font-size:15px; line-height:1.7; margin:0">Cinco clases breves para ordenar tu dinero, ahorrar con propósito, invertir sin apostar y entender cómo la economía llega hasta tu bolsillo.</p>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:22px">
+              <span style="border:1px solid rgba(255,255,255,.15); border-radius:999px; color:rgba(255,255,255,.8); font-size:11px; padding:7px 11px">5 capítulos</span>
+              <span style="border:1px solid rgba(255,255,255,.15); border-radius:999px; color:rgba(255,255,255,.8); font-size:11px; padding:7px 11px">Vídeos y materiales</span>
+              <span style="border:1px solid rgba(255,255,255,.15); border-radius:999px; color:rgba(255,255,255,.8); font-size:11px; padding:7px 11px">A tu ritmo</span>
+            </div>
+            <a href="curso.html" style="display:inline-flex; align-items:center; gap:9px; border-radius:var(--radius-md); background:#ffffff; color:#0B2347; font-size:13px; font-weight:600; margin-top:auto; padding:12px 20px; text-decoration:none" style-hover="color:#0B2347">Entrar en el curso <span aria-hidden="true">→</span></a>
+          </div>
+          <div style="display:flex; flex-direction:column; justify-content:center; min-height:370px; border-left:1px solid rgba(255,255,255,.12); background:#F7F4ED; padding:36px 42px">
+            <p style="color:#74263C; font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; margin:0 0 18px">Programa · Cinco capítulos</p>
+            <div style="display:flex; flex-direction:column">
+              <div style="display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; align-items:center; border-bottom:1px solid #DCE3E9; padding:11px 0"><span style="color:#7C9A44; font-size:15px">01</span><span style="color:#0B2347; font-size:14px; font-weight:600">Pon orden a tu dinero</span></div>
+              <div style="display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; align-items:center; border-bottom:1px solid #DCE3E9; padding:11px 0"><span style="color:#7C9A44; font-size:15px">02</span><span style="color:#0B2347; font-size:14px; font-weight:600">Ahorrar con propósito</span></div>
+              <div style="display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; align-items:center; border-bottom:1px solid #DCE3E9; padding:11px 0"><span style="color:#7C9A44; font-size:15px">03</span><span style="color:#0B2347; font-size:14px; font-weight:600">Invertir sin apostar</span></div>
+              <div style="display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; align-items:center; border-bottom:1px solid #DCE3E9; padding:11px 0"><span style="color:#7C9A44; font-size:15px">04</span><span style="color:#0B2347; font-size:14px; font-weight:600">La economía en tu día a día</span></div>
+              <div style="display:grid; grid-template-columns:38px minmax(0,1fr); gap:12px; align-items:center; padding:11px 0"><span style="color:#7C9A44; font-size:15px">05</span><span style="color:#0B2347; font-size:14px; font-weight:600">Construye tu plan</span></div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </sc-if>
+
+    <!-- ============ CONOCIMIENTOS ESENCIALES ============ -->
+    <sc-if value="{{ esEsenciales }}" hint-placeholder-val="{{ false }}">
+      <section data-screen-label="Conocimientos esenciales" style="max-width:1240px; margin:0 auto; padding:52px 40px 84px">
+        <div style="display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:28px">
+          <div>
+            <p style="color:var(--color-accent-300); font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase; margin:0 0 10px">Guía del inversor</p>
+            <h2 style="color:var(--color-text); font-size:40px; font-weight:500; line-height:1.05; letter-spacing:-.015em; margin:0 0 12px">Conocimientos esenciales</h2>
+            <p style="max-width:48em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:15px; line-height:1.7; margin:0">Conceptos y herramientas para entender cómo funciona una inversión y tomar decisiones con mayor criterio.</p>
+          </div>
+          <button type="button" onClick="{{ irInicio }}" style="border:1px solid var(--color-divider); border-radius:999px; background:var(--color-surface); color:var(--color-text); cursor:pointer; font-family:var(--font-body); font-size:12px; font-weight:600; padding:10px 17px">← Volver a la portada</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
+          <button type="button" onClick="{{ irFundamentos }}" style="display:grid; grid-template-columns:54px minmax(0,1fr) auto; gap:18px; align-items:center; min-height:164px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:var(--color-text); cursor:pointer; font-family:var(--font-body); text-align:left; padding:24px 26px; transition:transform .2s ease, box-shadow .2s ease" style-hover="transform:translateY(-2px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:999px; background:#F2F4E6; color:#4A5D23; font-size:15px; font-weight:600">01</span>
+            <span><strong style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:25px; font-weight:500; line-height:1.1">Fundamentos de inversión</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; line-height:1.6; margin-top:8px">Cómo han crecido los principales activos y qué papel desempeñan la inflación, el riesgo y la fiscalidad.</span></span>
+            <span aria-hidden="true" style="color:var(--color-accent-300); font-size:18px">→</span>
+          </button>
+          <button type="button" onClick="{{ irActivos }}" style="display:grid; grid-template-columns:54px minmax(0,1fr) auto; gap:18px; align-items:center; min-height:164px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:var(--color-text); cursor:pointer; font-family:var(--font-body); text-align:left; padding:24px 26px; transition:transform .2s ease, box-shadow .2s ease" style-hover="transform:translateY(-2px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:999px; background:#F5EEE3; color:#946E29; font-size:15px; font-weight:600">02</span>
+            <span><strong style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:25px; font-weight:500; line-height:1.1">Activos financieros</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; line-height:1.6; margin-top:8px">Las principales alternativas de inversión y la función que pueden cumplir dentro del patrimonio.</span></span>
+            <span aria-hidden="true" style="color:var(--color-accent-300); font-size:18px">→</span>
+          </button>
+          <button type="button" onClick="{{ irCalculadora }}" style="display:grid; grid-template-columns:54px minmax(0,1fr) auto; gap:18px; align-items:center; min-height:164px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:var(--color-text); cursor:pointer; font-family:var(--font-body); text-align:left; padding:24px 26px; transition:transform .2s ease, box-shadow .2s ease" style-hover="transform:translateY(-2px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:999px; background:#E6F1F2; color:#0B5A6B; font-size:15px; font-weight:600">03</span>
+            <span><strong style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:25px; font-weight:500; line-height:1.1">Interés compuesto</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; line-height:1.6; margin-top:8px">Una explicación visual del crecimiento acumulado con su simulador interactivo.</span></span>
+            <span aria-hidden="true" style="color:var(--color-accent-300); font-size:18px">→</span>
+          </button>
+          <button type="button" onClick="{{ irGlosario }}" style="display:grid; grid-template-columns:54px minmax(0,1fr) auto; gap:18px; align-items:center; min-height:164px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); color:var(--color-text); cursor:pointer; font-family:var(--font-body); text-align:left; padding:24px 26px; transition:transform .2s ease, box-shadow .2s ease" style-hover="transform:translateY(-2px); box-shadow:var(--shadow-md)">
+            <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:999px; background:#F0E7EB; color:#74263C; font-size:15px; font-weight:600">04</span>
+            <span><strong style="display:block; color:var(--color-text); font-family:var(--font-heading); font-size:25px; font-weight:500; line-height:1.1">Glosario financiero</strong><span style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; line-height:1.6; margin-top:8px">Conceptos e indicadores financieros explicados en un lenguaje claro.</span></span>
+            <span aria-hidden="true" style="color:var(--color-accent-300); font-size:18px">→</span>
+          </button>
+        </div>
+      </section>
+    </sc-if>
+
     <!-- ============ FUNDAMENTOS ============ -->
-    <sc-if value="{{ esFundamentos }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ esFundamentos }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Fundamentos de inversión" style="max-width:1240px; margin:0 auto; padding:44px 40px 84px">
         <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
           <div style="display:grid; grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr); gap:40px; align-items:end; padding:48px 48px 40px">
@@ -618,12 +722,24 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
-  state = { tab: 'fundamentos', activosSub: 'seguridad', sub: 'conceptos', abiertos: {}, c: null };
+  state = { tab: 'inicio', activosSub: 'seguridad', sub: 'conceptos', abiertos: {}, c: null };
   cDefaults() { return { initialCapital: 10000, periodicContribution: 300, contributionFrequency: 'monthly', years: 20, expectedReturn: 6.5, inflationRate: 2, taxRate: 21, annualIncrease: 0 }; }
   componentDidMount() {
     document.title = 'NUVIA Academy | NUVIA Family Wealth';
-    const p = new URLSearchParams(window.location.search).get('tab');
-    if (p && ['fundamentos', 'activos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
+    const raw = new URLSearchParams(window.location.search).get('tab');
+    const p = raw === 'interes' ? 'calculadora' : raw;
+    const hash = window.location.hash.replace('#', '');
+    if (p && ['inicio', 'cursos', 'esenciales', 'fundamentos', 'activos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
+    else if (hash === 'glosario') this.setState({ tab: 'glosario' });
+  }
+  abrirTab(tab) {
+    const url = new URL(window.location.href);
+    if (tab === 'inicio') url.searchParams.delete('tab');
+    else url.searchParams.set('tab', tab);
+    url.hash = '';
+    window.history.replaceState({}, '', url.pathname + url.search);
+    this.setState({ tab });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   reproducirVideo(evento, id, titulo) {
     const boton = evento && evento.currentTarget;
@@ -716,7 +832,7 @@ class Component extends DCLogic {
     const tab = this.state.tab;
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
     const pill = (on) => base + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
-    const defs = [['fundamentos', 'Fundamentos de inversión', ''], ['activos', 'Activos financieros', ''], ['calculadora', 'El poder del interés compuesto', ''], ['glosario', 'Glosario financiero', ''], ['curso', 'Curso · Dinero con criterio', '↗']];
+    const defs = [['cursos', 'Cursos', ''], ['esenciales', 'Conocimientos esenciales', '']];
     const c = this.c();
     const pr = this.proyectar(c);
     const maxY = Math.max(1, ...pr.filas.map(f => f.bruto));
@@ -729,15 +845,19 @@ class Component extends DCLogic {
     const vals = {
       pestanas: defs.map(([id, label, sufijo]) => ({
         label, sufijo,
-        ariaCurrent: id === tab ? 'page' : undefined,
-        abrir: id === 'curso' ? () => { window.location.href = 'curso.html'; } : () => { this.setState({ tab: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-        estilo: pill(id === tab),
+        ariaCurrent: (id === tab || (id === 'esenciales' && ['fundamentos', 'activos', 'calculadora', 'glosario'].includes(tab))) ? 'page' : undefined,
+        abrir: () => this.abrirTab(id),
+        estilo: pill(id === tab || (id === 'esenciales' && ['fundamentos', 'activos', 'calculadora', 'glosario'].includes(tab))),
       })),
+      esInicio: tab === 'inicio', esCursos: tab === 'cursos', esEsenciales: tab === 'esenciales',
       esFundamentos: tab === 'fundamentos', esActivos: tab === 'activos', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
-      irFundamentos: () => { this.setState({ tab: 'fundamentos' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      irActivos: () => { this.setState({ tab: 'activos' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      irCalculadora: () => { this.setState({ tab: 'calculadora' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
-      irGlosario: () => { this.setState({ tab: 'glosario' }); window.scrollTo({ top: 0, behavior: 'smooth' }); },
+      irInicio: () => this.abrirTab('inicio'),
+      irCursos: () => this.abrirTab('cursos'),
+      irEsenciales: () => this.abrirTab('esenciales'),
+      irFundamentos: () => this.abrirTab('fundamentos'),
+      irActivos: () => this.abrirTab('activos'),
+      irCalculadora: () => this.abrirTab('calculadora'),
+      irGlosario: () => this.abrirTab('glosario'),
       activosTabs: [
         ['seguridad', '01', 'Seguridad y estabilidad', 'Efectivo, depósitos, letras y bonos'],
         ['crecimiento', '02', 'Crecimiento y diversificación', 'Acciones, fondos de inversión y ETF'],
