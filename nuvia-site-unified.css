@@ -193,19 +193,6 @@ body.nuvia-unified {
   line-height: 1.65 !important;
 }
 
-/* Academia comparte la escala estable de la cabecera de Analítica. */
-.nuvia-page-academy #academy h1 {
-  font-size: 44px !important;
-  letter-spacing: -.015em !important;
-  line-height: 1.08 !important;
-}
-
-.nuvia-page-academy #academy h1 + p {
-  max-width: 62ch;
-  font-size: 16.5px !important;
-  line-height: 1.6 !important;
-}
-
 .nuvia-page-home #inicio {
   min-height: 0;
 }
@@ -422,10 +409,6 @@ body.nuvia-unified {
 
   .nuvia-global-nav__link {
     font-size: 12px !important;
-  }
-
-  .nuvia-page-academy #academy h1 {
-    font-size: 46px !important;
   }
 
   .nuvia-global-header > .nuvia-site-header__inner {
