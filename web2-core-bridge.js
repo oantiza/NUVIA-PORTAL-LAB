@@ -1853,7 +1853,8 @@
       bootLayoutFrame = window.requestAnimationFrame(runLayoutPass);
     };
     const runLayoutPass = () => {
-      const ready = tagPortfolioLayout();
+      const suiteMode = ['portfolio', 'technical', 'fundamental'].includes(requestedSuiteTab);
+      const ready = suiteMode ? tagPortfolioLayout() : Boolean(root?.firstElementChild);
       if (ready) {
         document.querySelectorAll('button[aria-label^="Ver ficha de "]').forEach((button) => button.remove());
         if (!document.body.dataset.nuviaBridgeReady) {

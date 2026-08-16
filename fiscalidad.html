@@ -291,7 +291,36 @@ class Component extends DCLogic {
       },
     };
   }
-  componentDidMount() { document.title = 'Mis impuestos | NUVIA Family Wealth'; }
+  territorioGuardado() {
+    try {
+      const preference = JSON.parse(window.localStorage.getItem('nuvia-tax-preference') || 'null');
+      const allowed = ['bizkaia', 'araba', 'gipuzkoa', 'navarra', 'common-territory', 'unsure'];
+      return preference && preference.version === '1' && preference.taxYear === 2026 && allowed.includes(preference.jurisdiction)
+        ? preference.jurisdiction
+        : null;
+    } catch (error) {
+      return null;
+    }
+  }
+  guardarTerritorio(jurisdiction) {
+    const allowed = ['bizkaia', 'araba', 'gipuzkoa', 'navarra', 'common-territory', 'unsure'];
+    if (!allowed.includes(jurisdiction)) return;
+    try {
+      window.localStorage.setItem('nuvia-tax-preference', JSON.stringify({
+        jurisdiction,
+        taxYear: 2026,
+        selectedAt: new Date().toISOString(),
+        version: '1',
+      }));
+    } catch (error) { /* La guía seguirá disponible para volver a seleccionar el territorio. */ }
+  }
+  componentDidMount() {
+    document.title = 'Mis impuestos | NUVIA Family Wealth';
+    const current = this.state.seleccion ?? this.props.territorioInicial ?? 'bizkaia';
+    const stored = this.territorioGuardado();
+    if (stored && stored !== current) this.setState({ seleccion: stored });
+    else this.guardarTerritorio(current);
+  }
   renderVals() {
     const jur = this.datos();
     const guideByTitle = {
@@ -305,7 +334,11 @@ class Component extends DCLogic {
     const estadoInseguro = seleccion === 'unsure';
     return {
       seleccion,
-      cambiarTerritorio: (e) => this.setState({ seleccion: e.target.value }),
+      cambiarTerritorio: (e) => {
+        const jurisdiction = e.target.value;
+        this.guardarTerritorio(jurisdiction);
+        this.setState({ seleccion: jurisdiction });
+      },
       hayTerritorio: !!t,
       sinTerritorio: !t,
       estadoVacio,
