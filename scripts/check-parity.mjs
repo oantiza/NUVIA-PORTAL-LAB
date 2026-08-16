@@ -90,7 +90,7 @@ if (/onclick=["']location\.href/i.test(web2Home)) {
 if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'")) {
   throw new Error('La página de cartera no integra la suite analítica real del núcleo');
 }
-if (!portfolioPage.includes('data-src="company-analysis/index.html"')) {
+if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }
 for (const suiteView of ['portfolio', 'companies']) {
