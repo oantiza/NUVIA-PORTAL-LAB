@@ -11,7 +11,6 @@
         { label: 'Vivienda y coste de vida', href: 'vivienda.html' },
         { label: 'Mis impuestos', href: 'fiscalidad.html' },
         { label: 'Jubilación', href: 'temas.html?topic=jubilacion' },
-        { label: 'Hijos y legado', href: 'temas.html?topic=hijos-legado' },
         { label: 'Cuerpo, mente y salud', href: 'temas.html?topic=bienestar' }
       ]
     },
