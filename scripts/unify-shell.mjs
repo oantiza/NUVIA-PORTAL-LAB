@@ -42,10 +42,10 @@ const header = (current) => {
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
+        <a href="academia.html"${active(current, 'academy')}>Academia</a>
         <details class="nuvia-site-nav__topics${current === 'temas' ? ' is-active' : ''}">
           <summary${current === 'temas' ? ' aria-current="page"' : ''}>Temas clave</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
             <a href="temas.html?topic=jubilacion">Jubilación</a>
@@ -53,7 +53,6 @@ const header = (current) => {
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="academia.html"${active(current, 'academy')}>Academia</a>
         <a href="lecturas.html"${active(current, 'lecturas')}>Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
@@ -83,7 +82,7 @@ const footer = (current) => {
         <div>
           <h4>Recursos</h4>
           <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
             <a href="academia.html?tab=interes">Interés compuesto</a>
             <a href="academia.html?tab=calculadora">Simulador</a>
@@ -112,6 +111,8 @@ for (const file of pages) {
   const next = html
     .replace(/<header data-screen-label="Header"[\s\S]*?<\/header>/, header(sectionFor(file)))
     .replace(/<footer data-screen-label="Footer"[\s\S]*?<\/footer>/, footer(sectionFor(file)))
+    .replace(/href="nuvia-site-unified\.css(?:\?[^"]*)?"/, 'href="nuvia-site-unified.css?v=20260816-nav-dropdown"')
+    .replace(/src="nuvia-site-unified\.js(?:\?[^"]*)?"/, 'src="nuvia-site-unified.js?v=20260816-nav-dropdown"')
     .replace(/min-width:1080px/g, 'min-width:768px');
   if (next === html) throw new Error(`No se pudo actualizar la estructura de ${file}`);
   fs.writeFileSync(fullPath, next);

@@ -48,7 +48,6 @@ for (const route of expectedRoutes) {
 }
 
 const expectedHomeLinks = [
-  'href="temas.html?topic=ahorro-inversion"',
   'href="vivienda.html"',
   'href="fiscalidad.html"',
   'href="mercados.html?vista=archivo"',

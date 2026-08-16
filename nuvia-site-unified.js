@@ -3,8 +3,18 @@
     { id: 'inicio', label: 'Inicio', href: 'index.html' },
     { id: 'mercados', label: 'Mercados', href: 'mercados.html' },
     { id: 'cartera', label: 'Analítica de cartera', href: 'cartera.html' },
-    { id: 'temas', label: 'Temas clave', href: 'temas.html' },
     { id: 'academy', label: 'Academia', href: 'academia.html' },
+    {
+      id: 'temas',
+      label: 'Temas clave',
+      children: [
+        { label: 'Vivienda y coste de vida', href: 'vivienda.html' },
+        { label: 'Mis impuestos', href: 'fiscalidad.html' },
+        { label: 'Jubilación', href: 'temas.html?topic=jubilacion' },
+        { label: 'Hijos y legado', href: 'temas.html?topic=hijos-legado' },
+        { label: 'Cuerpo, mente y salud', href: 'temas.html?topic=bienestar' }
+      ]
+    },
     { id: 'lecturas', label: 'Lecturas', href: 'lecturas.html' },
     { id: 'nuvia', label: 'Qué es NUVIA', href: 'index.html#que-es-nuvia' }
   ];
@@ -63,6 +73,33 @@
         nav.className = 'nuvia-global-nav';
         nav.setAttribute('aria-label', 'Navegación principal');
         nav.replaceChildren(...navigation.map((item) => {
+          if (item.children) {
+            const dropdown = document.createElement('details');
+            dropdown.className = 'nuvia-global-nav__dropdown';
+
+            const summary = document.createElement('summary');
+            summary.className = 'nuvia-global-nav__link nuvia-global-nav__summary';
+            summary.append(document.createTextNode(item.label));
+            const arrow = document.createElement('span');
+            arrow.className = 'nuvia-global-nav__arrow';
+            arrow.setAttribute('aria-hidden', 'true');
+            summary.append(arrow);
+            if (item.id === activeArea) summary.setAttribute('aria-current', 'page');
+
+            const menu = document.createElement('div');
+            menu.className = 'nuvia-global-nav__menu';
+            menu.setAttribute('aria-label', item.label);
+            item.children.forEach((child) => {
+              const childLink = document.createElement('a');
+              childLink.href = child.href;
+              childLink.textContent = child.label;
+              childLink.addEventListener('click', () => dropdown.removeAttribute('open'));
+              menu.append(childLink);
+            });
+
+            dropdown.append(summary, menu);
+            return dropdown;
+          }
           const link = document.createElement('a');
           link.href = item.href;
           link.textContent = item.label;
@@ -71,6 +108,22 @@
           return link;
         }));
         nav.dataset.nuviaUnified = 'true';
+
+        if (document.documentElement.dataset.nuviaDropdownReady !== 'true') {
+          document.addEventListener('click', (event) => {
+            document.querySelectorAll('.nuvia-global-nav__dropdown[open]').forEach((dropdown) => {
+              if (!dropdown.contains(event.target)) dropdown.removeAttribute('open');
+            });
+          });
+          document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            document.querySelectorAll('.nuvia-global-nav__dropdown[open]').forEach((dropdown) => {
+              dropdown.removeAttribute('open');
+              dropdown.querySelector('summary')?.focus();
+            });
+          });
+          document.documentElement.dataset.nuviaDropdownReady = 'true';
+        }
       }
     }
 

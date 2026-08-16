@@ -7,8 +7,8 @@
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/temas.html">
 <title>Temas clave | NUVIA</title>
 <script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260816-typography">
-<script defer src="nuvia-site-unified.js"></script>
+<link rel="stylesheet" href="nuvia-site-unified.css?v=20260816-nav-dropdown">
+<script defer src="nuvia-site-unified.js?v=20260816-nav-dropdown"></script>
 </head>
 <body>
 <x-dc>
@@ -45,10 +45,10 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
+        <a href="academia.html">Academia</a>
         <details class="nuvia-site-nav__topics is-active">
           <summary aria-current="page">Temas clave</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="temas.html?topic=ahorro-inversion">Ahorro e inversión</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
             <a href="temas.html?topic=jubilacion">Jubilación</a>
@@ -56,7 +56,6 @@
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
         <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
@@ -70,7 +69,7 @@
       <h1 style="color:#ffffff; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">{{ titulo }}</h1>
       <p style="max-width:52ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0 0 32px">{{ intro }}</p>
       <nav aria-label="Selector de tema" data-screen-label="Selector de temas" style="display:flex; flex-wrap:wrap; gap:10px; padding:0 0 8px">
-        <sc-for list="{{ pildoras }}" as="p" hint-placeholder-count="6">
+        <sc-for list="{{ pildoras }}" as="p" hint-placeholder-count="5">
           <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" style="{{ p.estilo }}" style-hover="{{ p.estiloHover }}">
             <span style="font-size:12px; font-feature-settings:'tnum' 1; opacity:.75">{{ p.num }}</span>
             <span>{{ p.nombre }}</span>
@@ -82,7 +81,7 @@
     </div>
     </section>
 
-    <sc-if value="{{ esAhorro }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ false }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Suite NUVIA" style="max-width:1240px; margin:0 auto; padding:48px 48px 0">
         <div style="position:relative; overflow:hidden; border-radius:var(--radius-md); background:radial-gradient(760px 420px at 88% -30%, rgba(157,184,97,.22), transparent 62%), linear-gradient(160deg, #0B2347 0%, #071A38 100%); box-shadow:var(--shadow-md)">
           <div style="display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: 44px; padding: 44px 46px; align-items: center">
@@ -155,20 +154,6 @@
         </div>
       </section>
 
-      <section data-screen-label="Fundamentos de inversión" style="max-width:1240px; margin:0 auto; padding:20px 48px 84px">
-        <a href="academia.html?tab=fundamentos" style="display: grid; grid-template-columns: 46px minmax(0,1fr) auto; gap: 18px; align-items: center; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); text-decoration: none; padding: 20px 24px; transition: box-shadow .3s ease, transform .3s ease; background:linear-gradient(115deg, #F0F5E2 0%, #ffffff 60%)" style-hover="box-shadow:var(--shadow-md); transform:translateY(-2px)">
-          <span style="display:inline-flex; width:46px; height:46px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:linear-gradient(160deg, #7C9A44, #9DB861); color:#ffffff; box-shadow:0 8px 18px -8px rgba(124,154,68,.6)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
-          <span style="min-width:0">
-            <span style="display:block; color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase">¿Empiezas de cero?</span>
-            <span style="display:block; color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin-top:4px">Fundamentos de inversión</span>
-            <span style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px">
-              <span class="tag tag-neutral">¿Cuánto colchón necesito?</span>
-              <span class="tag tag-neutral">¿Cómo funciona el interés compuesto?</span>
-            </span>
-          </span>
-          <span class="btn btn-secondary" style="white-space:nowrap; color:var(--color-text)">Empezar por lo básico →</span>
-        </a>
-      </section>
     </sc-if>
 
     <sc-if value="{{ esJubilacion }}" hint-placeholder-val="{{ false }}">
@@ -245,7 +230,7 @@
         <div>
           <h4>Recursos</h4>
           <div class="nuvia-site-footer__links">
-            <a href="temas.html?topic=ahorro-inversion">Temas clave</a>
+            <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
             <a href="academia.html?tab=interes">Interés compuesto</a>
             <a href="academia.html?tab=calculadora">Simulador</a>
@@ -268,24 +253,23 @@
   </footer>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;ahorro-inversion&quot;, &quot;options&quot;: [&quot;ahorro-inversion&quot;, &quot;vivienda-coste-vida&quot;, &quot;jubilacion&quot;, &quot;hijos-legado&quot;, &quot;bienestar&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tema&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;jubilacion&quot;, &quot;options&quot;: [&quot;vivienda-coste-vida&quot;, &quot;jubilacion&quot;, &quot;hijos-legado&quot;, &quot;bienestar&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tema&quot;}}">
 class Component extends DCLogic {
   state = { topic: null, temasOpen: false };
   temas() {
     const R = (titulo, descripcion) => ({ titulo, descripcion });
     return [
-      { id: 'ahorro-inversion', num: '01', nombre: 'Ahorro e inversión', intro: 'Criterios para ordenar el ahorro, invertir con horizonte de largo plazo y proteger el patrimonio familiar.', tipo: 'ahorro' },
-      { id: 'vivienda-coste-vida', num: '02', nombre: 'Vivienda y coste de vida', link: 'vivienda.html', intro: 'Decisiones de compra, alquiler, financiación y gasto familiar en un entorno de precios cambiantes.', tipo: 'recursos', recursos: [
+      { id: 'vivienda-coste-vida', num: '01', nombre: 'Vivienda y coste de vida', link: 'vivienda.html', intro: 'Decisiones de compra, alquiler, financiación y gasto familiar en un entorno de precios cambiantes.', tipo: 'recursos', recursos: [
         R('Compra o alquiler', 'Claves para comparar alternativas y medir el impacto patrimonial de cada decisión.'),
         R('Hipoteca y tipos', 'Cómo afectan el plazo, el tipo de interés y la cuota al coste total de la financiación.'),
         R('Presupuesto familiar', 'Una estructura sencilla para ordenar gastos, objetivos y margen de seguridad.') ] },
-      { id: 'mis-impuestos', num: '03', nombre: 'Mis impuestos', link: 'fiscalidad.html' },
-      { id: 'jubilacion', num: '04', nombre: 'Jubilación', intro: 'Planificación de ingresos, previsión privada, longevidad y decisiones patrimoniales para la etapa futura.', tipo: 'herramientas' },
-      { id: 'hijos-legado', num: '05', nombre: 'Hijos y legado', intro: 'Educación financiera, ayuda familiar y planificación de la transmisión patrimonial entre generaciones.', tipo: 'recursos', recursos: [
+      { id: 'mis-impuestos', num: '02', nombre: 'Mis impuestos', link: 'fiscalidad.html' },
+      { id: 'jubilacion', num: '03', nombre: 'Jubilación', intro: 'Planificación de ingresos, previsión privada, longevidad y decisiones patrimoniales para la etapa futura.', tipo: 'herramientas' },
+      { id: 'hijos-legado', num: '04', nombre: 'Hijos y legado', intro: 'Educación financiera, ayuda familiar y planificación de la transmisión patrimonial entre generaciones.', tipo: 'recursos', recursos: [
         R('Ayuda a hijos', 'Enfoques para apoyar sin comprometer la estabilidad financiera familiar.'),
         R('Educación financiera', 'Ideas para enseñar a gestionar el dinero con autonomía y responsabilidad.'),
         R('Transmisión patrimonial', 'Claves para preparar el relevo generacional con tiempo, diálogo y criterio.') ] },
-      { id: 'bienestar', num: '06', nombre: 'Cuerpo, mente y salud', intro: 'Salud, tiempo, equilibrio familiar y decisiones financieras que sostienen la calidad de vida.', tipo: 'recursos', recursos: [
+      { id: 'bienestar', num: '05', nombre: 'Cuerpo, mente y salud', intro: 'Salud, tiempo, equilibrio familiar y decisiones financieras que sostienen la calidad de vida.', tipo: 'recursos', recursos: [
         R('Equilibrio vital y patrimonial', 'Cómo ordenar prioridades financieras sin perder de vista la calidad de vida.'),
         R('Dependencia y cuidados', 'Cómo anticipar necesidades de cuidado y proteger la estabilidad familiar.'),
         R('Tiempo y decisiones', 'Una mirada al tiempo como recurso limitado dentro de la planificación patrimonial.') ] },
@@ -299,7 +283,7 @@ class Component extends DCLogic {
   ir(id) { this.setState({ topic: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   renderVals() {
     const temas = this.temas();
-    const activo = this.state.topic ?? this.props.temaInicial ?? 'ahorro-inversion';
+    const activo = this.state.topic ?? this.props.temaInicial ?? 'jubilacion';
     const t = temas.find(x => x.id === activo) || temas[0];
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
     return {
@@ -308,7 +292,7 @@ class Component extends DCLogic {
       cerrarTemas: () => this.setState({ temasOpen: false }),
       titulo: t.nombre,
       intro: t.intro,
-      numeroDe: t.num + ' de 06',
+      numeroDe: t.num + ' de 05',
       pildoras: temas.map(p => ({
         num: p.num, nombre: p.nombre,
         sufijo: p.link ? '↗' : '',
@@ -319,11 +303,9 @@ class Component extends DCLogic {
           : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)'),
         estiloHover: p.id === activo ? '' : 'background:rgba(255,255,255,.12); color:#ffffff',
       })),
-      esAhorro: t.tipo === 'ahorro',
       esJubilacion: t.tipo === 'herramientas',
       esRecursos: t.tipo === 'recursos',
       recursos: t.recursos || [],
-      irAhorro: () => this.ir('ahorro-inversion'),
       irVivienda: () => this.ir('vivienda-coste-vida'),
       irJubilacion: () => this.ir('jubilacion'),
       irHijos: () => this.ir('hijos-legado'),
