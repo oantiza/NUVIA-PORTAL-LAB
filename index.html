@@ -4,221 +4,42 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="NUVIA ofrece información financiera clara, herramientas patrimoniales y formación para ayudar a las familias a decidir con perspectiva.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/">
+
+<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/ -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/">
+
 <title>NUVIA Family Wealth</title>
-<script src="./web2-integration.js?v=20260810-ticker-visible2"></script>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+
+<!-- La imagen del héroe es el LCP: se precarga y no lleva lazy. -->
+<link rel="preload" as="image" href="src/assets/home/hero-family-finance-compact.webp">
+
+<script defer src="web2-integration.js"></script>
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
+
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    .home-lecturas-banner-art {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      filter: brightness(1.03) contrast(1.02) saturate(.97);
-    }
-    .home-lecturas-banner-copy {
-      position: absolute;
-      inset: 0 auto 0 5.85%;
-      display: flex;
-      width: 55%;
-      flex-direction: column;
-      justify-content: center;
-      color: #0b2948;
-      pointer-events: none;
-    }
-    .home-lecturas-banner-title {
-      margin: 0;
-      font-family: var(--nv-font-serif);
-      font-size: clamp(40px, 4.6vw, 58px);
-      font-weight: 400;
-      letter-spacing: -.025em;
-      line-height: .92;
-      white-space: nowrap;
-    }
-    .home-lecturas-banner-rule {
-      width: 30px;
-      height: 2px;
-      margin: 10px 0 7px;
-      background: #c2a15c;
-    }
-    .home-lecturas-banner-subtitle {
-      margin: 0 0 14px;
-      color: #323d45;
-      font-family: var(--nv-font-serif);
-      font-size: clamp(12px, 1.18vw, 15px);
-      line-height: 1.25;
-      white-space: nowrap;
-    }
-    .home-lecturas-banner-cta {
-      display: inline-flex;
-      width: fit-content;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid #cdb171;
-      padding: 10px 16px;
-      color: #0b2948;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: .13em;
-    }
-    .home-wellbeing-banner {
-      position: relative;
-      grid-column: 1 / -1;
-      min-height: 430px;
-      overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--color-border) 72%, transparent);
-      border-radius: var(--radius-md);
-      background: #0a2445;
-      box-shadow: var(--shadow-sm);
-      isolation: isolate;
-    }
-    .home-wellbeing-banner__art {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform .8s cubic-bezier(.2,.6,.2,1), filter .45s ease;
-    }
-    .home-wellbeing-banner:hover .home-wellbeing-banner__art {
-      transform: scale(1.018);
-      filter: saturate(1.04);
-    }
-    .home-wellbeing-banner__veil {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(90deg, rgba(4,21,45,.95) 0%, rgba(5,25,53,.84) 32%, rgba(5,25,53,.25) 65%, rgba(5,25,53,.08) 100%),
-        linear-gradient(0deg, rgba(4,20,43,.72) 0%, transparent 48%);
-    }
-    .home-wellbeing-banner__content {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      min-height: 430px;
-      max-width: 655px;
-      flex-direction: column;
-      justify-content: center;
-      padding: 48px 52px;
-      color: #fff;
-    }
-    .home-wellbeing-banner__eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-      color: #d7e7a6;
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .home-wellbeing-banner__eyebrow::before {
-      width: 34px;
-      height: 1px;
-      background: #b7d36a;
-      content: "";
-    }
-    .home-wellbeing-banner__title {
-      max-width: 530px;
-      margin: 0 0 18px;
-      font-family: var(--nv-font-serif);
-      font-size: clamp(38px, 3.3vw, 52px);
-      font-weight: 400;
-      letter-spacing: -.025em;
-      line-height: 1.02;
-    }
-    .home-wellbeing-banner__copy {
-      max-width: 570px;
-      margin: 0;
-      color: rgba(255,255,255,.86);
-      font-size: 15px;
-      line-height: 1.65;
-    }
-    .home-wellbeing-banner__rhythms {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 24px 0 28px;
-    }
-    .home-wellbeing-banner__rhythms span {
-      border: 1px solid rgba(215,231,166,.36);
-      border-radius: 999px;
-      padding: 7px 12px;
-      background: rgba(6,27,56,.32);
-      color: #f5f1e8;
-      font-size: 11.5px;
-      letter-spacing: .025em;
-      backdrop-filter: blur(6px);
-    }
-    .home-wellbeing-banner__footer {
-      display: flex;
-      align-items: center;
-      gap: 22px;
-    }
-    .home-wellbeing-banner__cta {
-      display: inline-flex;
-      flex: 0 0 auto;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid #d7e7a6;
-      border-radius: 999px;
-      padding: 11px 18px;
-      color: #fff;
-      font-size: 12.5px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: gap .25s ease, background .25s ease, color .25s ease;
-    }
-    .home-wellbeing-banner__cta:hover {
-      gap: 17px;
-      background: #d7e7a6;
-      color: #082345;
-    }
-    .home-wellbeing-banner__note {
-      max-width: 255px;
-      color: rgba(255,255,255,.67);
-      font-family: var(--nv-font-serif);
-      font-size: 12.5px;
-      font-style: italic;
-      line-height: 1.45;
-    }
-    @media (max-width: 1050px) {
-      .home-wellbeing-banner__content { max-width: 590px; padding: 42px 40px; }
-      .home-wellbeing-banner__veil { background: linear-gradient(90deg, rgba(4,21,45,.96) 0%, rgba(5,25,53,.86) 43%, rgba(5,25,53,.28) 78%, rgba(5,25,53,.12) 100%), linear-gradient(0deg, rgba(4,20,43,.7), transparent 50%); }
-    }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  </style>
-</helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
 
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html" class="is-active" aria-current="page">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -228,231 +49,311 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics">
           <summary>Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="inicio" data-screen-label="Hero" style="position:relative; overflow:hidden; scroll-margin-top:80px; background:#1C3A5E">
-      <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none">
-        <img src="src/assets/home/hero-family-finance-compact.webp" alt="" style="width:100%; height:100%; object-fit:cover; object-position:78% 36%;">
-      </div>
-      <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(95deg, rgba(28,58,94,.94) 0%, rgba(28,58,94,.85) 32%, rgba(28,58,94,.48) 56%, rgba(28,58,94,.14) 78%), linear-gradient(0deg, #F4F6F9 0%, rgba(244,246,249,.6) 5%, rgba(244,246,249,0) 12%), linear-gradient(0deg, rgba(28,58,94,.55) 0%, rgba(28,58,94,0) 42%); pointer-events:none"></div>
-      <div style="position:relative; max-width:1240px; margin:0 auto; padding:100px 48px 48px; min-height:460px; box-sizing:border-box">
-      <span style="display:block; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#c9dca0; font-feature-settings:'tnum' 1; margin-bottom:16px">Perspectiva · Disciplina · Legado</span>
-      <h1 style="color:#ffffff; font-family:var(--font-heading); font-weight:500; font-size:56px; line-height:1.08; letter-spacing:-.015em; margin:0 0 18px; max-width:15em">Información clara,<br>decisiones con propósito.</h1>
-      <p style="max-width:52ch; color:rgba(255,255,255,.85); font-size:16.5px; line-height:1.6; margin:0 0 26px">Planificación patrimonial y financiera para familias que piensan a largo plazo.</p>
-      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap">
-        <a href="#que-es-nuvia" class="btn btn-primary" style="text-decoration:none; white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Conoce el proyecto</a>
-        <a href="#mercados" class="btn btn-ghost" style="text-decoration:none; white-space:nowrap; color:#e8f0d5">Ver los mercados hoy →</a>
-      </div>
-      <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
-        <div style="margin-top:52px">
-          <div style="height:1px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
-          <div style="display:flex; padding:16px 0 0">
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">01</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Proteger</span>
-            </div>
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">02</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Crecer</span>
-            </div>
-            <div style="display:flex; flex:1; align-items:center; justify-content:center; gap:10px; border-left:1px solid rgba(255,255,255,.18)">
-              <span style="color:#9DB861; font-size:13.5px; font-feature-settings:'tnum' 1">03</span>
-              <span style="color:rgba(255,255,255,.92); font-size:11.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase">Legado</span>
-            </div>
-          </div>
-        </div>
-      </sc-if>
-      </div>
-    </section>
+  <main id="contenido">
 
-    <section id="mercados" data-screen-label="Resumen macro" style="max-width:1240px; margin:0 auto; padding:72px 48px 0; scroll-margin-top:80px">
-      <div style="display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:8px">
-        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent)"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Resumen estratégico</span>
-        <span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px" data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</span>
-      </div>
-      <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:6px 0 10px">Economía y mercados</h2>
-      <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de compra, al coste de la deuda y a las inversiones. NUVIA los traduce a decisiones comprensibles, sin convertir cada dato en una señal para actuar.</p>
+    <!-- ══ HÉROE FOTOGRÁFICO ═════════════════════════════════════════════════
+         La variante fotográfica está reservada a la portada. Es la referencia
+         visual del sitio, así que aquí la migración no mueve nada de sitio:
+         solo traslada los estilos a clases.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="inicio" data-screen-label="Hero" class="nv-hero nv-hero--photo home-hero">
+      <img class="home-hero__art" src="src/assets/home/hero-family-finance-compact.webp"
+           alt="" aria-hidden="true" width="1920" height="1080" fetchpriority="high">
+      <div class="home-hero__veil" aria-hidden="true"></div>
 
-    </section>
+      <div class="nv-container">
+        <div class="nv-hero__inner">
+          <div>
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Perspectiva · Disciplina · Legado</p>
 
-    <section id="noticia" data-screen-label="Noticia del día" style="max-width:1240px; margin:0 auto; padding:36px 48px 0; scroll-margin-top:80px">
-      <article style="position:relative; overflow:hidden; border-radius:var(--radius-md); box-shadow:var(--shadow-md); background:#dfe5e8">
-        <div style="position:relative">
-          <div style="position:absolute; inset:0">
-            <img src="src/assets/home/daily-news/daily-news-desktop.webp" alt="Fotografía editorial de un petrolero navegando con luz natural por un estrecho abierto al tráfico marítimo." data-daily-news="image" style="display:block; width:100%; height:100%; object-fit:cover; object-position:center">
-          </div>
-          <div style="position:relative; z-index:1; width:56%; min-height:560px; display:flex; flex-direction:column; justify-content:center; padding:52px 56px 48px">
-            <div style="position:absolute; top:0; bottom:0; left:0; right:-140px; background:linear-gradient(90deg, rgba(11,35,71,.92) 0%, rgba(11,35,71,.85) 55%, rgba(11,35,71,.7) 78%, rgba(11,35,71,0) 100%); pointer-events:none"></div>
-            <div style="position:relative; color:#ffffff">
-              <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:20px">
-                <span style="display:inline-flex; align-items:center; gap:9px; color:#dae5c1; font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase"><span aria-hidden="true" style="display:inline-block; width:7px; height:7px; border-radius:999px; background:#9DB861; animation:nv-pulse 2.4s ease-out infinite"></span><span>Noticia económica del día</span></span>
-                <span style="color:rgba(255,255,255,.85); font-size:12.5px; text-shadow:0 1px 3px rgba(11,35,71,.38)" data-daily-news="date">3 de agosto de 2026</span>
+            <h1>Información clara,<br>decisiones con propósito.</h1>
+
+            <p class="nv-hero__lead">
+              Planificación patrimonial y financiera para familias que piensan a largo plazo.
+            </p>
+
+            <div class="nv-hero__actions">
+              <a class="nv-btn nv-btn--accent" href="#que-es-nuvia">Conoce el proyecto</a>
+              <a class="nv-btn nv-btn--soft" href="#mercados">Ver los mercados hoy →</a>
+            </div>
+
+            <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
+              <div class="home-pillars">
+                <div class="home-pillars__rule" aria-hidden="true"></div>
+                <div class="home-pillars__row">
+                  <div><span class="home-pillars__num">01</span><span class="home-pillars__name">Proteger</span></div>
+                  <div><span class="home-pillars__num">02</span><span class="home-pillars__name">Crecer</span></div>
+                  <div><span class="home-pillars__num">03</span><span class="home-pillars__name">Legado</span></div>
+                </div>
               </div>
-              <h2 style="max-width:12em; color:#ffffff; font-size:40px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 16px; text-wrap:balance; text-shadow:0 2px 9px rgba(11,35,71,.28)" data-daily-news="title">El petróleo cae y alivia la presión inflacionista</h2>
-              <p style="max-width:44em; color:rgba(255,255,255,.9); font-size:15.5px; line-height:1.6; margin:0 0 22px; text-shadow:0 1px 5px rgba(11,35,71,.3)" data-daily-news="summary">El Brent cayó alrededor de un 5%, hasta 83,87 dólares por barril, después de que Estados Unidos frenara nuevos ataques contra Irán y aumentaran las expectativas de desescalada. El movimiento puede reducir parte de la presión sobre combustibles y transporte, aunque el crudo todavía cotiza claramente por encima de su nivel previo al conflicto.</p>
-              <div style="display:flex; align-items:center; gap:26px; flex-wrap:wrap; margin-bottom:22px">
-                <a href="https://apnews.com/article/oil-prices-iran-war-trump-194ab3d3130bb44de445cf3d05954beb" target="_blank" rel="noreferrer" data-daily-news="source-link" style="display:inline-flex; align-items:center; gap:8px; color:#ffffff; font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; text-shadow:0 1px 4px rgba(11,35,71,.32); transition:gap .25s ease, color .2s ease" style-hover="color:#e8f0d5; gap:13px">Leer la fuente <span aria-hidden="true">→</span></a>
-                <a href="mercados.html" style="display:inline-flex; align-items:center; gap:8px; color:#ffffff; font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; text-shadow:0 1px 4px rgba(11,35,71,.32); transition:gap .25s ease, color .2s ease" style-hover="color:#e8f0d5; gap:13px">Ver último informe <span aria-hidden="true">→</span></a>
-                <a href="mercados.html?vista=archivo" style="display:inline-flex; align-items:center; gap:8px; color:#ffffff; font-size:12px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; text-shadow:0 1px 4px rgba(11,35,71,.32); transition:gap .25s ease, color .2s ease" style-hover="color:#e8f0d5; gap:13px">Consultar archivo <span aria-hidden="true">→</span></a>
-              </div>
-              <div style="max-width:40em; border-left:2px solid #b8ca8c; background:rgba(11,35,71,.38); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:13px 18px">
-                <div style="color:#dae5c1; font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:7px">Lectura NUVIA</div>
-                <p style="color:rgba(255,255,255,.92); font-size:14.5px; font-style:italic; line-height:1.55; margin:0; text-shadow:0 1px 4px rgba(11,35,71,.3)" data-daily-news="why">Una energía menos cara puede moderar la inflación y dar margen a los bancos centrales, pero una sola sesión no garantiza un alivio duradero: la geopolítica y el tránsito por Ormuz siguen siendo fuentes de volatilidad.</p>
-              </div>
-            </div>
+            </sc-if>
           </div>
         </div>
-        <aside aria-label="Claves de la noticia económica del día" style="position:relative; z-index:2; background:var(--color-surface)">
-          <div style="height:1px; background:linear-gradient(90deg, transparent, rgba(11,35,71,.13) 48px, rgba(11,35,71,.13) calc(100% - 48px), transparent)"></div>
-          <div style="display:grid; grid-template-columns:150px minmax(0,1fr); gap:12px 32px; padding:24px 34px 22px">
-            <div style="align-self:start; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.16em; margin-top:4px; text-transform:uppercase">Por qué importa</div>
-            <ol style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; list-style:none; margin:0; padding:0">
-              <li style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:start">
-                <span style="color:var(--color-accent); font-size:14px; font-feature-settings:'tnum' 1">01</span>
-                <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.55; margin:0" data-daily-impact>Un petróleo más barato puede aliviar gradualmente el coste de los carburantes, el transporte y algunos alimentos.</p>
-              </li>
-              <li style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:start; border-left:1px solid rgba(11,35,71,.12); padding-left:18px">
-                <span style="color:var(--color-accent); font-size:14px; font-feature-settings:'tnum' 1">02</span>
-                <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.55; margin:0" data-daily-impact>Menos presión energética concede más margen a los bancos centrales para valorar futuras decisiones sobre tipos.</p>
-              </li>
-              <li style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:start; border-left:1px solid rgba(11,35,71,.12); padding-left:18px">
-                <span style="color:var(--color-accent); font-size:14px; font-feature-settings:'tnum' 1">03</span>
-                <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13px; line-height:1.55; margin:0" data-daily-impact>Una nueva escalada o más restricciones en Ormuz podrían revertir rápidamente el descenso.</p>
-              </li>
-            </ol>
-            <p style="grid-column:2; color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; line-height:1.5; margin:0" data-daily-news="source">Fuente: AP News · Publicada el 2 de agosto de 2026</p>
-          </div>
-        </aside>
-      </article>
-    </section>
-
-    <section id="temas-clave" data-screen-label="Temas clave" style="max-width:1240px; margin:0 auto; padding:80px 48px 0; scroll-margin-top:80px">
-      <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Los pilares</span>
-      <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 10px">¿Hablamos de lo que importa?</h2>
-      <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:16px; margin:0 0 36px">Una mirada clara a los pilares que protegen a tu familia y tu patrimonio.</p>
-      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px">
-        
-        <article style="display:flex; flex-direction:column; overflow:hidden; background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); transition:transform .35s cubic-bezier(.2,.6,.2,1), box-shadow .35s cubic-bezier(.2,.6,.2,1)" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
-          <div style="position:relative; overflow:hidden; aspect-ratio:16/9">
-            <img src="src/assets/home/card-vivienda.webp" alt="Vivienda y coste de vida" style="width:100%; height:100%; object-fit:cover; filter:brightness(.8) saturate(.9); transition:transform .7s cubic-bezier(.2,.6,.2,1), filter .4s ease" style-hover="transform:scale(1.04); filter:brightness(.88) saturate(.95)">
-            <span style="position:absolute; top:12px; left:12px; display:flex; align-items:center; justify-content:center; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--color-bg) 78%, transparent); backdrop-filter:blur(6px); color:var(--color-accent-300); font-size:12.5px; font-feature-settings:'tnum' 1">01</span>
-          </div>
-          <div style="display:flex; flex:1; flex-direction:column; padding:20px 22px 22px">
-            <h3 style="font-size:19px; font-weight:500; letter-spacing:-.01em; margin:0 0 10px">Vivienda y coste de vida</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0 0 16px">Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.</p>
-            <div style="border-left:2px solid var(--color-accent-700); padding:2px 0 2px 14px; margin-bottom:18px">
-              <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.1em; margin:0 0 4px; text-transform:uppercase">Lectura NUVIA</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; font-style:italic; line-height:1.55; margin:0">Capacidad de pago, margen de seguridad y visión patrimonial.</p>
-            </div>
-            <a href="vivienda.html" style="margin-top:auto; display:inline-flex; align-items:center; gap:8px; color:var(--color-accent); font-size:13.5px; font-weight:500; text-decoration:none; transition:gap .25s ease, color .2s ease" style-hover="color:var(--color-accent-300); gap:13px">Acceder <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-        <article style="display:flex; flex-direction:column; overflow:hidden; background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); transition:transform .35s cubic-bezier(.2,.6,.2,1), box-shadow .35s cubic-bezier(.2,.6,.2,1)" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
-          <div style="position:relative; overflow:hidden; aspect-ratio:16/9">
-            <img src="src/assets/home/card-impuestos.webp" alt="Mis impuestos" style="width:100%; height:100%; object-fit:cover; filter:brightness(.8) saturate(.9); transition:transform .7s cubic-bezier(.2,.6,.2,1), filter .4s ease" style-hover="transform:scale(1.04); filter:brightness(.88) saturate(.95)">
-            <span style="position:absolute; top:12px; left:12px; display:flex; align-items:center; justify-content:center; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--color-bg) 78%, transparent); backdrop-filter:blur(6px); color:var(--color-accent-300); font-size:12.5px; font-feature-settings:'tnum' 1">02</span>
-          </div>
-          <div style="display:flex; flex:1; flex-direction:column; padding:20px 22px 22px">
-            <h3 style="font-size:19px; font-weight:500; letter-spacing:-.01em; margin:0 0 10px">Mis impuestos</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0 0 16px">Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.</p>
-            <div style="border-left:2px solid var(--color-accent-700); padding:2px 0 2px 14px; margin-bottom:18px">
-              <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.1em; margin:0 0 4px; text-transform:uppercase">Lectura NUVIA</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; font-style:italic; line-height:1.55; margin:0">Planificación ordenada, documentación y revisión profesional cuando sea necesaria.</p>
-            </div>
-            <a href="fiscalidad.html" style="margin-top:auto; display:inline-flex; align-items:center; gap:8px; color:var(--color-accent); font-size:13.5px; font-weight:500; text-decoration:none; transition:gap .25s ease, color .2s ease" style-hover="color:var(--color-accent-300); gap:13px">Acceder <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-        <article style="display:flex; flex-direction:column; overflow:hidden; background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); transition:transform .35s cubic-bezier(.2,.6,.2,1), box-shadow .35s cubic-bezier(.2,.6,.2,1)" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
-          <div style="position:relative; overflow:hidden; aspect-ratio:16/9">
-            <img src="src/assets/home/card-jubilacion.webp" alt="Jubilación" style="width:100%; height:100%; object-fit:cover; filter:brightness(.8) saturate(.9); transition:transform .7s cubic-bezier(.2,.6,.2,1), filter .4s ease" style-hover="transform:scale(1.04); filter:brightness(.88) saturate(.95)">
-            <span style="position:absolute; top:12px; left:12px; display:flex; align-items:center; justify-content:center; padding:4px 10px; border-radius:999px; background:color-mix(in srgb, var(--color-bg) 78%, transparent); backdrop-filter:blur(6px); color:var(--color-accent-300); font-size:12.5px; font-feature-settings:'tnum' 1">03</span>
-          </div>
-          <div style="display:flex; flex:1; flex-direction:column; padding:20px 22px 22px">
-            <h3 style="font-size:19px; font-weight:500; letter-spacing:-.01em; margin:0 0 10px">Jubilación</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0 0 16px">Herramientas para ordenar ingresos futuros, longevidad, apoyo a los hijos y legado familiar.</p>
-            <div style="border-left:2px solid var(--color-accent-700); padding:2px 0 2px 14px; margin-bottom:18px">
-              <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.1em; margin:0 0 4px; text-transform:uppercase">Lectura NUVIA</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; font-style:italic; line-height:1.55; margin:0">Planificación anticipada, prudencia fiscal y diálogo entre generaciones.</p>
-            </div>
-            <a href="temas.html?topic=jubilacion" style="margin-top:auto; display:inline-flex; align-items:center; gap:8px; color:var(--color-accent); font-size:13.5px; font-weight:500; text-decoration:none; transition:gap .25s ease, color .2s ease" style-hover="color:var(--color-accent-300); gap:13px">Acceder <span aria-hidden="true">→</span></a>
-          </div>
-        </article>
-        <div style="grid-column:1 / -1; margin:22px 0 0">
-          <span style="display:inline-flex; align-items:center; gap:14px; color:var(--color-accent); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Bienestar integral · Vida en equilibrio</span>
-          <h3 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0">Cuerpo, mente y salud</h3>
-        </div>
-        <article data-screen-label="Banner Cuerpo, mente y salud" class="home-wellbeing-banner">
-          <img class="home-wellbeing-banner__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp" alt="Una familia disfruta de unas vacaciones junto al mar mientras practica yoga y pilates al aire libre">
-          <div class="home-wellbeing-banner__veil" aria-hidden="true"></div>
-          <div class="home-wellbeing-banner__content">
-            <h4 class="home-wellbeing-banner__title">Claves para una vida sana y equilibrada</h4>
-            <p class="home-wellbeing-banner__copy">Una sección sobre vida familiar, salud mental y física, bienestar y equilibrio frente al ritmo acelerado actual. Temas concretos y directrices prácticas para cuidar el cuerpo, reducir el estrés, organizar el tiempo y conciliar familia, trabajo y descanso.</p>
-            <div class="home-wellbeing-banner__rhythms" aria-label="Pilares de una vida equilibrada">
-              <span>Familia y relaciones</span>
-              <span>Salud mental</span>
-              <span>Salud física</span>
-              <span>Equilibrio diario</span>
-            </div>
-            <div class="home-wellbeing-banner__footer">
-              <a href="temas.html?topic=bienestar" class="home-wellbeing-banner__cta">Ver temas y directrices <span aria-hidden="true">→</span></a>
-              <span class="home-wellbeing-banner__note">Orientación práctica para vivir con más salud, calma y equilibrio.</span>
-            </div>
-          </div>
-        </article>
-      
       </div>
     </section>
 
-    <section id="lecturas-con-criterio" data-screen-label="Lecturas con Criterio" aria-label="Lecturas con Criterio" style="max-width:1240px; margin:0 auto; padding:84px 48px 0; scroll-margin-top:80px">
-      <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Sección editorial</span>
-      <h2 style="font-size:36px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 10px">Un rincón NUVIA para leer con calma</h2>
-      <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:16px; line-height:1.6; margin:0 0 28px">Conceptos breves, historias familiares y recomendaciones con criterio.</p>
-      <a href="lecturas.html" aria-label="Abrir Lecturas con Criterio: libros, artículos e ideas que comparten la mirada de NUVIA" style="position:relative; display:block; overflow:hidden; width:100%; aspect-ratio:2879/546; border-radius:var(--radius-md); background:#ffffff; box-shadow:var(--shadow-sm); transition:transform .32s ease, box-shadow .32s ease" style-hover="box-shadow:var(--shadow-md); transform:translateY(-3px)">
-        <img class="home-lecturas-banner-art" src="src/assets/home/lecturas-con-criterio-fondo-compacto.webp" alt="" aria-hidden="true">
-        <div class="home-lecturas-banner-copy">
-          <h3 class="home-lecturas-banner-title">Lecturas con Criterio</h3>
-          <span class="home-lecturas-banner-rule" aria-hidden="true"></span>
-          <p class="home-lecturas-banner-subtitle">Libros, artículos e ideas que comparten la mirada de NUVIA.</p>
-          <span class="home-lecturas-banner-cta">Explorar Lecturas <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-    </section>
 
-    <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" style="max-width:1240px; margin:0 auto; padding:80px 48px 96px; scroll-margin-top:80px">
-      <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:14px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>El proyecto</span>
-      <h2 style="font-size:34px; font-weight:500; letter-spacing:-.012em; margin:0 0 30px">Qué es NUVIA</h2>
-      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px">
-        <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:15.5px; line-height:1.7; margin:0">La respuesta más sencilla sería decir que NUVIA es una comunidad. Sin embargo, esa definición resulta insuficiente. También podríamos decir que NUVIA es una plataforma digital. Pero tampoco describe realmente lo que pretendemos construir.</p>
-        <p style="color:var(--color-accent-200); font-size:18px; line-height:1.6; font-style:italic; margin:0; border-left:2px solid var(--color-accent); padding-left:18px">NUVIA es, ante todo, un proyecto diseñado para ayudar a las Familias a comprender, proteger y gestionar mejor su patrimonio.</p>
-        <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:15.5px; line-height:1.7; margin:0">Para conseguirlo combinamos distintos elementos: conocimiento, comunidad, herramientas, tecnología y acceso a profesionales especializados.</p>
+    <!-- ══ RESUMEN MACRO ═════════════════════════════════════════════════════ -->
+    <section id="mercados" data-screen-label="Resumen macro" class="nv-section" aria-labelledby="titulo-mercados">
+      <div class="nv-container">
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">Resumen estratégico</p>
+            <h2 id="titulo-mercados">Economía y mercados</h2>
+          </div>
+          <p data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</p>
+        </div>
+        <p class="nv-prose">
+          Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de
+          compra, al coste de la deuda y a las inversiones. NUVIA los traduce a
+          decisiones comprensibles, sin convertir cada dato en una señal para actuar.
+        </p>
       </div>
     </section>
+
+
+    <!-- ══ NOTICIA DEL DÍA ═══════════════════════════════════════════════════
+         Los atributos data-daily-news y data-daily-impact son ganchos de
+         web2-integration.js: no se renombran ni se reordenan.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="noticia" data-screen-label="Noticia del día" class="nv-section nv-section--tight" aria-labelledby="titulo-noticia">
+      <div class="nv-container">
+        <article class="home-daily">
+
+          <div class="home-daily__stage">
+            <img class="home-daily__art"
+                 src="src/assets/home/daily-news/daily-news-desktop.webp"
+                 alt="Fotografía editorial de un petrolero navegando con luz natural por un estrecho abierto al tráfico marítimo."
+                 data-daily-news="image" width="1600" height="900" loading="lazy">
+
+            <div class="home-daily__panel">
+              <div class="home-daily__copy">
+
+                <div class="home-daily__meta">
+                  <span class="home-daily__live">Noticia económica del día</span>
+                  <span class="home-daily__date" data-daily-news="date">3 de agosto de 2026</span>
+                </div>
+
+                <h2 id="titulo-noticia" data-daily-news="title">El petróleo cae y alivia la presión inflacionista</h2>
+
+                <p class="home-daily__summary" data-daily-news="summary">El Brent cayó alrededor de un 5%, hasta 83,87 dólares por barril, después de que Estados Unidos frenara nuevos ataques contra Irán y aumentaran las expectativas de desescalada. El movimiento puede reducir parte de la presión sobre combustibles y transporte, aunque el crudo todavía cotiza claramente por encima de su nivel previo al conflicto.</p>
+
+                <div class="home-daily__links">
+                  <a href="https://apnews.com/article/oil-prices-iran-war-trump-194ab3d3130bb44de445cf3d05954beb" target="_blank" rel="noreferrer" data-daily-news="source-link">Leer la fuente <span aria-hidden="true">→</span></a>
+                  <a href="mercados.html">Ver último informe <span aria-hidden="true">→</span></a>
+                  <a href="mercados.html?vista=archivo">Consultar archivo <span aria-hidden="true">→</span></a>
+                </div>
+
+                <div class="home-daily__reading">
+                  <p class="home-daily__reading-label">Lectura NUVIA</p>
+                  <p data-daily-news="why">Una energía menos cara puede moderar la inflación y dar margen a los bancos centrales, pero una sola sesión no garantiza un alivio duradero: la geopolítica y el tránsito por Ormuz siguen siendo fuentes de volatilidad.</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <aside class="home-daily__why" aria-label="Claves de la noticia económica del día">
+            <div class="home-daily__why-rule" aria-hidden="true"></div>
+            <div class="home-daily__why-grid">
+              <p class="home-daily__why-label">Por qué importa</p>
+              <ol class="home-daily__why-list">
+                <li>
+                  <span>01</span>
+                  <p data-daily-impact>Un petróleo más barato puede aliviar gradualmente el coste de los carburantes, el transporte y algunos alimentos.</p>
+                </li>
+                <li>
+                  <span>02</span>
+                  <p data-daily-impact>Menos presión energética concede más margen a los bancos centrales para valorar futuras decisiones sobre tipos.</p>
+                </li>
+                <li>
+                  <span>03</span>
+                  <p data-daily-impact>Una nueva escalada o más restricciones en Ormuz podrían revertir rápidamente el descenso.</p>
+                </li>
+              </ol>
+              <p class="home-daily__source" data-daily-news="source">Fuente: AP News · Publicada el 2 de agosto de 2026</p>
+            </div>
+          </aside>
+
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ══ TEMAS CLAVE ═══════════════════════════════════════════════════════ -->
+    <section id="temas-clave" data-screen-label="Temas clave" class="nv-section" aria-labelledby="titulo-temas">
+      <div class="nv-container">
+
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">Los pilares</p>
+            <h2 id="titulo-temas">¿Hablamos de lo que importa?</h2>
+          </div>
+          <p>Una mirada clara a los pilares que protegen a tu familia y tu patrimonio.</p>
+        </div>
+
+        <div class="nv-card-grid">
+
+          <article class="home-topic">
+            <div class="home-topic__media">
+              <img src="src/assets/home/card-vivienda.webp" alt="Vivienda y coste de vida"
+                   width="640" height="360" loading="lazy">
+              <span class="home-topic__badge">01</span>
+            </div>
+            <div class="home-topic__body">
+              <h3>Vivienda y coste de vida</h3>
+              <p class="home-topic__lead">Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.</p>
+              <dl class="home-topic__reading">
+                <dt>Lectura NUVIA</dt>
+                <dd>Capacidad de pago, margen de seguridad y visión patrimonial.</dd>
+              </dl>
+              <a class="home-topic__link" href="vivienda.html">Acceder <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="home-topic">
+            <div class="home-topic__media">
+              <img src="src/assets/home/card-impuestos.webp" alt="Mis impuestos"
+                   width="640" height="360" loading="lazy">
+              <span class="home-topic__badge">02</span>
+            </div>
+            <div class="home-topic__body">
+              <h3>Mis impuestos</h3>
+              <p class="home-topic__lead">Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.</p>
+              <dl class="home-topic__reading">
+                <dt>Lectura NUVIA</dt>
+                <dd>Planificación ordenada, documentación y revisión profesional cuando sea necesaria.</dd>
+              </dl>
+              <a class="home-topic__link" href="fiscalidad.html">Acceder <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <article class="home-topic">
+            <div class="home-topic__media">
+              <img src="src/assets/home/card-jubilacion.webp" alt="Jubilación"
+                   width="640" height="360" loading="lazy">
+              <span class="home-topic__badge">03</span>
+            </div>
+            <div class="home-topic__body">
+              <h3>Jubilación</h3>
+              <p class="home-topic__lead">Herramientas para ordenar ingresos futuros, longevidad, apoyo a los hijos y legado familiar.</p>
+              <dl class="home-topic__reading">
+                <dt>Lectura NUVIA</dt>
+                <dd>Planificación anticipada, prudencia fiscal y diálogo entre generaciones.</dd>
+              </dl>
+              <a class="home-topic__link" href="temas.html?topic=jubilacion">Acceder <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+
+          <div class="home-topics-heading">
+            <p class="nv-eyebrow">Bienestar integral · Vida en equilibrio</p>
+            <h3>Cuerpo, mente y salud</h3>
+          </div>
+
+          <article data-screen-label="Banner Cuerpo, mente y salud" class="home-wellbeing">
+            <img class="home-wellbeing__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
+                 alt="Una familia disfruta de unas vacaciones junto al mar mientras practica yoga y pilates al aire libre"
+                 width="1600" height="900" loading="lazy">
+            <div class="home-wellbeing__veil" aria-hidden="true"></div>
+            <div class="home-wellbeing__content">
+              <h4 class="home-wellbeing__title">Claves para una vida sana y equilibrada</h4>
+              <p class="home-wellbeing__copy">Una sección sobre vida familiar, salud mental y física, bienestar y equilibrio frente al ritmo acelerado actual. Temas concretos y directrices prácticas para cuidar el cuerpo, reducir el estrés, organizar el tiempo y conciliar familia, trabajo y descanso.</p>
+              <div class="home-wellbeing__rhythms" aria-label="Pilares de una vida equilibrada">
+                <span>Familia y relaciones</span>
+                <span>Salud mental</span>
+                <span>Salud física</span>
+                <span>Equilibrio diario</span>
+              </div>
+              <div class="home-wellbeing__footer">
+                <a href="temas.html?topic=bienestar" class="home-wellbeing__cta">Ver temas y directrices <span aria-hidden="true">→</span></a>
+                <span class="home-wellbeing__note">Orientación práctica para vivir con más salud, calma y equilibrio.</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ LECTURAS CON CRITERIO ═════════════════════════════════════════════ -->
+    <section id="lecturas-con-criterio" data-screen-label="Lecturas con Criterio" class="nv-section" aria-labelledby="titulo-lecturas">
+      <div class="nv-container">
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow nv-eyebrow--editorial">Sección editorial</p>
+            <h2 id="titulo-lecturas">Un rincón NUVIA para leer con calma</h2>
+          </div>
+          <p>Conceptos breves, historias familiares y recomendaciones con criterio.</p>
+        </div>
+
+        <a class="home-lecturas" href="lecturas.html"
+           aria-label="Abrir Lecturas con Criterio: libros, artículos e ideas que comparten la mirada de NUVIA">
+          <img class="home-lecturas__art" src="src/assets/home/lecturas-con-criterio-fondo-compacto.webp"
+               alt="" aria-hidden="true" width="2879" height="546" loading="lazy">
+          <span class="home-lecturas__copy">
+            <span class="home-lecturas__title">Lecturas con Criterio</span>
+            <span class="home-lecturas__rule" aria-hidden="true"></span>
+            <span class="home-lecturas__subtitle">Libros, artículos e ideas que comparten la mirada de NUVIA.</span>
+            <span class="home-lecturas__cta">Explorar Lecturas <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ══ QUÉ ES NUVIA ══════════════════════════════════════════════════════ -->
+    <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" class="nv-section" aria-labelledby="titulo-proyecto">
+      <div class="nv-container">
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">El proyecto</p>
+            <h2 id="titulo-proyecto">Qué es NUVIA</h2>
+          </div>
+        </div>
+
+        <div class="home-manifesto">
+          <p>La respuesta más sencilla sería decir que NUVIA es una comunidad. Sin embargo, esa definición resulta insuficiente. También podríamos decir que NUVIA es una plataforma digital. Pero tampoco describe realmente lo que pretendemos construir.</p>
+          <p class="home-manifesto__pull">NUVIA es, ante todo, un proyecto diseñado para ayudar a las Familias a comprender, proteger y gestionar mejor su patrimonio.</p>
+          <p>Para conseguirlo combinamos distintos elementos: conocimiento, comunidad, herramientas, tecnología y acceso a profesionales especializados.</p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer data-screen-label="Footer" class="nuvia-site-footer">
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -462,7 +363,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -472,9 +373,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -485,8 +387,10 @@
       </div>
     </div>
   </footer>
+
 </div>
 </x-dc>
+
 <script type="text/x-dc" data-dc-script data-props="{&quot;barraPilares&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Hero&quot;}}">
 class Component extends DCLogic {
   state = { temasOpen: false };

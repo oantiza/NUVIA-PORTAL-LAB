@@ -1,5 +1,5 @@
 import { access, readFile, readdir, stat } from 'node:fs/promises';
-import { dirname, extname, resolve, sep } from 'node:path';
+import { basename, dirname, extname, resolve, sep } from 'node:path';
 
 const root = resolve(process.argv[2] || '.');
 const requiredPages = [
@@ -18,11 +18,16 @@ const requiredPages = [
 
 await Promise.all(requiredPages.map((page) => access(resolve(root, page))));
 
+const DIRECTORIOS_IGNORADOS = new Set([
+  '.firebase', '.git', '.github', 'build', 'dist', 'node_modules', 'tmp',
+  'output', '_archivo', 'coverage', '.next', '.cache',
+]);
+
 async function listFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
   for (const entry of entries) {
-    if (entry.isDirectory() && ['.firebase', '.git', 'build', 'dist', 'node_modules', 'tmp'].includes(entry.name)) continue;
+    if (entry.isDirectory() && DIRECTORIOS_IGNORADOS.has(entry.name)) continue;
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) files.push(...await listFiles(path));
     else files.push(path);
@@ -38,7 +43,12 @@ function localTarget(value) {
   return decodeURIComponent(trimmed.split('#')[0].split('?')[0]);
 }
 
-const htmlFiles = (await listFiles(root)).filter((file) => extname(file).toLowerCase() === '.html');
+/* Los ficheros que empiezan por _ no se publican: _plantilla.html es el punto
+   de partida para secciones nuevas y contiene marcadores ⟨…⟩ y rutas de ejemplo
+   a propósito. Validarlo como si fuese una página daba falsos errores. */
+const htmlFiles = (await listFiles(root))
+  .filter((file) => extname(file).toLowerCase() === '.html')
+  .filter((file) => !basename(file).startsWith('_'));
 const missing = [];
 const referencePattern = /\b(?:href|src)=["']([^"']+)["']/gi;
 

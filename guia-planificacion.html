@@ -3,41 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Hoja de ruta de NUVIA para ordenar las decisiones que forman un plan de jubilación completo.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/guia-planificacion.html">
-<title>Planificación fiscal | NUVIA</title>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+<meta name="description" content="Hoja de ruta de NUVIA para planificar la jubilación: objetivos, ingresos, patrimonio y decisiones clave.">
+
+<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/guia-planificacion.html -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/guia-planificacion.html">
+
+<title>Guía de planificación de la jubilación | NUVIA</title>
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  </style>
-</helmet>
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
 
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+
+<div class="nuvia-page">
 
   <!-- ============ HEADER ============ -->
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -47,105 +43,112 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics is-active">
           <summary aria-current="page">Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
+  <main id="contenido">
     <!-- ============ CABECERA ============ -->
-    <section id="guia" data-screen-label="Cabecera guía" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
-      <div style="max-width:1240px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr); gap:0">
-        <div style="padding:64px 48px 56px 0">
-          <span style="display:inline-block; white-space:nowrap; border:1px solid rgba(201,220,160,.45); border-radius:999px; background:color-mix(in srgb, #9DB861 8%, transparent); color:#e8f0d5; font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; padding:6px 14px">Ruta práctica · Paso a paso</span>
-          <p style="color:rgba(255,255,255,.56); font-size:11px; font-weight:500; letter-spacing:.23em; text-transform:uppercase; margin:28px 0 0">Guía NUVIA · Jubilación</p>
-          <h1 style="color:#ffffff; max-width:15em; color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:12px 0 0">Tu jubilación necesita una hoja de ruta, no una cifra aislada</h1>
-          <p style="max-width:36em; color:rgba(255,255,255,.74); font-size:16px; line-height:1.65; margin:20px 0 0">Ordena objetivos, ingresos, gastos y patrimonio. Al terminar tendrás una lista clara de decisiones y próximos pasos para llevar al simulador.</p>
+    <section id="guia" data-screen-label="Cabecera guía" class="nv-hero nv-hero--institutional gu-hero">
+      <div class="nv-container gu-section">
+        <nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li><a href="temas.html">Temas clave</a></li><li><a href="jubilacion.html">Jubilación</a></li><li><span aria-current="page">Guía de planificación</span></li></ol></nav>
+        <div class="gp-hero__copy">
+          <span class="gp-badge">Ruta práctica · Paso a paso</span>
+          <p class="gp-hero__label">Guía NUVIA · Jubilación</p>
+          <h1 class="gp-hero__title">Tu jubilación necesita una hoja de ruta, no una cifra aislada</h1>
+          <p class="gu-lead">Ordena objetivos, ingresos, gastos y patrimonio. Al terminar tendrás una lista clara de decisiones y próximos pasos para llevar al simulador.</p>
         </div>
-        <div style="border-left:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.18); padding:64px 0 56px 44px">
+        <div class="gp-hero__aside">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          <h2 style="color:#ffffff; font-size:24px; font-weight:500; line-height:1.25; margin:24px 0 0">Tu avance en esta guía</h2>
-          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-top:26px">
-            <p style="color:rgba(255,255,255,.60); font-size:12px; margin:0">Plan completado</p>
-            <p aria-live="polite" style="color:#4A5D23; font-size:34px; line-height:1; margin:0">{{ progresoTotal }} %</p>
+          <h2 class="gp-hero__sub">Tu avance en esta guía</h2>
+          <div class="gp-progress__row">
+            <p class="gp-hero__note">Plan completado</p>
+            <p aria-live="polite" class="gp-figure">{{ progresoTotal }} %</p>
           </div>
-          <div role="progressbar" aria-label="Progreso total de la guía" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progresoTotalNum }}" style="height:6px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; margin-top:12px">
-            <div style="height:100%; border-radius:999px; background:#7C9A44; transition:width .3s ease; width:{{ progresoTotal }}%"></div>
+          <div role="progressbar" aria-label="Progreso total de la guía" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progresoTotalNum }}" class="gp-progress">
+            <div class="gp-progress__fill" style="width:{{ progresoTotal }}%"></div>
           </div>
-          <p style="border-top:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.56); font-size:12px; line-height:1.6; margin:24px 0 0; padding-top:18px">No se guardan datos personales. Tu selección permanece únicamente mientras mantengas abierta esta página.</p>
+          <p class="gu-footnote-dark">No se guardan datos personales. Tu selección permanece únicamente mientras mantengas abierta esta página.</p>
         </div>
       </div>
     </section>
 
     <!-- ============ RECORRIDO ============ -->
-    <section data-screen-label="Recorrido" aria-label="Recorrido de las herramientas de jubilación" style="background:var(--color-surface); border-bottom:1px solid var(--color-divider)">
-      <div style="max-width:1240px; margin:0 auto; padding:0 40px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr))">
-        <div style="display:flex; align-items:flex-start; gap:14px; border-right:1px solid var(--color-divider); padding:20px 28px 20px 0">
-          <span style="color:#7C9A44; font-size:21px; line-height:1.1">01</span>
-          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Ordenar</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">Esta guía estructura las decisiones.</p></div>
+    <section data-screen-label="Recorrido" aria-label="Recorrido de las herramientas de jubilación" class="gu-bar">
+      <div class="nv-container gu-section">
+        <div class="gp-phase gp-phase--divided">
+          <span class="gu-num">01</span>
+          <div><p class="gu-strong">Ordenar</p><p class="gu-muted">Esta guía estructura las decisiones.</p></div>
         </div>
-        <div style="display:flex; align-items:flex-start; gap:14px; border-right:1px solid var(--color-divider); padding:20px 28px">
-          <span style="color:#7C9A44; font-size:21px; line-height:1.1">02</span>
-          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Calcular</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">El simulador convierte el plan en escenarios.</p></div>
+        <div class="gp-phase gp-phase--divided">
+          <span class="gu-num">02</span>
+          <div><p class="gu-strong">Calcular</p><p class="gu-muted">El simulador convierte el plan en escenarios.</p></div>
         </div>
-        <div style="display:flex; align-items:flex-start; gap:14px; padding:20px 0 20px 28px">
-          <span style="color:#7C9A44; font-size:21px; line-height:1.1">03</span>
-          <div><p style="color:var(--color-text); font-size:12.5px; font-weight:500; margin:0">Ejecutar</p><p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin:3px 0 0">La guía fiscal prepara el rescate.</p></div>
+        <div class="gp-phase">
+          <span class="gu-num">03</span>
+          <div><p class="gu-strong">Ejecutar</p><p class="gu-muted">La guía fiscal prepara el rescate.</p></div>
         </div>
       </div>
     </section>
 
     <!-- ============ 01 PUNTO DE PARTIDA ============ -->
-    <section data-screen-label="01 Punto de partida" style="max-width:1240px; margin:0 auto; padding:64px 40px 0">
-      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">01 · Punto de partida</p>
-      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Sitúa tu momento y reúne las piezas básicas</h2>
-      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">No necesitas conocer todas las respuestas. Este diagnóstico identifica qué tienes preparado y qué información conviene obtener antes de hacer números.</p>
+    <section data-screen-label="01 Punto de partida" class="nv-container">
+      <p class="gu-kicker">01 · Punto de partida</p>
+      <h2 class="gu-title">Sitúa tu momento y reúne las piezas básicas</h2>
+      <p class="gu-text">No necesitas conocer todas las respuestas. Este diagnóstico identifica qué tienes preparado y qué información conviene obtener antes de hacer números.</p>
 
-      <p style="color:var(--color-text); font-size:12px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px">¿A qué distancia está tu jubilación?</p>
-      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px">
+      <p class="gu-strong">¿A qué distancia está tu jubilación?</p>
+      <div class="gu-grid-4">
         <sc-for list="{{ horizontes }}" as="h" hint-placeholder-count="4">
-          <button type="button" onClick="{{ h.abrir }}" aria-pressed="{{ h.pressed }}" style="{{ h.estilo }}">
-            <span style="display:block; font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; opacity:.75">{{ h.label }}</span>
-            <span style="display:block; font-size:19px; line-height:1.2; margin-top:7px">{{ h.period }}</span>
+          <button type="button" onClick="{{ h.abrir }}" aria-pressed="{{ h.pressed }}" class="{{ h.clase }}">
+            <span class="gp-phase__label">{{ h.label }}</span>
+            <span class="gp-phase__title">{{ h.period }}</span>
           </button>
         </sc-for>
       </div>
       <sc-if value="{{ haySeleccion }}" hint-placeholder-val="{{ false }}">
-        <aside style="display:grid; grid-template-columns:220px minmax(0,1fr); gap:20px; border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:#F4F0E7; margin-top:14px; padding:20px 26px">
+        <aside class="gp-detail">
           <div>
-            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Prioridad de esta etapa</p>
-            <p style="color:var(--color-text); font-size:19px; line-height:1.25; margin:0">{{ prioridad }}</p>
+            <p class="gu-kicker">Prioridad de esta etapa</p>
+            <p class="gu-title--card">{{ prioridad }}</p>
           </div>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.65; margin:0; align-self:center">{{ descripcionHorizonte }}</p>
+          <p class="gu-text">{{ descripcionHorizonte }}</p>
         </aside>
       </sc-if>
 
-      <div style="display:grid; grid-template-columns:minmax(0,.66fr) minmax(0,1.34fr); gap:24px; margin-top:36px">
-        <div style="border-radius:var(--radius-md); background:var(--color-neutral-900); padding:30px 32px">
+      <div class="gp-summary">
+        <div class="gp-dark-card">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="m9 14 2 2 4-4"></path></svg>
-          <h3 style="color:var(--color-text); font-size:25px; font-weight:500; margin:22px 0 0">Información disponible</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Marca solo aquello que ya conoces o puedes documentar.</p>
-          <p style="color:#4A5D23; font-size:38px; line-height:1; margin:30px 0 0">{{ progresoInfo }} %</p>
-          <p style="color:rgba(255,255,255,.4); font-size:10px; letter-spacing:.14em; text-transform:uppercase; margin:6px 0 0">del punto de partida preparado</p>
+          <h3 class="gu-strong">Información disponible</h3>
+          <p class="gu-text">Marca solo aquello que ya conoces o puedes documentar.</p>
+          <p class="gp-figure--xl">{{ progresoInfo }} %</p>
+          <p class="gp-dark-card__label">del punto de partida preparado</p>
         </div>
-        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px">
+        <div class="gu-grid-2">
           <sc-for list="{{ piezas }}" as="p" hint-placeholder-count="6">
-            <button type="button" role="checkbox" aria-checked="{{ p.checked }}" onClick="{{ p.abrir }}" style="{{ p.estilo }}">
-              <span style="{{ p.caja }}">{{ p.marca }}</span>
-              <span style="min-width:0; text-align:left">
-                <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ p.label }}</span>
-                <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin-top:3px">{{ p.detail }}</span>
+            <button type="button" role="checkbox" aria-checked="{{ p.checked }}" onClick="{{ p.abrir }}" class="{{ p.clase }}">
+              <span class="{{ p.caja }}">{{ p.marca }}</span>
+              <span class="gu-left">
+                <span class="gu-block-strong">{{ p.label }}</span>
+                <span class="gu-block-muted">{{ p.detail }}</span>
               </span>
             </button>
           </sc-for>
@@ -154,110 +157,110 @@
     </section>
 
     <!-- ============ 02 HOJA DE RUTA ============ -->
-    <section data-screen-label="02 Hoja de ruta" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
-      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">02 · Hoja de ruta</p>
-      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 12px">Seis decisiones, en el orden adecuado</h2>
-      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.65; margin:0 0 30px">Recorre cada etapa y utiliza las preguntas como preparación para una conversación familiar o profesional.</p>
+    <section data-screen-label="02 Hoja de ruta" class="nv-container">
+      <p class="gu-kicker">02 · Hoja de ruta</p>
+      <h2 class="gu-title">Seis decisiones, en el orden adecuado</h2>
+      <p class="gu-text">Recorre cada etapa y utiliza las preguntas como preparación para una conversación familiar o profesional.</p>
 
-      <div style="display:grid; grid-template-columns:minmax(0,.44fr) minmax(0,.56fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-        <div style="border-right:1px solid var(--color-divider); display:flex; flex-direction:column">
+      <div class="gu-two gu-two--b">
+        <div class="gu-col-divided">
           <sc-for list="{{ pasos }}" as="p" hint-placeholder-count="6">
-            <button type="button" onClick="{{ p.abrir }}" aria-pressed="{{ p.pressed }}" style="{{ p.estilo }}">
-              <span style="font-size:19px; color:{{ p.numColor }}">{{ p.number }}</span>
-              <span style="font-size:17.5px; line-height:1.25; text-align:left">{{ p.title }}</span>
-              <span aria-hidden="true" style="margin-left:auto; font-size:12px; opacity:.55">›</span>
+            <button type="button" onClick="{{ p.abrir }}" aria-pressed="{{ p.pressed }}" class="{{ p.clase }}">
+              <span class="gp-step__num {{ p.numClase }}">{{ p.number }}</span>
+              <span class="gu-toggle__title">{{ p.title }}</span>
+              <span aria-hidden="true" class="gu-toggle__chevron">›</span>
             </button>
           </sc-for>
         </div>
-        <article aria-live="polite" style="padding:34px 38px">
-          <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">{{ pasoEyebrow }}</p>
-          <h3 style="color:var(--color-text); font-size:28px; font-weight:500; line-height:1.15; margin:12px 0 0">{{ pasoTitulo }}</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65; margin:14px 0 0">{{ pasoDescripcion }}</p>
-          <div style="border-top:1px solid var(--color-divider); margin-top:24px; padding-top:20px">
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 14px">Preguntas que debes responder</p>
+        <article aria-live="polite" class="gu-pane gu-pane--lg">
+          <p class="gu-kicker">{{ pasoEyebrow }}</p>
+          <h3 class="gu-strong">{{ pasoTitulo }}</h3>
+          <p class="gu-text">{{ pasoDescripcion }}</p>
+          <div class="gu-divide-top">
+            <p class="gu-text">Preguntas que debes responder</p>
             <sc-for list="{{ pasoPreguntas }}" as="q" hint-placeholder-count="3">
-              <p style="display:flex; gap:11px; align-items:flex-start; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:0 0 10px"><span style="color:var(--color-accent); font-size:13px; line-height:1.4">✓</span>{{ q }}</p>
+              <p class="gu-item--soft"><span class="gu-accent">✓</span>{{ q }}</p>
             </sc-for>
           </div>
-          <div style="border-radius:var(--radius-md); background:#F4F0E7; margin-top:20px; padding:16px 20px">
-            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0 0 7px">Resultado de este paso</p>
-            <p style="color:#394755; font-size:13px; line-height:1.6; margin:0">{{ pasoResultado }}</p>
+          <div class="gu-callout">
+            <p class="gu-kicker">Resultado de este paso</p>
+            <p class="gu-text">{{ pasoResultado }}</p>
           </div>
         </article>
       </div>
     </section>
 
     <!-- ============ 03 ETAPAS ============ -->
-    <section data-screen-label="03 Etapas" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
-      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">03 · Planificación por etapas</p>
-      <h2 style="max-width:24em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Las prioridades cambian a medida que se acerca la fecha</h2>
-      <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--color-divider); border-bottom:1px solid var(--color-divider)">
-        <article style="border-right:1px solid var(--color-divider); padding:26px 24px 26px 0">
-          <p style="color:#7C9A44; font-size:26px; margin:0">01</p>
-          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Construcción</p>
-          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Más de 10 años</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Objetivo y disciplina de ahorro.</p>
+    <section data-screen-label="03 Etapas" class="nv-container">
+      <p class="gu-kicker">03 · Planificación por etapas</p>
+      <h2 class="gu-title">Las prioridades cambian a medida que se acerca la fecha</h2>
+      <div class="gu-grid-4">
+        <article class="gu-card--split">
+          <p class="gu-num">01</p>
+          <p class="gu-kicker">Construcción</p>
+          <h3 class="gu-title gu-title--xs">Más de 10 años</h3>
+          <p class="gu-text">Objetivo y disciplina de ahorro.</p>
         </article>
-        <article style="border-right:1px solid var(--color-divider); padding:26px 24px">
-          <p style="color:#7C9A44; font-size:26px; margin:0">02</p>
-          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Concreción</p>
-          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Entre 5 y 10 años</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Ingresos, patrimonio y brecha.</p>
+        <article class="gu-card--split">
+          <p class="gu-num">02</p>
+          <p class="gu-kicker">Concreción</p>
+          <h3 class="gu-title gu-title--xs">Entre 5 y 10 años</h3>
+          <p class="gu-text">Ingresos, patrimonio y brecha.</p>
         </article>
-        <article style="border-right:1px solid var(--color-divider); padding:26px 24px">
-          <p style="color:#7C9A44; font-size:26px; margin:0">03</p>
-          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Preparación</p>
-          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Menos de 5 años</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Liquidez y calendario de cobro.</p>
+        <article class="gu-card--split">
+          <p class="gu-num">03</p>
+          <p class="gu-kicker">Preparación</p>
+          <h3 class="gu-title gu-title--xs">Menos de 5 años</h3>
+          <p class="gu-text">Liquidez y calendario de cobro.</p>
         </article>
-        <article style="padding:26px 0 26px 24px">
-          <p style="color:#7C9A44; font-size:26px; margin:0">04</p>
-          <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:18px 0 0">Seguimiento</p>
-          <h3 style="color:var(--color-text); font-size:20px; font-weight:500; line-height:1.2; margin:8px 0 0">Ya jubilado/a</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:12px 0 0">Sostenibilidad y revisión anual.</p>
+        <article class="gu-pane--inset">
+          <p class="gu-num">04</p>
+          <p class="gu-kicker">Seguimiento</p>
+          <h3 class="gu-title gu-title--xs">Ya jubilado/a</h3>
+          <p class="gu-text">Sostenibilidad y revisión anual.</p>
         </article>
       </div>
     </section>
 
     <!-- ============ 04 RIESGOS ============ -->
-    <section data-screen-label="04 Riesgos" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
-      <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 10px">04 · Riesgos que conviene anticipar</p>
-      <h2 style="max-width:22em; color:var(--color-text); font-size:32px; font-weight:500; line-height:1.12; margin:0 0 30px">Un buen plan también prepara lo inesperado</h2>
-      <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px">
+    <section data-screen-label="04 Riesgos" class="nv-container">
+      <p class="gu-kicker">04 · Riesgos que conviene anticipar</p>
+      <h2 class="gu-title">Un buen plan también prepara lo inesperado</h2>
+      <div class="gu-grid-3">
         <sc-for list="{{ riesgos }}" as="r" hint-placeholder-count="6">
-          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 24px; transition:transform .3s ease, box-shadow .3s ease" style-hover="transform:translateY(-3px); box-shadow:0 16px 36px -24px rgba(11,35,71,.4)">
-            <span style="display:inline-flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-300); font-size:16px">{{ r.inicial }}</span>
-            <h3 style="color:var(--color-text); font-size:19px; font-weight:500; margin:16px 0 0">{{ r.titulo }}</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12.5px; line-height:1.6; margin:7px 0 0">{{ r.descripcion }}</p>
-            <p style="border-top:1px solid var(--color-divider); color:#394755; font-size:12.5px; line-height:1.6; margin:14px 0 0; padding-top:13px"><strong style="color:var(--color-text)">Cómo prepararlo:</strong> {{ r.respuesta }}</p>
+          <article class="gu-card">
+            <span class="gu-mark">{{ r.inicial }}</span>
+            <h3 class="gu-title--card">{{ r.titulo }}</h3>
+            <p class="gu-muted">{{ r.descripcion }}</p>
+            <p class="gu-rule-top"><strong class="gu-strong">Cómo prepararlo:</strong> {{ r.respuesta }}</p>
           </article>
         </sc-for>
       </div>
     </section>
 
     <!-- ============ 05 PLAN EN UNA PÁGINA ============ -->
-    <section data-screen-label="05 Plan en una página" style="max-width:1240px; margin:0 auto; padding:76px 40px 0">
-      <div style="display:grid; grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-        <div style="border-right:1px solid var(--color-divider); padding:32px 34px">
+    <section data-screen-label="05 Plan en una página" class="nv-container">
+      <div class="gu-two gu-two--c">
+        <div class="gu-card--split">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4A5D23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
-          <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:24px 0 0">05 · Tu plan en una página</p>
-          <h2 style="color:var(--color-text); font-size:27px; font-weight:500; line-height:1.15; margin:12px 0 0">Marca decisiones y genera tu resumen</h2>
-          <p style="color:#6b7686; font-size:12.5px; line-height:1.6; margin:14px 0 0">Utiliza este control como agenda de trabajo. Puedes imprimir el resultado aunque todavía tengas tareas pendientes.</p>
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:18px">
-            <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 8px">Próxima acción sugerida</p>
-            <p aria-live="polite" style="color:var(--color-text); font-size:18px; line-height:1.35; margin:0">{{ proximaAccion }}</p>
+          <p class="gu-kicker">05 · Tu plan en una página</p>
+          <h2 class="gu-strong">Marca decisiones y genera tu resumen</h2>
+          <p class="gu-muted">Utiliza este control como agenda de trabajo. Puedes imprimir el resultado aunque todavía tengas tareas pendientes.</p>
+          <div class="gu-divide-top">
+            <p class="gu-kicker">Próxima acción sugerida</p>
+            <p aria-live="polite" class="gu-strong">{{ proximaAccion }}</p>
           </div>
         </div>
-        <div style="padding:32px 34px">
-          <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 26px">
+        <div class="gu-pane gu-pane--md">
+          <div class="gu-grid-2">
             <sc-for list="{{ acciones }}" as="a" hint-placeholder-count="8">
-              <button type="button" role="checkbox" aria-checked="{{ a.checked }}" onClick="{{ a.abrir }}" style="display:flex; gap:11px; align-items:flex-start; border:0; border-bottom:1px solid var(--color-divider); background:none; cursor:pointer; font-family:var(--font-body); padding:12px 0; text-align:left">
-                <span style="{{ a.caja }}">{{ a.marca }}</span>
-                <span style="{{ a.texto }}">{{ a.label }}</span>
+              <button type="button" role="checkbox" aria-checked="{{ a.checked }}" onClick="{{ a.abrir }}" class="gu-toggle">
+                <span class="{{ a.caja }}">{{ a.marca }}</span>
+                <span class="{{ a.texto }}">{{ a.label }}</span>
               </button>
             </sc-for>
           </div>
-          <button type="button" onClick="{{ imprimir }}" style="display:inline-flex; align-items:center; gap:10px; border:0; border-radius:var(--radius-md); border:1px solid var(--color-accent); background:transparent; color:var(--color-accent); cursor:pointer; font-family:var(--font-body); font-size:12.5px; font-weight:500; margin-top:26px; padding:12px 22px; transition:background .25s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 12%, transparent)">
+          <button type="button" onClick="{{ imprimir }}" class="gu-chip-box">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
             Imprimir mi hoja de ruta
           </button>
@@ -266,25 +269,25 @@
     </section>
 
     <!-- ============ SIGUIENTES PASOS ============ -->
-    <section data-screen-label="Siguientes pasos" aria-label="Siguientes pasos" style="max-width:1240px; margin:0 auto; padding:56px 40px 20px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px">
-      <article style="border-radius:var(--radius-md); background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); box-shadow:var(--shadow-sm); padding:32px 36px">
-        <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Siguiente paso · Calcular</p>
-        <h2 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.2; margin:12px 0 0">Convierte la hoja de ruta en escenarios</h2>
-        <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Introduce tus datos en el simulador para estimar ingresos, necesidades y brecha.</p>
-        <a href="jubilacion.html" style="display:inline-flex; align-items:center; gap:10px; border-radius:var(--radius-md); background:transparent; border:1px solid var(--color-accent-400); color:var(--color-accent-200); font-size:15px; font-weight:500; text-decoration:none; margin-top:24px; padding:12px 24px; box-shadow:0 12px 28px -10px rgba(197,164,109,.55); transition:transform .25s ease, background .25s ease" style-hover="transform:translateY(-2px); background:color-mix(in srgb, var(--color-accent-400) 14%, transparent); color:var(--color-accent-100)">Abrir simulador <span aria-hidden="true">→</span></a>
+    <section data-screen-label="Siguientes pasos" aria-label="Siguientes pasos" class="nv-container gu-section">
+      <article class="gu-aside-tint">
+        <p class="gu-muted">Siguiente paso · Calcular</p>
+        <h2 class="gu-title gu-title--sm">Convierte la hoja de ruta en escenarios</h2>
+        <p class="gu-text">Introduce tus datos en el simulador para estimar ingresos, necesidades y brecha.</p>
+        <a href="jubilacion.html" class="nv-btn nv-btn--secondary gu-cta">Abrir simulador <span aria-hidden="true">→</span></a>
       </article>
-      <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:32px 36px">
-        <p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">Último paso · Ejecutar</p>
-        <h2 style="color:var(--color-text); font-size:26px; font-weight:500; line-height:1.2; margin:12px 0 0">Prepara la forma de rescatar tu EPSV</h2>
-        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:12px 0 0">Compara capital, renta y modalidad mixta, junto con su tratamiento fiscal en Bizkaia.</p>
-        <a href="guia-fiscal.html" style="display:inline-flex; align-items:center; gap:10px; margin-top:24px; border:1px solid rgba(11,35,71,.25); border-radius:var(--radius-md); background:var(--color-surface); color:var(--color-text); font-size:15px; text-decoration:none; padding:12px 24px; transition:background .25s ease, border-color .25s ease" style-hover="background:color-mix(in srgb, var(--color-text) 5%, transparent); border-color:var(--color-text); color:var(--color-text)">Ver fiscalidad y rescate <span aria-hidden="true">→</span></a>
+      <article class="gu-card">
+        <p class="gu-kicker">Último paso · Ejecutar</p>
+        <h2 class="gu-title gu-title--sm">Prepara la forma de rescatar tu EPSV</h2>
+        <p class="gu-text">Compara capital, renta y modalidad mixta, junto con su tratamiento fiscal en Bizkaia.</p>
+        <a href="guia-fiscal.html" class="nv-btn nv-btn--soft gu-cta">Ver fiscalidad y rescate <span aria-hidden="true">→</span></a>
       </article>
     </section>
 
-    <section data-screen-label="Aviso" style="max-width:1240px; margin:0 auto; padding:0 40px 84px">
-      <div style="display:flex; gap:16px; align-items:flex-start; border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, var(--color-accent) 7%, transparent); padding:18px 24px">
-        <span style="color:var(--color-accent-300); font-size:17px; line-height:1.3">!</span>
-        <p style="color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:12.5px; line-height:1.6; margin:0">Esta guía es educativa y orientativa. No constituye asesoramiento financiero, fiscal o jurídico y debe adaptarse a la situación personal, familiar y patrimonial de cada usuario.</p>
+    <section data-screen-label="Aviso" class="nv-container gu-section">
+      <div class="gu-quote">
+        <span class="gu-accent">!</span>
+        <p class="gu-text">Esta guía es educativa y orientativa. No constituye asesoramiento financiero, fiscal o jurídico y debe adaptarse a la situación personal, familiar y patrimonial de cada usuario.</p>
       </div>
     </section>
   </main>
@@ -294,11 +297,12 @@
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -308,7 +312,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -318,9 +322,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -331,7 +336,11 @@
       </div>
     </div>
   </footer>
+
 </div>
+</x-dc>
+</div>
+
 
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
@@ -406,13 +415,12 @@ class Component extends DCLogic {
         : 'Revisar el plan una vez al año o cuando cambie tu situación.';
     }
     const paso = d.pasos[st.paso];
-    const cajaOn = 'flex-shrink:0; display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:5px; border:1px solid var(--color-accent); background:var(--color-accent); color:var(--color-text); font-size:11px; line-height:1; margin-top:2px';
-    const cajaOff = 'flex-shrink:0; display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; border-radius:5px; border:1px solid #6b7686; background:var(--color-surface); color:transparent; font-size:11px; line-height:1; margin-top:2px';
+    const claseCaja = (on) => 'gp-box' + (on ? ' is-checked' : '');
     return {
       horizontes: d.horizontes.map(h => ({
         label: h.label, period: h.period, pressed: h.id === st.horizonte,
         abrir: () => this.setState({ horizonte: h.id }),
-        estilo: 'border-radius:var(--radius-md); cursor:pointer; font-family:var(--font-body); padding:16px 18px; text-align:left; transition:background .25s ease, color .25s ease, border-color .25s ease; ' + (h.id === st.horizonte ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:var(--color-text)'),
+        clase: 'gp-option' + (h.id === st.horizonte ? ' is-active' : ''),
       })),
       haySeleccion: !!sel,
       prioridad: sel ? sel.priority : '',
@@ -422,16 +430,16 @@ class Component extends DCLogic {
         return {
           label: p.label, detail: p.detail, checked: on, marca: on ? '✓' : '',
           abrir: () => this.toggle('listas', p.id),
-          caja: on ? cajaOn : cajaOff,
-          estilo: 'display:flex; gap:12px; align-items:flex-start; border-radius:var(--radius-md); cursor:pointer; font-family:var(--font-body); padding:15px 17px; transition:border-color .25s ease, background .25s ease; ' + (on ? 'border:1px solid var(--color-accent); background:var(--color-accent-900)' : 'border:1px solid var(--color-divider); background:var(--color-surface)'),
+          caja: claseCaja(on),
+          clase: 'gp-task' + (on ? ' is-done' : ''),
         };
       }),
       progresoInfo, progresoTotal, progresoTotalNum: progresoTotal,
       pasos: d.pasos.map((p, i) => ({
         number: p.number, title: p.title, pressed: i === st.paso,
         abrir: () => this.setState({ paso: i }),
-        numColor: i === st.paso ? '#4A5D23' : '#7C9A44',
-        estilo: 'display:flex; gap:14px; align-items:center; border:0; border-bottom:1px solid var(--color-divider); cursor:pointer; font-family:var(--font-body); padding:16px 22px; transition:background .2s ease, color .2s ease; ' + (i === st.paso ? 'background:var(--color-neutral-900); color:var(--color-text)' : 'background:none; color:var(--color-text)'),
+        numClase: i === st.paso ? 'is-active' : '',
+        clase: 'gu-toggle gp-step' + (i === st.paso ? ' is-active' : ''),
       })),
       pasoEyebrow: paso.eyebrow, pasoTitulo: paso.title, pasoDescripcion: paso.description,
       pasoPreguntas: paso.questions, pasoResultado: paso.outcome,
@@ -441,8 +449,8 @@ class Component extends DCLogic {
         return {
           label: a.label, checked: on, marca: on ? '✓' : '',
           abrir: () => this.toggle('hechas', a.id),
-          caja: on ? cajaOn : cajaOff,
-          texto: 'font-size:12.5px; line-height:1.55; ' + (on ? 'color:color-mix(in srgb, var(--color-text) 50%, transparent); text-decoration:line-through' : 'color:color-mix(in srgb, var(--color-text) 72%, transparent)'),
+          caja: claseCaja(on),
+          texto: 'gp-task__text' + (on ? ' is-done' : ''),
         };
       }),
       proximaAccion,

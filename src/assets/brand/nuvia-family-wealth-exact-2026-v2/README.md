@@ -38,5 +38,38 @@ futura deberá realizarse y aprobarse como un trabajo separado.
 
 ## Estado
 
-Familia candidata corregida. No está publicada ni sustituye todavía todos los
-logotipos activos del portal.
+Familia candidata corregida y **en uso en las 15 páginas del portal** desde
+2026-08-17. Válida, pero no definitiva: puede sustituirse.
+
+El README anterior decía que no estaba publicada; los commits de esa misma
+mañana sí cambiaron todas las páginas a esta familia, así que la nota había
+quedado desfasada.
+
+### Cómo sustituirla
+
+No editar rutas a mano: son cuatro por página en quince páginas, y dejarlo a
+medias es fácil.
+
+```bash
+node scripts/cambiar-familia-logo.mjs <carpeta-de-la-familia-nueva>
+npm run validate
+```
+
+El script reescribe favicons, apple-touch-icon y los dos logotipos en todas las
+páginas de una vez, y regenera los WebP optimizados. Se niega a actuar si a la
+familia destino le falta alguna pieza obligatoria.
+
+`check-consistencia.mjs` bloquea la publicación si alguna página se queda con
+una familia distinta a la del resto.
+
+### Derivados generados
+
+Los `<img>` del sitio no usan los PNG máster directamente: usan dos WebP
+redimensionados a tres veces su tamaño de presentación.
+
+| Fichero | Uso | Origen |
+|---|---|---|
+| `logo-horizontal.webp` | Cabecera, 474 px | `…-transparent.png` (700 KB → 26 KB) |
+| `logo-horizontal-reversed.webp` | Pie, 372 px | `…-reversed.png` (469 KB → 15 KB) |
+
+Los PNG máster se conservan intactos como fuente.

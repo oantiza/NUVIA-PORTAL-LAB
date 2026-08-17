@@ -3,43 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Simulador de jubilación de NUVIA para estimar ingresos, ahorro, EPSV y escenarios de planificación.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/jubilacion.html">
-<title>Planificación de la jubilación | NUVIA</title>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+<meta name="description" content="Simulador de jubilación de NUVIA para Bizkaia: estima tu renta mensual neta, los impuestos y la duración de tu patrimonio.">
+
+<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/jubilacion.html -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/jubilacion.html">
+
+<title>Simulador de jubilación · Bizkaia | NUVIA</title>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
+
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    input, select { font-family: var(--font-body); }
-    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
-    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    select option { background: var(--color-surface); color: var(--color-text); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  </style>
-</helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
 
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -49,286 +45,285 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics is-active">
           <summary aria-current="page">Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="simulador" data-screen-label="Cabecera simulador" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
-      <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
-      <div style="display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:48px; align-items:center">
+<main id="contenido">
+    <section id="simulador" data-screen-label="Cabecera simulador" class="nv-hero nv-hero--institutional jub-hero">
+      <div class="nv-container">
+      <div class="nv-hero__inner nv-hero__inner--simple"><div>
+      <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+        <ol><li><a href="index.html">Inicio</a></li><li><a href="temas.html">Temas clave</a></li><li><span aria-current="page">Jubilación</span></li></ol>
+      </nav>
+      <div class="jub-hero__grid">
         <div>
-          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Jubilación · Planificación patrimonial</span>
-          <h1 style="color:#ffffff; font-size:40px; font-weight:500; letter-spacing:-.015em; line-height:1.1; margin:0 0 14px">Planifica cuánto dinero podrías tener cada mes al jubilarte</h1>
-          <p style="max-width:56ch; color:rgba(255,255,255,.74); font-size:16px; line-height:1.65; margin:0 0 20px">Introduce tu pensión, tus ahorros y tu EPSV. El simulador te mostrará una estimación sencilla de la renta mensual, los impuestos y el tiempo que podría durar tu patrimonio.</p>
-          <div style="display:flex; gap:10px; flex-wrap:wrap">
-            <span class="tag tag-outline" style="font-size:12px; padding:5px 13px">◆ Solo Bizkaia</span>
-            <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Reglas fiscales 2026</span>
-            <span style="display:inline-flex; align-items:center; border:1px solid rgba(255,255,255,.22); border-radius:999px; color:rgba(255,255,255,.70); font-size:12px; padding:5px 13px">Cálculo local, sin envío de datos</span>
+          <span class="nv-eyebrow nv-eyebrow--on-dark">Jubilación · Planificación patrimonial</span>
+          <h1>Planifica cuánto dinero podrías tener cada mes al jubilarte</h1>
+          <p class="nv-hero__lead">Introduce tu pensión, tus ahorros y tu EPSV. El simulador te mostrará una estimación sencilla de la renta mensual, los impuestos y el tiempo que podría durar tu patrimonio.</p>
+          <div class="viv-pill-row">
+            <span class="nv-tag">◆ Solo Bizkaia</span>
+            <span class="jub-tag-dark">Reglas fiscales 2026</span>
+            <span class="jub-tag-dark">Cálculo local, sin envío de datos</span>
           </div>
         </div>
-        <aside aria-label="Cómo se utiliza" style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:24px 26px">
-          <p style="color:rgba(255,255,255,.58); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 16px">Cómo se utiliza</p>
-          <div style="display:flex; flex-direction:column; gap:14px">
-            <div style="display:flex; gap:13px; align-items:flex-start">
-              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">01</span>
-              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Reúne tus datos</strong>Pensión bruta, saldos actuales y certificado de la EPSV.</p>
+        <aside aria-label="Cómo se utiliza" class="jub-howto">
+          <p class="jub-howto__label">Cómo se utiliza</p>
+          <div class="jub-howto__list">
+            <div class="jub-howto__step">
+              <span class="jub-howto__num">01</span>
+              <p class="jub-howto__text"><strong class="jub-howto__title">Reúne tus datos</strong>Pensión bruta, saldos actuales y certificado de la EPSV.</p>
             </div>
-            <div style="display:flex; gap:13px; align-items:flex-start">
-              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">02</span>
-              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Completa cuatro apartados</strong>Puedes dejar a cero los productos que no tengas.</p>
+            <div class="jub-howto__step">
+              <span class="jub-howto__num">02</span>
+              <p class="jub-howto__text"><strong class="jub-howto__title">Completa cuatro apartados</strong>Puedes dejar a cero los productos que no tengas.</p>
             </div>
-            <div style="display:flex; gap:13px; align-items:flex-start">
-              <span style="color:#9DB861; font-size:14px; line-height:1.4; font-feature-settings:'tnum' 1">03</span>
-              <p style="color:rgba(255,255,255,.76); font-size:13px; line-height:1.55; margin:0"><strong style="display:block; color:#ffffff; font-weight:500">Lee el resultado</strong>Verás una estimación mensual y varios escenarios fáciles de comparar.</p>
+            <div class="jub-howto__step">
+              <span class="jub-howto__num">03</span>
+              <p class="jub-howto__text"><strong class="jub-howto__title">Lee el resultado</strong>Verás una estimación mensual y varios escenarios fáciles de comparar.</p>
             </div>
           </div>
         </aside>
       </div>
-      <div style="height:1px; margin-top:40px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
+      <div class="viv-hero__rule"></div>
+      </div></div>
     </div>
     </section>
 
-    <section data-screen-label="Ámbito territorial" style="max-width:1240px; margin:0 auto; padding:20px 48px 0">
-      <div style="display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:24px; align-items:center; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 24px">
-        <span style="display:inline-flex; width:44px; height:44px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-family:var(--font-heading); font-size:19px; font-weight:500">B</span>
-        <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 72%, transparent); font-size:13.5px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Este simulador es válido únicamente para Bizkaia.</strong> Está preparado para personas que tributan conforme al IRPF de Bizkaia y utiliza las reglas fiscales de 2026. No debe utilizarse para Álava, Gipuzkoa, Navarra ni territorio común.</p>
-        <span style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; white-space:nowrap">Solo Bizkaia</span>
+    <section data-screen-label="Ámbito territorial" class="nv-container jub-section--tight">
+      <div class="jub-scope">
+        <span class="jub-scope__mark">B</span>
+        <p class="jub-note"><strong class="jub-strong">Este simulador es válido únicamente para Bizkaia.</strong> Está preparado para personas que tributan conforme al IRPF de Bizkaia y utiliza las reglas fiscales de 2026. No debe utilizarse para Álava, Gipuzkoa, Navarra ni territorio común.</p>
+        <span class="jub-label">Solo Bizkaia</span>
       </div>
     </section>
 
-    <section data-screen-label="Formulario del simulador" style="max-width:1240px; margin:0 auto; padding:32px 48px 0">
-      <div style="border-left:2px solid var(--color-accent); border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, var(--color-accent) 7%, transparent); padding:14px 20px; margin-bottom:20px; display:flex; gap:14px; align-items:flex-start">
-        <span style="color:var(--color-accent-300); font-size:16px; line-height:1.3">!</span>
-        <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; line-height:1.6; margin:0"><strong style="color:var(--color-text); font-weight:500">Importante:</strong> el resultado es una estimación para ayudarte a planificar y entender distintas alternativas. No sustituye una liquidación tributaria, el certificado de la EPSV ni el asesoramiento individual.</p>
+    <section data-screen-label="Formulario del simulador" class="nv-container jub-section--tight">
+      <div class="nv-note">
+        <span class="jub-scope__icon">!</span>
+        <p class="jub-note"><strong class="jub-strong">Importante:</strong> el resultado es una estimación para ayudarte a planificar y entender distintas alternativas. No sustituye una liquidación tributaria, el certificado de la EPSV ni el asesoramiento individual.</p>
       </div>
 
-      <article data-screen-label="01 Situación" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
-        <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
-          <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">01</span>
+      <article data-screen-label="01 Situación" class="jub-card">
+        <header class="jub-card__head">
+          <span class="jub-step-num">01</span>
           <div>
-            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tu situación y hasta cuándo quieres planificar</h2>
-            <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Empieza por tu edad, tu pensión y el horizonte del plan.</p>
+            <h2 class="jub-card__title">Tu situación y hasta cuándo quieres planificar</h2>
+            <p class="jub-note">Empieza por tu edad, tu pensión y el horizonte del plan.</p>
           </div>
         </header>
-        <div style="padding:22px 26px 26px">
-          <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px">
+        <div class="jub-card__body">
+          <div class="jub-grid-4">
             <div>
-              <label for="age" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Edad actual</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
-                <input id="age" name="age" type="number" min="40" max="95" data-dc-value="{{ v.age }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
-                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
-              </div>
+              <label for="age" class="nv-field__label">Edad actual</label>
+              <div class="nv-field__box"><input id="age" name="age" type="number" min="40" max="95" data-dc-value="{{ v.age }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
             </div>
             <div>
-              <label for="sex" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Sexo (referencia de longevidad)</label>
-              <select id="sex" name="sex" data-dc-value="{{ v.sex }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+              <label for="sex" class="nv-field__label">Sexo (referencia de longevidad)</label>
+              <select class="nv-select" id="sex" name="sex" data-dc-value="{{ v.sex }}" onChange="{{ setStr }}">
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
               </select>
             </div>
             <div>
-              <label for="pensionMonthly" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Pensión pública bruta mensual</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
-                <input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" data-dc-value="{{ v.pensionMonthly }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
-                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">€/mes</span>
-              </div>
-              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Antes de IRPF · 14 pagas.</p>
+              <label for="pensionMonthly" class="nv-field__label">Pensión pública bruta mensual</label>
+              <div class="nv-field__box"><input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" data-dc-value="{{ v.pensionMonthly }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div>
+              <p class="nv-field__note">Antes de IRPF · 14 pagas.</p>
             </div>
             <div>
-              <label for="pensionRevalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Subida anual estimada de la pensión</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
-                <input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" data-dc-value="{{ v.pensionRevalPct }}" onChange="{{ setRev }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
-                <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span>
-              </div>
-              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Si prefieres no suponer subidas, escribe 0.</p>
+              <label for="pensionRevalPct" class="nv-field__label">Subida anual estimada de la pensión</label>
+              <div class="nv-field__box"><input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" data-dc-value="{{ v.pensionRevalPct }}" onChange="{{ setRev }}"><span class="nv-field__unit">%</span></div>
+              <p class="nv-field__note">Si prefieres no suponer subidas, escribe 0.</p>
             </div>
           </div>
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
-            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Cómo quieres fijar la duración del plan?</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <div class="jub-block">
+            <p class="nv-field__label">¿Cómo quieres fijar la duración del plan?</p>
+            <div class="viv-pill-row">
               <sc-for list="{{ hOpts }}" as="o" hint-placeholder-count="3">
-                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" class="{{ o.clase }}">{{ o.label }}</button>
               </sc-for>
             </div>
-            <div style="margin-top:16px">
+            <div class="jub-mt">
               <sc-if value="{{ hTarget }}" hint-placeholder-val="{{ true }}">
-                <div style="max-width:280px">
-                  <label for="targetAge" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Planificar hasta la edad de</label>
-                  <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px">
-                    <input id="targetAge" name="targetAge" type="number" min="41" max="110" data-dc-value="{{ v.targetAge }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums">
-                    <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span>
-                  </div>
+                <div class="jub-narrow">
+                  <label for="targetAge" class="nv-field__label">Planificar hasta la edad de</label>
+                  <div class="nv-field__box"><input id="targetAge" name="targetAge" type="number" min="41" max="110" data-dc-value="{{ v.targetAge }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
                 </div>
               </sc-if>
               <sc-if value="{{ hLongevity }}" hint-placeholder-val="{{ false }}">
-                <div style="max-width:280px">
-                  <label for="longevityMargin" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Años de seguridad adicionales</label>
-                  <select id="longevityMargin" name="longevityMargin" data-dc-value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+                <div class="jub-narrow">
+                  <label for="longevityMargin" class="nv-field__label">Años de seguridad adicionales</label>
+                  <select class="nv-select" id="longevityMargin" name="longevityMargin" data-dc-value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}">
                     <option value="0">Sin margen</option>
                     <option value="5">+5 años</option>
                     <option value="10">+10 años</option>
                     <option value="15">+15 años</option>
                   </select>
-                  <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; margin:6px 0 0">{{ expectativa }}</p>
+                  <p class="nv-field__note">{{ expectativa }}</p>
                 </div>
               </sc-if>
               <sc-if value="{{ hPreserve }}" hint-placeholder-val="{{ false }}">
-                <p style="max-width:72ch; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; line-height:1.6; padding:13px 16px; margin:0">Esta opción intenta retirar únicamente la rentabilidad estimada. Aun así, el capital puede bajar por inflación, impuestos o años con pérdidas.</p>
+                <p class="jub-subpanel jub-narrow--wide">Esta opción intenta retirar únicamente la rentabilidad estimada. Aun así, el capital puede bajar por inflación, impuestos o años con pérdidas.</p>
               </sc-if>
             </div>
           </div>
         </div>
       </article>
 
-      <article data-screen-label="02 Patrimonio privado" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
-        <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
-          <div style="display:flex; align-items:flex-start; gap:16px">
-            <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">02</span>
+      <article data-screen-label="02 Patrimonio privado" class="jub-card">
+        <header class="jub-card__head">
+          <div class="jub-card__headrow">
+            <span class="jub-step-num">02</span>
             <div>
-              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tus ahorros e inversiones fuera de la EPSV</h2>
-              <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Indica cuánto vale hoy cada producto y cuánto dinero pusiste originalmente. Si no tienes un producto, déjalo en cero.</p>
+              <h2 class="jub-card__title">Tus ahorros e inversiones fuera de la EPSV</h2>
+              <p class="jub-note">Indica cuánto vale hoy cada producto y cuánto dinero pusiste originalmente. Si no tienes un producto, déjalo en cero.</p>
             </div>
           </div>
-          <button type="button" onClick="{{ vaciarPatrimonio }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Vaciar patrimonio</button>
+          <button type="button" onClick="{{ vaciarPatrimonio }}" class="btn btn-secondary jub-btn-small">Vaciar patrimonio</button>
         </header>
-        <div style="padding:8px 26px 22px">
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:12px 0 9px">
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Producto</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Valor actual</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Lo aportado o pagado</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.12em; text-transform:uppercase">Tratamiento aproximado</span>
+        <div class="jub-card__body">
+          <div class="jub-assets__row">
+            <span class="jub-label">Producto</span>
+            <span class="jub-label">Valor actual</span>
+            <span class="jub-label">Lo aportado o pagado</span>
+            <span class="jub-label">Tratamiento aproximado</span>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
-            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Liquidez y efectivo</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Cuentas corrientes y dinero disponible.</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de liquidez" name="cashValue" type="number" min="0" step="1000" data-dc-value="{{ v.cashValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:13px">—</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Retirada de principal no sujeta.</span>
+          <div class="jub-assets__row">
+            <div><strong class="jub-row__name">Liquidez y efectivo</strong><span class="jub-muted">Cuentas corrientes y dinero disponible.</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de liquidez" name="cashValue" type="number" min="0" step="1000" data-dc-value="{{ v.cashValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <span class="jub-muted">—</span>
+            <span class="jub-note">Retirada de principal no sujeta.</span>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
-            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Fondos de inversión</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Se estima qué parte de cada retirada es ganancia.</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de fondos" name="fundsValue" type="number" min="0" step="1000" data-dc-value="{{ v.fundsValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Aportado a fondos" name="fundsCost" type="number" min="0" step="1000" data-dc-value="{{ v.fundsCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Ganancia positiva a la base del ahorro.</span>
+          <div class="jub-assets__row">
+            <div><strong class="jub-row__name">Fondos de inversión</strong><span class="jub-muted">Se estima qué parte de cada retirada es ganancia.</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de fondos" name="fundsValue" type="number" min="0" step="1000" data-dc-value="{{ v.fundsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Aportado a fondos" name="fundsCost" type="number" min="0" step="1000" data-dc-value="{{ v.fundsCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <span class="jub-note">Ganancia positiva a la base del ahorro.</span>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
-            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Acciones y ETF</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Estimación simplificada, sin FIFO por lotes.</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de acciones y ETF" name="sharesValue" type="number" min="0" step="1000" data-dc-value="{{ v.sharesValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Pagado por acciones y ETF" name="sharesCost" type="number" min="0" step="1000" data-dc-value="{{ v.sharesCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Ganancia positiva a la base del ahorro.</span>
+          <div class="jub-assets__row">
+            <div><strong class="jub-row__name">Acciones y ETF</strong><span class="jub-muted">Estimación simplificada, sin FIFO por lotes.</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de acciones y ETF" name="sharesValue" type="number" min="0" step="1000" data-dc-value="{{ v.sharesValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Pagado por acciones y ETF" name="sharesCost" type="number" min="0" step="1000" data-dc-value="{{ v.sharesCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <span class="jub-note">Ganancia positiva a la base del ahorro.</span>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; border-bottom:1px solid var(--color-divider); padding:14px 0">
-            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Depósitos y renta fija</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">El capital no tributa; los intereses sí pueden.</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor actual de depósitos" name="depositsValue" type="number" min="0" step="1000" data-dc-value="{{ v.depositsValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">Principal = valor actual</span>
-            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Intereses a la base del ahorro.</span>
+          <div class="jub-assets__row">
+            <div><strong class="jub-row__name">Depósitos y renta fija</strong><span class="jub-muted">El capital no tributa; los intereses sí pueden.</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de depósitos" name="depositsValue" type="number" min="0" step="1000" data-dc-value="{{ v.depositsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <span class="jub-muted">Principal = valor actual</span>
+            <span class="jub-note">Intereses a la base del ahorro.</span>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.2fr) 170px 170px minmax(0,.85fr); gap:0 22px; align-items:center; padding:14px 0 6px">
-            <div><strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500">Seguros de ahorro</strong><span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; line-height:1.45">Rescates ordinarios; sin rentas vitalicias aseguradas.</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Valor de rescate del seguro" name="insuranceValue" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceValue }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input aria-label="Primas aportadas al seguro" name="insuranceCost" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14px; font-weight:500; padding:9px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div>
-            <span style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; line-height:1.45">Rendimiento positivo a la base del ahorro.</span>
+          <div class="jub-assets__row">
+            <div><strong class="jub-row__name">Seguros de ahorro</strong><span class="jub-muted">Rescates ordinarios; sin rentas vitalicias aseguradas.</span></div>
+            <div class="nv-field__box"><input aria-label="Valor de rescate del seguro" name="insuranceValue" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Primas aportadas al seguro" name="insuranceCost" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <span class="jub-note">Rendimiento positivo a la base del ahorro.</span>
           </div>
-          <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.55; border-top:1px solid var(--color-divider); margin:10px 0 0; padding-top:12px">Si un producto vale menos de lo que pagaste, el simulador no utiliza automáticamente esa pérdida para reducir el impuesto: esa compensación depende del resto de operaciones del año.</p>
+          <p class="jub-footnote">Si un producto vale menos de lo que pagaste, el simulador no utiliza automáticamente esa pérdida para reducir el impuesto: esa compensación depende del resto de operaciones del año.</p>
         </div>
       </article>
 
-      <article data-screen-label="03 EPSV" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin-bottom:20px; overflow:hidden">
-        <header style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
-          <div style="display:flex; align-items:flex-start; gap:16px">
-            <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">03</span>
+      <article data-screen-label="03 EPSV" class="jub-card">
+        <header class="jub-card__head">
+          <div class="jub-card__headrow">
+            <span class="jub-step-num">03</span>
             <div>
-              <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Tu EPSV y la forma de cobrarla</h2>
-              <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Solo si tienes una EPSV. Se diferencian los derechos anteriores y posteriores al 1 de enero de 2026.</p>
+              <h2 class="jub-card__title">Tu EPSV y la forma de cobrarla</h2>
+              <p class="jub-note">Solo si tienes una EPSV. Se diferencian los derechos anteriores y posteriores al 1 de enero de 2026.</p>
             </div>
           </div>
-          <button type="button" onClick="{{ cargarDFB }}" class="btn btn-secondary" style="flex-shrink:0; font-size:12.5px">Cargar caso práctico DFB</button>
+          <button type="button" onClick="{{ cargarDFB }}" class="btn btn-secondary jub-btn-small">Cargar caso práctico DFB</button>
         </header>
-        <div style="padding:22px 26px 26px">
-          <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
-            <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
-              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos anteriores al 1/1/2026</h3>
-              <label for="epsvPre" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPre }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+        <div class="jub-card__body">
+          <div class="nv-fields">
+            <div class="jub-subpanel">
+              <h3 class="jub-subtitle">Derechos anteriores al 1/1/2026</h3>
+              <label for="epsvPre" class="nv-field__label">Saldo actual de esta parte</label>
+              <div class="nv-field__box"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPre }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
-                <label for="epsvPreReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:14px 0 6px">Ganancias incluidas en ese saldo</label>
-                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPreReturn" name="epsvPreReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPreReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+                <label for="epsvPreReturn" class="nv-field__label">Ganancias incluidas en ese saldo</label>
+                <div class="nv-field__box"><input id="epsvPreReturn" name="epsvPreReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPreReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               </sc-if>
             </div>
-            <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 20px">
-              <h3 style="font-size:15.5px; font-weight:500; margin:0 0 14px">Derechos desde el 1/1/2026</h3>
-              <label for="epsvPost" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Saldo actual de esta parte</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+            <div class="jub-subpanel">
+              <h3 class="jub-subtitle">Derechos desde el 1/1/2026</h3>
+              <label for="epsvPost" class="nv-field__label">Saldo actual de esta parte</label>
+              <div class="nv-field__box"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
-                <label for="epsvPostReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:14px 0 6px">Ganancias incluidas en ese saldo</label>
-                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvPostReturn" name="epsvPostReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPostReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
+                <label for="epsvPostReturn" class="nv-field__label">Ganancias incluidas en ese saldo</label>
+                <div class="nv-field__box"><input id="epsvPostReturn" name="epsvPostReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPostReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               </sc-if>
             </div>
           </div>
 
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px">
-            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Tienes el desglose facilitado por la EPSV?</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <div class="jub-block">
+            <p class="nv-field__label">¿Tienes el desglose facilitado por la EPSV?</p>
+            <div class="viv-pill-row">
               <sc-for list="{{ dmOpts }}" as="o" hint-placeholder-count="2">
-                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+                <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" class="{{ o.clase }}">{{ o.label }}</button>
               </sc-for>
             </div>
             <sc-if value="{{ dmQuick }}" hint-placeholder-val="{{ false }}">
-              <div style="display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr) minmax(0,.7fr); gap:18px; margin-top:16px">
-                <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
-                  <input type="checkbox" name="entityNoBreakdown" checked="{{ v.entityNoBreakdown }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
-                  <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Confirmo que la entidad no facilita el desglose</strong>Se aplicará una estimación fiscal: 1 % por año con un máximo del 35 %, o 25 % si tampoco conoces la antigüedad.</span>
+              <div class="jub-grid-3">
+                <label class="jub-check">
+                  <input type="checkbox" name="entityNoBreakdown" checked="{{ v.entityNoBreakdown }}" onChange="{{ setChk }}" class="jub-check__input">
+                  <span class="jub-note"><strong class="jub-row__name">Confirmo que la entidad no facilita el desglose</strong>Se aplicará una estimación fiscal: 1 % por año con un máximo del 35 %, o 25 % si tampoco conoces la antigüedad.</span>
                 </label>
                 <div>
-                  <label for="seniorityKnown" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">¿Conoces los años de antigüedad?</label>
-                  <select id="seniorityKnown" name="seniorityKnown" data-dc-value="{{ v.seniorityKnown }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:14.5px; font-weight:500; padding:10px 12px; cursor:pointer">
+                  <label for="seniorityKnown" class="nv-field__label">¿Conoces los años de antigüedad?</label>
+                  <select class="nv-select" id="seniorityKnown" name="seniorityKnown" data-dc-value="{{ v.seniorityKnown }}" onChange="{{ setStr }}">
                     <option value="yes">Sí</option>
                     <option value="no">No</option>
                   </select>
                 </div>
                 <sc-if value="{{ seniorityYes }}" hint-placeholder-val="{{ true }}">
                   <div>
-                    <label for="seniorityYears" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Años desde la primera aportación</label>
-                    <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="seniorityYears" name="seniorityYears" type="number" min="1" max="60" data-dc-value="{{ v.seniorityYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span></div>
+                    <label for="seniorityYears" class="nv-field__label">Años desde la primera aportación</label>
+                    <div class="nv-field__box"><input id="seniorityYears" name="seniorityYears" type="number" min="1" max="60" data-dc-value="{{ v.seniorityYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
                   </div>
                 </sc-if>
               </div>
             </sc-if>
           </div>
 
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:24px; align-items:start">
+          <div class="jub-block jub-grid-2">
             <div>
-              <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin:0 0 10px">¿Cómo quieres cobrar la EPSV?</p>
-              <div style="display:flex; gap:10px; flex-wrap:wrap">
+              <p class="nv-field__label">¿Cómo quieres cobrar la EPSV?</p>
+              <div class="viv-pill-row">
                 <sc-for list="{{ poOpts }}" as="o" hint-placeholder-count="3">
-                  <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" style="{{ o.estilo }}">{{ o.label }}</button>
+                  <button type="button" onClick="{{ o.abrir }}" aria-pressed="{{ o.pressed }}" class="{{ o.clase }}">{{ o.label }}</button>
                 </sc-for>
               </div>
               <sc-if value="{{ poMixed }}" hint-placeholder-val="{{ false }}">
-                <div style="margin-top:16px; max-width:420px">
-                  <label for="epsvCapitalPct" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:9px">Parte que cobrarías de una sola vez</label>
-                  <div style="display:flex; align-items:center; gap:16px">
-                    <input id="epsvCapitalPct" name="epsvCapitalPct" type="range" min="0" max="100" step="5" data-dc-value="{{ v.epsvCapitalPct }}" onChange="{{ setNum }}" style="flex:1; accent-color:var(--color-accent); cursor:pointer">
-                    <span style="min-width:52px; text-align:right; color:var(--color-text); font-size:17px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ v.epsvCapitalPct }} %</span>
+                <div class="jub-mt jub-narrow--wide">
+                  <label for="epsvCapitalPct" class="nv-field__label">Parte que cobrarías de una sola vez</label>
+                  <div class="jub-slider">
+                    <input id="epsvCapitalPct" name="epsvCapitalPct" type="range" min="0" max="100" step="5" data-dc-value="{{ v.epsvCapitalPct }}" onChange="{{ setNum }}" class="jub-slider__input">
+                    <span class="jub-slider__value">{{ v.epsvCapitalPct }} %</span>
                   </div>
                 </div>
               </sc-if>
             </div>
             <div>
-              <label for="taxRegime" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Régimen del cobro anterior a 2026</label>
-              <select id="taxRegime" name="taxRegime" data-dc-value="{{ v.taxRegime }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+              <label for="taxRegime" class="nv-field__label">Régimen del cobro anterior a 2026</label>
+              <select class="nv-select" id="taxRegime" name="taxRegime" data-dc-value="{{ v.taxRegime }}" onChange="{{ setStr }}">
                 <option value="auto">Automático: comparar y elegir menor impuesto</option>
                 <option value="transitory">Régimen transitorio: integrar el 60 %</option>
                 <option value="new">Régimen desde 2026: separar aportación y ganancia</option>
@@ -336,10 +331,10 @@
             </div>
           </div>
 
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr); gap:18px; align-items:start">
+          <div class="jub-block jub-grid-2">
             <div>
-              <label for="contingency" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Motivo por el que cobras la EPSV</label>
-              <select id="contingency" name="contingency" data-dc-value="{{ v.contingency }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+              <label for="contingency" class="nv-field__label">Motivo por el que cobras la EPSV</label>
+              <select class="nv-select" id="contingency" name="contingency" data-dc-value="{{ v.contingency }}" onChange="{{ setStr }}">
                 <option value="retirement">Jubilación</option>
                 <option value="disability">Invalidez</option>
                 <option value="dependency">Dependencia</option>
@@ -348,20 +343,20 @@
                 <option value="other">Otro rescate o baja</option>
               </select>
             </div>
-            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
-              <input type="checkbox" name="firstBenefit" checked="{{ v.firstBenefit }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
-              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Es el primer cobro en capital por este motivo</strong>Se consideran juntos los cobros del mismo año.</span>
+            <label class="jub-check">
+              <input type="checkbox" name="firstBenefit" checked="{{ v.firstBenefit }}" onChange="{{ setChk }}" class="jub-check__input">
+              <span class="jub-note"><strong class="jub-row__name">Es el primer cobro en capital por este motivo</strong>Se consideran juntos los cobros del mismo año.</span>
             </label>
-            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
-              <input type="checkbox" name="twoYears" checked="{{ v.twoYears }}" disabled="{{ twoYearsDisabled }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
-              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Han pasado más de dos años desde la primera aportación</strong>No se exige en invalidez o dependencia.</span>
+            <label class="jub-check">
+              <input type="checkbox" name="twoYears" checked="{{ v.twoYears }}" disabled="{{ twoYearsDisabled }}" onChange="{{ setChk }}" class="jub-check__input">
+              <span class="jub-note"><strong class="jub-row__name">Han pasado más de dos años desde la primera aportación</strong>No se exige en invalidez o dependencia.</span>
             </label>
           </div>
 
-          <div style="border-top:1px solid var(--color-divider); margin-top:22px; padding-top:20px; display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,.5fr) minmax(0,1fr); gap:18px; align-items:start">
+          <div class="jub-block jub-grid-2">
             <div>
-              <label for="epsvRentQualification" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Tipo de renta formalizada con la EPSV</label>
-              <select id="epsvRentQualification" name="epsvRentQualification" data-dc-value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); color:var(--color-text); font-size:13.5px; font-weight:500; padding:11px 12px; cursor:pointer">
+              <label for="epsvRentQualification" class="nv-field__label">Tipo de renta formalizada con la EPSV</label>
+              <select class="nv-select" id="epsvRentQualification" name="epsvRentQualification" data-dc-value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}">
                 <option value="none">Pagos ordinarios: la ganancia puede tributar</option>
                 <option value="temporary">Renta temporal formalizada de 15 años o más</option>
                 <option value="life">Renta vitalicia formalizada por la EPSV</option>
@@ -369,117 +364,117 @@
             </div>
             <sc-if value="{{ rentTemporary }}" hint-placeholder-val="{{ false }}">
               <div>
-                <label for="epsvRentYears" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Duración del contrato</label>
-                <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="epsvRentYears" name="epsvRentYears" type="number" min="15" max="50" data-dc-value="{{ v.epsvRentYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px; white-space:nowrap">años</span></div>
+                <label for="epsvRentYears" class="nv-field__label">Duración del contrato</label>
+                <div class="nv-field__box"><input id="epsvRentYears" name="epsvRentYears" type="number" min="15" max="50" data-dc-value="{{ v.epsvRentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
               </div>
-              <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
-                <input type="checkbox" name="constantRent" checked="{{ v.constantRent }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
-                <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">El contrato establece una cuantía constante</strong>Márcalo solo si figura así en la documentación de la EPSV.</span>
+              <label class="jub-check">
+                <input type="checkbox" name="constantRent" checked="{{ v.constantRent }}" onChange="{{ setChk }}" class="jub-check__input">
+                <span class="jub-note"><strong class="jub-row__name">El contrato establece una cuantía constante</strong>Márcalo solo si figura así en la documentación de la EPSV.</span>
               </label>
             </sc-if>
           </div>
         </div>
       </article>
 
-      <article data-screen-label="04 Hipótesis" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-        <header style="display:flex; align-items:flex-start; gap:16px; border-bottom:1px solid var(--color-divider); padding:22px 26px 18px">
-          <span style="color:var(--color-accent); font-size:22px; line-height:1.1; font-feature-settings:'tnum' 1">04</span>
+      <article data-screen-label="04 Hipótesis" class="jub-card">
+        <header class="jub-card__head">
+          <span class="jub-step-num">04</span>
           <div>
-            <h2 style="font-size:21px; font-weight:500; line-height:1.2; margin:0 0 5px">Supuestos para hacer la proyección</h2>
-            <p style="color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:13.5px; margin:0">Estas cifras no son garantías: sirven para comparar escenarios.</p>
+            <h2 class="jub-card__title">Supuestos para hacer la proyección</h2>
+            <p class="jub-note">Estas cifras no son garantías: sirven para comparar escenarios.</p>
           </div>
         </header>
-        <div style="padding:22px 26px 26px">
-          <div style="display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; align-items:start">
+        <div class="jub-card__body">
+          <div class="jub-grid-4">
             <div>
-              <label for="expectedReturn" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Rentabilidad anual estimada</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
-              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Una cifra menor produce una estimación más prudente.</p>
+              <label for="expectedReturn" class="nv-field__label">Rentabilidad anual estimada</label>
+              <div class="nv-field__box"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
+              <p class="nv-field__note">Una cifra menor produce una estimación más prudente.</p>
             </div>
             <div>
-              <label for="incomeGrowth" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Subida anual de las retiradas</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" data-dc-value="{{ v.incomeGrowth }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">%</span></div>
-              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">Para compensar parcialmente el coste de vida.</p>
+              <label for="incomeGrowth" class="nv-field__label">Subida anual de las retiradas</label>
+              <div class="nv-field__box"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" data-dc-value="{{ v.incomeGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
+              <p class="nv-field__note">Para compensar parcialmente el coste de vida.</p>
             </div>
             <div>
-              <label for="otherDeductions" style="display:block; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12px; margin-bottom:6px">Otras deducciones (opcional)</label>
-              <div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" data-dc-value="{{ v.otherDeductions }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12.5px">€</span></div>
-              <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11.5px; line-height:1.5; margin:6px 0 0">La deducción por edad se calcula automáticamente.</p>
+              <label for="otherDeductions" class="nv-field__label">Otras deducciones (opcional)</label>
+              <div class="nv-field__box"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" data-dc-value="{{ v.otherDeductions }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+              <p class="nv-field__note">La deducción por edad se calcula automáticamente.</p>
             </div>
-            <label style="display:flex; gap:11px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); padding:13px 15px; cursor:pointer">
-              <input type="checkbox" name="stressEnabled" checked="{{ v.stressEnabled }}" onChange="{{ setChk }}" style="margin-top:3px; width:15px; height:15px; accent-color:var(--color-accent); cursor:pointer">
-              <span style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:12.5px; line-height:1.5"><strong style="display:block; color:var(--color-text); font-weight:500">Comprobar un comienzo desfavorable</strong>Caída del 12 % el primer año y del 5 % el segundo, manteniendo las retiradas.</span>
+            <label class="jub-check">
+              <input type="checkbox" name="stressEnabled" checked="{{ v.stressEnabled }}" onChange="{{ setChk }}" class="jub-check__input">
+              <span class="jub-note"><strong class="jub-row__name">Comprobar un comienzo desfavorable</strong>Caída del 12 % el primer año y del 5 % el segundo, manteniendo las retiradas.</span>
             </label>
           </div>
-          <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:12.5px; line-height:1.6; padding:13px 16px; margin:18px 0 0"><strong style="color:var(--color-text); font-weight:500">Por qué importa:</strong> perder dinero al principio de la jubilación puede dañar más el plan que sufrir la misma caída años después, porque ya se están realizando retiradas.</p>
+          <p class="jub-subpanel"><strong class="jub-strong">Por qué importa:</strong> perder dinero al principio de la jubilación puede dañar más el plan que sufrir la misma caída años después, porque ya se están realizando retiradas.</p>
         </div>
       </article>
 
       <sc-if value="{{ hayErrores }}" hint-placeholder-val="{{ false }}">
-        <div id="errores" role="alert" style="border-left:2px solid #C2453A; border-radius:0 var(--radius-md) var(--radius-md) 0; background:color-mix(in srgb, #C2453A 8%, transparent); margin-top:20px; padding:16px 22px">
-          <p style="color:#C2453A; font-size:13px; font-weight:500; margin:0 0 8px">Revisa los siguientes datos:</p>
+        <div id="errores" role="alert" class="jub-alert">
+          <p class="jub-alert__title">Revisa los siguientes datos:</p>
           <sc-for list="{{ errores }}" as="err" hint-placeholder-count="1">
-            <p style="color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13px; line-height:1.55; margin:0 0 4px">· {{ err }}</p>
+            <p class="jub-note">· {{ err }}</p>
           </sc-for>
         </div>
       </sc-if>
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:24px">
-        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; margin:0">Antes de calcular, revisa que los importes sean tuyos y no los valores de ejemplo.</p>
-        <div style="display:flex; gap:12px">
-          <button type="button" onClick="{{ restablecer }}" class="btn btn-secondary">Restablecer</button>
-          <button type="button" onClick="{{ calcular }}" class="btn btn-primary" style="font-size:15px; padding:10px 24px">Ver mi estimación de jubilación →</button>
+      <div class="jub-actions">
+        <p class="jub-footnote">Antes de calcular, revisa que los importes sean tuyos y no los valores de ejemplo.</p>
+        <div class="nv-btn-row">
+          <button type="button" onClick="{{ restablecer }}" class="nv-btn nv-btn--soft">Restablecer</button>
+          <button type="button" onClick="{{ calcular }}" class="nv-btn nv-btn--accent">Ver mi estimación de jubilación →</button>
         </div>
       </div>
     </section>
 
     <sc-if value="{{ hayPlan }}" hint-placeholder-val="{{ false }}">
-      <section id="resultados" data-screen-label="Resultados" style="max-width:1240px; margin:0 auto; padding:44px 48px 84px">
-        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent); margin-bottom:12px"><span style="display:inline-block; width:44px; height:1px; background:var(--color-accent)"></span>Tu estimación</span>
-        <h2 style="font-size:32px; font-weight:500; letter-spacing:-.012em; margin:0 0 24px">Lo que podrías cobrar cada mes</h2>
+      <section id="resultados" data-screen-label="Resultados" class="nv-container jub-section">
+        <span class="nv-eyebrow">Tu estimación</span>
+        <h2 class="jub-results__title">Lo que podrías cobrar cada mes</h2>
 
-        <div style="border-radius:var(--radius-md); background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); box-shadow:var(--shadow-sm); padding:32px 38px; margin-bottom:20px; display:grid; grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,.63fr)); gap:32px; align-items:center">
+        <div class="jub-results__hero">
           <div>
-            <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 8px">Renta neta mensual estimada · Escenario base</p>
-            <p style="font-size:48px; font-weight:500; line-height:1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resNeta }}</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:12.5px; margin:10px 0 0">Pensión pública + retiradas de patrimonio y EPSV, después de IRPF.</p>
+            <p class="jub-label">Renta neta mensual estimada · Escenario base</p>
+            <p class="jub-figure__value jub-figure__value--xl">{{ resNeta }}</p>
+            <p class="jub-muted">Pensión pública + retiradas de patrimonio y EPSV, después de IRPF.</p>
           </div>
-          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
-            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Renta bruta</p>
-            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resBruta }}</p>
+          <div class="jub-aside-col">
+            <p class="jub-label">Renta bruta</p>
+            <p class="jub-figure__value">{{ resBruta }}</p>
           </div>
-          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
-            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Horizonte</p>
-            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resHorizonte }}</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:11.5px; margin:5px 0 0; white-space:nowrap">{{ resHorizonteAnios }}</p>
+          <div class="jub-aside-col">
+            <p class="jub-label">Horizonte</p>
+            <p class="jub-figure__value">{{ resHorizonte }}</p>
+            <p class="jub-muted">{{ resHorizonteAnios }}</p>
           </div>
-          <div style="border-left:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); padding-left:26px">
-            <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 6px">Patrimonio inicial</p>
-            <p style="font-size:23px; font-weight:500; line-height:1.1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ resPatrimonio }}</p>
+          <div class="jub-aside-col">
+            <p class="jub-label">Patrimonio inicial</p>
+            <p class="jub-figure__value">{{ resPatrimonio }}</p>
           </div>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat({{ numEscenarios }},minmax(0,1fr)); gap:18px; margin-bottom:20px">
+        <div class="jub-scenarios">
           <sc-for list="{{ escenarios }}" as="e" hint-placeholder-count="3">
-            <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:20px 22px">
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px">
-                <h3 style="font-size:16px; font-weight:500; margin:0">{{ e.nombre }}</h3>
-                <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.hipotesis }}</span>
+            <article class="jub-panel">
+              <div class="jub-scenario__head">
+                <h3 class="jub-scenario__name">{{ e.nombre }}</h3>
+                <span class="jub-muted">{{ e.hipotesis }}</span>
               </div>
-              <p style="font-size:28px; font-weight:500; line-height:1; margin:0 0 4px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.neta }}</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin:0 0 14px">neto al mes · año 1</p>
-              <div style="border-top:1px solid var(--color-divider); padding-top:12px; display:flex; flex-direction:column; gap:5px">
-                <p style="display:flex; justify-content:space-between; gap:10px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:12.5px; margin:0"><span>Saldo al final</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ e.saldoFinal }}</strong></p>
-                <p style="font-size:12.5px; font-weight:500; margin:2px 0 0; color:{{ e.estadoColor }}">{{ e.estado }}</p>
+              <p class="jub-figure__value">{{ e.neta }}</p>
+              <p class="jub-muted">neto al mes · año 1</p>
+              <div class="jub-scenario__foot">
+                <p class="jub-line"><span>Saldo al final</span><strong class="jub-num">{{ e.saldoFinal }}</strong></p>
+                <p class="jub-scenario__state {{ e.estadoClase }}">{{ e.estado }}</p>
               </div>
             </article>
           </sc-for>
         </div>
 
-        <div style="display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:18px; margin-bottom:20px">
-          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 26px">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Proyección del patrimonio</p>
-            <h3 style="font-size:19px; font-weight:500; margin:0 0 18px">Cuánto podría durar tu dinero</h3>
-            <svg viewBox="0 0 640 210" style="display:block; width:100%" role="img" aria-label="Evolución del patrimonio por escenario">
+        <div class="jub-grid-2">
+          <article class="jub-panel">
+            <p class="jub-label">Proyección del patrimonio</p>
+            <h3 class="jub-panel__title">Cuánto podría durar tu dinero</h3>
+            <svg viewBox="0 0 640 210" class="jub-chart" role="img" aria-label="Evolución del patrimonio por escenario">
               <line x1="46" y1="10" x2="46" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
               <line x1="46" y1="180" x2="632" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
               <line x1="46" y1="95" x2="632" y2="95" stroke="#edf1f6" stroke-width="1"></line>
@@ -494,73 +489,105 @@
               <polyline points="{{ lineaEstres }}" fill="none" stroke="#C2453A" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
               <polyline points="{{ lineaBase }}" fill="none" stroke="#7C9A44" stroke-width="2.6" stroke-linecap="round"></polyline>
             </svg>
-            <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:14px">
-              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#7C9A44"></span>Base</span>
-              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#946E29"></span>Conservador</span>
-              <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:3px; border-radius:2px; background:#3C9A69"></span>Optimista</span>
+            <div class="jub-legend">
+              <span class="jub-chip"><span class="jub-swatch jub-swatch--base"></span>Base</span>
+              <span class="jub-chip"><span class="jub-swatch jub-swatch--prudente"></span>Conservador</span>
+              <span class="jub-chip"><span class="jub-swatch jub-swatch--favorable"></span>Optimista</span>
               <sc-if value="{{ hayEstres }}" hint-placeholder-val="{{ true }}">
-                <span style="display:inline-flex; align-items:center; gap:7px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:11.5px"><span style="width:16px; height:0; border-top:3px dashed #C2453A"></span>Estrés de secuencia</span>
+                <span class="jub-chip"><span class="jub-swatch jub-swatch--estres"></span>Estrés de secuencia</span>
               </sc-if>
             </div>
           </article>
-          <article style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:22px 26px">
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Escenario base · Año 1</p>
-            <h3 style="font-size:19px; font-weight:500; margin:0 0 16px">De dónde sale la renta</h3>
-            <div style="display:flex; flex-direction:column">
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Pensión pública neta</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1PensionNeta }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>Retiradas netas de patrimonio y EPSV</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1RetiradasNetas }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>IRPF sobre la pensión</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1CuotaBase }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0; padding:10px 0"><span>IRPF adicional por las retiradas</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f1ImpuestoExtra }}</strong></p>
+          <article class="jub-panel">
+            <p class="jub-label">Escenario base · Año 1</p>
+            <h3 class="jub-panel__title">De dónde sale la renta</h3>
+            <div class="jub-stack">
+              <p class="jub-line"><span>Pensión pública neta</span><strong class="jub-num">{{ f1PensionNeta }}</strong></p>
+              <p class="jub-line"><span>Retiradas netas de patrimonio y EPSV</span><strong class="jub-num">{{ f1RetiradasNetas }}</strong></p>
+              <p class="jub-line"><span>IRPF sobre la pensión</span><strong class="jub-num is-negative">{{ f1CuotaBase }}</strong></p>
+              <p class="jub-line"><span>IRPF adicional por las retiradas</span><strong class="jub-num is-negative">{{ f1ImpuestoExtra }}</strong></p>
             </div>
-            <p style="border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.55; margin:12px 0 0; padding-top:12px">{{ notaRatios }}</p>
+            <p class="jub-footnote">{{ notaRatios }}</p>
           </article>
         </div>
 
         <sc-if value="{{ hayCapital }}" hint-placeholder-val="{{ false }}">
-          <article data-screen-label="Cobro en capital" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px; margin-bottom:20px">
-            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px">
+          <article data-screen-label="Cobro en capital" class="jub-panel">
+            <div class="jub-panel__head">
               <div>
-                <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 6px">Cobro en capital de la EPSV</p>
-                <h3 style="font-size:21px; font-weight:500; margin:0">Comparativa de regímenes fiscales</h3>
+                <p class="jub-label">Cobro en capital de la EPSV</p>
+                <h3 class="jub-panel__title">Comparativa de regímenes fiscales</h3>
               </div>
-              <span class="tag tag-accent" style="white-space:nowrap">Aplicado: {{ regimenSel }}</span>
+              <span class="tag tag-accent jub-nowrap">Aplicado: {{ regimenSel }}</span>
             </div>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px">
-              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 22px">
-                <p style="color:var(--color-text); font-size:13px; font-weight:500; margin:0 0 12px">Régimen transitorio <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-weight:400">· integrar el 60 %</span></p>
-                <div style="display:flex; flex-direction:column; gap:6px">
-                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Capital bruto</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransBruto }}</strong></p>
-                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Impuesto estimado</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransImpuesto }}</strong></p>
-                  <p style="display:flex; justify-content:space-between; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:6px 0 0; padding-top:9px"><span>Neto</span><strong style="color:#3C9A69; font-size:15px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capTransNeto }}</strong></p>
+            <div class="nv-fields">
+              <div class="jub-subpanel">
+                <p class="jub-subtitle">Régimen transitorio <span class="jub-muted">· integrar el 60 %</span></p>
+                <div class="jub-stack">
+                  <p class="jub-line"><span>Capital bruto</span><strong class="jub-num">{{ capTransBruto }}</strong></p>
+                  <p class="jub-line"><span>Impuesto estimado</span><strong class="jub-num is-negative">{{ capTransImpuesto }}</strong></p>
+                  <p class="jub-line jub-line--total"><span>Neto</span><strong class="jub-num is-positive">{{ capTransNeto }}</strong></p>
                 </div>
               </div>
-              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 60%, var(--color-surface)); padding:18px 22px">
-                <p style="color:var(--color-text); font-size:13px; font-weight:500; margin:0 0 12px">Régimen desde 2026 <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-weight:400">· aportación y ganancia por separado</span></p>
-                <div style="display:flex; flex-direction:column; gap:6px">
-                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Capital bruto</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoBruto }}</strong></p>
-                  <p style="display:flex; justify-content:space-between; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:0"><span>Impuesto estimado</span><strong style="color:#C2453A; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoImpuesto }}</strong></p>
-                  <p style="display:flex; justify-content:space-between; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:13px; margin:6px 0 0; padding-top:9px"><span>Neto</span><strong style="color:#3C9A69; font-size:15px; font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ capNuevoNeto }}</strong></p>
+              <div class="jub-subpanel">
+                <p class="jub-subtitle">Régimen desde 2026 <span class="jub-muted">· aportación y ganancia por separado</span></p>
+                <div class="jub-stack">
+                  <p class="jub-line"><span>Capital bruto</span><strong class="jub-num">{{ capNuevoBruto }}</strong></p>
+                  <p class="jub-line"><span>Impuesto estimado</span><strong class="jub-num is-negative">{{ capNuevoImpuesto }}</strong></p>
+                  <p class="jub-line jub-line--total"><span>Neto</span><strong class="jub-num is-positive">{{ capNuevoNeto }}</strong></p>
                 </div>
               </div>
             </div>
-            <p style="color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:12px; line-height:1.55; margin:14px 0 0">{{ notaReducciones }}</p>
+            <p class="jub-footnote">{{ notaReducciones }}</p>
           </article>
         </sc-if>
 
-        <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; line-height:1.6; margin:0">Estimación orientativa con reglas fiscales de Bizkaia 2026 · El cálculo se realiza en tu navegador y no envía tus datos · No constituye asesoramiento fiscal ni financiero personalizado.</p>
+        <p class="jub-footnote">Estimación orientativa con reglas fiscales de Bizkaia 2026 · El cálculo se realiza en tu navegador y no envía tus datos · No constituye asesoramiento fiscal ni financiero personalizado.</p>
       </section>
     </sc-if>
+
+    <!-- ══ SEGUIR ════════════════════════════════════════════════════════════
+         Las dos guías de jubilación estaban huérfanas: sólo se llegaba a ellas
+         desde temas.html. Ahora cuelgan de su página madre, que es donde el
+         lector las busca después de simular.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section data-screen-label="Seguir" class="nv-section nv-section--white" aria-labelledby="seguir-jubilacion">
+      <div class="nv-container">
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">Después del simulador</p>
+            <h2 id="seguir-jubilacion">Dos guías para decidir con la estimación delante</h2>
+          </div>
+          <p>El número por sí solo no decide: estas guías ordenan lo que viene después.</p>
+        </div>
+
+        <div class="nv-card-grid nv-card-grid--2">
+          <article class="nv-card">
+            <h3>Guía de planificación</h3>
+            <p>Ordena las decisiones clave, identifica qué información necesitas reunir y construye tu hoja de ruta paso a paso.</p>
+            <a class="nv-btn nv-btn--primary" href="guia-planificacion.html">Crear mi hoja de ruta →</a>
+          </article>
+          <article class="nv-card">
+            <h3>Fiscalidad y rescate de la EPSV</h3>
+            <p>Compara el cobro en capital, en renta o mixto, y entiende el tratamiento fiscal de cada opción antes de decidir.</p>
+            <a class="nv-btn nv-btn--primary" href="guia-fiscal.html">Explorar opciones de rescate →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer data-screen-label="Footer" class="nuvia-site-footer">
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -570,7 +597,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -580,9 +607,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -593,7 +621,9 @@
       </div>
     </div>
   </footer>
+
 </div>
+</x-dc>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
@@ -652,10 +682,9 @@ class Component extends DCLogic {
     const s = this.s();
     const eng = this.motor();
     const fmt = (x) => this.fmt(x);
-    const pillBase = 'border-radius:999px; cursor:pointer; font-family:var(--font-body); font-size:13px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
-    const pill = (on) => pillBase + (on ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-accent-200)' : 'border:1px solid var(--color-divider); background:transparent; color:color-mix(in srgb, var(--color-text) 70%, transparent)');
+    const pill = (on) => 'viv-pill' + (on ? ' is-active' : '');
     const seg = (name, val, opts, extra) => opts.map(([value, label]) => ({
-      label, pressed: val === value, estilo: pill(val === value),
+      label, pressed: val === value, clase: pill(val === value),
       abrir: () => { if (extra) extra(value); else this.upd(name, value); },
     }));
     const setPayout = (value) => {
@@ -712,7 +741,7 @@ class Component extends DCLogic {
           neta: fmt(sc.totalNetMonthly) + ' €',
           saldoFinal: fmt(sc.projection[sc.projection.length - 1] || 0) + ' €',
           estado: sc.depletionYear ? 'Se agota en el año ' + sc.depletionYear + ' (edad ' + (plan.state.age + sc.depletionYear) + ')' : 'Cubre todo el horizonte',
-          estadoColor: sc.depletionYear ? '#C2453A' : '#3C9A69',
+          estadoClase: sc.depletionYear ? 'is-alert' : 'is-ok',
         })),
         chartMax: fmt(maxY) + ' €',
         chartMid: fmt(maxY / 2) + ' €',

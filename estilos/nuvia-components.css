@@ -1,0 +1,1049 @@
+/* ============================================================================
+   NUVIA · COMPONENTES
+   ----------------------------------------------------------------------------
+   Todo lo reutilizable del sistema. Ni un solo hexadecimal: si aquí hace falta
+   un color nuevo, se añade primero como rol en nuvia-tokens.css §3.
+
+   Carga: nuvia-tokens.css → NUVIA-COMPONENTS.CSS → nuvia-pages.css
+
+   Contiene los componentes reales, no la muestra. Las clases de escaparate del
+   antiguo nuvia-design-system.css (.nv-swatch, .nv-type-row, .nv-rule,
+   .nv-header-preview, .nv-footer-preview) se quedan en sistema-visual.html,
+   que es donde tienen sentido.
+   ========================================================================== */
+
+
+/* ── ESTRUCTURA ─────────────────────────────────────────────────────────── */
+
+.nv-container {
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+}
+
+.nv-reading {
+  max-width: var(--nv-reading);
+}
+
+.nv-section {
+  padding-block: var(--nv-space-20);
+}
+
+.nv-section--tight { padding-block: var(--nv-space-12); }
+.nv-section--white { background: var(--nv-surface); }
+.nv-section--paper { background: var(--nv-surface-editorial); }
+.nv-section--technical { background: var(--nv-surface-technical); }
+
+.nv-section--deep {
+  background: var(--nv-surface-deep);
+  color: var(--nv-text-on-dark);
+}
+
+.nv-section--deep h2,
+.nv-section--deep h3 { color: var(--nv-white); }
+
+.nv-section--deep p { color: var(--nv-text-on-dark-soft); }
+
+.nv-stack     { display: grid; gap: var(--nv-space-5); }
+.nv-stack--sm { gap: var(--nv-space-3); }
+.nv-stack--lg { gap: var(--nv-space-10); }
+
+
+/* ── ETIQUETAS Y ENCABEZADOS DE SECCIÓN ─────────────────────────────────── */
+
+.nv-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-3);
+  color: var(--nv-text-link);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.nv-eyebrow::before {
+  width: 38px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+.nv-eyebrow--on-dark { color: var(--nv-green-300); }
+.nv-eyebrow--editorial { color: var(--nv-text-editorial); }
+
+.nv-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, .72fr) minmax(280px, .28fr);
+  gap: var(--nv-space-10);
+  align-items: end;
+  margin-bottom: var(--nv-space-12);
+}
+
+.nv-section-heading > * { margin: 0; }
+
+.nv-section-heading h2 {
+  font-size: var(--nv-title-lg);
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+
+.nv-section-heading p {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-body-sm);
+}
+
+
+/* ── MIGAS DE PAN ───────────────────────────────────────────────────────────
+   Obligatorias en todo nivel 2 o inferior. Es la pieza que hoy falta para que
+   alguien que entra desde un buscador sepa dónde está.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2);
+  font-size: var(--nv-body-sm);
+}
+
+.nv-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nv-breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+}
+
+.nv-breadcrumb li + li::before {
+  color: var(--nv-text-muted);
+  content: "›";
+}
+
+.nv-breadcrumb a {
+  color: var(--nv-text-soft);
+  text-decoration: none;
+}
+
+.nv-breadcrumb a:hover { text-decoration: underline; }
+
+.nv-breadcrumb [aria-current="page"] {
+  color: var(--nv-text-muted);
+}
+
+/* Variante sobre héroe oscuro */
+.nv-hero .nv-breadcrumb a { color: var(--nv-text-on-dark-soft); }
+.nv-hero .nv-breadcrumb a:hover { color: var(--nv-white); }
+.nv-hero .nv-breadcrumb li + li::before,
+.nv-hero .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-on-dark-soft); }
+
+.nv-hero--editorial .nv-breadcrumb a { color: var(--nv-text-soft); }
+.nv-hero--editorial .nv-breadcrumb li + li::before,
+.nv-hero--editorial .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-muted); }
+
+
+/* ── HÉROES ─────────────────────────────────────────────────────────────────
+   Tres variantes y sólo tres. Comparten contenedor, escala tipográfica,
+   etiqueta superior, anchura de lectura y ritmo vertical: eso es lo que hace
+   que el sitio se lea homogéneo al saltar de página en página.
+
+     .nv-hero--photo          → SOLO portada
+     .nv-hero--institutional  → Mercados, Cartera, Academia, Temas, herramientas
+     .nv-hero--editorial      → Lecturas, guías, informes
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.nv-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .55fr);
+  gap: var(--nv-space-16);
+  align-items: end;
+  min-height: 460px;
+  padding-block: var(--nv-space-16);
+}
+
+.nv-hero__inner--simple {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 360px;
+}
+
+.nv-hero h1 {
+  max-width: 880px;
+  margin: var(--nv-space-6) 0 0;
+  font-size: var(--nv-display-lg);
+  letter-spacing: -.045em;
+  line-height: 1.02;
+}
+
+.nv-hero__lead {
+  max-width: 680px;
+  margin: var(--nv-space-6) 0 0;
+  font-size: var(--nv-body-lg);
+}
+
+.nv-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-3);
+  margin-top: var(--nv-space-8);
+}
+
+/* Panel lateral del héroe: un dato, una cifra o una nota de contexto. */
+.nv-hero__aside {
+  border-top: 2px solid var(--nv-bronze-500);
+  background: rgba(6, 23, 47, .38);
+  padding: var(--nv-space-8);
+}
+
+.nv-hero__aside strong {
+  display: block;
+  margin-top: var(--nv-space-4);
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-sm);
+  font-weight: var(--nv-weight-title);
+}
+
+.nv-hero__aside p {
+  margin: var(--nv-space-3) 0 0;
+  font-size: var(--nv-body-sm);
+}
+
+/* Variante 1 · fotográfica — reservada a la portada */
+.nv-hero--photo {
+  background:
+    linear-gradient(90deg, rgba(6, 23, 47, .92), rgba(6, 23, 47, .35)),
+    var(--nv-hero-image, none) center / cover no-repeat,
+    var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+}
+
+.nv-hero--photo h1 { color: var(--nv-white); }
+.nv-hero--photo .nv-hero__lead { color: var(--nv-text-on-dark-soft); }
+
+/* Variante 2 · institucional azul */
+.nv-hero--institutional {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(124, 154, 68, .18), transparent 28rem),
+    linear-gradient(135deg, var(--nv-navy-950), var(--nv-navy-800));
+  color: var(--nv-text-on-dark);
+}
+
+.nv-hero--institutional h1 { color: var(--nv-white); }
+.nv-hero--institutional .nv-hero__lead { color: var(--nv-text-on-dark-soft); }
+
+.nv-hero--institutional::after {
+  position: absolute;
+  right: -180px;
+  bottom: -310px;
+  width: 740px;
+  height: 520px;
+  border: 1px solid rgba(220, 197, 156, .18);
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-12deg);
+}
+
+/* Variante 3 · editorial crema */
+.nv-hero--editorial {
+  border-bottom: 1px solid var(--nv-line);
+  background: var(--nv-surface-editorial);
+  color: var(--nv-text);
+}
+
+.nv-hero--editorial h1 {
+  font-family: var(--nv-font-serif);
+  letter-spacing: -.03em;
+}
+
+.nv-hero--editorial .nv-hero__lead { color: var(--nv-text-soft); }
+
+.nv-hero--editorial .nv-hero__aside {
+  border-top-color: var(--nv-bronze-500);
+  background: rgba(182, 145, 82, .08);
+}
+
+.nv-hero--editorial .nv-hero__aside p { color: var(--nv-text-soft); }
+
+
+/* ── BOTONES ────────────────────────────────────────────────────────────────
+   Una acción principal por bloque. El nombre no cambia entre el botón y lo que
+   ocurre después: si el botón dice «Calcular», el resultado dice «Calculado».
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nv-space-2);
+  border: 1px solid transparent;
+  border-radius: var(--nv-radius-sm);
+  cursor: pointer;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  line-height: 1;
+  padding-inline: var(--nv-space-5);
+  text-decoration: none;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.nv-btn:hover { transform: translateY(-1px); }
+
+.nv-btn--primary {
+  background: var(--nv-action-primary-bg);
+  color: var(--nv-action-primary-text);
+}
+
+.nv-btn--primary:hover {
+  background: var(--nv-action-primary-bg-hover);
+  color: var(--nv-action-primary-text);
+}
+
+.nv-btn--accent {
+  background: var(--nv-action-accent-bg);
+  color: var(--nv-action-accent-text);
+}
+
+.nv-btn--accent:hover {
+  background: var(--nv-green-700);
+  color: var(--nv-action-accent-text);
+}
+
+.nv-btn--secondary {
+  border-color: var(--nv-action-secondary-border);
+  background: transparent;
+  color: var(--nv-action-secondary-text);
+}
+
+.nv-btn--secondary:hover {
+  background: var(--nv-action-secondary-bg-hover);
+  color: var(--nv-action-secondary-text);
+}
+
+.nv-btn--soft {
+  border-color: var(--nv-line);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+}
+
+.nv-btn--soft:hover { border-color: var(--nv-line-strong); color: var(--nv-text); }
+
+.nv-btn--text {
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  color: var(--nv-text);
+  padding-inline: var(--nv-space-1);
+}
+
+/* Sobre fondo oscuro */
+.nv-hero--photo .nv-btn--soft,
+.nv-hero--institutional .nv-btn--soft,
+.nv-section--deep .nv-btn--soft {
+  border-color: rgba(255, 255, 255, .28);
+  background: transparent;
+  color: var(--nv-white);
+}
+
+.nv-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-3);
+}
+
+
+/* ── TARJETAS ───────────────────────────────────────────────────────────────
+   Tres variantes, una por tipo de contenido. Ninguna más.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--nv-space-5);
+}
+
+.nv-card-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.nv-card-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.nv-card {
+  display: flex;
+  min-height: 280px;
+  flex-direction: column;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: var(--nv-space-8);
+}
+
+.nv-card--technical {
+  background: linear-gradient(145deg, var(--nv-white), var(--nv-mist));
+}
+
+.nv-card--editorial {
+  border-color: rgba(182, 145, 82, .3);
+  background: var(--nv-surface-editorial);
+}
+
+.nv-card h3 {
+  margin: var(--nv-space-6) 0 var(--nv-space-3);
+  font-size: var(--nv-title-sm);
+  line-height: 1.18;
+}
+
+.nv-card--editorial h3 {
+  font-family: var(--nv-font-serif);
+  font-size: 25px;
+}
+
+.nv-card p {
+  margin: 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+}
+
+.nv-card__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-green-100);
+  color: var(--nv-green-700);
+}
+
+/* Numeración SOLO cuando el contenido es realmente una secuencia
+   (capítulos de curso, pasos de una guía). Nunca como adorno. */
+.nv-card__step {
+  color: var(--nv-green-700);
+  font-family: var(--nv-font-serif);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.nv-card > .nv-btn,
+.nv-card > .nv-btn-row {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--nv-space-6);
+}
+
+/* Tarjeta enlazada entera */
+.nv-card--link { text-decoration: none; color: inherit; transition: box-shadow .2s ease, transform .2s ease; }
+.nv-card--link:hover { box-shadow: var(--nv-shadow-md); color: inherit; transform: translateY(-2px); }
+
+
+/* ── ETIQUETAS DE ESTADO ────────────────────────────────────────────────────
+   Incluye la de sección pendiente: mientras la web está en desarrollo, marcar
+   lo que falta es más honesto que dejar un hueco mudo.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-pill);
+  font-size: 10px;
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .12em;
+  padding: 6px 12px;
+  text-transform: uppercase;
+}
+
+.nv-tag--accent {
+  border-color: var(--nv-green-300);
+  background: var(--nv-green-100);
+  color: var(--nv-green-700);
+}
+
+.nv-tag--editorial {
+  border-color: var(--nv-bronze-200);
+  color: var(--nv-text-editorial);
+}
+
+.nv-tag--pending {
+  border-color: var(--nv-line-strong);
+  background: transparent;
+  color: var(--nv-text-muted);
+}
+
+/* Bloque para una sección aún sin construir. Ocupa el sitio, explica qué irá
+   ahí y no finge que está terminada. */
+.nv-pending {
+  display: grid;
+  place-items: center;
+  gap: var(--nv-space-4);
+  border: 1px dashed var(--nv-line-strong);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  padding: var(--nv-space-16) var(--nv-space-8);
+  text-align: center;
+}
+
+.nv-pending h3 { margin: 0; font-size: var(--nv-title-sm); }
+.nv-pending p { max-width: 46ch; margin: 0; color: var(--nv-text-muted); font-size: var(--nv-body-sm); }
+
+
+/* ── PROSA ──────────────────────────────────────────────────────────────────
+   Para el cuerpo de guías e informes. Anchura de lectura fija de 760 px.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+.nv-prose {
+  max-width: var(--nv-reading);
+  color: var(--nv-text-soft);
+}
+
+.nv-prose > * + * { margin-top: var(--nv-space-5); }
+
+.nv-prose h2 {
+  margin-top: var(--nv-space-12);
+  color: var(--nv-text);
+  font-size: var(--nv-title-md);
+}
+
+.nv-prose h3 {
+  margin-top: var(--nv-space-10);
+  color: var(--nv-text);
+  font-size: var(--nv-title-sm);
+}
+
+.nv-prose ul,
+.nv-prose ol { padding-left: var(--nv-space-6); }
+.nv-prose li + li { margin-top: var(--nv-space-2); }
+
+.nv-prose blockquote {
+  margin: var(--nv-space-8) 0;
+  border-left: 2px solid var(--nv-bronze-500);
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-body-lg);
+  padding-left: var(--nv-space-6);
+}
+
+.nv-note {
+  border-left: 3px solid var(--nv-green-600);
+  background: var(--nv-green-100);
+  border-radius: 0 var(--nv-radius-sm) var(--nv-radius-sm) 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  padding: var(--nv-space-5) var(--nv-space-6);
+}
+
+.nv-disclaimer {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-body-sm);
+}
+
+
+/* ── DATOS ──────────────────────────────────────────────────────────────── */
+
+.nv-figure-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--nv-space-5);
+}
+
+.nv-figure {
+  border-top: 1px solid var(--nv-line);
+  padding-top: var(--nv-space-4);
+}
+
+.nv-figure__value {
+  display: block;
+  font-size: var(--nv-title-md);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-title);
+  letter-spacing: -.02em;
+  line-height: 1.1;
+}
+
+.nv-figure__label {
+  display: block;
+  margin-top: var(--nv-space-2);
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.nv-figure--positive .nv-figure__value { color: var(--nv-positive); }
+.nv-figure--negative .nv-figure__value { color: var(--nv-negative); }
+
+.nv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--nv-body-sm);
+}
+
+.nv-table th,
+.nv-table td {
+  border-bottom: 1px solid var(--nv-line);
+  padding: var(--nv-space-3) var(--nv-space-4);
+  text-align: left;
+}
+
+.nv-table th {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.nv-table td:not(:first-child),
+.nv-table th:not(:first-child) {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+
+/* ── UTILIDADES ─────────────────────────────────────────────────────────── */
+
+.nv-visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Enlace de salto al contenido: aparece sólo al tabular. */
+.nv-skip-link {
+  position: absolute;
+  z-index: 200;
+  top: var(--nv-space-2);
+  left: var(--nv-space-2);
+  border-radius: var(--nv-radius-sm);
+  background: var(--nv-navy-900);
+  color: var(--nv-white);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  padding: var(--nv-space-3) var(--nv-space-5);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform .15s ease;
+}
+
+.nv-skip-link:focus-visible {
+  color: var(--nv-white);
+  transform: translateY(0);
+}
+
+
+/* ── TABLET (1024 px) ───────────────────────────────────────────────────────
+   El producto se diseña para escritorio y tablet. En tablet el contenedor
+   conserva 28 px por lado y las rejillas bajan a una o dos columnas, sin
+   desplazamiento horizontal en ningún caso.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1120px) {
+  .nv-container { width: calc(100% - 56px); }
+
+  .nv-section { padding-block: var(--nv-space-16); }
+
+  .nv-section-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nv-space-5);
+    align-items: start;
+  }
+
+  .nv-hero__inner {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: var(--nv-space-8);
+    min-height: 400px;
+  }
+
+  .nv-card-grid,
+  .nv-card-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .nv-hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .nv-card-grid,
+  .nv-card-grid--2,
+  .nv-card-grid--4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ══ CÁSCARA · CABECERA Y PIE ══════════════════════════════════════════════
+   La cabecera y el pie son un componente, no un caso especial.
+
+   Antes vivían en nuvia-site-unified.css bajo .nuvia-global-header y
+   .nuvia-global-footer, clases que nuvia-site-unified.js AÑADE en tiempo de
+   ejecución. Es decir: la cáscara estaba sin estilar hasta que corría el
+   JavaScript, y por eso hacían falta 9 !important para ganarle al bundle
+   Nocturne una vez llegaba.
+
+   Aquí cuelga de las clases que ya están escritas en el HTML, así que se pinta
+   en el primer fotograma. Ni un !important.
+
+   El JS puede seguir añadiendo .nuvia-global-* sin efecto: son inofensivas.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Cabecera ───────────────────────────────────────────────────────────── */
+
+.nuvia-site-header {
+  position: sticky;
+  z-index: 80;
+  top: 0;
+  border-bottom: 1px solid var(--nv-line);
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 8px 24px rgba(6, 23, 47, .04);
+  backdrop-filter: blur(16px);
+}
+
+.nuvia-site-header__inner {
+  display: flex;
+  width: min(var(--nv-container), calc(100% - 96px));
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-space-8);
+  margin-inline: auto;
+}
+
+.nuvia-site-header__brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  line-height: 0;
+}
+
+.nuvia-site-header__brand img {
+  width: auto;
+  height: 54px;   /* ajustado por Oscar en dbbac74 con la familia de logos nueva */
+}
+
+/* ── Navegación ─────────────────────────────────────────────────────────── */
+
+.nuvia-site-nav {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--nv-space-6);
+  margin-left: auto;
+}
+
+.nuvia-site-nav > a,
+.nuvia-site-nav__topics > summary {
+  position: relative;
+  flex: 0 0 auto;
+  color: var(--nv-text-soft);
+  font-size: 13.5px;
+  font-weight: var(--nv-weight-title);
+  line-height: 72px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nuvia-site-nav > a::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: transparent;
+  content: "";
+}
+
+.nuvia-site-nav > a:hover,
+.nuvia-site-nav > a[aria-current="page"],
+.nuvia-site-nav__topics > summary:hover,
+.nuvia-site-nav__topics[open] > summary,
+.nuvia-site-nav__topics.is-active > summary {
+  color: var(--nv-text-link);
+}
+
+.nuvia-site-nav > a[aria-current="page"]::after,
+.nuvia-site-nav__topics.is-active > summary::after {
+  background: var(--nv-green-500);
+}
+
+.nuvia-site-nav__topics {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.nuvia-site-nav__topics > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.nuvia-site-nav__topics > summary::-webkit-details-marker { display: none; }
+
+/* Flecha en CSS puro: antes la inyectaba el JS como <span>. */
+.nuvia-site-nav__topics > summary::before {
+  order: 2;
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  content: "";
+  transform: rotate(45deg);
+  transition: transform 180ms ease, margin 180ms ease;
+}
+
+.nuvia-site-nav__topics[open] > summary::before {
+  margin-top: 4px;
+  transform: rotate(225deg);
+}
+
+.nuvia-site-nav__topics.is-active > summary::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  content: "";
+}
+
+.nuvia-site-nav__menu {
+  position: absolute;
+  z-index: 1000;
+  top: calc(100% - 5px);
+  left: 50%;
+  display: grid;
+  min-width: 250px;
+  border: 1px solid var(--nv-line);
+  border-radius: 14px;
+  background: var(--nv-white);
+  box-shadow: 0 18px 45px rgba(11, 35, 71, .16);
+  padding: var(--nv-space-2);
+  transform: translateX(-50%);
+}
+
+.nuvia-site-nav__menu a {
+  border-radius: 9px;
+  color: var(--nv-text-soft);
+  font-size: 13px;
+  font-weight: var(--nv-weight-title);
+  line-height: 1.25;
+  padding: 11px 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nuvia-site-nav__menu a:hover,
+.nuvia-site-nav__menu a:focus-visible {
+  background: color-mix(in srgb, var(--nv-green-500) 10%, var(--nv-white));
+  color: var(--nv-text-link);
+}
+
+.nuvia-site-nav__secondary { color: var(--nv-text-muted); }
+
+/* ── Pie ────────────────────────────────────────────────────────────────── */
+
+.nuvia-site-footer {
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  background: var(--nv-navy-950);
+  color: var(--nv-text-on-dark-soft);
+}
+
+.nuvia-site-footer a,
+.nuvia-site-footer span,
+.nuvia-site-footer p { color: var(--nv-text-on-dark-soft); }
+
+.nuvia-site-footer a:hover { color: var(--nv-white); }
+
+.nuvia-site-footer__inner {
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+  padding: var(--nv-space-12) 0 var(--nv-space-6);
+}
+
+.nuvia-site-footer__grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.35fr) minmax(140px, .75fr) minmax(140px, .75fr) minmax(220px, 1fr);
+  gap: var(--nv-space-12);
+  align-items: start;
+}
+
+.nuvia-site-footer__brand img {
+  display: block;
+  width: 153px;   /* reducido por Oscar en 2219b0c */
+  height: auto;
+  background: transparent;
+  /* Se usa la variante -reversed de la familia de marca, así que no hace falta
+     invertir. El filtro anterior aplanaba el logotipo a blanco puro. */
+  opacity: .92;
+}
+
+.nuvia-site-footer__brand p {
+  max-width: 30em;
+  margin: var(--nv-space-4) 0 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.nuvia-site-footer h4,
+.nuvia-site-footer__heading {
+  margin: 0 0 var(--nv-space-4);
+  color: var(--nv-white);
+  font-size: 11px;
+  font-weight: var(--nv-weight-action);
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.nuvia-site-footer__links,
+.nuvia-site-footer__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--nv-space-2);
+}
+
+.nuvia-site-footer__links a,
+.nuvia-site-footer__info span {
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.nuvia-site-footer__legal {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--nv-space-6);
+  border-top: 1px solid rgba(255, 255, 255, .12);
+  margin-top: var(--nv-space-8);
+  font-size: 11.5px;
+  line-height: 1.5;
+  padding-top: var(--nv-space-5);
+}
+
+/* ── Cáscara en tablet ──────────────────────────────────────────────────── */
+
+@media (max-width: 1120px) {
+  .nuvia-site-header__inner,
+  .nuvia-site-footer__inner { width: calc(100% - 56px); }
+
+  .nuvia-site-header__inner { gap: var(--nv-space-5); }
+  .nuvia-site-header__brand img { height: 48px; }
+
+  .nuvia-site-nav { gap: var(--nv-space-4); }
+  .nuvia-site-nav > a,
+  .nuvia-site-nav__topics > summary { font-size: 12px; }
+
+  .nuvia-site-footer__grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--nv-space-8) var(--nv-space-12);
+  }
+}
+
+@media (max-width: 900px) {
+  .nuvia-site-footer__legal { flex-direction: column; gap: var(--nv-space-3); }
+}
+
+.nv-disclaimer--center { text-align: center; }
+
+
+/* ── Campo numérico · el patrón repetido 29 veces ────────────────────────── */
+
+.nv-field label,
+.nv-field__label {
+  display: block;
+  margin-bottom: var(--nv-space-1);
+  color: var(--nv-text-soft);
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.nv-field__box {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-bg);
+  padding: 0 var(--nv-space-3);
+  transition: border-color .2s ease;
+}
+
+.nv-field__box:focus-within { border-color: var(--nv-green-600); }
+
+.nv-field__box input,
+.nv-field__box select {
+  width: 100%;
+  border: 0;
+  background: none;
+  caret-color: var(--nv-green-600);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-title);
+  padding: var(--nv-space-2) 0;
+}
+
+.nv-field__box input:focus-visible { box-shadow: none; }
+
+.nv-field__unit {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  white-space: nowrap;
+}
+
+.nv-field__note {
+  margin: 5px 0 0;
+  color: var(--nv-text-muted);
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+.nv-field--wide { grid-column: span 2; }
+
+.nv-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-4);
+}
+
+.nv-fields--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+
+/* Desplegable suelto, fuera de .nv-field__box. Sin esta regla el select se
+   dimensiona según su opción más larga y desborda a 1024 px. */
+.nv-select {
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-bg);
+  color: var(--nv-text);
+  cursor: pointer;
+  font-size: 13.5px;
+  padding: var(--nv-space-2) var(--nv-space-3);
+  transition: border-color .2s ease;
+}
+
+.nv-select:hover { border-color: var(--nv-line-strong); }
+.nv-select:focus { border-color: var(--nv-green-600); }
