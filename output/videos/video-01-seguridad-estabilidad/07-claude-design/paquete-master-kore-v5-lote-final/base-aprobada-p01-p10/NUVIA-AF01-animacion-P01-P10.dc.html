@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @font-face { font-family: "Fraunces"; src: url("assets/fonts/Fraunces-Variable.ttf") format("truetype-variations"); font-style: normal; font-weight: 100 900; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-Variable.ttf") format("truetype-variations"); font-style: normal; font-weight: 100 900; font-display: block; }
+  body { margin: 0; background: #E9E2D4; }
+  a { color: #B69152; text-decoration: none; }
+  a:hover { color: #0B2347; }
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:{{ shellPad }};box-sizing:border-box;font-family:Inter,sans-serif;background:#E9E2D4;position:{{ shellPos }};inset:{{ shellInset }};z-index:{{ shellZ }};background-color:{{ shellBg }};cursor:{{ cursorVal }}">
+
+  <div style="position:relative;width:{{ boxW }}px;height:{{ boxH }}px;box-shadow:0 26px 60px rgba(11,35,71,.16)">
+  <section data-screen-label="Animación P01–P10" style="position:absolute;left:0;top:0;width:1920px;height:1080px;background:#FAF7EE;overflow:hidden;transform-origin:top left;transform:scale({{ scale }})">
+
+    <div style="position:absolute;left:100px;right:100px;top:80px;display:flex;justify-content:space-between;align-items:center">
+      <span style="display:inline-block;padding:13px 30px;border-radius:999px;background:#0B2347;color:#FAF7EE;font-size:28px;font-weight:600;letter-spacing:.18em;white-space:nowrap">NUVIA ACADEMY</span>
+      <span style="font-size:28px;font-weight:500;letter-spacing:.2em;color:#40506A;white-space:nowrap">ACTIVOS FINANCIEROS · 01</span>
+    </div>
+
+    <!-- P01 · cartera 3D -->
+    <img src="assets/nuvia-efectivo-cartera-crema.png" alt="" style="position:absolute;right:78px;top:252px;width:820px;height:660px;object-fit:contain;opacity:{{ walO }};transform:{{ walT }}">
+
+    <!-- Cifra continua 30.000 € -->
+    <div style="position:absolute;left:100px;top:296px;transform-origin:top left;font-weight:600;font-size:196px;line-height:1;letter-spacing:-.03em;color:#0B2347;font-variant-numeric:tabular-nums;white-space:nowrap;opacity:{{ figO }};transform:{{ figT }}">30.000 €</div>
+
+    <!-- P01 · etiqueta de plazo -->
+    <div style="position:absolute;left:100px;top:540px;display:flex;align-items:center;gap:24px;opacity:{{ labO }};transform:{{ labT }}">
+      <img src="assets/icon-horizonte.svg" alt="" style="width:64px;height:64px">
+      <span style="font-size:38px;font-weight:600;letter-spacing:.13em;color:#40506A;white-space:nowrap">LOS NECESITARÁS EN 1 AÑO</span>
+    </div>
+
+    <!-- P01 · línea de doce meses -->
+    <div style="position:absolute;left:100px;top:672px;width:880px;opacity:{{ tlO }};transform:{{ tlT }};clip-path:inset(0 {{ tlClip }}% 0 0)">
+      <div style="height:2px;background:rgba(11,35,71,.16)"></div>
+      <div style="display:flex;align-items:flex-start">
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">1</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">2</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">3</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">4</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">5</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">6</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">7</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">8</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">9</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">10</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px"><div style="width:2px;height:18px;background:rgba(11,35,71,.3)"></div><span style="font-size:28px;font-weight:500;color:#8C96A6">11</span></div>
+        <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div style="position:absolute;top:-9px;width:16px;height:16px;border-radius:50%;background:#B69152"></div>
+          <div style="width:4px;height:34px;background:#B69152"></div>
+          <span style="font-size:28px;font-weight:600;color:#B69152">12</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- P01 · pregunta -->
+    <div style="position:absolute;left:100px;top:790px;opacity:{{ qO }};transform:{{ qT }}">
+      <div style="width:{{ qRuleW }}px;height:4px;background:#B69152;margin-bottom:28px"></div>
+      <div style="font-family:Fraunces,serif;font-weight:500;font-size:82px;line-height:1;color:#0B2347;white-space:nowrap">¿DÓNDE LOS COLOCAS?</div>
+    </div>
+
+    <!-- P02 · bifurcación -->
+    <svg viewBox="0 0 1920 1080" width="1920" height="1080" style="position:absolute;left:0;top:0;opacity:{{ brO }}" aria-hidden="true">
+      <path d="M960 310 V344" fill="none" stroke="#B69152" stroke-width="3" stroke-dasharray="40" stroke-dashoffset="{{ brStem }}"></path>
+      <path d="M960 344 H620 Q580 344 580 384 V400" fill="none" stroke="rgba(11,35,71,.28)" stroke-width="3" stroke-dasharray="430" stroke-dashoffset="{{ brBranch }}"></path>
+      <path d="M960 344 H1300 Q1340 344 1340 384 V400" fill="none" stroke="rgba(11,35,71,.28)" stroke-width="3" stroke-dasharray="430" stroke-dashoffset="{{ brBranch }}"></path>
+    </svg>
+
+    <!-- P02 · tarjeta izquierda -->
+    <div style="position:absolute;left:100px;top:400px;width:800px;height:540px;box-sizing:border-box;padding:44px 48px;background:#FFFDF8;border:1px solid #E8DFCB;border-radius:22px;box-shadow:0 20px 44px rgba(11,35,71,.06);opacity:{{ c1O }};transform:{{ c1T }}">
+      <img src="assets/icon-riesgo-inflacion.svg" alt="" style="position:absolute;right:44px;top:40px;width:74px;height:74px;padding:13px;box-sizing:content-box;background:#FBE9E2;border-radius:50%;opacity:{{ c1Head }}">
+      <div style="font-size:44px;font-weight:600;letter-spacing:.06em;line-height:1.2;color:#0B2347;max-width:520px;min-height:106px;opacity:{{ c1Head }}">DEJARLO QUIETO</div>
+      <div style="margin-top:14px;font-size:28px;font-weight:600;letter-spacing:.14em;color:#7A8598;white-space:nowrap;opacity:{{ c1Cap }}">PODER DE COMPRA</div>
+      <div style="position:relative;margin-top:10px;height:176px;display:flex;align-items:flex-end;gap:38px">
+        <div style="position:absolute;left:0;right:0;top:6px;border-top:2px dashed rgba(199,96,75,.45);opacity:{{ c1Cap }}"></div>
+        <div style="width:80px;height:170px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b1 }})"></div>
+        <div style="width:80px;height:154px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b2 }})"></div>
+        <div style="width:80px;height:139px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b3 }})"></div>
+        <div style="width:80px;height:126px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b4 }})"></div>
+        <div style="width:80px;height:114px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b5 }})"></div>
+        <div style="width:80px;height:103px;background:#FBE9E2;border-top:5px solid #C7604B;border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY({{ b6 }})"></div>
+      </div>
+      <div style="margin-top:22px;height:2px;background:rgba(11,35,71,.08);opacity:{{ c1Cap }}"></div>
+      <div style="margin-top:22px;display:flex;opacity:{{ chip1O }};transform:{{ chip1T }}">
+        <span style="padding:11px 26px;border-radius:8px;background:#FBE9E2;color:#C7604B;font-size:32px;font-weight:600;letter-spacing:.14em;white-space:nowrap">INFLACIÓN</span>
+      </div>
+    </div>
+
+    <!-- P02 · tarjeta derecha -->
+    <div style="position:absolute;left:1020px;top:400px;width:800px;height:540px;box-sizing:border-box;padding:44px 48px;background:#FFFDF8;border:1px solid #E8DFCB;border-radius:22px;box-shadow:0 20px 44px rgba(11,35,71,.06);opacity:{{ c2O }};transform:{{ c2T }}">
+      <img src="assets/icon-riesgo-venta-anticipada.svg" alt="" style="position:absolute;right:44px;top:40px;width:74px;height:74px;padding:13px;box-sizing:content-box;background:#FBE9E2;border-radius:50%;opacity:{{ c2Head }}">
+      <div style="font-size:44px;font-weight:600;letter-spacing:.06em;line-height:1.2;color:#0B2347;max-width:520px;min-height:106px;opacity:{{ c2Head }}">ASUMIR DEMASIADO RIESGO</div>
+      <div style="margin-top:14px;font-size:28px;font-weight:600;letter-spacing:.14em;color:#7A8598;white-space:nowrap;opacity:{{ c2Cap }}">VALOR DE MERCADO</div>
+      <div style="margin-top:10px;height:176px">
+        <svg viewBox="0 0 704 176" width="704" height="176" aria-hidden="true">
+          <path d="M0 176 H704" fill="none" stroke="rgba(11,35,71,.12)" stroke-width="2" opacity="{{ c2Cap }}"></path>
+          <path d="M0 96 L78 60 L156 108 L234 47 L312 85 L390 29 L468 121 L546 75 L604 143 L704 104" fill="none" stroke="#40506A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="880" stroke-dashoffset="{{ mkDash }}"></path>
+          <g opacity="{{ sellO }}">
+            <path d="M604 143 V176" fill="none" stroke="#C7604B" stroke-width="3" stroke-dasharray="8 8"></path>
+            <circle cx="604" cy="143" r="16" fill="#FAF7EE" stroke="#C7604B" stroke-width="6"></circle>
+          </g>
+        </svg>
+      </div>
+      <div style="margin-top:22px;height:2px;background:rgba(11,35,71,.08);opacity:{{ c2Cap }}"></div>
+      <div style="margin-top:22px;display:flex;opacity:{{ chip2O }};transform:{{ chip2T }}">
+        <span style="padding:11px 26px;border-radius:8px;background:#FBE9E2;color:#C7604B;font-size:32px;font-weight:600;letter-spacing:.14em;white-space:nowrap">VENDER EN MAL MOMENTO</span>
+      </div>
+    </div>
+
+    <!-- P03 · tres preguntas -->
+    <div style="position:absolute;left:100px;top:230px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#FFF5D8;border:1px solid rgba(199,151,24,.22);border-radius:22px;opacity:{{ q1O }};transform:{{ q1T }}">
+      <img src="assets/icon-objetivo.svg" alt="" style="width:62px;height:62px;padding:17px;box-sizing:content-box;background:rgba(250,247,238,.75);border-radius:50%">
+      <div style="margin-top:30px;font-family:Fraunces,serif;font-weight:500;font-size:56px;line-height:1.12;color:#0B2347"><span style="color:#8A6A0F">1 · </span>¿PARA QUÉ?</div>
+      <div style="position:absolute;left:44px;bottom:44px;width:64px;height:4px;background:#C79718"></div>
+    </div>
+    <div style="position:absolute;left:690px;top:230px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#E9F4F8;border:1px solid rgba(26,107,115,.2);border-radius:22px;opacity:{{ q2O }};transform:{{ q2T }}">
+      <img src="assets/icon-horizonte.svg" alt="" style="width:62px;height:62px;padding:17px;box-sizing:content-box;background:rgba(250,247,238,.75);border-radius:50%">
+      <div style="margin-top:30px;font-family:Fraunces,serif;font-weight:500;font-size:56px;line-height:1.12;color:#0B2347"><span style="color:#1A6B73">2 · </span>¿CUÁNDO?</div>
+      <div style="position:absolute;left:44px;bottom:44px;width:64px;height:4px;background:#1A6B73"></div>
+    </div>
+    <div style="position:absolute;left:1280px;top:230px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#F2EDF8;border:1px solid rgba(112,82,163,.2);border-radius:22px;opacity:{{ q3O }};transform:{{ q3T }}">
+      <img src="assets/icon-liquidez.svg" alt="" style="width:62px;height:62px;padding:17px;box-sizing:content-box;background:rgba(250,247,238,.75);border-radius:50%">
+      <div style="margin-top:30px;font-family:Fraunces,serif;font-weight:500;font-size:56px;line-height:1.12;color:#0B2347"><span style="color:#7052A3">3 · </span>¿CON QUÉ RAPIDEZ?</div>
+      <div style="position:absolute;left:44px;bottom:44px;width:64px;height:4px;background:#7052A3"></div>
+    </div>
+
+    <svg viewBox="0 0 1920 1080" width="1920" height="1080" style="position:absolute;left:0;top:0;opacity:{{ connO }}" aria-hidden="true">
+      <path d="M370 630 V664 L930 722" fill="none" stroke="rgba(11,35,71,.2)" stroke-width="3" stroke-dasharray="600" stroke-dashoffset="{{ connDash }}"></path>
+      <path d="M960 630 V722" fill="none" stroke="rgba(11,35,71,.2)" stroke-width="3" stroke-dasharray="100" stroke-dashoffset="{{ connDashC }}"></path>
+      <path d="M1550 630 V664 L990 722" fill="none" stroke="rgba(11,35,71,.2)" stroke-width="3" stroke-dasharray="600" stroke-dashoffset="{{ connDash }}"></path>
+      <path d="M960 722 V752" fill="none" stroke="rgba(11,35,71,.2)" stroke-width="3" stroke-dasharray="40" stroke-dashoffset="{{ connDashS }}"></path>
+      <circle cx="960" cy="722" r="7" fill="#B69152" opacity="{{ prodO }}"></circle>
+    </svg>
+
+    <div style="position:absolute;left:730px;top:752px;width:460px;height:104px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:2px dashed rgba(11,35,71,.28);border-radius:16px;opacity:{{ prodO }};transform:{{ prodT }}">
+      <span style="font-size:42px;font-weight:600;letter-spacing:.2em;color:rgba(11,35,71,.42);white-space:nowrap">PRODUCTO</span>
+    </div>
+
+    <div style="position:absolute;left:0;right:0;top:876px;display:flex;justify-content:center;opacity:{{ bandO }};transform:{{ bandT }}">
+      <span style="padding:15px 44px;border-radius:999px;background:#0B2347;color:#FAF7EE;font-size:34px;font-weight:600;letter-spacing:.18em;white-space:nowrap">EL PRODUCTO VIENE DESPUÉS</span>
+    </div>
+
+    <!-- P04 → P10 · mapa (grupo transformable: pleno en P04, franja inferior desde P05) -->
+    <div style="position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:top left;transform:{{ mapT }}">
+      <div style="position:absolute;left:160px;top:598px;width:1600px;height:4px;border-radius:2px;background:rgba(11,35,71,.22);clip-path:inset(0 {{ lineClip }}% 0 0)"></div>
+      <div style="position:absolute;left:160px;top:598px;height:4px;border-radius:2px;background:#0B2347;width:{{ fillW }}px"></div>
+      <div style="position:absolute;left:411px;top:585px;width:30px;height:30px;border-radius:50%;background:#0B2347;opacity:{{ node1O }}"></div>
+      <div style="position:absolute;left:945px;top:585px;width:30px;height:30px;border-radius:50%;background:#0B2347;opacity:{{ node2O }}"></div>
+      <div style="position:absolute;top:570px;left:{{ dotL }}px;width:60px;height:60px;border-radius:50%;border:4px solid #B69152;box-sizing:border-box;display:flex;align-items:center;justify-content:center;opacity:{{ dotO }}">
+        <span style="width:26px;height:26px;border-radius:50%;background:#B69152"></span>
+      </div>
+
+      <div style="position:absolute;left:425px;top:630px;width:2px;height:48px;background:rgba(11,35,71,.2);opacity:{{ t1O }}"></div>
+      <div style="position:absolute;left:959px;top:630px;width:2px;height:48px;background:rgba(11,35,71,.2);opacity:{{ t2O }}"></div>
+      <div style="position:absolute;left:1493px;top:645px;width:2px;height:33px;background:rgba(11,35,71,.2);opacity:{{ t3O }}"></div>
+
+      <div style="position:absolute;left:216px;top:442px;width:420px;text-align:center;font-family:Fraunces,serif;font-weight:500;font-size:72px;line-height:1;color:#0B2347;white-space:nowrap;opacity:{{ nm1O }};transform:{{ nm1T }}">HOY</div>
+      <div style="position:absolute;left:750px;top:442px;width:420px;text-align:center;font-family:Fraunces,serif;font-weight:500;font-size:72px;line-height:1;color:#0B2347;white-space:nowrap;opacity:{{ nm2O }};transform:{{ nm2T }}">PRONTO</div>
+      <div style="position:absolute;left:1174px;top:442px;width:640px;text-align:center;font-family:Fraunces,serif;font-weight:500;font-size:72px;line-height:1;color:#0B2347;white-space:nowrap;opacity:{{ nm3O }};transform:{{ nm3T }}">MÁS ADELANTE</div>
+
+      <div style="position:absolute;left:326px;top:524px;width:200px;height:8px;border-radius:4px;background:#7052A3;opacity:{{ u1O }}"></div>
+      <div style="position:absolute;left:860px;top:524px;width:200px;height:8px;border-radius:4px;background:#7C9A44;opacity:{{ u2O }}"></div>
+
+      <div style="position:absolute;left:216px;top:678px;width:420px;height:148px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#F2EDF8;border-top:5px solid #7052A3;border-radius:4px 4px 18px 18px;opacity:{{ z1O }};transform:{{ z1T }}">
+        <span style="font-size:36px;font-weight:600;letter-spacing:.1em;line-height:1.2;text-align:center;color:#7052A3">LIQUIDEZ</span>
+      </div>
+      <div style="position:absolute;left:750px;top:678px;width:420px;height:148px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#E9F4F8;border-top:5px solid #1A6B73;border-radius:4px 4px 18px 18px;opacity:{{ z2O }};transform:{{ z2T }}">
+        <span style="font-size:36px;font-weight:600;letter-spacing:.1em;line-height:1.2;text-align:center;color:#1A6B73">PREVISIBILIDAD</span>
+      </div>
+      <div style="position:absolute;left:1284px;top:678px;width:420px;height:148px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#FFF5D8;border-top:5px solid #C79718;border-radius:4px 4px 18px 18px;opacity:{{ z3O }};transform:{{ z3T }}">
+        <span style="padding:0 22px;font-size:36px;font-weight:600;letter-spacing:.1em;line-height:1.2;text-align:center;color:#8A6A0F">MÁS MARGEN PARA OSCILAR</span>
+      </div>
+    </div>
+
+    <!-- Ancla continua · 30.000 € -->
+    <div style="position:absolute;left:100px;top:250px;display:flex;align-items:center;gap:22px;opacity:{{ pillO }};transform:{{ pillT }}">
+      <span style="padding:12px 28px;border:2px solid rgba(11,35,71,.28);border-radius:999px;font-size:44px;font-weight:600;color:#0B2347;font-variant-numeric:tabular-nums;white-space:nowrap">30.000 €</span>
+      <span style="width:96px;height:2px;background:rgba(11,35,71,.2)"></span>
+    </div>
+
+    <!-- P05/P06 · cartera 3D -->
+    <img src="assets/nuvia-efectivo-cartera-crema.png" alt="" style="position:absolute;left:1180px;top:315px;width:620px;height:499px;object-fit:contain;opacity:{{ wal2O }};transform:{{ wal2T }}">
+
+    <!-- P05 · tarjeta de capítulo -->
+    <div style="position:absolute;left:100px;top:320px;width:880px;height:400px;box-sizing:border-box;padding:52px 56px;background:#F2EDF8;border-top:6px solid #7052A3;border-radius:6px 6px 22px 22px;opacity:{{ p5O }};transform:{{ p5T }}">
+      <div style="font-family:Fraunces,serif;font-weight:500;font-size:74px;line-height:1.1;color:#0B2347"><span style="color:#7052A3">1 · </span>EFECTIVO<br>Y CUENTAS</div>
+      <div style="position:absolute;left:56px;bottom:46px;font-size:34px;font-weight:600;letter-spacing:.16em;color:#6A5B84;white-space:nowrap">DINERO PARA HOY</div>
+    </div>
+
+    <!-- P06 · usos de la liquidez -->
+    <div style="position:absolute;left:100px;top:320px;width:940px;height:490px;box-sizing:border-box;padding:44px 56px;background:#F2EDF8;border-top:6px solid #7052A3;border-radius:6px 6px 22px 22px;opacity:{{ p6O }};transform:{{ p6T }}">
+      <div style="font-size:34px;font-weight:600;letter-spacing:.14em;color:#7052A3;white-space:nowrap">1 · EFECTIVO Y CUENTAS</div>
+
+      <div style="position:absolute;left:56px;top:112px;display:flex;align-items:center;gap:32px;opacity:{{ u6aO }};transform:{{ u6aT }}">
+        <img src="assets/icon-recibo.svg" alt="" style="width:52px;height:52px;padding:16px;box-sizing:content-box;background:#FAF7EE;border-radius:50%">
+        <span style="font-size:44px;font-weight:600;letter-spacing:.05em;color:#0B2347;white-space:nowrap">RECIBOS</span>
+      </div>
+      <div style="position:absolute;left:56px;top:202px;display:flex;align-items:center;gap:32px;opacity:{{ u6bO }};transform:{{ u6bT }}">
+        <img src="assets/icon-imprevisto.svg" alt="" style="width:52px;height:52px;padding:16px;box-sizing:content-box;background:#FAF7EE;border-radius:50%">
+        <span style="font-size:44px;font-weight:600;letter-spacing:.05em;color:#0B2347;white-space:nowrap">IMPREVISTOS</span>
+      </div>
+      <div style="position:absolute;left:56px;top:292px;display:flex;align-items:center;gap:32px;opacity:{{ u6cO }};transform:{{ u6cT }}">
+        <img src="assets/icon-gasto-cercano.svg" alt="" style="width:52px;height:52px;padding:16px;box-sizing:content-box;background:#FAF7EE;border-radius:50%">
+        <span style="font-size:44px;font-weight:600;letter-spacing:.05em;color:#0B2347;white-space:nowrap">GASTOS CERCANOS</span>
+      </div>
+
+      <div style="position:absolute;left:56px;right:56px;top:386px;display:flex;align-items:center;justify-content:space-between;opacity:{{ liqLabO }}">
+        <span style="font-size:28px;font-weight:600;letter-spacing:.16em;color:#6A5B84;white-space:nowrap">LIQUIDEZ</span>
+        <span style="padding:9px 22px;border-radius:8px;background:#7052A3;color:#FAF7EE;font-size:28px;font-weight:600;letter-spacing:.14em;white-space:nowrap;opacity:{{ liqChipO }};transform:{{ liqChipT }}">MUY ALTA</span>
+      </div>
+      <div style="position:absolute;left:56px;right:56px;top:442px;display:flex;gap:16px;opacity:{{ liqLabO }}">
+        <div style="flex:1;height:14px;border-radius:7px;background:rgba(112,82,163,.18);overflow:hidden"><div style="height:100%;border-radius:7px;background:#7052A3;transform-origin:left;transform:scaleX({{ liq1 }})"></div></div>
+        <div style="flex:1;height:14px;border-radius:7px;background:rgba(112,82,163,.18);overflow:hidden"><div style="height:100%;border-radius:7px;background:#7052A3;transform-origin:left;transform:scaleX({{ liq2 }})"></div></div>
+        <div style="flex:1;height:14px;border-radius:7px;background:rgba(112,82,163,.18);overflow:hidden"><div style="height:100%;border-radius:7px;background:#7052A3;transform-origin:left;transform:scaleX({{ liq3 }})"></div></div>
+        <div style="flex:1;height:14px;border-radius:7px;background:rgba(112,82,163,.18);overflow:hidden"><div style="height:100%;border-radius:7px;background:#7052A3;transform-origin:left;transform:scaleX({{ liq4 }})"></div></div>
+      </div>
+    </div>
+
+    <!-- P07 · saldo constante -->
+    <div style="position:absolute;left:100px;top:330px;opacity:{{ p7lO }};transform:{{ p7lT }}">
+      <div style="font-size:30px;font-weight:600;letter-spacing:.18em;color:#7A8598;white-space:nowrap">SALDO EN CUENTA</div>
+      <div style="margin-top:16px;font-size:140px;font-weight:600;line-height:1;letter-spacing:-.03em;color:#0B2347;font-variant-numeric:tabular-nums;white-space:nowrap">30.000 €</div>
+      <div style="position:relative;margin-top:70px;width:700px;height:4px;background:rgba(11,35,71,.7)">
+        <span style="position:absolute;left:-7px;top:-7px;width:18px;height:18px;border-radius:50%;background:#0B2347"></span>
+        <span style="position:absolute;right:-7px;top:-7px;width:18px;height:18px;border-radius:50%;background:#0B2347"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;width:700px;margin-top:22px;font-size:26px;font-weight:600;letter-spacing:.14em;color:#7A8598">
+        <span>HOY</span><span>EN 12 MESES</span>
+      </div>
+    </div>
+    <div style="position:absolute;left:100px;top:648px;display:flex;opacity:{{ p7capO }};transform:{{ p7capT }}">
+      <span style="padding:12px 26px;border-radius:10px;background:rgba(11,35,71,.07);color:#0B2347;font-size:34px;font-weight:600;letter-spacing:.1em;white-space:nowrap">EL MISMO SALDO</span>
+    </div>
+
+    <!-- P07 · poder de compra -->
+    <div style="position:absolute;left:1000px;top:320px;width:820px;height:340px;box-sizing:border-box;padding:40px 48px;background:#FFFDF8;border:1px solid #E8DFCB;border-radius:22px;box-shadow:0 20px 44px rgba(11,35,71,.06);opacity:{{ p7rO }};transform:{{ p7rT }}">
+      <img src="assets/icon-riesgo-inflacion.svg" alt="" style="position:absolute;right:40px;top:34px;width:64px;height:64px;padding:12px;box-sizing:content-box;background:#FBE9E2;border-radius:50%">
+      <div style="font-size:40px;font-weight:600;letter-spacing:.06em;color:#0B2347;white-space:nowrap">PODER DE COMPRA</div>
+
+      <div style="position:absolute;left:48px;top:104px;display:flex;align-items:center;gap:44px">
+        <svg viewBox="0 0 176 132" width="176" height="132" aria-hidden="true">
+          <path d="M62 34a26 26 0 0152 0" fill="none" stroke="#0B2347" stroke-width="6" stroke-linecap="round"></path>
+          <path d="M14 40h148" fill="none" stroke="#0B2347" stroke-width="7" stroke-linecap="round"></path>
+          <path d="M26 40l16 78h92l16-78" fill="none" stroke="#0B2347" stroke-width="7" stroke-linejoin="round"></path>
+          <circle cx="50" cy="64" r="10" fill="#B69152"></circle>
+          <circle cx="86" cy="64" r="10" fill="#B69152"></circle>
+          <circle cx="122" cy="64" r="10" fill="#B69152" fill-opacity="{{ uA }}" stroke="#C7604B" stroke-width="3" stroke-opacity="{{ uAout }}"></circle>
+          <circle cx="62" cy="92" r="10" fill="#B69152"></circle>
+          <circle cx="98" cy="92" r="10" fill="#B69152"></circle>
+          <circle cx="134" cy="92" r="10" fill="#B69152" fill-opacity="{{ uB }}" stroke="#C7604B" stroke-width="3" stroke-opacity="{{ uBout }}"></circle>
+        </svg>
+        <span style="padding:11px 24px;border-radius:8px;background:#FBE9E2;color:#C7604B;font-size:30px;font-weight:600;letter-spacing:.14em;white-space:nowrap;opacity:{{ infChipO }};transform:{{ infChipT }}">INFLACIÓN ↑</span>
+      </div>
+
+      <div style="position:absolute;left:48px;right:48px;top:258px;height:26px;border-radius:13px;background:rgba(199,96,75,.14);overflow:hidden">
+        <div style="height:100%;border-radius:13px;background:#C7604B;transform-origin:left;transform:scaleX({{ powerP }})"></div>
+      </div>
+    </div>
+    <div style="position:absolute;left:1000px;top:648px;display:flex;opacity:{{ p7rcapO }};transform:{{ p7rcapT }}">
+      <span style="padding:12px 26px;border-radius:10px;background:#FBE9E2;color:#C7604B;font-size:34px;font-weight:600;letter-spacing:.06em;white-space:nowrap">MENOS COSAS CON EL MISMO DINERO</span>
+    </div>
+
+    <div style="position:absolute;left:0;right:0;top:744px;display:flex;justify-content:center;opacity:{{ p7bandO }};transform:{{ p7bandT }}">
+      <span style="padding:15px 44px;border-radius:999px;background:#0B2347;color:#FAF7EE;font-size:34px;font-weight:600;letter-spacing:.1em;white-space:nowrap">EL SALDO PUEDE SER EL MISMO. TU PODER DE COMPRA, NO.</span>
+    </div>
+
+    <!-- P08 · depósitos -->
+    <img src="assets/nuvia-deposito-caja-fuerte-crema.png" alt="" style="position:absolute;left:1180px;top:300px;width:620px;height:439px;object-fit:contain;opacity:{{ safeO }};transform:{{ safeT }}">
+    <div style="position:absolute;left:100px;top:320px;width:880px;height:400px;box-sizing:border-box;padding:52px 56px;background:#EEF5E8;border-top:6px solid #7C9A44;border-radius:6px 6px 22px 22px;opacity:{{ p8O }};transform:{{ p8T }}">
+      <div style="font-family:Fraunces,serif;font-weight:500;font-size:74px;line-height:1.1;color:#0B2347"><span style="color:#5E7A2E">2 · </span>DEPÓSITOS</div>
+      <div style="position:absolute;left:56px;bottom:46px;font-size:34px;font-weight:600;letter-spacing:.16em;color:#5E7A2E;white-space:nowrap">DINERO PARA PRONTO</div>
+    </div>
+    <div style="position:absolute;left:800px;top:500px;transform-origin:left center;opacity:{{ moneyO }};transform:{{ moneyT }}">
+      <span style="display:inline-block;padding:12px 28px;border:2px solid rgba(11,35,71,.28);border-radius:999px;background:#FAF7EE;font-size:44px;font-weight:600;color:#0B2347;font-variant-numeric:tabular-nums;white-space:nowrap">30.000 €</span>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:744px;display:flex;justify-content:center;opacity:{{ p8bandO }};transform:{{ p8bandT }}">
+      <span style="padding:15px 44px;border-radius:999px;background:#0B2347;color:#FAF7EE;font-size:34px;font-weight:600;letter-spacing:.14em;white-space:nowrap">UN PLAZO ACORDADO CON EL BANCO</span>
+    </div>
+
+    <!-- P09 · tres comprobaciones -->
+    <div style="position:absolute;left:100px;top:320px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#EEF5E8;border:1px solid rgba(124,154,68,.28);border-radius:22px;opacity:{{ k1O }};transform:{{ k1T }}">
+      <svg viewBox="0 0 132 88" width="132" height="88" aria-hidden="true">
+        <path d="M10 78a56 56 0 01112 0" fill="none" stroke="rgba(124,154,68,.32)" stroke-width="9" stroke-linecap="round"></path>
+        <path d="M10 78a56 56 0 01112 0" fill="none" stroke="#7C9A44" stroke-width="9" stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="{{ taeDash }}"></path>
+        <path d="M66 78l30-30" fill="none" stroke="#0B2347" stroke-width="6" stroke-linecap="round" opacity="{{ taeNeedle }}"></path>
+      </svg>
+      <div style="margin-top:22px;font-size:26px;font-weight:600;letter-spacing:.2em;color:#5E7A2E">01</div>
+      <div style="margin-top:8px;font-family:Fraunces,serif;font-weight:500;font-size:54px;line-height:1;color:#0B2347">TAE</div>
+      <div style="margin-top:18px;font-size:28px;font-weight:400;line-height:1.35;color:#4C5A3A;max-width:400px">Rendimiento anual comparable entre entidades.</div>
+    </div>
+
+    <div style="position:absolute;left:690px;top:320px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#EEF5E8;border:1px solid rgba(124,154,68,.28);border-radius:22px;opacity:{{ k2O }};transform:{{ k2T }}">
+      <svg viewBox="0 0 132 88" width="132" height="88" aria-hidden="true">
+        <path d="M12 62h108" fill="none" stroke="rgba(124,154,68,.4)" stroke-width="6" stroke-linecap="round"></path>
+        <path d="M12 62h108" fill="none" stroke="#7C9A44" stroke-width="6" stroke-linecap="round" stroke-dasharray="108" stroke-dashoffset="{{ vtoDash }}"></path>
+        <circle cx="12" cy="62" r="8" fill="#0B2347"></circle>
+        <path d="M110 62V22" fill="none" stroke="#0B2347" stroke-width="6" stroke-linecap="round" opacity="{{ vtoFlag }}"></path>
+        <path d="M110 24h22l-8 11 8 11h-22z" fill="#B69152" opacity="{{ vtoFlag }}"></path>
+      </svg>
+      <div style="margin-top:22px;font-size:26px;font-weight:600;letter-spacing:.2em;color:#5E7A2E">02</div>
+      <div style="margin-top:8px;font-family:Fraunces,serif;font-weight:500;font-size:54px;line-height:1;color:#0B2347">VENCIMIENTO</div>
+      <div style="margin-top:18px;font-size:28px;font-weight:400;line-height:1.35;color:#4C5A3A;max-width:400px">Cuándo vuelves a disponer del dinero.</div>
+    </div>
+
+    <div style="position:absolute;left:1280px;top:320px;width:540px;height:400px;box-sizing:border-box;padding:44px;background:#EEF5E8;border:1px solid rgba(124,154,68,.28);border-radius:22px;opacity:{{ k3O }};transform:{{ k3T }}">
+      <svg viewBox="0 0 132 88" width="132" height="88" aria-hidden="true">
+        <path d="M16 14v60M16 14h34M16 74h34" fill="none" stroke="#7C9A44" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M42 44h56m-16-14 16 14-16 14" fill="none" stroke="#0B2347" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="150" stroke-dashoffset="{{ canDash }}"></path>
+        <path d="M84 18v52" fill="none" stroke="#C7604B" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 8" opacity="{{ canGate }}"></path>
+      </svg>
+      <div style="margin-top:22px;font-size:26px;font-weight:600;letter-spacing:.2em;color:#5E7A2E">03</div>
+      <div style="margin-top:8px;font-family:Fraunces,serif;font-weight:500;font-size:54px;line-height:1;color:#0B2347">CANCELACIÓN</div>
+      <div style="margin-top:22px;display:flex;opacity:{{ canChipO }};transform:{{ canChipT }}">
+        <span style="padding:10px 22px;border-radius:8px;background:#FBE9E2;color:#C7604B;font-size:27px;font-weight:600;letter-spacing:.1em;white-space:nowrap">SALIDA CON CONDICIONES</span>
+      </div>
+    </div>
+
+    <div style="position:absolute;left:0;right:0;top:744px;display:flex;justify-content:center;opacity:{{ p9bandO }};transform:{{ p9bandT }}">
+      <span style="padding:15px 44px;border-radius:999px;background:#0B2347;color:#FAF7EE;font-size:34px;font-weight:600;letter-spacing:.18em;white-space:nowrap">COMPARA LAS TRES</span>
+    </div>
+
+    <!-- P10 · Fondo de Garantía de Depósitos -->
+    <div style="position:absolute;left:100px;top:320px;width:700px;height:490px;box-sizing:border-box;background:#0B2347;border-radius:22px;overflow:hidden;opacity:{{ fgdPanelO }};transform:{{ fgdPanelT }}">
+      <img src="assets/nuvia-fgd-escudo-alpha.png" alt="" style="position:absolute;left:238px;top:40px;width:224px;height:300px;object-fit:contain">
+      <div style="position:absolute;left:48px;right:48px;top:368px;text-align:center;font-size:34px;font-weight:600;letter-spacing:.14em;line-height:1.25;color:#FAF7EE">FONDO DE GARANTÍA<br>DE DEPÓSITOS</div>
+    </div>
+
+    <div style="position:absolute;left:880px;top:330px;opacity:{{ fgdFigO }};transform:{{ fgdFigT }}">
+      <div style="font-size:30px;font-weight:600;letter-spacing:.2em;color:#7A8598;white-space:nowrap">HASTA</div>
+      <div style="margin-top:12px;font-size:128px;font-weight:600;line-height:1;letter-spacing:-.03em;color:#0B2347;font-variant-numeric:tabular-nums;white-space:nowrap">100.000 €</div>
+    </div>
+    <div style="position:absolute;left:880px;top:534px;width:120px;height:4px;background:#B69152;opacity:{{ fgdRuleO }}"></div>
+    <div style="position:absolute;left:880px;top:562px;font-family:Fraunces,serif;font-weight:500;font-size:52px;line-height:1;color:#0B2347;white-space:nowrap;opacity:{{ fgdL1O }};transform:{{ fgdL1T }}">POR DEPOSITANTE</div>
+    <div style="position:absolute;left:880px;top:628px;font-family:Fraunces,serif;font-weight:500;font-size:52px;line-height:1;color:#0B2347;white-space:nowrap;opacity:{{ fgdL2O }};transform:{{ fgdL2T }}">Y ENTIDAD ADHERIDA</div>
+    <div style="position:absolute;left:880px;top:710px;display:flex;opacity:{{ fgdCondO }};transform:{{ fgdCondT }}">
+      <span style="padding:13px 26px;border:2px solid #B69152;border-radius:10px;color:#8A6A2E;font-size:28px;font-weight:600;letter-spacing:.14em;white-space:nowrap">CON CARÁCTER GENERAL</span>
+    </div>
+    <div style="position:absolute;left:880px;top:786px;font-size:26px;font-weight:500;letter-spacing:.05em;color:#7A8598;white-space:nowrap;opacity:{{ fgdCondO }};transform:{{ fgdCondT }}">Comprueba las condiciones y los límites de tu entidad.</div>
+
+    <sc-if value="{{ guias }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:100px;border:1px dashed rgba(199,96,75,.5);pointer-events:none"></div>
+      <div style="position:absolute;left:0;right:0;bottom:0;height:120px;background:rgba(199,96,75,.07);border-top:1px dashed rgba(199,96,75,.5);pointer-events:none"></div>
+    </sc-if>
+  </section>
+  </div>
+
+  <sc-if value="{{ showUI }}" hint-placeholder-val="{{ true }}">
+    <div style="width:{{ boxW }}px;min-width:900px;display:flex;flex-direction:column;gap:14px">
+      <div onClick="{{ onSeek }}" style="position:relative;height:10px;border-radius:5px;background:rgba(11,35,71,.12);cursor:pointer">
+        <div style="position:absolute;left:0;top:0;bottom:0;border-radius:5px;background:#0B2347;width:{{ pct }}%"></div>
+        <div style="position:absolute;left:6.41%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:16.36%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:28.79%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:40.90%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:45.90%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:56.62%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:67.76%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:75.52%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+        <div style="position:absolute;left:85.96%;top:-4px;width:2px;height:18px;background:rgba(11,35,71,.25)"></div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+        <button onClick="{{ togglePlay }}" style="padding:10px 22px;border:none;border-radius:8px;background:#0B2347;color:#FAF7EE;font-family:Inter,sans-serif;font-size:14px;font-weight:600;letter-spacing:.06em;cursor:pointer;min-width:104px">{{ playLabel }}</button>
+        <button onClick="{{ restart }}" style="padding:10px 16px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:transparent;color:#0B2347;font-family:Inter,sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap">Reiniciar</button>
+        <button onClick="{{ stepBack }}" style="padding:10px 14px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:transparent;color:#0B2347;font-family:Inter,sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap">−1 f</button>
+        <button onClick="{{ stepFwd }}" style="padding:10px 14px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:transparent;color:#0B2347;font-family:Inter,sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap">+1 f</button>
+
+        <span style="width:1px;height:26px;background:rgba(11,35,71,.18);margin:0 6px"></span>
+
+        <sc-for list="{{ planos }}" as="p" hint-placeholder-count="10">
+          <button onClick="{{ p.go }}" style="padding:10px 13px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:{{ p.bg }};color:{{ p.fg }};font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer">{{ p.id }}</button>
+        </sc-for>
+
+        <span style="width:1px;height:26px;background:rgba(11,35,71,.18);margin:0 6px"></span>
+
+        <button onClick="{{ sp05 }}" style="padding:10px 12px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:{{ s05Bg }};color:{{ s05Fg }};font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer">0,5×</button>
+        <button onClick="{{ sp1 }}" style="padding:10px 12px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:{{ s1Bg }};color:{{ s1Fg }};font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer">1×</button>
+        <button onClick="{{ sp2 }}" style="padding:10px 12px;border:1px solid rgba(11,35,71,.25);border-radius:8px;background:{{ s2Bg }};color:{{ s2Fg }};font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer">2×</button>
+
+        <span style="flex:1"></span>
+
+        <span style="font-variant-numeric:tabular-nums;font-size:15px;font-weight:600;letter-spacing:.08em;color:#0B2347">{{ tc }}</span>
+        <span style="font-variant-numeric:tabular-nums;font-size:14px;color:#6B6250">F{{ fLabel }} / 3104 · {{ planLabel }}</span>
+
+        <button onClick="{{ enterRec }}" style="margin-left:10px;padding:10px 18px;border:1px solid #B69152;border-radius:8px;background:#B69152;color:#FAF7EE;font-family:Inter,sans-serif;font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer">Modo grabación</button>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#7A7161;letter-spacing:.04em">
+        <span>Espacio: reproducir/pausar · ← →: fotograma · Esc: salir de grabación</span>
+        <span>1920 × 1080 · 30 fps · 3.105 fotogramas · 103,5 s · sin audio</span>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Revisión&quot;},&quot;fotogramaInicial&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:3104,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Revisión&quot;},&quot;mostrarGuias&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Revisión&quot;}}">
+const LAST = 3104;
+const PLANS = [
+  ['P01', 0], ['P02', 199], ['P03', 508], ['P04', 894], ['P05', 1270],
+  ['P06', 1425], ['P07', 1758], ['P08', 2104], ['P09', 2345], ['P10', 2669],
+];
+
+class Component extends DCLogic {
+  state = { frame: 0, playing: false, speed: 1, rec: false, vw: 1280, vh: 800 };
+
+  componentDidMount() {
+    this._exact = this.props.fotogramaInicial ?? 0;
+    this.setState({
+      frame: this._exact,
+      playing: (this.props.autoplay ?? true),
+      vw: window.innerWidth,
+      vh: window.innerHeight,
+    });
+    this._onResize = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    this._onKey = (e) => {
+      if (e.key === ' ') { e.preventDefault(); this.toggle(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); this.jump(this.state.frame - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); this.jump(this.state.frame + 1); }
+      else if (e.key === 'Escape' && this.state.rec) { this.exitRec(); }
+    };
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('keydown', this._onKey);
+    const loop = (t) => {
+      const last = this._last == null ? t : this._last;
+      this._last = t;
+      if (this.state.playing) {
+        let f = this._exact + ((t - last) / 1000) * 30 * this.state.speed;
+        if (f >= LAST) { f = LAST; this.setState({ playing: false }); }
+        this._exact = f;
+        const nf = Math.round(f);
+        if (nf !== this.state.frame) this.setState({ frame: nf });
+      }
+      this._raf = requestAnimationFrame(loop);
+    };
+    this._raf = requestAnimationFrame(loop);
+    window.__nuvia = {
+      last: LAST,
+      plans: PLANS,
+      setFrame: (f) => this.jump(f),
+      play: () => this.setState({ playing: true }),
+      pause: () => this.setState({ playing: false }),
+      recording: (on) => (on ? this.enterRec() : this.exitRec()),
+      still: (f) => {
+        const n = Math.max(0, Math.min(LAST, Math.round(f)));
+        this._exact = n;
+        this.setState({ rec: true, playing: false, frame: n });
+      },
+      exportStill: (f) => {
+        const n = Math.max(0, Math.min(LAST, Math.round(f)));
+        this._exact = n;
+        this.setState({ rec: true, exp: true, playing: false, frame: n });
+      },
+      exportEnd: () => this.setState({ exp: false, rec: false }),
+    };
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this._raf);
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('keydown', this._onKey);
+    if (window.__nuvia) delete window.__nuvia;
+  }
+
+  jump(f) {
+    const n = Math.max(0, Math.min(LAST, Math.round(f)));
+    this._exact = n;
+    this.setState({ frame: n });
+  }
+  toggle() {
+    if (!this.state.playing && this.state.frame >= LAST) this._exact = 0;
+    this.setState((s) => ({ playing: !s.playing, frame: !s.playing && s.frame >= LAST ? 0 : s.frame }));
+  }
+  enterRec() {
+    this._exact = 0;
+    this.setState({ rec: true, frame: 0, playing: false, speed: 1 });
+  }
+  exitRec() { this.setState({ rec: false, playing: false }); }
+
+  seg(f, a, b) { const t = (f - a) / (b - a); return t < 0 ? 0 : t > 1 ? 1 : t; }
+  eOut(t) { return 1 - Math.pow(1 - t, 3); }
+  eIO(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  lerp(a, b, t) { return a + (b - a) * t; }
+  n(x) { return Math.round(x * 1000) / 1000; }
+
+  renderVals() {
+    const f = this.state.frame;
+    const S = (a, b) => this.seg(f, a, b);
+    const O = (a, b) => this.eOut(this.seg(f, a, b));
+    const IO = (a, b) => this.eIO(this.seg(f, a, b));
+    const L = (a, b, t) => this.lerp(a, b, t);
+    const rise = (p, px) => 'translateY(' + this.n((1 - p) * px) + 'px)';
+    // entrada/salida estándar de tarjeta: sube al entrar, baja y encoge al salir
+    const io = (inP, outP, px) => ({
+      o: this.n(inP * (1 - outP)),
+      t: 'translateY(' + this.n((1 - inP) * px + outP * (px + 10)) + 'px) scale(' + this.n(L(1, 0.97, outP)) + ')',
+    });
+
+    // ── Cifra 30.000 € (elemento continuo P01→P03) ─────────────────────
+    const figIn = O(0, 28);
+    let fx = 0, fy = 0, fs = L(0.98, 1, figIn);
+    const toP02 = IO(199, 241);
+    if (toP02 > 0) { fx = L(0, 658.5, toP02); fy = L(0, -100, toP02); fs = L(1, 0.4898, toP02); }
+    const toHub = IO(512, 566);
+    if (toHub > 0) { fx = L(658.5, 724.5, toHub); fy = L(-100, -110, toHub); fs = L(0.4898, 0.33, toHub); }
+    const figO = 1 - S(540, 580);
+
+    // ── P01 · F0000–F0198 ──────────────────────────────────────────────
+    const walIn = O(29, 85), walOut = IO(199, 241);
+    const p01Out = S(199, 232);
+    const tlP = O(86, 142);
+
+    // ── P02 · F0199–F0507 ──────────────────────────────────────────────
+    const dim = L(1, 0.55, S(482, 507));
+    const c1in = O(293, 317), c2in = O(353, 377);
+    const cardsOut = IO(508, 556);
+    const cardT = (inP) => 'translateY(' + this.n((1 - inP) * 28 + cardsOut * 36) + 'px) scale(' + this.n(L(1, 0.97, cardsOut)) + ')';
+
+    // ── P03 · F0508–F0893 ──────────────────────────────────────────────
+    const q1in = O(567, 637), q2in = O(656, 708), q3in = O(715, 777);
+    const qOut = IO(894, 934);
+    const qT = (inP) => 'translateY(' + this.n((1 - inP) * 26 + qOut * 34) + 'px) scale(' + this.n(L(1, 0.97, qOut)) + ')';
+    const prodIn = O(806, 833);
+    const bandIn = O(834, 863);
+
+    // ── P04 · F0894–F1269 ──────────────────────────────────────────────
+    const lineP = O(909, 953);
+    const dotIn = S(954, 972);
+    let dotX = 426;
+    if (f >= 1014) dotX = L(426, 960, IO(1014, 1064));
+    if (f >= 1104) dotX = L(960, 1494, IO(1104, 1154));
+    // vuelta a HOY al comprimirse el mapa (P05) y viaje a PRONTO (P08)
+    if (f >= 1294) dotX = L(1494, 426, IO(1294, 1340));
+    if (f >= 2104) dotX = L(426, 960, IO(2104, 2143));
+
+    const nm1b = O(954, 984), nm2b = O(1044, 1074), nm3b = O(1134, 1164);
+    const z1b = O(969, 1009), z2b = O(1059, 1099), z3b = O(1149, 1189);
+
+    // ── Mapa: pleno (P04) → franja inferior (P05–P10) ──────────────────
+    const mp = IO(1294, 1340);
+    const ms = L(1, 0.62, mp);
+    const mapT = 'translate(' + this.n(L(0, 364.8, mp)) + 'px,' + this.n(L(0, 559.2, mp)) + 'px) scale(' + this.n(ms) + ')';
+    const zonesOut = 1 - S(1294, 1326);
+    const actHoy = 1 - S(2104, 2143);
+    const actPronto = S(2104, 2143);
+    const nmState = (base, active) => this.n(L(base, L(0.4, 1, active), mp));
+
+    // ── P05 · F1270–F1424 ──────────────────────────────────────────────
+    const p5 = io(O(1336, 1372), IO(1425, 1461), 22);
+    const walletIn = O(1348, 1389), walletOut = IO(1758, 1794);
+
+    // ── P06 · F1425–F1757 ──────────────────────────────────────────────
+    const p6in = O(1429, 1465), p6out = IO(1758, 1794);
+    const p6 = io(p6in, p6out, 18);
+    const liqP = O(1641, 1676);
+    const segFill = (i) => this.n(Math.max(0, Math.min(1, liqP * 4 - i)));
+
+    // ── P07 · F1758–F2103 ──────────────────────────────────────────────
+    const p7lIn = O(1766, 1799), p7Out = IO(2104, 2140);
+    const p7l = io(p7lIn, p7Out, 20);
+    const p7r = io(O(1800, 1838), p7Out, 22);
+    const powerP = L(1, 0.78, IO(1878, 1948));
+    const uAf = S(1890, 1920), uBf = S(1918, 1948);
+    const p7cap = io(O(1966, 1998), Math.max(IO(2040, 2068), p7Out), 12);
+    const p7rcap = io(O(2002, 2034), Math.max(IO(2040, 2068), p7Out), 12);
+    const p7band = io(O(2046, 2080), p7Out, 14);
+
+    // ── P08 · F2104–F2344 ──────────────────────────────────────────────
+    const p8Out = IO(2345, 2381);
+    const p8 = io(O(2144, 2180), p8Out, 22);
+    const safeIn = O(2156, 2195), safeOut = IO(2352, 2388);
+    const mv = IO(2202, 2252);
+    const p8band = io(O(2266, 2300), IO(2345, 2375), 14);
+
+    // ── P09 · F2345–F2668 ──────────────────────────────────────────────
+    const p9Out = IO(2669, 2705);
+    const k1 = io(O(2385, 2427), p9Out, 24);
+    const k2 = io(O(2455, 2497), p9Out, 24);
+    const k3 = io(O(2525, 2567), p9Out, 24);
+    const p9band = io(O(2611, 2645), IO(2669, 2699), 14);
+
+    // ── P10 · F2669–F3104 ──────────────────────────────────────────────
+    const fgdPanel = io(O(2681, 2718), 0, 24);
+    const fgdFig = io(O(2725, 2767), 0, 18);
+    const fgdL1 = io(O(2795, 2831), 0, 16);
+    const fgdL2 = io(O(2875, 2911), 0, 16);
+    const fgdCond = io(O(2955, 2991), 0, 14);
+
+    // ── interfaz ───────────────────────────────────────────────────────
+    const tcOf = (n) => {
+      const p = (v) => String(v).padStart(2, '0');
+      return '00:' + p(Math.floor(n / 1800)) + ':' + p(Math.floor(n / 30) % 60) + ':' + p(n % 30);
+    };
+    const act = (on) => (on ? '#0B2347' : 'transparent');
+    const actF = (on) => (on ? '#FAF7EE' : '#0B2347');
+    let cur = 0;
+    for (let i = 0; i < PLANS.length; i++) if (f >= PLANS[i][1]) cur = i;
+    const planos = PLANS.map(([id, start], i) => ({
+      id, bg: act(i === cur), fg: actF(i === cur), go: () => this.jump(start),
+    }));
+    const rec = this.state.rec;
+    const scale = this.state.exp
+      ? 1
+      : rec
+      ? Math.min(this.state.vw / 1920, this.state.vh / 1080)
+      : Math.max(0.18, Math.min(0.58, (this.state.vw - 90) / 1920, (this.state.vh - 300) / 1080));
+
+    return {
+      scale: this.n(scale), boxW: Math.round(1920 * scale), boxH: Math.round(1080 * scale),
+      shellPos: rec ? 'fixed' : 'relative', shellInset: rec ? '0' : 'auto', shellZ: rec ? 9999 : 'auto',
+      shellBg: rec ? '#0F1420' : '#E9E2D4', cursorVal: rec ? 'none' : 'auto', shellPad: rec ? '0px' : '28px',
+      showUI: !rec, guias: (this.props.mostrarGuias ?? false) && !rec,
+
+      figO: this.n(figO),
+      figT: 'translate(' + this.n(fx) + 'px,' + this.n(fy) + 'px) scale(' + this.n(fs) + ')',
+
+      // P01
+      walO: this.n(walIn * (1 - walOut)),
+      walT: 'translateX(' + this.n(L(180, 0, walIn) + walOut * 220) + 'px)',
+      tlO: this.n(S(86, 96) * (1 - p01Out)), tlClip: this.n((1 - tlP) * 100),
+      tlT: 'translateY(' + this.n(-p01Out * 14) + 'px)',
+      labO: this.n(O(143, 170) * (1 - p01Out)),
+      labT: 'translateY(' + this.n((1 - O(143, 170)) * 16 - p01Out * 14) + 'px)',
+      qO: this.n(O(171, 198) * (1 - p01Out)),
+      qT: 'translateY(' + this.n((1 - O(171, 198)) * 20 - p01Out * 14) + 'px)',
+      qRuleW: Math.round(76 * O(171, 190)),
+
+      // P02
+      brO: this.n(S(242, 250) * (1 - S(508, 538))),
+      brStem: this.n(40 - 40 * O(242, 258)), brBranch: this.n(430 - 430 * O(258, 292)),
+      c1O: this.n(Math.min(c1in, dim) * (1 - cardsOut)), c1T: cardT(c1in),
+      c1Head: this.n(O(305, 326)), c1Cap: this.n(O(313, 330)),
+      b1: this.n(O(317, 337)), b2: this.n(O(321, 340)), b3: this.n(O(325, 343)),
+      b4: this.n(O(328, 345)), b5: this.n(O(331, 347)), b6: this.n(O(334, 349)),
+      chip1O: this.n(O(337, 352)), chip1T: rise(O(337, 352), 10),
+      c2O: this.n(Math.min(c2in, dim) * (1 - cardsOut)), c2T: cardT(c2in),
+      c2Head: this.n(O(365, 386)), c2Cap: this.n(O(374, 391)),
+      mkDash: this.n(880 - 880 * O(381, 414)), sellO: this.n(S(404, 417)),
+      chip2O: this.n(O(412, 427)), chip2T: rise(O(412, 427), 10),
+
+      // P03
+      q1O: this.n(q1in * (1 - qOut)), q1T: qT(q1in),
+      q2O: this.n(q2in * (1 - qOut)), q2T: qT(q2in),
+      q3O: this.n(q3in * (1 - qOut)), q3T: qT(q3in),
+      connO: this.n(S(784, 792) * (1 - S(894, 924))),
+      connDash: this.n(600 - 600 * O(784, 818)),
+      connDashC: this.n(100 - 100 * O(784, 814)),
+      connDashS: this.n(40 - 40 * O(814, 824)),
+      prodO: this.n(prodIn * (1 - S(894, 924))),
+      prodT: 'scale(' + this.n(L(0.985, 1, prodIn)) + ')',
+      bandO: this.n(bandIn * (1 - S(894, 919))), bandT: rise(bandIn, 12),
+
+      // P04 + mapa continuo
+      mapT,
+      lineClip: this.n((1 - lineP) * 100),
+      fillW: Math.round(Math.max(0, (dotX - 160) * dotIn)),
+      node1O: this.n(S(1014, 1034) * (1 - S(1294, 1326))), node2O: this.n(S(1104, 1124) * (1 - S(1294, 1326))),
+      dotL: Math.round(dotX - 30), dotO: this.n(dotIn),
+      t1O: this.n(z1b * zonesOut), t2O: this.n(z2b * zonesOut), t3O: this.n(z3b * zonesOut),
+      nm1O: nmState(nm1b, actHoy), nm1T: rise(nm1b, 14),
+      nm2O: nmState(nm2b, actPronto), nm2T: rise(nm2b, 14),
+      nm3O: nmState(nm3b, 0), nm3T: rise(nm3b, 14),
+      u1O: this.n(mp * actHoy), u2O: this.n(mp * actPronto),
+      z1O: this.n(z1b * zonesOut), z1T: rise(z1b, 24),
+      z2O: this.n(z2b * zonesOut), z2T: rise(z2b, 24),
+      z3O: this.n(z3b * zonesOut), z3T: rise(z3b, 24),
+
+      // ancla 30.000 €
+      pillO: this.n(Math.max(O(909, 939) * (1 - IO(1758, 1782)), O(2110, 2140))),
+      pillT: rise(O(909, 939), 12),
+
+      // P05 / P06 · cartera
+      wal2O: this.n(walletIn * (1 - walletOut)),
+      wal2T: 'translateX(' + this.n(L(60, 0, walletIn) + walletOut * 90) + 'px)',
+
+      // P05
+      p5O: p5.o, p5T: p5.t,
+
+      // P06
+      p6O: p6.o, p6T: p6.t,
+      u6aO: this.n(O(1461, 1497)), u6aT: rise(O(1461, 1497), 16),
+      u6bO: this.n(O(1521, 1557)), u6bT: rise(O(1521, 1557), 16),
+      u6cO: this.n(O(1581, 1617)), u6cT: rise(O(1581, 1617), 16),
+      liqLabO: this.n(O(1630, 1660)),
+      liq1: segFill(0), liq2: segFill(1), liq3: segFill(2), liq4: segFill(3),
+      liqChipO: this.n(O(1668, 1694)), liqChipT: rise(O(1668, 1694), 8),
+
+      // P07
+      p7lO: p7l.o, p7lT: p7l.t,
+      p7rO: p7r.o, p7rT: p7r.t,
+      infChipO: this.n(O(1836, 1866)), infChipT: rise(O(1836, 1866), 10),
+      powerP: this.n(powerP),
+      uA: this.n(1 - uAf), uAout: this.n(uAf), uB: this.n(1 - uBf), uBout: this.n(uBf),
+      p7capO: p7cap.o, p7capT: p7cap.t,
+      p7rcapO: p7rcap.o, p7rcapT: p7rcap.t,
+      p7bandO: p7band.o, p7bandT: p7band.t,
+
+      // P08
+      p8O: p8.o, p8T: p8.t,
+      safeO: this.n(safeIn * (1 - safeOut)),
+      safeT: 'translateX(' + this.n(L(70, 0, safeIn) + safeOut * 90) + 'px)',
+      moneyO: this.n(S(2202, 2214) * (1 - S(2236, 2252))),
+      moneyT: 'translate(' + this.n(566 * mv) + 'px,' + this.n(41 * mv) + 'px) scale(' + this.n(L(1, 0.46, mv)) + ')',
+      p8bandO: p8band.o, p8bandT: p8band.t,
+
+      // P09
+      k1O: k1.o, k1T: k1.t, k2O: k2.o, k2T: k2.t, k3O: k3.o, k3T: k3.t,
+      taeDash: this.n(176 - 114 * O(2400, 2445)), taeNeedle: this.n(S(2424, 2445)),
+      vtoDash: this.n(108 - 108 * O(2470, 2510)), vtoFlag: this.n(S(2498, 2518)),
+      canDash: this.n(150 - 150 * O(2540, 2580)), canGate: this.n(S(2552, 2572)),
+      canChipO: this.n(O(2560, 2590) * (1 - p9Out)), canChipT: rise(O(2560, 2590), 10),
+      p9bandO: p9band.o, p9bandT: p9band.t,
+
+      // P10
+      fgdPanelO: fgdPanel.o, fgdPanelT: fgdPanel.t,
+      fgdFigO: fgdFig.o, fgdFigT: fgdFig.t,
+      fgdRuleO: this.n(O(2795, 2825)),
+      fgdL1O: fgdL1.o, fgdL1T: fgdL1.t,
+      fgdL2O: fgdL2.o, fgdL2T: fgdL2.t,
+      fgdCondO: fgdCond.o, fgdCondT: fgdCond.t,
+
+      // interfaz
+      planos,
+      playLabel: this.state.playing ? 'Pausa' : 'Reproducir',
+      tc: tcOf(f), fLabel: String(f).padStart(4, '0'), pct: this.n((f / LAST) * 100),
+      planLabel: PLANS[cur][0],
+      s05Bg: act(this.state.speed === 0.5), s05Fg: actF(this.state.speed === 0.5),
+      s1Bg: act(this.state.speed === 1), s1Fg: actF(this.state.speed === 1),
+      s2Bg: act(this.state.speed === 2), s2Fg: actF(this.state.speed === 2),
+      togglePlay: () => this.toggle(),
+      restart: () => { this.jump(0); this.setState({ playing: true }); },
+      stepBack: () => { this.setState({ playing: false }); this.jump(f - 1); },
+      stepFwd: () => { this.setState({ playing: false }); this.jump(f + 1); },
+      sp05: () => this.setState({ speed: 0.5 }), sp1: () => this.setState({ speed: 1 }), sp2: () => this.setState({ speed: 2 }),
+      enterRec: () => this.enterRec(), exitRec: () => this.exitRec(),
+      onSeek: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        this.setState({ playing: false });
+        this.jump(((e.clientX - r.left) / r.width) * LAST);
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
