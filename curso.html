@@ -5,44 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Curso Dinero con criterio de Academia Nuvia para ordenar las finanzas personales y construir decisiones sostenibles.">
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/curso.html">
+
 <title>Dinero con criterio | Academia Nuvia</title>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
+
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    input, select { font-family: var(--font-body); }
-    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
-    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    select option { background: var(--color-surface); color: var(--color-text); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  @keyframes nv-pulse { 0% { box-shadow:0 0 0 0 rgba(124,154,68,.4); } 70% { box-shadow:0 0 0 6px transparent; } 100% { box-shadow:0 0 0 0 transparent; } }
-  </style>
-</helmet>
 
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<div class="nuvia-page curso-page">
 
-  <!-- ============ HEADER ============ -->
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -52,357 +43,466 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html" class="is-active" aria-current="page">Academia</a>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics">
           <summary>Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <!-- ============ CABECERA CURSO ============ -->
-    <section id="curso" data-screen-label="Cabecera del curso" style="max-width:1240px; margin:0 auto; padding:56px 40px 0; scroll-margin-top:96px">
-      <span style="display:inline-block; color:#D6AE59; font-size:11px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; margin-bottom:14px">Educación financiera</span>
-      <h1 style="color:#ffffff; font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:0 0 14px">Dinero con criterio</h1>
-      <p style="max-width:44em; color:rgba(255,255,255,.78); font-size:16px; line-height:1.65; margin:0 0 26px">Cinco clases breves para ordenar tu dinero, ahorrar con propósito, invertir sin apostar y entender cómo la economía llega hasta tu bolsillo.</p>
-      <div aria-label="Ruta del curso" style="display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,.22); border-radius:999px; padding:5px">
-        <a href="academia.html?tab=cursos" style="border-radius:999px; background:#ffffff; color:#0B2347; font-size:12.5px; font-weight:600; padding:9px 18px; text-decoration:none" style-hover="color:#0B2347">← Volver a Cursos</a>
-        <span style="color:rgba(255,255,255,.72); font-size:12px; font-weight:500; padding:0 14px 0 4px">Dinero con criterio</span>
-      </div>
-    </section>
+  <main id="contenido">
 
-    <!-- ============ PROGRAMA ============ -->
-    <section data-screen-label="Programa del curso" aria-label="Programa del curso" style="max-width:1240px; margin:0 auto; padding:30px 40px 0">
-      <div style="display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px">
-        <sc-for list="{{ capitulos }}" as="cap" hint-placeholder-count="5">
-          <button type="button" onClick="{{ cap.abrir }}" aria-current="{{ cap.ariaCurrent }}" style="{{ cap.estiloTab }}">
-            <span style="font-size:19px; color:var(--color-accent)">{{ cap.numero }}</span>
-            <span style="min-width:0; text-align:left">
-              <strong style="display:block; color:var(--color-text); font-size:13px; font-weight:500; line-height:1.3">{{ cap.titulo }}</strong>
-              <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10.5px; margin-top:2px">{{ cap.estado }}</small>
-            </span>
-          </button>
-        </sc-for>
-      </div>
-    </section>
-
-    <!-- ============ HERO CAPÍTULO ============ -->
-    <section data-screen-label="Hero del capítulo" style="max-width:1240px; margin:0 auto; padding:22px 40px 0">
-      <div style="position:relative; overflow:hidden; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:38px 48px 30px">
-        <div style="position:absolute; left:0; right:0; top:0; height:2px; background:linear-gradient(90deg, transparent, #7C9A44 30%, #9DB861 70%, transparent)"></div>
-        <span aria-hidden="true" style="position:absolute; right:26px; top:2px; color:rgba(11,35,71,.06); font-size:150px; font-weight:500; line-height:1; font-variant-numeric:tabular-nums; pointer-events:none">{{ numeroCapitulo }}</span>
-        <div style="position:relative">
-          <p style="color:#4A5D23; font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; margin:0 0 12px">✦ Dinero con criterio · {{ metaCapitulo }} · Nivel inicial</p>
-          <h2 style="color:var(--color-text); font-size:42px; font-weight:500; letter-spacing:-.015em; line-height:1.06; margin:0 0 12px; max-width:16em">{{ tituloCapitulo }}</h2>
-          <p style="max-width:52ch; color:rgba(11,35,71,.68); font-size:15px; line-height:1.6; margin:0 0 24px">{{ introCapitulo }}</p>
-          <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:26px">
-            <a href="#leccion-video" style="display:inline-flex; align-items:center; gap:9px; border:1px solid #7C9A44; border-radius:var(--radius-md); color:#3f501e; font-family:var(--font-heading); font-size:14.5px; font-weight:500; text-decoration:none; padding:11px 24px; white-space:nowrap; transition:background .25s ease" style-hover="background:color-mix(in srgb, #7C9A44 12%, transparent); color:#2c3817" style-active="background:color-mix(in srgb, #7C9A44 20%, transparent)">Empezar la clase →</a>
-            <span style="color:rgba(11,35,71,.5); font-size:12px">Tu progreso se guarda en este dispositivo.</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:16px; border-top:1px solid rgba(11,35,71,.1); padding-top:16px">
-            <span style="color:rgba(11,35,71,.55); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap">Progreso</span>
-            <div style="flex:1; height:4px; border-radius:999px; background:#edf1f6"><span style="display:block; height:100%; width:{{ progresoAncho }}; border-radius:999px; background:linear-gradient(90deg,#7C9A44,#9DB861); transition:width .4s ease"></span></div>
-            <strong style="color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ progresoTexto }}</strong>
-          </div>
-        </div>
-      </div>
-      <nav aria-label="Progreso del capítulo" style="margin-top:16px; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:10px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:2px 6px">
-            <sc-for list="{{ pasos }}" as="paso" hint-placeholder-count="5">
-              <a href="{{ paso.destino }}" style="display:inline-flex; align-items:center; gap:9px; border-radius:999px; color:var(--color-text); padding:7px 14px; text-decoration:none; transition:background .15s ease" style-hover="background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">
-                <span style="{{ paso.estiloCheck }}">{{ paso.marca }}</span>
-                <b style="font-size:12.5px; font-weight:500; color:var(--color-text); white-space:nowrap">{{ paso.etiqueta }}</b>
-              </a>
-            </sc-for>
-      </nav>
-    </section>
-
-    <!-- ============ INFOGRAFÍA ============ -->
-    <figure data-screen-label="Infografía" style="max-width:1240px; margin:0 auto; padding:22px 40px 0">
-      <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-        <div style="min-height:120px">{{ infografiaImg }}</div>
-        <figcaption style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; border-top:1px solid var(--color-divider); padding:14px 20px">
+    <!-- ══ CABECERA DEL CURSO ════════════════════════════════════════════════
+         Antes era una sección suelta con h1 blanco sobre el fondo general — el
+         texto sólo se leía porque el bundle Nocturne pintaba el fondo oscuro.
+         Ahora usa el héroe institucional del sistema, que trae su propio fondo.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="curso" data-screen-label="Cabecera del curso" class="nv-hero nv-hero--institutional curso-hero">
+      <div class="nv-container">
+        <div class="nv-hero__inner">
           <div>
-            <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase">{{ infografiaKicker }}</span>
-            <strong style="color:var(--color-text); font-size:14px; font-weight:500">{{ tituloCapitulo }}</strong>
+            <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+              <ol>
+                <li><a href="index.html">Inicio</a></li>
+                <li><details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap">
-            <a href="{{ infografiaSrc }}" target="_blank" rel="noopener noreferrer" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:11.5px; font-weight:500; padding:8px 16px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">Ver a tamaño completo ↗</a>
-            <a href="#apuntes" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:11.5px; font-weight:500; padding:8px 16px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text)">⤓ Descargar apuntes</a>
-          </div>
-        </figcaption>
-      </div>
-    </figure>
+        </details></li>
+                <li><span aria-current="page">Dinero con criterio</span></li>
+              </ol>
+            </nav>
 
-    <!-- ============ 01 VÍDEO ============ -->
-    <section id="leccion-video" data-screen-label="01 Vídeo" style="max-width:1240px; margin:0 auto; padding:56px 40px 0; scroll-margin-top:96px">
-      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">01 · Introducción en vídeo</span>
-      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">{{ videoTitulo }}</h2>
-      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">{{ videoDescripcion }}</p>
-      <div style="position:relative; border-radius:var(--radius-md); overflow:hidden; background:var(--color-neutral-900); box-shadow:var(--shadow-sm); aspect-ratio:16/9">
-        <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen="{{ true }}" style="position:absolute; inset:0; width:100%; height:100%; border:0"></iframe>
-      </div>
-      <button type="button" onClick="{{ marcarVideo }}" style="{{ estiloBotonVideo }}">{{ textoBotonVideo }}</button>
-    </section>
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Educación financiera</p>
 
-    <!-- ============ 02 APUNTES ============ -->
-    <section id="apuntes" data-screen-label="02 Apuntes" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:44px; align-items:end; margin-bottom:22px">
-        <div>
-          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">{{ apuntesKicker }}</span>
-          <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0">{{ tituloCapitulo }}</h2>
-        </div>
-        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0">{{ subtituloCapitulo }}. Lee los apuntes a tu ritmo y conserva el informe para consultarlo cuando lo necesites.</p>
-      </div>
-      <div style="display:flex; gap:14px; align-items:flex-start; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 22px; margin-bottom:18px">
-        <span style="flex-shrink:0; display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:var(--color-accent-900); color:var(--color-accent-300); font-size:15px">i</span>
-        <div>
-          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Contexto de la clase</span>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.65; margin:0">{{ introCapitulo }}</p>
-        </div>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:12px">
-        <sc-for list="{{ apuntes }}" as="nota" hint-placeholder-count="4">
-          <details open="{{ nota.abierta }}" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-            <summary style="display:grid; grid-template-columns:44px minmax(0,1fr) auto; align-items:center; gap:14px; padding:16px 20px">
-              <span style="display:inline-flex; width:34px; height:34px; align-items:center; justify-content:center; border-radius:var(--radius-sm); background:var(--color-accent-900); color:var(--color-accent-300); font-size:14px">{{ nota.numero }}</span>
-              <span style="min-width:0">
-                <strong style="display:block; color:var(--color-text); font-size:15px; font-weight:500">{{ nota.titulo }}</strong>
-                <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ nota.resumen }}</small>
-              </span>
-              <span class="curso-chevron" style="color:color-mix(in srgb, var(--color-text) 46%, transparent); font-size:11px; transition:transform .2s ease">▾</span>
-            </summary>
-            <div style="border-top:1px solid var(--color-divider); padding:18px 22px 22px">
-              <sc-for list="{{ nota.parrafos }}" as="parrafo" hint-placeholder-count="2">
-                <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.7; margin:0 0 12px">{{ parrafo.texto }}</p>
-              </sc-for>
-              <sc-if value="{{ nota.tieneVinetas }}" hint-placeholder-val="{{ false }}">
-                <ul style="margin:0 0 12px; padding-left:18px; display:flex; flex-direction:column; gap:7px">
-                  <sc-for list="{{ nota.vinetas }}" as="vineta" hint-placeholder-count="2">
-                    <li style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6">{{ vineta.texto }}</li>
-                  </sc-for>
-                </ul>
-              </sc-if>
-              <sc-if value="{{ nota.tieneFormula }}" hint-placeholder-val="{{ false }}">
-                <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:var(--color-text); font-size:14.5px; margin:0 0 12px; padding:13px 18px">{{ nota.formula }}</p>
-              </sc-if>
-              <sc-if value="{{ nota.tieneApunte }}" hint-placeholder-val="{{ false }}">
-                <aside style="border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); padding:14px 18px">
-                  <strong style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; margin-bottom:6px">{{ nota.apunteTitulo }}</strong>
-                  <p style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:13px; line-height:1.6; margin:0">{{ nota.apunte }}</p>
-                </aside>
-              </sc-if>
+            <h1>Dinero con criterio</h1>
+
+            <p class="nv-hero__lead">
+              Cinco clases breves para ordenar tu dinero, ahorrar con propósito,
+              invertir sin apostar y entender cómo la economía llega hasta tu bolsillo.
+            </p>
+
+            <div class="curso-ruta" aria-label="Ruta del curso">
+              <a class="curso-ruta__volver" href="academia.html?tab=cursos">← Volver a Cursos</a>
+              <span class="curso-ruta__actual">Dinero con criterio</span>
             </div>
-          </details>
-        </sc-for>
-      </div>
-      <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px 28px; margin-top:18px">
-        <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Apuntes del capítulo</span>
-        <h3 style="color:var(--color-text); font-size:22px; font-weight:500; margin:0 0 16px">Cinco directrices de criterio</h3>
-        <ol style="margin:0; padding:0; list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:12px 34px; counter-reset:directriz">
-          <sc-for list="{{ directrices }}" as="directriz" hint-placeholder-count="5">
-            <li style="display:grid; grid-template-columns:26px minmax(0,1fr); gap:10px; align-items:baseline; border-top:1px solid var(--color-divider); padding-top:12px">
-              <span style="font-size:16px; color:var(--color-accent)">{{ directriz.numero }}</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6">{{ directriz.texto }}</span>
-            </li>
-          </sc-for>
-        </ol>
-      </div>
-      <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:18px">
-        <button type="button" onClick="{{ marcarApuntes }}" style="{{ estiloBotonApuntes }}">{{ textoBotonApuntes }}</button>
-        <a href="#apuntes" style="border:1px solid var(--color-divider); border-radius:999px; color:var(--color-text); font-size:12px; font-weight:500; padding:11px 20px; text-decoration:none; transition:border-color .2s ease, background .2s ease" style-hover="border-color:#6b7686; background:var(--color-surface); color:var(--color-text)">⤓ {{ descargaTexto }}</a>
+          </div>
+        </div>
       </div>
     </section>
+
+
+    <!-- ══ PROGRAMA ══════════════════════════════════════════════════════════ -->
+    <section data-screen-label="Programa del curso" class="nv-section nv-section--tight" aria-label="Programa del curso">
+      <div class="nv-container">
+        <div class="curso-programa">
+          <sc-for list="{{ capitulos }}" as="cap" hint-placeholder-count="5">
+            <button type="button" onClick="{{ cap.abrir }}" aria-current="{{ cap.ariaCurrent }}" class="{{ cap.claseTab }}">
+              <span class="curso-tab__num">{{ cap.numero }}</span>
+              <span class="curso-tab__body">
+                <strong>{{ cap.titulo }}</strong>
+                <small>{{ cap.estado }}</small>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ CABECERA DEL CAPÍTULO ═════════════════════════════════════════════ -->
+    <section data-screen-label="Hero del capítulo" class="nv-section nv-section--tight">
+      <div class="nv-container">
+
+        <div class="curso-cap">
+          <span class="curso-cap__ghost" aria-hidden="true">{{ numeroCapitulo }}</span>
+          <div class="curso-cap__body">
+            <p class="curso-cap__kicker">✦ Dinero con criterio · {{ metaCapitulo }} · Nivel inicial</p>
+            <h2>{{ tituloCapitulo }}</h2>
+            <p class="curso-cap__intro">{{ introCapitulo }}</p>
+
+            <div class="curso-cap__actions">
+              <a class="nv-btn nv-btn--secondary" href="#leccion-video">Empezar la clase →</a>
+              <span class="curso-cap__note">Tu progreso se guarda en este dispositivo.</span>
+            </div>
+
+            <div class="curso-progreso">
+              <span class="curso-progreso__label">Progreso</span>
+              <div class="curso-progreso__track">
+                <span class="curso-progreso__fill" style="width:{{ progresoAncho }}"></span>
+              </div>
+              <strong>{{ progresoTexto }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <nav class="curso-pasos" aria-label="Progreso del capítulo">
+          <sc-for list="{{ pasos }}" as="paso" hint-placeholder-count="5">
+            <a class="curso-paso" href="{{ paso.destino }}">
+              <span class="{{ paso.claseCheck }}">{{ paso.marca }}</span>
+              <b>{{ paso.etiqueta }}</b>
+            </a>
+          </sc-for>
+        </nav>
+
+      </div>
+    </section>
+
+
+    <!-- ══ INFOGRAFÍA ════════════════════════════════════════════════════════ -->
+    <section class="nv-section nv-section--tight">
+      <div class="nv-container">
+        <figure class="curso-figura" data-screen-label="Infografía">
+          <div class="curso-figura__img">{{ infografiaImg }}</div>
+          <figcaption>
+            <div>
+              <span class="curso-figura__kicker">{{ infografiaKicker }}</span>
+              <strong>{{ tituloCapitulo }}</strong>
+            </div>
+            <div class="nv-btn-row">
+              <a class="curso-btn-outline" href="{{ infografiaSrc }}" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a>
+              <a class="curso-btn-outline" href="#apuntes">⤓ Descargar apuntes</a>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- ══ 01 · VÍDEO ════════════════════════════════════════════════════════ -->
+    <section id="leccion-video" data-screen-label="01 Vídeo" class="nv-section curso-leccion" aria-labelledby="titulo-video">
+      <div class="nv-container">
+        <span class="curso-leccion__kicker">01 · Introducción en vídeo</span>
+        <h2 id="titulo-video">{{ videoTitulo }}</h2>
+        <p class="curso-leccion__lead">{{ videoDescripcion }}</p>
+
+        <div class="curso-video">
+          <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen="{{ true }}"></iframe>
+        </div>
+
+        <button type="button" onClick="{{ marcarVideo }}" class="{{ claseBotonVideo }}">{{ textoBotonVideo }}</button>
+      </div>
+    </section>
+
+
+    <!-- ══ 02 · APUNTES ══════════════════════════════════════════════════════ -->
+    <section id="apuntes" data-screen-label="02 Apuntes" class="nv-section curso-leccion" aria-labelledby="titulo-apuntes">
+      <div class="nv-container">
+
+        <div class="curso-leccion__split">
+          <div>
+            <span class="curso-leccion__kicker">{{ apuntesKicker }}</span>
+            <h2 id="titulo-apuntes">{{ tituloCapitulo }}</h2>
+          </div>
+          <p>{{ subtituloCapitulo }}. Lee los apuntes a tu ritmo y conserva el informe para consultarlo cuando lo necesites.</p>
+        </div>
+
+        <div class="curso-contexto">
+          <span class="curso-icon" aria-hidden="true">i</span>
+          <div>
+            <span class="curso-label">Contexto de la clase</span>
+            <p>{{ introCapitulo }}</p>
+          </div>
+        </div>
+
+        <div class="curso-notas">
+          <sc-for list="{{ apuntes }}" as="nota" hint-placeholder-count="4">
+            <details class="curso-nota" open="{{ nota.abierta }}">
+              <summary>
+                <span class="curso-icon">{{ nota.numero }}</span>
+                <span class="curso-nota__title">
+                  <strong>{{ nota.titulo }}</strong>
+                  <small>{{ nota.resumen }}</small>
+                </span>
+                <span class="curso-chevron" aria-hidden="true">▾</span>
+              </summary>
+              <div class="curso-nota__body">
+                <sc-for list="{{ nota.parrafos }}" as="parrafo" hint-placeholder-count="2">
+                  <p>{{ parrafo.texto }}</p>
+                </sc-for>
+                <sc-if value="{{ nota.tieneVinetas }}" hint-placeholder-val="{{ false }}">
+                  <ul>
+                    <sc-for list="{{ nota.vinetas }}" as="vineta" hint-placeholder-count="2">
+                      <li>{{ vineta.texto }}</li>
+                    </sc-for>
+                  </ul>
+                </sc-if>
+                <sc-if value="{{ nota.tieneFormula }}" hint-placeholder-val="{{ false }}">
+                  <p class="curso-formula">{{ nota.formula }}</p>
+                </sc-if>
+                <sc-if value="{{ nota.tieneApunte }}" hint-placeholder-val="{{ false }}">
+                  <aside class="curso-apunte">
+                    <strong>{{ nota.apunteTitulo }}</strong>
+                    <p>{{ nota.apunte }}</p>
+                  </aside>
+                </sc-if>
+              </div>
+            </details>
+          </sc-for>
+        </div>
+
+        <div class="curso-directrices">
+          <span class="curso-label">Apuntes del capítulo</span>
+          <h3>Cinco directrices de criterio</h3>
+          <ol>
+            <sc-for list="{{ directrices }}" as="directriz" hint-placeholder-count="5">
+              <li><span>{{ directriz.numero }}</span><span>{{ directriz.texto }}</span></li>
+            </sc-for>
+          </ol>
+        </div>
+
+        <div class="curso-acciones">
+          <button type="button" onClick="{{ marcarApuntes }}" class="{{ claseBotonApuntes }}">{{ textoBotonApuntes }}</button>
+          <a class="curso-btn-outline" href="#apuntes">⤓ {{ descargaTexto }}</a>
+        </div>
+
+      </div>
+    </section>
+
 
     <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
-    <!-- ============ 03 HERRAMIENTA ============ -->
-    <section id="leccion-mapa" data-screen-label="03 Herramienta" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
-      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">03 · Herramienta práctica</span>
-      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">Diagnostica tus cuatro pilares</h2>
-      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">Introduce cifras aproximadas para revisar flujo de caja, deseos, patrimonio y fondo de emergencia. Los datos permanecen en tu dispositivo.</p>
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
-          <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500; margin-bottom:14px">◍ Flujo mensual</span>
-          <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px">
-            <sc-for list="{{ camposFlujo }}" as="campo" hint-placeholder-count="4">
-              <label style="display:grid; grid-template-columns:minmax(0,1fr) 130px; gap:14px; align-items:center">
-                <span><b style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ campo.etiqueta }}</b><small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin-top:1px">{{ campo.ayuda }}</small></span>
-                <span style="position:relative"><input type="number" min="0" step="50" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}" style="width:100%; box-sizing:border-box; background:var(--color-bg); border:1px solid var(--color-divider); border-radius:var(--radius-md); color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; padding:9px 28px 9px 12px; transition:border-color .2s ease" style-focus="border-color:var(--color-accent)"><span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500">€</span></span>
-              </label>
-            </sc-for>
-          </div>
-          <span style="display:block; color:var(--color-text); font-size:13px; font-weight:500; margin-bottom:14px">▣ Tu fotografía</span>
-          <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px">
-            <sc-for list="{{ camposFoto }}" as="campo" hint-placeholder-count="3">
-              <label style="display:grid; grid-template-columns:minmax(0,1fr) 130px; gap:14px; align-items:center">
-                <span><b style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ campo.etiqueta }}</b><small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; margin-top:1px">{{ campo.ayuda }}</small></span>
-                <span style="position:relative"><input type="number" min="0" step="100" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}" style="width:100%; box-sizing:border-box; background:var(--color-bg); border:1px solid var(--color-divider); border-radius:var(--radius-md); color:var(--color-text); font-size:13.5px; font-weight:500; font-variant-numeric:tabular-nums; padding:9px 28px 9px 12px; transition:border-color .2s ease" style-focus="border-color:var(--color-accent)"><span style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; font-weight:500">€</span></span>
-              </label>
-            </sc-for>
-          </div>
-          <button type="button" onClick="{{ calcularMapa }}" style="width:100%; border:0; border-radius:999px; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:12px 20px; transition:transform .25s ease, background .25s ease" style-hover="background:#796cbf; transform:translateY(-2px)" style-active="transform:scale(.98)">Calcular mi mapa →</button>
-        </div>
-        <div aria-live="polite" style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
-          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:5px">Tu punto de partida</span>
-          <h3 style="color:var(--color-text); font-size:22px; font-weight:500; margin:0 0 4px">{{ mapaTitulo }}</h3>
-          <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.55; margin:0 0 18px">{{ mapaDescripcion }}</p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
-            <sc-for list="{{ resultados }}" as="res" hint-placeholder-count="4">
-              <div style="border:1px solid var(--color-divider); border-radius:var(--radius-md); background:#ffffff; padding:16px">
-                <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px">{{ res.etiqueta }}</span>
-                <strong style="display:block; white-space:nowrap; font-size:26px; font-weight:500; color:var(--color-text); font-variant-numeric:tabular-nums">{{ res.valor }}</strong>
-                <small style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.5; margin-top:6px">{{ res.ayuda }}</small>
-              </div>
-            </sc-for>
-          </div>
-          <sc-if value="{{ mapaCalculado }}" hint-placeholder-val="{{ false }}">
-            <div style="display:flex; gap:12px; align-items:flex-start; border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); margin-top:16px; padding:14px 18px">
-              <span style="color:var(--color-accent-300); font-size:15px; line-height:1.3">◎</span>
-              <div>
-                <span style="display:block; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px">Primera prioridad orientativa</span>
-                <strong style="color:var(--color-text); font-size:14px; font-weight:500; line-height:1.45">{{ prioridad }}</strong>
-              </div>
-            </div>
-          </sc-if>
-        </div>
-      </div>
-    </section>
 
-    <!-- ============ 04 CASO ============ -->
-    <section id="leccion-caso" data-screen-label="04 Caso práctico" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
-      <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">04 · Caso práctico</span>
-      <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0 0 8px">Elena y Marcos: cuatro pilares, una prioridad</h2>
-      <p style="max-width:46em; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14.5px; line-height:1.6; margin:0 0 22px">Lee su diagnóstico y decide cómo deberían ordenar el siguiente euro.</p>
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:24px; align-items:start">
-        <article style="border-radius:var(--radius-md); background:#262a60; box-shadow:var(--shadow-sm); padding:26px">
-          <span style="display:block; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:8px">Diagnóstico familiar</span>
-          <h3 style="color:var(--color-text); font-size:24px; font-weight:500; margin:0 0 18px">Ingresan 3.400 € al mes</h3>
-          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px">
-            <sc-for list="{{ cifrasCaso }}" as="cifra" hint-placeholder-count="6">
-              <div style="border:1px solid color-mix(in srgb, var(--color-text) 16%, transparent); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 6%, transparent); padding:11px 12px">
-                <small style="display:block; color:color-mix(in srgb, var(--color-text) 60%, transparent); font-size:10px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; margin-bottom:4px">{{ cifra.etiqueta }}</small>
-                <strong style="color:var(--color-text); font-size:15px; font-weight:500; font-variant-numeric:tabular-nums; white-space:nowrap">{{ cifra.valor }}</strong>
-              </div>
-            </sc-for>
-          </div>
-          <p style="color:color-mix(in srgb, var(--color-text) 74%, transparent); font-size:13px; line-height:1.65; margin:0">Además del ahorro tienen otros activos por 20.000 € y una deuda total de 18.000 €, parte de ella en una tarjeta con intereses elevados. El ahorro cubre menos de un mes de gastos indispensables: su patrimonio es positivo, pero todavía frágil.</p>
-        </article>
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px">
-          <span style="display:block; color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin-bottom:14px">Elige la primera acción más razonable</span>
-          <div style="display:flex; flex-direction:column; gap:10px">
-            <sc-for list="{{ opcionesCaso }}" as="opcion" hint-placeholder-count="4">
-              <button type="button" onClick="{{ opcion.elegir }}" style="{{ opcion.estilo }}">
-                <span style="{{ opcion.estiloLetra }}">{{ opcion.letra }}</span>
-                <span style="text-align:left; font-size:13px; line-height:1.5">{{ opcion.texto }}</span>
-              </button>
-            </sc-for>
-          </div>
-          <sc-if value="{{ casoRespondido }}" hint-placeholder-val="{{ false }}">
-            <div style="{{ estiloFeedbackCaso }}">
-              <strong style="display:block; font-size:13px; font-weight:500; margin-bottom:5px">{{ tituloFeedbackCaso }}</strong>
-              <p style="font-size:12.5px; line-height:1.6; margin:0">El margen ya es positivo, pero el airbag no llega a un mes y existe deuda cara. Revisar deseos libera más margen; conservar un colchón inicial evita nuevas deudas; y repartir el excedente entre seguridad y tarjeta fortalece a la vez el flujo de caja y el patrimonio.</p>
-            </div>
-          </sc-if>
-        </div>
-      </div>
-    </section>
+    <!-- ══ 03 · HERRAMIENTA ══════════════════════════════════════════════════ -->
+    <section id="leccion-mapa" data-screen-label="03 Herramienta" class="nv-section curso-leccion" aria-labelledby="titulo-mapa">
+      <div class="nv-container">
+        <span class="curso-leccion__kicker">03 · Herramienta práctica</span>
+        <h2 id="titulo-mapa">Diagnostica tus cuatro pilares</h2>
+        <p class="curso-leccion__lead">Introduce cifras aproximadas para revisar flujo de caja, deseos, patrimonio y fondo de emergencia. Los datos permanecen en tu dispositivo.</p>
 
-    <!-- ============ 05 COMPROBACIÓN ============ -->
-    <section id="leccion-quiz" data-screen-label="05 Comprobación" style="max-width:1240px; margin:0 auto; padding:64px 40px 0; scroll-margin-top:96px">
-      <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.8fr); gap:44px; align-items:end; margin-bottom:22px">
-        <div>
-          <span style="display:block; color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; margin-bottom:10px">05 · Comprobación</span>
-          <h2 style="color:var(--color-text); font-size:30px; font-weight:500; margin:0">Cinco preguntas para cerrar</h2>
-        </div>
-        <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13.5px; line-height:1.6; margin:0">No es un examen. Cada respuesta incluye una explicación para reforzar la idea.</p>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:14px">
-        <sc-for list="{{ preguntas }}" as="pregunta" hint-placeholder-count="5">
-          <fieldset style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); margin:0; padding:20px 24px">
-            <legend style="display:flex; align-items:baseline; gap:12px; float:left; width:100%; color:var(--color-text); font-size:14.5px; font-weight:500; margin-bottom:14px; padding:0">
-              <span style="flex-shrink:0; font-size:17px; color:var(--color-accent)">{{ pregunta.numero }}</span>
-              {{ pregunta.texto }}
-            </legend>
-            <div style="clear:both; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px">
-              <sc-for list="{{ pregunta.opciones }}" as="opcion" hint-placeholder-count="3">
-                <label style="{{ opcion.estilo }}">
-                  <input type="radio" name="{{ pregunta.grupo }}" checked="{{ opcion.seleccionada }}" onChange="{{ opcion.marcar }}" style="accent-color:var(--color-accent)">
-                  <span style="font-size:13px; line-height:1.45">{{ opcion.texto }}</span>
+        <div class="curso-tool">
+
+          <div class="curso-panel">
+            <span class="curso-panel__title">◍ Flujo mensual</span>
+            <div class="curso-campos">
+              <sc-for list="{{ camposFlujo }}" as="campo" hint-placeholder-count="4">
+                <label class="curso-campo">
+                  <span><b>{{ campo.etiqueta }}</b><small>{{ campo.ayuda }}</small></span>
+                  <span class="curso-campo__input">
+                    <input type="number" min="0" step="50" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
+                    <span class="curso-campo__unit">€</span>
+                  </span>
                 </label>
               </sc-for>
             </div>
-            <sc-if value="{{ pregunta.mostrarExplicacion }}" hint-placeholder-val="{{ false }}">
-              <p style="border-left:2px solid #2568A9; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:12.5px; line-height:1.6; margin:14px 0 0; padding-left:12px">{{ pregunta.explicacion }}</p>
-            </sc-if>
-          </fieldset>
-        </sc-for>
-      </div>
-      <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:18px">
-        <button type="button" onClick="{{ comprobarQuiz }}" disabled="{{ quizIncompleto }}" style="{{ estiloBotonQuiz }}">Comprobar respuestas →</button>
-        <sc-if value="{{ quizComprobado }}" hint-placeholder-val="{{ false }}">
-          <div style="display:flex; align-items:center; gap:14px; border-radius:var(--radius-md); background:color-mix(in srgb, #3C9A69 8%, transparent); border:1px solid color-mix(in srgb, #3C9A69 30%, transparent); padding:12px 18px">
-            <span style="font-size:24px; font-weight:500; color:var(--color-accent-300); font-variant-numeric:tabular-nums">{{ puntuacion }}</span>
-            <div>
-              <strong style="display:block; color:var(--color-text); font-size:13px; font-weight:500">{{ tituloQuiz }}</strong>
-              <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:12px; margin:0">Puedes repetir la comprobación tantas veces como quieras.</p>
+
+            <span class="curso-panel__title">▣ Tu fotografía</span>
+            <div class="curso-campos">
+              <sc-for list="{{ camposFoto }}" as="campo" hint-placeholder-count="3">
+                <label class="curso-campo">
+                  <span><b>{{ campo.etiqueta }}</b><small>{{ campo.ayuda }}</small></span>
+                  <span class="curso-campo__input">
+                    <input type="number" min="0" step="100" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
+                    <span class="curso-campo__unit">€</span>
+                  </span>
+                </label>
+              </sc-for>
             </div>
+
+            <button type="button" onClick="{{ calcularMapa }}" class="curso-btn-calcular">Calcular mi mapa →</button>
           </div>
-        </sc-if>
+
+          <div class="curso-panel" aria-live="polite">
+            <span class="curso-label">Tu punto de partida</span>
+            <h3>{{ mapaTitulo }}</h3>
+            <p class="curso-leccion__lead">{{ mapaDescripcion }}</p>
+
+            <div class="curso-resultados">
+              <sc-for list="{{ resultados }}" as="res" hint-placeholder-count="4">
+                <div class="curso-resultado">
+                  <span>{{ res.etiqueta }}</span>
+                  <strong>{{ res.valor }}</strong>
+                  <small>{{ res.ayuda }}</small>
+                </div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ mapaCalculado }}" hint-placeholder-val="{{ false }}">
+              <div class="curso-prioridad">
+                <span aria-hidden="true">◎</span>
+                <div>
+                  <span class="curso-label">Primera prioridad orientativa</span>
+                  <strong>{{ prioridad }}</strong>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ 04 · CASO PRÁCTICO ════════════════════════════════════════════════ -->
+    <section id="leccion-caso" data-screen-label="04 Caso práctico" class="nv-section curso-leccion" aria-labelledby="titulo-caso">
+      <div class="nv-container">
+        <span class="curso-leccion__kicker">04 · Caso práctico</span>
+        <h2 id="titulo-caso">Elena y Marcos: cuatro pilares, una prioridad</h2>
+        <p class="curso-leccion__lead">Lee su diagnóstico y decide cómo deberían ordenar el siguiente euro.</p>
+
+        <div class="curso-tool">
+
+          <article class="curso-caso">
+            <span class="curso-label">Diagnóstico familiar</span>
+            <h3>Ingresan 3.400 € al mes</h3>
+            <div class="curso-cifras">
+              <sc-for list="{{ cifrasCaso }}" as="cifra" hint-placeholder-count="6">
+                <div class="curso-cifra">
+                  <small>{{ cifra.etiqueta }}</small>
+                  <strong>{{ cifra.valor }}</strong>
+                </div>
+              </sc-for>
+            </div>
+            <p>Además del ahorro tienen otros activos por 20.000 € y una deuda total de 18.000 €, parte de ella en una tarjeta con intereses elevados. El ahorro cubre menos de un mes de gastos indispensables: su patrimonio es positivo, pero todavía frágil.</p>
+          </article>
+
+          <div class="curso-panel">
+            <span class="curso-label">Elige la primera acción más razonable</span>
+            <div class="curso-opciones">
+              <sc-for list="{{ opcionesCaso }}" as="opcion" hint-placeholder-count="4">
+                <button type="button" onClick="{{ opcion.elegir }}" class="{{ opcion.clase }}">
+                  <span class="{{ opcion.claseLetra }}">{{ opcion.letra }}</span>
+                  <span class="curso-opcion__texto">{{ opcion.texto }}</span>
+                </button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ casoRespondido }}" hint-placeholder-val="{{ false }}">
+              <div class="{{ claseFeedbackCaso }}">
+                <strong>{{ tituloFeedbackCaso }}</strong>
+                <p>El margen ya es positivo, pero el airbag no llega a un mes y existe deuda cara. Revisar deseos libera más margen; conservar un colchón inicial evita nuevas deudas; y repartir el excedente entre seguridad y tarjeta fortalece a la vez el flujo de caja y el patrimonio.</p>
+              </div>
+            </sc-if>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ 05 · COMPROBACIÓN ═════════════════════════════════════════════════ -->
+    <section id="leccion-quiz" data-screen-label="05 Comprobación" class="nv-section curso-leccion" aria-labelledby="titulo-quiz">
+      <div class="nv-container">
+
+        <div class="curso-leccion__split">
+          <div>
+            <span class="curso-leccion__kicker">05 · Comprobación</span>
+            <h2 id="titulo-quiz">Cinco preguntas para cerrar</h2>
+          </div>
+          <p>No es un examen. Cada respuesta incluye una explicación para reforzar la idea.</p>
+        </div>
+
+        <div class="curso-quiz">
+          <sc-for list="{{ preguntas }}" as="pregunta" hint-placeholder-count="5">
+            <fieldset class="curso-pregunta">
+              <legend>
+                <span>{{ pregunta.numero }}</span>
+                {{ pregunta.texto }}
+              </legend>
+              <div class="curso-pregunta__opciones">
+                <sc-for list="{{ pregunta.opciones }}" as="opcion" hint-placeholder-count="3">
+                  <label class="{{ opcion.clase }}">
+                    <input type="radio" name="{{ pregunta.grupo }}" checked="{{ opcion.seleccionada }}" onChange="{{ opcion.marcar }}">
+                    <span>{{ opcion.texto }}</span>
+                  </label>
+                </sc-for>
+              </div>
+              <sc-if value="{{ pregunta.mostrarExplicacion }}" hint-placeholder-val="{{ false }}">
+                <p class="curso-explicacion">{{ pregunta.explicacion }}</p>
+              </sc-if>
+            </fieldset>
+          </sc-for>
+        </div>
+
+        <div class="curso-acciones">
+          <button type="button" onClick="{{ comprobarQuiz }}" disabled="{{ quizIncompleto }}" class="{{ claseBotonQuiz }}">Comprobar respuestas →</button>
+          <sc-if value="{{ quizComprobado }}" hint-placeholder-val="{{ false }}">
+            <div class="curso-puntuacion">
+              <span>{{ puntuacion }}</span>
+              <div>
+                <strong>{{ tituloQuiz }}</strong>
+                <p>Puedes repetir la comprobación tantas veces como quieras.</p>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
       </div>
     </section>
     </sc-if>
+
+
     <sc-if value="{{ noEsCapituloUno }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Partes prácticas" style="max-width:1240px; margin:0 auto; padding:64px 40px 0">
-        <div style="display:flex; gap:16px; align-items:flex-start; border:1px dashed #6b7686; border-radius:var(--radius-md); background:var(--color-surface); padding:24px 28px">
-          <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:17px">◫</span>
-          <div>
-            <strong style="display:block; color:var(--color-text); font-size:14px; font-weight:500; margin-bottom:4px">03 – 05 · Herramienta, caso práctico y comprobación</strong>
-            <p style="color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:13px; line-height:1.6; margin:0">Las partes prácticas de este capítulo siguen la misma plantilla modernizada que se muestra en el capítulo 1.</p>
+      <section data-screen-label="Partes prácticas" class="nv-section">
+        <div class="nv-container">
+          <div class="curso-sin-practica">
+            <span aria-hidden="true">◫</span>
+            <div>
+              <strong>03 – 05 · Herramienta, caso práctico y comprobación</strong>
+              <p>Las partes prácticas de este capítulo siguen la misma plantilla modernizada que se muestra en el capítulo 1.</p>
+            </div>
           </div>
         </div>
       </section>
     </sc-if>
 
-    <!-- ============ CIERRE ============ -->
-    <section data-screen-label="Cierre del capítulo" style="max-width:1240px; margin:0 auto; padding:56px 40px 0">
-      <div style="{{ estiloCierre }}">
-        <div style="display:flex; gap:18px; align-items:flex-start">
-          <span style="{{ estiloPuntoCierre }}"></span>
-          <div>
-            <small style="display:block; font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin-bottom:6px; opacity:.75">{{ kickerCierre }}</small>
-            <h2 style="font-size:26px; font-weight:500; margin:0 0 8px">{{ tituloCierre }}</h2>
-            <p style="max-width:44em; font-size:13.5px; line-height:1.6; margin:0; opacity:.85">{{ textoCierre }}</p>
+
+    <!-- ══ CIERRE ════════════════════════════════════════════════════════════ -->
+    <section data-screen-label="Cierre del capítulo" class="nv-section">
+      <div class="nv-container">
+        <div class="{{ claseCierre }}">
+          <div class="curso-cierre__head">
+            <span class="curso-cierre__dot" aria-hidden="true"></span>
+            <div>
+              <small>{{ kickerCierre }}</small>
+              <h2>{{ tituloCierre }}</h2>
+              <p>{{ textoCierre }}</p>
+            </div>
+          </div>
+          <div class="curso-cierre__actions">
+            <sc-if value="{{ capituloCompleto }}" hint-placeholder-val="{{ false }}">
+              <button type="button" class="curso-btn-quiz">Imprimir mi resumen ⎙</button>
+            </sc-if>
+            <button type="button" onClick="{{ reiniciar }}" class="curso-btn-reset">↺ Reiniciar capítulo</button>
           </div>
         </div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
-          <sc-if value="{{ capituloCompleto }}" hint-placeholder-val="{{ false }}">
-            <button type="button" style="border:0; border-radius:999px; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 20px; transition:background .25s ease" style-hover="background:color-mix(in srgb, var(--color-accent) 12%, transparent)">Imprimir mi resumen ⎙</button>
-          </sc-if>
-          <button type="button" onClick="{{ reiniciar }}" style="border:1px solid rgba(11,35,71,.25); border-radius:999px; background:transparent; color:inherit; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 20px; transition:background .25s ease" style-hover="background:rgba(11,35,71,.06)">↺ Reiniciar capítulo</button>
-        </div>
+
+        <p class="nv-disclaimer nv-disclaimer--center">Contenido educativo general. No constituye asesoramiento financiero, fiscal o jurídico personalizado. Las cifras introducidas permanecen en este dispositivo.</p>
       </div>
-      <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11.5px; line-height:1.6; margin:22px 0 0; text-align:center">Contenido educativo general. No constituye asesoramiento financiero, fiscal o jurídico personalizado. Las cifras introducidas permanecen en este dispositivo.</p>
     </section>
+
   </main>
 
-  <!-- ============ FOOTER ============ -->
   <footer data-screen-label="Footer" class="nuvia-site-footer">
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -412,7 +512,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -422,9 +522,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -435,9 +536,10 @@
       </div>
     </div>
   </footer>
-</div>
 
+</div>
 </x-dc>
+
 <script type="text/x-dc" data-dc-script data-props="{&quot;capituloInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;1&quot;, &quot;options&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}, &quot;estadoProgreso&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;a-medias&quot;, &quot;options&quot;: [&quot;nuevo&quot;, &quot;a-medias&quot;, &quot;completado&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}}">
 class Component extends DCLogic {
   state = {};
@@ -531,7 +633,7 @@ class Component extends DCLogic {
         estado: i === capIdx ? 'Capítulo actual' : 'Contenido disponible',
         ariaCurrent: i === capIdx ? 'page' : undefined,
         abrir: () => this.setState({ capitulo: i, completadas: i === 0 ? completadas : [], quizSel: {}, quizComprobado: false, casoSel: null, calculado: false }),
-        estiloTab: 'display:flex; align-items:center; gap:11px; border-radius:var(--radius-md); cursor:pointer; padding:13px 15px; transition:transform .2s ease, box-shadow .2s ease; ' + (i === capIdx ? 'border:1px solid var(--color-accent); background:var(--color-surface); box-shadow:var(--shadow-md)' : 'border:1px solid var(--color-divider); background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface))'),
+        claseTab: 'curso-tab' + (i === capIdx ? ' is-active' : ''),
       })),
       metaCapitulo: 'Capítulo ' + Number(cap.numero) + ' de 5',
       numeroCapitulo: String(Number(cap.numero)).padStart(2, '0'),
@@ -552,13 +654,13 @@ class Component extends DCLogic {
       pasos: idsPaso.map((id, i) => ({
         etiqueta: etiquetasPaso[i], destino: destinos[i],
         marca: (esC1 && completadas.includes(id)) ? '✓' : '',
-        estiloCheck: 'display:inline-flex; width:20px; height:20px; align-items:center; justify-content:center; border-radius:999px; font-size:11px; ' + ((esC1 && completadas.includes(id)) ? 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)' : 'border:1.5px solid var(--color-divider); color:transparent'),
+        claseCheck: 'curso-check' + ((esC1 && completadas.includes(id)) ? ' is-done' : ''),
       })),
       esCapituloUno: esC1,
       noEsCapituloUno: !esC1,
       marcarVideo: () => { if (esC1) marcar('video'); },
       textoBotonVideo: (esC1 && completadas.includes('video')) ? '✓ Vídeo completado' : 'Marcar vídeo como visto →',
-      estiloBotonVideo: 'margin-top:16px; border-radius:999px; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 22px; transition:background .2s ease, color .2s ease; ' + ((esC1 && completadas.includes('video')) ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:1px solid var(--color-accent); background:transparent; color:var(--color-text)'),
+      claseBotonVideo: 'curso-btn-marcar curso-btn-marcar--video' + ((esC1 && completadas.includes('video')) ? ' is-done' : ''),
       apuntes: this.apuntesCapitulo1().map((n, i) => ({
         numero: '0' + (i + 1), titulo: n.titulo, resumen: n.parrafos[0], abierta: i === 0,
         parrafos: n.parrafos.map((texto) => ({ texto })),
@@ -569,7 +671,7 @@ class Component extends DCLogic {
       directrices: this.directricesCapitulo1().map((texto, i) => ({ numero: '0' + (i + 1), texto })),
       marcarApuntes: () => { if (esC1) marcar('notes'); },
       textoBotonApuntes: (esC1 && completadas.includes('notes')) ? '✓ Apuntes completados' : 'He leído estos apuntes →',
-      estiloBotonApuntes: 'border-radius:999px; cursor:pointer; font-size:12px; font-weight:500; letter-spacing:.05em; padding:11px 22px; transition:background .2s ease, color .2s ease, transform .2s ease; ' + ((esC1 && completadas.includes('notes')) ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:0; background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)'),
+      claseBotonApuntes: 'curso-btn-marcar' + ((esC1 && completadas.includes('notes')) ? ' is-done' : ''),
       camposFlujo: [campo('income', 'Ingresos netos', 'Lo que entra cada mes'), campo('essentials', 'Gastos esenciales', 'Vivienda, alimentación, suministros…'), campo('flexible', 'Deseos y gastos prescindibles', 'Ocio, restaurantes, viajes, suscripciones…'), campo('debtPayment', 'Cuotas de deuda', 'Pagos mínimos mensuales')],
       camposFoto: [campo('savings', 'Ahorro disponible', 'Dinero líquido y accesible'), campo('assets', 'Otros activos', 'Inversiones y bienes, sin incluir el ahorro anterior'), campo('debt', 'Deuda pendiente', 'Hipoteca, préstamos, tarjetas…')],
       calcularMapa: () => { this.setState({ calculado: true }); marcar('map'); },
@@ -598,25 +700,25 @@ class Component extends DCLogic {
         return {
           letra: String.fromCharCode(65 + i), texto,
           elegir: () => { this.setState({ casoSel: i }); marcar('case'); },
-          estilo: 'display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:start; width:100%; border-radius:var(--radius-md); cursor:pointer; padding:12px 14px; text-align:left; transition:border-color .2s ease, background .2s ease; ' + (correctaVisible ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:var(--color-text)' : sel ? 'border:1px solid var(--color-accent); background:rgba(11,35,71,.04); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
-          estiloLetra: 'display:inline-flex; width:24px; height:24px; align-items:center; justify-content:center; border-radius:999px; font-size:11px; font-weight:500; ' + (correctaVisible ? 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent)' : 'background:#ffffff; color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
+          clase: 'curso-opcion' + (correctaVisible ? ' is-correct' : sel ? ' is-selected' : ''),
+          claseLetra: 'curso-opcion__letra' + (correctaVisible ? ' is-correct' : ''),
         };
       }),
       casoRespondido: casoSel !== null,
       tituloFeedbackCaso: casoSel === 2 ? 'Buena decisión' : 'Revísalo una vez más',
-      estiloFeedbackCaso: 'border-radius:var(--radius-md); margin-top:14px; padding:14px 18px; ' + (casoSel === 2 ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : 'border:1px solid rgba(148,110,41,.4); background:rgba(148,110,41,.08); color:#946E29'),
+      claseFeedbackCaso: 'curso-feedback' + (casoSel === 2 ? ' is-correct' : ''),
       preguntas: preguntasBase.map((p, qi) => ({
         numero: String(qi + 1), texto: p.texto, grupo: 'pregunta-' + qi,
         explicacion: p.explicacion, mostrarExplicacion: quizComprobado,
         opciones: p.opciones.map((texto, oi) => ({
           texto, seleccionada: quizSel[qi] === oi,
           marcar: () => this.setState({ quizSel: Object.assign({}, quizSel, { [qi]: oi }), quizComprobado: false }),
-          estilo: 'display:flex; align-items:flex-start; gap:9px; border-radius:var(--radius-md); cursor:pointer; padding:11px 13px; transition:border-color .2s ease, background .2s ease; ' + (quizComprobado && oi === p.correcta ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:#3C9A69' : quizSel[qi] === oi ? 'border:1px solid var(--color-accent); background:rgba(11,35,71,.04); color:var(--color-text)' : 'border:1px solid var(--color-divider); background:var(--color-surface); color:color-mix(in srgb, var(--color-text) 68%, transparent)'),
+          clase: 'curso-radio' + (quizComprobado && oi === p.correcta ? ' is-correct' : quizSel[qi] === oi ? ' is-selected' : ''),
         })),
       })),
       quizIncompleto: Object.keys(quizSel).length !== preguntasBase.length,
       comprobarQuiz: () => { this.setState({ quizComprobado: true }); marcar('quiz'); },
-      estiloBotonQuiz: 'border:0; border-radius:999px; font-size:12px; font-weight:500; letter-spacing:.05em; padding:12px 24px; transition:background .25s ease, transform .25s ease; ' + (Object.keys(quizSel).length !== preguntasBase.length ? 'background:var(--color-neutral-800); color:color-mix(in srgb, var(--color-text) 45%, transparent); cursor:not-allowed' : 'background:transparent; border:1px solid var(--color-accent); color:var(--color-accent); cursor:pointer'),
+      claseBotonQuiz: 'curso-btn-quiz' + (Object.keys(quizSel).length !== preguntasBase.length ? ' is-disabled' : ''),
       quizComprobado,
       puntuacion: puntos + '/5',
       tituloQuiz: puntos === 5 ? 'Has comprendido los cuatro pilares' : 'Buen comienzo. Revisa las explicaciones.',
@@ -625,8 +727,7 @@ class Component extends DCLogic {
       kickerCierre: esC1 ? (progreso === 100 ? 'Capítulo completado' : 'Tu siguiente paso') : 'Contenido disponible',
       tituloCierre: esC1 ? (progreso === 100 ? 'Ya tienes tu punto de partida' : 'Te falta completar ' + (5 - completadas.length) + (5 - completadas.length === 1 ? ' parte' : ' partes')) : 'Continúa con la clase y los apuntes',
       textoCierre: esC1 && progreso === 100 ? 'Has revisado tu flujo de caja, tus deseos, tu patrimonio y tu fondo de emergencia. Ya tienes un diagnóstico para ordenar tus siguientes decisiones.' : 'Continúa la clase para guardar el capítulo como completado.',
-      estiloCierre: 'display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; border-radius:var(--radius-md); padding:28px 32px; ' + (esC1 && progreso === 100 ? 'border:1px solid color-mix(in srgb, #3C9A69 40%, transparent); background:color-mix(in srgb, #3C9A69 10%, transparent); color:var(--color-text)' : 'background:var(--color-surface); color:var(--color-text); box-shadow:var(--shadow-sm)'),
-      estiloPuntoCierre: 'flex-shrink:0; width:10px; height:10px; border-radius:999px; margin-top:8px; ' + (esC1 && progreso === 100 ? 'background:#3C9A69' : 'background:#7C9A44; animation:nv-pulse 2.4s ease-out infinite'),
+      claseCierre: 'curso-cierre' + (esC1 && progreso === 100 ? ' is-complete' : ''),
       reiniciar: () => this.setState({ completadas: [], calculado: false, casoSel: null, quizSel: {}, quizComprobado: false, dinero: undefined }),
     };
   }

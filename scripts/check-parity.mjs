@@ -56,7 +56,9 @@ const expectedHomeLinks = [
 for (const link of expectedHomeLinks) {
   if (!web2Home.includes(link)) throw new Error(`Falta el acceso de portada: ${link}`);
 }
-if (!/<script src="\.\/web2-integration\.js(?:\?[^\"]+)?"><\/script>/.test(web2Home)) {
+/* Acepta `defer` y la ruta con o sin `./`: la portada ahora la carga diferida,
+   que no bloquea el parseo. Lo que importa es que la integración esté. */
+if (!/<script[^>]*\ssrc="\.?\/?web2-integration\.js(?:\?[^"]+)?"[^>]*><\/script>/.test(web2Home)) {
   throw new Error('La portada no carga la integración de contenido diario y mercados');
 }
 if (!/<a href="mercados\.html"[^>]*>Mercados<\/a>/.test(web2Home)) {
@@ -79,7 +81,9 @@ for (const cover of [
     throw new Error(`El libro debe aparecer exactamente una vez en Lecturas con Criterio: ${cover}`);
   }
 }
-if ((readingsPage.match(/class="lecturas-feature-card"/g) || []).length !== 4) {
+/* La clase pasó de .lecturas-feature-card a .lecturas-card en la migración.
+   La comprobación es la misma: cuatro fichas, una por libro. */
+if ((readingsPage.match(/class="lecturas-card"/g) || []).length !== 4) {
   throw new Error('Lecturas con Criterio debe mostrar un libro en cada uno de sus cuatro bloques');
 }
 if (/onclick=["']location\.href/i.test(web2Home)) {
@@ -92,10 +96,15 @@ if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embed
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }
-for (const suiteView of ['portfolio', 'companies']) {
-  if (!topicsPage.includes(`cartera.html?vista=${suiteView}`)) {
-    throw new Error(`Falta el acceso a la vista analítica: ${suiteView}`);
-  }
+/* Antes esto se comprobaba en temas.html, pero vivía dentro de un
+   <sc-if value="{{ false }}"> que nunca se renderizaba: el contrato validaba
+   código muerto. Ahora se comprueba en la navegación común de la portada,
+   que es donde el acceso existe de verdad. */
+if (!web2Home.includes('cartera.html?vista=companies')) {
+  throw new Error('Falta el acceso a la vista de análisis de empresas');
+}
+if (!/href="cartera\.html"/.test(web2Home)) {
+  throw new Error('Falta el acceso a la vista de cartera');
 }
 for (const [title, guide] of [
   ['Calendario fiscal', 'calendar'],
@@ -116,16 +125,27 @@ if (!coreBridge.includes("params.get('embedded') === 'web2'") || !coreBridge.inc
   throw new Error('El puente de la suite analítica no prepara el modo integrado o su altura dinámica');
 }
 
-const cloudDesignMarkers = [
-  'background:#1C3A5E',
-  'padding:100px 48px 48px; min-height:460px',
-  'font-size:56px; line-height:1.08',
+/* Diseño de portada.
+
+   Antes esto comprobaba cadenas de estilo inline literales —'background:#1C3A5E',
+   'font-size:56px; line-height:1.08', 'padding:100px 48px 48px'— como contrato.
+   El efecto real era el contrario del buscado: el guardarraíl impedía sacar los
+   estilos del markup, así que la portada no podía sistematizarse sin romper la
+   validación.
+
+   Ahora se comprueba lo que de verdad importa: que la portada siga usando el
+   héroe fotográfico del sistema, su titular y el banner editorial. El aspecto
+   lo garantizan los tokens; esto garantiza la estructura. */
+const marcadoresPortada = [
+  'nv-hero nv-hero--photo home-hero',
   'Información clara,<br>decisiones con propósito.',
-  'background:linear-gradient(95deg, rgba(28,58,94,.94)',
-  'aspect-ratio:2879/546',
+  'class="home-lecturas"',
+  'data-daily-news="title"',
 ];
-for (const marker of cloudDesignMarkers) {
-  if (!web2Home.includes(marker)) throw new Error(`La portada ya no respeta el diseño Cloud Design: ${marker}`);
+for (const marcador of marcadoresPortada) {
+  if (!web2Home.includes(marcador)) {
+    throw new Error(`La portada ya no respeta su estructura de diseño: ${marcador}`);
+  }
 }
 
 const daily = JSON.parse(await readFile(resolve(root, 'data/daily-content.json'), 'utf8'));

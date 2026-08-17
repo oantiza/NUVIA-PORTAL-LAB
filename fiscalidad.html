@@ -3,40 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Recursos y guías de NUVIA para comprender la fiscalidad personal y tomar decisiones informadas en Bizkaia.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/fiscalidad.html">
-<title>Fiscalidad | NUVIA</title>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+<meta name="description" content="Recursos y guías de NUVIA para comprender la fiscalidad personal y tomar decisiones informadas según tu territorio fiscal.">
+
+<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/fiscalidad.html -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/fiscalidad.html">
+
+<title>Mis impuestos | NUVIA</title>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<!-- Hojas en el <head>, no dentro de <helmet>: elimina el parpadeo. -->
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
+
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    select option { background: var(--color-surface); color: var(--color-text); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  </style>
-</helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
 
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -46,152 +46,238 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics is-active">
           <summary aria-current="page">Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="tema" data-screen-label="Cabecera Mis impuestos" style="background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
-      <div style="max-width:1240px; margin:0 auto; padding:64px 48px 32px">
-      <div style="display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr); gap:48px; align-items:end">
-        <div>
-          <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861; margin-bottom:16px"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tema clave · Fiscalidad</span>
-          <h1 style="color:#ffffff; font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 14px">Mis impuestos</h1>
-          <p style="max-width:52ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.6; margin:0">Fiscalidad personal y familiar aplicada al ahorro, la inversión, el patrimonio y las decisiones sucesorias.</p>
-        </div>
-        <div style="border-radius:var(--radius-md); background:rgba(255,255,255,.08); backdrop-filter:blur(8px); box-shadow:0 0 0 1px rgba(255,255,255,.14); padding:20px">
-          <label for="residencia-fiscal" style="display:block; color:rgba(255,255,255,.62); font-size:10.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin-bottom:9px">¿Dónde tienes tu residencia fiscal?</label>
-          <div style="position:relative">
-            <select id="residencia-fiscal" data-dc-value="{{ seleccion }}" onChange="{{ cambiarTerritorio }}" aria-describedby="ayuda-residencia" style="width:100%; appearance:none; border:1px solid rgba(255,255,255,.25); border-radius:var(--radius-md); background:#ffffff; color:#0B2347; cursor:pointer; font-size:14.5px; font-weight:500; padding:12px 40px 12px 14px; transition:border-color .2s ease" style-focus="border-color:#9DB861">
-              <option value="sin-seleccion" disabled="{{ true }}">Selecciona tu territorio</option>
-              <option value="bizkaia">Bizkaia</option>
-              <option value="araba">Araba / Álava</option>
-              <option value="gipuzkoa">Gipuzkoa</option>
-              <option value="navarra">Navarra</option>
-              <option value="common-territory">Territorio común</option>
-              <option value="unsure">No estoy seguro</option>
-            </select>
-            <span style="position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#0B2347; font-size:11px; pointer-events:none">▾</span>
+  <main id="contenido">
+
+    <!-- ══ HÉROE INSTITUCIONAL ═══════════════════════════════════════════════
+         El selector de territorio ocupa el panel lateral: es la decisión que
+         condiciona todo lo demás, así que va antes que cualquier contenido.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="tema" data-screen-label="Cabecera Mis impuestos" class="nv-hero nv-hero--institutional">
+      <div class="nv-container">
+        <div class="nv-hero__inner">
+
+          <div>
+            <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+              <ol>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="temas.html">Temas clave</a></li>
+                <li><span aria-current="page">Mis impuestos</span></li>
+              </ol>
+            </nav>
+
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Tema clave · Fiscalidad</p>
+
+            <h1>Mis impuestos</h1>
+
+            <p class="nv-hero__lead">
+              Fiscalidad personal y familiar aplicada al ahorro, la inversión,
+              el patrimonio y las decisiones sucesorias.
+            </p>
           </div>
-          <div id="ayuda-residencia" aria-live="polite" style="display:flex; align-items:flex-start; gap:11px; border-top:1px solid rgba(255,255,255,.22); margin-top:16px; padding-top:15px">
-            <sc-if value="{{ hayTerritorio }}" hint-placeholder-val="{{ true }}">
-              <span style="color:#9DB861; font-size:13px; line-height:1.3">◆</span>
-              <div>
-                <span style="display:block; color:rgba(255,255,255,.52); font-size:10px; letter-spacing:.12em; text-transform:uppercase">{{ regimen }}</span>
-                <span style="display:block; color:#ffffff; font-size:13px; font-weight:500; margin-top:3px">{{ autoridad }}</span>
-              </div>
-            </sc-if>
-            <sc-if value="{{ sinTerritorio }}" hint-placeholder-val="{{ false }}">
-              <span style="color:#9DB861; font-size:13px; line-height:1.3">?</span>
-              <p style="color:rgba(255,255,255,.70); font-size:12.5px; line-height:1.55; margin:0">{{ ayudaSinTerritorio }}</p>
-            </sc-if>
-          </div>
+
+          <aside class="fiscal-selector">
+            <label class="fiscal-selector__label" for="residencia-fiscal">
+              ¿Dónde tienes tu residencia fiscal?
+            </label>
+
+            <div class="fiscal-selector__field">
+              <select id="residencia-fiscal"
+                      data-dc-value="{{ seleccion }}"
+                      onChange="{{ cambiarTerritorio }}"
+                      aria-describedby="ayuda-residencia">
+                <option value="sin-seleccion" disabled="{{ true }}">Selecciona tu territorio</option>
+                <option value="bizkaia">Bizkaia</option>
+                <option value="araba">Araba / Álava</option>
+                <option value="gipuzkoa">Gipuzkoa</option>
+                <option value="navarra">Navarra</option>
+                <option value="common-territory">Territorio común</option>
+                <option value="unsure">No estoy seguro</option>
+              </select>
+            </div>
+
+            <div class="fiscal-selector__status" id="ayuda-residencia" aria-live="polite">
+              <sc-if value="{{ hayTerritorio }}" hint-placeholder-val="{{ true }}">
+                <span class="fiscal-selector__mark" aria-hidden="true">◆</span>
+                <div>
+                  <span class="fiscal-selector__regime">{{ regimen }}</span>
+                  <span class="fiscal-selector__authority">{{ autoridad }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ sinTerritorio }}" hint-placeholder-val="{{ false }}">
+                <span class="fiscal-selector__mark" aria-hidden="true">?</span>
+                <p class="fiscal-selector__help">{{ ayudaSinTerritorio }}</p>
+              </sc-if>
+            </div>
+          </aside>
+
         </div>
       </div>
-      <div style="height:1px; margin-top:40px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
-    </div>
     </section>
 
+
+    <!-- ══ ESTADO 1 · SIN TERRITORIO ═════════════════════════════════════════ -->
     <sc-if value="{{ estadoVacio }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Primer paso" style="max-width:1240px; margin:0 auto; padding:56px 48px 84px">
-        <div style="max-width:720px; margin:0 auto; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); text-align:center; padding:42px 46px">
-          <span style="display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:20px; margin-bottom:18px">§</span>
-          <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Primer paso</p>
-          <h2 style="font-size:30px; font-weight:500; line-height:1.12; margin:0 0 14px">Sitúa tu territorio fiscal</h2>
-          <p style="max-width:52ch; margin:0 auto; color:color-mix(in srgb, var(--color-text) 68%, transparent); font-size:14px; line-height:1.65">Las fechas, modelos y reglas cambian según la administración competente. Selecciona una opción para evitar que se muestre normativa de otro territorio.</p>
+      <section data-screen-label="Primer paso" class="nv-section" aria-labelledby="primer-paso">
+        <div class="nv-container">
+          <div class="fiscal-paso">
+            <span class="fiscal-paso__icon" aria-hidden="true">§</span>
+            <p class="nv-eyebrow">Primer paso</p>
+            <h2 id="primer-paso">Sitúa tu territorio fiscal</h2>
+            <p>
+              Las fechas, modelos y reglas cambian según la administración
+              competente. Selecciona una opción para evitar que se muestre
+              normativa de otro territorio.
+            </p>
+          </div>
         </div>
       </section>
     </sc-if>
+
+
+    <!-- ══ ESTADO 2 · NO ESTOY SEGURO ════════════════════════════════════════ -->
     <sc-if value="{{ estadoInseguro }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Antes de continuar" style="max-width:1240px; margin:0 auto; padding:56px 48px 84px">
-        <div style="max-width:860px; margin:0 auto; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:38px 42px; display:flex; gap:22px; align-items:flex-start">
-          <span style="flex-shrink:0; display:inline-flex; width:48px; height:48px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:22px">?</span>
-          <div>
-            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; margin:0 0 10px">Antes de continuar</p>
-            <h2 style="font-size:28px; font-weight:500; line-height:1.15; margin:0 0 16px">Confirma qué Hacienda es competente</h2>
-            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.65; margin:0 0 12px">La residencia fiscal no depende únicamente del domicilio. También pueden influir la permanencia, el centro de intereses económicos y la situación familiar.</p>
-            <p style="color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:14px; line-height:1.65; margin:0">No mostraremos contenido territorial hasta que puedas identificarlo. Si existen dudas, confirma tu situación con la Hacienda correspondiente o con un profesional.</p>
+      <section data-screen-label="Antes de continuar" class="nv-section" aria-labelledby="antes-de-continuar">
+        <div class="nv-container">
+          <div class="fiscal-paso fiscal-paso--ancho">
+            <span class="fiscal-paso__icon" aria-hidden="true">?</span>
+            <div>
+              <p class="nv-eyebrow">Antes de continuar</p>
+              <h2 id="antes-de-continuar">Confirma qué Hacienda es competente</h2>
+              <p>
+                La residencia fiscal no depende únicamente del domicilio.
+                También pueden influir la permanencia, el centro de intereses
+                económicos y la situación familiar.
+              </p>
+              <p>
+                No mostraremos contenido territorial hasta que puedas
+                identificarlo. Si existen dudas, confirma tu situación con la
+                Hacienda correspondiente o con un profesional.
+              </p>
+            </div>
           </div>
         </div>
       </section>
     </sc-if>
 
+
+    <!-- ══ ESTADO 3 · CON TERRITORIO ═════════════════════════════════════════ -->
     <sc-if value="{{ hayTerritorio }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Marco de referencia" style="margin-top:28px; background:radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section)">
-        <div style="max-width:1240px; margin:0 auto; padding:28px 48px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:44px; align-items:center">
-          <div>
-            <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0 0 6px">Tu marco de referencia</p>
-            <h2 style="font-size:28px; font-weight:500; line-height:1; margin:0; white-space:nowrap">{{ nombre }}</h2>
-          </div>
-          <p aria-live="polite" style="max-width:66ch; color:color-mix(in srgb, var(--color-text) 76%, transparent); font-size:13.5px; line-height:1.6; margin:0">{{ intro }}</p>
-          <a href="{{ fuenteHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:6px; border-bottom:1px solid color-mix(in srgb, var(--color-accent-300) 50%, transparent); color:var(--color-accent-200); font-size:12.5px; font-weight:500; padding-bottom:4px; text-decoration:none; white-space:nowrap; transition:border-color .2s ease, color .2s ease" style-hover="border-color:var(--color-accent-200); color:var(--color-accent-100)">{{ fuenteLabel }} ↗</a>
-        </div>
-      </section>
 
-      <section id="guias" data-screen-label="Guías del territorio" style="max-width:1240px; margin:0 auto; padding:44px 48px 0">
-        <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px">
-          <sc-for list="{{ tarjetas }}" as="tarjeta" hint-placeholder-count="3">
-            <article style="display:flex; flex-direction:column; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:24px; transition:transform .25s ease, box-shadow .25s ease" style-hover="transform:translateY(-4px); box-shadow:var(--shadow-md)">
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:20px">
-                <span style="display:inline-flex; width:40px; height:40px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900)">
-                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="{{ tarjeta.icono }}" fill="none" stroke="#4A5D23" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                </span>
-                <span style="text-align:right; color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; font-feature-settings:'tnum' 1">{{ tarjeta.eyebrow }}</span>
-              </div>
-              <h3 style="font-size:23px; font-weight:500; line-height:1.15; margin:0 0 12px">{{ tarjeta.titulo }}</h3>
-              <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 20px">{{ tarjeta.descripcion }}</p>
-              <dl style="margin:0; border-top:1px solid var(--color-divider)">
-                <sc-for list="{{ tarjeta.datos }}" as="dato" hint-placeholder-count="3">
-                  <div style="border-bottom:1px solid var(--color-divider); padding:12px 0">
-                    <dt style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin-bottom:4px">{{ dato.etiqueta }}</dt>
-                    <dd style="color:var(--color-text); font-size:13px; font-weight:500; line-height:1.45; margin:0; font-variant-numeric:tabular-nums">{{ dato.valor }}</dd>
-                  </div>
-                </sc-for>
-              </dl>
-              <p style="border-left:2px solid var(--color-accent-700); color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:11.5px; line-height:1.6; margin:16px 0 0; padding-left:12px">{{ tarjeta.nota }}</p>
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:auto; padding-top:22px">
-                <a href="guia-impuestos.html?guia={{ tarjeta.guia }}" class="btn btn-primary" style="text-decoration:none; font-size:12.5px">Abrir guía →</a>
-                <a href="{{ tarjeta.fuenteHref }}" target="_blank" rel="noopener noreferrer" style="color:color-mix(in srgb, var(--color-text) 55%, transparent); font-size:10px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; transition:color .2s ease" style-hover="color:var(--color-accent-300)">Fuente oficial ↗</a>
-              </div>
-            </article>
-          </sc-for>
-        </div>
-      </section>
-
-      <section data-screen-label="Nota editorial" style="max-width:1240px; margin:0 auto; padding:28px 48px 84px">
-        <div style="display:grid; grid-template-columns:auto minmax(0,1fr); gap:14px; border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:18px 22px">
-          <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true" style="margin-top:2px"><path d="M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z M8.5 11.5 L11 14 L15.5 9.5" fill="none" stroke="#2568A9" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-          <div style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11.5px; line-height:1.6">
-            <p style="margin:0">{{ notaOrientativa }}</p>
-            <p style="margin:4px 0 0; font-weight:500; color:color-mix(in srgb, var(--color-text) 80%, transparent)">Estado editorial: pendiente de revisión fiscal independiente.</p>
-            <p style="margin:4px 0 0">La selección personaliza el contenido, pero no determina jurídicamente tu residencia fiscal ni sustituye asesoramiento individual.</p>
+      <section data-screen-label="Marco de referencia" class="fiscal-marco" aria-labelledby="marco-referencia">
+        <div class="nv-container">
+          <div class="fiscal-marco__inner">
+            <div>
+              <p class="nv-eyebrow">Tu marco de referencia</p>
+              <h2 id="marco-referencia">{{ nombre }}</h2>
+            </div>
+            <p class="fiscal-marco__intro" aria-live="polite">{{ intro }}</p>
+            <a class="fiscal-marco__source"
+               href="{{ fuenteHref }}" target="_blank" rel="noopener noreferrer">{{ fuenteLabel }} ↗</a>
           </div>
         </div>
       </section>
+
+      <section id="guias" data-screen-label="Guías del territorio" class="nv-section" aria-labelledby="guias-territorio">
+        <div class="nv-container">
+          <h2 id="guias-territorio" class="nv-visually-hidden">Guías de tu territorio fiscal</h2>
+
+          <div class="nv-card-grid">
+            <sc-for list="{{ tarjetas }}" as="tarjeta" hint-placeholder-count="3">
+              <article class="nv-card fiscal-guia">
+
+                <div class="fiscal-guia__head">
+                  <span class="nv-card__icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24">
+                      <path d="{{ tarjeta.icono }}" fill="none" stroke="currentColor"
+                            stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                  <span class="fiscal-guia__ref">{{ tarjeta.eyebrow }}</span>
+                </div>
+
+                <h3>{{ tarjeta.titulo }}</h3>
+                <p>{{ tarjeta.descripcion }}</p>
+
+                <dl class="fiscal-guia__datos">
+                  <sc-for list="{{ tarjeta.datos }}" as="dato" hint-placeholder-count="3">
+                    <div class="fiscal-dato">
+                      <dt>{{ dato.etiqueta }}</dt>
+                      <dd>{{ dato.valor }}</dd>
+                    </div>
+                  </sc-for>
+                </dl>
+
+                <p class="fiscal-guia__nota">{{ tarjeta.nota }}</p>
+
+                <div class="fiscal-guia__acciones">
+                  <a class="nv-btn nv-btn--primary" href="guia-impuestos.html?guia={{ tarjeta.guia }}">Abrir guía →</a>
+                  <a class="fiscal-guia__fuente"
+                     href="{{ tarjeta.fuenteHref }}" target="_blank" rel="noopener noreferrer">Fuente oficial ↗</a>
+                </div>
+
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section data-screen-label="Nota editorial" class="nv-section nv-section--tight">
+        <div class="nv-container">
+          <div class="fiscal-nota-editorial">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3 L20 6 V11 C20 16 16.5 19.5 12 21 C7.5 19.5 4 16 4 11 V6 Z M8.5 11.5 L11 14 L15.5 9.5"
+                    fill="none" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <div>
+              <p>{{ notaOrientativa }}</p>
+              <p><strong>Estado editorial: pendiente de revisión fiscal independiente.</strong></p>
+              <p>
+                La selección personaliza el contenido, pero no determina
+                jurídicamente tu residencia fiscal ni sustituye asesoramiento
+                individual.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </sc-if>
+
   </main>
 
   <footer data-screen-label="Footer" class="nuvia-site-footer">
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -201,7 +287,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -211,9 +297,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -224,6 +311,7 @@
       </div>
     </div>
   </footer>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;territorioInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;bizkaia&quot;, &quot;options&quot;: [&quot;bizkaia&quot;, &quot;araba&quot;, &quot;gipuzkoa&quot;, &quot;navarra&quot;, &quot;common-territory&quot;, &quot;sin-seleccion&quot;, &quot;unsure&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Territorio&quot;}}">

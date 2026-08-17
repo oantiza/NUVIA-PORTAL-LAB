@@ -1,3 +1,20 @@
+/* ⚠️  OBSOLETO — NO EJECUTAR ─────────────────────────────────────────────────
+
+   Este script reescribía la cáscara de las 13 páginas para apuntarlas a
+   `nuvia-site-unified.css`. Esa hoja ya no existe: la cabecera y el pie viven
+   ahora en estilos/nuvia-components.css y las páginas los enlazan directamente.
+
+   Ejecutarlo deshace la migración y deja las 13 páginas sin estilos de cáscara.
+
+   Se conserva únicamente como referencia histórica. Si hace falta volver a
+   unificar cáscaras, la fuente de verdad es _plantilla.html.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+console.error('\n  unify-shell.mjs está obsoleto y no debe ejecutarse.');
+console.error('  Reescribiría las páginas contra nuvia-site-unified.css, que ya no existe.');
+console.error('  La cáscara vive en estilos/nuvia-components.css; la plantilla, en _plantilla.html.\n');
+process.exit(1);
+
 import fs from 'node:fs';
 import path from 'node:path';
 

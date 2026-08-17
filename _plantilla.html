@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     NUVIA · PLANTILLA DE PÁGINA
+     ----------------------------------------------------------------------------
+     Punto de partida de toda sección nueva. Copiar este fichero, renombrarlo y
+     rellenar lo marcado con  ⟨…⟩  y con  <!-- TODO -->.
+
+     Tres reglas, y con ellas la homogeneidad se mantiene sola:
+
+       1. NINGÚN atributo style="…". Si falta un estilo, se añade una clase en
+          nuvia-components.css. Si falta un color, se añade un rol en
+          nuvia-tokens.css §3. Nunca un hexadecimal aquí.
+       2. Un solo <h1>, y jerarquía continua H1 → H2 → H3 sin saltos.
+       3. Migas de pan en todo nivel 2 o inferior. Sin excepción.
+
+     Este fichero NO se añade a scripts/build-site.mjs: no se publica.
+     ========================================================================= -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ⟨Una frase, 150-160 caracteres, que describa qué resuelve esta página⟩ -->
+<meta name="description" content="⟨DESCRIPCIÓN⟩">
+
+<!-- CANÓNICA · siempre NUVIA-PORTAL-LAB, nunca NUVIA-WEB-.
+     El validador del build falla si esto apunta a otro sitio. -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/⟨ARCHIVO⟩.html">
+
+<!-- Mientras la sección esté a medias, dejar esta línea. Quitarla al publicar. -->
+<meta name="robots" content="noindex, follow">
+
+<title>⟨Título de la página⟩ | NUVIA</title>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<!-- Hojas de estilo en el <head>, no dentro de <helmet>.
+     Cargarlas en el <body> provoca el parpadeo que tienen hoy las 13 páginas.
+     Orden fijo: tokens → componentes → específico de página. -->
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+
+<!-- Runtime dc. Con defer: no bloquea el parseo. -->
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
+</head>
+
+<body>
+<x-dc>
+
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<!-- ══ CABECERA ══════════════════════════════════════════════════════════════
+     Idéntica en todas las páginas. Lo único que cambia: is-active y
+     aria-current="page" en la entrada que corresponda.
+     ═════════════════════════════════════════════════════════════════════════ -->
+<header data-screen-label="Header" class="nuvia-site-header">
+  <div class="nuvia-site-header__inner">
+    <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+      <!-- TODO fase 0: sustituir el PNG de 318 KB por SVG. -->
+      <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+           alt="NUVIA Family Wealth" width="164" height="54">
+    </a>
+    <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Cartera</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="cartera.html">Visión de cartera</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="jubilacion.html">Jubilación</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+  </div>
+</header>
+
+
+<main id="contenido">
+
+  <!-- ══ HÉROE ═══════════════════════════════════════════════════════════════
+       Elegir UNA variante y borrar las otras dos. No se inventan héroes nuevos.
+
+         nv-hero--photo          → SOLO portada
+         nv-hero--institutional  → Mercados, Cartera, Academia, Temas, herramientas
+         nv-hero--editorial      → Lecturas, guías, informes
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="nv-hero nv-hero--institutional">
+    <div class="nv-container">
+      <div class="nv-hero__inner">
+
+        <div>
+          <!-- Migas: obligatorias salvo en portada y en las 5 páginas de primer nivel. -->
+          <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+            <ol>
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="⟨PADRE⟩.html">⟨Sección padre⟩</a></li>
+              <li><span aria-current="page">⟨Esta página⟩</span></li>
+            </ol>
+          </nav>
+
+          <p class="nv-eyebrow nv-eyebrow--on-dark">⟨Etiqueta corta⟩</p>
+
+          <h1>⟨Titular. Una idea, en la voz de quien lee, no del sistema.⟩</h1>
+
+          <p class="nv-hero__lead">
+            ⟨Dos líneas que expliquen qué se lleva el lector de esta página y
+            para qué decisión le sirve.⟩
+          </p>
+
+          <div class="nv-hero__actions">
+            <a class="nv-btn nv-btn--accent" href="#⟨ancla⟩">⟨Acción principal⟩</a>
+            <a class="nv-btn nv-btn--soft" href="#⟨ancla⟩">⟨Acción secundaria⟩</a>
+          </div>
+        </div>
+
+        <!-- Panel lateral opcional: un dato, una cifra o una nota de contexto.
+             Si no aporta nada, se borra y se usa nv-hero__inner--simple. -->
+        <aside class="nv-hero__aside">
+          <p class="nv-eyebrow nv-eyebrow--on-dark">⟨Contexto⟩</p>
+          <strong>⟨Dato o cifra⟩</strong>
+          <p>⟨Una frase que explique de dónde sale el dato.⟩</p>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ SECCIÓN DE TARJETAS ═════════════════════════════════════════════════
+       Alternar fondos: nv-section (nube) → nv-section--white → nv-section--paper.
+       Máximo tres superficies simultáneas en una misma página.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="nv-section nv-section--white" aria-labelledby="⟨id-seccion⟩">
+    <div class="nv-container">
+
+      <div class="nv-section-heading">
+        <div>
+          <p class="nv-eyebrow">⟨Etiqueta⟩</p>
+          <h2 id="⟨id-seccion⟩">⟨Título de la sección⟩</h2>
+        </div>
+        <p>⟨Frase de apoyo. Opcional: si no dice nada nuevo, se quita.⟩</p>
+      </div>
+
+      <div class="nv-card-grid">
+
+        <article class="nv-card">
+          <span class="nv-card__icon" aria-hidden="true">
+            <!-- TODO: icono SVG, 20×20, stroke currentColor, stroke-width 1.6 -->
+          </span>
+          <h3>⟨Título de la tarjeta⟩</h3>
+          <p>⟨Qué encuentra aquí el lector, en una o dos frases.⟩</p>
+          <a class="nv-btn nv-btn--text" href="⟨destino⟩.html">⟨Ver ⟨lo que sea⟩⟩ →</a>
+        </article>
+
+        <article class="nv-card nv-card--technical">
+          <h3>⟨Herramienta o cálculo⟩</h3>
+          <p>⟨Qué calcula y con qué datos.⟩</p>
+          <a class="nv-btn nv-btn--secondary" href="⟨destino⟩.html">Abrir la herramienta</a>
+        </article>
+
+        <!-- Sección aún sin construir: se marca, no se disimula. -->
+        <article class="nv-card nv-card--editorial">
+          <span class="nv-tag nv-tag--pending">En preparación</span>
+          <h3>⟨Título previsto⟩</h3>
+          <p>⟨Qué irá aquí cuando esté listo.⟩</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ SECCIÓN DE PROSA ════════════════════════════════════════════════════
+       Para guías e informes. Anchura de lectura fija de 760 px: el texto no se
+       estira aunque la pantalla sea de 1920 px.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="nv-section" aria-labelledby="⟨id-guia⟩">
+    <div class="nv-container">
+      <div class="nv-prose">
+        <h2 id="⟨id-guia⟩">⟨Título⟩</h2>
+        <p>⟨Cuerpo.⟩</p>
+
+        <div class="nv-note">
+          ⟨Aviso o matiz importante. Se usa con moderación: si hay tres notas
+          seguidas, ninguna se lee.⟩
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ BLOQUE PENDIENTE ════════════════════════════════════════════════════
+       Para una sección entera todavía sin contenido. Ocupa el sitio, dice qué
+       irá ahí y no aparenta estar terminada. Borrar al rellenarla.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="nv-section nv-section--white" aria-labelledby="⟨id-pendiente⟩">
+    <div class="nv-container">
+      <div class="nv-pending">
+        <span class="nv-tag nv-tag--pending">En preparación</span>
+        <h3 id="⟨id-pendiente⟩">⟨Nombre de la sección⟩</h3>
+        <p>⟨Qué contendrá y a quién le sirve.⟩</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ AVISO LEGAL ═════════════════════════════════════════════════════════
+       En toda página con cálculos, cifras o recomendaciones.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="nv-section nv-section--tight">
+    <div class="nv-container">
+      <p class="nv-disclaimer nv-reading">
+        Contenido educativo e informativo. No constituye asesoramiento
+        financiero, fiscal o jurídico personalizado. Las decisiones
+        patrimoniales deben valorar las circunstancias personales de cada
+        familia.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ══ PIE ═══════════════════════════════════════════════════════════════════
+     Idéntico en todas las páginas. No se edita por página.
+     ═════════════════════════════════════════════════════════════════════════ -->
+<footer data-screen-label="Footer" class="nuvia-site-footer">
+  <div class="nuvia-site-footer__inner">
+    <div class="nuvia-site-footer__grid">
+      <div class="nuvia-site-footer__brand">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+             alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
+        <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <div class="nuvia-site-footer__links">
+          <a href="index.html">Inicio</a>
+          <a href="mercados.html">Mercados</a>
+          <a href="cartera.html">Analítica de cartera</a>
+          <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+          <a href="lecturas.html">Lecturas con criterio</a>
+        </div>
+      </div>
+      <div>
+        <h4>Recursos</h4>
+        <div class="nuvia-site-footer__links">
+          <a href="vivienda.html">Temas clave</a>
+          <a href="academia.html">Academia Nuvia</a>
+          <a href="academia.html?tab=interes">Interés compuesto</a>
+          <a href="academia.html?tab=calculadora">Simulador</a>
+          <a href="curso.html">Curso · Dinero con criterio</a>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__info-column">
+        <h4>Información</h4>
+        <div class="nuvia-site-footer__info">
+          <span>Contenido educativo e informativo.</span>
+          <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+        </div>
+      </div>
+    </div>
+    <div class="nuvia-site-footer__legal">
+      <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+      <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+</body>
+</html>
+
+<!-- ============================================================================
+     LISTA DE COMPROBACIÓN ANTES DE DAR POR HECHA UNA PÁGINA
+
+     [ ] Canónica apunta a NUVIA-PORTAL-LAB
+     [ ] Quitado <meta name="robots" content="noindex">
+     [ ] <title> y <meta description> escritos, no ⟨…⟩
+     [ ] Un solo <h1>, sin saltos H1→H3
+     [ ] Migas de pan si es nivel 2 o inferior
+     [ ] is-active + aria-current en la entrada de menú correspondiente
+     [ ] Cero atributos style="…"
+     [ ] Toda imagen con alt, width, height y loading="lazy"
+         (salvo la del héroe, que va sin lazy por ser el LCP)
+     [ ] Una sola acción principal por bloque
+     [ ] Máximo tres superficies distintas en la página
+     [ ] Revisada a 1024 px sin desplazamiento horizontal
+     [ ] Recorrida entera con el tabulador: el foco se ve siempre
+     [ ] Añadida a la lista de scripts/build-site.mjs
+     ========================================================================= -->

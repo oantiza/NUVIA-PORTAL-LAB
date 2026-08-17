@@ -4,23 +4,29 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Sistema visual común de NUVIA para escritorio y tablet.">
-  <title>Sistema visual NUVIA · Fase 1</title>
+  <title>Sistema visual NUVIA</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/sistema-visual.html">
   <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
   <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="nuvia-design-system.css">
+  <!-- Ahora consume el sistema real, no una copia. Si algo cambia en los
+       tokens, esta página lo refleja: es su razón de ser. -->
+  <link rel="stylesheet" href="estilos/nuvia-tokens.css">
+  <link rel="stylesheet" href="estilos/nuvia-components.css">
+  <link rel="stylesheet" href="estilos/sistema-visual.css">
 </head>
 <body class="nv-system">
   <header class="nv-header-preview" aria-label="Cabecera de referencia">
     <div class="nv-container nv-header-preview__inner">
-      <img class="nv-header-preview__logo" src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+      <img class="nv-header-preview__logo" src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth" width="158" height="53" loading="lazy">
       <nav class="nv-header-preview__nav" aria-label="Muestra de navegación principal">
         <a href="#fundamentos" aria-current="page">Fundamentos</a>
         <a href="#tipografia">Tipografía</a>
         <a href="#componentes">Componentes</a>
         <a href="#heroes">Héroes</a>
       </nav>
-      <span class="nv-phase-badge">Fase 1 · Propuesta</span>
+      <span class="nv-phase-badge">En uso · 13 páginas</span>
     </div>
   </header>
 
@@ -52,35 +58,35 @@
 
         <div class="nv-swatch-grid" aria-label="Paleta principal de NUVIA">
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#0B2347"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Azul NUVIA</strong><span>#0B2347 · Identidad</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#7C9A44"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Verde criterio</strong><span>#7C9A44 · Acción</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#F3EEDF"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Papel cálido</strong><span>#F3EEDF · Editorial</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#B69152"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Bronce sereno</strong><span>#B69152 · Detalle</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#F4F6F9"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Nube</strong><span>#F4F6F9 · Fondo</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#FFFFFF"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Blanco</strong><span>#FFFFFF · Superficie</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#40506A"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Texto secundario</strong><span>#40506A · Lectura</span></div>
           </article>
           <article class="nv-swatch">
-            <div class="nv-swatch__color" style="background:#06172F"></div>
+            <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Azul profundo</strong><span>#06172F · Contraste</span></div>
           </article>
         </div>
@@ -136,7 +142,7 @@
           <a class="nv-btn nv-btn--text" href="#componentes">Enlace de apoyo <span aria-hidden="true">↗</span></a>
         </div>
 
-        <div class="nv-card-grid" style="margin-top:32px">
+        <div class="nv-card-grid">
           <article class="nv-card">
             <span class="nv-card__number">01</span>
             <h3>Tarjeta institucional</h3>
@@ -171,12 +177,12 @@
 
         <div class="nv-hero-grid">
           <article class="nv-hero-sample nv-hero-sample--photo">
-            <span class="nv-kicker" style="color:#C8D99C">Portada</span>
+            <span class="nv-kicker">Portada</span>
             <h3>Información clara, decisiones con propósito.</h3>
             <p>Fotografía únicamente para la entrada principal de NUVIA.</p>
           </article>
           <article class="nv-hero-sample nv-hero-sample--institutional">
-            <span class="nv-kicker" style="color:#C8D99C">Áreas NUVIA</span>
+            <span class="nv-kicker">Áreas NUVIA</span>
             <h3>El pulso de los mercados, sin ruido</h3>
             <p>Azul institucional para mercados, cartera, Academia Nuvia y temas.</p>
           </article>
@@ -213,7 +219,7 @@
 
   <footer class="nv-footer-preview">
     <div class="nv-container nv-footer-preview__inner">
-      <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+      <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       <span>Sistema visual NUVIA · Propuesta de fase 1 · Escritorio y tablet</span>
       <span>Claridad · Perspectiva · Criterio</span>
     </div>

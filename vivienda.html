@@ -4,42 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Calcula una cuota de vivienda sostenible y compara escenarios de financiación con la herramienta de NUVIA.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-WEB-/vivienda.html">
+
+<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/vivienda.html -->
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/vivienda.html">
+
 <title>Vivienda y coste de vida | NUVIA</title>
-<script src="./support.js"></script>
-<link rel="stylesheet" href="nuvia-site-unified.css?v=20260817-footer-logo-v3">
-<script defer src="nuvia-site-unified.js?v=20260816-themes-v2"></script>
+
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
 </head>
+
 <body>
 <x-dc>
-<helmet>
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
-  <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
-  <link rel="stylesheet" href="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/styles.css">
-  <link rel="stylesheet" href="tema-claro.css">
-  <script src="_ds/nocturne-e7792111-f643-483d-a269-2c7d7d24276a/_ds_bundle.js"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { margin:0; background: var(--color-bg); text-wrap: pretty; }
-    a { color: var(--color-accent-600); }
-    a:hover { color: var(--color-accent-200); }
-    input, select { font-family: var(--font-body); }
-    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
-    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    select option { background: var(--color-surface); color: var(--color-text); }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } html { scroll-behavior: auto; } }
-  </style>
-</helmet>
 
-<div style="min-height:100vh; min-width:768px; color:var(--color-text); font-family:var(--font-body)">
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
 
   <header data-screen-label="Header" class="nuvia-site-header">
     <div class="nuvia-site-header__inner">
       <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png"
+             alt="NUVIA Family Wealth" width="164" height="54" loading="lazy">
       </a>
-      <nav class="nuvia-site-nav" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
@@ -49,159 +45,163 @@
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
           </div>
         </details>
-        <a href="academia.html">Academia</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
         <details class="nuvia-site-nav__topics is-active">
           <summary aria-current="page">Temas clave</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="temas.html?topic=jubilacion">Jubilación</a>
+            <a href="jubilacion.html">Jubilación</a>
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
-        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section id="vivienda" data-screen-label="Cabecera vivienda" style="position:relative; overflow:hidden; background:linear-gradient(160deg, #0B2347 0%, #071A38 100%)">
-      <div aria-hidden="true" style="position:absolute; right:-80px; top:-120px; width:420px; height:420px; border-radius:999px; border:1px solid rgba(255,255,255,.06)"></div>
-      <div aria-hidden="true" style="position:absolute; right:-8px; top:-80px; width:300px; height:300px; border-radius:999px; border:1px solid color-mix(in srgb, #9DB861 22%, transparent)"></div>
-      <div style="position:relative; max-width:1240px; margin:0 auto; padding:64px 48px 0">
-        <span style="display:inline-flex; align-items:center; gap:14px; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:#9DB861"><span style="display:inline-block; width:44px; height:1px; background:#9DB861"></span>Tema clave · Vivienda y coste de vida</span>
-        <h1 style="color:#ffffff; max-width:15em; font-size:46px; font-weight:500; letter-spacing:-.015em; line-height:1.05; margin:22px 0 0">La casa que encaja también en tu vida</h1>
-        <p style="max-width:56ch; color:rgba(255,255,255,.74); font-size:16.5px; line-height:1.65; margin:18px 0 0">Calcula, compara y somete la decisión a escenarios exigentes antes de comprometer el presupuesto familiar.</p>
-        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:24px 0 0">
-          <button type="button" onClick="{{ guardar }}" class="btn btn-primary" style="white-space:nowrap; color:#dfe7d2; border-color:#b8ca8c">Guardar escenario</button>
-          <button type="button" onClick="{{ recuperar }}" class="btn btn-secondary" style="white-space:nowrap; color:rgba(255,255,255,.85); border-color:rgba(255,255,255,.3)">Recuperar</button>
-          <span role="status" style="color:rgba(255,255,255,.58); font-size:11.5px">{{ mensaje }}</span>
+<main id="contenido">
+    <section id="vivienda" data-screen-label="Cabecera vivienda" class="nv-hero nv-hero--institutional viv-hero">
+      <div class="nv-container">
+        <div class="nv-hero__inner"><div>
+        <span class="nv-eyebrow nv-eyebrow--on-dark">Tema clave · Vivienda y coste de vida</span>
+        <h1>La casa que encaja también en tu vida</h1>
+        <p class="nv-hero__lead">Calcula, compara y somete la decisión a escenarios exigentes antes de comprometer el presupuesto familiar.</p>
+        <div class="nv-hero__actions">
+          <button type="button" onClick="{{ guardar }}" class="nv-btn nv-btn--accent">Guardar escenario</button>
+          <button type="button" onClick="{{ recuperar }}" class="nv-btn nv-btn--soft">Recuperar</button>
+          <span role="status" class="viv-hero__status">{{ mensaje }}</span>
         </div>
-        <div style="height:1px; margin-top:26px; background:linear-gradient(to right, transparent, rgba(255,255,255,.22) 48px, rgba(255,255,255,.22) calc(100% - 48px), transparent)"></div>
-        <nav aria-label="Herramientas de vivienda" style="display:flex; gap:10px; flex-wrap:wrap; padding:18px 0 6px">
+        <div class="viv-hero__rule"></div>
+        <nav aria-label="Herramientas de vivienda" class="viv-tabs">
           <sc-for list="{{ pestanas }}" as="t" hint-placeholder-count="5">
-            <button type="button" onClick="{{ t.abrir }}" aria-pressed="{{ t.pressed }}" style="{{ t.estilo }}">{{ t.label }}</button>
+            <button type="button" onClick="{{ t.abrir }}" aria-pressed="{{ t.pressed }}" class="{{ t.clase }}">{{ t.label }}</button>
           </sc-for>
         </nav>
+        </div></div>
       </div>
     </section>
 
-    <section data-screen-label="Intro de herramienta" style="max-width:1240px; margin:0 auto; padding:28px 48px 0">
-      <div style="display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-        <div style="background:color-mix(in srgb, var(--color-bg) 55%, var(--color-surface)); padding:26px 30px">
-          <p style="color:var(--color-accent-300); font-size:10.5px; font-weight:500; letter-spacing:.19em; text-transform:uppercase; margin:0">Antes de empezar</p>
-          <h2 style="font-size:26px; font-weight:500; line-height:1.15; margin:10px 0 0">{{ tabTitulo }}</h2>
-          <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13.5px; line-height:1.65; margin:12px 0 0">{{ tabResumen }}</p>
-          <div aria-label="Datos necesarios" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:18px">
+    <section data-screen-label="Intro de herramienta" class="nv-container viv-section viv-section--tight">
+      <div class="viv-intro">
+        <div class="viv-intro__lead">
+          <p class="viv-result__kicker">Antes de empezar</p>
+          <h2 class="viv-intro__title">{{ tabTitulo }}</h2>
+          <p class="viv-intro__steptext">{{ tabResumen }}</p>
+          <div aria-label="Datos necesarios" class="viv-intro__chips">
             <sc-for list="{{ tabChips }}" as="c" hint-placeholder-count="3">
-              <span class="tag tag-neutral">{{ c }}</span>
+              <span class="nv-tag">{{ c }}</span>
             </sc-for>
           </div>
         </div>
-        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr))">
-          <article style="border-right:1px solid var(--color-divider); padding:26px 28px">
-            <span style="display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:999px; background:var(--color-accent-900); color:var(--color-accent-300); font-size:12px; font-feature-settings:'tnum' 1">1</span>
-            <h3 style="font-size:20px; font-weight:500; margin:14px 0 0">Qué es</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.65; margin:10px 0 0">{{ tabQue }}</p>
+        <div class="viv-intro__steps">
+          <article>
+            <span class="viv-step-num">1</span>
+            <h3 class="viv-intro__steptitle">Qué es</h3>
+            <p class="viv-intro__steptext">{{ tabQue }}</p>
           </article>
-          <article style="padding:26px 28px">
-            <span style="display:inline-flex; width:30px; height:30px; align-items:center; justify-content:center; border-radius:999px; background:var(--color-accent-900); color:var(--color-accent-300); font-size:12px; font-feature-settings:'tnum' 1">2</span>
-            <h3 style="font-size:20px; font-weight:500; margin:14px 0 0">Cómo funciona</h3>
-            <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.65; margin:10px 0 0">{{ tabComo }}</p>
+          <article>
+            <span class="viv-step-num">2</span>
+            <h3 class="viv-intro__steptitle">Cómo funciona</h3>
+            <p class="viv-intro__steptext">{{ tabComo }}</p>
           </article>
         </div>
       </div>
     </section>
 
     <sc-if value="{{ tabHipoteca }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Calculadora de hipoteca" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden">
-          <div style="border-bottom:1px solid var(--color-divider); padding:24px 30px">
-            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Calculadora de hipoteca</p>
-            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Una cuota que refleja el tipo de préstamo</h2>
-            <p style="max-width:78ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0">Distingue entre tipo fijo, variable y mixto. En los dos últimos casos, el tipo variable resulta de sumar el índice de referencia y el diferencial.</p>
+      <section data-screen-label="Calculadora de hipoteca" class="nv-container viv-section">
+        <div class="viv-card">
+          <div class="viv-card__head">
+            <p class="viv-result__kicker">Calculadora de hipoteca</p>
+            <h2 class="viv-card__title">Una cuota que refleja el tipo de préstamo</h2>
+            <p class="viv-card__lead">Distingue entre tipo fijo, variable y mixto. En los dos últimos casos, el tipo variable resulta de sumar el índice de referencia y el diferencial.</p>
           </div>
-          <div style="display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)">
-            <div style="padding:26px 30px">
-              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Precio de la vivienda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchasePrice" type="number" step="5000" data-dc-value="{{ v.purchasePrice }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Entrada prevista</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="downPayment" type="number" step="5000" data-dc-value="{{ v.downPayment }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Impuestos de compra</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchaseTaxPercent" type="number" step="0.5" max="20" data-dc-value="{{ v.purchaseTaxPercent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div><p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px; line-height:1.5; margin:5px 0 0">Dependen de vivienda nueva/usada y del territorio.</p></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Notaría y otros gastos</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="purchaseOtherCosts" type="number" step="100" data-dc-value="{{ v.purchaseOtherCosts }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Tasación</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="appraisalCost" type="number" step="50" data-dc-value="{{ v.appraisalCost }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Plazo</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="years" type="number" min="1" max="40" data-dc-value="{{ v.years }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
-                <div style="grid-column:span 2">
-                  <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin:0 0 8px">Modalidad</p>
-                  <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <div class="viv-card__split">
+            <div class="viv-card__form">
+              <div class="nv-fields">
+                <div class="nv-field"><label>Precio de la vivienda</label><div class="nv-field__box"><input name="purchasePrice" type="number" step="5000" data-dc-value="{{ v.purchasePrice }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Entrada prevista</label><div class="nv-field__box"><input name="downPayment" type="number" step="5000" data-dc-value="{{ v.downPayment }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Impuestos de compra</label><div class="nv-field__box"><input name="purchaseTaxPercent" type="number" step="0.5" max="20" data-dc-value="{{ v.purchaseTaxPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Dependen de vivienda nueva/usada y del territorio.</p></div><div class="nv-field"><label>Notaría y otros gastos</label><div class="nv-field__box"><input name="purchaseOtherCosts" type="number" step="100" data-dc-value="{{ v.purchaseOtherCosts }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="appraisalCost" type="number" step="50" data-dc-value="{{ v.appraisalCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="years" type="number" min="1" max="40" data-dc-value="{{ v.years }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+                <div class="nv-field--wide">
+                  <p class="viv-section-label">Modalidad</p>
+                  <div class="viv-pill-row">
                     <sc-for list="{{ modalidades }}" as="m" hint-placeholder-count="3">
-                      <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" style="{{ m.estilo }}">{{ m.label }}</button>
+                      <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" class="{{ m.clase }}">{{ m.label }}</button>
                     </sc-for>
                   </div>
                 </div>
                 <sc-if value="{{ noEsVariable }}" hint-placeholder-val="{{ true }}">
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">{{ etiquetaTinFijo }}</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="fixedRate" type="number" step="0.05" max="20" data-dc-value="{{ v.fixedRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+                  <div class="nv-field"><label>{{ etiquetaTinFijo }}</label><div class="nv-field__box"><input name="fixedRate" type="number" step="0.05" max="20" data-dc-value="{{ v.fixedRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
                 </sc-if>
                 <sc-if value="{{ esMixta }}" hint-placeholder-val="{{ true }}">
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Duración del tramo fijo</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="fixedYears" type="number" min="1" max="40" data-dc-value="{{ v.fixedYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
+                  <div class="nv-field"><label>Duración del tramo fijo</label><div class="nv-field__box"><input name="fixedYears" type="number" min="1" max="40" data-dc-value="{{ v.fixedYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
                 </sc-if>
                 <sc-if value="{{ noEsFija }}" hint-placeholder-val="{{ true }}">
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Índice de referencia</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="referenceRate" type="number" step="0.05" max="20" data-dc-value="{{ v.referenceRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div><p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:10.5px; line-height:1.5; margin:5px 0 0">Introduce el valor de referencia que quieras simular.</p></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Diferencial</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="spread" type="number" step="0.05" max="10" data-dc-value="{{ v.spread }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+                  <div class="nv-field"><label>Índice de referencia</label><div class="nv-field__box"><input name="referenceRate" type="number" step="0.05" max="20" data-dc-value="{{ v.referenceRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Introduce el valor de referencia que quieras simular.</p></div><div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="spread" type="number" step="0.05" max="10" data-dc-value="{{ v.spread }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
                 </sc-if>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Ingresos netos del hogar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="annualHouseholdIncome" type="number" step="1000" data-dc-value="{{ v.annualHouseholdIncome }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
-                <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Otras cuotas de deuda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="monthlyOtherDebt" type="number" step="25" data-dc-value="{{ v.monthlyOtherDebt }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+                <div class="nv-field"><label>Ingresos netos del hogar</label><div class="nv-field__box"><input name="annualHouseholdIncome" type="number" step="1000" data-dc-value="{{ v.annualHouseholdIncome }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+                <div class="nv-field"><label>Otras cuotas de deuda</label><div class="nv-field__box"><input name="monthlyOtherDebt" type="number" step="25" data-dc-value="{{ v.monthlyOtherDebt }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
               </div>
-              <p style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 5%, transparent); color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11.5px; line-height:1.6; margin:18px 0 0; padding:13px 16px">La entrada, impuestos, compraventa y tasación se pagan con recursos propios. Conserva además un colchón separado. La revisión variable se representa con un índice constante: es un escenario, no una predicción.</p>
+              <p class="viv-figure">La entrada, impuestos, compraventa y tasación se pagan con recursos propios. Conserva además un colchón separado. La revisión variable se representa con un índice constante: es un escenario, no una predicción.</p>
             </div>
-            <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
-              <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0">Resultado estimado</p>
-              <p style="font-size:22px; font-weight:500; margin:8px 0 0">Tu escenario de compra</p>
-              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:20px">
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Cuota inicial</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rCuota }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rCuotaNota }}</p></div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Préstamo</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rPrestamo }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rLtv }}</p></div>
+            <div class="viv-card__aside">
+              <p class="viv-result__kicker">Resultado estimado</p>
+              <p class="viv-result__title">Tu escenario de compra</p>
+              <div class="viv-result-grid">
+                <div class="viv-figure"><p class="viv-figure__label">Cuota inicial</p><p class="viv-figure__value">{{ rCuota }}</p><p class="viv-figure__note">{{ rCuotaNota }}</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Préstamo</p><p class="viv-figure__value">{{ rPrestamo }}</p><p class="viv-figure__note">{{ rLtv }}</p></div>
                 <sc-if value="{{ esMixta }}" hint-placeholder-val="{{ true }}">
-                  <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">{{ rCuotaTrasLabel }}</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rCuotaTras }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rCuotaTrasNota }}</p></div>
+                  <div class="viv-figure"><p class="viv-figure__label">{{ rCuotaTrasLabel }}</p><p class="viv-figure__value">{{ rCuotaTras }}</p><p class="viv-figure__note">{{ rCuotaTrasNota }}</p></div>
                 </sc-if>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Intereses estimados</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rIntereses }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Con los tipos introducidos</p></div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Efectivo inicial</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEfectivo }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Entrada + impuestos + gastos + tasación</p></div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Tipo variable simulado</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rTipoVar }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ rTipoVarNota }}</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Intereses estimados</p><p class="viv-figure__value">{{ rIntereses }}</p><p class="viv-figure__note">Con los tipos introducidos</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Efectivo inicial</p><p class="viv-figure__value">{{ rEfectivo }}</p><p class="viv-figure__note">Entrada + impuestos + gastos + tasación</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Tipo variable simulado</p><p class="viv-figure__value">{{ rTipoVar }}</p><p class="viv-figure__note">{{ rTipoVarNota }}</p></div>
               </div>
-              <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:14px; padding:16px 19px">
-                <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px">
-                  <div><p style="color:var(--color-accent-300); font-size:10px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; margin:0">Esfuerzo mensual inicial</p><p style="font-size:30px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEsfuerzo }}</p></div>
-                  <span style="{{ rEsfuerzoEstilo }}">{{ rEsfuerzoBadge }}</span>
+              <div class="viv-budget-total">
+                <div class="viv-effort__row">
+                  <div><p class="viv-figure__label">Esfuerzo mensual inicial</p><p class="viv-figure__value viv-figure__value--xl">{{ rEsfuerzo }}</p></div>
+                  <span class="{{ rEsfuerzoClase }}">{{ rEsfuerzoBadge }}</span>
                 </div>
-                <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">Hipoteca y otras deudas sobre ingresos netos. Es una referencia orientativa, no un criterio de concesión.</p>
+                <p class="viv-card__disclaimer">Hipoteca y otras deudas sobre ingresos netos. Es una referencia orientativa, no un criterio de concesión.</p>
               </div>
-              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); margin-top:14px; padding:16px 19px">
-                <p style="color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">{{ rEstresTitulo }}</p>
-                <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-top:10px">
-                  <p style="font-size:24px; font-weight:500; line-height:1; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEstresCuota }}<span style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:12px"> /mes</span></p>
-                  <p style="font-size:13px; font-weight:500; margin:0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ rEstresEsfuerzo }}</p>
+              <div class="viv-effort">
+                <p class="viv-figure__label">{{ rEstresTitulo }}</p>
+                <div class="viv-stress__row">
+                  <p class="viv-figure__value viv-figure__value--xl">{{ rEstresCuota }}<span class="viv-figure__note"> /mes</span></p>
+                  <p class="viv-figure__value viv-figure__value--sm">{{ rEstresEsfuerzo }}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div style="border-top:1px solid var(--color-divider); padding:20px 30px 26px">
-            <p style="font-size:12.5px; font-weight:500; margin:0 0 14px">Tabla anual de amortización</p>
-            <div style="display:grid; grid-template-columns:56px repeat(4,minmax(0,1fr)) 90px; gap:0 18px; border-bottom:1px solid var(--color-divider); padding-bottom:8px">
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Año</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Saldo inicial</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Capital amortizado</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Intereses</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Saldo final</span>
-              <span style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:10px; font-weight:500; letter-spacing:.07em; text-transform:uppercase">Tipo medio</span>
+          <div class="viv-table">
+            <p class="viv-table__title">Tabla anual de amortización</p>
+            <div class="viv-table__head">
+              <span class="viv-figure__label">Año</span>
+              <span class="viv-figure__label">Saldo inicial</span>
+              <span class="viv-figure__label">Capital amortizado</span>
+              <span class="viv-figure__label">Intereses</span>
+              <span class="viv-figure__label">Saldo final</span>
+              <span class="viv-figure__label">Tipo medio</span>
             </div>
-            <div style="max-height:280px; overflow-y:auto">
+            <div class="viv-table__body">
               <sc-for list="{{ filas }}" as="f" hint-placeholder-count="10">
-                <div style="display:grid; grid-template-columns:56px repeat(4,minmax(0,1fr)) 90px; gap:0 18px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 6%, transparent); padding:9px 0">
-                  <span style="color:var(--color-text); font-size:12px; font-weight:500; font-variant-numeric:tabular-nums">{{ f.year }}</span>
-                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.inicial }}</span>
-                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.capital }}</span>
-                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.intereses }}</span>
-                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.final }}</span>
-                  <span style="color:color-mix(in srgb, var(--color-text) 64%, transparent); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums">{{ f.tipo }}</span>
+                <div class="viv-table__row">
+                  <span class="viv-budget-line__value">{{ f.year }}</span>
+                  <span class="viv-budget-line__value">{{ f.inicial }}</span>
+                  <span class="viv-budget-line__value">{{ f.capital }}</span>
+                  <span class="viv-budget-line__value">{{ f.intereses }}</span>
+                  <span class="viv-budget-line__value">{{ f.final }}</span>
+                  <span class="viv-budget-line__value">{{ f.tipo }}</span>
                 </div>
               </sc-for>
             </div>
@@ -211,85 +211,85 @@
     </sc-if>
 
     <sc-if value="{{ tabOfertas }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Comparador de ofertas" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px">
-          <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap">
+      <section data-screen-label="Comparador de ofertas" class="nv-container viv-section">
+        <div class="viv-panel">
+          <div class="nv-section-heading">
             <div>
-              <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Comparador de hipotecas</p>
-              <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Copia las condiciones completas de cada FEIN</h2>
-              <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0">{{ ofertasIntro }}</p>
+              <p class="viv-result__kicker">Comparador de hipotecas</p>
+              <h2 class="viv-card__title">Copia las condiciones completas de cada FEIN</h2>
+              <p class="viv-card__lead">{{ ofertasIntro }}</p>
             </div>
-            <a href="https://clientebancario.bde.es/pcb/es/menu-horizontal/actualidadeducac/educacion-financiera/comparadores-y-simuladores/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="text-decoration:none; white-space:nowrap; font-size:12px">Comparadores oficiales ↗</a>
+            <a href="https://clientebancario.bde.es/pcb/es/menu-horizontal/actualidadeducac/educacion-financiera/comparadores-y-simuladores/" target="_blank" rel="noopener noreferrer" class="nv-btn nv-btn--soft">Comparadores oficiales ↗</a>
           </div>
-          <div style="display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:26px">
+          <div class="viv-offers">
             <sc-for list="{{ ofertas }}" as="o" hint-placeholder-count="3">
-              <article style="{{ o.estiloCard }}">
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px">
-                  <div style="display:flex; align-items:center; gap:12px; min-width:0">
-                    <span style="flex-shrink:0; display:inline-flex; width:38px; height:38px; align-items:center; justify-content:center; border-radius:var(--radius-md); background:var(--color-accent-900); color:var(--color-accent-200); font-size:15px; font-feature-settings:'tnum' 1">{{ o.num }}</span>
-                    <span style="font-size:19px; font-weight:500">{{ o.name }}</span>
+              <article class="{{ o.claseCard }}">
+                <div class="viv-offer__head">
+                  <div class="viv-offer__id">
+                    <span class="viv-offer__num">{{ o.num }}</span>
+                    <span class="viv-offer__name">{{ o.name }}</span>
                   </div>
-                  <span style="{{ o.badgeEstilo }}">{{ o.badge }}</span>
+                  <span class="{{ o.claseBadge }}">{{ o.badge }}</span>
                 </div>
-                <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; margin-top:16px">
-                  <div style="grid-column:span 2"><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Modalidad</label><select name="{{ o.campoKind }}" data-dc-value="{{ o.kind }}" onChange="{{ setOfertaStr }}" style="width:100%; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); color:var(--color-text); font-size:13px; font-weight:500; padding:8px 10px; cursor:pointer"><option value="Fija">Fija</option><option value="Variable">Variable</option><option value="Mixta">Mixta</option></select></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">TIN fijo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoFixedRate }}" type="number" step="0.05" data-dc-value="{{ o.fixedRate }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Tramo fijo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoFixedYears }}" type="number" min="0" max="40" data-dc-value="{{ o.fixedYears }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">años</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Índice</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoReferenceRate }}" type="number" step="0.05" data-dc-value="{{ o.referenceRate }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Diferencial</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoSpread }}" type="number" step="0.05" data-dc-value="{{ o.spread }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">TAE</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoTae }}" type="number" step="0.05" data-dc-value="{{ o.tae }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">%</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Plazo</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoYears }}" type="number" min="1" max="40" data-dc-value="{{ o.years }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">años</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Apertura</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoOpeningFee }}" type="number" step="100" data-dc-value="{{ o.openingFee }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">€</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Tasación</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoAppraisalCost }}" type="number" step="50" data-dc-value="{{ o.appraisalCost }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px">€</span></div></div>
-                  <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 62%, transparent); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:5px">Productos</label><div style="display:flex; align-items:center; gap:6px; border:1px solid var(--color-divider); border-radius:var(--radius-sm); background:var(--color-bg); padding:0 10px"><input name="{{ o.campoAnnualProductsCost }}" type="number" step="50" data-dc-value="{{ o.annualProductsCost }}" onChange="{{ setOferta }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:13px; font-weight:500; padding:8px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; white-space:nowrap">€/año</span></div></div>
+                <div class="viv-result-grid">
+                  <div class="nv-field nv-field--wide"><label>Modalidad</label><div class="nv-field__box"><select class="nv-select" name="{{ o.campoKind }}" data-dc-value="{{ o.kind }}" onChange="{{ setOfertaStr }}" ><option value="Fija">Fija</option><option value="Variable">Variable</option><option value="Mixta">Mixta</option></select></div></div>
+                  <div class="nv-field"><label>TIN fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedRate }}" type="number" step="0.05" data-dc-value="{{ o.fixedRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Tramo fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedYears }}" type="number" min="0" max="40" data-dc-value="{{ o.fixedYears }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
+                  <div class="nv-field"><label>Índice</label><div class="nv-field__box"><input name="{{ o.campoReferenceRate }}" type="number" step="0.05" data-dc-value="{{ o.referenceRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="{{ o.campoSpread }}" type="number" step="0.05" data-dc-value="{{ o.spread }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>TAE</label><div class="nv-field__box"><input name="{{ o.campoTae }}" type="number" step="0.05" data-dc-value="{{ o.tae }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="{{ o.campoYears }}" type="number" min="1" max="40" data-dc-value="{{ o.years }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
+                  <div class="nv-field"><label>Apertura</label><div class="nv-field__box"><input name="{{ o.campoOpeningFee }}" type="number" step="100" data-dc-value="{{ o.openingFee }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
+                  <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="{{ o.campoAppraisalCost }}" type="number" step="50" data-dc-value="{{ o.appraisalCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
+                  <div class="nv-field"><label>Productos</label><div class="nv-field__box"><input name="{{ o.campoAnnualProductsCost }}" type="number" step="50" data-dc-value="{{ o.annualProductsCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€/año</span></div></div>
                 </div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-bg) 70%, var(--color-surface)); margin-top:16px; padding:14px 17px">
-                  <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px">
-                    <div><p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:9px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0">Cuota inicial</p><p style="font-size:19px; font-weight:500; margin:6px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rCuota }}</p></div>
-                    <div><p style="color:color-mix(in srgb, var(--color-text) 52%, transparent); font-size:9px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0">Coste conocido</p><p style="font-size:19px; font-weight:500; margin:6px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rCoste }}</p></div>
+                <div class="viv-offer__result">
+                  <div class="viv-offer__result-grid">
+                    <div><p class="viv-table__headcell">Cuota inicial</p><p class="viv-figure__value">{{ o.rCuota }}</p></div>
+                    <div><p class="viv-table__headcell">Coste conocido</p><p class="viv-figure__value">{{ o.rCoste }}</p></div>
                   </div>
-                  <p style="display:flex; justify-content:space-between; gap:10px; border-top:1px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; margin:11px 0 0; padding-top:10px"><span>Desembolso conocido</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ o.rDesembolso }}</strong></p>
+                  <p class="viv-offer__total"><span>Desembolso conocido</span><strong class="viv-budget-line__value">{{ o.rDesembolso }}</strong></p>
                 </div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; min-height:22px">
-                  <span style="{{ o.chipTaeEstilo }}">{{ o.chipTae }}</span>
-                  <span style="{{ o.chipVarEstilo }}">{{ o.chipVar }}</span>
+                <div class="viv-offer__chips">
+                  <span class="{{ o.claseChipTae }}">{{ o.chipTae }}</span>
+                  <span class="{{ o.claseChipVar }}">{{ o.chipVar }}</span>
                 </div>
               </article>
             </sc-for>
           </div>
-          <p style="border-left:2px solid var(--color-accent); border-radius:0 var(--radius-sm) var(--radius-sm) 0; background:color-mix(in srgb, var(--color-accent) 6%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:11.5px; line-height:1.6; margin:18px 0 0; padding:13px 16px"><strong style="color:var(--color-text); font-weight:500">Alcance:</strong> la TAE sigue siendo la referencia contractual principal. Las comisiones por amortización son contingentes y no se suman al coste conocido. NUVIA no presenta los ejemplos como ofertas comerciales vigentes.</p>
+          <p class="viv-stress"><strong class="viv-budget-line__value">Alcance:</strong> la TAE sigue siendo la referencia contractual principal. Las comisiones por amortización son contingentes y no se suman al coste conocido. NUVIA no presenta los ejemplos como ofertas comerciales vigentes.</p>
         </div>
       </section>
     </sc-if>
 
     <sc-if value="{{ tabCompra }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Compra o alquiler" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr)">
-          <div style="padding:26px 30px">
-            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Compra o alquiler</p>
-            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Compara patrimonio, no solo mensualidades</h2>
-            <p style="max-width:58ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 22px">El modelo asigna al alquiler la entrada y los gastos que no desembolsa, e invierte cada mes la diferencia de coste. La compra acumula la revalorización de la vivienda y el capital amortizado.</p>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Alquiler comparable</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="monthlyRent" type="number" step="50" data-dc-value="{{ v.monthlyRent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Horizonte</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="comparisonYears" type="number" min="1" max="30" data-dc-value="{{ v.comparisonYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Revalorización vivienda</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="homeAppreciation" type="number" step="0.25" max="15" data-dc-value="{{ v.homeAppreciation }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Crecimiento alquiler</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="rentGrowth" type="number" step="0.25" max="15" data-dc-value="{{ v.rentGrowth }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Rentabilidad alternativa</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="investmentReturn" type="number" step="0.25" max="20" data-dc-value="{{ v.investmentReturn }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">% anual</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Costes de venta</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="saleCostsPercent" type="number" step="0.25" max="15" data-dc-value="{{ v.saleCostsPercent }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+      <section data-screen-label="Compra o alquiler" class="nv-container viv-section">
+        <div class="viv-card viv-card__split">
+          <div class="viv-card__form">
+            <p class="viv-result__kicker">Compra o alquiler</p>
+            <h2 class="viv-card__title">Compara patrimonio, no solo mensualidades</h2>
+            <p class="viv-card__lead">El modelo asigna al alquiler la entrada y los gastos que no desembolsa, e invierte cada mes la diferencia de coste. La compra acumula la revalorización de la vivienda y el capital amortizado.</p>
+            <div class="nv-fields">
+              <div class="nv-field"><label>Alquiler comparable</label><div class="nv-field__box"><input name="monthlyRent" type="number" step="50" data-dc-value="{{ v.monthlyRent }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Horizonte</label><div class="nv-field__box"><input name="comparisonYears" type="number" min="1" max="30" data-dc-value="{{ v.comparisonYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+              <div class="nv-field"><label>Revalorización vivienda</label><div class="nv-field__box"><input name="homeAppreciation" type="number" step="0.25" max="15" data-dc-value="{{ v.homeAppreciation }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Crecimiento alquiler</label><div class="nv-field__box"><input name="rentGrowth" type="number" step="0.25" max="15" data-dc-value="{{ v.rentGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Rentabilidad alternativa</label><div class="nv-field__box"><input name="investmentReturn" type="number" step="0.25" max="20" data-dc-value="{{ v.investmentReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Costes de venta</label><div class="nv-field__box"><input name="saleCostsPercent" type="number" step="0.25" max="15" data-dc-value="{{ v.saleCostsPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
             </div>
-            <p style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:11px; line-height:1.55; margin:16px 0 0">La hipoteca, la entrada y los costes de propietario se toman de las pestañas Hipoteca y Presupuesto.</p>
+            <p class="viv-card__disclaimer">La hipoteca, la entrada y los costes de propietario se toman de las pestañas Hipoteca y Presupuesto.</p>
           </div>
-          <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
-            <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.17em; text-transform:uppercase; margin:0">{{ bvResultadoLabel }}</p>
-            <h3 style="font-size:26px; font-weight:500; line-height:1.15; margin:10px 0 0">{{ bvTitulo }}</h3>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:20px">
-              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Patrimonio comprando</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvComprando }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ bvComprandoNota }}</p></div>
-              <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Patrimonio alquilando</p><p style="font-size:23px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvAlquilando }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">Entrada, gastos y diferencias mensuales invertidas</p></div>
+          <div class="viv-card__aside">
+            <p class="viv-figure__label">{{ bvResultadoLabel }}</p>
+            <h3 class="viv-intro__title">{{ bvTitulo }}</h3>
+            <div class="viv-result-grid">
+              <div class="viv-figure"><p class="viv-figure__label">Patrimonio comprando</p><p class="viv-figure__value">{{ bvComprando }}</p><p class="viv-figure__note">{{ bvComprandoNota }}</p></div>
+              <div class="viv-figure"><p class="viv-figure__label">Patrimonio alquilando</p><p class="viv-figure__value">{{ bvAlquilando }}</p><p class="viv-figure__note">Entrada, gastos y diferencias mensuales invertidas</p></div>
             </div>
-            <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:14px; padding:16px 19px">
-              <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Diferencia patrimonial</p>
-              <p style="font-size:31px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ bvDiferencia }}</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">Resultado sensible a revalorización, alquiler, rentabilidad, costes de propietario y venta. No incluye fiscalidad individual.</p>
+            <div class="viv-budget-total">
+              <p class="viv-result__kicker">Diferencia patrimonial</p>
+              <p class="viv-figure__value viv-figure__value--xl">{{ bvDiferencia }}</p>
+              <p class="viv-card__disclaimer">Resultado sensible a revalorización, alquiler, rentabilidad, costes de propietario y venta. No incluye fiscalidad individual.</p>
             </div>
           </div>
         </div>
@@ -297,34 +297,34 @@
     </sc-if>
 
     <sc-if value="{{ tabAmort }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Amortización anticipada" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); padding:26px 30px">
-          <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Amortización anticipada</p>
-          <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Reducir cuota o terminar antes</h2>
-          <p style="max-width:72ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 26px">Simula una aportación extraordinaria sobre una hipoteca existente y descuenta la compensación indicada en tu contrato.</p>
-          <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.9fr); gap:24px; align-items:start">
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Capital pendiente</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentBalance" type="number" step="5000" data-dc-value="{{ v.repaymentBalance }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">TIN actual</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentRate" type="number" step="0.05" data-dc-value="{{ v.repaymentRate }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Plazo restante</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentYears" type="number" min="1" max="40" data-dc-value="{{ v.repaymentYears }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">años</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Importe a amortizar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentAmount" type="number" step="1000" data-dc-value="{{ v.repaymentAmount }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">€</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Compensación aplicable</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="repaymentFee" type="number" step="0.05" data-dc-value="{{ v.repaymentFee }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px">%</span></div></div>
+      <section data-screen-label="Amortización anticipada" class="nv-container viv-section">
+        <div class="viv-panel">
+          <p class="viv-result__kicker">Amortización anticipada</p>
+          <h2 class="viv-card__title">Reducir cuota o terminar antes</h2>
+          <p class="viv-card__lead">Simula una aportación extraordinaria sobre una hipoteca existente y descuenta la compensación indicada en tu contrato.</p>
+          <div class="viv-card__split">
+            <div class="nv-fields">
+              <div class="nv-field"><label>Capital pendiente</label><div class="nv-field__box"><input name="repaymentBalance" type="number" step="5000" data-dc-value="{{ v.repaymentBalance }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+              <div class="nv-field"><label>TIN actual</label><div class="nv-field__box"><input name="repaymentRate" type="number" step="0.05" data-dc-value="{{ v.repaymentRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+              <div class="nv-field"><label>Plazo restante</label><div class="nv-field__box"><input name="repaymentYears" type="number" min="1" max="40" data-dc-value="{{ v.repaymentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+              <div class="nv-field"><label>Importe a amortizar</label><div class="nv-field__box"><input name="repaymentAmount" type="number" step="1000" data-dc-value="{{ v.repaymentAmount }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+              <div class="nv-field"><label>Compensación aplicable</label><div class="nv-field__box"><input name="repaymentFee" type="number" step="0.05" data-dc-value="{{ v.repaymentFee }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
               <div>
-                <p style="color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin:0 0 8px">Objetivo</p>
-                <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <p class="viv-section-label">Objetivo</p>
+                <div class="viv-pill-row">
                   <sc-for list="{{ modosAmort }}" as="m" hint-placeholder-count="2">
-                    <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" style="{{ m.estilo }}">{{ m.label }}</button>
+                    <button type="button" onClick="{{ m.abrir }}" aria-pressed="{{ m.pressed }}" class="{{ m.clase }}">{{ m.label }}</button>
                   </sc-for>
                 </div>
               </div>
             </div>
-            <div style="border-radius:var(--radius-md); background:radial-gradient(600px 380px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:24px 28px">
-              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Resultado estimado</p>
-              <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:18px">
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Cuota actual</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arCuotaActual }}</p></div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Nueva cuota</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arNuevaCuota }}</p><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ arNuevaCuotaNota }}</p></div>
-                <div style="border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-text) 7%, transparent); padding:14px 16px"><p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Nuevo plazo</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arNuevoPlazo }}</p></div>
-                <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 12%, transparent); padding:14px 16px"><p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.15em; text-transform:uppercase; margin:0">Ahorro neto</p><p style="font-size:22px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums">{{ arAhorroNeto }}</p><p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.5; margin:7px 0 0">{{ arAhorroNota }}</p></div>
+            <div class="viv-card__aside">
+              <p class="viv-figure__label">Resultado estimado</p>
+              <div class="viv-result-grid">
+                <div class="viv-figure"><p class="viv-figure__label">Cuota actual</p><p class="viv-figure__value">{{ arCuotaActual }}</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Nueva cuota</p><p class="viv-figure__value">{{ arNuevaCuota }}</p><p class="viv-figure__note">{{ arNuevaCuotaNota }}</p></div>
+                <div class="viv-figure"><p class="viv-figure__label">Nuevo plazo</p><p class="viv-figure__value">{{ arNuevoPlazo }}</p></div>
+                <div class="viv-budget-total"><p class="viv-figure__label">Ahorro neto</p><p class="viv-figure__value">{{ arAhorroNeto }}</p><p class="viv-figure__note">{{ arAhorroNota }}</p></div>
               </div>
             </div>
           </div>
@@ -333,41 +333,41 @@
     </sc-if>
 
     <sc-if value="{{ tabPresupuesto }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Presupuesto mensual" style="max-width:1240px; margin:0 auto; padding:24px 48px 84px">
-        <div style="border-radius:var(--radius-md); background:var(--color-surface); box-shadow:var(--shadow-sm); overflow:hidden; display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)">
-          <div style="padding:26px 30px">
-            <p style="color:var(--color-accent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0 0 8px">Presupuesto del hogar</p>
-            <h2 style="font-size:25px; font-weight:500; line-height:1.15; margin:0 0 8px">Lo que queda después de la casa</h2>
-            <p style="max-width:58ch; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:13px; line-height:1.6; margin:0 0 22px">Los ingresos, la cuota y otras deudas se toman de la pestaña Hipoteca. Añade aquí los costes de propietario y de vida diaria.</p>
-            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0 0 12px">Costes de propietario</p>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Comunidad</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="communityFees" type="number" step="10" data-dc-value="{{ v.communityFees }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">IBI</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="propertyTaxAnnual" type="number" step="50" data-dc-value="{{ v.propertyTaxAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Seguro de hogar</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="homeInsuranceAnnual" type="number" step="50" data-dc-value="{{ v.homeInsuranceAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Mantenimiento</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="maintenanceAnnual" type="number" step="100" data-dc-value="{{ v.maintenanceAnnual }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/año</span></div></div>
+      <section data-screen-label="Presupuesto mensual" class="nv-container viv-section">
+        <div class="viv-card viv-card__split">
+          <div class="viv-card__form">
+            <p class="viv-result__kicker">Presupuesto del hogar</p>
+            <h2 class="viv-card__title">Lo que queda después de la casa</h2>
+            <p class="viv-card__lead">Los ingresos, la cuota y otras deudas se toman de la pestaña Hipoteca. Añade aquí los costes de propietario y de vida diaria.</p>
+            <p class="viv-figure__label">Costes de propietario</p>
+            <div class="nv-fields">
+              <div class="nv-field"><label>Comunidad</label><div class="nv-field__box"><input name="communityFees" type="number" step="10" data-dc-value="{{ v.communityFees }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>IBI</label><div class="nv-field__box"><input name="propertyTaxAnnual" type="number" step="50" data-dc-value="{{ v.propertyTaxAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+              <div class="nv-field"><label>Seguro de hogar</label><div class="nv-field__box"><input name="homeInsuranceAnnual" type="number" step="50" data-dc-value="{{ v.homeInsuranceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+              <div class="nv-field"><label>Mantenimiento</label><div class="nv-field__box"><input name="maintenanceAnnual" type="number" step="100" data-dc-value="{{ v.maintenanceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
             </div>
-            <p style="color:var(--color-accent-300); font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:22px 0 12px">Gastos de vida diaria</p>
-            <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px">
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Alimentación y suministros</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="essentials" type="number" step="25" data-dc-value="{{ v.essentials }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Transporte</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="transport" type="number" step="25" data-dc-value="{{ v.transport }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Seguros y cuidados</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="insuranceCare" type="number" step="25" data-dc-value="{{ v.insuranceCare }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
-              <div><label style="display:block; color:color-mix(in srgb, var(--color-text) 66%, transparent); font-size:11px; letter-spacing:.09em; text-transform:uppercase; margin-bottom:6px">Ocio y otros</label><div style="display:flex; align-items:center; gap:8px; border:1px solid var(--color-divider); border-radius:var(--radius-md); background:var(--color-bg); padding:0 12px"><input name="leisureOther" type="number" step="25" data-dc-value="{{ v.leisureOther }}" onChange="{{ setNum }}" style="width:100%; border:0; background:none; color:var(--color-text); caret-color:var(--color-accent); font-size:14.5px; font-weight:500; padding:10px 0; font-variant-numeric:tabular-nums"><span style="color:color-mix(in srgb, var(--color-text) 48%, transparent); font-size:12px; white-space:nowrap">€/mes</span></div></div>
+            <p class="viv-figure__label">Gastos de vida diaria</p>
+            <div class="nv-fields">
+              <div class="nv-field"><label>Alimentación y suministros</label><div class="nv-field__box"><input name="essentials" type="number" step="25" data-dc-value="{{ v.essentials }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Transporte</label><div class="nv-field__box"><input name="transport" type="number" step="25" data-dc-value="{{ v.transport }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Seguros y cuidados</label><div class="nv-field__box"><input name="insuranceCare" type="number" step="25" data-dc-value="{{ v.insuranceCare }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Ocio y otros</label><div class="nv-field__box"><input name="leisureOther" type="number" step="25" data-dc-value="{{ v.leisureOther }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
             </div>
           </div>
-          <div style="background:radial-gradient(700px 420px at 85% -20%, color-mix(in srgb, var(--color-section-glow) 70%, transparent), transparent 64%), var(--color-section); padding:26px 30px">
-            <p style="color:color-mix(in srgb, var(--color-text) 56%, transparent); font-size:10.5px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; margin:0">Cada mes, con la casa incluida</p>
-            <div style="display:flex; flex-direction:column; margin-top:18px">
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Ingresos netos</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">{{ pIngresos }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Cuota hipotecaria y otras deudas</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pHipoteca }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; border-bottom:1px solid color-mix(in srgb, var(--color-text) 12%, transparent); color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Costes de propietario</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pCostesProp }}</strong></p>
-              <p style="display:flex; justify-content:space-between; gap:12px; color:color-mix(in srgb, var(--color-text) 70%, transparent); font-size:13px; margin:0; padding:11px 0"><span>Gastos de vida diaria</span><strong style="color:var(--color-text); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums">−{{ pVida }}</strong></p>
+          <div class="viv-card__aside">
+            <p class="viv-result__kicker">Cada mes, con la casa incluida</p>
+            <div class="viv-budget-lines">
+              <p class="viv-budget-line"><span>Ingresos netos</span><strong class="viv-budget-line__value">{{ pIngresos }}</strong></p>
+              <p class="viv-budget-line"><span>Cuota hipotecaria y otras deudas</span><strong class="viv-budget-line__value">−{{ pHipoteca }}</strong></p>
+              <p class="viv-budget-line"><span>Costes de propietario</span><strong class="viv-budget-line__value">−{{ pCostesProp }}</strong></p>
+              <p class="viv-budget-line"><span>Gastos de vida diaria</span><strong class="viv-budget-line__value">−{{ pVida }}</strong></p>
             </div>
-            <div style="border:1px solid var(--color-accent-700); border-radius:var(--radius-md); background:color-mix(in srgb, var(--color-accent) 10%, transparent); margin-top:18px; padding:16px 19px">
-              <p style="color:var(--color-accent-300); font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; margin:0">Margen mensual disponible</p>
-              <p style="font-size:32px; font-weight:500; line-height:1; margin:8px 0 0; white-space:nowrap; font-variant-numeric:tabular-nums; color:{{ pMargenColor }}">{{ pMargen }}</p>
-              <p style="color:color-mix(in srgb, var(--color-text) 58%, transparent); font-size:10.5px; line-height:1.55; margin:10px 0 0">{{ pCapacidad }}</p>
+            <div class="viv-budget-total">
+              <p class="viv-result__kicker">Margen mensual disponible</p>
+              <p class="viv-figure__value viv-figure__value--xl {{ pMargenClase }}">{{ pMargen }}</p>
+              <p class="viv-card__disclaimer">{{ pCapacidad }}</p>
             </div>
-            <p style="color:color-mix(in srgb, var(--color-text) 50%, transparent); font-size:11px; line-height:1.6; margin:16px 0 0">Un margen estable permite sostener ahorro, objetivos e imprevistos sin renunciar a la casa elegida.</p>
+            <p class="viv-card__disclaimer">Un margen estable permite sostener ahorro, objetivos e imprevistos sin renunciar a la casa elegida.</p>
           </div>
         </div>
       </section>
@@ -378,11 +378,12 @@
     <div class="nuvia-site-footer__inner">
       <div class="nuvia-site-footer__grid">
         <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+          <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png"
+               alt="NUVIA Family Wealth" width="153" height="50" loading="lazy">
           <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
         </div>
         <div>
-          <h4>Navegación</h4>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
           <div class="nuvia-site-footer__links">
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
@@ -392,7 +393,7 @@
           </div>
         </div>
         <div>
-          <h4>Recursos</h4>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
           <div class="nuvia-site-footer__links">
             <a href="vivienda.html">Temas clave</a>
             <a href="academia.html">Academia Nuvia</a>
@@ -402,9 +403,10 @@
           </div>
         </div>
         <div class="nuvia-site-footer__info-column">
-          <h4>Información</h4>
+          <h2 class="nuvia-site-footer__heading">Información</h2>
           <div class="nuvia-site-footer__info">
             <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
             <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
           </div>
         </div>
@@ -415,7 +417,9 @@
       </div>
     </div>
   </footer>
+
 </div>
+</x-dc>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
@@ -500,15 +504,17 @@ class Component extends DCLogic {
     const euroP = (x) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(x) + ' €';
     const pct = (x) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 2 }).format(x);
     const tab = this.tabs().find(t => t.id === this.state.tab) || this.tabs()[0];
-    const pill = (on) => 'border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ' + (on ? 'border:1px solid rgba(255,255,255,.9); background:rgba(255,255,255,.95); color:#0B2347' : 'border:1px solid rgba(255,255,255,.3); background:transparent; color:rgba(255,255,255,.8)');
-    const pillClaro = (on) => 'border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:12.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ' + (on ? 'border:1px solid var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent); color:var(--color-accent-200)' : 'border:1px solid var(--color-divider); background:transparent; color:color-mix(in srgb, var(--color-text) 70%, transparent)');
+    const pill = (on) => 'viv-pill viv-pill--dark' + (on ? ' is-active' : '');
+    const pillClaro = (on) => 'viv-pill' + (on ? ' is-active' : '');
     const scenario = eng.calculatePurchaseScenario({
       purchasePrice: s.purchasePrice, downPayment: s.downPayment, purchaseTaxPercent: s.purchaseTaxPercent,
       purchaseOtherCosts: s.purchaseOtherCosts, appraisalCost: s.appraisalCost,
       annualHouseholdIncome: s.annualHouseholdIncome, monthlyOtherDebt: s.monthlyOtherDebt,
       mortgage: { years: s.years, kind: s.mortgageKind, fixedRate: s.fixedRate, fixedYears: s.fixedYears, referenceRate: s.referenceRate, spread: s.spread },
     });
-    const efecto = scenario.effortRate <= 30 ? { label: 'Margen amplio', color: '#3C9A69', bg: 'color-mix(in srgb, #3C9A69 14%, transparent)' } : scenario.effortRate <= 35 ? { label: 'Margen ajustado', color: '#946E29', bg: 'color-mix(in srgb, #946E29 14%, transparent)' } : { label: 'Esfuerzo elevado', color: '#C2453A', bg: 'color-mix(in srgb, #C2453A 14%, transparent)' };
+    const efecto = scenario.effortRate <= 30 ? { label: 'Margen amplio', clase: 'holgado' }
+      : scenario.effortRate <= 35 ? { label: 'Margen ajustado', clase: 'ajustado' }
+      : { label: 'Esfuerzo elevado', clase: 'elevado' };
     const ownerMonthly = s.communityFees + s.propertyTaxAnnual / 12 + s.homeInsuranceAnnual / 12 + s.maintenanceAnnual / 12;
     const living = s.essentials + s.transport + s.insuranceCare + s.leisureOther;
     const margen = scenario.monthlyIncome - scenario.firstMonthlyPayment - s.monthlyOtherDebt - living - ownerMonthly;
@@ -532,10 +538,10 @@ class Component extends DCLogic {
       setNum: (e) => this.upd(e.target.name, Number(e.target.value) || 0),
       guardar: () => { try { window.localStorage.setItem('nuvia-vivienda-maqueta-v1', JSON.stringify({ s, ofertas })); this.setState({ msg: 'Escenario guardado en este dispositivo' }); } catch (err) { this.setState({ msg: 'No se pudo guardar' }); } },
       recuperar: () => { try { const raw = window.localStorage.getItem('nuvia-vivienda-maqueta-v1'); if (!raw) { this.setState({ msg: 'No hay ningún escenario guardado' }); return; } const d = JSON.parse(raw); this.setState({ s: Object.assign(this.defaults(), d.s || {}), ofertas: Array.isArray(d.ofertas) && d.ofertas.length === 3 ? d.ofertas : this.ofs(), msg: 'Escenario recuperado' }); } catch (err) { this.setState({ msg: 'No se pudo recuperar el escenario' }); } },
-      pestanas: this.tabs().map(t => ({ label: t.label, pressed: t.id === this.state.tab, abrir: () => this.setState({ tab: t.id }), estilo: pill(t.id === this.state.tab) })),
+      pestanas: this.tabs().map(t => ({ label: t.label, pressed: t.id === this.state.tab, abrir: () => this.setState({ tab: t.id }), clase: pill(t.id === this.state.tab) })),
       tabTitulo: tab.title, tabResumen: tab.summary, tabQue: tab.what, tabComo: tab.how, tabChips: tab.chips,
       tabHipoteca: tab.id === 'mortgage', tabOfertas: tab.id === 'offers', tabCompra: tab.id === 'buy-rent', tabAmort: tab.id === 'repayment', tabPresupuesto: tab.id === 'budget',
-      modalidades: ['Fija','Variable','Mixta'].map(k => ({ label: k, pressed: s.mortgageKind === k, abrir: () => this.upd('mortgageKind', k), estilo: pillClaro(s.mortgageKind === k) })),
+      modalidades: ['Fija','Variable','Mixta'].map(k => ({ label: k, pressed: s.mortgageKind === k, abrir: () => this.upd('mortgageKind', k), clase: pillClaro(s.mortgageKind === k) })),
       noEsVariable: s.mortgageKind !== 'Variable', noEsFija: s.mortgageKind !== 'Fija', esMixta: s.mortgageKind === 'Mixta',
       etiquetaTinFijo: s.mortgageKind === 'Mixta' ? 'TIN del tramo fijo' : 'TIN fijo',
       rCuota: euroP(scenario.firstMonthlyPayment), rCuotaNota: (s.years * 12) + ' mensualidades máximas',
@@ -545,7 +551,7 @@ class Component extends DCLogic {
       rTipoVar: pct(scenario.variableRate) + ' %', rTipoVarNota: s.mortgageKind === 'Fija' ? 'No aplica a esta modalidad' : 'Índice + diferencial',
       rEsfuerzo: pct(scenario.effortRate) + ' %',
       rEsfuerzoBadge: efecto.label,
-      rEsfuerzoEstilo: 'flex-shrink:0; border-radius:999px; font-size:9.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:6px 12px; white-space:nowrap; color:' + efecto.color + '; background:' + efecto.bg,
+      rEsfuerzoClase: 'viv-badge viv-badge--' + efecto.clase,
       rEstresTitulo: s.mortgageKind === 'Fija' ? 'Tipo fijo · cuota protegida frente a revisiones' : 'Escenario de tensión · referencia +2 puntos',
       rEstresCuota: euroP(scenario.stressedMonthlyPayment), rEstresEsfuerzo: pct(scenario.stressedEffortRate) + ' %',
       filas: scenario.schedule.map(f => ({ year: f.year, inicial: euro(f.openingBalance), capital: euro(f.principalPaid), intereses: euro(f.interestPaid), final: euro(f.closingBalance), tipo: pct(f.averageRate) + ' %' })),
@@ -560,21 +566,21 @@ class Component extends DCLogic {
           campoReferenceRate: o.id + '|referenceRate', campoSpread: o.id + '|spread', campoTae: o.id + '|tae',
           campoYears: o.id + '|years', campoOpeningFee: o.id + '|openingFee', campoAppraisalCost: o.id + '|appraisalCost',
           campoAnnualProductsCost: o.id + '|annualProductsCost',
-          estiloCard: 'border-radius:var(--radius-md); padding:20px 22px; ' + (esMenor ? 'box-shadow:inset 0 0 0 1px var(--color-accent); background:color-mix(in srgb, var(--color-accent) 6%, var(--color-surface))' : 'background:color-mix(in srgb, var(--color-bg) 45%, var(--color-surface)); box-shadow:var(--shadow-sm)'),
+          claseCard: 'viv-offer' + (esMenor ? ' is-best' : ''),
           badge: esMenor ? 'Menor coste conocido' : '',
-          badgeEstilo: esMenor ? 'flex-shrink:0; border-radius:999px; background:var(--color-accent-800); color:var(--color-accent-100); font-size:8.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; padding:5px 10px; white-space:nowrap' : 'display:none',
+          claseBadge: 'viv-offer__badge',
           rCuota: euroP(r.firstMonthlyPayment), rCoste: euro(r.knownOfferCost), rDesembolso: euro(r.knownTotalOutlay),
           chipTae: o.tae === menorTae ? 'Menor TAE' : '',
-          chipTaeEstilo: o.tae === menorTae ? 'border-radius:999px; background:color-mix(in srgb, #3C9A69 14%, transparent); color:#3C9A69; font-size:8.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px' : 'display:none',
+          claseChipTae: 'viv-chip viv-chip--tae' + (o.tae === menorTae ? '' : ' is-hidden'),
           chipVar: o.kind !== 'Fija' ? 'Cuota revisable' : '',
-          chipVarEstilo: o.kind !== 'Fija' ? 'border-radius:999px; background:color-mix(in srgb, #946E29 14%, transparent); color:#946E29; font-size:8.5px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px' : 'display:none',
+          claseChipVar: 'viv-chip viv-chip--var' + (o.kind !== 'Fija' ? '' : ' is-hidden'),
         });
       }),
       bvResultadoLabel: 'Resultado a ' + s.comparisonYears + ' años',
       bvTitulo: bv.winner === 'tie' ? 'Escenarios muy próximos' : bv.winner === 'buy' ? 'Comprar acumula más patrimonio' : 'Alquilar e invertir acumula más',
       bvComprando: euro(bv.buyerNetWorth), bvComprandoNota: 'Vivienda ' + euro(bv.finalHomeValue) + ' · deuda ' + euro(bv.remainingMortgage),
       bvAlquilando: euro(bv.renterNetWorth), bvDiferencia: euro(bv.difference),
-      modosAmort: [['term','Reducir plazo'],['payment','Reducir cuota']].map(([m, label]) => ({ label, pressed: s.repaymentMode === m, abrir: () => this.upd('repaymentMode', m), estilo: pillClaro(s.repaymentMode === m) })),
+      modosAmort: [['term','Reducir plazo'],['payment','Reducir cuota']].map(([m, label]) => ({ label, pressed: s.repaymentMode === m, abrir: () => this.upd('repaymentMode', m), clase: pillClaro(s.repaymentMode === m) })),
       arCuotaActual: euroP(ar.originalPayment), arNuevaCuota: euroP(ar.newPayment),
       arNuevaCuotaNota: s.repaymentMode === 'term' ? 'Se mantiene aproximadamente' : 'Manteniendo el plazo',
       arNuevoPlazo: Math.floor(ar.newMonths / 12) + ' años ' + (ar.newMonths % 12) + ' meses',
@@ -582,7 +588,7 @@ class Component extends DCLogic {
       pIngresos: euro(scenario.monthlyIncome), pHipoteca: euro(scenario.firstMonthlyPayment + s.monthlyOtherDebt),
       pCostesProp: euro(ownerMonthly), pVida: euro(living),
       pMargen: (margen < 0 ? '−' : '') + euro(Math.abs(margen)),
-      pMargenColor: margen < 0 ? '#C2453A' : 'var(--color-text)',
+      pMargenClase: margen < 0 ? 'is-negative' : '',
       pCapacidad: 'Capacidad de ahorro estimada: ' + pct(capacidad) + ' % de los ingresos netos.',
     };
   }
