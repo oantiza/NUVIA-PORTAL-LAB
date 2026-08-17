@@ -1027,6 +1027,14 @@
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 
+.home-macro__lead { margin-bottom: var(--nv-space-8); }
+
+.home-macro__cta { margin: var(--nv-space-6) 0 0; }
+
+/* La banda macro en portada: mismo componente que en mercados, sin la
+   variante --compact, para que las cifras respiren. */
+.home-macro__lead + .markets-macro { margin-top: 0; }
+
 /* ── Tarjetas de tema ────────────────────────────────────────────────────── */
 
 .home-topic {
