@@ -8,3 +8,13 @@ firebase-debug.log*
 tmp/
 .playwright-mcp/
 .vite-local.*.log
+output/
+
+# Material de trabajo de marca: no forma parte del sitio
+*.zip
+src/assets/brand/nuvia-2026/
+src/assets/brand/nuvia-2026-vector-v2/
+src/assets/brand/nuvia-original-5-hojas-2026/
+src/assets/brand/nuvia-three-leaf-master/
+src/assets/brand/nuvia-family-wealth-visible-2026-v1/
+src/assets/brand/propuestas/
