@@ -1140,29 +1140,6 @@
   }
 
   // src/cdn.ts
-  /* ── NUVIA · dependencias autoalojadas ──────────────────────────────────
-     El runtime ya soporta redirigir cualquier recurso mediante
-     window.__resources (ver cdnScriptFor). Se aprovecha para servir React
-     desde el propio dominio: si unpkg.com falla o está bloqueado en la red
-     del usuario, la web seguía sin mostrar absolutamente nada.
-
-     Las copias locales son byte a byte las del CDN, así que el hash de
-     integridad sigue siendo válido. Si el fichero local no existe, basta con
-     borrar este bloque para volver al CDN.
-     ──────────────────────────────────────────────────────────────────────── */
-  (function () {
-    var base = (function () {
-      var s = document.querySelector('script[src$="support.js"]');
-      return s ? s.src.replace(/support\.js.*$/, "") : "";
-    })();
-    window.__resources = Object.assign({}, window.__resources, {
-      "https://unpkg.com/react@18.3.1/umd/react.production.min.js":
-        base + "js/vendor/react.production.min.js",
-      "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":
-        base + "js/vendor/react-dom.production.min.js"
-    });
-  })();
-
   var REACT_URL = "https://unpkg.com/react@18.3.1/umd/react.production.min.js";
   var REACT_SRI = "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z";
   var REACT_DOM_URL = "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js";
