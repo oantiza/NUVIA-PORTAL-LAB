@@ -18,3 +18,13 @@ src/assets/brand/nuvia-original-5-hojas-2026/
 src/assets/brand/nuvia-three-leaf-master/
 src/assets/brand/nuvia-family-wealth-visible-2026-v1/
 src/assets/brand/propuestas/
+
+# Descartes de marca sin referenciar (verificado: 0 usos en HTML/CSS/JS)
+core/nuvia-favicon-48.png
+nuvia-family-wealth-legible-v1.png
+src/assets/home/nuvia-home-header-logo-v*.png
+src/assets/education/nuvia-academy/nuvia-academy-horizontal-5-hojas.png
+src/assets/brand/nuvia-three-leaf-final-2026/nuvia-family-wealth-horizontal-family-visible-preview-v1.png
+
+# Andamiaje de trabajo
+nuvia-commits.ps1
