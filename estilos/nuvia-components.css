@@ -733,9 +733,9 @@
 
 .nuvia-site-header__brand img {
   width: auto;
-  /* 68 px. Es la altura a la que «FAMILY WEALTH» alcanza 11 px y por fin se
-     lee en cabecera. Con el descriptor en línea el logotipo es muy apaisado
-     (ratio 4,9), así que a esta altura mide 333 px de ancho. */
+  /* Altura en --nv-logo-height (68 px): es donde «FAMILY WEALTH» alcanza
+     11 px y por fin se lee en cabecera. El viewBox del SVG es 585x143,25,
+     o sea ratio 4,083, así que a 68 px de alto mide 278 px de ancho. */
   height: var(--nv-logo-height);
 }
 

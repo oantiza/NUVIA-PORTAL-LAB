@@ -1029,11 +1029,105 @@
 
 .home-macro__lead { margin-bottom: var(--nv-space-8); }
 
+/* ── Qué es NUVIA ────────────────────────────────────────────────────────
+   Va justo después del héroe, así que es lo segundo que se lee: el titular
+   lleva el peso y los dos párrafos quedan como apoyo, no al revés.
+   ──────────────────────────────────────────────────────────────────── */
+
+.home-intro__title {
+  max-width: 20ch;
+  margin: var(--nv-space-3) 0 var(--nv-space-8);
+  font-size: var(--nv-display-md);
+  letter-spacing: -.03em;
+  line-height: 1.12;
+}
+
+.home-intro__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-12);
+  max-width: 980px;
+}
+
+.home-intro__grid p {
+  margin: 0;
+  color: var(--nv-text-soft);
+  font-size: 15.5px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .home-intro__title { max-width: none; }
+  .home-intro__grid { grid-template-columns: minmax(0, 1fr); gap: var(--nv-space-5); }
+}
+
 .home-macro__cta { margin: var(--nv-space-6) 0 0; }
 
 /* La banda macro en portada: mismo componente que en mercados, sin la
    variante --compact, para que las cifras respiren. */
 .home-macro__lead + .markets-macro { margin-top: 0; }
+
+/* ── Academia ───────────────────────────────────────────────────────────
+   No es una rejilla de productos: es un frontispicio. La idea es un lugar
+   donde se aprende, así que va centrada, sobre fondo profundo y con una sola
+   entrada. Un solo gesto, no dos tarjetas compitiendo.
+   ──────────────────────────────────────────────────────────────────── */
+
+.home-academia {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-navy-900);
+  box-shadow: var(--nv-shadow-md);
+  text-decoration: none;
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.home-academia:hover {
+  box-shadow: var(--nv-shadow-lg);
+  transform: translateY(-2px);
+}
+
+/* El banner ya trae dentro el título y el lema, así que aquí no se superpone
+   texto: el alt de la imagen se encarga de que sea accesible. */
+.home-academia__art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.home-academia__cta {
+  position: absolute;
+  right: var(--nv-space-8);
+  bottom: var(--nv-space-8);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: var(--nv-radius-md);
+  background: rgba(11, 35, 71, .55);
+  backdrop-filter: blur(6px);
+  color: var(--nv-white);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  padding: var(--nv-space-3) var(--nv-space-5);
+  transition: background .25s ease, border-color .25s ease;
+}
+
+.home-academia:hover .home-academia__cta {
+  border-color: rgba(255, 255, 255, .7);
+  background: rgba(11, 35, 71, .8);
+}
+
+@media (max-width: 900px) {
+  .home-academia__cta {
+    right: var(--nv-space-4);
+    bottom: var(--nv-space-4);
+    font-size: var(--nv-label);
+    padding: var(--nv-space-2) var(--nv-space-4);
+  }
+}
 
 /* ── Tarjetas de tema ────────────────────────────────────────────────────── */
 

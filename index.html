@@ -41,31 +41,36 @@
       </a>
       <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html" class="is-active" aria-current="page">Inicio</a>
-        <a href="mercados.html">Mercados</a>
         <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
+          <summary>Economía y Finanzas</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
+            <a href="mercados.html">Mercados y noticias</a>
+            <a href="cartera.html">Gestión de cartera</a>
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Patrimonio</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="jubilacion.html">Jubilación</a>
+            <a href="fiscalidad.html">Impuestos</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Familia, Salud y Bienestar</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
         <details class="nuvia-site-nav__topics">
           <summary>Academia</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
+            <a href="academia.html">Academia NUVIA</a>
             <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
           </div>
         </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="jubilacion.html">Jubilación</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
+        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
@@ -110,6 +115,18 @@
               </div>
             </sc-if>
           </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" class="nv-section nv-section--white" aria-labelledby="titulo-proyecto">
+      <div class="nv-container">
+        <p class="nv-eyebrow">El proyecto</p>
+        <h2 id="titulo-proyecto" class="home-intro__title">Un proyecto para ayudar a las familias a comprender, proteger y gestionar mejor su patrimonio.</h2>
+        <div class="home-intro__grid">
+          <p>Podríamos decir que NUVIA es una comunidad, o una plataforma digital. Ninguna de las dos definiciones describe del todo lo que estamos construyendo.</p>
+          <p>Combinamos conocimiento, comunidad, herramientas, tecnología y acceso a profesionales especializados.</p>
         </div>
       </div>
     </section>
@@ -299,15 +316,15 @@
 
 
     <!-- ══ TEMAS CLAVE ═══════════════════════════════════════════════════════ -->
-    <section id="temas-clave" data-screen-label="Temas clave" class="nv-section" aria-labelledby="titulo-temas">
+    <section id="patrimonio" data-screen-label="Patrimonio" class="nv-section" aria-labelledby="titulo-patrimonio">
       <div class="nv-container">
 
         <div class="nv-section-heading">
           <div>
-            <p class="nv-eyebrow">Los pilares</p>
-            <h2 id="titulo-temas">¿Hablamos de lo que importa?</h2>
+            <p class="nv-eyebrow">Decisiones de fondo</p>
+            <h2 id="titulo-patrimonio">Patrimonio</h2>
           </div>
-          <p>Una mirada clara a los pilares que protegen a tu familia y tu patrimonio.</p>
+          <p>Vivienda, jubilación e impuestos: las tres decisiones que más marcan el patrimonio de una familia.</p>
         </div>
 
         <div class="nv-card-grid">
@@ -359,14 +376,30 @@
                 <dt>Lectura NUVIA</dt>
                 <dd>Planificación anticipada, prudencia fiscal y diálogo entre generaciones.</dd>
               </dl>
-              <a class="home-topic__link" href="temas.html?topic=jubilacion">Acceder <span aria-hidden="true">→</span></a>
+              <a class="home-topic__link" href="jubilacion.html">Acceder <span aria-hidden="true">→</span></a>
             </div>
           </article>
 
-          <div class="home-topics-heading">
-            <p class="nv-eyebrow">Bienestar integral · Vida en equilibrio</p>
-            <h3>Cuerpo, mente y salud</h3>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Familia, Salud y Bienestar. Sección nueva, todavía por construir: de
+         momento solo existe el banner. Se marca como tal en vez de aparentar
+         que está terminada. -->
+    <section id="familia-salud" data-screen-label="Familia, Salud y Bienestar" class="nv-section nv-section--white" aria-labelledby="titulo-familia-salud">
+      <div class="nv-container">
+
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">En preparación</p>
+            <h2 id="titulo-familia-salud">Familia, Salud y Bienestar</h2>
           </div>
+          <p>Lo que se hace fuera del trabajo y sostiene todo lo demás.</p>
+        </div>
+
+        <div class="nv-card-grid">
 
           <article data-screen-label="Banner Cuerpo, mente y salud" class="home-wellbeing">
             <img class="home-wellbeing__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
@@ -394,6 +427,32 @@
     </section>
 
 
+    <!-- Academia. Es uno de los tres pilares y hasta ahora no tenía ninguna
+         presencia en la portada. -->
+    <section id="academia" data-screen-label="Academia" class="nv-section" aria-labelledby="titulo-academia">
+      <div class="nv-container">
+
+        <div class="nv-section-heading">
+          <div>
+            <p class="nv-eyebrow">Formación</p>
+            <h2 id="titulo-academia">Academia NUVIA</h2>
+          </div>
+          <p>Finanzas, economía y gestión del patrimonio, explicadas para decidir mejor. Conceptos, cursos y materiales de distinto nivel.</p>
+        </div>
+
+        <a class="home-academia" href="academia.html"
+           aria-label="Entrar en la Academia NUVIA: saber es patrimonio">
+          <img class="home-academia__art"
+               src="src/assets/education/nuvia-academy/academia-nuvia-banner.webp"
+               alt="Academia NUVIA · Saber es patrimonio. Una fuente de conocimiento para entender el dinero con calma."
+               width="1920" height="819" loading="lazy">
+          <span class="home-academia__cta">Entrar en la Academia <span aria-hidden="true">→</span></span>
+        </a>
+
+      </div>
+    </section>
+
+
     <!-- ══ LECTURAS CON CRITERIO ═════════════════════════════════════════════ -->
     <section id="lecturas-con-criterio" data-screen-label="Lecturas con Criterio" class="nv-section" aria-labelledby="titulo-lecturas">
       <div class="nv-container">
@@ -416,25 +475,6 @@
             <span class="home-lecturas__cta">Explorar Lecturas <span aria-hidden="true">→</span></span>
           </span>
         </a>
-      </div>
-    </section>
-
-
-    <!-- ══ QUÉ ES NUVIA ══════════════════════════════════════════════════════ -->
-    <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" class="nv-section" aria-labelledby="titulo-proyecto">
-      <div class="nv-container">
-        <div class="nv-section-heading">
-          <div>
-            <p class="nv-eyebrow">El proyecto</p>
-            <h2 id="titulo-proyecto">Qué es NUVIA</h2>
-          </div>
-        </div>
-
-        <div class="home-manifesto">
-          <p>La respuesta más sencilla sería decir que NUVIA es una comunidad. Sin embargo, esa definición resulta insuficiente. También podríamos decir que NUVIA es una plataforma digital. Pero tampoco describe realmente lo que pretendemos construir.</p>
-          <p class="home-manifesto__pull">NUVIA es, ante todo, un proyecto diseñado para ayudar a las Familias a comprender, proteger y gestionar mejor su patrimonio.</p>
-          <p>Para conseguirlo combinamos distintos elementos: conocimiento, comunidad, herramientas, tecnología y acceso a profesionales especializados.</p>
-        </div>
       </div>
     </section>
 
