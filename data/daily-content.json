@@ -1,21 +1,22 @@
 {
-  "synchronizedAt": "2026-08-14T06:01:43.061Z",
+  "synchronizedAt": "2026-08-17T22:02:26.377Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
-    "selectionDate": "14 de agosto de 2026",
-    "sourcePublishedAt": "13 de agosto de 2026",
-    "sourceName": "INE",
-    "sourceUrl": "https://www.ine.es/dyngs/Prensa/IPC0726.htm",
-    "imageAlt": "Ilustración editorial luminosa de un hogar español conectado a una estación de servicio y una red eléctrica, con destellos bronce que representan el encarecimiento de la energía en el presupuesto familiar.",
-    "title": "La inflación española sube al 3,6% por carburantes y electricidad",
-    "summary": "El INE revisó una décima al alza el dato adelantado de julio: el IPC anual alcanzó el 3,6%, cuatro décimas más que en junio. El mayor coste de los combustibles y de la electricidad explica el repunte, mientras la inflación subyacente avanzó al 3,0%.",
-    "category": "Inflación y coste de vida",
-    "context": "El dato definitivo sitúa la inflación española por encima de la estimación inicial y mantiene la presión energética en el centro del presupuesto familiar. El País recoge que el Gobierno ha anunciado una ampliación de la rebaja fiscal al gasóleo para septiembre, y Cinco Días subraya el peso de los componentes energéticos en la subida.",
-    "whyItMatters": "La inflación no afecta igual a todos los hogares: pesa más cuando el gasto en transporte, energía o vivienda ocupa una parte alta de los ingresos. La respuesta útil es revisar el margen mensual y los gastos esenciales; no perseguir titulares ni modificar una cartera diversificada por un único dato.",
+    "selectionDate": "18 de agosto de 2026",
+    "sourcePublishedAt": "17 de agosto de 2026",
+    "sourceName": "EL PAÍS Economía",
+    "sourceUrl": "https://elpais.com/economia/2026-08-17/el-gobierno-prepara-medidas-contra-el-abuso-de-temporalidad-en-el-empleo-publico-y-acota-el-problema-a-200000-interinos.html",
+    "imageUrl": "src/assets/home/daily-news/daily-news-current.webp?v=20260817220226",
+    "imageAlt": "Imagen editorial asociada a la noticia «El Gobierno prepara medidas contra el abuso de temporalidad en el empleo público y acota el problema a 200.000 interinos».",
+    "title": "El Gobierno prepara medidas contra el abuso de temporalidad en el empleo público y acota el problema a 200.000 interinos",
+    "summary": "La información económica destacada de hoy pone el foco en los ingresos familiares, el consumo y la capacidad de ahorro a largo plazo. NUVIA selecciona esta noticia de EL PAÍS Economía como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
+    "category": "Empleo e ingresos",
+    "context": "El empleo y los salarios sostienen el consumo y determinan cuánto margen tienen las familias para ahorrar, reducir deuda y financiar sus objetivos.",
+    "whyItMatters": "El patrimonio se construye sobre un flujo de ingresos sostenible. Los datos laborales ayudan a calibrar el colchón de seguridad y la velocidad razonable de ahorro e inversión.",
     "impactPoints": [
-      "El transporte y la vivienda lideraron el repunte por el encarecimiento de carburantes y electricidad.",
-      "La inflación subyacente alcanza el 3,0%, señal de que la presión no se limita por completo a la energía.",
-      "Un coste de vida más alto refuerza la importancia de presupuesto, liquidez de seguridad y deuda sostenible."
+      "Orienta sobre la fortaleza de los ingresos y del consumo de los hogares.",
+      "Puede influir en inflación, tipos de interés y expectativas de crecimiento.",
+      "Ayuda a ajustar colchón, deuda y aportaciones periódicas a un escenario realista."
     ]
   },
   "secondaryEconomicNews": [
@@ -130,5 +131,6 @@
       "sourceUrl": "https://www.ine.es/dyngs/Prensa/es/EPA2T26.htm",
       "referenceDate": "28 jul 2026"
     }
-  ]
+  ],
+  "dailyEconomicNewsCheckedAt": "2026-08-17T22:02:26.377Z"
 }

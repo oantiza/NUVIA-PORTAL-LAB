@@ -1,5 +1,6 @@
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import sharp from 'sharp';
 
 const root = resolve(process.cwd());
 const dataPath = resolve(root, 'data/daily-content.json');
@@ -165,8 +166,17 @@ async function persistDailyImage(image, checkedAt) {
     rm(resolve(imageDirectory, `daily-news-current.${extension}`), { force: true })
   )));
 
-  const filename = `daily-news-current.${image.extension}`;
-  await writeFile(resolve(imageDirectory, filename), image.bytes);
+  /* Se normaliza siempre a WebP, sea cual sea el formato que sirva el medio.
+     Antes se guardaba tal cual y un JPG de agencia pesaba 1,2 MB: mas que
+     el resto de la portada junta, y se republicaba cada dia. Ademas se
+     limita el ancho a 1600 px, el doble del hueco que ocupa en pantalla. */
+  const filename = 'daily-news-current.webp';
+  const optimizada = await sharp(image.bytes)
+    .resize({ width: 1600, withoutEnlargement: true })
+    .webp({ quality: 82, effort: 6 })
+    .toBuffer();
+
+  await writeFile(resolve(imageDirectory, filename), optimizada);
   const version = checkedAt.toISOString().replace(/\D/g, '').slice(0, 14);
   return `src/assets/home/daily-news/${filename}?v=${version}`;
 }
