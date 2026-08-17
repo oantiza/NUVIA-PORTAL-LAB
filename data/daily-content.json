@@ -1,21 +1,21 @@
 {
-  "synchronizedAt": "2026-08-11T17:00:00.000Z",
+  "synchronizedAt": "2026-08-14T06:01:43.061Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
-    "selectionDate": "9 de agosto de 2026",
-    "sourcePublishedAt": "8 de agosto de 2026",
-    "sourceName": "AP News",
-    "sourceUrl": "https://apnews.com/article/feb75871fb82c44b3f7fd0ee02bb24b4",
-    "imageAlt": "Ilustración editorial luminosa de un buque de gas avanzando por un estrecho entre costas rocosas al amanecer, con líneas abstractas de energía.",
-    "title": "Ormuz vuelve a tensarse y mantiene vivo el riesgo energético",
-    "summary": "Irán planteó nuevas condiciones para el tránsito por el estrecho de Ormuz y Emiratos Árabes Unidos informó de un ataque contra un buque comercial, sin víctimas. El incidente vuelve a poner el foco en una ruta crítica para el petróleo y el gas mundiales y mantiene la incertidumbre sobre energía, inflación y crecimiento.",
-    "category": "Energía y geopolítica",
-    "context": "El estrecho concentra una parte decisiva del comercio mundial de energía. Europa no afronta por ahora un problema inmediato de suministro, pero el FMI advierte de que los inventarios y las rutas alternativas ya han absorbido buena parte del impacto y ofrecen menos margen ante nuevas interrupciones.",
-    "whyItMatters": "Una tensión prolongada puede trasladarse a carburantes, transporte, electricidad y alimentos, y complicar el descenso de la inflación. Un episodio aislado no exige cambiar el plan financiero: la señal relevante será la duración del bloqueo, la evolución de los precios energéticos y la respuesta de los bancos centrales.",
+    "selectionDate": "14 de agosto de 2026",
+    "sourcePublishedAt": "13 de agosto de 2026",
+    "sourceName": "INE",
+    "sourceUrl": "https://www.ine.es/dyngs/Prensa/IPC0726.htm",
+    "imageAlt": "Ilustración editorial luminosa de un hogar español conectado a una estación de servicio y una red eléctrica, con destellos bronce que representan el encarecimiento de la energía en el presupuesto familiar.",
+    "title": "La inflación española sube al 3,6% por carburantes y electricidad",
+    "summary": "El INE revisó una décima al alza el dato adelantado de julio: el IPC anual alcanzó el 3,6%, cuatro décimas más que en junio. El mayor coste de los combustibles y de la electricidad explica el repunte, mientras la inflación subyacente avanzó al 3,0%.",
+    "category": "Inflación y coste de vida",
+    "context": "El dato definitivo sitúa la inflación española por encima de la estimación inicial y mantiene la presión energética en el centro del presupuesto familiar. El País recoge que el Gobierno ha anunciado una ampliación de la rebaja fiscal al gasóleo para septiembre, y Cinco Días subraya el peso de los componentes energéticos en la subida.",
+    "whyItMatters": "La inflación no afecta igual a todos los hogares: pesa más cuando el gasto en transporte, energía o vivienda ocupa una parte alta de los ingresos. La respuesta útil es revisar el margen mensual y los gastos esenciales; no perseguir titulares ni modificar una cartera diversificada por un único dato.",
     "impactPoints": [
-      "Una interrupción sostenida puede elevar el coste de los combustibles, el transporte y los productos importados.",
-      "Más presión energética dificultaría la vuelta de la inflación al objetivo y podría retrasar el alivio de los tipos de interés.",
-      "La liquidez de seguridad y una cartera diversificada reducen la necesidad de reaccionar a una geopolítica imprevisible."
+      "El transporte y la vivienda lideraron el repunte por el encarecimiento de carburantes y electricidad.",
+      "La inflación subyacente alcanza el 3,0%, señal de que la presión no se limita por completo a la energía.",
+      "Un coste de vida más alto refuerza la importancia de presupuesto, liquidez de seguridad y deuda sostenible."
     ]
   },
   "secondaryEconomicNews": [
@@ -68,19 +68,19 @@
       "sourceUrl": "https://apnews.com/article/3f3f2f2d49e4aa8744d21ecd0ce55a9c"
     }
   ],
-  "macroIndicatorsUpdatedAt": "9 de agosto de 2026",
+  "macroIndicatorsUpdatedAt": "14 de agosto de 2026",
   "dailyMacroIndicators": [
     {
       "id": "inflation-spain",
       "label": "IPC España",
-      "value": "3,5%",
+      "value": "3,6%",
       "period": "Julio · interanual",
-      "change": "Sube 0,3 pp",
+      "change": "Sube 0,4 pp",
       "direction": "up",
-      "context": "El avance refleja mayor presión de carburantes y electricidad.",
+      "context": "El dato definitivo incorpora más presión de carburantes y electricidad de la anticipada.",
       "sourceName": "INE",
-      "sourceUrl": "https://www.ine.es/dyngs/Prensa/adIPC0726.htm",
-      "referenceDate": "30 jul 2026"
+      "sourceUrl": "https://www.ine.es/dyngs/Prensa/IPC0726.htm",
+      "referenceDate": "13 ago 2026"
     },
     {
       "id": "euribor",
