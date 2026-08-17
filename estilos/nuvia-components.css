@@ -717,7 +717,7 @@
 .nuvia-site-header__inner {
   display: flex;
   width: min(var(--nv-container), calc(100% - 96px));
-  min-height: 72px;
+  min-height: var(--nv-header-height);
   align-items: center;
   justify-content: space-between;
   gap: var(--nv-space-8);
@@ -733,7 +733,10 @@
 
 .nuvia-site-header__brand img {
   width: auto;
-  height: 54px;   /* ajustado por Oscar en dbbac74 con la familia de logos nueva */
+  /* 68 px. Es la altura a la que «FAMILY WEALTH» alcanza 11 px y por fin se
+     lee en cabecera. Con el descriptor en línea el logotipo es muy apaisado
+     (ratio 4,9), así que a esta altura mide 333 px de ancho. */
+  height: var(--nv-logo-height);
 }
 
 /* ── Navegación ─────────────────────────────────────────────────────────── */
@@ -755,7 +758,7 @@
   color: var(--nv-text-soft);
   font-size: 13.5px;
   font-weight: var(--nv-weight-title);
-  line-height: 72px;
+  line-height: var(--nv-header-height);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -947,7 +950,9 @@
   .nuvia-site-footer__inner { width: calc(100% - 56px); }
 
   .nuvia-site-header__inner { gap: var(--nv-space-5); }
-  .nuvia-site-header__brand img { height: 48px; }
+  /* En tablet el logotipo se reduce: a 52 px el descriptor deja de leerse,
+     pero con 5 entradas de menú no hay ancho para mantener los 68. */
+  .nuvia-site-header__brand img { height: 52px; }
 
   .nuvia-site-nav { gap: var(--nv-space-4); }
   .nuvia-site-nav > a,
