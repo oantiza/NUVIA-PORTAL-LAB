@@ -891,12 +891,13 @@
 
 .nuvia-site-footer__brand img {
   display: block;
-  width: 153px;   /* reducido por Oscar en 2219b0c */
+  width: 180px;
   height: auto;
-  background: transparent;
-  /* Se usa la variante -reversed de la familia de marca, así que no hace falta
-     invertir. El filtro anterior aplanaba el logotipo a blanco puro. */
-  opacity: .92;
+  box-sizing: content-box;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .98);
+  opacity: 1;
 }
 
 .nuvia-site-footer__brand p {
