@@ -2717,7 +2717,7 @@
 .markets-macro__label {
   overflow: hidden;
   color: var(--nv-text-on-dark-soft);
-  font-size: 10.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .1em;
   text-overflow: ellipsis;
@@ -2725,7 +2725,7 @@
   white-space: nowrap;
 }
 
-.markets-macro__dir { flex-shrink: 0; font-size: 11px; }
+.markets-macro__dir { flex-shrink: 0; font-size: var(--nv-label); }
 
 .markets-macro__value {
   display: block;
@@ -2754,7 +2754,7 @@
 }
 
 .markets-macro__change {
-  font-size: 10px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -2771,7 +2771,7 @@
 
 .markets-macro__period {
   color: var(--nv-text-on-dark-soft);
-  font-size: 10px;
+  font-size: var(--nv-body-sm);
   line-height: 1.25;
 }
 
@@ -2787,7 +2787,7 @@
   border-bottom: 1px solid color-mix(in srgb, var(--nv-green-500) 40%, transparent);
   margin-top: auto;
   color: var(--nv-green-300);
-  font-size: 10.5px;
+  font-size: var(--nv-body-sm);
   line-height: 1.4;
   padding-top: var(--nv-space-3);
   text-decoration: none;
@@ -2855,7 +2855,7 @@
 .markets-index-card__kicker {
   margin: 0 0 var(--nv-space-1);
   color: var(--nv-text-link);
-  font-size: 9.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -2868,7 +2868,7 @@
   align-items: center;
   gap: 7px;
   color: var(--nv-text-muted);
-  font-size: 10px;
+  font-size: var(--nv-body-sm);
 }
 
 .markets-index-card__live::before {
@@ -2892,7 +2892,7 @@
   border-top: 1px solid var(--nv-line);
   margin: 0;
   color: var(--nv-text-muted);
-  font-size: 9.5px;
+  font-size: var(--nv-body-sm);
   line-height: 1.45;
   padding: 9px var(--nv-space-5);
 }
@@ -2955,7 +2955,7 @@
   align-items: center;
   gap: var(--nv-space-2);
   color: var(--nv-green-300);
-  font-size: 10px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -2972,10 +2972,10 @@
 .markets-lead-news__date,
 .markets-lead-news__category {
   color: var(--nv-text-on-dark-soft);
-  font-size: 11px;
+  font-size: var(--nv-body-sm);
 }
 
-.markets-lead-news__category { display: block; margin-bottom: 7px; font-size: 10.5px; }
+.markets-lead-news__category { display: block; margin-bottom: 7px; font-size: var(--nv-body-sm); }
 
 .markets-lead-news h3 {
   max-width: 18em;
@@ -3003,7 +3003,7 @@
   align-items: center;
   gap: var(--nv-space-2);
   color: var(--nv-green-300);
-  font-size: 10.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .1em;
   text-decoration: none;
@@ -3025,7 +3025,7 @@
 }
 
 .markets-secondary-news__head h3 { margin: 0; font-size: 17px; }
-.markets-secondary-news__head span { color: var(--nv-text-muted); font-size: 10.5px; }
+.markets-secondary-news__head span { color: var(--nv-text-muted); font-size: var(--nv-body-sm); }
 
 .markets-secondary-grid {
   display: grid;
@@ -3058,7 +3058,7 @@
 
 .markets-secondary-card__label {
   color: var(--nv-text-link);
-  font-size: 9.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -3085,19 +3085,26 @@
   flex: 1;
   margin: 0 0 var(--nv-space-3);
   color: var(--nv-text-soft);
-  font-size: 11.5px;
+  font-size: var(--nv-body-sm);
   line-height: 1.5;
 }
 
+/* Al subir el pie de 9-10,5px a 12px los tres elementos (fecha, medio y
+   enlace) dejaron de caber en el ancho de la tarjeta y partian en dos
+   lineas cada uno. nowrap en cada uno y wrap en el contenedor: si no caben
+   en una linea bajan enteros, en vez de romperse por dentro. */
 .markets-secondary-card__foot {
   display: flex;
   align-items: end;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--nv-space-2);
 }
 
+.markets-secondary-card__foot > * { white-space: nowrap; }
+
 .markets-secondary-card__date {
-  font-size: 9px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   text-transform: uppercase;
 }
@@ -3107,7 +3114,7 @@
   align-items: center;
   gap: 5px;
   color: var(--nv-text-link);
-  font-size: 9px;
+  font-size: var(--nv-body-sm);
 }
 
 /* Ficha ampliada de noticia */
@@ -3150,7 +3157,7 @@
   align-items: center;
   gap: var(--nv-space-2);
   color: var(--nv-text-link);
-  font-size: 10px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -3209,7 +3216,7 @@
   padding-top: var(--nv-space-5);
 }
 
-.markets-news-dialog__note { color: var(--nv-text-muted); font-size: 10.5px; }
+.markets-news-dialog__note { color: var(--nv-text-muted); font-size: var(--nv-body-sm); }
 
 .markets-news-dialog__source {
   display: inline-flex;
@@ -3218,7 +3225,7 @@
   border-radius: var(--nv-radius-pill);
   background: var(--nv-action-accent-bg);
   color: var(--nv-action-accent-text);
-  font-size: 11px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-action);
   padding: 11px 17px;
   text-decoration: none;
@@ -3280,7 +3287,7 @@
   line-height: 1.65;
 }
 
-.markets-report__note { color: var(--nv-text-muted); font-size: 11.5px; }
+.markets-report__note { color: var(--nv-text-muted); font-size: var(--nv-body-sm); }
 
 /* Archivo de informes */
 .markets-archive { display: flex; flex-direction: column; gap: var(--nv-space-3); }
@@ -3364,7 +3371,7 @@
 .markets-filter-group__label {
   margin-right: var(--nv-space-1);
   color: var(--nv-text-muted);
-  font-size: 10px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -3377,7 +3384,7 @@
   color: var(--nv-text-soft);
   cursor: pointer;
   font-family: var(--nv-font-sans);
-  font-size: 11.5px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-title);
   padding: 7px var(--nv-space-3);
   transition: background .2s ease, color .2s ease, border-color .2s ease;
@@ -3443,14 +3450,14 @@
   display: block;
   margin-bottom: 5px;
   color: var(--nv-text-link);
-  font-size: 9.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
 
 .markets-calendar-row h4 { margin: 0; font-size: 15px; line-height: 1.35; }
-.markets-calendar-row__detail { color: var(--nv-text-soft); font-size: 11.5px; }
+.markets-calendar-row__detail { color: var(--nv-text-soft); font-size: var(--nv-body-sm); }
 
 /* Etiquetas de impacto y de tipo */
 .markets-badge {
@@ -3458,7 +3465,7 @@
   width: fit-content;
   justify-content: center;
   border-radius: var(--nv-radius-pill);
-  font-size: 9.5px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .08em;
   padding: 6px 9px;
@@ -3477,7 +3484,7 @@
   gap: var(--nv-space-5);
   border-top: 1px solid var(--nv-line);
   color: var(--nv-text-muted);
-  font-size: 10.5px;
+  font-size: var(--nv-body-sm);
   padding: var(--nv-space-3) 22px;
 }
 
