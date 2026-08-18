@@ -4893,9 +4893,13 @@
 .ac-x220 { align-items:center; color:color-mix(in srgb, var(--nv-text) 68%, transparent); display:inline-flex; font-size: var(--nv-body-sm); font-weight:500; gap:var(--nv-space-2); }
 .ac-x221 { background:var(--nv-muted); border-radius:2px; height:3px; width:16px; }
 .ac-x222 { background:var(--nv-green-500); border-radius:2px; height:3px; width:16px; }
-.ac-x223 { background:var(--nv-navy-900); border-radius:var(--nv-radius-md); color:var(--nv-text); padding:var(--nv-space-5) var(--nv-space-6); }
-.ac-x224 { align-items:center; display:flex; font-size: var(--nv-body-lg); font-weight:500; gap:var(--nv-space-2); margin:0; }
-.ac-x225 { color:var(--nv-warning); }
+.ac-x223 { background:var(--nv-navy-900); border-radius:var(--nv-radius-md); color:var(--nv-text-on-dark-soft); padding:var(--nv-space-5) var(--nv-space-6); }
+.ac-x224 { align-items:center; color:var(--nv-text-on-dark); display:flex; font-size: var(--nv-body-lg); font-weight:500; gap:var(--nv-space-2); margin:0; }
+.ac-x225 { color:var(--nv-bronze-500); }
+
+/* gu-text hereda --nv-text-soft, pensado para fondo claro. Dentro del aviso
+   de fiscalidad (fondo navy-900) daba 1,4:1. Mismo caso que .nv-hero .gu-lead. */
+.ac-x223 .gu-text { color: var(--nv-text-on-dark-soft); }
 .ac-x226 { border-bottom:1px solid var(--nv-line); padding:32px 36px var(--nv-space-6); text-align:center; }
 .ac-x227 { background:var(--nv-line); border-radius:var(--nv-radius-md); display:inline-flex; gap:var(--nv-space-1); padding:var(--nv-space-1); }
 .ac-x228 { border-bottom:1px solid var(--nv-line); }
