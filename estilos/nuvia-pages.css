@@ -4619,6 +4619,13 @@
 /* Celdas numéricas de las tablas comparativas */
 .ac-cell { text-align: right; color: var(--nv-muted); }
 .ac-cell--text { text-align: right; color: var(--nv-text); }
+
+/* Nombre de activo en la tabla comparativa. Antes eran seis clases con
+   seis colores distintos (azul, navy, ambar, verde, naranja, gris) sin
+   significado, dos de ellos semanticos (--nv-warning en 'Oro',
+   --nv-positive en 'Renta fija'). Ahora una sola, alineada con la
+   columna hermana .ac-cell--text.                                      */
+.ac-cell--name { color: var(--nv-text); font-weight: var(--nv-weight-title); }
 .ac-cell--soft { text-align: right; color: var(--nv-text-soft); font-size: var(--nv-body); font-weight: var(--nv-weight-title); }
 .ac-cell--neg { text-align: right; color: var(--nv-negative); font-weight: var(--nv-weight-title); }
 .ac-cell--plain { text-align: right; }
@@ -4735,12 +4742,6 @@
 .ac-x55 { font-size:40px; line-height:1; margin:10px 0 0; }
 .ac-x56 { display:block; width:100%; }
 .ac-x57 { border-radius:var(--nv-radius-md); border:1px solid var(--nv-line); overflow:hidden; }
-.ac-x58 { color:var(--nv-tint-02); font-weight:500; }
-.ac-x59 { color:var(--nv-navy-700); font-weight:500; }
-.ac-x60 { color:var(--nv-warning); font-weight:500; }
-.ac-x61 { color:var(--nv-positive); font-weight:500; }
-.ac-x62 { color:var(--nv-tint-05); font-weight:500; }
-.ac-x63 { color:var(--nv-muted); font-weight:500; }
 .ac-x64 { background:color-mix(in srgb, var(--nv-bg) 45%, var(--nv-surface)); border-radius:var(--nv-radius-md); border:1px solid var(--nv-line); padding:28px 32px; }
 .ac-x65 { background:var(--nv-tint-02); border-radius:var(--nv-radius-pill); height:100%; width:100%; }
 .ac-x66 { background:var(--nv-navy-700); border-radius:var(--nv-radius-pill); height:100%; width:51%; }
