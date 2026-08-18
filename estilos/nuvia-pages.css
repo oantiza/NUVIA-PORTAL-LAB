@@ -4407,7 +4407,6 @@
   text-transform: uppercase;
 }
 
-.gu-kicker--on-dark { color: var(--nv-green-300); }
 
 .gu-title { margin: 0 0 var(--nv-space-3); color: var(--nv-text); font-size: 32px; letter-spacing: -.015em; line-height: 1.12; }
 .gu-title--sm { font-size: 26px; line-height: 1.2; }
@@ -4416,14 +4415,11 @@
 
 .gu-lead { max-width: 46em; margin: 0; color: var(--nv-text-soft); font-size: var(--nv-body); line-height: 1.65; }
 .gu-text { color: var(--nv-text-soft); font-size: var(--nv-body); line-height: 1.6; }
-.gu-text--sm { font-size: var(--nv-body-sm); }
 .gu-muted { color: var(--nv-text-muted); font-size: var(--nv-body-sm); line-height: 1.5; }
 .gu-strong { color: var(--nv-text); font-weight: var(--nv-weight-title); }
 .gu-accent { color: var(--nv-text-link); }
-.gu-label { color: var(--nv-text-muted); font-size: var(--nv-label); letter-spacing: .11em; text-transform: uppercase; }
 
 .gu-num { color: var(--nv-green-700); font-size: var(--nv-title-lg); line-height: 1; }
-.gu-num--sm { font-size: var(--nv-title-md); line-height: 1.1; }
 .gu-figure { margin: 0; color: var(--nv-text); font-size: var(--nv-title-md); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* Lista con marca de verificación */
@@ -4603,8 +4599,6 @@
    las tres familias de activos.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.ac-section { padding-block: var(--nv-space-10) var(--nv-space-16); }
-.ac-hero .nv-container { padding-block: var(--nv-space-16) var(--nv-space-8); }
 .ac-title { margin: 0; color: var(--nv-text); font-size: var(--nv-title-lg); line-height: 1.1; }
 .ac-title--sm { font-size: var(--nv-title-md); }
 .ac-title--xs { margin: 0 0 5px; font-size: var(--nv-body-lg); font-weight: var(--nv-weight-action); }
