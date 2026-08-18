@@ -82,14 +82,15 @@
   --nv-cat-slate: #3d5670;
   --nv-cat-clay: #8d4236;
 
-  /* Tintes de fondo de Academia. Sólo superficies: ningún texto los usa.
+  /* Tintes de fondo de Academia. Casi todos son superficies, pero unos pocos
+     llevan texto encima (numeros de orden en blanco) y estan ajustados a 4,5:1.
      Pendiente de consolidar en la paleta cuando se rediseñe la sección. */
-  --nv-tint-01: #218675;
+  --nv-tint-01: #208271;   /* oscurecido desde #218675: lleva el numero 02 en blanco, 4,44 -> 4,67:1 */
   --nv-tint-02: #3B5BC4;
   --nv-tint-03: #65723D;
   --nv-tint-04: #74263C;
   --nv-tint-05: #C05621;
-  --nv-tint-06: #C7604B;
+  --nv-tint-06: #be513b;   /* oscurecido desde #C7604B: lleva el numero 05 en blanco, 4,04 -> 4,74:1 */
   --nv-tint-07: #C79718;
   --nv-tint-08: #CAE3DD;
   --nv-tint-09: #D8DEC8;
