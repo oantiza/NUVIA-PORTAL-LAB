@@ -4675,9 +4675,26 @@
 /* Academia · cola larga.
    233 cadenas distintas que, normalizadas y deduplicadas, resultan ser
    233 reglas reales. Nombradas ac-xNN: son honestas sobre lo que son —
-   estilos trasladados, no componentes con nombre— y quedan agrupadas aquí
+   estilos trasladados, no componentes con nombre — y quedan agrupadas aquí
    para consolidarlas cuando se rediseñe la página.
-   Valores tokenizados: ni un hexadecimal. */
+   Valores tokenizados: ni un hexadecimal.
+
+   NO IMITAR ESTE PATRÓN. No es la convención del proyecto: academia.html es
+   la única de las catorce páginas que tiene clases numeradas, porque se
+   exportó desde una herramienta de prototipado. El resto usa prefijos con
+   nombre (markets-, viv-, jub-, lecturas-…) o los componentes de
+   nuvia-components.css. Para marcado nuevo, ese es el camino.
+
+   Por qué no se consolidan de golpe: de las 233 reglas, 231 tienen una
+   combinación única de propiedades y solo hay un duplicado exacto. No son
+   fragmentos fusionables con un script; difieren en valores reales
+   (minmax(0,.92fr) frente a minmax(0,1.24fr), etc.). Unificarlas exige
+   decidir que esas diferencias no importan, y eso es rediseñar.
+
+   Cuándo abordarlo: al tocar una sección de Academia por otro motivo, se
+   reescribe con componentes del sistema y se borran los ac-xNN que queden
+   huérfanos. Hecho así con .ac-tag → .nv-chip (88 usos, 0 píxeles de
+   diferencia) y con el botón de descarga de la calculadora (.nv-btn). */
 
 .ac-x02 { align-items:center; color: var(--nv-green-700); display:inline-flex; font-size: var(--nv-body-sm); font-weight:400; gap:var(--nv-space-3); letter-spacing:.2em; margin-bottom:16px; text-transform:uppercase; }
 .ac-x03 { color:var(--nv-white); font-size: var(--nv-display-lg); font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 16px; max-width:16em; }
