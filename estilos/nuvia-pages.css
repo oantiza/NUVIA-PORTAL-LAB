@@ -4631,10 +4631,6 @@
 .ac-cell--plain { text-align: right; }
 
 /* Etiquetas de familia de activo */
-.ac-tag { border-radius: var(--nv-space-2); font-size: var(--nv-body-sm); font-weight: var(--nv-weight-action); padding: 4px var(--nv-space-2); }
-.ac-tag--seguridad { background: color-mix(in srgb, var(--nv-cat-teal) 12%, transparent); color: var(--nv-cat-teal); }
-.ac-tag--crecimiento { background: color-mix(in srgb, var(--nv-cat-purple) 12%, transparent); color: var(--nv-cat-purple); }
-.ac-tag--complementario { background: color-mix(in srgb, var(--nv-cat-amber) 13%, transparent); color: var(--nv-cat-amber); }
 
 /* Barras del interés compuesto */
 .ac-bar-row { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: var(--nv-space-3); align-items: center; }
@@ -4647,10 +4643,6 @@
 
 /* Academia · segundo grupo. Cinco familias más de etiqueta y las tablas de
    concepto, que son la misma rejilla con anchos distintos. */
-.ac-tag--liquidez { background: color-mix(in srgb, var(--nv-cat-cyan) 12%, transparent); color: var(--nv-cat-cyan); }
-.ac-tag--verde { background: color-mix(in srgb, var(--nv-green-700) 10%, transparent); color: var(--nv-green-700); }
-.ac-tag--neutro { background: color-mix(in srgb, var(--nv-cat-slate) 12%, transparent); color: var(--nv-cat-slate); }
-.ac-tag--riesgo { background: color-mix(in srgb, var(--nv-cat-clay) 12%, transparent); color: var(--nv-cat-clay); }
 .ac-pill { border-radius: var(--nv-radius-pill); background: color-mix(in srgb, var(--nv-green-500) 12%, transparent); color: var(--nv-green-700); font-size: var(--nv-body-sm); font-weight: var(--nv-weight-action); padding: 7px var(--nv-space-3); }
 
 .ac-meter { height: 14px; overflow: hidden; border-radius: var(--nv-radius-pill); background: var(--color-neutral-800); }

@@ -1065,3 +1065,25 @@
 sc-for {
   display: none;
 }
+
+/* ── Chip ───────────────────────────────────────────────────────────────────
+   Etiqueta rellena de color que clasifica un elemento por categoria. Se
+   distingue de .nv-tag, que es una pildora con borde, versalitas y tracking:
+   el chip va sin borde, en caja de color suave y a tamano de cuerpo.
+
+   Promovido desde .ac-tag de academia.html (88 usos). Las siete variantes
+   verifican WCAG AA sobre su propio fondo: entre 5,19:1 y 6,66:1.          */
+.nv-chip {
+  border-radius: var(--nv-space-2);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  padding: 4px var(--nv-space-2);
+}
+
+.nv-chip--seguridad      { background: color-mix(in srgb, var(--nv-cat-teal) 12%, transparent);   color: var(--nv-cat-teal); }
+.nv-chip--crecimiento    { background: color-mix(in srgb, var(--nv-cat-purple) 12%, transparent); color: var(--nv-cat-purple); }
+.nv-chip--complementario { background: color-mix(in srgb, var(--nv-cat-amber) 13%, transparent);  color: var(--nv-cat-amber); }
+.nv-chip--liquidez       { background: color-mix(in srgb, var(--nv-cat-cyan) 12%, transparent);   color: var(--nv-cat-cyan); }
+.nv-chip--verde          { background: color-mix(in srgb, var(--nv-green-700) 10%, transparent);  color: var(--nv-green-700); }
+.nv-chip--neutro         { background: color-mix(in srgb, var(--nv-cat-slate) 12%, transparent);  color: var(--nv-cat-slate); }
+.nv-chip--riesgo         { background: color-mix(in srgb, var(--nv-cat-clay) 12%, transparent);   color: var(--nv-cat-clay); }
