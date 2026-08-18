@@ -855,7 +855,7 @@ class Component extends DCLogic {
     const fmt = (x) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(x)) + ' €';
     const tab = this.state.tab;
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:9px 18px; transition:background .25s ease, color .25s ease, border-color .25s ease; ';
-    const pill = (on) => 'viv-pill' + (on ? ' is-active' : '');
+    const pill = (on) => 'viv-pill viv-pill--dark' + (on ? ' is-active' : '');
     const defs = [['esenciales', 'Conocimientos esenciales', ''], ['cursos', 'Cursos', '']];
     const c = this.c();
     const pr = this.proyectar(c);

@@ -4929,3 +4929,11 @@
 .ac-tint.is-hidden { display: none; }
 .gp-step__num { font-size: 19px; color: var(--nv-text-muted); }
 .gp-step__num.is-active { color: var(--nv-text-link); }
+
+/* ── Academia: texto sobre heroe oscuro ─────────────────────────────────────
+   .gu-lead y .ac-x02 heredan colores pensados para fondo claro. Sobre el
+   navy del heroe institucional daban 1,91:1 y 2,14:1, muy por debajo del
+   4,5:1 de WCAG AA. Los tokens --nv-text-on-dark* ya existen para este caso
+   y son los que usa .nv-hero__lead en el resto del sitio.                  */
+.nv-hero .gu-lead { color: var(--nv-text-on-dark-soft); }
+.nv-hero .ac-x02  { color: var(--nv-text-on-dark); }
