@@ -520,3 +520,43 @@ html.nuvia-company-embedded .login-wrap {
   .indicator-info-icon, .indicator-popover { display: none !important; }
 }
 @page { size: A4; margin: 0; }
+
+/* ============================================================
+   PIEL NUVIA (prueba) — solo cuando la app va embebida en el portal
+   ============================================================
+   La app tiene su propia paleta (granate #9e304f + dorado #8d6d3d) y no
+   referencia los tokens del portal. Este bloque la re-tematiza redefiniendo
+   sus variables, sin tocar ni un componente: es el mismo mecanismo que ya
+   usa el bloque .page del informe A4.
+
+   Solo aplica bajo html.nuvia-company-embedded, que es la clase que pone
+   cartera.html al cargarla en el iframe. Abierta suelta conserva su piel.
+
+   Para deshacer: borrar este bloque y recompilar.
+
+   Contrastes verificados sobre blanco:
+     navy-900   15,61:1    bronze-700  6,20:1    text-soft  8,16:1
+     text-muted  5,98:1    positive    6,38:1    negative   7,34:1  */
+
+html.nuvia-company-embedded {
+  --crimson: #0b2347;              /* era #9e304f */
+  --gold: #7a5c27;                 /* era #8d6d3d */
+  --ink: #0b2347;                  /* era #1b2430 */
+  --ink2: #40506a;                 /* era #576576 */
+  --ink3: #5b6472;                 /* era #7e8a99 */
+  --pos: #2f6b3d;                  /* era #187344 */
+  --neg: #9c2f2f;                  /* era #bd2d3d */
+  --paper: #f4f6f9;                /* nube NUVIA */
+  --line: rgba(11, 35, 71, .14);
+  --solid-bg: #0b2347;
+  --solid-border: #143458;
+  --solid-hover: #143458;
+  --solid-hover-border: #1d4670;
+  --chart-area: rgba(11, 35, 71, .09);
+  --selection: rgba(11, 35, 71, .2);
+  --hover-bg: rgba(122, 92, 39, .065);
+}
+
+/* El enlace secundario del acceso daba 3,51:1. */
+html.nuvia-company-embedded .login-card .alt-login,
+html.nuvia-company-embedded .login-card a { color: #40506a; }
