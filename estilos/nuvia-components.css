@@ -889,15 +889,13 @@
   align-items: start;
 }
 
+/* Logotipo invertido: wordmark #f8f4ea (14,2:1) y hojas #b8d36a (9,3:1)
+   sobre el navy del pie. Antes se usaba la version oscura, que daba 1,14:1,
+   y hacia falta un recuadro blanco detras para que se viera. */
 .nuvia-site-footer__brand img {
   display: block;
   width: 180px;
   height: auto;
-  box-sizing: content-box;
-  padding: 8px 10px;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, .98);
-  opacity: 1;
 }
 
 .nuvia-site-footer__brand p {
