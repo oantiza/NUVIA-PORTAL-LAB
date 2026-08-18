@@ -179,7 +179,7 @@
             </div>
             <div class="nv-btn-row">
               <a class="curso-btn-outline" href="{{ infografiaSrc }}" target="_blank" rel="noopener noreferrer">Ver a tamaño completo ↗</a>
-              <a class="curso-btn-outline" href="#apuntes">⤓ Descargar apuntes</a>
+              <a class="curso-btn-outline" href="{{ descargaHref }}" download>⤓ Descargar apuntes</a>
             </div>
           </figcaption>
         </figure>
@@ -274,7 +274,7 @@
 
         <div class="curso-acciones">
           <button type="button" onClick="{{ marcarApuntes }}" class="{{ claseBotonApuntes }}">{{ textoBotonApuntes }}</button>
-          <a class="curso-btn-outline" href="#apuntes">⤓ {{ descargaTexto }}</a>
+          <a class="curso-btn-outline" href="{{ descargaHref }}" download>⤓ {{ descargaTexto }}</a>
         </div>
 
       </div>
@@ -545,11 +545,11 @@ class Component extends DCLogic {
   state = {};
   capitulosData() {
     return [
-      { numero: '01', titulo: 'Pon orden a tu dinero', subtitulo: 'El punto de partida hacia tu tranquilidad financiera', video: '8bkXWpsZ1YI', videoTitulo: 'Pon orden a tu dinero', videoDesc: 'Una introducción visual para comprender las cifras que sostienen tu tranquilidad financiera.', intro: 'Descubre dónde estás, cuánto margen tienes y cuál debería ser tu primera prioridad antes de ahorrar o invertir.', img: 'src/assets/education/financial-course/chapter-01-health-pillars.webp', alt: 'Infografía sobre los cuatro pilares de la salud financiera: flujo de caja, necesidades y deseos, patrimonio neto y fondo de emergencia.' },
-      { numero: '02', titulo: 'Ahorrar con propósito', subtitulo: 'El arte de construir tu mañana de forma automática', video: 'cwHHU5okGqY', videoTitulo: 'Ahorrar con propósito', videoDesc: 'Descubre cómo convertir el ahorro en un sistema automático conectado con tus objetivos.', intro: 'Ahorrar suele percibirse como una renuncia, pero el ahorro inteligente es una herramienta de diseño financiero: permite decidir hoy qué proyectos y qué tranquilidad tendrá tu familia mañana.', img: 'src/assets/education/financial-course/chapter-02-automatic-saving.webp', alt: 'Infografía sobre ahorro automático, metas financieras, inflación e interés compuesto.' },
-      { numero: '03', titulo: 'Invertir sin apostar', subtitulo: 'Cómo poner tu dinero a trabajar con calma y método', video: 'K-AbB3tDmd0', videoTitulo: 'Invertir sin apostar', videoDesc: 'Una introducción al riesgo, el tiempo y la diversificación para invertir con criterio.', intro: 'Invertir con criterio es un proceso disciplinado que relaciona objetivos, plazo, riesgo, diversificación y comportamiento para poner el ahorro a trabajar a favor del bienestar futuro.', img: 'src/assets/education/financial-course/chapter-03-investment-pillars.webp', alt: 'Infografía sobre los cinco pilares de la inversión: mentalidad, riesgo, diversificación, tiempo y control emocional.' },
-      { numero: '04', titulo: 'La economía en tu día a día', subtitulo: 'Cómo entender lo que ocurre en el mundo sin complicarte la vida', video: 'uOrdz0Gi96A', videoTitulo: 'La economía en tu día a día', videoDesc: 'Aprende a traducir inflación, tipos y ciclos económicos a decisiones familiares concretas.', intro: 'Entender la economía significa distinguir lo que afecta realmente a tu bolsillo de lo que es ruido informativo para poder decidir con serenidad.', img: 'src/assets/education/financial-course/chapter-04-economic-survival.webp', alt: 'Infografía que explica tipos de interés, inflación, ciclos económicos y la diferencia entre señal y ruido.' },
-      { numero: '05', titulo: 'Construye tu plan', subtitulo: 'Tu hoja de ruta personal hacia la serenidad financiera', video: 'OoZXhp9sJ_0', videoTitulo: 'Construye tu plan financiero', videoDesc: 'Convierte lo aprendido en una hoja de ruta personal, sencilla y sostenible.', intro: 'El conocimiento financiero solo se vuelve útil cuando lo unes en una hoja de ruta propia, sencilla, escrita y adaptada a la realidad de tu hogar.', img: 'src/assets/education/financial-course/chapter-05-financial-roadmap.webp', alt: 'Infografía del capítulo cinco con la escalera financiera, el test de la almohada, el contrato de Ulises y la revisión anual del plan.' },
+      { numero: '01', pdf: 'core/downloads/nuvia-academy/capitulo-01-pon-orden-a-tu-dinero.pdf', titulo: 'Pon orden a tu dinero', subtitulo: 'El punto de partida hacia tu tranquilidad financiera', video: '8bkXWpsZ1YI', videoTitulo: 'Pon orden a tu dinero', videoDesc: 'Una introducción visual para comprender las cifras que sostienen tu tranquilidad financiera.', intro: 'Descubre dónde estás, cuánto margen tienes y cuál debería ser tu primera prioridad antes de ahorrar o invertir.', img: 'src/assets/education/financial-course/chapter-01-health-pillars.webp', alt: 'Infografía sobre los cuatro pilares de la salud financiera: flujo de caja, necesidades y deseos, patrimonio neto y fondo de emergencia.' },
+      { numero: '02', pdf: 'core/downloads/nuvia-academy/capitulo-02-ahorrar-con-proposito.pdf', titulo: 'Ahorrar con propósito', subtitulo: 'El arte de construir tu mañana de forma automática', video: 'cwHHU5okGqY', videoTitulo: 'Ahorrar con propósito', videoDesc: 'Descubre cómo convertir el ahorro en un sistema automático conectado con tus objetivos.', intro: 'Ahorrar suele percibirse como una renuncia, pero el ahorro inteligente es una herramienta de diseño financiero: permite decidir hoy qué proyectos y qué tranquilidad tendrá tu familia mañana.', img: 'src/assets/education/financial-course/chapter-02-automatic-saving.webp', alt: 'Infografía sobre ahorro automático, metas financieras, inflación e interés compuesto.' },
+      { numero: '03', pdf: 'core/downloads/nuvia-academy/capitulo-03-invertir-sin-apostar.pdf', titulo: 'Invertir sin apostar', subtitulo: 'Cómo poner tu dinero a trabajar con calma y método', video: 'K-AbB3tDmd0', videoTitulo: 'Invertir sin apostar', videoDesc: 'Una introducción al riesgo, el tiempo y la diversificación para invertir con criterio.', intro: 'Invertir con criterio es un proceso disciplinado que relaciona objetivos, plazo, riesgo, diversificación y comportamiento para poner el ahorro a trabajar a favor del bienestar futuro.', img: 'src/assets/education/financial-course/chapter-03-investment-pillars.webp', alt: 'Infografía sobre los cinco pilares de la inversión: mentalidad, riesgo, diversificación, tiempo y control emocional.' },
+      { numero: '04', pdf: 'core/downloads/nuvia-academy/capitulo-04-la-economia-en-tu-dia-a-dia.pdf', titulo: 'La economía en tu día a día', subtitulo: 'Cómo entender lo que ocurre en el mundo sin complicarte la vida', video: 'uOrdz0Gi96A', videoTitulo: 'La economía en tu día a día', videoDesc: 'Aprende a traducir inflación, tipos y ciclos económicos a decisiones familiares concretas.', intro: 'Entender la economía significa distinguir lo que afecta realmente a tu bolsillo de lo que es ruido informativo para poder decidir con serenidad.', img: 'src/assets/education/financial-course/chapter-04-economic-survival.webp', alt: 'Infografía que explica tipos de interés, inflación, ciclos económicos y la diferencia entre señal y ruido.' },
+      { numero: '05', pdf: 'core/downloads/nuvia-academy/capitulo-05-construye-tu-plan.pdf', titulo: 'Construye tu plan', subtitulo: 'Tu hoja de ruta personal hacia la serenidad financiera', video: 'OoZXhp9sJ_0', videoTitulo: 'Construye tu plan financiero', videoDesc: 'Convierte lo aprendido en una hoja de ruta personal, sencilla y sostenible.', intro: 'El conocimiento financiero solo se vuelve útil cuando lo unes en una hoja de ruta propia, sencilla, escrita y adaptada a la realidad de tu hogar.', img: 'src/assets/education/financial-course/chapter-05-financial-roadmap.webp', alt: 'Infografía del capítulo cinco con la escalera financiera, el test de la almohada, el contrato de Ulises y la revisión anual del plan.' },
     ];
   }
   apuntesCapitulo1() {
@@ -646,6 +646,7 @@ class Component extends DCLogic {
       infografiaKicker: 'Infografía del capítulo ' + cap.numero,
       apuntesKicker: '02 · Clase y apuntes · Capítulo ' + cap.numero,
       descargaTexto: 'Descargar PDF del capítulo ' + cap.numero,
+      descargaHref: cap.pdf,
       videoTitulo: cap.videoTitulo,
       videoDescripcion: cap.videoDesc,
       videoSrc: 'https://www.youtube-nocookie.com/embed/' + cap.video + '?rel=0',
