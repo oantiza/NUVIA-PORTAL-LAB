@@ -1052,3 +1052,16 @@
 
 .nv-select:hover { border-color: var(--nv-line-strong); }
 .nv-select:focus { border-color: var(--nv-green-600); }
+
+/* ── Plantillas de sc-for sin resolver ──────────────────────────────────────
+   sc-for es un elemento de plantilla que React reemplaza al montar. Hasta
+   entonces —o siempre, si el JS falla— el navegador lo pinta como elemento
+   desconocido y muestra su contenido literal: los marcadores {{ p.label }}
+   quedan a la vista. Se detectaron 248 repartidos por ocho paginas.
+
+   Solo se oculta sc-for. sc-if NO debe ocultarse: su contenido es HTML real
+   y es lo que hace que las paginas sigan siendo indexables sin JavaScript;
+   ocultarlo dejaba academia.html en 195 caracteres de 27.003.             */
+sc-for {
+  display: none;
+}
