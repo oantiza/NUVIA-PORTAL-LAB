@@ -4679,7 +4679,6 @@
    para consolidarlas cuando se rediseñe la página.
    Valores tokenizados: ni un hexadecimal. */
 
-.ac-x01 { color:var(--nv-text); font-family:var(--nv-font-sans); min-height:100vh; min-width:960px; }
 .ac-x02 { align-items:center; color: var(--nv-green-700); display:inline-flex; font-size:12.5px; font-weight:400; gap:14px; letter-spacing:.2em; margin-bottom:16px; text-transform:uppercase; }
 .ac-x03 { color:var(--nv-white); font-size:44px; font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 16px; max-width:16em; }
 .ac-x04 { border-top:1px solid rgba(255,255,255,.16); display:flex; flex-wrap:wrap; gap:10px; padding:18px 0 22px; }
