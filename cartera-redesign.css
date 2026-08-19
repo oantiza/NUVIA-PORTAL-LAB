@@ -593,6 +593,36 @@
 /* Nota de qué añade el suscriptor, al pie del análisis del registrado */
 .nv-analisis__suscriptor { font-size: 12px; color: var(--nv-text-muted); }
 
+/* Informe genérico de compañía (paso 37) */
+.nv-informe__cuerpo { display: grid; gap: var(--nv-space-3); min-inline-size: 0; }
+.nv-informe__cerrado { margin: 0; font-size: 13px; color: var(--nv-text-muted); }
+.nv-informe__campo { max-width: 420px; }
+.nv-informe__resultados { display: grid; gap: 4px; }
+.nv-informe__resultado {
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  padding: 8px 10px;
+  border: 1px solid var(--nv-line);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+.nv-informe__resultado:hover { background: var(--nv-cloud); }
+.nv-informe__articulo { display: grid; gap: var(--nv-space-3); }
+.nv-informe__nombre { margin: 0; }
+.nv-informe__seccion h4 { margin: 0 0 6px; }
+.nv-informe__filas {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 4px 12px;
+  font-size: 13px;
+}
+.nv-informe__filas dt { color: var(--nv-text-muted); }
+.nv-informe__filas dd { margin: 0; font-variant-numeric: tabular-nums; }
+.nv-informe__riesgos ul { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 6px; font-size: 13px; }
+
 /* «Tus datos y tus derechos» (paso 34) */
 .nv-cuenta__derechos { display: grid; gap: var(--nv-space-2); min-inline-size: 0; }
 .nv-cuenta__derechos h3 { margin: 0; }

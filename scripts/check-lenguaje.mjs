@@ -24,6 +24,7 @@ const FICHEROS = [
   'js/nuvia-datos.js',
   'js/nuvia-cuenta.js',
   'js/nuvia-analisis.js',
+  'js/nuvia-informe.js',
 ];
 
 /** Patrones prohibidos, con el porqué al lado. */
@@ -83,6 +84,8 @@ const EXIGIDO = [
   /* Paso 32: el análisis ampliado declara su fuente y nunca inventa.
      Paso 33: la proyección se declara simulación, jamás previsión. */
   ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa', 'no es una previsión']],
+  /* Paso 37: el informe es genérico, sin firma y sin recomendación. */
+  ['js/nuvia-informe.js', ['idéntico para cualquiera', 'sin firma', 'no emite recomendaciones', 'base de datos NUVIA']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');

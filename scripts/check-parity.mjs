@@ -120,6 +120,10 @@ if (!portfolioPage.includes('js/nuvia-constructor.js') || !portfolioPage.include
 if (!portfolioPage.includes('js/nuvia-cuenta.js') || !portfolioPage.includes('id="cuenta"')) {
   throw new Error('La página de cartera no monta el bloque de cuenta con datos mínimos');
 }
+/* Paso 37: informe genérico de compañía, misma plantilla para todas. */
+if (!portfolioPage.includes('js/nuvia-informe.js') || !portfolioPage.includes('id="informe"')) {
+  throw new Error('La página de cartera no monta el informe genérico de compañía');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

@@ -931,6 +931,36 @@ cálculos ya precalculados.**
 **Sin firma personal.** Estructura fija para todas las compañías, y las reglas
 de redacción de la sección 5 de las bases.
 
+> **Hecho y verificado (19-08-2026).** Bloque **«Informe de compañía»** en la
+> página de cartera (`js/nuvia-informe.js`), abierto con la sesión iniciada
+> (cuenta gratuita): un buscador solo de acciones y, al elegir una, su
+> informe con la **misma plantilla para todas** — Qué es · Tamaño y
+> valoración · Cómo gana dinero · Dividendo · Comportamiento en mercado ·
+> Riesgos —, construida con UNA llamada a `get_asset_detail`
+> (`fundamentals_summary` + `metrics` de la maestra). Reglas de las bases §5
+> aplicadas literalmente: solo hechos con su cifra, su fecha y su fuente
+> (fundamentales con `as_of_date` y `source`; caída máxima y último precio
+> con fecha); el PER adelantado se cita como **estimación del consenso**;
+> un dato ausente se muestra como «—» y el informe **declara el recuento**
+> de ausencias; y la sección de **Riesgos sale de reglas fijas** iguales
+> para todas las compañías (concentración en un valor/sector/país — siempre;
+> volatilidad y peor caída del historial; pérdida reciente si el margen neto
+> es negativo; BPA negativo explicando el PER ausente; payout > 100 %;
+> divisa distinta del euro), así que ninguna empresa recibe riesgos «a
+> medida»: simetría garantizada por construcción. Pie fijo: idéntico para
+> cualquiera que lo pida, no emite recomendaciones, sin precio objetivo y
+> **sin firma**. `check-lenguaje` vigila la superficie nueva y exige esas
+> declaraciones; `check-parity` exige el bloque montado.
+>
+> **Verificado** con la ficha REAL de Telefónica servida por producción
+> (fixture en la batería): la plantilla de una ficha vacía es idéntica a la
+> de una completa (solo cambian los valores a «—»); pérdida del −9,5 % y
+> payout del 111 % en riesgos con su cifra; caída del −76,1 % con su fecha;
+> y la **prueba de la sección 5** pasada dos veces — sobre los textos puros
+> y sobre el informe renderizado en navegador: cero giros prohibidos
+> (mejor/recomend*/óptimo/atractiva/infravalorada/oportunidad…). 18
+> comprobaciones de navegador en verde; sin desbordes; suelo de 12 px.
+
 ### Paso 38 · Carteras modelo temáticas
 
 **Publicadas, idénticas para todos, nunca presentadas como adecuadas para

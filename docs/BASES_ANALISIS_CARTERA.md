@@ -415,6 +415,17 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Informe genérico de compañía (paso 37, 19-08-2026).** «Informe de
+compañía» en la página de cartera, con la sesión iniciada: la misma
+plantilla para todas las acciones del catálogo (qué es, tamaño y valoración,
+cómo gana dinero, dividendo, comportamiento en mercado, riesgos), una sola
+llamada a `get_asset_detail`. Las reglas de §5, ejecutables: hechos con
+fecha y fuente; PER adelantado citado como estimación del consenso; dato
+ausente → «—» con el recuento declarado; riesgos por reglas fijas iguales
+para todas (simetría por construcción); pie con «idéntico para cualquiera»,
+«no emite recomendaciones» y «sin firma». La prueba de §5 corre en la
+batería y sobre el informe renderizado: cero giros prohibidos.
+
 **Derechos RGPD operativos (paso 34, 19-08-2026).** «Tus datos y tus
 derechos» en el bloque de cuenta: acceso (ver todo lo guardado, con la
 declaración de que no hay nada más), portabilidad (JSON versionado, legible
