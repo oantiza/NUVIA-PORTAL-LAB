@@ -415,6 +415,16 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Análisis del nivel registrado (paso 32, 19-08-2026).** Con la sesión
+iniciada, el constructor añade «Análisis ampliado (tu cuenta)»: ahorro por
+diversificar sobre el historial real (σ frente a σ con ρ=1, correlaciones de
+Pearson), concentración sectorial y geográfica con la calidad del dato
+declarada (fichas de `get_asset_detail` a los módulos del paso 14) y matriz
+de solapamiento entre fondos/ETF (`get_asset_holdings_batch` al módulo del
+paso 13). Todo en el navegador, con `js/nuvia-analisis.js` orquestando; sin
+sesión, una sola línea descriptiva. Cuando falta un dato se declara; nunca se
+inventa. `check-lenguaje` cubre la superficie.
+
 **Migración desde local (paso 31, 19-08-2026).** Al registrarse, si el
 navegador guarda carteras del nivel visitante, la cuenta ofrece subirlas —con
 un botón, nunca en silencio— y, tras confirmar cada subida, las retira del

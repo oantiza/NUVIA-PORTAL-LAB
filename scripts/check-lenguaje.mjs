@@ -23,6 +23,7 @@ const FICHEROS = [
   'js/nuvia-constructor.js',
   'js/nuvia-datos.js',
   'js/nuvia-cuenta.js',
+  'js/nuvia-analisis.js',
 ];
 
 /** Patrones prohibidos, con el porqué al lado. */
@@ -77,6 +78,8 @@ const EXIGIDO = [
   /* Paso 29: lo opcional es opt-in de verdad; se declara que apagado no
      registra nada. */
   ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio', 'no se registrará nunca']],
+  /* Paso 32: el análisis ampliado declara su fuente y nunca inventa. */
+  ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');

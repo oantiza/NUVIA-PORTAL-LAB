@@ -13,6 +13,7 @@
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
 import { metricasDesdeSerie, serieDeCaidas, pct, DIAS_MERCADO } from './nuvia-cartera.js';
+import { montaAnalisis } from './nuvia-analisis.js';
 
 export const MAX_POSICIONES = 5;
 const PESO_INICIAL = 20;
@@ -547,7 +548,10 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     else pintaGuardadoLocal();
   }
 
-  document.addEventListener('nuvia:sesion-cambiada', pintaGuardado);
+  document.addEventListener('nuvia:sesion-cambiada', () => {
+    pintaGuardado();
+    recalcula(); // el análisis ampliado (paso 32) aparece o se cierra con la sesión
+  });
   pintaGuardado();
 
   function seriesDelConjunto(ids) {
@@ -676,10 +680,20 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       resultados.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Métricas de la combinación'));
     }
 
+    /* Análisis ampliado del nivel registrado (paso 32): se pinta en un nodo
+       propio al final; si el usuario mueve un peso, este nodo se descarta con
+       el resto de resultados y el render tardío cae en un nodo suelto. */
+    const pintaAnalisis = () => {
+      const nodo = el('div', { class: 'nv-analisis' });
+      resultados.append(nodo);
+      montaAnalisis(nodo, { posiciones, pesos, series, datos, registrada: esRegistrada() });
+    };
+
     const niveles = serieCartera(series, pesos);
     const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
     if (!m) {
       resultados.append(el('p', { class: 'nv-cons__nota' }, 'No hay historial común suficiente para calcular las métricas de esta combinación.'));
+      pintaAnalisis();
       return;
     }
 
@@ -704,6 +718,7 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const fecha = fechaCorta(payload?.coverage?.last_date);
     resultados.append(el('p', { class: 'nv-cons__fuente' },
       `Datos de cierre${fecha ? ` del ${fecha}` : ''}, base de datos NUVIA. Ventana de 3 años, en euros. ${m.observaciones} observaciones.`));
+    pintaAnalisis();
   }
 
   document.addEventListener('nuvia:activo-elegido', (evento) => {

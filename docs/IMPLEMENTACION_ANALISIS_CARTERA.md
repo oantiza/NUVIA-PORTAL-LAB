@@ -766,6 +766,36 @@ cálculo ni los resultados: se recalculan al abrir.
 **Hacer.** Los desbloqueados en el paso 1: concentración, ahorro por
 diversificar, solapamiento.
 
+> **Hecho y verificado (19-08-2026).** Nuevo `js/nuvia-analisis.js`: con la
+> sesión iniciada, bajo la tabla de métricas del constructor aparece
+> **«Análisis ampliado (tu cuenta)»** con tres grupos, todos calculados en el
+> navegador con los módulos ya portados en la Fase 2:
+> **Ahorro por diversificar** — `ahorroDeSeries` calcula σ de la combinación y
+> σ con ρ=1 sobre el MISMO historial de 3 años ya cargado (correlaciones de
+> Pearson vía `correlacionesDesdeSeries`), y la lectura da las tres cifras en
+> llano; con una sola posición o sin datos de un par → se dice, nunca se
+> inventa. **Concentración sectorial y geográfica** — fichas de
+> `get_asset_detail` (cacheadas por activo) pasadas a
+> `concentracionSectorial`/`concentracionGeografica` (paso 14), top 5 con
+> barras y la **calidad del dato declarada** (desglose real / % estimado por
+> heurística / todo estimado); las claves de la base se muestran aseadas pero
+> sin traducir. **Solapamiento entre fondos** — `get_asset_holdings_batch`
+> (cacheado por conjunto) + `matrizSolapamiento` (paso 13) solo sobre
+> posiciones FUND/ETF; con <2 fondos o sin desglose se dice tal cual.
+> Sin sesión, el bloque es una sola línea que describe qué se abre —
+> sin empujar a nadie. El cambio de sesión re-lanza el recálculo
+> (`nuvia:sesion-cambiada`). `check-lenguaje` vigila la superficie nueva y
+> exige «base de datos NUVIA» y «nunca se inventa».
+>
+> **Verificado en navegador** (fichas, desgloses y series simulados): sin
+> sesión solo el aviso; al registrarse aparecen los tres grupos; la matriz
+> del par da EXACTAMENTE el mínimo esperado (Apple 50 %/30 % → 30 %); la
+> concentración agrega bien (Technology 45 % = 60·½+30·½); mover un peso
+> recalcula; cerrar sesión lo cierra. Batería pura
+> `docs/nuvia-analisis.test.mjs` (series opuestas → ahorro grande; idénticas
+> → ~0; serie plana → null). `npm run validate` en verde; sin desbordes
+> 1440/1024/390; suelo de 12 px.
+
 ### Paso 33 · Análisis del nivel suscriptor
 
 **Hacer.** Frontera, Monte Carlo, correlaciones, y 20 posiciones.

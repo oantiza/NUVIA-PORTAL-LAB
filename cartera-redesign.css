@@ -500,6 +500,70 @@
   color: var(--nv-text-muted);
 }
 
+/* ── Análisis ampliado del nivel registrado (paso 32) ── */
+
+.nv-analisis { display: grid; gap: var(--nv-space-3); min-width: 0; }
+
+.nv-analisis__cerrado {
+  margin: 0;
+  font-size: 13px;
+  color: var(--nv-text-muted);
+}
+
+.nv-analisis__grupo { display: grid; gap: var(--nv-space-2); min-width: 0; }
+
+.nv-analisis__titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--nv-text);
+}
+
+.nv-analisis__filas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.nv-analisis__fila {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--nv-space-3);
+  align-items: baseline;
+  min-width: 0;
+}
+
+.nv-analisis__clave { color: var(--nv-text); font-size: 13px; }
+
+.nv-analisis__peso {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--nv-text);
+}
+
+.nv-analisis__barra {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--nv-green-600);
+  opacity: 0.55;
+}
+
+.nv-analisis__calidad {
+  margin: 0;
+  font-size: 12px;
+  color: var(--nv-text-muted);
+}
+
+.nv-analisis__matriz td,
+.nv-analisis__matriz th {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 /* Oferta de migración de lo local a la cuenta (paso 31) */
 .nv-cons__migracion { display: grid; gap: var(--nv-space-2); min-width: 0; }
 .nv-cons__migracion[hidden] { display: none; }
