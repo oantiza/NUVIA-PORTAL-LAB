@@ -316,6 +316,22 @@ un fondo global no es «internacional», son sus posiciones repartidas.
 **Verificación.** Una cartera de cuatro bancos españoles debe salir ~100 %
 financiero y ~100 % España. Si sale repartida, el look-through no funciona.
 
+> **Hecho y verificado (19-08-2026).** Portado en `docs/nuvia-concentracion.js`
+> desde `equitySectors.ts` y `equityRegions.ts` de la plataforma:
+> `concentracionSectorial()` y `concentracionGeografica()` agregan las
+> distribuciones que la maestra guarda por activo (`exposure_detail`),
+> ponderadas por peso × exposición a renta variable — el look-through no se
+> recalcula en el portal, viene calculado en el dato del activo. Se porta
+> también el respaldo heurístico de la plataforma (categoría/nombre para
+> sector; región o divisa para geografía) con su etiqueta de calidad
+> (`lookthrough`/`mixed`/`estimated`/`none`) y el `pesoEstimado` declarado:
+> la interfaz TIENE que enseñarlo, un estimado nunca se presenta como dato.
+> Batería en `node docs/nuvia-concentracion.test.mjs`: cuatro bancos → 100 %
+> financiero y 100 % España; fondo global repartido por regiones; fondo de
+> bonos fuera de la concentración de RV. Contraste con distribuciones reales
+> de EODHD: XLF → 98,1 % financiero; SPY 70 % + XLF 30 % → financiero 37,8 %,
+> exactamente la media ponderada.
+
 ### Paso 15 · Frontera y Monte Carlo sobre activos reales
 
 **Hacer.** Adaptar `frontera()` para que opere sobre las posiciones reales del

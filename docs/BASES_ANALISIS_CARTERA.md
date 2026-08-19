@@ -389,6 +389,14 @@ puras: los desgloses llegan ya descargados de `get_asset_holdings`. Batería
 en `nuvia-solapamiento.test.mjs`; contrastado con carteras reales de ETF
 (mismo índice 95,5 %, sectores disjuntos 0 %).
 
+**También hecho — concentración sectorial y geográfica (paso 14, 19-08-2026):**
+`nuvia-concentracion.js`, portado de `equitySectors.ts` y `equityRegions.ts`.
+Agrega las distribuciones por activo de la maestra (`exposure_detail`)
+ponderadas por exposición a renta variable, con la calidad del dato declarada
+(`lookthrough`/`mixed`/`estimated`) — un estimado se enseña como estimado.
+Batería en `nuvia-concentracion.test.mjs` (cuatro bancos españoles → 100 %
+financiero y 100 % España).
+
 **Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
 asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula
 la matriz de Pearson sobre retornos diarios a partir de las series de
