@@ -631,11 +631,42 @@ nota confundiría al usuario sobre de dónde sale cada cifra.
 **Antes de empezar: revisión jurídica.** Bases, «Pendiente de validación
 jurídica». No es un trámite posterior.
 
+> **Hecho (19-08-2026).** Óscar dio por validada la revisión jurídica y
+> autorizó el arranque de la fase («sigue, está validado»). Registrado en las
+> bases, §2.
+
 ### Paso 28 · Registro con datos mínimos
 
 **Hacer.** Correo y contraseña, o proveedor externo. Nada más. Sin teléfono, sin
 patrimonio, sin perfil de riesgo — eso último se parecería a un test de
 idoneidad, que es exactamente lo que la norma regula.
+
+> **Hecho y verificado (19-08-2026).** Bloque «Tu cuenta» en `cartera.html`,
+> montado por `js/nuvia-cuenta.js`: crear cuenta, iniciar sesión, cerrar
+> sesión y recuperar contraseña, con correo y contraseña y nada más — y el
+> bloque lo declara («Solo pedimos correo y contraseña…»), con `check-lenguaje`
+> exigiendo esa declaración desde la build. Dice además, honestamente, que de
+> momento iniciar sesión no cambia lo que se ve: la nube y el análisis ampliado
+> llegan en los pasos 30–32.
+>
+> **Cómo se enlaza la cuenta.** El visitante ya tiene una sesión anónima de
+> lectura (paso 19). Crear la cuenta la enlaza con `accounts:signUp` +
+> `idToken` — mismo usuario antes y después, así que lo que se apoye en el UID
+> sobrevivirá al registro. La vía «natural» (`accounts:update` con email y
+> password) la rechaza Identity Toolkit («Please verify the new email before
+> changing email»); comprobado contra el proyecto real desde el PC de Óscar
+> antes de escribir una línea: alta anónima → enlace (mismo UID) → login →
+> llamada a las funciones OK → cuenta de prueba borrada. La renovación de
+> token conserva tipo y correo de la sesión; cerrar sesión la olvida y la
+> siguiente consulta abre otra anónima. Errores de Firebase traducidos a
+> llano (EMAIL_EXISTS, credenciales que no coinciden —sin desvelar cuál de
+> las dos falla—, WEAK_PASSWORD, INVALID_EMAIL, demasiados intentos).
+> `NOTA_NIVEL` del constructor ya no habla de «una fase posterior»: apunta al
+> bloque «Tu cuenta». Batería nueva `docs/nuvia-cuenta.test.mjs` (22
+> comprobaciones, en `npm run validate`), `check-parity` exige el bloque, y
+> verificación en navegador con Identity Toolkit simulado: alta, recarga con
+> sesión persistida, cierre, login fallido y correcto, olvido de contraseña,
+> sin desbordes a 1440/1024/390, suelo de 12 px y labels en todos los campos.
 
 ### Paso 29 · Consentimiento granular
 

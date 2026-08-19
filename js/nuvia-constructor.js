@@ -25,15 +25,15 @@ export function textoContador(n) {
 
 /**
  * Nota de nivel, mostrada al llegar al tope. Describe qué añade cada nivel;
- * no aconseja. El registro llega en una fase posterior y se dice tal cual.
+ * no aconseja. El registro ya está abierto (paso 28) y se dice dónde.
  */
 export const NOTA_NIVEL = 'Este nivel de la página trabaja con hasta '
   + `${MAX_POSICIONES} posiciones: bastan para ver el efecto de combinar `
-  + 'activos y la tabla se lee con claridad. Una cuenta gratuita, cuando el '
-  + 'registro se abra en una fase posterior del portal, mantendrá las '
-  + `${MAX_POSICIONES} posiciones por cartera y añadirá guardado en la nube, `
-  + 'carteras sin tope y análisis más amplio; la suscripción ampliará el '
-  + 'análisis y llegará a 20 posiciones.';
+  + 'activos y la tabla se lee con claridad. Una cuenta gratuita —el registro '
+  + 'ya está abierto en el bloque «Tu cuenta» de esta página— mantendrá las '
+  + `${MAX_POSICIONES} posiciones por cartera e irá añadiendo guardado en la `
+  + 'nube, carteras sin tope y análisis más amplio; la suscripción ampliará '
+  + 'el análisis y llegará a 20 posiciones.';
 
 /* ── Lógica pura (probada en docs/nuvia-constructor.test.mjs) ── */
 

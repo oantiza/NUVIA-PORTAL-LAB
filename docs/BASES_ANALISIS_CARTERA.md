@@ -164,6 +164,11 @@ exacta del contenido personalizado, las obligaciones de información publicitari
 de productos financieros, la normativa de consumo y contratación a distancia, y
 los requisitos fiscales del nivel de pago.
 
+> **Validada (19-08-2026).** Óscar dio por validada esta revisión jurídica y
+> autorizó el arranque de la Fase 4 («sigue, está validado»). Con ello se abre
+> el registro (paso 28). La validación de los supuestos del simulador (§8)
+> sigue pendiente y es un encargo distinto.
+
 ---
 
 ## 3. Modelo de tres niveles
@@ -409,6 +414,19 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 (58 comprobaciones) corre con `npm run test:analisis`, integrada en
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
+
+**Fase 4 en marcha — registro con datos mínimos (paso 28, 19-08-2026).** La
+revisión jurídica quedó validada por Óscar ese mismo día (nota en §2) y se
+abre el registro: correo y contraseña, nada más — sin teléfono, sin patrimonio
+y sin cuestionario de perfil, que se parecería a un test de idoneidad.
+`js/nuvia-datos.js` enlaza la sesión anónima a la cuenta nueva con
+`accounts:signUp` + idToken (mismo usuario antes y después; la vía
+`accounts:update` la rechaza Identity Toolkit), inicia sesión con
+`signInWithPassword`, recupera contraseña con `sendOobCode` y traduce los
+códigos de error a llano. `js/nuvia-cuenta.js` monta el bloque «Tu cuenta» y
+dice honestamente que, de momento, iniciar sesión no cambia lo que se ve.
+`check-lenguaje.mjs` vigila también esta superficie y exige la declaración de
+datos mínimos.
 
 **FASE 3 CERRADA (pasos 18–27, 19-08-2026).** El nivel de visitante está
 completo y publicado: sección propia sin iframe, buscador sobre la maestra,

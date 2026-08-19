@@ -500,6 +500,55 @@
   color: var(--nv-text-muted);
 }
 
+/* ── Cuenta con datos mínimos (paso 28) ── */
+
+.nv-cuenta { display: grid; gap: var(--nv-space-3); }
+
+.nv-cuenta__cuerpo { display: grid; gap: var(--nv-space-3); min-width: 0; }
+
+.nv-cuenta__minimos {
+  margin: 0;
+  font-weight: 600;
+  color: var(--nv-text);
+}
+
+.nv-cuenta__nota,
+.nv-cuenta__quien {
+  margin: 0;
+  color: var(--nv-text-soft);
+}
+
+.nv-cuenta__forma {
+  display: grid;
+  gap: var(--nv-space-3);
+  max-width: 520px;
+}
+
+.nv-cuenta__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+}
+
+.nv-cuenta__olvido {
+  justify-self: start;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  color: var(--nv-text-muted);
+  text-decoration: underline;
+}
+
+.nv-cuenta__estado {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: 14px;
+  color: var(--nv-text-muted);
+}
+
 .nv-sim-cifra {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;

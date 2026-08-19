@@ -88,7 +88,8 @@ comprueba('La nota de nivel explica el porqué del tope', NOTA_NIVEL.includes('s
 comprueba('…y qué añade la cuenta gratuita', NOTA_NIVEL.includes('cuenta gratuita')
   && NOTA_NIVEL.includes('guardado en la nube') && NOTA_NIVEL.includes('carteras sin tope'));
 comprueba('…y hasta dónde llega la suscripción', NOTA_NIVEL.includes('20 posiciones'));
-comprueba('Dice honestamente que el registro aún no está abierto', NOTA_NIVEL.includes('fase posterior'));
+comprueba('Dice que el registro ya está abierto y dónde (paso 28)',
+  NOTA_NIVEL.includes('ya está abierto') && NOTA_NIVEL.includes('«Tu cuenta»'));
 comprueba('La nota describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
   !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_NIVEL));
 

@@ -116,6 +116,10 @@ if (/eodhd/i.test(portfolioPage)) {
 if (!portfolioPage.includes('js/nuvia-constructor.js') || !portfolioPage.includes('id="constructor"')) {
   throw new Error('La página de cartera no monta el constructor de cartera del visitante');
 }
+/* Paso 28: registro con datos mínimos (correo y contraseña, nada más). */
+if (!portfolioPage.includes('js/nuvia-cuenta.js') || !portfolioPage.includes('id="cuenta"')) {
+  throw new Error('La página de cartera no monta el bloque de cuenta con datos mínimos');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

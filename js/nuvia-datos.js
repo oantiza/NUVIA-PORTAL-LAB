@@ -11,6 +11,12 @@
  *
  * `creaClienteMaestra` acepta inyección de fetch/almacén/reloj para poder
  * probar la lógica de sesión y caché sin red (docs/nuvia-datos.test.mjs).
+ *
+ * Paso 28 (registro con datos mínimos): la misma sesión puede pasar de
+ * anónima a registrada enlazando correo y contraseña — y nada más — con
+ * `accounts:signUp` + idToken, que conserva el mismo usuario. Identity
+ * Toolkit rechaza aquí la vía `accounts:update` («verify the new email»),
+ * comprobado contra el proyecto real el 19-08-2026.
  */
 
 export const PROYECTO = {
@@ -68,26 +74,31 @@ export function creaClienteMaestra({
     return { ok: res.ok, status: res.status, json };
   }
 
+  const urlCuentas = (accion) =>
+    `https://identitytoolkit.googleapis.com/v1/accounts:${accion}?key=${proyecto.apiKey}`;
+
   async function sesionNueva() {
-    const { ok, json } = await pideJson(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${proyecto.apiKey}`, '{}');
+    const { ok, json } = await pideJson(urlCuentas('signUp'), '{}');
     if (!ok || !json?.idToken) throw new Error('No se ha podido abrir la sesión de lectura.');
     return {
+      tipo: 'anonima',
       idToken: json.idToken,
       refreshToken: json.refreshToken,
       caducaEn: ahora() + Number(json.expiresIn || 3600) * 1000,
     };
   }
 
-  async function sesionRenovada(refreshToken) {
+  async function sesionRenovada(guardada) {
     const { ok, json } = await pideJson(
       `https://securetoken.googleapis.com/v1/token?key=${proyecto.apiKey}`,
-      `grant_type=refresh_token&refresh_token=${encodeURIComponent(refreshToken)}`,
+      `grant_type=refresh_token&refresh_token=${encodeURIComponent(guardada.refreshToken)}`,
       { 'Content-Type': 'application/x-www-form-urlencoded' });
     if (!ok || !json?.id_token) return null; // la sesión caducada se sustituye por una nueva
     return {
+      tipo: guardada.tipo || 'anonima',
+      ...(guardada.correo ? { correo: guardada.correo } : {}),
       idToken: json.id_token,
-      refreshToken: json.refresh_token || refreshToken,
+      refreshToken: json.refresh_token || guardada.refreshToken,
       caducaEn: ahora() + Number(json.expires_in || 3600) * 1000,
     };
   }
@@ -99,7 +110,7 @@ export function creaClienteMaestra({
     if (guardada && guardada.caducaEn - MARGEN_CADUCIDAD_MS > ahora()) return guardada;
     if (!sesionEnCurso) {
       sesionEnCurso = (async () => {
-        let s = guardada ? await sesionRenovada(guardada.refreshToken) : null;
+        let s = guardada ? await sesionRenovada(guardada) : null;
         if (!s) s = await sesionNueva();
         guardaSesion(s);
         return s;
@@ -142,7 +153,95 @@ export function creaClienteMaestra({
     return promesa;
   }
 
-  return { llama, buscaActivos, sesion };
+  /* ── Cuenta con datos mínimos: correo y contraseña, nada más (paso 28) ── */
+
+  /** Mensajes en llano para los códigos de Identity Toolkit. */
+  function errorDeCuenta(json, status) {
+    const codigo = String(json?.error?.message || '');
+    let texto;
+    if (codigo.startsWith('EMAIL_EXISTS')) {
+      texto = 'Ya existe una cuenta con ese correo. Puedes iniciar sesión con él.';
+    } else if (/^(INVALID_LOGIN_CREDENTIALS|EMAIL_NOT_FOUND|INVALID_PASSWORD)/.test(codigo)) {
+      texto = 'El correo o la contraseña no coinciden con ninguna cuenta.';
+    } else if (codigo.startsWith('WEAK_PASSWORD')) {
+      texto = 'La contraseña necesita al menos 6 caracteres.';
+    } else if (/^(INVALID_EMAIL|MISSING_EMAIL)/.test(codigo)) {
+      texto = 'Ese correo no parece una dirección válida.';
+    } else if (codigo.startsWith('TOO_MANY_ATTEMPTS')) {
+      texto = 'Demasiados intentos seguidos. Espera unos minutos antes de repetirlo.';
+    } else {
+      texto = `No se ha podido completar la operación (${codigo || `error ${status}`}).`;
+    }
+    const error = new Error(texto);
+    error.codigo = codigo || status;
+    return error;
+  }
+
+  function guardaSesionRegistrada(json) {
+    const s = {
+      tipo: 'registrada',
+      correo: json.email || '',
+      idToken: json.idToken,
+      refreshToken: json.refreshToken,
+      caducaEn: ahora() + Number(json.expiresIn || 3600) * 1000,
+    };
+    guardaSesion(s);
+    return { tipo: s.tipo, correo: s.correo };
+  }
+
+  /** Estado de la sesión tal y como debe contarse: tipo y, si la hay, correo. */
+  function sesionActual() {
+    const s = leeSesion();
+    if (s?.tipo === 'registrada') return { tipo: 'registrada', correo: s.correo || '' };
+    return { tipo: 'anonima' };
+  }
+
+  /** Crea la cuenta enlazando correo y contraseña a la sesión de lectura ya
+   *  abierta (mismo usuario antes y después; `accounts:signUp` con idToken). */
+  async function creaCuenta(correo, contrasena) {
+    const s = await sesion();
+    const { ok, status, json } = await pideJson(urlCuentas('signUp'), {
+      idToken: s.idToken,
+      email: String(correo || '').trim(),
+      password: String(contrasena || ''),
+      returnSecureToken: true,
+    });
+    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
+    return guardaSesionRegistrada(json);
+  }
+
+  /** Inicia sesión con una cuenta ya creada. */
+  async function iniciaSesion(correo, contrasena) {
+    const { ok, status, json } = await pideJson(urlCuentas('signInWithPassword'), {
+      email: String(correo || '').trim(),
+      password: String(contrasena || ''),
+      returnSecureToken: true,
+    });
+    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
+    return guardaSesionRegistrada(json);
+  }
+
+  /** Cierra la sesión: se olvida aquí mismo; la siguiente consulta abre una
+   *  sesión de lectura anónima nueva. */
+  function cierraSesion() {
+    if (almacen) { try { almacen.removeItem(CLAVE_SESION); } catch { /* sin persistencia */ } }
+    return { tipo: 'anonima' };
+  }
+
+  /** Pide a Firebase el correo de restablecimiento de contraseña. */
+  async function recuperaContrasena(correo) {
+    const { ok, status, json } = await pideJson(urlCuentas('sendOobCode'), {
+      requestType: 'PASSWORD_RESET',
+      email: String(correo || '').trim(),
+    });
+    if (!ok) throw errorDeCuenta(json, status);
+    return { enviado: true };
+  }
+
+  return {
+    llama, buscaActivos, sesion,
+    sesionActual, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
+  };
 }
 
 /** Cliente único del navegador (con persistencia de sesión en localStorage). */

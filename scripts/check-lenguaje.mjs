@@ -22,6 +22,7 @@ const FICHEROS = [
   'js/nuvia-buscador.js',
   'js/nuvia-constructor.js',
   'js/nuvia-datos.js',
+  'js/nuvia-cuenta.js',
 ];
 
 /** Patrones prohibidos, con el porqué al lado. */
@@ -71,6 +72,9 @@ const EXIGIDO = [
   ['cartera.html', ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento', 'base de datos NUVIA']],
   ['js/nuvia-simulador.js', ['supuestos propios de NUVIA']],
   ['js/nuvia-constructor.js', ['Datos de cierre', 'base de datos NUVIA']],
+  /* Paso 28: el registro pide lo mínimo y lo declara; nada de teléfono,
+     patrimonio ni cuestionarios de perfil. */
+  ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');
