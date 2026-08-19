@@ -18,9 +18,14 @@
  *
  * Lenguaje: describe, nunca prescribe. Registrarse es una opción que se
  * explica; no se empuja a nadie a hacerlo ni a marcar casilla alguna.
+ *
+ * Derechos RGPD (paso 34): acceso, rectificación, supresión y portabilidad,
+ * operativos desde el primer usuario y en autoservicio — ver todo, descargar
+ * el JSON, corregir contraseña o correo, y borrar la cuenta con todo lo suyo
+ * (carteras de la nube incluidas) sin intervención de nadie.
  */
 
-import { maestra } from './nuvia-datos.js';
+import { maestra, leeSuscripcion, CLAVE_SUSCRIPCION } from './nuvia-datos.js';
 
 export const NOTA_DATOS_MINIMOS = 'Solo pedimos correo y contraseña. '
   + 'Sin teléfono, sin datos de patrimonio y sin preguntas sobre tu manera de '
@@ -92,6 +97,69 @@ export function leeConsentimientos(almacen, correo) {
       };
   }
   return salida;
+}
+
+/* ── Derechos sobre tus datos (paso 34, RGPD) ──
+ *  Los cuatro derechos operativos desde el primer usuario, en autoservicio:
+ *  acceso (ver todo), portabilidad (descargar en un formato legible por
+ *  máquina), rectificación (contraseña al momento; correo por enlace de
+ *  verificación; carteras y permisos, donde están) y supresión (borrar la
+ *  cuenta y todo lo suyo, sin pedir nada a nadie). */
+
+export const NOTA_DERECHOS = 'Tus derechos sobre estos datos — acceso, '
+  + 'rectificación, supresión y portabilidad— se ejercen aquí mismo, al '
+  + 'momento y sin pedirlo a nadie: ver todo lo que guardamos, descargarlo, '
+  + 'corregirlo o borrarlo del todo.';
+
+/**
+ * Todo lo que el servicio guarda de una cuenta, en un objeto legible por
+ * máquina (portabilidad) y por personas (acceso). Solo hechos: lo que hay,
+ * de dónde sale y cuándo se generó.
+ */
+export function datosParaPortabilidad({ correo, carteras = [], consentimientos = {}, suscripcionActiva = false, generado = null } = {}) {
+  return {
+    formato: 'nuvia-datos-personales',
+    version: 1,
+    generado,
+    cuenta: { correo: idDeCuenta(correo) },
+    carteras: (carteras || []).map((c) => ({
+      portfolio_id: c.portfolio_id,
+      nombre: c.name || '',
+      base_currency: c.base_currency || 'EUR',
+      actualizada: c.updated_at || null,
+      posiciones: (c.positions || []).map((p) => ({
+        asset_id: p.asset_id,
+        weight_percent: p.weight_percent,
+      })),
+    })),
+    consentimientos: CONSENTIMIENTOS.map((def) => ({
+      clave: def.clave,
+      nombre: def.nombre,
+      necesario: Boolean(def.necesario),
+      activo: Boolean(consentimientos[def.clave]?.activo),
+      fecha: consentimientos[def.clave]?.fecha || null,
+    })),
+    suscripcion: { activa: Boolean(suscripcionActiva) },
+  };
+}
+
+/** Supresión del rastro local de una cuenta: sus consentimientos y su
+ *  marcador de suscripción. Lo de otras cuentas del mismo navegador queda. */
+export function borraRastroLocal(almacen, correo) {
+  if (!almacen) return;
+  const id = idDeCuenta(correo);
+  const todo = leeTodoConsentimiento(almacen);
+  if (id in todo) {
+    delete todo[id];
+    try { almacen.setItem(CLAVE_CONSENTIMIENTOS, JSON.stringify(todo)); } catch { /* sin persistencia */ }
+  }
+  try {
+    const susc = JSON.parse(almacen.getItem(CLAVE_SUSCRIPCION) || 'null');
+    if (susc && typeof susc === 'object' && id in susc) {
+      delete susc[id];
+      almacen.setItem(CLAVE_SUSCRIPCION, JSON.stringify(susc));
+    }
+  } catch { /* marcador ilegible: nada que borrar */ }
 }
 
 /** Enciende o apaga un consentimiento opcional, con la fecha de la decisión.
@@ -198,8 +266,7 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
     permisos.append(el('p', { class: 'nv-cuenta__nota' },
       'Lo opcional se decide aquí, casilla a casilla, y se puede cambiar '
       + 'cuando quieras: se aplica al momento y cada decisión queda apuntada '
-      + 'con su fecha. De momento se guarda en este navegador; pasará a tu '
-      + 'cuenta en la nube con la persistencia de los próximos pasos.'));
+      + 'con su fecha. Se guarda en este navegador, bajo tu correo.'));
     const estado29 = leeConsentimientos(memoria, sesion.correo);
     for (const definicion of CONSENTIMIENTOS) {
       permisos.append(filaConsentimiento(definicion, estado29[definicion.clave], sesion.correo).fila);
@@ -214,7 +281,132 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
       void s;
     });
 
-    cuerpo.append(quien, nota, permisos, salir);
+    cuerpo.append(quien, nota, permisos, seccionDerechos(sesion), salir);
+  }
+
+  /* ── «Tus datos y tus derechos» (paso 34, RGPD) ── */
+
+  async function recogeTodo(sesion) {
+    const carteras = await datos.listaCarterasNube();
+    return datosParaPortabilidad({
+      correo: sesion.correo,
+      carteras,
+      consentimientos: leeConsentimientos(memoria, sesion.correo),
+      suscripcionActiva: leeSuscripcion(memoria, sesion.correo),
+      generado: new Date().toISOString(),
+    });
+  }
+
+  function pintaAcceso(panel, d) {
+    panel.textContent = '';
+    const lista = el('ul', { class: 'nv-cuenta__acceso-lista' });
+    lista.append(el('li', {}, `Correo de la cuenta: ${d.cuenta.correo}.`));
+    if (d.carteras.length) {
+      for (const c of d.carteras) {
+        lista.append(el('li', {},
+          `Cartera «${c.nombre || 'sin nombre'}»: ${c.posiciones.length} posición(es) — `
+          + c.posiciones.map((p) => `${p.asset_id} ${Number(p.weight_percent).toFixed(1)} %`).join(', ') + '.'));
+      }
+    } else {
+      lista.append(el('li', {}, 'Carteras guardadas en tu cuenta: ninguna.'));
+    }
+    for (const c of d.consentimientos) {
+      lista.append(el('li', {},
+        `Permiso «${c.nombre}»: ${c.necesario ? 'necesario para el servicio' : (c.activo ? 'encendido' : 'apagado')}`
+        + `${c.fecha ? `, decidido el ${c.fecha.slice(0, 10)}` : ''}.`));
+    }
+    lista.append(el('li', {}, `Suscripción: ${d.suscripcion.activa ? 'activa' : 'no hay'}.`));
+    lista.append(el('li', {}, 'Nada más: ni teléfono, ni patrimonio, ni perfil.'));
+    panel.append(lista);
+  }
+
+  function seccionDerechos(sesion) {
+    const bloque = el('div', { class: 'nv-cuenta__derechos' });
+    bloque.append(el('h3', {}, 'Tus datos y tus derechos'));
+    bloque.append(el('p', { class: 'nv-cuenta__nota' }, NOTA_DERECHOS));
+
+    /* Acceso y portabilidad. */
+    const filaVer = el('div', { class: 'nv-cuenta__derechos-fila' });
+    const verBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Ver todo lo que guardamos');
+    const bajarBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Descargar mis datos (JSON)');
+    const panel = el('div', { class: 'nv-cuenta__acceso', hidden: '' });
+    verBtn.addEventListener('click', () => protege(verBtn, async () => {
+      pintaAcceso(panel, await recogeTodo(sesion));
+      panel.hidden = false;
+      avisa('');
+    }));
+    bajarBtn.addEventListener('click', () => protege(bajarBtn, async () => {
+      const d = await recogeTodo(sesion);
+      const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+      const enlace = el('a', { href: URL.createObjectURL(blob), download: `nuvia-datos-${d.cuenta.correo}.json` });
+      document.body.append(enlace);
+      enlace.click();
+      enlace.remove();
+      setTimeout(() => URL.revokeObjectURL(enlace.href), 60_000);
+      avisa('Descarga preparada: un fichero JSON con todo lo que guardamos.');
+    }));
+    filaVer.append(verBtn, bajarBtn);
+    bloque.append(filaVer, panel);
+
+    /* Rectificación: contraseña al momento; correo por enlace verificado. */
+    const rect = el('div', { class: 'nv-cuenta__rectifica' });
+    const campoClave = el('div', { class: 'nv-field nv-cuenta__campo' });
+    campoClave.append(el('label', { for: 'derechos-contrasena' }, 'Contraseña nueva (mínimo 6 caracteres)'));
+    const cajaClave = el('div', { class: 'nv-field__box' });
+    const claveNueva = el('input', { id: 'derechos-contrasena', type: 'password', autocomplete: 'new-password' });
+    cajaClave.append(claveNueva);
+    campoClave.append(cajaClave);
+    const cambiaClaveBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Cambiar la contraseña');
+    cambiaClaveBtn.addEventListener('click', () => protege(cambiaClaveBtn, async () => {
+      await datos.cambiaContrasena(claveNueva.value);
+      claveNueva.value = '';
+      avisa('Contraseña cambiada al momento.');
+    }));
+
+    const campoCorreo = el('div', { class: 'nv-field nv-cuenta__campo' });
+    campoCorreo.append(el('label', { for: 'derechos-correo' }, 'Correo nuevo'));
+    const cajaCorreo = el('div', { class: 'nv-field__box' });
+    const correoNuevo = el('input', { id: 'derechos-correo', type: 'email', autocomplete: 'email', spellcheck: 'false' });
+    cajaCorreo.append(correoNuevo);
+    campoCorreo.append(cajaCorreo);
+    const cambiaCorreoBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Cambiar el correo');
+    cambiaCorreoBtn.addEventListener('click', () => protege(cambiaCorreoBtn, async () => {
+      await datos.pideCambioCorreo(correoNuevo.value);
+      avisa('Enviado un enlace de verificación al correo nuevo: el cambio se completa al confirmarlo, sin pedir nada a nadie.');
+    }));
+
+    rect.append(campoClave, cambiaClaveBtn, campoCorreo, cambiaCorreoBtn);
+    rect.append(el('p', { class: 'nv-cuenta__nota' },
+      'Las carteras se rectifican abriéndolas y volviéndolas a guardar; los permisos, con sus casillas de arriba.'));
+    bloque.append(rect);
+
+    /* Supresión: dos pasos, en la misma página, sin diálogos del navegador. */
+    const borrarBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cuenta__borrar' },
+      'Borrar mi cuenta y todos mis datos');
+    const confirmacion = el('div', { class: 'nv-cuenta__confirma-borrado', hidden: '' });
+    confirmacion.append(el('p', {},
+      'Se borrarán la cuenta, todas las carteras guardadas en ella y el rastro '
+      + 'local de este navegador (permisos y marcador de suscripción). No hay '
+      + 'papelera: borrado es borrado.'));
+    const definitivoBtn = el('button', { type: 'button', class: 'nv-btn nv-cuenta__borrar-definitivo' }, 'Sí, borrar definitivamente');
+    const conservarBtn = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'No, conservar la cuenta');
+    confirmacion.append(definitivoBtn, conservarBtn);
+    borrarBtn.addEventListener('click', () => { confirmacion.hidden = false; });
+    conservarBtn.addEventListener('click', () => { confirmacion.hidden = true; avisa(''); });
+    definitivoBtn.addEventListener('click', () => protege(definitivoBtn, async () => {
+      const carteras = await datos.listaCarterasNube();
+      for (const c of carteras) {
+        await datos.borraCarteraNube(c.portfolio_id);
+      }
+      borraRastroLocal(memoria, sesion.correo);
+      await datos.borraCuenta();
+      pintaDesconectado();
+      avisa(`Hecho: cuenta borrada con sus ${carteras.length} cartera(s) y el rastro local. Nada queda.`);
+      avisaSesionCambiada();
+    }));
+    bloque.append(borrarBtn, confirmacion);
+
+    return bloque;
   }
 
   function pintaDesconectado() {

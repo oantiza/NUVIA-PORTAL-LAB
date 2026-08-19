@@ -593,6 +593,18 @@
 /* Nota de qué añade el suscriptor, al pie del análisis del registrado */
 .nv-analisis__suscriptor { font-size: 12px; color: var(--nv-text-muted); }
 
+/* «Tus datos y tus derechos» (paso 34) */
+.nv-cuenta__derechos { display: grid; gap: var(--nv-space-2); min-inline-size: 0; }
+.nv-cuenta__derechos h3 { margin: 0; }
+.nv-cuenta__derechos-fila { display: flex; flex-wrap: wrap; gap: var(--nv-space-2); }
+.nv-cuenta__acceso[hidden] { display: none; }
+.nv-cuenta__acceso-lista { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 4px; font-size: 13px; }
+.nv-cuenta__rectifica { display: grid; gap: var(--nv-space-2); }
+.nv-cuenta__confirma-borrado { display: grid; gap: var(--nv-space-2); }
+.nv-cuenta__confirma-borrado[hidden] { display: none; }
+.nv-cuenta__confirma-borrado p { margin: 0; }
+.nv-cuenta__borrar-definitivo { justify-self: start; }
+
 /* Oferta de migración de lo local a la cuenta (paso 31) */
 .nv-cons__migracion { display: grid; gap: var(--nv-space-2); min-width: 0; }
 .nv-cons__migracion[hidden] { display: none; }

@@ -129,6 +129,41 @@ console.log('\n— Carteras en la nube (paso 30) —');
     ficha.identity.display_name === 'Alfa' && ficha.instrument_type === 'STOCK' && ficha.economic_asset_class === 'EQUITY');
 }
 
+console.log('\n— Derechos sobre la cuenta (paso 34) —');
+{
+  const registro = [];
+  const fnDerechos = async (url, opciones) => {
+    const respuesta = (json, ok = true, status = 200) => ({ ok, status, json: async () => json });
+    const cuerpo = JSON.parse(opciones.body);
+    if (url.includes('accounts:signInWithPassword')) return respuesta({ idToken: 't1', refreshToken: 'r', email: cuerpo.email, expiresIn: '3600' });
+    if (url.includes('accounts:update')) { registro.push({ accion: 'update', cuerpo }); return respuesta({ idToken: 't2', refreshToken: 'r2', email: 'ana@ejemplo.com', expiresIn: '3600' }); }
+    if (url.includes('accounts:sendOobCode')) { registro.push({ accion: 'oob', cuerpo }); return respuesta({ email: cuerpo.newEmail }); }
+    if (url.includes('accounts:delete')) { registro.push({ accion: 'delete', cuerpo }); return respuesta({}); }
+    return respuesta({ result: {} });
+  };
+  const mapa = new Map();
+  const almacen = { getItem: (k) => (mapa.has(k) ? mapa.get(k) : null), setItem: (k, v) => mapa.set(k, String(v)), removeItem: (k) => mapa.delete(k) };
+  const cliente = creaClienteMaestra({ fetchFn: fnDerechos, almacen, ahora: () => 1 });
+  await cliente.iniciaSesion('ana@ejemplo.com', 'secreta9');
+
+  await cliente.cambiaContrasena('nueva123');
+  comprueba('cambiaContrasena pega en accounts:update con la contraseña y el idToken',
+    registro.at(-1).accion === 'update' && registro.at(-1).cuerpo.password === 'nueva123' && registro.at(-1).cuerpo.idToken === 't1');
+  comprueba('…y la sesión guarda los tokens nuevos sin perder tipo ni correo',
+    cliente.sesionActual().tipo === 'registrada' && JSON.parse(mapa.get('nuvia.maestra-sesion.v1')).idToken === 't2');
+
+  await cliente.pideCambioCorreo('  Ana.Nueva@Ejemplo.com ');
+  comprueba('pideCambioCorreo pide el enlace VERIFY_AND_CHANGE_EMAIL con el correo nuevo',
+    registro.at(-1).accion === 'oob' && registro.at(-1).cuerpo.requestType === 'VERIFY_AND_CHANGE_EMAIL'
+    && registro.at(-1).cuerpo.newEmail === 'Ana.Nueva@Ejemplo.com' && registro.at(-1).cuerpo.idToken === 't2');
+
+  const borrado = await cliente.borraCuenta();
+  comprueba('borraCuenta pega en accounts:delete con el idToken y olvida la sesión local',
+    registro.at(-1).accion === 'delete' && registro.at(-1).cuerpo.idToken === 't2'
+    && borrado.borrada === true && cliente.sesionActual().tipo === 'anonima'
+    && !mapa.has('nuvia.maestra-sesion.v1'));
+}
+
 console.log('\n— Etiquetas de tipo —');
 comprueba('STOCK → Acción', etiquetaTipo('STOCK') === 'Acción');
 comprueba('FUND → Fondo', etiquetaTipo('FUND') === 'Fondo');

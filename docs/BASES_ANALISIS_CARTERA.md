@@ -415,6 +415,16 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Derechos RGPD operativos (paso 34, 19-08-2026).** «Tus datos y tus
+derechos» en el bloque de cuenta: acceso (ver todo lo guardado, con la
+declaración de que no hay nada más), portabilidad (JSON versionado, legible
+por máquina, descargado en local), rectificación (contraseña al momento;
+correo por enlace de verificación —Firebase no permite el cambio directo—;
+carteras y permisos donde están) y supresión (dos pasos: carteras de la nube
+una a una, rastro local de esa cuenta, cuenta del proveedor y sesión — «no
+hay papelera»). Todo autoservicio desde el primer usuario, sin intervención
+de nadie; `check-lenguaje` exige los cuatro derechos nombrados.
+
 **Análisis del nivel suscriptor (paso 33, 19-08-2026).** El registrado suma
 la frontera estática con su combinación marcada (nube y frontera de
 `frontera()` sobre los activos reales; «describe ese historial, no el

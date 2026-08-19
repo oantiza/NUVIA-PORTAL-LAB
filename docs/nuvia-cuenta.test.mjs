@@ -11,8 +11,9 @@
  */
 import { creaClienteMaestra } from '../js/nuvia-datos.js';
 import {
-  NOTA_DATOS_MINIMOS, NOTA_QUE_APORTA,
+  NOTA_DATOS_MINIMOS, NOTA_QUE_APORTA, NOTA_DERECHOS,
   CONSENTIMIENTOS, leeConsentimientos, cambiaConsentimiento,
+  datosParaPortabilidad, borraRastroLocal,
 } from '../js/nuvia-cuenta.js';
 
 let fallos = 0;
@@ -213,8 +214,60 @@ console.log('\n— Consentimiento granular: lo opcional es opt-in (paso 29) —'
     !CONSENTIMIENTOS.some((c) => /mejor|recomendad|óptim|conviene|deberías|ideal para/i.test(c.explica + c.nombre)));
 }
 
+console.log('\n— Derechos RGPD en autoservicio (paso 34) —');
+{
+  const mapa = new Map();
+  const almacen = {
+    getItem: (k) => (mapa.has(k) ? mapa.get(k) : null),
+    setItem: (k, v) => mapa.set(k, String(v)),
+    removeItem: (k) => mapa.delete(k),
+  };
+  cambiaConsentimiento(almacen, 'Ana@Ejemplo.com', 'comunicaciones', true, () => '2026-08-19T10:00:00Z');
+  almacen.setItem('nuvia.suscripcion.v1', JSON.stringify({
+    'ana@ejemplo.com': { activa: true }, 'otra@ejemplo.com': { activa: true },
+  }));
+
+  const carteras = [
+    { portfolio_id: 'p1', name: 'Mi cartera', base_currency: 'EUR', updated_at: '2026-08-19T09:00:00Z',
+      positions: [{ asset_id: 'ES0162332037', weight_percent: 60, extra_interno: 'fuera' }, { asset_id: 'LU1372006947', weight_percent: 40 }] },
+  ];
+  const d = datosParaPortabilidad({
+    correo: ' Ana@Ejemplo.com ',
+    carteras,
+    consentimientos: leeConsentimientos(almacen, 'ana@ejemplo.com'),
+    suscripcionActiva: true,
+    generado: '2026-08-19T12:00:00Z',
+  });
+  comprueba('El paquete de portabilidad es legible por máquina, con formato y versión',
+    d.formato === 'nuvia-datos-personales' && d.version === 1 && d.generado === '2026-08-19T12:00:00Z');
+  comprueba('Lleva el correo normalizado y las carteras solo con ids y pesos',
+    d.cuenta.correo === 'ana@ejemplo.com' && d.carteras[0].posiciones.length === 2
+    && Object.keys(d.carteras[0].posiciones[0]).sort().join(',') === 'asset_id,weight_percent');
+  comprueba('Los consentimientos van con su estado y su fecha',
+    d.consentimientos.find((c) => c.clave === 'comunicaciones')?.activo === true
+    && d.consentimientos.find((c) => c.clave === 'comunicaciones')?.fecha === '2026-08-19T10:00:00Z'
+    && d.consentimientos.find((c) => c.clave === 'comportamiento')?.activo === false);
+  comprueba('La suscripción viaja como hecho, activa o no', d.suscripcion.activa === true
+    && datosParaPortabilidad({ correo: 'x@y.z' }).suscripcion.activa === false);
+
+  borraRastroLocal(almacen, 'ANA@ejemplo.com');
+  comprueba('La supresión local borra los consentimientos y la suscripción de ESA cuenta',
+    leeConsentimientos(almacen, 'ana@ejemplo.com').comunicaciones.activo === false
+    && !JSON.parse(almacen.getItem('nuvia.suscripcion.v1'))['ana@ejemplo.com']);
+  comprueba('…y no toca lo de otras cuentas del mismo navegador',
+    JSON.parse(almacen.getItem('nuvia.suscripcion.v1'))['otra@ejemplo.com']?.activa === true);
+  comprueba('Sin almacén no rompe', (borraRastroLocal(null, 'a@b.c'), true));
+
+  comprueba('La nota nombra los cuatro derechos y el autoservicio',
+    NOTA_DERECHOS.includes('acceso') && NOTA_DERECHOS.includes('rectificación')
+    && NOTA_DERECHOS.includes('supresión') && NOTA_DERECHOS.includes('portabilidad')
+    && NOTA_DERECHOS.includes('sin pedirlo a nadie'));
+  comprueba('La nota describe sin aconsejar',
+    !/mejor|recomendad|óptim|conviene|deberías|ideal para/i.test(NOTA_DERECHOS));
+}
+
 if (fallos) {
   console.error(`\n${fallos} comprobación(es) en rojo.`);
   process.exit(1);
 }
-console.log('\nTodo en verde: registro con datos mínimos (paso 28) y consentimiento granular (paso 29).');
+console.log('\nTodo en verde: registro (28), consentimiento (29) y derechos RGPD (34).');

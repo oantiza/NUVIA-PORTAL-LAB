@@ -77,7 +77,9 @@ const EXIGIDO = [
      patrimonio ni cuestionarios de perfil. */
   /* Paso 29: lo opcional es opt-in de verdad; se declara que apagado no
      registra nada. */
-  ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio', 'no se registrará nunca']],
+  /* Paso 34: los cuatro derechos RGPD, nombrados y operativos. */
+  ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio', 'no se registrará nunca',
+    'rectificación, supresión y portabilidad']],
   /* Paso 32: el análisis ampliado declara su fuente y nunca inventa.
      Paso 33: la proyección se declara simulación, jamás previsión. */
   ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa', 'no es una previsión']],

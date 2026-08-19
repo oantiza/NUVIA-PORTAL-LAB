@@ -185,6 +185,10 @@ export function creaClienteMaestra({
       texto = 'Ese correo no parece una dirección válida.';
     } else if (codigo.startsWith('TOO_MANY_ATTEMPTS')) {
       texto = 'Demasiados intentos seguidos. Espera unos minutos antes de repetirlo.';
+    } else if (codigo.startsWith('CREDENTIAL_TOO_OLD_LOGIN_AGAIN')) {
+      texto = 'Por seguridad, esta operación pide una sesión reciente: cierra sesión, vuelve a entrar y repítela.';
+    } else if (codigo.startsWith('OPERATION_NOT_ALLOWED')) {
+      texto = 'El proveedor de cuentas no permite esa operación tal cual; si era un cambio de correo, llega por el enlace de verificación.';
     } else {
       texto = `No se ha podido completar la operación (${codigo || `error ${status}`}).`;
     }
@@ -262,6 +266,45 @@ export function creaClienteMaestra({
     return { enviado: true };
   }
 
+  /* ── Derechos sobre la cuenta (paso 34, RGPD) ── */
+
+  /** Rectificación inmediata de la contraseña de la sesión iniciada. */
+  async function cambiaContrasena(nueva) {
+    const s = await sesion();
+    const { ok, status, json } = await pideJson(urlCuentas('update'), {
+      idToken: s.idToken,
+      password: String(nueva || ''),
+      returnSecureToken: true,
+    });
+    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
+    return guardaSesionRegistrada(json);
+  }
+
+  /** Rectificación del correo: Firebase exige verificar el correo nuevo, así
+   *  que se pide el enlace de verificación (VERIFY_AND_CHANGE_EMAIL) y el
+   *  cambio se completa cuando el titular lo confirma. Autoservicio íntegro. */
+  async function pideCambioCorreo(nuevoCorreo) {
+    const s = await sesion();
+    const { ok, status, json } = await pideJson(urlCuentas('sendOobCode'), {
+      requestType: 'VERIFY_AND_CHANGE_EMAIL',
+      idToken: s.idToken,
+      newEmail: String(nuevoCorreo || '').trim(),
+    });
+    if (!ok) throw errorDeCuenta(json, status);
+    return { enviado: true };
+  }
+
+  /** Supresión de la cuenta en el proveedor. Las carteras se borran antes,
+   *  una a una, desde la capa de arriba; aquí solo cae la cuenta y se olvida
+   *  la sesión local. */
+  async function borraCuenta() {
+    const s = await sesion();
+    const { ok, status, json } = await pideJson(urlCuentas('delete'), { idToken: s.idToken });
+    if (!ok) throw errorDeCuenta(json, status);
+    cierraSesion();
+    return { borrada: true };
+  }
+
   /* ── Carteras en la nube (paso 30) ──
    *  Las funciones callable son app-owned y aisladas por UID: cada cuenta ve
    *  solo las suyas. Se guarda lo mínimo —qué activos y con qué peso—; el
@@ -299,6 +342,7 @@ export function creaClienteMaestra({
   return {
     llama, buscaActivos, sesion,
     sesionActual, nivelSesion, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
+    cambiaContrasena, pideCambioCorreo, borraCuenta,
     guardaCarteraNube, listaCarterasNube, leeCarteraNube, borraCarteraNube, detalleActivo,
   };
 }

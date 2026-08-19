@@ -867,6 +867,39 @@ primer usuario. No «cuando haya volumen».
 **Verificación.** Crear una cuenta de prueba, usarla, y ejercer los cuatro
 derechos. Si alguno requiere intervención manual por correo, no está operativo.
 
+> **Hecho y verificado (19-08-2026).** Sección **«Tus datos y tus derechos»**
+> dentro de «Tu cuenta», con los cuatro derechos en autoservicio:
+> **Acceso** — «Ver todo lo que guardamos»: correo, carteras de la nube con
+> sus posiciones (una llamada: `list_portfolios` devuelve los documentos
+> completos), permisos con estado y fecha, suscripción, y la declaración de
+> que no hay nada más (ni teléfono, ni patrimonio, ni perfil).
+> **Portabilidad** — «Descargar mis datos (JSON)»: `datosParaPortabilidad`
+> (pura) empaqueta todo en un JSON versionado y legible por máquina; se
+> descarga como fichero, sin pasar por ningún servidor propio.
+> **Rectificación** — la contraseña cambia **al momento** (`accounts:update`
+> con idToken, probado contra el backend real); el correo pide su enlace
+> `VERIFY_AND_CHANGE_EMAIL` porque Firebase exige verificar el correo nuevo
+> (probado en real: el update directo responde OPERATION_NOT_ALLOWED) — sigue
+> siendo autoservicio íntegro: lo completa el titular con el enlace, nadie
+> interviene. Carteras y permisos se rectifican donde están, y se dice.
+> **Supresión** — dos pasos en la misma página (sin diálogos del navegador):
+> borra todas las carteras de la nube una a una, el rastro local de ESA
+> cuenta (`borraRastroLocal`: consentimientos y marcador de suscripción, sin
+> tocar otras cuentas del navegador), la cuenta en el proveedor
+> (`accounts:delete`) y la sesión. «No hay papelera: borrado es borrado.»
+> `CREDENTIAL_TOO_OLD_LOGIN_AGAIN` mapeado en llano por si la sesión es
+> vieja. `check-lenguaje` exige que los cuatro derechos estén nombrados.
+>
+> **Verificado en navegador** (20 comprobaciones): cuenta + cartera guardada
+> + permiso encendido → acceso enseña todo; la descarga es un JSON válido
+> con ids+pesos, consentimientos con fecha y suscripción; la contraseña
+> cambia con el idToken vigente; el cambio de correo dispara el oobCode
+> correcto; el borrado deja la nube a cero, el proveedor sin cuenta, el
+> navegador sin rastro y la página en estado visitante. Sin desbordes;
+> suelo de 12 px. Baterías: paquete de portabilidad (normalización, solo
+> ids+pesos, fechas), `borraRastroLocal` selectivo, y los tres métodos de
+> cuenta con fetch falso (update/oob/delete y limpieza de sesión).
+
 ---
 
 # FASE 5 · Suscripción
