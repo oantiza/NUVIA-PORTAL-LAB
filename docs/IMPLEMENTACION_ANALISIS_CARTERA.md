@@ -805,6 +805,11 @@ diversificar, solapamiento.
 > real. Batería pura `docs/nuvia-analisis.test.mjs` (series opuestas → ahorro
 > grande; idénticas → ~0; serie plana → null; adaptador de la forma real).
 > `npm run validate` en verde; sin desbordes 1440/1024/390; suelo de 12 px.
+> **Verificado en producción** con cuenta de prueba (creada y borrada):
+> con dos fondos reales en cartera, los tres grupos se pintan con datos
+> reales — concentración con «desglose real de la base de datos NUVIA» y
+> matriz de solapamiento con su cifra —, y la red confirma el camino:
+> 1 intento de batch (401) y los desgloses fondo a fondo.
 
 ### Paso 33 · Análisis del nivel suscriptor
 
