@@ -126,6 +126,48 @@ export function lecturasDeMetricas(m, { niveles = null, fechas = null } = {}) {
   return { rentabilidad, volatilidad, caida };
 }
 
+/**
+ * Clases de activo de la maestra, con su etiqueta y color del sistema
+ * (paso 23). Lo que no llega clasificado se enseña como «Sin clasificar»,
+ * nunca se adivina.
+ */
+export const CLASES_VISUALES = {
+  EQUITY: { etiqueta: 'Renta variable', color: 'var(--nv-cat-teal)' },
+  FIXED_INCOME: { etiqueta: 'Renta fija', color: 'var(--nv-cat-purple)' },
+  MONEY_MARKET: { etiqueta: 'Monetario', color: 'var(--nv-cat-cyan)' },
+  REAL_ASSET: { etiqueta: 'Activos reales', color: 'var(--nv-cat-amber)' },
+  MIXED: { etiqueta: 'Mixtos', color: 'var(--nv-cat-clay)' },
+  ALTERNATIVE: { etiqueta: 'Alternativos', color: 'var(--nv-cat-slate)' },
+  OTHER: { etiqueta: 'Otros', color: 'var(--nv-cat-slate)' },
+  SIN_CLASIFICAR: { etiqueta: 'Sin clasificar', color: 'var(--nv-cat-slate)' },
+};
+
+export function claseVisual(clase) {
+  return CLASES_VISUALES[String(clase || '').toUpperCase()] || CLASES_VISUALES.SIN_CLASIFICAR;
+}
+
+/**
+ * Reparto por clase de activo: agrega los pesos normalizados por la clase
+ * económica que declara la maestra para cada producto (sin mirar dentro de
+ * los fondos: el look-through es de niveles superiores). Devuelve
+ * [{clase, etiqueta, color, peso}] de mayor a menor, o null sin pesos.
+ */
+export function repartoPorClase(posiciones, pesos) {
+  if (!pesos) return null;
+  const acumulado = new Map();
+  for (const p of posiciones) {
+    const peso = pesos[p.activo.asset_id];
+    if (peso == null) continue;
+    const bruta = String(p.activo.economic_asset_class || '').toUpperCase();
+    const clase = CLASES_VISUALES[bruta] ? bruta : 'SIN_CLASIFICAR';
+    acumulado.set(clase, (acumulado.get(clase) || 0) + peso);
+  }
+  if (!acumulado.size) return null;
+  return [...acumulado.entries()]
+    .map(([clase, peso]) => ({ clase, ...claseVisual(clase), peso }))
+    .sort((a, b) => b.peso - a.peso);
+}
+
 /** Fecha del punto más bajo de la caída máxima, o null si no puede saberse. */
 export function fechaDelMinimo(niveles, fechas) {
   if (!niveles?.length || !fechas || fechas.length !== niveles.length) return null;
@@ -262,6 +304,34 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       resultados.append(el('p', { class: 'nv-cons__nota' }, 'Sube algún peso para ver las métricas.'));
       return;
     }
+    /* ── Reparto por clase de activo: un gráfico, una idea (paso 23) ── */
+    const reparto = repartoPorClase(posiciones, pesos);
+    if (reparto) {
+      resultados.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Reparto por clase de activo'));
+      const barra = el('div', {
+        class: 'nv-sim-barra',
+        role: 'img',
+        'aria-label': `Reparto: ${reparto.map((r) => `${r.etiqueta} ${pct(r.peso, 0)}`).join(', ')}`,
+      });
+      const leyenda = el('ul', { class: 'nv-cons__leyenda' });
+      for (const r of reparto) {
+        const seg = el('span', { class: 'nv-sim-seg' });
+        seg.style.background = r.color;
+        seg.style.width = `${(r.peso * 100).toFixed(2)}%`;
+        seg.title = `${r.etiqueta}: ${pct(r.peso, 0)}`;
+        barra.append(seg);
+        const item = el('li', { class: 'nv-cons__leyenda-item' });
+        const punto = el('span', { class: 'nv-sim-punto', 'aria-hidden': 'true' });
+        punto.style.background = r.color;
+        item.append(punto, el('span', {}, `${r.etiqueta} · ${pct(r.peso, 0)}`));
+        leyenda.append(item);
+      }
+      resultados.append(barra, leyenda);
+      resultados.append(el('p', { class: 'nv-cons__nota-clase' },
+        'Clase declarada de cada producto en la base de datos; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
+      resultados.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Métricas de la combinación'));
+    }
+
     const niveles = serieCartera(series, pesos);
     const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
     if (!m) {

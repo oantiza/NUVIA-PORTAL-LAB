@@ -514,6 +514,17 @@ en lenguaje llano**, no solo el número.
 
 **Hacer.** Un gráfico. Uno solo, y que enseñe una idea (bases, sección 4).
 
+> **Hecho y verificado (19-08-2026).** Una barra apilada con leyenda en el
+> constructor: `repartoPorClase()` agrega los pesos normalizados por la
+> clase económica que declara la maestra (`economic_asset_class`), con los
+> colores de categoría del sistema (`--nv-cat-*`) y la leyenda con etiqueta
+> y porcentaje al lado — la información no depende solo del color. La idea
+> que enseña: en qué clases está el dinero de esta combinación. Honestidad
+> del dato: una clase desconocida sale como «Sin clasificar» (no se
+> adivina), un activo sin historial no entra, y una nota fija aclara que los
+> fondos mixtos cuentan como «Mixtos», sin mirar dentro (el look-through es
+> de niveles superiores). Batería propia y verificación en navegador real.
+
 ### Paso 24 · Guardado local
 
 **Hacer.** Hasta 3–4 carteras en el navegador. **Avisar de que se pierden** al

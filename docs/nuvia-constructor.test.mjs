@@ -6,7 +6,7 @@
 import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
-  lecturasDeMetricas, fechaDelMinimo,
+  lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -114,6 +114,31 @@ console.log('\n— Lecturas en lenguaje llano (paso 22) —');
     [vacio.rentabilidad, vacio.volatilidad, vacio.caida].every((t) => t.includes('No hay datos suficientes')));
   comprueba('Las lecturas describen sin aconsejar (filtro de lenguaje de bases §2)',
     ![l.rentabilidad, l.volatilidad, l.caida].some((t) => /mejor|recomendad|óptim|conviene|deberías|ideal/i.test(t)));
+}
+
+console.log('\n— Reparto por clase (paso 23) —');
+{
+  const conClase = (id, clase, bruto) => ({ activo: { asset_id: id, economic_asset_class: clase }, bruto });
+  const posiciones = [
+    conClase('A', 'EQUITY', 40),
+    conClase('B', 'EQUITY', 20),
+    conClase('C', 'FIXED_INCOME', 30),
+    conClase('D', 'raro', 10),
+  ];
+  const pesos = { A: 0.4, B: 0.2, C: 0.3, D: 0.1 };
+  const r = repartoPorClase(posiciones, pesos);
+  comprueba('Dos acciones del 40 y el 20 → Renta variable 60 %', r[0].etiqueta === 'Renta variable'
+    && Math.abs(r[0].peso - 0.6) < 1e-12);
+  comprueba('Ordenado de mayor a menor', r[0].peso >= r[1].peso && r[1].peso >= r[2].peso);
+  comprueba('Una clase desconocida se enseña como «Sin clasificar», no se adivina',
+    r.some((x) => x.etiqueta === 'Sin clasificar' && Math.abs(x.peso - 0.1) < 1e-12));
+  comprueba('Los pesos del reparto suman 1', Math.abs(r.reduce((s, x) => s + x.peso, 0) - 1) < 1e-12);
+  const soloConSerie = repartoPorClase(posiciones, { A: 0.5, C: 0.5 });
+  comprueba('Un activo fuera del cálculo no entra en el reparto', soloConSerie.length === 2
+    && soloConSerie.every((x) => ['Renta variable', 'Renta fija'].includes(x.etiqueta)));
+  comprueba('Sin pesos → null, nunca un gráfico vacío inventado', repartoPorClase(posiciones, null) === null);
+  comprueba('claseVisual da color del sistema para cada clase', claseVisual('EQUITY').color.startsWith('var(--nv-cat-')
+    && claseVisual('lo-que-sea').etiqueta === 'Sin clasificar');
 }
 
 console.log('\n— Fechas —');
