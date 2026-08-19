@@ -11,6 +11,12 @@
     if (['portfolio', 'technical', 'fundamental'].includes(requestedSuiteTab)) {
       document.body.classList.add(`nuvia-web2-view-${requestedSuiteTab}`);
     }
+    /* Las tres guías fiscales se sirven dentro de guia-impuestos.html, que ya
+       pinta cabecera, miga de pan, título y territorio. Sin esta marca, el
+       núcleo repetía todo eso dentro del iframe. */
+    if (params.get('topic') === 'mis-impuestos') {
+      document.body.classList.add('nuvia-web2-view-impuestos');
+    }
 
     const style = document.createElement('style');
     style.id = 'nuvia-web2-embedded-styles';
@@ -1291,6 +1297,117 @@
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
       }
+
+      /* ══ VISTA DE IMPUESTOS EMBEBIDA ══════════════════════════════════════
+         La cáscara (guia-impuestos.html) ya da cabecera de sitio, miga de pan,
+         título, entradilla y territorio. Lo que sigue retira del núcleo todo lo
+         que era una segunda versión de eso mismo, y alinea lo que queda con el
+         sistema NUVIA. Todo va bajo @media screen: al imprimir, la guía
+         conserva su portada, que ahí sí es la única.
+
+         Los valores son los de estilos/nuvia-tokens.css. Se repiten aquí porque
+         el documento del núcleo no carga esa hoja; el día que las guías dejen de
+         ir en iframe, este bloque desaparece con él.
+         ═══════════════════════════════════════════════════════════════════ */
+      body.nuvia-web2-view-impuestos {
+        --nv-text-link: #4a5d23;
+        --nv-green-600: #5f7a2c;
+        --nv-green-300: #b9cc8b;
+        --nv-text-muted: #5b6472;
+        --nv-label: 12px;
+      }
+
+      @media screen {
+        /* Tres «volver» competían en 500 px: el de la cáscara, este y el del
+           héroe interno. Se queda solo el de la miga de pan. */
+        body.nuvia-web2-view-impuestos main#contenido-principal > button {
+          display: none !important;
+        }
+
+        /* Portada duplicada: mismo antetítulo y mismo <h1> que arriba, además
+           de un segundo <h1> en el documento compuesto. */
+        body.nuvia-web2-view-impuestos .tax-page-hero {
+          display: none !important;
+        }
+
+        /* La tarjeta del núcleo quedaba dentro de la tarjeta de .gi-frame: dos
+           marcos redondeados concéntricos. Se deja solo el de fuera. */
+        body.nuvia-web2-view-impuestos main#contenido-principal {
+          max-width: none !important;
+          padding: 0 !important;
+        }
+        body.nuvia-web2-view-impuestos main#contenido-principal > article {
+          overflow: visible !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+
+        /* El índice lateral pedía una columna de 220 px y se declaraba sticky,
+           pero dentro de un iframe alto no hay nada que se desplace: dejaba
+           miles de píxeles de columna vacía. Pasa a ser una fila superior. */
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > .grid {
+          grid-template-columns: minmax(0, 1fr) !important;
+        }
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > .grid nav.sticky {
+          position: static !important;
+        }
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > .grid nav.sticky ul {
+          display: flex !important;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 8px;
+        }
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > .grid nav.sticky ul li {
+          margin-top: 0 !important;
+        }
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > .grid nav.sticky ul a {
+          padding: 6px 12px;
+        }
+
+        /* «Imprimir guía» venía vestido para el azul de la portada interna:
+           texto blanco sobre blanco al 10 %. En la barra clara de pestañas era
+           invisible, así que se reviste con el trazo del sistema. */
+        body.nuvia-web2-view-impuestos main#contenido-principal > article > nav > button[data-nuvia-reubicado="true"] {
+          border-color: var(--nv-text-link) !important;
+          background: transparent !important;
+          color: var(--nv-text-link) !important;
+        }
+
+        /* Suelo tipográfico de 12 px, el mismo que se fijó para el resto del
+           sitio. En estas tres guías había 109 rótulos a 9 px. */
+        body.nuvia-web2-view-impuestos [class*="text-[9px]"],
+        body.nuvia-web2-view-impuestos [class*="text-[10px]"],
+        body.nuvia-web2-view-impuestos [class*="text-[11px]"] {
+          font-size: var(--nv-label) !important;
+        }
+
+        /* El acento del núcleo es el granate de los informes de cliente. En una
+           interfaz NUVIA el acento es el oliva; el granate se reserva para el
+           papel. Contraste sobre blanco: 6,7:1. */
+        body.nuvia-web2-view-impuestos [class*="text-[#74263C]"] {
+          color: var(--nv-text-link) !important;
+        }
+        body.nuvia-web2-view-impuestos [class*="bg-[#74263C]"] {
+          background-color: var(--nv-green-600) !important;
+        }
+        body.nuvia-web2-view-impuestos [class*="border-[#74263C]"] {
+          border-color: var(--nv-text-link) !important;
+        }
+        body.nuvia-web2-view-impuestos [class*="border-[#C5A46D]"] {
+          border-color: var(--nv-green-300) !important;
+        }
+
+        /* Grises de Tailwind por debajo de AA sobre blanco: slate-500 se queda
+           en 4,46:1 (la nota de actualización y el aviso legal de cada guía) y
+           slate-400 en 2,63:1 (el símbolo € del campo de importe). Pasan al
+           gris de texto de NUVIA, 5,8:1. */
+        body.nuvia-web2-view-impuestos [class*="text-slate-500"],
+        body.nuvia-web2-view-impuestos [class*="text-slate-400"] {
+          color: var(--nv-text-muted) !important;
+        }
+      }
+
     `;
     document.head.appendChild(style);
 
@@ -1846,6 +1963,23 @@
       return portfolioReady;
     };
 
+    /* Al ocultar la portada interna se iba con ella «Imprimir guía», que sí es
+       útil y no está duplicada arriba. Se recoloca al final de la fila de
+       pestañas de las tres guías: una sola barra de acciones en lugar de dos.
+       Es idempotente: runLayoutPass se ejecuta varias veces. */
+    const reubicarImprimirGuia = () => {
+      if (!document.body.classList.contains('nuvia-web2-view-impuestos')) return;
+      const boton = [...document.querySelectorAll('main#contenido-principal button')]
+        .find((b) => (b.textContent || '').trim().startsWith('Imprimir guía'));
+      if (!boton || boton.dataset.nuviaReubicado === 'true') return;
+      const pestanas = document.querySelector('main#contenido-principal > article > nav');
+      if (!pestanas) return;
+      boton.dataset.nuviaReubicado = 'true';
+      boton.style.marginLeft = 'auto';
+      boton.style.flexShrink = '0';
+      pestanas.appendChild(boton);
+    };
+
     let bootLayoutFrame = 0;
     let bootObserver = null;
     const scheduleLayoutPass = () => {
@@ -1855,6 +1989,7 @@
     const runLayoutPass = () => {
       const suiteMode = ['portfolio', 'technical', 'fundamental'].includes(requestedSuiteTab);
       const ready = suiteMode ? tagPortfolioLayout() : Boolean(root?.firstElementChild);
+      reubicarImprimirGuia();
       if (ready) {
         document.querySelectorAll('button[aria-label^="Ver ficha de "]').forEach((button) => button.remove());
         if (!document.body.dataset.nuviaBridgeReady) {

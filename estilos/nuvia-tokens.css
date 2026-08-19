@@ -190,6 +190,13 @@
   --nv-text-on-dark: rgba(255, 255, 255, .92);
   --nv-text-on-dark-soft: rgba(255, 255, 255, .68);
 
+  /* Superficies y filetes sobre fondo oscuro. En nuvia-pages.css conviven 34
+     alfas de blanco distintos para hacer estas tres cosas; estos son los que
+     usan las piezas ya migradas y a los que hay que ir llevando el resto. */
+  --nv-surface-on-dark: rgba(255, 255, 255, .08);
+  --nv-line-on-dark: rgba(255, 255, 255, .14);
+  --nv-line-on-dark-strong: rgba(255, 255, 255, .25);
+
   /* Superficies */
   --nv-surface: var(--nv-white);
   --nv-surface-technical: var(--nv-mist);

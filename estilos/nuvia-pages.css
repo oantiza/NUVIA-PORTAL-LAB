@@ -38,8 +38,8 @@
 
 .fiscal-selector {
   border-radius: var(--nv-radius-md);
-  background: rgba(255, 255, 255, .08);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .14);
+  background: var(--nv-surface-on-dark);
+  box-shadow: 0 0 0 1px var(--nv-line-on-dark);
   backdrop-filter: blur(8px);
   padding: var(--nv-space-5);
 }
@@ -59,7 +59,7 @@
 .fiscal-selector__field select {
   width: 100%;
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, .25);
+  border: 1px solid var(--nv-line-on-dark-strong);
   border-radius: var(--nv-radius-md);
   background: var(--nv-white);
   color: var(--nv-ink);
@@ -78,7 +78,7 @@
   right: var(--nv-space-4);
   color: var(--nv-ink);
   content: "▾";
-  font-size: 11px;
+  font-size: var(--nv-label);
   pointer-events: none;
   transform: translateY(-50%);
 }
@@ -87,14 +87,14 @@
   display: flex;
   align-items: flex-start;
   gap: var(--nv-space-3);
-  border-top: 1px solid rgba(255, 255, 255, .22);
+  border-top: 1px solid var(--nv-line-on-dark-strong);
   margin-top: var(--nv-space-4);
   padding-top: var(--nv-space-4);
 }
 
 .fiscal-selector__mark {
   color: var(--nv-green-300);
-  font-size: 13px;
+  font-size: var(--nv-label);
   line-height: 1.3;
 }
 
@@ -108,9 +108,9 @@
 
 .fiscal-selector__authority {
   display: block;
-  margin-top: 3px;
+  margin-top: var(--nv-space-1);
   color: var(--nv-white);
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-title);
 }
 
@@ -218,7 +218,7 @@
 .fiscal-dato dd {
   margin: 0;
   color: var(--nv-text);
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
   font-variant-numeric: tabular-nums;
   font-weight: var(--nv-weight-title);
   line-height: 1.45;
@@ -304,7 +304,7 @@
   border-radius: var(--nv-radius-md);
   background: var(--nv-green-100);
   color: var(--nv-green-700);
-  font-size: 20px;
+  font-size: var(--nv-title-sm);
 }
 
 .fiscal-paso > .fiscal-paso__icon { margin-bottom: var(--nv-space-5); }
@@ -325,6 +325,8 @@
   line-height: 1.6;
 }
 
+/* El icono se alinea con la primera línea, no con la caja: 2 px es el ajuste
+   óptico, no una medida de ritmo. */
 .fiscal-nota-editorial svg {
   margin-top: 2px;
   color: var(--nv-navy-700);
@@ -4268,27 +4270,28 @@
 /* ══ GUÍA DE IMPUESTOS ═════════════════════════════════════════════════════
    Cáscara alrededor de un iframe con la guía territorial. El <h1> era
    {{ titulo }}: sin JavaScript, un buscador leía el marcador de plantilla.
+
+   Homogeneización (19-08-2026):
+     · .gi-back desaparece. Era el único «volver» suelto de la sección y,
+       además, competía con los dos que el núcleo pinta dentro del iframe.
+       Su sitio lo ocupa .nv-breadcrumb, como en las demás páginas.
+     · El título pasa de 44 px sueltos a --nv-display-md, el escalón de la
+       escala que ya usan los héroes de segundo nivel.
+     · La franja deja de anunciar una conexión y dice de qué Hacienda son las
+       reglas que se leen, con salida para cambiar de territorio.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .gi-hero .nv-container { padding-block: var(--nv-space-16) var(--nv-space-12); }
 
-.gi-back {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--nv-space-2);
-  margin-bottom: 22px;
-  color: var(--nv-text-on-dark-soft);
-  font-size: 12.5px;
-  text-decoration: none;
-}
-
-.gi-back:hover { color: var(--nv-white); }
-
-.gi-title {
+/* La regla iba en `.gi-title` a secas y perdía siempre contra `.nv-hero h1`
+   (0,1,1 frente a 0,1,0): los 44 px declarados nunca llegaron a pintarse, el
+   título salía a 57,6 px como el del hub. Se cualifica con el héroe para que
+   el segundo nivel se lea como segundo nivel. */
+.gi-hero .gi-title {
   max-width: 18em;
-  margin: 0 0 var(--nv-space-3);
+  margin: var(--nv-space-3) 0 0;
   color: var(--nv-white);
-  font-size: 44px;
+  font-size: var(--nv-display-md);
   letter-spacing: -.015em;
   line-height: 1.08;
 }
@@ -4313,15 +4316,17 @@
   text-transform: uppercase;
 }
 
-.gi-strip__note { color: var(--nv-text-muted); font-size: var(--nv-label); }
+/* El mismo rombo que marca el territorio elegido en el héroe de fiscalidad:
+   una sola señal para la misma idea en las dos páginas. */
+.gi-strip__mark { color: var(--nv-green-600); font-size: var(--nv-label); line-height: 1; }
 
-.gi-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: var(--nv-radius-pill);
-  background: var(--nv-green-500);
-  animation: nv-pulse 2.4s ease-out infinite;
+.gi-strip__change {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  text-decoration: none;
 }
+
+.gi-strip__change:hover { color: var(--nv-text-link); text-decoration: underline; }
 
 .gi-frame {
   overflow: hidden;
@@ -4331,7 +4336,10 @@
   box-shadow: var(--nv-shadow-sm);
 }
 
-.gi-frame__iframe { display: block; width: 100%; min-height: 1600px; border: 0; background: transparent; }
+/* Sin min-height fijo: el mínimo de 1.600 px dejaba casi mil píxeles de blanco
+   cuando la guía muestra el estado vacío. El puente ajusta la altura real por
+   postMessage y, si no llegara, el iframe conserva su barra propia. */
+.gi-frame__iframe { display: block; width: 100%; min-height: 60vh; border: 0; background: transparent; }
 
 
 /* ══ TEMAS CLAVE ═══════════════════════════════════════════════════════════
@@ -4415,9 +4423,9 @@
 }
 
 
-.gu-title { margin: 0 0 var(--nv-space-3); color: var(--nv-text); font-size: 32px; letter-spacing: -.015em; line-height: 1.12; }
-.gu-title--sm { font-size: 26px; line-height: 1.2; }
-.gu-title--xs { margin: 0; font-size: 20px; line-height: 1.2; }
+.gu-title { margin: 0 0 var(--nv-space-3); color: var(--nv-text); font-size: var(--nv-title-md); letter-spacing: -.015em; line-height: 1.12; }
+.gu-title--sm { font-size: var(--nv-title-sm); line-height: 1.2; }
+.gu-title--xs { margin: 0; font-size: var(--nv-body-lg); line-height: 1.2; }
 .gu-title--card { margin: 0; color: var(--nv-text); font-size: var(--nv-title-sm); font-weight: var(--nv-weight-title); }
 
 .gu-lead { max-width: 46em; margin: 0; color: var(--nv-text-soft); font-size: var(--nv-body); line-height: 1.65; }
@@ -4482,33 +4490,61 @@
 .gu-on-dark--strong { display: block; color: var(--nv-white); font-size: var(--nv-body); }
 .gu-icon-light { color: var(--nv-green-300); font-size: var(--nv-body-lg); }
 
+/* ── El repertorio .gu-* sobre superficie oscura ──────────────────────────
+   .gu-strong, .gu-text y .gu-muted llevan color de texto sobre claro, pero se
+   usan también dentro de .gu-dark, .gp-dark-card y el panel del héroe. Ahí
+   medían 1,00:1 (tinta azul sobre azul: invisible), 1,91:1 y 2,61:1. Estas
+   reglas les dan su versión sobre oscuro, con los mismos roles que ya usa el
+   resto del sitio. */
+.gu-dark .gu-strong,
+.gp-dark-card .gu-strong,
+.gp-hero__aside .gu-strong { color: var(--nv-white); }
+
+.gu-dark .gu-text,
+.gu-dark .gu-muted,
+.gp-dark-card .gu-text,
+.gp-dark-card .gu-muted,
+.gp-hero__aside .gu-text,
+.gp-hero__aside .gu-muted { color: var(--nv-text-on-dark-soft); }
+
+.gu-dark .gu-kicker,
+.gp-dark-card .gu-kicker,
+.gp-hero__aside .gu-kicker { color: var(--nv-green-300); }
+
+/* Los iconos llevaban el verde escrito a mano en el atributo stroke de cada
+   <svg> (ocho veces entre las dos guías). Ahora heredan del texto: verde
+   oscuro sobre claro, verde claro sobre azul. */
+.gu-icon { color: var(--nv-text-link); }
+
+.gu-dark .gu-icon,
+.gp-dark-card .gu-icon,
+.gp-hero__aside .gu-icon { color: var(--nv-green-300); }
+
 /* Hoja de ruta */
-.gp-hero__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); }
-.gp-hero__copy { padding: var(--nv-space-16) var(--nv-space-12) 56px 0; }
-.gp-hero__aside { border-left: 1px solid rgba(255, 255, 255, .12); background: rgba(0, 0, 0, .18); padding: var(--nv-space-16) 0 56px 44px; }
-.gp-hero__title { max-width: 15em; margin: 0 0 var(--nv-space-3); color: var(--nv-white); font-size: 42px; letter-spacing: -.015em; line-height: 1.1; }
-.gp-hero__sub { margin: var(--nv-space-6) 0 0; color: var(--nv-white); font-size: var(--nv-space-6); font-weight: var(--nv-weight-title); line-height: 1.25; }
-.gp-hero__label { color: rgba(255, 255, 255, .56); font-size: var(--nv-label); font-weight: var(--nv-weight-title); letter-spacing: .23em; text-transform: uppercase; }
-.gp-hero__note { margin: 0; color: rgba(255, 255, 255, .6); font-size: var(--nv-label); }
+.gp-hero__copy { padding: var(--nv-space-16) var(--nv-space-12) var(--nv-space-16) 0; }
+.gp-hero__aside { border-left: 1px solid var(--nv-line-on-dark); background: rgba(0, 0, 0, .18); padding: var(--nv-space-16) 0 var(--nv-space-16) var(--nv-space-10); }
+.gu-hero .gp-hero__title { max-width: 15em; margin: 0 0 var(--nv-space-3); color: var(--nv-white); font-size: var(--nv-display-md); letter-spacing: -.015em; line-height: 1.1; }
+.gp-hero__sub { margin: var(--nv-space-6) 0 0; color: var(--nv-white); font-size: var(--nv-title-sm); font-weight: var(--nv-weight-title); line-height: 1.25; }
+.gp-hero__label { color: var(--nv-text-on-dark-soft); font-size: var(--nv-label); font-weight: var(--nv-weight-title); letter-spacing: .23em; text-transform: uppercase; }
+.gp-hero__note { margin: 0; color: var(--nv-text-on-dark-soft); font-size: var(--nv-label); }
 .gp-badge { display: inline-block; border: 1px solid rgba(201, 220, 160, .45); border-radius: var(--nv-radius-pill); color: var(--nv-green-300); font-size: var(--nv-body-sm); padding: 5px 13px; white-space: nowrap; }
-.gp-progress { height: 6px; overflow: hidden; border-radius: var(--nv-radius-pill); background: rgba(255, 255, 255, .12); margin-top: var(--nv-space-3); }
+.gp-progress { height: 6px; overflow: hidden; border-radius: var(--nv-radius-pill); background: var(--nv-line-on-dark); margin-top: var(--nv-space-3); }
 .gp-progress__fill { height: 100%; border-radius: var(--nv-radius-pill); background: var(--nv-green-500); transition: width .3s ease; }
 .gp-progress__row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--nv-space-4); margin-top: 26px; }
-.gp-figure { margin: 0; color: var(--nv-green-700); font-size: 34px; line-height: 1; }
+.gp-figure { margin: 0; color: var(--nv-green-300); font-size: var(--nv-title-md); line-height: 1; }
 
 @media (max-width: 1120px) {
-  .gp-hero__grid { grid-template-columns: minmax(0, 1fr); }
   .gp-hero__copy { padding: var(--nv-space-12) 0 var(--nv-space-8); }
-  .gp-hero__aside { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .12); padding: var(--nv-space-8) 0; }
+  .gp-hero__aside { border-left: 0; border-top: 1px solid var(--nv-line-on-dark); padding: var(--nv-space-8) 0; }
   .gu-row--3 { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* Últimas piezas de las dos guías */
-.gu-tag-dark { display: inline-block; border: 1px solid rgba(255, 255, 255, .22); border-radius: var(--nv-radius-pill); color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); padding:var(--nv-space-1) var(--nv-space-3); white-space: nowrap; }
-.gu-hero__title { max-width: 16em; margin: 0 0 var(--nv-space-3); color: var(--nv-white); font-size: 42px; letter-spacing: -.015em; line-height: 1.1; }
+.gu-tag-dark { display: inline-block; border: 1px solid var(--nv-line-on-dark-strong); border-radius: var(--nv-radius-pill); color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); padding:var(--nv-space-1) var(--nv-space-3); white-space: nowrap; }
+.gu-hero .gu-hero__title { max-width: 16em; margin: 0 0 var(--nv-space-3); color: var(--nv-white); font-size: var(--nv-display-md); letter-spacing: -.015em; line-height: 1.1; }
 .gu-steps { display: flex; flex-direction: column; margin-top: var(--nv-space-6); }
 .gu-step { display: flex; align-items: flex-start; gap:var(--nv-space-3); padding: var(--nv-space-4) 0; }
-.gu-step + .gu-step { border-top: 1px solid rgba(255, 255, 255, .12); }
+.gu-step + .gu-step { border-top: 1px solid var(--nv-line-on-dark); }
 .gu-bar { border-bottom: 1px solid var(--nv-line); background: var(--nv-surface); }
 .gu-bar__inner { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--nv-space-5); align-items: center; border-left: 2px solid var(--nv-green-500); padding: var(--nv-space-4) var(--nv-space-5); }
 .gu-bar__mark { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: var(--nv-radius-md); background: var(--nv-green-100); color: var(--nv-text-link); }
@@ -4517,16 +4553,16 @@
 .gu-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--nv-space-5); flex-wrap: wrap; margin-bottom: var(--nv-space-5); }
 .gu-pill-outline { border: 1px solid var(--nv-green-300); border-radius: var(--nv-radius-pill); color: var(--nv-text-link); font-size: var(--nv-body-sm); padding:var(--nv-space-1) var(--nv-space-3); }
 .gu-tint { border-radius: var(--nv-radius-md); background: color-mix(in srgb, var(--nv-bg) 55%, var(--nv-surface)); padding: var(--nv-space-5) var(--nv-space-6); }
-.gu-footnote-dark { border-top: 1px solid rgba(255, 255, 255, .12); color: rgba(255, 255, 255, .56); font-size: var(--nv-label); line-height: 1.55; padding-top: var(--nv-space-4); }
+.gu-footnote-dark { border-top: 1px solid var(--nv-line-on-dark); color: var(--nv-text-on-dark-soft); font-size: var(--nv-label); line-height: 1.55; padding-top: var(--nv-space-4); }
 .gp-phase { display: flex; align-items: flex-start; gap: var(--nv-space-3); padding: var(--nv-space-5) var(--nv-space-6); }
 .gp-phase--divided { border-right: 1px solid var(--nv-line); }
 .gp-phase__label { display: block; font-size: var(--nv-label); font-weight: var(--nv-weight-title); letter-spacing: .15em; text-transform: uppercase; }
-.gp-phase__title { display: block; margin-top: 7px; font-size: 19px; line-height: 1.2; }
+.gp-phase__title { display: block; margin-top: var(--nv-space-2); font-size: var(--nv-body-lg); line-height: 1.2; }
 .gp-detail { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--nv-space-5); border-left: 2px solid var(--nv-green-500); padding: var(--nv-space-4) var(--nv-space-5); }
 .gp-summary { display: grid; grid-template-columns: minmax(0, .66fr) minmax(0, 1.34fr); gap: var(--nv-space-6); margin-top: 36px; }
 .gp-dark-card { border-radius: var(--nv-radius-md); background: var(--nv-navy-900); color: var(--nv-text-on-dark); padding: 30px 32px; }
-.gp-dark-card__label { margin: 0; color: rgba(255, 255, 255, .4); font-size: var(--nv-label); letter-spacing: .14em; text-transform: uppercase; }
-.gp-figure--xl { margin: 30px 0 0; color: var(--nv-green-700); font-size: 38px; line-height: 1; }
+.gp-dark-card__label { margin: 0; color: var(--nv-text-on-dark-soft); font-size: var(--nv-label); letter-spacing: .14em; text-transform: uppercase; }
+.gp-figure--xl { margin: var(--nv-space-8) 0 0; color: var(--nv-green-300); font-size: var(--nv-title-lg); line-height: 1; }
 .gu-left { min-width: 0; text-align: left; }
 .gu-block-strong { display: block; color: var(--nv-text); font-size: var(--nv-body); font-weight: var(--nv-weight-title); }
 
@@ -4552,7 +4588,8 @@
 .gu-pane--md { padding:32px var(--nv-space-8); }
 .gu-pane--inset { padding: 26px 0 26px var(--nv-space-6); }
 .gu-col-divided { display: flex; flex-direction: column; border-right: 1px solid var(--nv-line); }
-.gu-link-dark { display: inline-flex; align-items: center; gap: var(--nv-space-2); border-bottom: 1px solid rgba(255, 255, 255, .3); color: var(--nv-text-on-dark); text-decoration: none; }
+.gu-link { display: inline-flex; align-items: center; gap: var(--nv-space-2); border-bottom: 1px solid var(--nv-green-300); color: var(--nv-text-link); text-decoration: none; }
+.gu-link:hover { border-bottom-color: var(--nv-green-600); color: var(--nv-text-link-hover); }
 .gu-rule-y { border-top: 1px solid var(--nv-line); border-bottom: 1px solid var(--nv-line); }
 .gu-rule-top { border-top: 1px solid var(--nv-line); color: var(--nv-text-soft); font-size: var(--nv-body-sm); line-height: 1.6; margin-top: var(--nv-space-6); padding-top: var(--nv-space-5); }
 .gu-row--plain { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: var(--nv-space-3); padding: var(--nv-space-5) 0; }
@@ -4586,7 +4623,7 @@
 
 .gp-task { display: flex; align-items: flex-start; gap: var(--nv-space-3); border: 1px solid var(--nv-line); border-radius: var(--nv-radius-md); background: var(--nv-surface); cursor: pointer; font-family: var(--nv-font-sans); padding: 15px 17px; text-align: left; width: 100%; transition: border-color .25s ease, background .25s ease; }
 .gp-task.is-done { border-color: var(--nv-green-600); background: color-mix(in srgb, var(--nv-green-500) 7%, transparent); }
-.gp-task__text { color: var(--nv-text-soft); font-size: 12.5px; line-height: 1.55; }
+.gp-task__text { color: var(--nv-text-soft); font-size: var(--nv-body-sm); line-height: 1.55; }
 .gp-task__text.is-done { color: var(--nv-text-muted); text-decoration: line-through; }
 
 .gp-box { flex-shrink: 0; display: inline-flex; width: 18px; height: 18px; align-items: center; justify-content: center; border: 1px solid var(--nv-muted); border-radius: 5px; background: var(--nv-surface); color: transparent; font-size: var(--nv-body-sm); line-height: 1; margin-top: 2px; }
@@ -4942,7 +4979,7 @@
 .ac-accordion__body { display: flex; flex-direction: column; gap: var(--nv-space-3); padding: 0 32px var(--nv-space-5); }
 .ac-accordion__body.is-closed { display: none; }
 .ac-tint.is-hidden { display: none; }
-.gp-step__num { font-size: 19px; color: var(--nv-text-muted); }
+.gp-step__num { font-size: var(--nv-body-lg); color: var(--nv-text-muted); }
 .gp-step__num.is-active { color: var(--nv-text-link); }
 
 /* ── Academia: texto sobre heroe oscuro ─────────────────────────────────────

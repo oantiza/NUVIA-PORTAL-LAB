@@ -60,9 +60,22 @@
   </header>
 
   <main id="contenido">
+    <!-- ══ CABECERA ══════════════════════════════════════════════════════════
+         Antes había aquí un enlace suelto «← Volver a Mis impuestos». Era la
+         única página de la sección sin miga de pan, y además competía con los
+         otros dos «volver» que el núcleo pinta dentro del iframe. Ahora usa
+         .nv-breadcrumb, igual que fiscalidad, guia-fiscal y guia-planificacion.
+         ═══════════════════════════════════════════════════════════════════ -->
     <section data-screen-label="Hero guía fiscal" class="nv-hero nv-hero--institutional gi-hero">
       <div class="nv-container">
-        <a href="fiscalidad.html#guias" class="gi-back">← Volver a Mis impuestos</a>
+        <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="temas.html">Temas clave</a></li>
+            <li><a href="fiscalidad.html#guias">Mis impuestos</a></li>
+            <li><span aria-current="page" id="guia-migaja">Calendario fiscal</span></li>
+          </ol>
+        </nav>
         <span class="nv-eyebrow nv-eyebrow--on-dark" id="guia-eyebrow">Planificación fiscal</span>
         <h1 class="gi-title" id="guia-titulo">Calendario fiscal</h1>
         <p class="nv-hero__lead" id="guia-descripcion">Revisa obligaciones, fechas oficiales y decisiones que conviene preparar con tiempo.</p>
@@ -70,12 +83,20 @@
     </section>
 
     <section class="nv-container">
-      <div class="nv-container gi-strip">
-        <span class="gi-strip__label"><span class="gi-dot"></span>Guía NUVIA conectada</span>
-        <span class="gi-strip__note">Contenido adaptado al territorio fiscal seleccionado</span>
+      <!-- La franja decía «Guía NUVIA conectada»: vocabulario de desarrollo.
+           Ahora dice de qué Hacienda son las reglas que se están leyendo, que
+           es la única pregunta que el lector tiene aquí, y ofrece el cambio.
+           El .nv-container anidado se ha quitado: dejaba la franja 48 px más
+           estrecha que el marco de debajo. -->
+      <div class="gi-strip">
+        <span class="gi-strip__label">
+          <span class="gi-strip__mark" aria-hidden="true">◆</span>
+          <span id="guia-territorio">Contenido según tu territorio fiscal</span>
+        </span>
+        <a class="gi-strip__change" href="fiscalidad.html">Cambiar de territorio →</a>
       </div>
       <div class="gi-frame">
-        <iframe id="nuvia-tax-guide" src="{{ iframeSrc }}" title="{{ iframeTitle }}" loading="eager" scrolling="no" class="gi-frame__iframe"></iframe>
+        <iframe id="nuvia-tax-guide" src="{{ iframeSrc }}" title="{{ iframeTitle }}" loading="eager" class="gi-frame__iframe"></iframe>
       </div>
     </section>
   </main>
@@ -125,7 +146,8 @@
   </footer>
 
 </div>
-</div>
+
+</x-dc>
 
 <script>
 /* Igual que en temas.html: la cabecera se publica con la guía por defecto ya
@@ -136,23 +158,51 @@
     savings:     ['Inversión y patrimonio',   'Fiscalidad del ahorro',    'Comprende cuándo tributan rendimientos, ganancias y pérdidas, y qué documentación conviene conservar.'],
     inheritance: ['Planificación patrimonial','Sucesiones y donaciones',  'Ordena los aspectos fiscales, patrimoniales y documentales de una transmisión familiar.']
   };
+  /* El mismo nombre y el mismo orden que el selector de fiscalidad.html. Si
+     alguien guardó un territorio que ya no existe, la franja se queda con su
+     texto neutro en lugar de inventar una Hacienda. */
+  const TERRITORIOS = {
+    'bizkaia': 'Bizkaia', 'araba': 'Araba / Álava', 'gipuzkoa': 'Gipuzkoa',
+    'navarra': 'Navarra', 'common-territory': 'Territorio común'
+  };
+  function territorioGuardado() {
+    try {
+      const p = JSON.parse(window.localStorage.getItem('nuvia-tax-preference') || 'null');
+      return p && p.version === '1' && TERRITORIOS[p.jurisdiction] ? TERRITORIOS[p.jurisdiction] : null;
+    } catch (error) { return null; }
+  }
   function sincronizar() {
+    const poner = (el, texto) => { if (el && el.textContent !== texto) el.textContent = texto; };
+
+    const nombre = territorioGuardado();
+    if (nombre) poner(document.getElementById('guia-territorio'), 'Normativa de ' + nombre + ' · ejercicio 2026');
+
     const g = GUIAS[new URLSearchParams(location.search).get('guia')];
     if (!g) return;
-    const e = document.getElementById('guia-eyebrow');
-    const h = document.getElementById('guia-titulo');
-    const d = document.getElementById('guia-descripcion');
-    if (e) e.textContent = g[0];
-    if (h) h.textContent = g[1];
-    if (d) d.textContent = g[2];
-    document.title = g[1] + ' | NUVIA';
+    poner(document.getElementById('guia-eyebrow'), g[0]);
+    poner(document.getElementById('guia-titulo'), g[1]);
+    poner(document.getElementById('guia-descripcion'), g[2]);
+    poner(document.getElementById('guia-migaja'), g[1]);
+    if (document.title !== g[1] + ' | NUVIA') document.title = g[1] + ' | NUVIA';
   }
+  /* El runtime de componentes vuelve a pintar la plantilla después de montar y
+     devolvía la cabecera a sus valores por defecto: con ?guia=savings y
+     ?guia=inheritance el <h1> se quedaba en «Calendario fiscal» aunque el
+     iframe sí cargara la guía correcta. Se resuelve con el mismo observador
+     que ya usa nuvia-site-unified.js: reaplicar en cuanto el DOM cambie. */
+  let pendiente = false;
+  const programar = () => {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(() => { pendiente = false; sincronizar(); });
+  };
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', sincronizar, { once: true });
-  } else { sincronizar(); }
+    document.addEventListener('DOMContentLoaded', programar, { once: true });
+  } else { programar(); }
+  new MutationObserver(programar).observe(document, { childList: true, subtree: true });
+  window.addEventListener('popstate', programar);
 })();
 </script>
-</x-dc>
 
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
@@ -181,8 +231,10 @@ class Component extends DCLogic {
   componentDidMount() {
     const frame = document.getElementById('nuvia-tax-guide');
     if (!frame) return;
+    /* El suelo era 1.000 px. Con la guía en estado vacío dejaba casi mil
+       píxeles de blanco antes del pie; 360 basta para que no dé un salto. */
     const applyHeight = (height) => {
-      const safeHeight = Math.max(1000, Math.min(Number(height) || 0, 16000));
+      const safeHeight = Math.max(360, Math.min(Number(height) || 0, 16000));
       if (safeHeight) frame.style.height = safeHeight + 'px';
     };
     this._onMsg = (event) => {
@@ -193,7 +245,6 @@ class Component extends DCLogic {
     frame.addEventListener('load', () => {
       try { applyHeight(frame.contentDocument && frame.contentDocument.documentElement && frame.contentDocument.documentElement.scrollHeight); } catch (e) { /* el puente mantiene el ajuste */ }
     });
-    document.title = this.guia().titulo + ' | NUVIA Family Wealth';
   }
   componentWillUnmount() { if (this._onMsg) window.removeEventListener('message', this._onMsg); }
   renderVals() {
