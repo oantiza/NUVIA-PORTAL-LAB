@@ -158,8 +158,10 @@ console.log('\n— Los textos del bloque dicen lo mínimo y lo dicen claro —')
   comprueba('Declara los datos mínimos: correo y contraseña, nada más',
     NOTA_DATOS_MINIMOS.includes('correo y contraseña')
     && NOTA_DATOS_MINIMOS.includes('Sin teléfono, sin datos de patrimonio'));
-  comprueba('Es honesto sobre el presente: iniciar sesión aún no cambia la página',
-    NOTA_QUE_APORTA.includes('no cambia lo que ves'));
+  comprueba('Es honesto sobre el presente: dice lo que la sesión aporta hoy (pasos 30–33)',
+    NOTA_QUE_APORTA.includes('se guardan en tu cuenta')
+    && NOTA_QUE_APORTA.includes('análisis ampliado')
+    && NOTA_QUE_APORTA.includes('frontera'));
   comprueba('Describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
     !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_DATOS_MINIMOS + NOTA_QUE_APORTA));
 }

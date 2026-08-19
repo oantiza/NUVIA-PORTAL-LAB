@@ -27,10 +27,11 @@ export const NOTA_DATOS_MINIMOS = 'Solo pedimos correo y contraseña. '
   + 'invertir: esta página describe métricas y no necesita saber nada de ti '
   + 'para hacerlo.';
 
-export const NOTA_QUE_APORTA = 'La cuenta gratuita irá sumando, en los '
-  + 'próximos pasos de esta fase, guardado de carteras en la nube y análisis '
-  + 'más amplio. De momento, iniciar sesión no cambia lo que ves en la '
-  + 'página: solo deja la cuenta preparada, y se dice tal cual.';
+export const NOTA_QUE_APORTA = 'Con la sesión iniciada, tus carteras se '
+  + 'guardan en tu cuenta —sin tope y disponibles desde cualquier '
+  + 'dispositivo— y el constructor añade el análisis ampliado: concentración, '
+  + 'solapamiento entre fondos, ahorro por diversificar y la frontera con tu '
+  + 'combinación marcada.';
 
 /* ── Consentimiento granular (paso 29, bases §2) ── */
 

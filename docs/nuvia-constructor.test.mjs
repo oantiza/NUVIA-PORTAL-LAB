@@ -10,6 +10,7 @@ import {
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
   carterasLocalesParaNube,
+  MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -88,10 +89,10 @@ console.log('\n— Límite comunicado (paso 21) —');
 comprueba('El contador dice cuántas posiciones hay y cuál es el tope', textoContador(3) === 'Posiciones: 3 de 5');
 comprueba('La nota de nivel explica el porqué del tope', NOTA_NIVEL.includes('se lee con claridad'));
 comprueba('…y qué añade la cuenta gratuita', NOTA_NIVEL.includes('cuenta gratuita')
-  && NOTA_NIVEL.includes('guardado en la nube') && NOTA_NIVEL.includes('carteras sin tope'));
+  && NOTA_NIVEL.includes('en la nube') && NOTA_NIVEL.includes('sin tope de carteras'));
 comprueba('…y hasta dónde llega la suscripción', NOTA_NIVEL.includes('20 posiciones'));
-comprueba('Dice que el registro ya está abierto y dónde (paso 28)',
-  NOTA_NIVEL.includes('ya está abierto') && NOTA_NIVEL.includes('«Tu cuenta»'));
+comprueba('Dice que el registro está abierto y dónde (paso 28)',
+  NOTA_NIVEL.includes('está abierto') && NOTA_NIVEL.includes('«Tu cuenta»'));
 comprueba('La nota describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
   !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_NIVEL));
 
@@ -235,6 +236,33 @@ console.log('\n— Migración de lo local a la cuenta (paso 31) —');
     Math.abs(paraNube[0].carga.positions[0].weight_percent - 75) < 1e-6
     && Math.abs(paraNube[0].carga.positions[1].weight_percent - 25) < 1e-6);
   comprueba('Sin carteras locales, no hay nada que migrar', carterasLocalesParaNube([]).length === 0);
+}
+
+console.log('\n— Límite por nivel (paso 33) —');
+{
+  comprueba('El suscriptor trabaja con 20 posiciones; el resto con 5',
+    maxPosiciones('suscriptor') === MAX_POSICIONES_SUSCRIPTOR
+    && maxPosiciones('registrada') === MAX_POSICIONES && maxPosiciones('visitante') === MAX_POSICIONES
+    && MAX_POSICIONES_SUSCRIPTOR === 20);
+
+  let lista = [];
+  for (let i = 0; i < 6; i += 1) {
+    lista = agregaPosicion(lista, { asset_id: `A${i}`, display_name: `Activo ${i}` }, maxPosiciones('suscriptor')).posiciones;
+  }
+  comprueba('Con límite de suscriptor, la sexta posición entra', lista.length === 6);
+  comprueba('Con el límite normal, la sexta se rechaza con motivo «limite»',
+    agregaPosicion(lista.slice(0, 5), { asset_id: 'A9' }).motivo === 'limite');
+
+  comprueba('El contador enseña el límite del nivel',
+    textoContador(6, 20) === 'Posiciones: 6 de 20' && textoContador(2) === 'Posiciones: 2 de 5');
+
+  const nube = Array.from({ length: 22 }, (_, i) => ({ asset_id: `N${i}`, weight_percent: 1 }));
+  comprueba('Al abrir de la nube, el corte respeta el límite del nivel',
+    posicionesDesdeNube(nube, {}, 20).length === 20 && posicionesDesdeNube(nube, {}).length === 5);
+
+  comprueba('La nota del tope del suscriptor explica el porqué, sin aconsejar',
+    NOTA_NIVEL_SUSCRIPTOR.includes('20') && NOTA_NIVEL_SUSCRIPTOR.includes('gráficos')
+    && !/mejor|recomendad|óptim|conviene|deberías/i.test(NOTA_NIVEL_SUSCRIPTOR));
 }
 
 console.log('\n— Fechas —');

@@ -564,6 +564,35 @@
   white-space: nowrap;
 }
 
+/* Frontera del nivel registrado/suscriptor (paso 33) */
+.nv-frontera {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-block: var(--nv-space-2);
+}
+.nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
+.nv-frontera__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-frontera__mi-punto {
+  fill: var(--nv-green-700);
+  stroke: #fff;
+  stroke-width: 2;
+}
+.nv-frontera__elegido {
+  fill: none;
+  stroke: var(--nv-bronze-700);
+  stroke-width: 3;
+}
+.nv-frontera__eje { font-size: 12px; fill: var(--nv-text-muted); }
+.nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
+.nv-frontera__control input[type='range'] { width: 100%; max-width: 560px; }
+.nv-frontera__etiqueta { font-size: 13px; }
+.nv-frontera__detalle { margin: 0; font-size: 13px; }
+
+/* Nota de qué añade el suscriptor, al pie del análisis del registrado */
+.nv-analisis__suscriptor { font-size: 12px; color: var(--nv-text-muted); }
+
 /* Oferta de migración de lo local a la cuenta (paso 31) */
 .nv-cons__migracion { display: grid; gap: var(--nv-space-2); min-width: 0; }
 .nv-cons__migracion[hidden] { display: none; }

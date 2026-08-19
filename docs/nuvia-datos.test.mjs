@@ -6,7 +6,7 @@
  *
  *   node docs/nuvia-datos.test.mjs
  */
-import { creaClienteMaestra, etiquetaTipo } from '../js/nuvia-datos.js';
+import { creaClienteMaestra, etiquetaTipo, leeSuscripcion, CLAVE_SUSCRIPCION } from '../js/nuvia-datos.js';
 
 let fallos = 0;
 function comprueba(nombre, condicion, detalle = '') {
@@ -134,6 +134,30 @@ comprueba('STOCK → Acción', etiquetaTipo('STOCK') === 'Acción');
 comprueba('FUND → Fondo', etiquetaTipo('FUND') === 'Fondo');
 comprueba('Tipo desconocido se muestra tal cual, no se inventa', etiquetaTipo('BOND') === 'BOND');
 comprueba('Sin tipo → «—»', etiquetaTipo(null) === '—');
+
+console.log('\n— Suscripción (marcador del paso 35, leído desde el paso 33) —');
+{
+  const mapa = new Map();
+  const almacen = {
+    getItem: (k) => (mapa.has(k) ? mapa.get(k) : null),
+    setItem: (k, v) => mapa.set(k, String(v)),
+    removeItem: (k) => mapa.delete(k),
+  };
+  comprueba('Sin marcador, nadie es suscriptor (silencio = no)',
+    leeSuscripcion(almacen, 'ana@ejemplo.com') === false);
+  almacen.setItem(CLAVE_SUSCRIPCION, JSON.stringify({ 'ana@ejemplo.com': { activa: true, desde: '2026-08-19' } }));
+  comprueba('Con marcador activo, la cuenta es suscriptora (correo normalizado)',
+    leeSuscripcion(almacen, ' Ana@Ejemplo.com ') === true);
+  comprueba('Otra cuenta no hereda la suscripción',
+    leeSuscripcion(almacen, 'otro@ejemplo.com') === false);
+  almacen.setItem(CLAVE_SUSCRIPCION, '{esto no es json');
+  comprueba('Marcador ilegible → no suscriptor, sin romper',
+    leeSuscripcion(almacen, 'ana@ejemplo.com') === false);
+  comprueba('Sin almacén o sin correo → no', leeSuscripcion(null, 'a@b.c') === false && leeSuscripcion(almacen, '') === false);
+
+  const cliente = creaClienteMaestra({ almacen, fetchFn: async () => ({ ok: true, status: 200, json: async () => ({}) }) });
+  comprueba('nivelSesion: sin sesión registrada → visitante', cliente.nivelSesion() === 'visitante');
+}
 
 if (fallos) {
   console.error(`\n${fallos} comprobación(es) fallida(s).`);

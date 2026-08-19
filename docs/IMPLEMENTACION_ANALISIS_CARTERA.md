@@ -815,6 +815,43 @@ diversificar, solapamiento.
 
 **Hacer.** Frontera, Monte Carlo, correlaciones, y 20 posiciones.
 
+> **Hecho y verificado (19-08-2026).** Reparto del paso 1 respetado:
+> **Registrado** — la frontera **estática** entra en su análisis ampliado:
+> SVG con la nube de combinaciones (pesos Montecarlo de `frontera()` sobre
+> los activos reales, σ y ρ de la matriz de `correlacionesDesdeSeries`, la
+> rentabilidad anualizada de cada serie), la línea de la frontera y **su
+> combinación marcada**; se declara «historial, no el futuro». Al pie, una
+> línea dice qué añade el suscriptor y que la contratación **aún no está
+> abierta**. **Suscriptor** — mismo bloque como «Análisis completo
+> (suscripción)» con: frontera **interactiva** (un control accesible recorre
+> los puntos de la frontera, marca el elegido en el dibujo y enseña riesgo,
+> rentabilidad y reparto de ese punto del historial), **proyección por
+> simulación de Montecarlo** (`proyeccionMonteCarlo` en `nuvia-cartera.js`:
+> 4.000 trayectorias lognormales a pasos mensuales con la rentabilidad
+> anualizada —geométrica, deriva ln(1+r) sin corrección −σ²/2— y la σ
+> históricas de la combinación; percentiles 5/50/95 a 1, 3, 5 y 10 años,
+> base 100; generador con semilla: reproducible también en la batería;
+> declarada «simulación…, no es una previsión», exigido por `check-lenguaje`)
+> y **matriz de correlaciones** completa (Pearson 3 años, diagonal 1,00,
+> par sin datos → «—»). **20 posiciones**: `maxPosiciones(nivel)` en el
+> constructor (contador, buscador, apertura desde la nube y textos del
+> límite); una llamada a `get_price_series` sigue bastando (límite 25).
+> El nivel sale de `nivelSesion()` en `nuvia-datos.js`: sesión registrada +
+> marcador `nuvia.suscripcion.v1` por correo, que **escribirá la pasarela
+> del paso 35** — hoy nadie lo tiene y el nivel queda descrito pero cerrado.
+> De paso, `NOTA_QUE_APORTA` de «Tu cuenta» actualizada: ya era falso que
+> iniciar sesión no cambiara nada.
+>
+> **Verificado en navegador** (23 comprobaciones): visitante solo el aviso;
+> registrado con frontera estática sin control y sin proyección/matriz;
+> suscriptor con las tres piezas, recorrido de la frontera funcionando,
+> percentiles en los años 1/3/5/10, diagonal 1,00, sexta posición aceptada
+> con contador «6 de 20»; cierre de sesión lo cierra todo; sin desbordes
+> 1440/1024/390; suelo de 12 px. Baterías nuevas: proyección (mediana ≈
+> (1+r)^años, σ=0 → percentiles iguales, reproducible, más σ → banda más
+> ancha, entrada inválida → null), límite por nivel y `leeSuscripcion`
+> (silencio = no; correo normalizado; marcador ilegible → no).
+
 ### Paso 34 · Derechos RGPD operativos
 
 **Hacer.** Acceso, rectificación, supresión y portabilidad, funcionando desde el

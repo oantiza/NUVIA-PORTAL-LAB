@@ -78,8 +78,9 @@ const EXIGIDO = [
   /* Paso 29: lo opcional es opt-in de verdad; se declara que apagado no
      registra nada. */
   ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio', 'no se registrará nunca']],
-  /* Paso 32: el análisis ampliado declara su fuente y nunca inventa. */
-  ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa']],
+  /* Paso 32: el análisis ampliado declara su fuente y nunca inventa.
+     Paso 33: la proyección se declara simulación, jamás previsión. */
+  ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa', 'no es una previsión']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');

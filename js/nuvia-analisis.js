@@ -12,9 +12,16 @@
  * Sin sesión, el bloque se limita a decir que este análisis existe y con qué
  * se abre. Lenguaje: describe, nunca prescribe; cuando falta un dato se dice
  * tal cual y nunca se inventa una cifra.
+ *
+ * Paso 33: el nivel registrado suma la frontera estática con su combinación
+ * marcada; el suscriptor (aún sin contratación abierta) la versión
+ * interactiva, la proyección por Montecarlo y la matriz de correlaciones.
  */
 
-import { correlacionesDesdeSeries, pct } from './nuvia-cartera.js';
+import {
+  correlacionesDesdeSeries, estableceCorrelaciones, frontera,
+  metricasDesdeSerie, proyeccionMonteCarlo, pct, num,
+} from './nuvia-cartera.js';
 import { concentracionSectorial, concentracionGeografica } from './nuvia-concentracion.js';
 import { matrizSolapamiento } from './nuvia-solapamiento.js';
 
@@ -25,6 +32,32 @@ export const NOTA_ANALISIS_CERRADO = 'Con la sesión iniciada, esta misma '
 export const FUENTE_ANALISIS = 'Fichas y desgloses de la base de datos NUVIA '
   + 'a su último cierre; el ahorro por diversificar sale del mismo historial '
   + 'de 3 años de la tabla de métricas.';
+
+/** Qué añade el nivel suscriptor, dicho al registrado sin empujar (paso 33).
+ *  La suscripción aún no puede contratarse y se dice tal cual. */
+export const NOTA_ANALISIS_SUSCRIPTOR = 'El nivel suscriptor —aún no abierto '
+  + 'a contratación— añade sobre esta misma cartera la frontera interactiva '
+  + '(recorrerla y ver el reparto de cada punto), una proyección por '
+  + 'simulación y la matriz de correlaciones, con hasta 20 posiciones.';
+
+/** Qué es la frontera, en llano y sin previsión (bases §2). */
+export const TEXTO_FRONTERA = 'Cada punto gris es una combinación de pesos '
+  + 'probada con estos mismos activos; la línea es la frontera: a cada nivel '
+  + 'de riesgo, la mayor rentabilidad del historial de 3 años. Describe ese '
+  + 'historial, no el futuro.';
+
+/** Qué es la proyección: simulación con supuestos a la vista, nunca previsión. */
+export const TEXTO_PROYECCION = 'Simulación de 4.000 trayectorias a pasos '
+  + 'mensuales, partiendo de 100 y usando como supuestos la rentabilidad y la '
+  + 'volatilidad históricas de esta combinación (las de la tabla de métricas). '
+  + 'Entre el valor del 5 % y el del 95 % quedan nueve de cada diez '
+  + 'trayectorias simuladas. Es una simulación con esos supuestos, '
+  + 'no es una previsión.';
+
+/** Cómo leer la matriz de correlaciones, sin jerga suelta. */
+export const TEXTO_CORRELACIONES = 'Correlación de Pearson sobre los retornos '
+  + 'diarios comunes de 3 años: 1 significa moverse a la vez, 0 sin relación, '
+  + '−1 en sentido contrario. Un par sin datos comunes queda sin cifra.';
 
 /* ── Helpers puros (probados en docs/nuvia-analisis.test.mjs) ── */
 
@@ -139,6 +172,28 @@ export function textoCalidad(resultado) {
   return `Desglose real en su mayor parte; un ${pct((resultado.pesoEstimado || 0) / 100, 0)} del peso está estimado por heurística.`;
 }
 
+/**
+ * Activos de la frontera: id y rentabilidad anualizada de su propia serie
+ * (la σ y la ρ de cada par salen de la matriz registrada). Solo entran los
+ * que están en el cálculo (tienen peso); sin métrica propia, la rentabilidad
+ * queda ausente y `frontera()` lo declarará en `sinDatos`.
+ */
+export function activosParaFrontera(series, pesos) {
+  if (!pesos) return [];
+  return (series || [])
+    .filter((s) => pesos[s.asset_id] != null)
+    .map((s) => ({
+      id: s.asset_id,
+      rentabilidad: metricasDesdeSerie(s.values)?.rentabilidadAnualizada,
+    }));
+}
+
+/** Filas de la proyección para la tabla: los años señalados que existan. */
+export function filasProyeccion(proyeccion, senalados = [1, 3, 5, 10]) {
+  if (!proyeccion) return [];
+  return proyeccion.anos.filter((fila) => senalados.includes(fila.ano));
+}
+
 /* ── Montaje ── */
 
 function el(tag, attrs = {}, texto) {
@@ -191,6 +246,193 @@ function holdingsDe(datos, ids) {
   return cacheHoldings.get(clave);
 }
 
+/**
+ * Dibuja la frontera en un SVG sencillo: nube gris, línea de la frontera y
+ * — si hay métricas — la combinación del usuario marcada. En el nivel
+ * suscriptor añade un control para recorrer la frontera y ver el reparto
+ * de cada punto (la parte interactiva, guía paso 1).
+ */
+function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
+  const bloque = el('div', { class: 'nv-analisis__grupo' });
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Frontera de estas posiciones'));
+
+  const activos = activosParaFrontera(series, pesos);
+  if (activos.length < 2) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      'Con una sola posición en el cálculo no hay combinaciones que dibujar.'));
+    return bloque;
+  }
+  const matriz = correlacionesDesdeSeries(
+    (series || []).filter((s) => pesos[s.asset_id] != null)
+      .map((s) => ({ id: s.asset_id, niveles: s.values })));
+  estableceCorrelaciones(matriz);
+  const f = frontera({ activos });
+  if (f.sinDatos.length) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      `Faltan datos para dibujarla (${f.sinDatos.slice(0, 3).join('; ')}); nunca se inventa.`));
+    return bloque;
+  }
+
+  /* Escalas del dibujo. */
+  const W = 560; const H = 300; const izq = 62; const abajo = 34; const arriba = 14; const der = 14;
+  const puntos = f.nube.concat(metricas ? [{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }] : []);
+  const vMin = Math.min(...puntos.map((p) => p.volatilidad));
+  const vMax = Math.max(...puntos.map((p) => p.volatilidad));
+  const rMin = Math.min(...puntos.map((p) => p.rentabilidad));
+  const rMax = Math.max(...puntos.map((p) => p.rentabilidad));
+  const x = (v) => izq + ((v - vMin) / ((vMax - vMin) || 1)) * (W - izq - der);
+  const y = (r) => H - abajo - ((r - rMin) / ((rMax - rMin) || 1)) * (H - abajo - arriba);
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('class', 'nv-frontera');
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Nube de combinaciones de estos activos y su frontera: '
+    + `riesgo entre ${pct(vMin)} y ${pct(vMax)}, rentabilidad anual entre ${pct(rMin)} y ${pct(rMax)}.`);
+  const nodoSvg = (tag, attrs, texto) => {
+    const e = document.createElementNS(ns, tag);
+    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+    if (texto != null) e.textContent = texto;
+    return e;
+  };
+
+  const salto = Math.max(1, Math.floor(f.nube.length / 450));
+  for (let i = 0; i < f.nube.length; i += salto) {
+    const p = f.nube[i];
+    svg.append(nodoSvg('circle', { cx: x(p.volatilidad).toFixed(1), cy: y(p.rentabilidad).toFixed(1), r: 2, class: 'nv-frontera__punto' }));
+  }
+  svg.append(nodoSvg('polyline', {
+    points: f.frontera.map((p) => `${x(p.volatilidad).toFixed(1)},${y(p.rentabilidad).toFixed(1)}`).join(' '),
+    class: 'nv-frontera__linea', fill: 'none',
+  }));
+  if (metricas) {
+    svg.append(nodoSvg('circle', {
+      cx: x(metricas.volatilidad).toFixed(1), cy: y(metricas.rentabilidadAnualizada).toFixed(1),
+      r: 5.5, class: 'nv-frontera__mi-punto',
+    }));
+  }
+  /* Ejes: mínimo y máximo, sin más ruido. */
+  svg.append(
+    nodoSvg('text', { x: izq, y: H - 10, class: 'nv-frontera__eje' }, pct(vMin)),
+    nodoSvg('text', { x: W - der, y: H - 10, 'text-anchor': 'end', class: 'nv-frontera__eje' }, pct(vMax)),
+    nodoSvg('text', { x: 4, y: H - abajo, class: 'nv-frontera__eje' }, pct(rMin)),
+    nodoSvg('text', { x: 4, y: arriba + 10, class: 'nv-frontera__eje' }, pct(rMax)),
+    nodoSvg('text', { x: (izq + W - der) / 2, y: H - 10, 'text-anchor': 'middle', class: 'nv-frontera__eje' }, 'Riesgo (volatilidad anual) →'),
+  );
+  bloque.append(svg);
+
+  bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_FRONTERA
+    + (metricas ? ' El punto grande es tu combinación actual.'
+      : ' Tu combinación no tiene historial común suficiente para marcarla.')));
+
+  if (!interactiva) return bloque;
+
+  /* Parte interactiva del suscriptor: recorrer la frontera punto a punto. */
+  const control = el('div', { class: 'nv-frontera__control' });
+  const idControl = 'frontera-punto';
+  control.append(el('label', { for: idControl, class: 'nv-frontera__etiqueta' },
+    'Recorre la frontera y mira el reparto de cada punto:'));
+  const rango = el('input', {
+    type: 'range', id: idControl, min: '0',
+    max: String(f.frontera.length - 1), step: '1', value: String(Math.floor(f.frontera.length / 2)),
+  });
+  const detalle = el('p', { class: 'nv-frontera__detalle', 'aria-live': 'polite' });
+  let marcador = null;
+  const pinta = () => {
+    const p = f.frontera[Number(rango.value)];
+    if (!p) return;
+    if (marcador) marcador.remove();
+    marcador = nodoSvg('circle', {
+      cx: x(p.volatilidad).toFixed(1), cy: y(p.rentabilidad).toFixed(1), r: 5, class: 'nv-frontera__elegido',
+    });
+    svg.append(marcador);
+    const reparto = [...p.pesos].sort((a, b) => b.peso - a.peso)
+      .filter((w) => w.peso >= 0.5)
+      .map((w) => `${nombreDe?.[w.id] || w.id} ${pct(w.peso / 100, 0)}`)
+      .join(' · ');
+    detalle.textContent = `Ese punto del historial: riesgo ${pct(p.volatilidad)}, `
+      + `rentabilidad anual ${pct(p.rentabilidad)}. Reparto: ${reparto}.`;
+  };
+  rango.addEventListener('input', pinta);
+  control.append(rango, detalle);
+  bloque.append(control);
+  pinta();
+  return bloque;
+}
+
+/** Grupo de proyección del suscriptor: simulación con los supuestos a la vista. */
+function grupoProyeccion(metricas) {
+  const bloque = el('div', { class: 'nv-analisis__grupo' });
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Proyección por simulación (Montecarlo)'));
+  const proyeccion = metricas
+    ? proyeccionMonteCarlo({ rentabilidad: metricas.rentabilidadAnualizada, volatilidad: metricas.volatilidad })
+    : null;
+  if (!proyeccion) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      'Sin métricas de la combinación no hay nada que simular; nunca se inventa.'));
+    return bloque;
+  }
+  const tabla = el('table', { class: 'nv-table nv-analisis__matriz' });
+  tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Percentiles del valor simulado de 100'));
+  const thead = el('thead');
+  const trh = el('tr');
+  for (const t of ['Al cierre del año', 'Percentil 5', 'Mediana', 'Percentil 95']) {
+    trh.append(el('th', { scope: 'col' }, t));
+  }
+  thead.append(trh);
+  const tbody = el('tbody');
+  for (const fila of filasProyeccion(proyeccion)) {
+    const tr = el('tr');
+    tr.append(el('th', { scope: 'row' }, String(fila.ano)));
+    tr.append(el('td', {}, num(fila.p5, 0)), el('td', {}, num(fila.p50, 0)), el('td', {}, num(fila.p95, 0)));
+    tbody.append(tr);
+  }
+  tabla.append(thead, tbody);
+  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+  envoltorio.append(tabla);
+  bloque.append(envoltorio);
+  bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_PROYECCION));
+  return bloque;
+}
+
+/** Grupo de la matriz de correlaciones del suscriptor. */
+function grupoCorrelaciones(series, pesos, nombreDe) {
+  const bloque = el('div', { class: 'nv-analisis__grupo' });
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Matriz de correlaciones'));
+  const enCalculo = (series || []).filter((s) => pesos[s.asset_id] != null);
+  if (enCalculo.length < 2) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      'Con una sola posición en el cálculo no hay pares que correlacionar.'));
+    return bloque;
+  }
+  const { ids, rho } = correlacionesDesdeSeries(
+    enCalculo.map((s) => ({ id: s.asset_id, niveles: s.values })));
+  const tabla = el('table', { class: 'nv-table nv-analisis__matriz' });
+  tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Correlaciones entre las posiciones de la cartera'));
+  const thead = el('thead');
+  const trh = el('tr');
+  trh.append(el('th', { scope: 'col' }, ''));
+  for (const id of ids) trh.append(el('th', { scope: 'col' }, nombreDe?.[id] || id));
+  thead.append(trh);
+  const tbody = el('tbody');
+  for (const a of ids) {
+    const tr = el('tr');
+    tr.append(el('th', { scope: 'row' }, nombreDe?.[a] || a));
+    for (const b of ids) {
+      const v = rho[a]?.[b];
+      tr.append(el('td', {}, Number.isFinite(v) ? num(v, 2) : '—'));
+    }
+    tbody.append(tr);
+  }
+  tabla.append(thead, tbody);
+  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+  envoltorio.append(tabla);
+  bloque.append(envoltorio);
+  bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_CORRELACIONES));
+  return bloque;
+}
+
 function tablaReparto(titulo, resultado, maxFilas = 5) {
   const bloque = el('div', { class: 'nv-analisis__grupo' });
   bloque.append(el('h4', { class: 'nv-analisis__titulo' }, titulo));
@@ -221,17 +463,23 @@ function tablaReparto(titulo, resultado, maxFilas = 5) {
  * constructor crea en cada recálculo; si llega tarde y el nodo ya no está en
  * el documento, lo pintado no se ve y no pasa nada).
  */
-export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, registrada }) {
+export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, registrada, nivel, metricas }) {
   if (!raiz) return;
   raiz.textContent = '';
   if (!pesos) return;
 
-  if (!registrada) {
+  const nivelEfectivo = nivel || (registrada ? 'registrada' : 'visitante');
+  if (nivelEfectivo === 'visitante') {
     raiz.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_CERRADO));
     return;
   }
+  const esSuscriptor = nivelEfectivo === 'suscriptor';
 
-  raiz.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Análisis ampliado (tu cuenta)'));
+  const nombreDe = {};
+  for (const p of posiciones) nombreDe[p.activo.asset_id] = p.activo.display_name || p.activo.asset_id;
+
+  raiz.append(el('h3', { class: 'nv-cons__subtitulo' },
+    esSuscriptor ? 'Análisis completo (suscripción)' : 'Análisis ampliado (tu cuenta)'));
 
   /* Ahorro por diversificar: sale de las series ya cargadas, sin más red. */
   const ahorro = ahorroDeSeries(series, pesos);
@@ -241,6 +489,16 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
     ? textoAhorro(ahorro)
     : 'Con una sola posición en el cálculo, o sin historial común suficiente, no hay diversificación que medir.'));
   raiz.append(grupoAhorro);
+
+  /* Frontera (paso 33): estática con la cartera marcada para el registrado,
+     con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
+  raiz.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
+
+  /* Solo suscriptor: proyección por simulación y matriz de correlaciones. */
+  if (esSuscriptor) {
+    raiz.append(grupoProyeccion(metricas));
+    raiz.append(grupoCorrelaciones(series, pesos, nombreDe));
+  }
 
   const cargando = el('p', { class: 'nv-cons__nota', role: 'status' }, 'Consultando fichas y desgloses…');
   raiz.append(cargando);
@@ -283,8 +541,6 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
       grupoSolape.append(el('p', { class: 'nv-cons__nota' },
         'No se han podido consultar los desgloses. Prueba de nuevo en unos segundos.'));
     } else {
-      const nombreDe = {};
-      for (const p of posiciones) nombreDe[p.activo.asset_id] = p.activo.display_name || p.activo.asset_id;
       const matriz = matrizSolapamiento(fondos.map((id) => ({ id, cartera: carteraDesdeHoldings(docs[id]) })));
       const conDatos = matriz.ids.filter((id) => !matriz.sinDatos.includes(id));
       const sinDatos = matriz.sinDatos;
@@ -323,5 +579,8 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
   }
   raiz.append(grupoSolape);
 
+  if (!esSuscriptor) {
+    raiz.append(el('p', { class: 'nv-analisis__suscriptor' }, NOTA_ANALISIS_SUSCRIPTOR));
+  }
   raiz.append(el('p', { class: 'nv-cons__fuente' }, FUENTE_ANALISIS));
 }

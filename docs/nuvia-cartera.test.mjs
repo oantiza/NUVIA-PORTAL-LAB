@@ -24,6 +24,7 @@ import {
   frontera,
   serieDeCaidas,
   metricasDesdeSerie,
+  proyeccionMonteCarlo,
 } from '../js/nuvia-cartera.js';
 
 let fallos = 0;
@@ -274,6 +275,37 @@ comprueba('Con ρ baja, diversificar reduce el riesgo muy por debajo del activo 
   Math.min(...diversificada.nube.map((p) => p.volatilidad)) < 0.14
   && Math.min(...correlada.nube.map((p) => p.volatilidad)) > 0.19,
   `mín σ: diversificada ${Math.min(...diversificada.nube.map((p) => p.volatilidad))} · correlada ${Math.min(...correlada.nube.map((p) => p.volatilidad))}`);
+
+/* ── Proyección por simulación de Montecarlo (guía, paso 33) ────────────── */
+console.log('\n— Proyección de Montecarlo —');
+
+const p = proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: 0.15, anos: 10, iteraciones: 2000 });
+comprueba('Devuelve un percentil por año, base 100', p && p.anos.length === 10 && p.base === 100);
+comprueba('En cada año, p5 ≤ p50 ≤ p95',
+  p.anos.every((f) => f.p5 <= f.p50 && f.p50 <= f.p95));
+comprueba('La mediana a 10 años ronda 100·(1,05)^10 (deriva lognormal bien puesta)',
+  Math.abs(p.anos[9].p50 - 100 * 1.05 ** 10) < 8, `p50=${p.anos[9].p50} esperado≈${(100 * 1.05 ** 10).toFixed(1)}`);
+comprueba('El peor decil queda por debajo de la mediana con σ alta',
+  p.anos[9].p5 < p.anos[9].p50 * 0.8, `p5=${p.anos[9].p5}`);
+
+const sinRuido = proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: 0, anos: 5, iteraciones: 50 });
+comprueba('Con σ=0 los tres percentiles coinciden en 100·(1+r)^año',
+  sinRuido.anos.every((f) => Math.abs(f.p5 - f.p95) < 1e-9
+    && Math.abs(f.p50 - 100 * 1.05 ** f.ano) < 0.01));
+
+const otra = proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: 0.15, anos: 10, iteraciones: 2000 });
+comprueba('Reproducible: misma semilla → misma proyección',
+  JSON.stringify(otra) === JSON.stringify(p));
+
+const anchaPoco = proyeccionMonteCarlo({ rentabilidad: 0.03, volatilidad: 0.05, anos: 10, iteraciones: 2000 });
+const anchaMucho = proyeccionMonteCarlo({ rentabilidad: 0.03, volatilidad: 0.25, anos: 10, iteraciones: 2000 });
+comprueba('Más volatilidad → banda 5–95 más ancha',
+  (anchaMucho.anos[9].p95 - anchaMucho.anos[9].p5) > (anchaPoco.anos[9].p95 - anchaPoco.anos[9].p5) * 3);
+
+comprueba('Sin rentabilidad o volatilidad válidas → null, nunca se inventa',
+  proyeccionMonteCarlo({ rentabilidad: NaN, volatilidad: 0.1 }) === null
+  && proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: -1 }) === null
+  && proyeccionMonteCarlo({}) === null);
 
 /* ───────────────────────────────────────────────────────────────────────── */
 

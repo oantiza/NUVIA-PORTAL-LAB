@@ -415,6 +415,18 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Análisis del nivel suscriptor (paso 33, 19-08-2026).** El registrado suma
+la frontera estática con su combinación marcada (nube y frontera de
+`frontera()` sobre los activos reales; «describe ese historial, no el
+futuro»). El suscriptor —nivel implementado pero **sin contratación abierta**:
+el marcador `nuvia.suscripcion.v1` lo escribirá la pasarela del paso 35—
+recibe el análisis completo: frontera interactiva (recorrerla y ver el
+reparto de cada punto), proyección por Montecarlo (`proyeccionMonteCarlo`,
+4.000 trayectorias con los supuestos históricos a la vista, percentiles
+5/50/95, «no es una previsión» vigilado por `check-lenguaje`) y matriz de
+correlaciones completa; y el constructor pasa de 5 a 20 posiciones
+(`maxPosiciones(nivel)`), dentro del límite de 25 de `get_price_series`.
+
 **Análisis del nivel registrado (paso 32, 19-08-2026).** Con la sesión
 iniciada, el constructor añade «Análisis ampliado (tu cuenta)»: ahorro por
 diversificar sobre el historial real (σ frente a σ con ρ=1, correlaciones de

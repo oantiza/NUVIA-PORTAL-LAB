@@ -29,6 +29,22 @@ const CLAVE_SESION = 'nuvia.maestra-sesion.v1';
 const MARGEN_CADUCIDAD_MS = 5 * 60_000; // renovar 5 min antes de caducar
 const TTL_BUSQUEDA_MS = 10 * 60_000;
 
+/** Marcador de suscripción por cuenta. Lo escribirá la pasarela de pago
+ *  (guía, paso 35); hasta entonces nadie lo tiene y el nivel suscriptor
+ *  queda descrito pero cerrado. */
+export const CLAVE_SUSCRIPCION = 'nuvia.suscripcion.v1';
+
+/** ¿Tiene suscripción activa esta cuenta? Pura y probada: silencio = no. */
+export function leeSuscripcion(almacen, correo) {
+  if (!almacen || !correo) return false;
+  try {
+    const mapa = JSON.parse(almacen.getItem(CLAVE_SUSCRIPCION) || 'null');
+    return mapa?.[String(correo).trim().toLowerCase()]?.activa === true;
+  } catch {
+    return false;
+  }
+}
+
 /** Etiqueta en castellano para los tipos de instrumento de la maestra. */
 export function etiquetaTipo(tipo) {
   const mapa = {
@@ -196,6 +212,14 @@ export function creaClienteMaestra({
     return { tipo: 'anonima' };
   }
 
+  /** Nivel de la sesión para la interfaz: visitante, registrada o suscriptor
+   *  (registrada + marcador de suscripción del paso 35). */
+  function nivelSesion() {
+    const s = sesionActual();
+    if (s.tipo !== 'registrada') return 'visitante';
+    return leeSuscripcion(almacen, s.correo) ? 'suscriptor' : 'registrada';
+  }
+
   /** Crea la cuenta enlazando correo y contraseña a la sesión de lectura ya
    *  abierta (mismo usuario antes y después; `accounts:signUp` con idToken). */
   async function creaCuenta(correo, contrasena) {
@@ -274,7 +298,7 @@ export function creaClienteMaestra({
 
   return {
     llama, buscaActivos, sesion,
-    sesionActual, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
+    sesionActual, nivelSesion, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
     guardaCarteraNube, listaCarterasNube, leeCarteraNube, borraCarteraNube, detalleActivo,
   };
 }

@@ -11,8 +11,11 @@
 import {
   etiquetaClave, posicionesParaAnalisis, idsDeFondos,
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
-  NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS,
+  activosParaFrontera, filasProyeccion,
+  NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
+  TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
+import { proyeccionMonteCarlo } from '../js/nuvia-cartera.js';
 
 let fallos = 0;
 function comprueba(nombre, condicion, detalle = '') {
@@ -115,14 +118,50 @@ comprueba('estimated → lo dice tal cual', textoCalidad({ calidad: 'estimated' 
 comprueba('mixed → declara el % estimado', textoCalidad({ calidad: 'mixed', pesoEstimado: 40 }).includes('40'));
 comprueba('none → nada que declarar (la sección lo dice aparte)', textoCalidad({ calidad: 'none' }) === null);
 
+console.log('\n— Frontera y proyección (paso 33) —');
+{
+  const n = 260;
+  const serie = (paso) => {
+    const o = [100];
+    for (let t = 1; t < n; t += 1) o.push(Number((o[t - 1] * (1 + paso * ((t % 3) - 1))).toFixed(6)));
+    return o;
+  };
+  const series = [
+    { asset_id: 'A', values: serie(0.01) },
+    { asset_id: 'B', values: serie(0.008) },
+    { asset_id: 'C', values: serie(0.012) }, // sin peso: fuera
+  ];
+  const activos = activosParaFrontera(series, { A: 0.5, B: 0.5 });
+  comprueba('Solo entran los activos con peso, con su rentabilidad anualizada',
+    activos.length === 2 && activos.every((a) => Number.isFinite(a.rentabilidad))
+    && activos.map((a) => a.id).join(',') === 'A,B');
+  comprueba('Sin pesos, no hay frontera que montar', activosParaFrontera(series, null).length === 0);
+
+  const proyeccion = proyeccionMonteCarlo({ rentabilidad: 0.04, volatilidad: 0.12, anos: 10 });
+  const filas = filasProyeccion(proyeccion);
+  comprueba('La tabla de la proyección enseña los años 1, 3, 5 y 10',
+    filas.map((f) => f.ano).join(',') === '1,3,5,10');
+  comprueba('Con horizonte corto, solo los años que existen',
+    filasProyeccion(proyeccionMonteCarlo({ rentabilidad: 0.04, volatilidad: 0.12, anos: 4 }))
+      .map((f) => f.ano).join(',') === '1,3');
+  comprueba('Sin proyección → sin filas, nunca se inventa', filasProyeccion(null).length === 0);
+}
+
 console.log('\n— Textos del bloque —');
 comprueba('El aviso sin sesión describe qué se abre, sin empujar a nadie',
   NOTA_ANALISIS_CERRADO.includes('sesión iniciada') && NOTA_ANALISIS_CERRADO.includes('análisis ampliado')
   && !/regístrate|hazte|no te pierdas|aprovecha/i.test(NOTA_ANALISIS_CERRADO));
 comprueba('La fuente cita la base de datos NUVIA y la ventana del historial',
   FUENTE_ANALISIS.includes('base de datos NUVIA') && FUENTE_ANALISIS.includes('3 años'));
+comprueba('La proyección se declara simulación y niega ser previsión',
+  TEXTO_PROYECCION.includes('no es una previsión') && TEXTO_PROYECCION.includes('supuestos'));
+comprueba('La frontera se declara historial, no futuro',
+  TEXTO_FRONTERA.includes('historial') && TEXTO_FRONTERA.includes('no el futuro'));
+comprueba('La nota del suscriptor dice que aún no puede contratarse',
+  NOTA_ANALISIS_SUSCRIPTOR.includes('aún no abierto'));
 comprueba('Ningún texto aconseja (sin mejor/recomendado/óptimo/conviene/deberías/ideal)',
-  ![NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, textoCalidad({ calidad: 'estimated' })]
+  ![NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR, TEXTO_FRONTERA,
+    TEXTO_PROYECCION, TEXTO_CORRELACIONES, textoCalidad({ calidad: 'estimated' })]
     .some((t) => /mejor|recomendad|óptim|conviene|deberías|ideal para/i.test(t || '')));
 
 if (fallos) {

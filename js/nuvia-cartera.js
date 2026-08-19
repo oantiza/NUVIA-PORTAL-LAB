@@ -474,6 +474,79 @@ export function frontera({ muestras = 4000, tramos = 28, semilla = 42, activos =
   return { nube, frontera: monotona, sinDatos: [] };
 }
 
+/* ── Proyección por simulación de Montecarlo (guía, paso 33) ─────────────── */
+
+/**
+ * Proyección del valor de 100 unidades por simulación de Montecarlo, con los
+ * supuestos a la vista: una rentabilidad anual y una volatilidad anual dadas
+ * (típicamente las históricas de 3 años de la combinación). Es una simulación
+ * bajo esos supuestos, no una previsión.
+ *
+ * Modelo: pasos mensuales lognormales con deriva ln(1+r)/12 y desviación
+ * σ/√12; normales por Box–Muller sobre el mismo generador reproducible de la
+ * frontera (misma semilla → misma proyección, también en las baterías).
+ * La rentabilidad de entrada es la anualizada (geométrica), así que la deriva
+ * del logaritmo es ln(1+r) tal cual — sin corrección −σ²/2, que sería para
+ * una media aritmética—: la mediana simulada reproduce (1+r)^años.
+ *
+ * @param {{rentabilidad:number, volatilidad:number, anos?:number,
+ *   iteraciones?:number, semilla?:number}} opciones
+ * @returns {{anos:Array<{ano:number, p5:number, p50:number, p95:number}>,
+ *   iteraciones:number, base:number}|null}  percentiles del valor simulado al
+ *   cierre de cada año (base 100). Sin rentabilidad o volatilidad válidas →
+ *   null: nunca se inventa una cifra.
+ */
+export function proyeccionMonteCarlo({
+  rentabilidad, volatilidad, anos = 10, iteraciones = 4000, semilla = 42,
+} = {}) {
+  if (!Number.isFinite(rentabilidad) || !Number.isFinite(volatilidad)
+    || volatilidad < 0 || rentabilidad <= -1 || anos < 1) return null;
+
+  const pasosPorAno = 12;
+  const deriva = Math.log(1 + rentabilidad) / pasosPorAno;
+  const sigma = volatilidad / Math.sqrt(pasosPorAno);
+  const rnd = aleatorio(semilla);
+
+  // Normales estándar por Box–Muller, de dos en dos.
+  let guardada = null;
+  const normal = () => {
+    if (guardada != null) { const v = guardada; guardada = null; return v; }
+    let u = 0;
+    while (u === 0) u = rnd(); // evita ln(0)
+    const v = rnd();
+    const radio = Math.sqrt(-2 * Math.log(u));
+    guardada = radio * Math.sin(2 * Math.PI * v);
+    return radio * Math.cos(2 * Math.PI * v);
+  };
+
+  const porAno = Array.from({ length: anos }, () => new Array(iteraciones));
+  for (let i = 0; i < iteraciones; i += 1) {
+    let logValor = Math.log(100);
+    for (let a = 0; a < anos; a += 1) {
+      for (let p = 0; p < pasosPorAno; p += 1) {
+        logValor += deriva + sigma * normal();
+      }
+      porAno[a][i] = Math.exp(logValor);
+    }
+  }
+
+  const percentil = (valores, q) => {
+    const orden = [...valores].sort((x, y) => x - y);
+    return orden[Math.min(orden.length - 1, Math.max(0, Math.round(q * (orden.length - 1))))];
+  };
+
+  return {
+    base: 100,
+    iteraciones,
+    anos: porAno.map((valores, a) => ({
+      ano: a + 1,
+      p5: redondea(percentil(valores, 0.05)),
+      p50: redondea(percentil(valores, 0.5)),
+      p95: redondea(percentil(valores, 0.95)),
+    })),
+  };
+}
+
 /* ── Formato ─────────────────────────────────────────────────────────────── */
 
 /** Porcentaje en formato español, con el menos tipográfico (U+2212). */
