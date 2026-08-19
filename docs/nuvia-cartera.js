@@ -11,15 +11,21 @@
  *   - Frontera por Monte Carlo sobre 4 clases en vez de N activos: basta para
  *     ilustrar la idea y se calcula en milisegundos en el navegador.
  *
- * LIMITACIÓN CONOCIDA — ver docs/BASES_ANALISIS_CARTERA.md, sección 7.
- * La correlación se asume por clase de activo (0,75 entre dos de la misma).
- * Con valores concretos eso es falso: Telefónica y BBVA se mueven mucho más
- * juntos que un valor español y uno japonés. Para el simulador con valores
- * reales hacen falta correlaciones entre pares, que existen en la base de
- * datos propia.
+ * CORRELACIONES — ver docs/BASES_ANALISIS_CARTERA.md, sección 7, y la guía
+ * de implementación, pasos 8 y 12. El módulo trabaja en dos modos:
  *
- * Todo son funciones puras: entran pesos, salen números. Sin red, sin backend,
- * sin autenticación.
+ *   - Por CLASE de activo (simulador del visitante): ρ se asume por clase,
+ *     como siempre. Es una simplificación deliberada y documentada.
+ *   - Por ACTIVO concreto: ρ sale de una matriz de correlaciones REALES,
+ *     calculada con correlacionesDesdeSeries() a partir de las series de
+ *     `get_price_series` (Pearson sobre retornos diarios, ventana 3 años)
+ *     y registrada con estableceCorrelaciones(). Si a una pareja de activos
+ *     le falta correlación real, el cálculo devuelve undefined: nunca se
+ *     inventa una ρ ni se degrada en silencio al supuesto por clase.
+ *
+ * Todo son funciones puras salvo el registro de la matriz (estableceCorrelaciones),
+ * que es el único estado del módulo. Sin red, sin backend, sin autenticación:
+ * las series se piden fuera y se le pasan a este módulo ya descargadas.
  */
 
 /** Tasa libre de riesgo anual (€STR aproximado). Igual que quantConfig.ts. */
@@ -61,12 +67,141 @@ export const CLASES = {
   },
 };
 
+/* ── Correlaciones ───────────────────────────────────────────────────────── */
+
+/** Días de mercado por año, para anualizar la volatilidad de retornos diarios. */
+export const DIAS_MERCADO = 252;
+
 /**
- * Correlación supuesta entre dos clases de activo.
- * Copiado literal de assumedAssetClassCorrelation() en portfolioRiskModel.ts:
- * es el corazón del cálculo y el que hace visible la diversificación.
+ * Matriz de correlaciones reales registrada, o null si no hay ninguna.
+ * Es el único estado del módulo. La registra la capa que llama a
+ * `get_price_series`; este módulo solo la lee.
+ */
+let matrizActiva = null;
+
+/**
+ * Calcula la matriz de correlaciones reales a partir de series de niveles.
+ * Implementa el paso 8 de la guía: niveles → retornos diarios → Pearson
+ * por pares sobre las fechas comunes.
+ *
+ * @param {Array<{id:string, niveles:number[]}>} series
+ *   Una entrada por activo. `niveles` son los precios/niveles ya ALINEADOS
+ *   por fecha entre activos (así los devuelve `get_price_series`: mismo
+ *   índice ⇒ misma fecha). Rebasados o no da igual: los retornos son
+ *   invariantes a la escala.
+ * @param {{periodosPorAno?:number}} [opciones]
+ *   `periodosPorAno` anualiza la volatilidad: 252 (por defecto) para series
+ *   diarias, 52 para semanales, 12 para mensuales. La correlación no depende
+ *   de esto; solo la σ.
+ * @returns {{ids:string[], rho:Object, volatilidades:Object, observaciones:Object}}
+ *   `rho[a][b]` es la correlación de Pearson (diagonal = 1).
+ *   `volatilidades[id]` es la volatilidad ANUALIZADA de cada activo,
+ *   subproducto del mismo cálculo (desviación típica diaria × √252); la usa
+ *   volatilidadCartera() como σ real cuando la posición no trae la suya.
+ *   `observaciones[a][b]` es el nº de retornos comunes usados en cada par.
+ */
+export function correlacionesDesdeSeries(series, { periodosPorAno = DIAS_MERCADO } = {}) {
+  const limpias = (series || []).filter(
+    (s) => s && s.id && Array.isArray(s.niveles) && s.niveles.length >= 2
+  );
+  const retornos = limpias.map((s) => {
+    const r = new Array(s.niveles.length - 1).fill(NaN);
+    for (let t = 1; t < s.niveles.length; t += 1) {
+      const prev = s.niveles[t - 1];
+      const cur = s.niveles[t];
+      if (Number.isFinite(prev) && Number.isFinite(cur) && prev > 0) {
+        r[t - 1] = cur / prev - 1;
+      }
+    }
+    return { id: s.id, r };
+  });
+
+  const ids = retornos.map((s) => s.id);
+  const rho = {};
+  const volatilidades = {};
+  const observaciones = {};
+  for (const id of ids) { rho[id] = {}; observaciones[id] = {}; }
+
+  for (let i = 0; i < retornos.length; i += 1) {
+    const a = retornos[i];
+    // Volatilidad anualizada del activo, sobre sus retornos válidos.
+    const propios = a.r.filter(Number.isFinite);
+    if (propios.length >= 2) {
+      const media = propios.reduce((s, v) => s + v, 0) / propios.length;
+      const varPeriodo = propios.reduce((s, v) => s + (v - media) ** 2, 0) / (propios.length - 1);
+      volatilidades[a.id] = redondea(Math.sqrt(varPeriodo * periodosPorAno));
+    }
+
+    for (let j = i; j < retornos.length; j += 1) {
+      const b = retornos[j];
+      if (i === j) {
+        rho[a.id][a.id] = 1;
+        observaciones[a.id][a.id] = propios.length;
+        continue;
+      }
+      // Pearson sobre los retornos en que AMBOS activos tienen dato.
+      const xs = [];
+      const ys = [];
+      const n = Math.min(a.r.length, b.r.length);
+      for (let t = 0; t < n; t += 1) {
+        if (Number.isFinite(a.r[t]) && Number.isFinite(b.r[t])) {
+          xs.push(a.r[t]);
+          ys.push(b.r[t]);
+        }
+      }
+      observaciones[a.id][b.id] = xs.length;
+      observaciones[b.id][a.id] = xs.length;
+      if (xs.length < 2) continue; // sin datos comunes: el par queda SIN correlación
+      const mx = xs.reduce((s, v) => s + v, 0) / xs.length;
+      const my = ys.reduce((s, v) => s + v, 0) / ys.length;
+      let sxy = 0;
+      let sxx = 0;
+      let syy = 0;
+      for (let t = 0; t < xs.length; t += 1) {
+        sxy += (xs[t] - mx) * (ys[t] - my);
+        sxx += (xs[t] - mx) ** 2;
+        syy += (ys[t] - my) ** 2;
+      }
+      if (sxx <= 0 || syy <= 0) continue; // serie plana: correlación indefinida
+      const r = Math.max(-1, Math.min(1, sxy / Math.sqrt(sxx * syy)));
+      rho[a.id][b.id] = redondea(r);
+      rho[b.id][a.id] = redondea(r);
+    }
+  }
+
+  return { ids, rho, volatilidades, observaciones };
+}
+
+/**
+ * Registra (o retira, con null) la matriz de correlaciones reales que
+ * usará `correlacion()` para activos concretos.
+ */
+export function estableceCorrelaciones(matriz) {
+  matrizActiva = matriz || null;
+}
+
+/** La matriz registrada, por si la interfaz quiere pintarla. */
+export function correlacionesActivas() {
+  return matrizActiva;
+}
+
+/**
+ * Correlación entre dos posiciones.
+ *
+ * - Entre CLASES de activo: supuesto por clase, copiado literal de
+ *   assumedAssetClassCorrelation() en portfolioRiskModel.ts. Sigue siendo
+ *   el corazón del simulador del visitante.
+ * - Entre ACTIVOS concretos (cualquier identificador que no sea una clase):
+ *   lectura de la matriz real registrada. Si no hay matriz o al par le
+ *   faltan datos, devuelve undefined — nunca se inventa una correlación
+ *   (guía, paso 8) ni se degrada en silencio al supuesto por clase.
  */
 export function correlacion(a, b) {
+  const sonClases = a in CLASES && b in CLASES;
+  if (!sonClases) {
+    const real = matrizActiva?.rho?.[a]?.[b];
+    return Number.isFinite(real) ? real : undefined;
+  }
   if (a === b) return 0.75;
   const esBolsa = (c) => c === 'EQUITY';
   const esRentaFija = (c) => c === 'FIXED_INCOME' || c === 'MONEY_MARKET';
@@ -78,42 +213,72 @@ export function correlacion(a, b) {
 
 const redondea = (v) => Number(v.toFixed(4));
 
+/** Identificador de una posición: el id del activo o, si no hay, su clase. */
+const claveDe = (p) => p.id ?? p.clase;
+
+/**
+ * Volatilidad anual de una posición, por orden de preferencia:
+ * la traiga ella misma → la real de la matriz registrada → la de su clase.
+ */
+const volDe = (p) => {
+  if (Number.isFinite(p.volatilidad)) return p.volatilidad;
+  const real = matrizActiva?.volatilidades?.[p.id];
+  if (Number.isFinite(real)) return real;
+  return CLASES[p.clase]?.volatilidad;
+};
+
 /**
  * Volatilidad de la cartera. Raíz de la suma doble de covarianzas:
  *   σ² = Σᵢ Σⱼ wᵢ wⱼ ρᵢⱼ σᵢ σⱼ
  * Es lo que hace que el conjunto arriesgue menos que la suma de sus partes.
  *
- * @param {Array<{clase:string, peso:number}>} posiciones  pesos en % (suman 100)
+ * ρ sale de `correlacion()`: por clase en el simulador, real en cartera de
+ * activos concretos. Si a algún par o posición le faltan datos (ρ o σ),
+ * devuelve undefined en vez de calcular con cifras inventadas.
+ *
+ * @param {Array<{clase?:string, id?:string, peso:number, volatilidad?:number}>}
+ *   posiciones  pesos en % (suman 100). Con `id`, la posición se trata como
+ *   activo concreto; sin él, como clase de activo.
  */
 export function volatilidadCartera(posiciones) {
   const conPeso = posiciones.filter((p) => Number.isFinite(p.peso) && p.peso > 0);
   const total = conPeso.reduce((s, p) => s + p.peso, 0);
   if (total <= 0) return undefined;
 
-  const norm = conPeso.map((p) => ({
-    clase: p.clase,
-    peso: p.peso / total,
-    vol: CLASES[p.clase].volatilidad,
-  }));
+  const norm = [];
+  for (const p of conPeso) {
+    const vol = volDe(p);
+    if (!Number.isFinite(vol)) return undefined; // posición sin σ conocida
+    norm.push({ clave: claveDe(p), peso: p.peso / total, vol });
+  }
 
   let varianza = 0;
   for (const i of norm) {
     for (const j of norm) {
-      const rho = i.clase === j.clase ? 1 : correlacion(i.clase, j.clase);
+      const rho = i.clave === j.clave ? 1 : correlacion(i.clave, j.clave);
+      if (!Number.isFinite(rho)) return undefined; // par sin correlación conocida
       varianza += i.peso * j.peso * rho * i.vol * j.vol;
     }
   }
   return redondea(Math.sqrt(Math.max(varianza, 0)));
 }
 
-/** Rentabilidad esperada: media ponderada simple. */
+/**
+ * Rentabilidad esperada: media ponderada simple. Cada posición puede traer
+ * su propia rentabilidad anual; si no, se usa la de su clase.
+ */
 export function rentabilidadCartera(posiciones) {
   const conPeso = posiciones.filter((p) => Number.isFinite(p.peso) && p.peso > 0);
   const total = conPeso.reduce((s, p) => s + p.peso, 0);
   if (total <= 0) return undefined;
-  const r = conPeso.reduce(
-    (s, p) => s + (p.peso / total) * CLASES[p.clase].rentabilidad, 0
-  );
+  let r = 0;
+  for (const p of conPeso) {
+    const rent = Number.isFinite(p.rentabilidad)
+      ? p.rentabilidad
+      : CLASES[p.clase]?.rentabilidad;
+    if (!Number.isFinite(rent)) return undefined;
+    r += (p.peso / total) * rent;
+  }
   return redondea(r);
 }
 
@@ -137,9 +302,12 @@ export function volatilidadSinDiversificar(posiciones) {
   const conPeso = posiciones.filter((p) => Number.isFinite(p.peso) && p.peso > 0);
   const total = conPeso.reduce((s, p) => s + p.peso, 0);
   if (total <= 0) return undefined;
-  const v = conPeso.reduce(
-    (s, p) => s + (p.peso / total) * CLASES[p.clase].volatilidad, 0
-  );
+  let v = 0;
+  for (const p of conPeso) {
+    const vol = volDe(p);
+    if (!Number.isFinite(vol)) return undefined;
+    v += (p.peso / total) * vol;
+  }
   return redondea(v);
 }
 

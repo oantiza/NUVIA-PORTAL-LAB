@@ -375,24 +375,30 @@ rentabilidad.
 
 ## 7. Estado técnico
 
-**Ya hecho:** módulo de cálculo `nuvia-cartera.js` (213 líneas), extraído de
+**Ya hecho:** módulo de cálculo `nuvia-cartera.js`, extraído de
 `src/core/portfolioRiskModel.ts`, `quantConfig.ts` y `frontier.ts` de la
 plataforma. Funciones puras: volatilidad con matriz de correlaciones,
 rentabilidad esperada, Sharpe, frontera por Monte Carlo y **ahorro por
-diversificar** (cálculo propio del portal).
+diversificar** (cálculo propio del portal). Batería de verificación en
+`nuvia-cartera.test.mjs` (`node docs/nuvia-cartera.test.mjs`).
 
-**Limitación conocida:** ese módulo asume correlación por *clase de activo*
-(0,7 entre dos de bolsa). Con valores concretos eso es falso —Telefónica y BBVA
-correlacionan mucho más que un valor español y uno japonés—. Para resultados
-creíbles hacen falta **correlaciones reales entre pares**.
+**Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
+asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula
+la matriz de Pearson sobre retornos diarios a partir de las series de
+`get_price_series` (que acepta hasta 25 activos por llamada, con `frequency:
+"DAILY"` y `window: "3Y"`, y las devuelve ya alineadas por fecha), y
+`estableceCorrelaciones()` la registra para que `volatilidadCartera()` la lea.
+El supuesto por clase queda solo para el simulador del visitante, que trabaja
+por clases. Si a un par de activos le falta correlación, el cálculo devuelve
+`undefined`: nunca se inventa una ρ. Detalle en
+`IMPLEMENTACION_ANALISIS_CARTERA.md`, pasos 8 y 12.
 
-**Cómo se resuelve — decidido y verificado.** Se calcula en el cliente a
-partir de `get_price_series`, sin Cloud Function nueva. Esa función acepta
-hasta 25 activos por llamada —por encima del límite de 20 del suscriptor— y,
-con `frequency: "DAILY"` y `window: "3Y"`, devuelve series diarias de tres
-años ya alineadas por fecha entre activos: exactamente lo que hace falta para
-una correlación de Pearson por pares. El detalle técnico está en
-`IMPLEMENTACION_ANALISIS_CARTERA.md`, paso 8.
+> **Lección del contraste con datos reales (semanales, 3 años, ago-2026):**
+> el supuesto de clase erraba en las dos direcciones. Telefónica apenas
+> correlaciona ya con la banca (ρ ≈ 0,15–0,23 tras su desplome de nov-2025),
+> y los pares entre bancos (BBVA–SAN 0,79; BBVA–CABK 0,70; SAN–CABK 0,73)
+> quedan alrededor del 0,75 asumido, no muy por encima. La matriz real no es
+> un refinamiento cosmético: cambia el signo del mensaje según la cartera.
 
 **Lo que hay publicado hoy** en `cartera.html` es un build antiguo de la
 plataforma servido en un iframe, con su propio sistema de diseño. Es lo que se

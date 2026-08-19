@@ -267,6 +267,21 @@ cambia; cambia de dónde sale ρ.
 **mucho menos ahorro por diversificar** que antes. Si no baja, la matriz no se
 está usando.
 
+> **Hecho y verificado (19-08-2026), con un matiz que importa.** El módulo lee
+> ρ de la matriz real (`correlacionesDesdeSeries()` +
+> `estableceCorrelaciones()`); la firma de `volatilidadCartera()` no cambió, y
+> la batería (`node docs/nuvia-cartera.test.mjs`) pasa entera, incluida la
+> comprobación de que sin matriz no se inventa ninguna ρ (devuelve
+> `undefined`). Pero el contraste con datos reales de mercado desmintió el
+> ejemplo del enunciado: Telefónica ya no se mueve con la banca (ρ ≈ 0,15–0,23
+> con BBVA y Santander en la ventana 2023–2026, tras su desplome de nov-2025),
+> así que esa cartera concreta da HOY MÁS ahorro por diversificar que con el
+> supuesto de clase, no menos — y es el resultado correcto. Con tres valores
+> que sí se mueven juntos (mecanismo verificado con series sintéticas de
+> ρ ≈ 0,88, y con BBVA–SAN real, ρ = 0,79) el ahorro baja como predice el
+> enunciado. La prueba de que «la matriz se está usando» es doble: los pares
+> reales pesan cada uno lo suyo, y sin matriz el cálculo se niega a responder.
+
 ### Paso 13 · Portar el solapamiento
 
 **Prioritario, no un extra.** Es lo que el usuario no ve en ningún otro sitio.
