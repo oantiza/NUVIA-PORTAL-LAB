@@ -973,6 +973,33 @@ de redacción de la sección 5 de las bases.
 nadie.** Sin botón que las copie a la cartera del usuario ni enlace a
 contratarlas: eso cerraría el círculo hacia la recomendación.
 
+> **Hecho y verificado (19-08-2026).** Bloque **«Carteras modelo temáticas»**
+> (`js/nuvia-modelos.js`), visible para cualquiera SIN cuenta: cuatro
+> composiciones fijas con activos reales del catálogo, verificados uno a uno
+> contra `search_assets` en producción antes de fijarlos — «Bolsa mundial
+> indexada» (4 indexados globales), «Grandes cotizadas españolas» (IBE, ITX,
+> SAN, BBVA, TEF), «Value de gestoras independientes» (Bestinver, Cobas,
+> Azvalor, Magallanes) y «Mitad bolsa mundial, mitad bonos en euros». La
+> regla es ÚNICA para todas y la vigila `validaModelo` en la batería:
+> criterio propio del portal declarado con su **fecha de fijación**
+> (19-08-2026), pesos **a partes iguales** que suman 100, ≥3 posiciones,
+> sin repetidos. Cada tarjeta enseña tema, criterio, composición y un solo
+> control: «Ver sus métricas (historial real)» — `get_price_series` +
+> `metricasDesdeSerie` del motor del constructor, con fuente y fecha.
+> **No hay botón que copie la composición a la cartera del usuario ni
+> enlace para contratarla**, y la nota del bloque lo dice tal cual («es
+> una publicación, no es una propuesta»). `check-lenguaje` exige esas
+> declaraciones; `check-parity` exige el bloque montado.
+>
+> **Verificado en navegador** (12 comprobaciones): visibles sin sesión;
+> criterio con fecha en cada tarjeta; los ÚNICOS controles del bloque son
+> los de ver métricas (ni copiar, ni añadir, ni contratar); métricas con
+> sus tres filas y su fuente; la criba de giros prohibidos (incluidos
+> «equilibrada» y «prudente», que venden idoneidad) dio cero cruces sobre
+> el bloque renderizado; sin desbordes; suelo de 12 px. Batería: la regla
+> única pasa en las cuatro; una modelo rota acumula sus problemas uno a
+> uno; la prueba de la §5 sobre todos los textos.
+
 ---
 
 # Transversal

@@ -124,6 +124,10 @@ if (!portfolioPage.includes('js/nuvia-cuenta.js') || !portfolioPage.includes('id
 if (!portfolioPage.includes('js/nuvia-informe.js') || !portfolioPage.includes('id="informe"')) {
   throw new Error('La página de cartera no monta el informe genérico de compañía');
 }
+/* Paso 38: carteras modelo temáticas, publicadas e idénticas para todos. */
+if (!portfolioPage.includes('js/nuvia-modelos.js') || !portfolioPage.includes('id="modelos"')) {
+  throw new Error('La página de cartera no monta las carteras modelo temáticas');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

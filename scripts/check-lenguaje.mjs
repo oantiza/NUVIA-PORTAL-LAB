@@ -25,6 +25,7 @@ const FICHEROS = [
   'js/nuvia-cuenta.js',
   'js/nuvia-analisis.js',
   'js/nuvia-informe.js',
+  'js/nuvia-modelos.js',
 ];
 
 /** Patrones prohibidos, con el porqué al lado. */
@@ -86,6 +87,8 @@ const EXIGIDO = [
   ['js/nuvia-analisis.js', ['base de datos NUVIA', 'nunca se inventa', 'no es una previsión']],
   /* Paso 37: el informe es genérico, sin firma y sin recomendación. */
   ['js/nuvia-informe.js', ['idéntico para cualquiera', 'sin firma', 'no emite recomendaciones', 'base de datos NUVIA']],
+  /* Paso 38: las carteras modelo son publicación, nunca propuesta. */
+  ['js/nuvia-modelos.js', ['la misma para cualquiera', 'ni enlace para contratarla', 'No es una propuesta', 'base de datos NUVIA']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');

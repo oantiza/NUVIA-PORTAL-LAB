@@ -143,6 +143,16 @@
           </div>
 
           <div class="nuvia-lab__bloque">
+            <h2 id="modelos-title">Carteras modelo temáticas</h2>
+            <p>Composiciones fijas publicadas por el portal, idénticas para cualquiera que las mire, con su criterio y su fecha declarados. Describen un tema; no describen a ningún lector. Sus métricas se calculan sobre el historial real al abrirlas.</p>
+            <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
+              <div class="nv-note">
+                <p>Las carteras modelo necesitan JavaScript y conexión. El resto de la página se lee igualmente sin ellas.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nuvia-lab__bloque">
             <h2 id="supuestos-title">Los supuestos, a la vista</h2>
             <p>El simulador usa exactamente estas cifras. Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
             <div class="nuvia-lab__tabla-scroll">
@@ -291,6 +301,9 @@ class Component extends DCLogic {
       .catch(() => {});
     import('./js/nuvia-informe.js')
       .then((m) => { const nodo = document.getElementById('informe'); if (nodo) m.montaInforme(nodo); })
+      .catch(() => {});
+    import('./js/nuvia-modelos.js')
+      .then((m) => { const nodo = document.getElementById('modelos'); if (nodo) m.montaModelos(nodo); })
       .catch(() => {});
     const applyCompanyHeight = (height) => {
       const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));

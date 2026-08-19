@@ -623,6 +623,23 @@
 .nv-informe__filas dd { margin: 0; font-variant-numeric: tabular-nums; }
 .nv-informe__riesgos ul { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 6px; font-size: 13px; }
 
+/* Carteras modelo temáticas (paso 38) */
+.nv-modelos { display: grid; gap: var(--nv-space-3); min-inline-size: 0; }
+.nv-modelos__nota { margin: 0; font-size: 13px; color: var(--nv-text-muted); }
+.nv-modelos__lista {
+  display: grid;
+  gap: var(--nv-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+}
+.nv-modelos__tarjeta { display: grid; gap: var(--nv-space-2); align-content: start; min-inline-size: 0; }
+.nv-modelos__nombre { margin: 0; }
+.nv-modelos__tema { margin: 0; font-size: 13px; }
+.nv-modelos__criterio { margin: 0; font-size: 12px; color: var(--nv-text-muted); }
+.nv-modelos__composicion { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 4px; font-size: 13px; }
+.nv-modelos__tarjeta .nv-btn { justify-self: start; }
+.nv-modelos__metricas { display: grid; gap: var(--nv-space-2); font-size: 13px; }
+.nv-modelos__tabla th { text-align: left; }
+
 /* «Tus datos y tus derechos» (paso 34) */
 .nv-cuenta__derechos { display: grid; gap: var(--nv-space-2); min-inline-size: 0; }
 .nv-cuenta__derechos h3 { margin: 0; }

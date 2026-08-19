@@ -415,6 +415,16 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Carteras modelo temáticas (paso 38, 19-08-2026).** Bloque público en la
+página de cartera: cuatro composiciones fijas con activos reales del
+catálogo, criterio propio declarado con fecha de fijación y pesos a partes
+iguales — una regla única vigilada por la batería (`validaModelo`). Cada
+una enseña tema, criterio, composición y sus métricas del historial real
+al abrirlas. Idénticas para cualquiera; sin botón que las copie a la
+cartera del usuario ni enlace a contratarlas, y el bloque declara por qué:
+son una publicación, no una propuesta. La prueba de §5 corre sobre todos
+los textos y sobre el bloque renderizado.
+
 **Informe genérico de compañía (paso 37, 19-08-2026).** «Informe de
 compañía» en la página de cartera, con la sesión iniciada: la misma
 plantilla para todas las acciones del catálogo (qué es, tamaño y valoración,
