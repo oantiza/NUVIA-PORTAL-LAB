@@ -999,6 +999,22 @@ contratarlas: eso cerraría el círculo hacia la recomendación.
 > el bloque renderizado; sin desbordes; suelo de 12 px. Batería: la regla
 > única pasa en las cuatro; una modelo rota acumula sus problemas uno a
 > uno; la prueba de la §5 sobre todos los textos.
+>
+> **Verificado en producción (19-08-2026).** En
+> https://oantiza.github.io/NUVIA-PORTAL-LAB/cartera.html, **sin sesión
+> ninguna** (localStorage limpio): el bloque enseña las cuatro tarjetas con
+> su criterio y su fecha; los únicos controles son los cuatro «Ver sus
+> métricas (historial real)». Al abrir «Bolsa mundial indexada», métricas
+> reales de la base NUVIA: rentabilidad 3 años 67,4 %, volatilidad 12,8 %,
+> máxima caída −20,3 % (772 observaciones, cierre del 17-08-2026) — y los
+> dos productos sin historial suficiente en la base (iShares Core MSCI
+> World, Vanguard S&P 500) quedaron **declarados como excluidos del
+> cálculo**, tal y como manda la regla de fuentes. La criba de giros
+> prohibidos sobre el bloque renderizado en producción: cero cruces. Nota
+> de publicación: mientras se preparaba este paso entró en `main` una
+> mejora de la sección de impuestos (`005bf6e`, de otra sesión de trabajo);
+> el paso se rebasó encima sin tocar un solo fichero en común y `npm run
+> validate` volvió a pasar en verde sobre el estado combinado.
 
 ---
 
