@@ -456,6 +456,20 @@ ISIN completo, también.
 **Verificación.** Mover un peso debe recalcular todo **al instante**, sin botón
 de «calcular». Esa inmediatez es lo que engancha.
 
+> **Hecho y verificado (19-08-2026).** `js/nuvia-constructor.js`: hasta 5
+> posiciones que llegan del buscador (evento `nuvia:activo-elegido`), pesos
+> normalizados al 100 % y recálculo inmediato. Las métricas salen del
+> historial real: una llamada a `get_price_series` (diaria, 3 años, EUR) por
+> conjunto de activos, cacheada — mover un peso no toca la red; la serie de
+> la cartera es la combinación ponderada de las series rebasadas (comprar al
+> inicio y no tocar) y pasa por `metricasDesdeSerie()`. Un activo sin
+> historial se dice tal cual («fuera del cálculo») y el resto se renormaliza.
+> Nota de fuente con la fecha del último cierre y «base de datos NUVIA»
+> (adelanta el paso 26 en esta vista). La lógica pura tiene batería propia
+> (`docs/nuvia-constructor.test.mjs`, en `npm run test:analisis`); el flujo
+> completo está verificado con navegador real (añadir/quitar/límite/sin
+> historial/overflow a 1440 y 390/sin JS) y en producción.
+
 ### Paso 21 · El límite, comunicado antes
 
 **Hacer.** Al llegar a 5 posiciones, decir por qué y qué se gana registrándose.

@@ -410,6 +410,12 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Constructor del visitante (paso 20, 19-08-2026).** `js/nuvia-constructor.js`
+monta hasta 5 posiciones reales con pesos normalizados y recálculo instantáneo;
+rentabilidad, volatilidad y máxima caída se calculan en el navegador sobre el
+historial de `get_price_series` (3 años, diario, EUR), con la fecha del último
+cierre visible. Sin historial → fuera del cálculo, dicho tal cual.
+
 **Buscador conectado a la maestra (paso 19, 19-08-2026).** `js/nuvia-datos.js`
 abre la sesión anónima (REST de Identity Toolkit, renovada sola) y llama a las
 callable de solo lectura; `js/nuvia-buscador.js` busca por nombre, ticker o

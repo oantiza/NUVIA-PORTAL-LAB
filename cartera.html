@@ -104,10 +104,20 @@
 
           <div class="nuvia-lab__bloque">
             <h2 id="buscador-title">Busca en el catálogo</h2>
-            <p>Busca por nombre, ticker o ISIN entre los fondos, ETF, acciones e índices del catálogo. Los datos vienen de la base de datos NUVIA, de solo lectura.</p>
+            <p>Busca por nombre, ticker o ISIN entre los fondos, ETF, acciones e índices del catálogo, y elige un resultado para añadirlo a la cartera de abajo. Los datos vienen de la base de datos NUVIA, de solo lectura.</p>
             <div id="buscador" class="nv-buscador" aria-labelledby="buscador-title">
               <div class="nv-note">
                 <p>El buscador necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="constructor-title">Monta una cartera con activos reales</h2>
+            <p>Hasta cinco posiciones. Los pesos se normalizan para sumar el 100 % y las métricas —calculadas sobre el historial real de los últimos tres años— se recalculan al instante al mover cualquier peso.</p>
+            <div id="constructor" class="nv-cons" aria-labelledby="constructor-title">
+              <div class="nv-note">
+                <p>El constructor necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
               </div>
             </div>
           </div>
@@ -252,6 +262,9 @@ class Component extends DCLogic {
       .catch(() => {});
     import('./js/nuvia-buscador.js')
       .then((m) => { const nodo = document.getElementById('buscador'); if (nodo) m.montaBuscador(nodo); })
+      .catch(() => {});
+    import('./js/nuvia-constructor.js')
+      .then((m) => { const nodo = document.getElementById('constructor'); if (nodo) m.montaConstructor(nodo); })
       .catch(() => {});
     const applyCompanyHeight = (height) => {
       const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));

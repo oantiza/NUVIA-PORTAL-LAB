@@ -112,6 +112,10 @@ if (!portfolioPage.includes('js/nuvia-buscador.js') || !portfolioPage.includes('
 if (/eodhd/i.test(portfolioPage)) {
   throw new Error('La página de cartera no debe mencionar ni llamar a EODHD (bases §6)');
 }
+/* Paso 20: constructor de hasta 5 posiciones sobre historial real. */
+if (!portfolioPage.includes('js/nuvia-constructor.js') || !portfolioPage.includes('id="constructor"')) {
+  throw new Error('La página de cartera no monta el constructor de cartera del visitante');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }
