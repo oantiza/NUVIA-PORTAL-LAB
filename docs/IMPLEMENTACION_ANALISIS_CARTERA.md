@@ -293,6 +293,21 @@ dependencias de tipos. Necesita el desglose de posiciones de cada fondo
 **Verificación.** Dos ETF conocidos del mismo índice deben dar solapamiento
 cercano al 100 %. Dos de sectores distintos, cercano a 0.
 
+> **Hecho y verificado (19-08-2026).** Portado en `docs/nuvia-solapamiento.js`
+> como funciones puras: `solapamiento()` (de `overlap.ts`, Σ min de pesos
+> normalizados, casado por ISIN y por nombre normalizado como respaldo),
+> `lookThroughCartera()` (de `holdingsLookthrough.ts`, sin la capa de carga:
+> los desgloses llegan ya descargados de `get_asset_holdings`) y
+> `matrizSolapamiento()` (añadido del portal, todos los pares con la misma
+> regla que el paso 12: fondo sin desglose fuera de la matriz, nunca un valor
+> inventado). Batería en `node docs/nuvia-solapamiento.test.mjs`. Contraste
+> con carteras reales de ETF: SPY–VOO (mismo índice, misma profundidad de
+> desglose) 95,5 %; XLF–XLE (financiero vs energía) 0 %; SPY–XLF 10,6 %, el
+> peso que financieras tiene dentro del índice amplio. El repositorio
+> profesional no se ha tocado. Queda para la fase 1/3: que el catálogo del
+> portal traiga el desglose vía `get_asset_holdings` (con su caché diaria,
+> paso 11).
+
 ### Paso 14 · Concentración sectorial y geográfica
 
 **Hacer.** Agregar los pesos por sector y por país, con look-through en fondos:

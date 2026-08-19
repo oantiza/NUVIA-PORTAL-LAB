@@ -382,6 +382,13 @@ rentabilidad esperada, Sharpe, frontera por Monte Carlo y **ahorro por
 diversificar** (cálculo propio del portal). Batería de verificación en
 `nuvia-cartera.test.mjs` (`node docs/nuvia-cartera.test.mjs`).
 
+**También hecho — solapamiento y look-through (paso 13, 19-08-2026):**
+`nuvia-solapamiento.js`, portado de `src/core/overlap.ts` y
+`holdingsLookthrough.ts` sin tocar el repositorio profesional. Funciones
+puras: los desgloses llegan ya descargados de `get_asset_holdings`. Batería
+en `nuvia-solapamiento.test.mjs`; contrastado con carteras reales de ETF
+(mismo índice 95,5 %, sectores disjuntos 0 %).
+
 **Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
 asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula
 la matriz de Pearson sobre retornos diarios a partir de las series de
