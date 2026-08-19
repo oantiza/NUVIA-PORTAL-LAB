@@ -1,5 +1,6 @@
 /**
- * NUVIA — cuenta con datos mínimos (paso 28, Fase 4).
+ * NUVIA — cuenta con datos mínimos (paso 28) y consentimiento granular
+ * (paso 29), Fase 4.
  *
  * Bloque «Tu cuenta»: crear cuenta o iniciar sesión con correo y contraseña,
  * y nada más — sin teléfono, sin datos de patrimonio, sin preguntas sobre el
@@ -10,8 +11,13 @@
  * cuenta nueva (mismo usuario antes y después), así que nada se pierde al
  * registrarse. Los mensajes de error llegan en llano desde nuvia-datos.js.
  *
+ * Consentimiento (bases §2): lo necesario para el servicio no lleva casilla
+ * y se dice por qué; lo opcional —comunicaciones y análisis de uso— es
+ * opt-in, nunca premarcado, y revocable al instante desde este mismo bloque.
+ * Cada decisión se apunta con su fecha.
+ *
  * Lenguaje: describe, nunca prescribe. Registrarse es una opción que se
- * explica; no se empuja a nadie a hacerlo.
+ * explica; no se empuja a nadie a hacerlo ni a marcar casilla alguna.
  */
 
 import { maestra } from './nuvia-datos.js';
@@ -26,6 +32,81 @@ export const NOTA_QUE_APORTA = 'La cuenta gratuita irá sumando, en los '
   + 'más amplio. De momento, iniciar sesión no cambia lo que ves en la '
   + 'página: solo deja la cuenta preparada, y se dice tal cual.';
 
+/* ── Consentimiento granular (paso 29, bases §2) ── */
+
+export const CLAVE_CONSENTIMIENTOS = 'nuvia.consentimientos.v1';
+
+/**
+ * Qué se separa y por qué. Lo necesario no lleva casilla: sin ello no hay
+ * servicio, y marcarlo como elegible sería fingir una elección. Lo opcional
+ * es opt-in de verdad: apagado hasta que alguien lo encienda, y con la
+ * explicación delante de la casilla, no detrás de un enlace.
+ */
+export const CONSENTIMIENTOS = [
+  {
+    clave: 'servicio',
+    nombre: 'Cuenta y guardado de carteras',
+    necesario: true,
+    explica: 'Lo imprescindible del servicio: el correo identifica la cuenta '
+      + 'y guarda lo que decidas guardar. No se usa para nada más y por eso '
+      + 'no lleva casilla: sin esto no hay cuenta.',
+  },
+  {
+    clave: 'comunicaciones',
+    nombre: 'Comunicaciones por correo',
+    necesario: false,
+    explica: 'Recibir por correo avisos y novedades del portal. Hoy no se '
+      + 'envía ninguno; la casilla decide lo que pasará cuando existan.',
+  },
+  {
+    clave: 'comportamiento',
+    nombre: 'Análisis de uso',
+    necesario: false,
+    explica: 'Registrar con qué activos y vistas trabaja tu cuenta para '
+      + 'estudiar cómo se usa el portal. Es elaboración de perfil y hoy no '
+      + 'se hace: con la casilla apagada, no se registrará nunca.',
+  },
+];
+
+function leeTodoConsentimiento(almacen) {
+  try {
+    const todo = JSON.parse(almacen.getItem(CLAVE_CONSENTIMIENTOS) || '{}');
+    return todo && typeof todo === 'object' ? todo : {};
+  } catch { return {}; }
+}
+
+const idDeCuenta = (correo) => String(correo || '').trim().toLowerCase();
+
+/** Estado de los consentimientos de una cuenta. Lo opcional, si nadie lo ha
+ *  tocado, está apagado: el silencio nunca cuenta como un sí. */
+export function leeConsentimientos(almacen, correo) {
+  const propios = leeTodoConsentimiento(almacen)[idDeCuenta(correo)] || {};
+  const salida = {};
+  for (const c of CONSENTIMIENTOS) {
+    salida[c.clave] = c.necesario
+      ? { activo: true, necesario: true }
+      : {
+        activo: Boolean(propios[c.clave]?.activo),
+        fecha: propios[c.clave]?.fecha || null,
+      };
+  }
+  return salida;
+}
+
+/** Enciende o apaga un consentimiento opcional, con la fecha de la decisión.
+ *  Lo necesario no se toca desde aquí: no es una elección. */
+export function cambiaConsentimiento(almacen, correo, clave, activo, ahora = () => new Date().toISOString()) {
+  const definicion = CONSENTIMIENTOS.find((c) => c.clave === clave);
+  if (!definicion) return { motivo: 'desconocido' };
+  if (definicion.necesario) return { motivo: 'necesario' };
+  const todo = leeTodoConsentimiento(almacen);
+  const id = idDeCuenta(correo);
+  const decision = { activo: Boolean(activo), fecha: ahora() };
+  todo[id] = { ...(todo[id] || {}), [clave]: decision };
+  try { almacen.setItem(CLAVE_CONSENTIMIENTOS, JSON.stringify(todo)); } catch { /* sin persistencia */ }
+  return decision;
+}
+
 function el(tag, attrs = {}, texto) {
   const nodo = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs)) nodo.setAttribute(k, v);
@@ -33,9 +114,10 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
-export function montaCuenta(raiz, { cliente = null } = {}) {
+export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
+  const memoria = almacen || (typeof localStorage !== 'undefined' ? localStorage : null);
 
   raiz.textContent = '';
 
@@ -64,6 +146,33 @@ export function montaCuenta(raiz, { cliente = null } = {}) {
     }
   }
 
+  /** Fila de un consentimiento: casilla (si es opcional), nombre y porqué. */
+  function filaConsentimiento(definicion, estado, correo) {
+    const fila = el('div', { class: 'nv-cuenta__permiso' });
+    const linea = el('label', { class: 'nv-cuenta__permiso-linea', for: `permiso-${definicion.clave}` });
+    let casilla = null;
+    if (definicion.necesario) {
+      linea.append(el('span', { class: 'nv-cuenta__permiso-nombre' }, definicion.nombre));
+      linea.append(el('span', { class: 'nv-tag' }, 'Necesario'));
+    } else {
+      casilla = el('input', { type: 'checkbox', id: `permiso-${definicion.clave}` });
+      casilla.checked = Boolean(estado?.activo);
+      linea.append(casilla);
+      linea.append(el('span', { class: 'nv-cuenta__permiso-nombre' }, definicion.nombre));
+      linea.append(el('span', { class: 'nv-tag' }, 'Opcional'));
+      if (correo != null) {
+        casilla.addEventListener('change', () => {
+          cambiaConsentimiento(memoria, correo, definicion.clave, casilla.checked);
+          avisa(casilla.checked
+            ? `Activado: ${definicion.nombre.toLowerCase()}. Puedes apagarlo aquí cuando quieras.`
+            : `Desactivado: ${definicion.nombre.toLowerCase()}. Apuntado con su fecha.`);
+        });
+      }
+    }
+    fila.append(linea, el('p', { class: 'nv-cuenta__permiso-explica' }, definicion.explica));
+    return { fila, casilla };
+  }
+
   function pintaConectado(sesion) {
     cuerpo.textContent = '';
     avisa('');
@@ -75,6 +184,18 @@ export function montaCuenta(raiz, { cliente = null } = {}) {
 
     const nota = el('p', { class: 'nv-cuenta__nota' }, NOTA_QUE_APORTA);
 
+    const permisos = el('div', { class: 'nv-cuenta__permisos' });
+    permisos.append(el('h3', {}, 'Tus permisos'));
+    permisos.append(el('p', { class: 'nv-cuenta__nota' },
+      'Lo opcional se decide aquí, casilla a casilla, y se puede cambiar '
+      + 'cuando quieras: se aplica al momento y cada decisión queda apuntada '
+      + 'con su fecha. De momento se guarda en este navegador; pasará a tu '
+      + 'cuenta en la nube con la persistencia de los próximos pasos.'));
+    const estado29 = leeConsentimientos(memoria, sesion.correo);
+    for (const definicion of CONSENTIMIENTOS) {
+      permisos.append(filaConsentimiento(definicion, estado29[definicion.clave], sesion.correo).fila);
+    }
+
     const salir = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Cerrar sesión');
     salir.addEventListener('click', () => {
       const s = datos.cierraSesion();
@@ -83,7 +204,7 @@ export function montaCuenta(raiz, { cliente = null } = {}) {
       void s;
     });
 
-    cuerpo.append(quien, nota, salir);
+    cuerpo.append(quien, nota, permisos, salir);
   }
 
   function pintaDesconectado() {
@@ -114,6 +235,17 @@ export function montaCuenta(raiz, { cliente = null } = {}) {
     cajaClave.append(clave);
     campoClave.append(cajaClave);
 
+    /* Consentimiento granular en el alta (paso 29): lo necesario se explica
+       sin casilla; lo opcional arranca apagado y nadie lo premarca. */
+    const permisos = el('fieldset', { class: 'nv-cuenta__permisos nv-cuenta__permisos--alta' });
+    permisos.append(el('legend', {}, 'Al crear la cuenta'));
+    const casillas = new Map();
+    for (const definicion of CONSENTIMIENTOS) {
+      const { fila, casilla } = filaConsentimiento(definicion, { activo: false }, null);
+      permisos.append(fila);
+      if (casilla) casillas.set(definicion.clave, casilla);
+    }
+
     const botones = el('div', { class: 'nv-cuenta__botones' });
     const crear = el('button', { type: 'submit', class: 'nv-btn' }, 'Crear cuenta');
     const entrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Iniciar sesión');
@@ -121,12 +253,15 @@ export function montaCuenta(raiz, { cliente = null } = {}) {
       'He olvidado la contraseña');
     botones.append(crear, entrar);
 
-    forma.append(campoCorreo, campoClave, botones, olvido);
+    forma.append(campoCorreo, campoClave, permisos, botones, olvido);
 
     forma.addEventListener('submit', (evento) => {
       evento.preventDefault();
       protege(crear, async () => {
         const s = await datos.creaCuenta(correo.value, clave.value);
+        for (const [clave29, casilla] of casillas) {
+          cambiaConsentimiento(memoria, s.correo, clave29, casilla.checked);
+        }
         pintaConectado(s);
         avisa('Cuenta creada. Sesión iniciada en este navegador.');
       });

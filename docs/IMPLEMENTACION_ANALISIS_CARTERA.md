@@ -674,6 +674,32 @@ idoneidad, que es exactamente lo que la norma regula.
 (opcional) y de análisis de comportamiento (opcional y explicado). Revocable
 desde el perfil.
 
+> **Hecho y verificado (19-08-2026).** `js/nuvia-cuenta.js` define
+> `CONSENTIMIENTOS` (uno necesario —cuenta y guardado— y dos opcionales
+> —comunicaciones por correo y análisis de uso—), con `leeConsentimientos` y
+> `cambiaConsentimiento` (lógica pura, probada). Reglas de las bases §2 hechas
+> código: lo necesario no lleva casilla y se explica por qué (marcarlo sería
+> fingir una elección); lo opcional es opt-in real —apagado hasta que alguien
+> lo encienda, con la explicación delante de la casilla— y **revocable al
+> instante** desde el propio bloque «Tus permisos»; cada decisión se apunta con
+> su fecha. El silencio nunca cuenta como sí: sin decisión previa, lo opcional
+> se lee apagado. El análisis de uso se nombra como lo que es —elaboración de
+> perfil— y declara que, apagado, «no se registrará nunca» (declaración que
+> `check-lenguaje` exige). En el alta las casillas opcionales salen sin
+> premarcar; al crear la cuenta se guardan las que el visitante haya marcado.
+> Persistencia hoy en `localStorage` por cuenta (clave `nuvia.consentimientos.v1`,
+> id = correo normalizado); pasará a la nube con el paso 30, y se dice tal cual.
+>
+> **Verificado.** Batería ampliada en `docs/nuvia-cuenta.test.mjs` (necesario
+> siempre activo e intocable, opcional apagado por defecto, activar/revocar con
+> fecha, normalización del correo, aislamiento entre cuentas, clave desconocida
+> rechazada, textos sin jerga de consejo). En navegador con Identity Toolkit
+> simulado: alta sin casillas premarcadas, marcar en el alta persiste el
+> permiso, revocar en caliente se aplica y sobrevive a la recarga, lo necesario
+> sin casilla. `npm run validate` en verde. Sin desbordes a 1440/1024/390
+> (un `<fieldset>` pedía `min-inline-size:0` para no imponer su ancho de
+> contenido en móvil; corregido).
+
 ### Paso 30 · Persistencia en la nube
 
 **Hacer.** Guardar solo lo mínimo: identificador de activos y pesos. Ni el

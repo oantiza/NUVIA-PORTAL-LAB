@@ -10,7 +10,10 @@
  *   node docs/nuvia-cuenta.test.mjs
  */
 import { creaClienteMaestra } from '../js/nuvia-datos.js';
-import { NOTA_DATOS_MINIMOS, NOTA_QUE_APORTA } from '../js/nuvia-cuenta.js';
+import {
+  NOTA_DATOS_MINIMOS, NOTA_QUE_APORTA,
+  CONSENTIMIENTOS, leeConsentimientos, cambiaConsentimiento,
+} from '../js/nuvia-cuenta.js';
 
 let fallos = 0;
 function comprueba(nombre, condicion, detalle = '') {
@@ -161,8 +164,55 @@ console.log('\n— Los textos del bloque dicen lo mínimo y lo dicen claro —')
     !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_DATOS_MINIMOS + NOTA_QUE_APORTA));
 }
 
+console.log('\n— Consentimiento granular: lo opcional es opt-in (paso 29) —');
+{
+  const almacen = almacenFalso();
+  const correo = 'Persona@Nuvia.Example';
+  const inicial = leeConsentimientos(almacen, correo);
+  comprueba('Lo necesario está siempre activo y marcado como tal',
+    inicial.servicio.activo === true && inicial.servicio.necesario === true);
+  comprueba('Lo opcional arranca apagado si nadie lo ha tocado',
+    inicial.comunicaciones.activo === false && inicial.comportamiento.activo === false);
+  comprueba('Sin decisión previa, lo opcional no trae fecha',
+    inicial.comunicaciones.fecha === null);
+
+  const d = cambiaConsentimiento(almacen, correo, 'comunicaciones', true, () => '2026-08-19T10:00:00Z');
+  comprueba('Activar un opcional lo enciende y apunta la fecha',
+    d.activo === true && d.fecha === '2026-08-19T10:00:00Z');
+  const trasActivar = leeConsentimientos(almacen, correo);
+  comprueba('…y queda persistido', trasActivar.comunicaciones.activo === true
+    && trasActivar.comunicaciones.fecha === '2026-08-19T10:00:00Z');
+
+  comprueba('El correo se normaliza (mayúsculas/minúsculas dan la misma cuenta)',
+    leeConsentimientos(almacen, 'persona@nuvia.example').comunicaciones.activo === true);
+
+  const revoca = cambiaConsentimiento(almacen, correo, 'comunicaciones', false, () => '2026-08-20T09:00:00Z');
+  comprueba('Revocar apaga y vuelve a apuntar la fecha del cambio',
+    revoca.activo === false && revoca.fecha === '2026-08-20T09:00:00Z'
+    && leeConsentimientos(almacen, correo).comunicaciones.activo === false);
+
+  comprueba('Lo necesario no se puede cambiar desde aquí (no es una elección)',
+    cambiaConsentimiento(almacen, correo, 'servicio', false).motivo === 'necesario'
+    && leeConsentimientos(almacen, correo).servicio.activo === true);
+  comprueba('Una clave desconocida se rechaza',
+    cambiaConsentimiento(almacen, correo, 'inventada', true).motivo === 'desconocido');
+
+  comprueba('Las cuentas no comparten permisos',
+    leeConsentimientos(almacen, 'otra@nuvia.example').comunicaciones.activo === false);
+
+  const opcionales = CONSENTIMIENTOS.filter((c) => !c.necesario);
+  comprueba('Hay al menos comunicaciones y análisis de uso como opcionales',
+    opcionales.some((c) => c.clave === 'comunicaciones') && opcionales.some((c) => c.clave === 'comportamiento'));
+  comprueba('Cada consentimiento explica su porqué antes de la casilla',
+    CONSENTIMIENTOS.every((c) => typeof c.explica === 'string' && c.explica.length > 20));
+  comprueba('El análisis de uso declara que apagado no registra nada',
+    CONSENTIMIENTOS.find((c) => c.clave === 'comportamiento').explica.includes('no se registrará nunca'));
+  comprueba('Los textos de consentimiento describen sin aconsejar',
+    !CONSENTIMIENTOS.some((c) => /mejor|recomendad|óptim|conviene|deberías|ideal para/i.test(c.explica + c.nombre)));
+}
+
 if (fallos) {
   console.error(`\n${fallos} comprobación(es) en rojo.`);
   process.exit(1);
 }
-console.log('\nTodo en verde: registro con datos mínimos (paso 28).');
+console.log('\nTodo en verde: registro con datos mínimos (paso 28) y consentimiento granular (paso 29).');

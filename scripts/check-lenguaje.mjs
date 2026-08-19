@@ -74,7 +74,9 @@ const EXIGIDO = [
   ['js/nuvia-constructor.js', ['Datos de cierre', 'base de datos NUVIA']],
   /* Paso 28: el registro pide lo mínimo y lo declara; nada de teléfono,
      patrimonio ni cuestionarios de perfil. */
-  ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio']],
+  /* Paso 29: lo opcional es opt-in de verdad; se declara que apagado no
+     registra nada. */
+  ['js/nuvia-cuenta.js', ['correo y contraseña', 'Sin teléfono, sin datos de patrimonio', 'no se registrará nunca']],
 ];
 for (const [fichero, declaraciones] of EXIGIDO) {
   const texto = await readFile(resolve(root, fichero), 'utf8');

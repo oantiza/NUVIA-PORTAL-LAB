@@ -415,6 +415,18 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Consentimiento granular (paso 29, 19-08-2026).** El bloque «Tu cuenta»
+separa lo necesario (cuenta y guardado, sin casilla y explicado) de lo
+opcional (comunicaciones y análisis de uso). Lo opcional es opt-in de verdad:
+apagado hasta que alguien lo encienda, con el porqué delante de la casilla, y
+revocable al instante; cada decisión se apunta con fecha y el silencio nunca
+cuenta como sí. El análisis de uso se nombra como elaboración de perfil y
+declara que, apagado, no registra nada. `js/nuvia-cuenta.js`
+(`CONSENTIMIENTOS`, `leeConsentimientos`, `cambiaConsentimiento`) con batería
+propia y verificación en navegador; hoy en `localStorage` por cuenta, a la
+nube en el paso 30. `check-lenguaje` exige la declaración de que apagado no
+registra.
+
 **Fase 4 en marcha — registro con datos mínimos (paso 28, 19-08-2026).** La
 revisión jurídica quedó validada por Óscar ese mismo día (nota en §2) y se
 abre el registro: correo y contraseña, nada más — sin teléfono, sin patrimonio
