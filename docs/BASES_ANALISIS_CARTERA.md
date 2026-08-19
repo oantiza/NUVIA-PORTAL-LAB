@@ -300,35 +300,66 @@ cuenta, se le ofrece migrarlas con permiso explícito. Nunca en silencio.
 clases de activo. Es lo que hace la herramienta interesante y no compromete el
 cumplimiento, porque elige él.
 
-**Origen de los datos de mercado.** Bases de datos propias, alimentadas por
-**EODHD** (cierres históricos y fundamentales; ya en uso en la app de empresas,
-con la atribución «vía EODHD» que exige la licencia) y por **fuentes de libre
-acceso** para el resto. Las fuentes libres suelen exigir atribución aunque
-permitan redistribución: se cita siempre en la nota al pie del gráfico.
+**Origen de los datos de mercado — decisión revisada.** Se reutiliza
+**`bbdd-activos-financieros`**, la base de datos maestra de la plataforma
+profesional (Firestore, alimentada por EODHD y otras fuentes en `functions_python`
+de `oantiza/BDB-ACTIVOS`). Ya tiene ~1.200 activos con volatilidades y
+fundamentales calculados. No se monta un proceso propio de descarga y cálculo.
 
-El grueso —volatilidades, correlaciones, desgloses geográfico y sectorial— **se
-publica precalculado** con periodicidad a definir: es lo que hace el simulador
-instantáneo y sin coste por consulta.
+> **EODHD solo se toca en Análisis y valoración de empresas** (la aplicación
+> ya existente, `company-analysis/`, que muestra la atribución «vía EODHD»).
+> El simulador de cartera de esta sección **no llama a EODHD en ningún punto**,
+> ni directo ni a través de un proceso propio: todo pasa por las Cloud
+> Functions de solo lectura de `bbdd-activos-financieros`, que ya trae los
+> datos calculados. Son dos rutas de datos distintas dentro del mismo proyecto
+> Firebase; no confundirlas al implementar.
 
-> **Las correlaciones entre pares hay que calcularlas**, EODHD no las sirve
-> hechas. Salen de las series de cierre y son N²/2 pares: inviable en el
-> navegador y en vivo. Es precisamente donde la base de datos propia aporta el
-> valor. Un proceso periódico descarga cierres, calcula la matriz y publica un
-> fichero compacto que el portal consume.
+**De solo consulta. Sin excepción.** El portal no escribe en `bbdd-activos-financieros`
+bajo ningún concepto. Las propias reglas de Firestore ya lo garantizan por
+diseño: `assets/` tiene `allow read, write: if false` para el cliente; el único
+acceso es vía Cloud Functions con Admin SDK. El portal consumirá esas mismas
+Cloud Functions —`search_assets`, `get_asset_detail`, `get_asset_holdings`,
+`get_price_series`—, nunca Firestore directo.
 
-**Todo con datos de cierre del día anterior. Sin cotización en vivo.** En fondos
-de inversión el valor liquidativo es diario, así que «en vivo» no significa nada;
-en acciones no aporta al propósito educativo de la sección. Queda como posible
-extra del nivel de pago, no como parte del diseño.
+**Una base de datos aparte, más adelante, para lo que sí escribe el portal**
+—carteras guardadas, cuentas, datos de clientes—. Eso no toca la maestra. Se
+abrirá cuando haga falta (fase 4); no antes.
 
-Esto simplifica la arquitectura: **no hay llamadas externas en el camino crítico
-del cálculo.** El simulador funciona íntegramente con datos precalculados y
-sigue respondiendo aunque el proveedor falle.
+**Acceso del visitante: Firebase Anonymous Auth.** Las Cloud Functions exigen
+`request.auth != null` con límite de 120 llamadas/minuto por UID. Con Anonymous
+Auth, cada visitante obtiene un UID al cargar la página y cae en ese sistema tal
+cual está, sin tocar una sola línea del código profesional. Se descarta una
+«autorización del programa» (clave compartida, App Check en solitario): exigiría
+modificar las Cloud Functions del proyecto profesional para un problema que
+Anonymous Auth ya resuelve sin tocarlas.
 
-**Catálogo.** ~1.200 activos: unos 500 fondos de inversión, 500 acciones y ETF.
-Tamaño escogido para cubrir lo que un particular querrá probar sin que la matriz
-de correlaciones se dispare (1.200 activos son ~720.000 pares, ~1 MB comprimido;
-y no hace falta servirla entera, solo los pares de la cartera consultada).
+> **Beneficio no buscado.** Firebase permite vincular una cuenta anónima a una
+> cuenta real al registrarse, conservando el mismo UID. Resuelve casi solo la
+> migración de local a nube de la que ya hablan estas bases: no hace falta un
+> proceso de migración a mano.
+
+**Consecuencia que hay que asumir con los ojos abiertos.** Esto cambia el
+principio de «sin backend por usuario» que regía cuando la fuente era EODHD
+propio: ya no es servir un fichero estático, es una llamada real a Cloud
+Functions por cada búsqueda. Tiene coste por invocación —pequeño, pero real y no
+gratuito a escala—. Es un cambio de arquitectura, no un matiz.
+
+> **Pendiente de verificar antes de implementar.** Ninguna de las Cloud
+> Functions existentes sirve la matriz de correlaciones entre pares, que sigue
+> siendo necesaria para que la frontera eficiente sea creíble con valores
+> concretos (ver limitación conocida, sección 7). Si hace falta una función
+> nueva, eso **sí es escribir código en el repositorio de la plataforma
+> profesional** —no es "solo consulta"— y es una decisión distinta, que requiere
+> acuerdo explícito antes de tocar ese código.
+
+**Datos de cierre, no en vivo,** salvo que una Cloud Function ya sirva otra cosa:
+en fondos el valor liquidativo es diario y «en vivo» no aporta al propósito
+educativo de la sección.
+
+**Catálogo.** ~1.200 activos ya existentes en `bbdd-activos-financieros`: fondos,
+acciones y ETF. No lo construye el portal; lo consulta. Sigue aplicando la
+restricción de las bases, sección 1: el catálogo visible al usuario se filtra
+por criterio propio, no por lo que la maestra tenga volcado.
 
 **Análisis previstos.** Consolidación de posiciones de varias entidades,
 **solapamiento entre fondos y ETF**, concentración sectorial y geográfica,
@@ -353,8 +384,13 @@ diversificar** (cálculo propio del portal).
 **Limitación conocida:** ese módulo asume correlación por *clase de activo*
 (0,7 entre dos de bolsa). Con valores concretos eso es falso —Telefónica y BBVA
 correlacionan mucho más que un valor español y uno japonés—. Para resultados
-creíbles hacen falta **correlaciones reales entre pares**, que existen en las
-bases de datos propias.
+creíbles hacen falta **correlaciones reales entre pares**.
+
+**Cómo se resuelve, tras la decisión de reutilizar `bbdd-activos-financieros`
+(sección 6):** ninguna Cloud Function existente sirve hoy esa matriz. O se
+confirma que puede derivarse de `get_price_series` en el cliente, o hace falta
+una función nueva en el repositorio de la plataforma profesional —lo segundo
+requiere acuerdo explícito antes de tocar ese código, no es una simple consulta.
 
 **Lo que hay publicado hoy** en `cartera.html` es un build antiguo de la
 plataforma servido en un iframe, con su propio sistema de diseño. Es lo que se
@@ -398,7 +434,12 @@ va a sustituir.
 
 4. **Unidad de «prueba» del visitante.** Propuesta: la cartera creada, no el
    cálculo — así puede mover pesos y recalcular sin gastar cupo.
-5. **Periodicidad de actualización** de los datos precalculados.
-6. **Infraestructura de cuentas y pago.** El portal es estático en GitHub Pages;
-   la app de empresas ya usa Firebase Auth. Decidir si se reutiliza.
+5. **Periodicidad de actualización.** Ya no aplica a volatilidades y correlaciones
+   —viven en la maestra y las mantiene la plataforma profesional—; sigue abierta
+   para cualquier dato que el portal precalcule por su cuenta.
+6. ~~Infraestructura de cuentas.~~ **Resuelta:** se reutiliza Firebase del
+   proyecto `bbdd-activos-financieros`, con Anonymous Auth para el visitante
+   (sección 6). Queda abierto solo el pago (pasarela, facturación).
 7. **Supuestos de mercado** para el modo por clases: pendientes de validación.
+8. **Matriz de correlaciones:** confirmar si sale de `get_price_series` en
+   cliente o requiere una Cloud Function nueva (sección 7).

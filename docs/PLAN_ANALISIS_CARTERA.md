@@ -47,28 +47,29 @@ las bases. Ningún modelo recuerda la sesión anterior.
 
 ---
 
-## Fase 1 · Los datos
+## Fase 1 · Integración con la base maestra
 
-**El cuello de botella real del proyecto.** Modelo: **Fable 5** — es código de
-tratamiento de datos donde un error se propaga a todas las cifras.
+**Ya no es "el cuello de botella real" — se resolvió el problema de fondo al
+decidir reutilizar `bbdd-activos-financieros`.** El trabajo pasa de construir
+un pipeline de datos propio a conectar con Cloud Functions ya existentes, de
+solo lectura. Modelo: **Fable 5** para la integración técnica; el riesgo ya no
+es de cálculo, es de coste e integración correcta.
 
-1. **Definir el catálogo.** ~1.200 activos: 500 fondos, 500 acciones, ETF.
-   Criterio propio de selección (ver bases, sección 1: el catálogo no lo decide
-   quién aporta los datos).
-2. **Proceso de precálculo.** Descarga cierres de EODHD, calcula volatilidades
-   a 1/3/5 años y **la matriz de correlaciones entre pares**.
-3. **Publicar el fichero.** Formato compacto; servir solo los pares de la
-   cartera consultada, no la matriz entera.
-4. **Automatizar** con la periodicidad decidida en la fase 0.
+1. **Firebase Anonymous Auth** en el portal, para que el visitante consulte
+   sin registrarse (las Cloud Functions exigen `request.auth != null`).
+2. **Conectar con las Cloud Functions existentes**: `search_assets`,
+   `get_asset_detail`, `get_asset_holdings`, `get_price_series`.
+3. **Resolver la matriz de correlaciones.** Ninguna función la sirve hoy.
+   Confirmar si sale de `get_price_series` calculada en cliente, o si hace
+   falta una función nueva en el repositorio de la plataforma profesional
+   —eso último requiere acuerdo explícito, no es "solo consulta".
+4. **Medir el coste real** por invocación, y proyectarlo a volumen.
+5. **Definir el catálogo visible** en el portal por criterio propio, sobre el
+   catálogo completo de la maestra.
 
-> **Esto resuelve la limitación conocida** de `nuvia-cartera.js`: hoy asume
-> correlación por clase de activo, y con valores concretos eso da fronteras
-> demasiado optimistas.
-
-**Entregable:** fichero de datos publicado + proceso reproducible.
-**Verificación:** contrastar correlaciones calculadas contra las de la
-plataforma OAA para un puñado de pares conocidos.
-
+> **Consecuencia que hay que asumir.** Esto cambia el principio de "sin
+> backend por usuario": ya no es un fichero estático, es una llamada real a
+> Cloud Functions por visitante. Tiene coste, aunque pequeño.
 ---
 
 ## Fase 2 · Completar el motor de cálculo

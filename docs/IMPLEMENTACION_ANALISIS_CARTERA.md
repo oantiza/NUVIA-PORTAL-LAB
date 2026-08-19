@@ -77,15 +77,20 @@ diferencia entre hoy y hace una semana es despreciable.
 **Recomendación:** semanal para correlaciones y volatilidades; diaria para
 precios de cierre si se muestran.
 
-### Paso 4 · Infraestructura de cuentas
+### Paso 4 · Infraestructura de cuentas — resuelto
 
-**Hacer.** Decidir si se reutiliza Firebase Auth (ya en uso en la app de
-empresas, proyecto `bbdd-activos-financieros`) o se monta aparte.
+**Decisión tomada, no queda por decidir.** Se reutiliza Firebase del proyecto
+`bbdd-activos-financieros`: Anonymous Auth para el visitante (paso 6), cuentas
+reales vinculadas para registrado y suscriptor (fase 4). El acceso a datos de
+la maestra es de solo lectura vía Cloud Functions; los datos que el portal
+escriba (carteras, cuentas) van, cuando haga falta, en una base **aparte**
+—decisión de las bases, sección 6— nunca en la maestra.
 
-**A favor de reutilizar:** ya funciona, ya está pagado, un solo inicio de sesión
-para todo el portal.
-**En contra:** mezcla el proyecto profesional con el portal público; conviene
-comprobar que las reglas de Firestore separan bien ambos mundos.
+**Verificación.** Antes de dar este paso por cerrado del todo: confirmar que
+las reglas de Firestore actuales (`av_watchlist`, `av_informes`, etc., ligadas
+a `esOscar()`) no interfieren con usuarios anónimos del portal. Por diseño no
+deberían —esas reglas exigen emails concretos verificados—, pero conviene
+probarlo antes de depender de ello.
 
 **Verificación.** Escribir en una línea qué pasa si alguien se registra en el
 portal: dónde queda su cuenta y qué puede ver.
@@ -104,87 +109,99 @@ publicar.
 
 ---
 
-# FASE 1 · Datos
+# FASE 1 · Integración con la base maestra
 
-El cuello de botella real. Aquí se resuelve la limitación conocida del motor.
+**Cambia por completo respecto a la versión anterior de este documento.** Ya no
+se monta un proceso propio de descarga y cálculo: se reutiliza
+`bbdd-activos-financieros`, la base de datos de la plataforma profesional
+(ver bases, sección 6). El trabajo pasa de "construir datos" a "conectar con
+los que ya existen, de solo lectura".
 
-### Paso 6 · Definir el catálogo
+### Paso 6 · Dar de alta Firebase Anonymous Auth en el portal
 
-**Hacer.** Componer la lista de ~1.200 activos: unos 500 fondos, 500 acciones,
-resto ETF. Criterio de selección **propio**: relevancia para un particular
-español, cobertura de las principales bolsas y gestoras, y presencia de los
-productos que se encuentran habitualmente en banca comercial.
+**Hacer.** Añadir el SDK cliente de Firebase al portal, apuntando al proyecto
+`bbdd-activos-financieros`. Al cargar la sección, si no hay sesión, iniciar
+sesión anónima automáticamente.
 
-**Formato.** Un `catalogo.json` con, por activo: `id`, `isin`, `nombre`, `tipo`
-(fondo/acción/ETF), `divisa`, `pais`, `sector`, `clase` (equity/fixed/money/real).
+**Verificación.** Abrir en incógnito, cargar la sección y comprobar en la
+consola de Firebase que aparece un nuevo usuario anónimo. Sin acción del
+visitante: tiene que ser invisible para él.
 
-**Verificación.** Buscar diez valores que un cliente típico tendría —los del
-IBEX grandes, un par de fondos indexados conocidos, un ETF global— y comprobar
-que están todos.
+> **No mezclar con las cuentas del portal.** Este UID anónimo es solo para
+> autorizar las consultas de solo lectura. La cuenta que el usuario cree al
+> registrarse en NUVIA (fase 4) es otra cosa; se vincula, no se confunde.
 
-> **Cuidado.** Las bases prohíben que el catálogo lo determine quién aporta los
-> datos. Si mañana una gestora ofrece su gama «para que la tengáis», entra por
-> criterio propio o no entra.
+### Paso 7 · Probar las Cloud Functions existentes desde el portal
 
-### Paso 7 · Descargar las series de cierre
+**Hacer.** Llamar a `search_assets`, `get_asset_detail`, `get_asset_holdings` y
+`get_price_series` desde un prototipo mínimo, autenticado solo con el UID
+anónimo del paso 6.
 
-**Hacer.** Script que, para cada activo del catálogo, descarga de EODHD el
-histórico de cierres ajustados de los últimos 5 años. Guardar en crudo antes de
-procesar: si el cálculo cambia, no hay que volver a descargar.
+**Verificación.** Las cuatro responden sin error de permisos. Si alguna
+rechaza al usuario anónimo pese a pasar `request.auth != null`, revisar si
+tiene una comprobación adicional (por ejemplo, email verificado) que excluya
+cuentas anónimas — habría que pedir un ajuste en el repositorio profesional.
 
-**Verificación.** Contar activos con menos de 3 años de historia: esos no
-pueden dar volatilidad a 3 años y hay que marcarlos, no inventarles el dato.
+### Paso 8 · Resolver la matriz de correlaciones
 
-### Paso 8 · Calcular volatilidades
+**El paso que arregla la limitación del motor actual, y el más incierto.**
 
-**Hacer.** Para cada activo, volatilidad anualizada a 1, 3 y 5 años sobre
-rendimientos logarítmicos diarios: `σ_anual = σ_diaria × √252`.
+**Hacer, en este orden:**
+1. Comprobar si `get_price_series` devuelve suficiente histórico como para
+   calcular correlaciones de Pearson **en el cliente**, para los activos de una
+   cartera concreta (máximo 20 → 190 pares, asumible en el navegador).
+2. Si no alcanza, plantear una Cloud Function nueva que la devuelva ya
+   calculada. **Esto es escribir código en el repositorio de la plataforma
+   profesional** (`oantiza/BDB-ACTIVOS`), no una consulta: requiere acuerdo
+   explícito antes de tocarlo, con las mismas garantías de solo lectura sobre
+   los datos y sin afectar al rendimiento de la app profesional.
 
-**Verificación.** Contrastar cinco valores contra la plataforma OAA, que ya los
-calcula. Deben coincidir en el primer decimal. Si no, hay una diferencia de
-método que hay que entender antes de seguir.
-
-### Paso 9 · Calcular la matriz de correlaciones
-
-**El paso que arregla la limitación del motor actual.**
-
-**Hacer.** Correlación de Pearson entre rendimientos diarios de cada par, con
-ventana de 3 años. Son ~720.000 pares para 1.200 activos.
-
-Guardar solo el triangular superior; la matriz es simétrica. `float32` basta:
-la precisión de una correlación no necesita más.
-
-**Verificación.** Comprobaciones de coherencia:
+**Verificación.** Comprobaciones de coherencia sobre el resultado, sea cual sea
+el camino:
 - La diagonal debe ser 1.
 - Telefónica–BBVA debe salir claramente por encima de Telefónica–Toyota.
 - Dos ETF del mismo índice deben salir cerca de 0,99.
 - Ningún valor fuera de [−1, 1].
 
-### Paso 10 · Publicar el fichero de datos
+### Paso 9 · Definir el catálogo visible en el portal
 
-**Hacer.** No servir la matriz entera. Dos opciones:
+**Hacer.** El catálogo completo ya existe en la maestra; el portal filtra qué
+parte muestra. Criterio **propio** (bases, sección 1): relevancia para un
+particular español, cobertura de las principales bolsas y gestoras, presencia
+de productos habituales en banca comercial.
 
-**A · Fichero por activo.** Para cada uno, sus correlaciones con el resto.
-1.200 ficheros pequeños; el navegador descarga solo los de la cartera. Sencillo
-y cacheable.
+**Verificación.** Buscar diez valores que un cliente típico tendría —IBEX
+grandes, fondos indexados conocidos, un ETF global— y comprobar que
+`search_assets` los devuelve dentro del filtro elegido.
 
-**B · Endpoint que devuelve el submatriz.** Menos ficheros, pero necesita
-servidor. Contradice el principio de «sin backend por usuario».
+> **Cuidado, sigue aplicando.** El catálogo no lo determina quién aporta los
+> datos ni qué tiene la maestra volcado. Si mañana una gestora ofrece su gama
+> «para que la tengáis», entra por criterio propio o no entra.
 
-**Recomendación: A.** Encaja con el portal estático y con GitHub Pages.
+### Paso 10 · Medir el coste real
 
-**Verificación.** Una cartera de 20 activos debe resolverse descargando 20
-ficheros pequeños, no un MB. Medir el total transferido.
+**Hacer.** Con el prototipo del paso 7, estimar invocaciones por sesión de
+usuario típica (búsqueda + varias fichas + un cálculo de cartera) y proyectar
+coste mensual a distintos volúmenes de visitantes.
 
-### Paso 11 · Automatizar el proceso
+**Por qué este paso no existía antes.** La versión anterior de este plan no
+tenía coste marginal por visitante —todo era estático—. Ahora sí lo hay, y
+conviene conocerlo antes de que el nivel gratuito escale sin control.
 
-**Hacer.** Script único que encadene pasos 7–10, ejecutable con un comando y
-programado con la periodicidad del paso 3. Debe registrar qué activos falló y
-por qué, sin abortar el conjunto.
+**Verificación.** Cifra en euros/mes a 1.000, 10.000 y 100.000 visitantes
+mensuales, con margen si `optimize_portfolio` u otras funciones pesadas entran
+en el camino del visitante (no deberían: son de nivel suscriptor).
 
-**Verificación.** Ejecutarlo dos veces seguidas: la segunda no debe romper nada
-ni duplicar datos. Y si EODHD falla a mitad, los datos anteriores siguen
-publicados y válidos.
+### Paso 11 · Cachear en el cliente lo que no cambia en el día
+
+**Hacer.** Los datos de una ficha de activo no cambian en el mismo día. Cachear
+en el navegador (`localStorage` o similar) las respuestas de `get_asset_detail`
+y `get_asset_holdings` con expiración diaria, para no repetir la llamada si el
+usuario vuelve a mirar el mismo activo en la misma sesión.
+
+**Verificación.** Consultar el mismo activo dos veces en una sesión debe
+disparar una sola llamada a la Cloud Function, visible en las herramientas de
+red del navegador.
 
 ---
 
@@ -319,9 +336,11 @@ debería hacer alguien con su dinero?* Si sí, reescribir.
 
 ### Paso 26 · Nota al pie con fuentes
 
-**Hacer.** En cada vista con datos: origen, fecha del dato y atribución. «Datos
-de cierre del [fecha] vía EODHD.» La licencia lo exige y la credibilidad
-también.
+**Hacer.** En cada vista con datos: origen y fecha. En el simulador, la fuente
+es la maestra: «Datos de cierre del [fecha], base de datos NUVIA.» No citar
+EODHD aquí: esa atribución corresponde a Análisis y valoración de empresas,
+la única vista que lo consulta. Mezclar las dos rutas de datos en la misma
+nota confundiría al usuario sobre de dónde sale cada cifra.
 
 ### Paso 27 · Verificación final del nivel
 
