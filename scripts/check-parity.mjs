@@ -90,8 +90,19 @@ if (/onclick=["']location\.href/i.test(web2Home)) {
   throw new Error('La portada contiene botones de navegación que el renderizador no conserva');
 }
 
-if (!portfolioPage.includes("suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'")) {
-  throw new Error('La página de cartera no integra la suite analítica real del núcleo');
+/* Paso 18: la vista de cartera dejó el iframe del núcleo y pasó a ser una
+   sección propia servida por la página, con el simulador de js/nuvia-simulador.js. */
+if (!portfolioPage.includes('id="laboratorio"')) {
+  throw new Error('La página de cartera no contiene la sección propia del laboratorio');
+}
+if (!portfolioPage.includes('js/nuvia-simulador.js')) {
+  throw new Error('La página de cartera no monta el simulador propio');
+}
+if (portfolioPage.includes('portfolioPreview=1')) {
+  throw new Error('La página de cartera no debe seguir incrustando la suite del núcleo');
+}
+if (!portfolioPage.includes('id="simulador"')) {
+  throw new Error('Falta el punto de montaje del simulador con su aviso sin JavaScript');
 }
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
@@ -180,8 +191,10 @@ for (const prefix of ['PortfolioAnalyticsSuite-', 'TechnicalAnalysisModule-', 'F
   }
 }
 await access(resolve(root, 'core/assets', suiteLoaderMatch[0]));
-if (!portfolioPage.includes('suite-tab-change') || !coreBridge.includes('suite-tab-change')) {
-  throw new Error('La suite analítica no sincroniza sus pestañas con la navegación exterior');
+/* Paso 18: la página de cartera ya no escucha suite-tab-change (no incrusta la
+   suite del núcleo); el puente del núcleo lo conserva para otros anfitriones. */
+if (!coreBridge.includes('suite-tab-change')) {
+  throw new Error('El puente del núcleo perdió la sincronización de pestañas de la suite');
 }
 const courseBundles = await Promise.all(
   assetFiles

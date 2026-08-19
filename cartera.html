@@ -84,14 +84,78 @@
       </section>
 
       <div class="nuvia-analysis-content">
-        <section id="suite-nuvia" class="nuvia-suite-shell" aria-label="Suite interactiva de analítica de cartera">
-          <iframe id="nuvia-portfolio-suite" src="core/index.html?portfolioPreview=1&amp;embedded=web2&amp;web2Suite=6&amp;suiteTab=portfolio" title="Suite NUVIA de analítica de cartera" loading="eager" scrolling="no"></iframe>
-          <iframe id="nuvia-company-suite" data-src="company-analysis/index.html?embedded=web2" title="Análisis y valoración de empresas NUVIA" loading="lazy" hidden></iframe>
-          <div class="nuvia-suite-loading" role="status" aria-live="polite">
-            <span aria-hidden="true"></span>
-            <strong>Preparando el laboratorio de cartera</strong>
+
+        <section id="laboratorio" class="nuvia-lab" aria-labelledby="lab-title">
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="lab-title">Un laboratorio para entender, con los supuestos a la vista</h2>
+            <p>Esta página es una herramienta educativa: sirve para ver cómo cambian el riesgo y la rentabilidad estimada de una cartera cuando cambia su reparto entre clases de activo. No pide datos personales, no guarda nada y no emite recomendaciones: describe, con supuestos publicados más abajo, cómo se comporta cada combinación.</p>
           </div>
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="sim-title">Prueba un reparto por clases de activo</h2>
+            <p>Mueve los controles para repartir el peso entre las cuatro clases. Los pesos se normalizan para sumar el 100 % y las métricas se recalculan al instante.</p>
+            <div id="simulador" class="nuvia-lab__simulador" aria-labelledby="sim-title">
+              <div class="nv-note">
+                <p>El simulador interactivo necesita JavaScript. Los supuestos y las explicaciones de esta página pueden leerse igualmente sin él.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="supuestos-title">Los supuestos, a la vista</h2>
+            <p>El simulador usa exactamente estas cifras. Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
+            <div class="nuvia-lab__tabla-scroll">
+            <table class="nv-table nuvia-lab__tabla">
+              <caption class="nv-visually-hidden">Supuestos de rentabilidad y volatilidad por clase de activo</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Clase de activo</th>
+                  <th scope="col">Qué incluye</th>
+                  <th scope="col">Rentabilidad anual estimada</th>
+                  <th scope="col">Volatilidad anual estimada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Renta variable</th><td>Acciones y fondos de bolsa</td><td>7,0&nbsp;%</td><td>16,0&nbsp;%</td></tr>
+                <tr><th scope="row">Renta fija</th><td>Bonos de Estados y empresas</td><td>3,2&nbsp;%</td><td>5,5&nbsp;%</td></tr>
+                <tr><th scope="row">Monetario</th><td>Letras y depósitos a corto plazo</td><td>2,0&nbsp;%</td><td>0,8&nbsp;%</td></tr>
+                <tr><th scope="row">Activos reales</th><td>Inmobiliario cotizado y oro</td><td>5,0&nbsp;%</td><td>13,0&nbsp;%</td></tr>
+              </tbody>
+            </table>
+            </div>
+            <p class="nuvia-lab__nota">La tasa sin riesgo empleada es del 1,9&nbsp;% anual. Al combinar clases se aplican correlaciones aproximadas entre ellas (por ejemplo, 0,05 entre renta variable y renta fija), contrastadas con series reales de mercado en el laboratorio interno del proyecto.</p>
+          </div>
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="lectura-title">Cómo leer estas cifras</h2>
+            <div class="nv-card-grid nuvia-lab__cartas">
+              <article class="nv-card">
+                <h3>Rentabilidad estimada</h3>
+                <p>Media anual que resultaría de los supuestos de la tabla, mantenidos muchos años. Un año concreto puede quedar muy por encima o muy por debajo.</p>
+              </article>
+              <article class="nv-card">
+                <h3>Volatilidad</h3>
+                <p>Cuánto suele moverse el valor de la cartera en un año, arriba o abajo. Una volatilidad del 12&nbsp;% significa oscilaciones habituales en torno a ese orden de magnitud.</p>
+              </article>
+              <article class="nv-card">
+                <h3>Diversificación</h3>
+                <p>Cuando las clases no se mueven a la vez, la volatilidad del conjunto queda por debajo de la suma de sus partes. La tabla muestra esa diferencia como «efecto de la diversificación».</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="nuvia-lab__bloque">
+            <h2 id="fuentes-title">Fuentes y límites</h2>
+            <p>Los cálculos se ejecutan en tu navegador con los supuestos publicados en esta página; cuando falta un dato, la cifra aparece como «—» en lugar de inventarse. Este contenido es educativo e informativo: no constituye asesoramiento financiero personalizado ni una oferta de servicios de inversión.</p>
+          </div>
+
         </section>
+
+        <section id="suite-nuvia" class="nuvia-suite-shell nuvia-suite-shell--companies" aria-label="Análisis y valoración de empresas" hidden>
+          <iframe id="nuvia-company-suite" data-src="company-analysis/index.html?embedded=web2" title="Análisis y valoración de empresas NUVIA" loading="lazy"></iframe>
+        </section>
+
       </div>
     </div>
   </main>
@@ -158,36 +222,24 @@ class Component extends DCLogic {
       window.history.replaceState(null, '', canonicalUrl);
     }
     document.title = 'Analítica de cartera | NUVIA Family Wealth';
-    const frame = document.getElementById('nuvia-portfolio-suite');
+    const lab = document.getElementById('laboratorio');
+    const shell = document.getElementById('suite-nuvia');
     const companyFrame = document.getElementById('nuvia-company-suite');
-    if (!frame || !companyFrame) return;
+    if (!lab || !shell || !companyFrame) return;
     document.body.dataset.suiteVista = vista;
-    const suite = {
-      suiteSrc: 'core/index.html?portfolioPreview=1&embedded=web2&web2Suite=6&suiteTab=portfolio'
-    };
     const esAnalisisEmpresas = vista === 'companies';
-    frame.hidden = esAnalisisEmpresas;
-    companyFrame.hidden = !esAnalisisEmpresas;
-    if (esAnalisisEmpresas) {
-      if (!companyFrame.getAttribute('src')) companyFrame.setAttribute('src', companyFrame.dataset.src);
-    } else {
-      const expectedSuiteSrc = new URL(suite.suiteSrc, window.location.href).href;
-      if (frame.src !== expectedSuiteSrc) frame.setAttribute('src', suite.suiteSrc);
+    lab.hidden = esAnalisisEmpresas;
+    shell.hidden = !esAnalisisEmpresas;
+    if (esAnalisisEmpresas && !companyFrame.getAttribute('src')) {
+      companyFrame.setAttribute('src', companyFrame.dataset.src);
     }
     SUITE_TABS.forEach((tab) => {
       const boton = document.getElementById('vista-' + tab);
       if (boton) boton.setAttribute('aria-current', tab === vista ? 'page' : 'false');
     });
-    const shellElement = frame.closest('.nuvia-suite-shell');
-    const resetPortfolioFrame = () => {
-      frame.classList.remove('is-ready');
-      shellElement?.classList.remove('is-portfolio-ready');
-    };
-    resetPortfolioFrame();
-    const applyHeight = (height) => {
-      const safeHeight = Math.max(900, Math.min(Number(height) || 0, 12000));
-      if (safeHeight) frame.style.height = safeHeight + 'px';
-    };
+    import('./js/nuvia-simulador.js')
+      .then((m) => { const sim = document.getElementById('simulador'); if (sim) m.montaSimulador(sim); })
+      .catch(() => {});
     const applyCompanyHeight = (height) => {
       const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));
       if (safeHeight) companyFrame.style.height = safeHeight + 'px';
@@ -196,43 +248,9 @@ class Component extends DCLogic {
       if (event.origin !== window.location.origin || !event.data) return;
       if (event.source === companyFrame.contentWindow && event.data.source === 'nuvia-company-analysis') {
         if (event.data.type === 'resize') applyCompanyHeight(event.data.height);
-        return;
-      }
-      if (event.source !== frame.contentWindow || event.data.source !== 'nuvia-core') return;
-      if (event.data.type === 'ready') {
-        if (this._portfolioRevealFrame) window.cancelAnimationFrame(this._portfolioRevealFrame);
-        this._portfolioRevealFrame = window.requestAnimationFrame(() => {
-          this._portfolioRevealFrame = window.requestAnimationFrame(() => {
-            frame.classList.add('is-ready');
-            shellElement?.classList.add('is-portfolio-ready');
-          });
-        });
-      }
-      if (event.data.type === 'resize') applyHeight(event.data.height);
-      if (event.data.type === 'suite-tab-change' && SUITE_TABS.includes(event.data.tab)) {
-        const tab = event.data.tab;
-        document.body.dataset.suiteVista = tab;
-        const url = new URL(window.location.href);
-        url.searchParams.set('vista', tab);
-        url.searchParams.delete('release');
-        url.searchParams.delete('verify');
-        window.history.replaceState(null, '', url);
-        document.title = 'Analítica de cartera | NUVIA Family Wealth';
-        SUITE_TABS.forEach((name) => {
-          const boton = document.getElementById('vista-' + name);
-          if (boton) boton.setAttribute('aria-current', name === tab ? 'page' : 'false');
-        });
       }
     };
     window.addEventListener('message', this._onMsg);
-    this._onFrameLoad = () => {
-      try {
-        const embeddedReady = frame.contentDocument?.body?.dataset?.nuviaBridgeReady === 'true';
-        if (!embeddedReady) resetPortfolioFrame();
-        applyHeight(frame.contentDocument?.documentElement?.scrollHeight);
-      } catch (e) { resetPortfolioFrame(); }
-    };
-    frame.addEventListener('load', this._onFrameLoad);
     this._onCompanyFrameLoad = () => {
       try { applyCompanyHeight(companyFrame.contentDocument?.documentElement?.scrollHeight); } catch (e) { applyCompanyHeight(720); }
     };
@@ -240,9 +258,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() {
     if (this._onMsg) window.removeEventListener('message', this._onMsg);
-    if (this._onFrameLoad) document.getElementById('nuvia-portfolio-suite')?.removeEventListener('load', this._onFrameLoad);
     if (this._onCompanyFrameLoad) document.getElementById('nuvia-company-suite')?.removeEventListener('load', this._onCompanyFrameLoad);
-    if (this._portfolioRevealFrame) window.cancelAnimationFrame(this._portfolioRevealFrame);
   }
   renderVals() { return {}; }
 }

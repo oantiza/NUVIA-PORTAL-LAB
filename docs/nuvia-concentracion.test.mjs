@@ -14,7 +14,7 @@ import {
   concentracionGeografica,
   clasificaSectorEstimado,
   distribucionRegionalEstimada,
-} from './nuvia-concentracion.js';
+} from '../js/nuvia-concentracion.js';
 
 let fallos = 0;
 const comprueba = (nombre, condicion, detalle = '') => {

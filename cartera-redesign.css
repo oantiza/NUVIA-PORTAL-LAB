@@ -151,47 +151,140 @@
   display: none;
 }
 
-#nuvia-portfolio-suite {
-  visibility: hidden;
-  opacity: 0;
-}
+/* ── Laboratorio de cartera (sección propia, paso 18) ─────────────────── */
 
-#nuvia-portfolio-suite.is-ready {
-  visibility: visible;
-  opacity: 1;
-}
-
-.nuvia-suite-loading {
-  position: absolute;
-  z-index: 2;
-  inset: 0 0 auto;
+.nuvia-lab {
   display: grid;
-  min-height: 280px;
-  place-content: center;
-  justify-items: center;
-  gap: 14px;
-  background: #f4f5f8;
-  color: #153d5b;
-  font-size: 12px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  gap: var(--nv-space-8);
+  padding-bottom: var(--nv-space-12);
 }
 
-.nuvia-suite-loading span {
-  width: 24px;
-  height: 24px;
-  border: 2px solid rgba(21,61,91,.18);
-  border-top-color: #6f8d3c;
+/* La regla display:grid ganaría al atributo hidden; esto restaura su efecto. */
+.nuvia-lab[hidden] { display: none; }
+
+.nuvia-lab__bloque {
+  min-width: 0;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  background: var(--nv-white);
+  box-shadow: var(--nv-shadow-md);
+  padding: var(--nv-space-5) var(--nv-space-6);
+}
+
+.nuvia-lab__bloque > h2 {
+  margin: 0 0 var(--nv-space-3);
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--nv-text);
+}
+
+.nuvia-lab__bloque > p {
+  margin: 0 0 var(--nv-space-4);
+  max-width: 72ch;
+  color: var(--nv-text-soft);
+}
+
+.nuvia-lab__bloque > p:last-child { margin-bottom: 0; }
+
+.nuvia-lab__nota {
+  margin: var(--nv-space-3) 0 0;
+  max-width: 72ch;
+  font-size: 14px;
+  color: var(--nv-text-muted);
+}
+
+.nuvia-lab__cartas { margin-top: var(--nv-space-2); }
+
+.nuvia-lab__tabla-scroll { overflow-x: auto; }
+
+.nuvia-lab__tabla { width: 100%; min-width: 520px; }
+
+/* ── Simulador ── */
+
+.nuvia-lab__simulador {
+  display: grid;
+  gap: var(--nv-space-5);
+}
+
+.nuvia-lab__simulador > *,
+.nv-sim-resultados > * { min-width: 0; }
+
+.nv-sim-resultados {
+  display: grid;
+  gap: var(--nv-space-4);
+}
+
+.nv-sim-tabla-scroll { overflow-x: auto; }
+
+.nv-sim-tabla { width: 100%; min-width: 480px; }
+
+.nv-sim-controles {
+  display: grid;
+  gap: var(--nv-space-3);
+}
+
+.nv-sim-fila {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 2fr) 64px;
+  align-items: center;
+  gap: var(--nv-space-3);
+}
+
+.nv-sim-etiqueta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--nv-space-2);
+  align-items: baseline;
+  font-weight: 600;
+  color: var(--nv-text);
+}
+
+.nv-sim-punto {
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  animation: nuvia-suite-spin .8s linear infinite;
+  align-self: center;
 }
 
-.nuvia-suite-shell.is-portfolio-ready .nuvia-suite-loading,
-body[data-suite-vista="companies"] .nuvia-suite-loading {
-  display: none;
+.nv-sim-desc {
+  grid-column: 2;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--nv-text-muted);
 }
 
-@keyframes nuvia-suite-spin { to { transform: rotate(360deg); } }
+.nv-sim-fila input[type="range"] { width: 100%; accent-color: var(--nv-green-700); }
+
+.nv-sim-valor {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--nv-text-soft);
+}
+
+.nv-sim-barra {
+  display: flex;
+  height: 18px;
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--nv-line);
+}
+
+.nv-sim-seg { display: block; height: 100%; }
+
+.nv-sim-cifra {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .nv-sim-fila {
+    grid-template-columns: 1fr 64px;
+  }
+  .nv-sim-fila input[type="range"] { grid-column: 1; }
+  .nv-sim-etiqueta { grid-column: 1 / -1; }
+  .nv-sim-valor { grid-row: 2; }
+}
 
 #nuvia-company-suite {
   height: 720px;

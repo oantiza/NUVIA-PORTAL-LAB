@@ -375,7 +375,7 @@ rentabilidad.
 
 ## 7. Estado técnico
 
-**Ya hecho:** módulo de cálculo `nuvia-cartera.js`, extraído de
+**Ya hecho:** módulo de cálculo `js/nuvia-cartera.js`, extraído de
 `src/core/portfolioRiskModel.ts`, `quantConfig.ts` y `frontier.ts` de la
 plataforma. Funciones puras: volatilidad con matriz de correlaciones,
 rentabilidad esperada, Sharpe, frontera por Monte Carlo y **ahorro por
@@ -409,6 +409,15 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 (58 comprobaciones) corre con `npm run test:analisis`, integrada en
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
+
+**Fase 3 en marcha — sección propia del visitante (paso 18, 19-08-2026).**
+`cartera.html` ya no incrusta la suite del núcleo: sirve su propia sección
+`#laboratorio` con el simulador por clases (`js/nuvia-simulador.js`, montado
+desde el script de la página), la tabla de supuestos a la vista y las lecturas
+llanas. Los módulos de cálculo viven ahora en `js/` para que el build los
+publique; las baterías siguen en `docs/`. La página entera se lee sin
+JavaScript; el simulador lo requiere y lo dice. La vista de análisis de
+empresas conserva su iframe independiente.
 
 **Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
 asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula

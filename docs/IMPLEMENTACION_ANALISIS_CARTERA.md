@@ -97,7 +97,7 @@ portal: dónde queda su cuenta y qué puede ver.
 
 ### Paso 5 · Validar los supuestos de mercado
 
-**Entrada:** `docs/nuvia-cartera.js`, constante `CLASES`.
+**Entrada:** `js/nuvia-cartera.js`, constante `CLASES`.
 
 **Hacer.** Revisar con criterio profesional los pares rentabilidad/volatilidad:
 renta variable 7,0 / 16,0 · renta fija 3,2 / 5,5 · monetario 2,0 / 0,8 ·
@@ -255,7 +255,7 @@ red del navegador.
 
 # FASE 2 · Motor de cálculo
 
-**Entrada:** `docs/nuvia-cartera.js` y el fichero de datos de la fase 1.
+**Entrada:** `js/nuvia-cartera.js` y el fichero de datos de la fase 1.
 
 ### Paso 12 · Migrar a correlaciones reales
 
@@ -293,7 +293,7 @@ dependencias de tipos. Necesita el desglose de posiciones de cada fondo
 **Verificación.** Dos ETF conocidos del mismo índice deben dar solapamiento
 cercano al 100 %. Dos de sectores distintos, cercano a 0.
 
-> **Hecho y verificado (19-08-2026).** Portado en `docs/nuvia-solapamiento.js`
+> **Hecho y verificado (19-08-2026).** Portado en `js/nuvia-solapamiento.js`
 > como funciones puras: `solapamiento()` (de `overlap.ts`, Σ min de pesos
 > normalizados, casado por ISIN y por nombre normalizado como respaldo),
 > `lookThroughCartera()` (de `holdingsLookthrough.ts`, sin la capa de carga:
@@ -316,7 +316,7 @@ un fondo global no es «internacional», son sus posiciones repartidas.
 **Verificación.** Una cartera de cuatro bancos españoles debe salir ~100 %
 financiero y ~100 % España. Si sale repartida, el look-through no funciona.
 
-> **Hecho y verificado (19-08-2026).** Portado en `docs/nuvia-concentracion.js`
+> **Hecho y verificado (19-08-2026).** Portado en `js/nuvia-concentracion.js`
 > desde `equitySectors.ts` y `equityRegions.ts` de la plataforma:
 > `concentracionSectorial()` y `concentracionGeografica()` agregan las
 > distribuciones que la maestra guarda por activo (`exposure_detail`),
@@ -363,7 +363,7 @@ pico a valle en el periodo). Esta última es la más intuitiva para un particula
 y no está aún en el módulo.
 
 > **Hecho y verificado (19-08-2026).** `metricasDesdeSerie()` en
-> `nuvia-cartera.js`: rentabilidad total y anualizada, volatilidad anualizada
+> `js/nuvia-cartera.js`: rentabilidad total y anualizada, volatilidad anualizada
 > y máxima caída, con la serie de caídas portada literal de `underwater.ts`
 > (`serieDeCaidas()`: el NaN no rompe el pico). Serie insuficiente →
 > `undefined`, nada inventado. Contraste real: Telefónica semanal 2023–2026
@@ -405,6 +405,19 @@ Mantener el héroe existente, que ya está bien y usa la identidad de NUVIA.
 
 **Verificación.** La página renderiza **sin JavaScript** (principio del portal).
 El simulador puede requerirlo; la página, no.
+
+> **Hecho y verificado (19-08-2026).** `cartera.html` dejó de incrustar la suite
+> del núcleo (`portfolioPreview=1`) y pasó a servir su propia sección
+> `#laboratorio`: introducción, simulador por clases, tabla de supuestos
+> visible, «cómo leer estas cifras» y fuentes/límites. La vista de análisis de
+> empresas conserva su iframe. Los módulos de cálculo se movieron de `docs/` a
+> `js/` (build los publica) y el montaje lo hace `js/nuvia-simulador.js` desde
+> el script de la página. Comprobado con navegador real: sin JavaScript se lee
+> toda la sección estática con su aviso; con JavaScript el simulador recalcula
+> al instante; sin desbordamiento horizontal a 1440/1024/390; `?vista=companies`
+> oculta el laboratorio y carga el iframe de empresas. `npm run validate` en
+> verde con el contrato de paridad actualizado (la página ya no debe contener
+> `portfolioPreview=1`).
 
 ### Paso 19 · Buscador de activos
 

@@ -15,7 +15,7 @@ import {
   solapamiento,
   matrizSolapamiento,
   lookThroughCartera,
-} from './nuvia-solapamiento.js';
+} from '../js/nuvia-solapamiento.js';
 
 let fallos = 0;
 const comprueba = (nombre, condicion, detalle = '') => {

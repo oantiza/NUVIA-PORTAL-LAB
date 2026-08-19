@@ -24,7 +24,7 @@ import {
   frontera,
   serieDeCaidas,
   metricasDesdeSerie,
-} from './nuvia-cartera.js';
+} from '../js/nuvia-cartera.js';
 
 let fallos = 0;
 const comprueba = (nombre, condicion, detalle = '') => {
