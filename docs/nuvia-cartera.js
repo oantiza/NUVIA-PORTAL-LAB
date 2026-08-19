@@ -173,6 +173,65 @@ export function correlacionesDesdeSeries(series, { periodosPorAno = DIAS_MERCADO
 }
 
 /**
+ * Serie de caídas (drawdown) de una serie de niveles.
+ * Portado literal de calculateUnderwaterSeries() en underwater.ts:
+ *   dd_t = V_t / max_{s≤t}(V_s) − 1
+ * Un valor no finito da NaN en ese punto, pero el pico se conserva.
+ */
+export function serieDeCaidas(niveles) {
+  if (!niveles || niveles.length === 0) return [];
+  const caidas = new Array(niveles.length).fill(0);
+  let pico = -Infinity;
+  for (let i = 0; i < niveles.length; i += 1) {
+    const v = niveles[i];
+    if (Number.isFinite(v)) {
+      if (v > pico) pico = v;
+      caidas[i] = pico > 0 ? v / pico - 1 : 0;
+    } else {
+      caidas[i] = NaN;
+    }
+  }
+  return caidas;
+}
+
+/**
+ * Métricas de la tabla del visitante (guía, paso 16) a partir de una serie
+ * de niveles: rentabilidad del periodo (total y anualizada), volatilidad
+ * anualizada y máxima caída — la peor caída de pico a valle, la métrica más
+ * intuitiva para un particular.
+ *
+ * @param {number[]} niveles  serie de niveles ya alineada (get_price_series)
+ * @param {{periodosPorAno?:number}} [opciones]  252 diaria · 52 semanal · 12 mensual
+ * @returns {{rentabilidadTotal:number, rentabilidadAnualizada:number,
+ *   volatilidad:number, maximaCaida:number, observaciones:number}|undefined}
+ *   `maximaCaida` es negativa o cero (p. ej. −0,24 = caída del 24 %).
+ *   Con menos de 2 niveles válidos no hay métrica: undefined, nada inventado.
+ */
+export function metricasDesdeSerie(niveles, { periodosPorAno = DIAS_MERCADO } = {}) {
+  const validos = (niveles || []).filter(Number.isFinite);
+  if (validos.length < 2 || validos[0] <= 0) return undefined;
+
+  const retornos = [];
+  for (let t = 1; t < validos.length; t += 1) {
+    if (validos[t - 1] > 0) retornos.push(validos[t] / validos[t - 1] - 1);
+  }
+  const media = retornos.reduce((s, v) => s + v, 0) / retornos.length;
+  const varianza = retornos.reduce((s, v) => s + (v - media) ** 2, 0) / (retornos.length - 1);
+
+  const total = validos[validos.length - 1] / validos[0] - 1;
+  const anos = retornos.length / periodosPorAno;
+  const caidas = serieDeCaidas(validos);
+
+  return {
+    rentabilidadTotal: redondea(total),
+    rentabilidadAnualizada: redondea((1 + total) ** (1 / anos) - 1),
+    volatilidad: redondea(Math.sqrt(Math.max(varianza, 0) * periodosPorAno)),
+    maximaCaida: redondea(Math.min(...caidas.filter(Number.isFinite))),
+    observaciones: retornos.length,
+  };
+}
+
+/**
  * Registra (o retira, con null) la matriz de correlaciones reales que
  * usará `correlacion()` para activos concretos.
  */

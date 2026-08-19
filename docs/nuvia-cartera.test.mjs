@@ -22,6 +22,8 @@ import {
   volatilidadSinDiversificar,
   analizaCartera,
   frontera,
+  serieDeCaidas,
+  metricasDesdeSerie,
 } from './nuvia-cartera.js';
 
 let fallos = 0;
@@ -174,6 +176,48 @@ comprueba('Par sin correlación en la matriz → undefined, nunca una ρ inventa
 const sinVol = volatilidadSinDiversificar([{ id: 'ACTIVO_SIN_HISTORICO', peso: 100 }]);
 comprueba('Posición sin σ conocida → undefined', sinVol === undefined);
 
+estableceCorrelaciones(null);
+
+/* ── Paso 16 · Métricas del visitante ───────────────────────────────────── */
+
+comprueba('Serie siempre al alza → sin caídas',
+  serieDeCaidas([100, 105, 110, 120]).every((c) => c === 0));
+
+// 100 → 110 → 99 → 108,9: la peor caída es del pico 110 al valle 99 (−10 %).
+const metricas = metricasDesdeSerie([100, 110, 99, 108.9], { periodosPorAno: 252 });
+comprueba('Máxima caída de pico a valle, no del inicio',
+  metricas.maximaCaida === -0.1, `${metricas.maximaCaida}`);
+comprueba('Rentabilidad total del periodo',
+  Math.abs(metricas.rentabilidadTotal - 0.089) < 1e-9, `${metricas.rentabilidadTotal}`);
+comprueba('Serie con hueco: NaN no rompe el pico',
+  serieDeCaidas([100, NaN, 80]).filter(Number.isFinite).some((c) => Math.abs(c + 0.2) < 1e-12));
+comprueba('Serie insuficiente → undefined, nada inventado',
+  metricasDesdeSerie([100]) === undefined && metricasDesdeSerie([]) === undefined);
+
+// Con la serie sintética del contraste: caída conocida y anualización coherente.
+const metRuido = metricasDesdeSerie(serieA, { periodosPorAno: 252 });
+comprueba('Volatilidad anualizada de la serie sintética ≈ 19 % (σ diaria 1,2 %)',
+  metRuido.volatilidad > 0.15 && metRuido.volatilidad < 0.24, `${metRuido.volatilidad}`);
+comprueba('La máxima caída es negativa y acotada',
+  metRuido.maximaCaida < 0 && metRuido.maximaCaida > -1, `${metRuido.maximaCaida}`);
+
+/* ── Paso 17 · Casos que exige la batería ───────────────────────────────── */
+
+const unSolo = analizaCartera([{ clase: 'EQUITY', peso: 100 }]);
+comprueba('Un solo activo → ahorro por diversificar = 0',
+  unSolo.ahorroPorDiversificar === 0);
+
+estableceCorrelaciones({
+  ids: ['X1', 'X2'],
+  rho: { X1: { X1: 1, X2: 1 }, X2: { X1: 1, X2: 1 } },
+  volatilidades: { X1: 0.2, X2: 0.2 },
+});
+const identicos = analizaCartera([
+  { id: 'X1', peso: 50, rentabilidad: 0.05 },
+  { id: 'X2', peso: 50, rentabilidad: 0.05 },
+]);
+comprueba('Dos activos idénticos (ρ = 1) → ahorro ≈ 0',
+  Math.abs(identicos.ahorroPorDiversificar) < 1e-9);
 estableceCorrelaciones(null);
 
 /* ── Paso 15 · Frontera sobre activos reales ────────────────────────────── */

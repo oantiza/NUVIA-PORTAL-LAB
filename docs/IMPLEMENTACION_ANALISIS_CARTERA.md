@@ -362,6 +362,14 @@ diversificada: si no, las correlaciones no están entrando.
 pico a valle en el periodo). Esta última es la más intuitiva para un particular
 y no está aún en el módulo.
 
+> **Hecho y verificado (19-08-2026).** `metricasDesdeSerie()` en
+> `nuvia-cartera.js`: rentabilidad total y anualizada, volatilidad anualizada
+> y máxima caída, con la serie de caídas portada literal de `underwater.ts`
+> (`serieDeCaidas()`: el NaN no rompe el pico). Serie insuficiente →
+> `undefined`, nada inventado. Contraste real: Telefónica semanal 2023–2026
+> → +19,6 % total, 6,1 % anualizada, σ 21,5 % y máxima caída −28,3 %, que es
+> el desplome de noviembre de 2025 medido de pico a valle.
+
 ### Paso 17 · Batería de pruebas
 
 **Hacer.** Fichero de casos con resultado esperado. Mínimo:
@@ -376,6 +384,13 @@ y no está aún en el módulo.
 
 **Verificación.** Se ejecuta con un comando y pasa entera. Añadir al
 `npm run validate` si encaja.
+
+> **Hecho (19-08-2026).** `npm run test:analisis` ejecuta las tres baterías
+> (cartera, solapamiento, concentración: 58 comprobaciones) y queda integrado
+> en `npm run validate`. Todos los casos de la tabla están cubiertos: un solo
+> activo → ahorro 0; dos idénticos (ρ = 1) → ahorro 0; cuatro bancos → 100 %
+> un sector; cartera diversificada → ahorro de varios puntos; dos ETF del
+> mismo índice → solapamiento ~100 % (95,5 % con carteras reales SPY–VOO).
 
 ---
 

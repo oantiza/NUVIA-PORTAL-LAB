@@ -403,6 +403,13 @@ financiero y 100 % España).
 creciente y, si faltan datos, devuelve el motivo en `sinDatos` en vez de
 calcular con cifras inventadas.
 
+**Fase 2 cerrada (pasos 16 y 17, 19-08-2026).** `metricasDesdeSerie()` añade
+las métricas de la tabla del visitante —rentabilidad, volatilidad y máxima
+caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
+(58 comprobaciones) corre con `npm run test:analisis`, integrada en
+`npm run validate`. El motor de cálculo del portal queda completo a falta
+del Monte Carlo de proyección (nivel suscriptor, fase 4).
+
 **Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
 asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula
 la matriz de Pearson sobre retornos diarios a partir de las series de
