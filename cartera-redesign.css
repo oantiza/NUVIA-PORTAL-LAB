@@ -153,6 +153,11 @@
 
 /* ── Laboratorio de cartera (sección propia, paso 18) ─────────────────── */
 
+/* Suelo tipográfico de 12 px del nivel (paso 27): el nv-tag global es de
+   10 px; dentro del laboratorio se eleva al suelo. */
+.nuvia-lab .nv-tag { font-size: 12px; }
+.nuvia-lab .nv-field label { font-size: 12px; }
+
 .nuvia-lab {
   display: grid;
   gap: var(--nv-space-8);

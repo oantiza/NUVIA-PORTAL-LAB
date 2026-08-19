@@ -608,6 +608,22 @@ nota confundiría al usuario sobre de dónde sale cada cifra.
 - Jerarquía de encabezados sin saltos.
 - `npm run validate` en verde.
 
+> **Hecho y verificado (19-08-2026) — Fase 3 cerrada.** Con la página montada
+> con datos (buscador usado, cartera construida, cartera guardada):
+> **Contraste AA medido.** 146 textos visibles: los de fondo sólido,
+> calculados con la fórmula WCAG (peor caso 5,98:1 ≥ 4,5); los 5 sobre el
+> degradado del héroe, leyendo píxeles de la captura — solo píxeles de fondo
+> planos (entorno 5×5 uniforme, lejos del color del texto, para excluir el
+> antialiasing de las letras): peor píxel 7,38:1. **Suelo de 12 px:** tres
+> incumplimientos corregidos — `nv-tag` (10 px) y las etiquetas `nv-field`
+> (11 px) elevados a 12 px dentro del laboratorio, y el pie de página del
+> sitio (11/11,5 px) subido a 12 px. **Sin desbordes** a 1440/1024/390 con el
+> laboratorio lleno. **Consola limpia** (la única incidencia del entorno de
+> pruebas es Google Fonts bloqueado por el sandbox; comprobado limpio en
+> producción). **Encabezados:** un solo h1 y sin saltos con los h3 dinámicos
+> incluidos. **`npm run validate` en verde** (paridad, sitio estático,
+> consistencia, lenguaje y baterías).
+
 ---
 
 # FASE 4 · Cuentas y niveles

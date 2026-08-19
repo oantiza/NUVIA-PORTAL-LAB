@@ -410,6 +410,15 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**FASE 3 CERRADA (pasos 18–27, 19-08-2026).** El nivel de visitante está
+completo y publicado: sección propia sin iframe, buscador sobre la maestra,
+constructor de hasta 5 posiciones con métricas del historial real y lecturas
+llanas, reparto por clase, guardado local con aviso, límite comunicado antes,
+lenguaje revisado y blindado en la build (`check-lenguaje.mjs`), fuentes en
+cada vista y verificación final medida (AA por píxeles, suelo de 12 px,
+sin desbordes, consola limpia, encabezados). La Fase 4 (cuentas y niveles)
+exige revisión jurídica antes de empezar.
+
 **Constructor del visitante (paso 20, 19-08-2026).** `js/nuvia-constructor.js`
 monta hasta 5 posiciones reales con pesos normalizados y recálculo instantáneo;
 rentabilidad, volatilidad y máxima caída se calculan en el navegador sobre el
