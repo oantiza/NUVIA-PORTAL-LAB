@@ -5,7 +5,8 @@
  * además por: ahorro por diversificar (sobre el historial real ya cargado),
  * concentración sectorial y geográfica (fichas de `get_asset_detail`, con la
  * calidad del dato declarada) y solapamiento entre fondos y ETF
- * (`get_asset_holdings_batch`). Todo se calcula en el navegador con los
+ * (`get_asset_holdings_batch`, y si el lote no responde, fondo a fondo con
+ * `get_asset_holdings`). Todo se calcula en el navegador con los
  * módulos ya portados en la Fase 2; aquí solo se orquesta y se pinta.
  *
  * Sin sesión, el bloque se limita a decir que este análisis existe y con qué
@@ -95,6 +96,37 @@ export function textoAhorro(a) {
     + `${pct(a.ahorro)}, es lo que ha aportado diversificar en esta combinación.`;
 }
 
+/**
+ * Cartera de un fondo en la forma que espera el módulo de solapamiento,
+ * a partir del documento REAL de `get_asset_holdings` en producción:
+ *   { holdings: [{ holding_name, holding_weight, holding_weight_unit,
+ *                  identifiers: { isin?, ticker? }, ... }] }
+ * También acepta la forma corta { holdings: [{ name, isin?, ticker?,
+ * weight_pct }] } tal cual. Una fila sin nombre o sin peso en porcentaje se
+ * descarta: nunca se inventa. Sin filas útiles devuelve null (sin datos).
+ */
+export function carteraDesdeHoldings(doc) {
+  const filas = Array.isArray(doc?.holdings) ? doc.holdings : [];
+  const holdings = [];
+  for (const h of filas) {
+    const nombre = h.name ?? h.holding_name ?? h.raw_source?.name ?? null;
+    let peso = null;
+    if (Number.isFinite(h.weight_pct)) peso = h.weight_pct;
+    else if (Number.isFinite(h.holding_weight)
+      && (h.holding_weight_unit == null || h.holding_weight_unit === 'percent')) {
+      peso = h.holding_weight;
+    }
+    if (nombre == null || !Number.isFinite(peso)) continue;
+    holdings.push({
+      name: nombre,
+      isin: h.isin ?? h.identifiers?.isin ?? undefined,
+      ticker: h.ticker ?? h.identifiers?.ticker ?? undefined,
+      weight_pct: peso,
+    });
+  }
+  return holdings.length ? { holdings } : null;
+}
+
 /** Frase que declara la calidad del dato de concentración (bases §2). */
 export function textoCalidad(resultado) {
   if (!resultado || resultado.calidad === 'none') return null;
@@ -127,12 +159,32 @@ function detalleDe(datos, id) {
   return cacheDetalles.get(id);
 }
 
+const cacheHoldingsUno = new Map(); // asset_id -> promesa de doc|null
+
+function holdingsUno(datos, id) {
+  if (!cacheHoldingsUno.has(id)) {
+    const promesa = datos.llama('get_asset_holdings', { asset_id: id }).catch(() => null);
+    promesa.then((r) => { if (r === null) cacheHoldingsUno.delete(id); });
+    cacheHoldingsUno.set(id, promesa);
+  }
+  return cacheHoldingsUno.get(id);
+}
+
 function holdingsDe(datos, ids) {
   const clave = [...ids].sort().join('|');
   if (!cacheHoldings.has(clave)) {
     const promesa = datos.llama('get_asset_holdings_batch', { asset_ids: ids })
       .then((r) => r?.holdings || {})
-      .catch(() => null);
+      .catch(async () => {
+        /* En producción el batch responde 401 para las sesiones del portal:
+         * se piden los desgloses fondo a fondo (como mucho 5, dentro del
+         * límite de 30 por minuto). Si tampoco responde ninguno, null. */
+        const docs = await Promise.all(ids.map((id) => holdingsUno(datos, id)));
+        if (docs.every((d) => d == null)) return null;
+        const porId = {};
+        ids.forEach((id, i) => { porId[id] = docs[i] || null; });
+        return porId;
+      });
     promesa.then((r) => { if (r === null) cacheHoldings.delete(clave); });
     cacheHoldings.set(clave, promesa);
   }
@@ -233,7 +285,7 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
     } else {
       const nombreDe = {};
       for (const p of posiciones) nombreDe[p.activo.asset_id] = p.activo.display_name || p.activo.asset_id;
-      const matriz = matrizSolapamiento(fondos.map((id) => ({ id, cartera: docs[id] || null })));
+      const matriz = matrizSolapamiento(fondos.map((id) => ({ id, cartera: carteraDesdeHoldings(docs[id]) })));
       const conDatos = matriz.ids.filter((id) => !matriz.sinDatos.includes(id));
       const sinDatos = matriz.sinDatos;
       if (conDatos.length < 2) {

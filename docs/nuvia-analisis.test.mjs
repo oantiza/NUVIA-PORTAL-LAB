@@ -10,7 +10,7 @@
  */
 import {
   etiquetaClave, posicionesParaAnalisis, idsDeFondos,
-  ahorroDeSeries, textoAhorro, textoCalidad,
+  ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS,
 } from '../js/nuvia-analisis.js';
 
@@ -76,6 +76,37 @@ console.log('\n— Ahorro por diversificar (series sintéticas) —');
   const texto = textoAhorro(r);
   comprueba('La lectura del ahorro lleva las tres cifras y explica la diferencia',
     texto.includes('%') && texto.includes('diversificar') && texto.includes('diferencia'));
+}
+
+console.log('\n— Desgloses reales de producción → forma del módulo de solapamiento —');
+{
+  // Documento REAL de get_asset_holdings en producción (paso 32).
+  const real = {
+    as_of_date: '2026-06-30',
+    asset_id: 'ES0162332037',
+    holdings: [
+      { holding_name: 'Apple Inc', holding_weight: 5.25, holding_weight_unit: 'percent', identifiers: { isin: 'US0378331005', ticker: 'AAPL' }, country: 'US', raw_source: { name: 'APPLE INC', weight: 5.25 } },
+      { holding_name: 'Euro Fx Future Sept 26', holding_weight: 8.81004, holding_weight_unit: 'percent', identifiers: {}, raw_source: { name: 'EURO FX FUTURE', weight: 8.81004 } },
+    ],
+  };
+  const c = carteraDesdeHoldings(real);
+  comprueba('La forma real (holding_name/holding_weight/identifiers) se traduce a name/isin/ticker/weight_pct',
+    c && c.holdings.length === 2
+    && c.holdings[0].name === 'Apple Inc' && c.holdings[0].isin === 'US0378331005'
+    && c.holdings[0].ticker === 'AAPL' && c.holdings[0].weight_pct === 5.25
+    && c.holdings[1].name === 'Euro Fx Future Sept 26' && c.holdings[1].isin === undefined);
+  comprueba('La forma corta ya correcta pasa tal cual',
+    carteraDesdeHoldings({ holdings: [{ name: 'Apple', isin: 'US0378331005', weight_pct: 50 }] })
+      .holdings[0].weight_pct === 50);
+  comprueba('Sin nombre por ningún lado, la fila se descarta',
+    carteraDesdeHoldings({ holdings: [{ holding_weight: 10, holding_weight_unit: 'percent', identifiers: {} }] }) === null);
+  comprueba('Peso en una unidad que no es porcentaje → se descarta, nunca se convierte a ojo',
+    carteraDesdeHoldings({ holdings: [{ holding_name: 'X', holding_weight: 0.05, holding_weight_unit: 'fraction' }] }) === null);
+  comprueba('Si falta holding_name, vale el nombre de raw_source',
+    carteraDesdeHoldings({ holdings: [{ raw_source: { name: 'APPLE INC' }, holding_weight: 5 }] })
+      .holdings[0].name === 'APPLE INC');
+  comprueba('Documento nulo o sin filas útiles → null (sin datos, se declara)',
+    carteraDesdeHoldings(null) === null && carteraDesdeHoldings({ holdings: [] }) === null);
 }
 
 console.log('\n— Calidad del dato, declarada (bases §2) —');

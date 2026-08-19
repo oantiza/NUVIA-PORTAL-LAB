@@ -421,7 +421,10 @@ diversificar sobre el historial real (σ frente a σ con ρ=1, correlaciones de
 Pearson), concentración sectorial y geográfica con la calidad del dato
 declarada (fichas de `get_asset_detail` a los módulos del paso 14) y matriz
 de solapamiento entre fondos/ETF (`get_asset_holdings_batch` al módulo del
-paso 13). Todo en el navegador, con `js/nuvia-analisis.js` orquestando; sin
+paso 13; en producción el batch responde 401 y se pide fondo a fondo con
+`get_asset_holdings`, cuyo documento real —`holding_name`/`holding_weight`/
+`identifiers`— traduce el adaptador puro `carteraDesdeHoldings`). Todo en el
+navegador, con `js/nuvia-analisis.js` orquestando; sin
 sesión, una sola línea descriptiva. Cuando falta un dato se declara; nunca se
 inventa. `check-lenguaje` cubre la superficie.
 

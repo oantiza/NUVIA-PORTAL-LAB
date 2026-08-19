@@ -782,6 +782,15 @@ diversificar, solapamiento.
 > sin traducir. **Solapamiento entre fondos** — `get_asset_holdings_batch`
 > (cacheado por conjunto) + `matrizSolapamiento` (paso 13) solo sobre
 > posiciones FUND/ETF; con <2 fondos o sin desglose se dice tal cual.
+> **Realidad de producción, verificada contra el backend real:** (1) el
+> batch responde **401** incluso con sesión registrada, así que la capa de
+> datos se repliega fondo a fondo con `get_asset_holdings` (≤5 fondos,
+> límite 30/min); (2) el documento real de holdings trae
+> `holding_name`/`holding_weight`/`identifiers.{isin,ticker}` (unidad
+> `percent`), no el `{name, weight_pct}` del paso 13 → adaptador puro
+> `carteraDesdeHoldings` que traduce esa forma (y acepta la corta), descarta
+> filas sin nombre o con peso en otra unidad, y devuelve null sin filas
+> útiles: nunca se inventa.
 > Sin sesión, el bloque es una sola línea que describe qué se abre —
 > sin empujar a nadie. El cambio de sesión re-lanza el recálculo
 > (`nuvia:sesion-cambiada`). `check-lenguaje` vigila la superficie nueva y
@@ -791,10 +800,11 @@ diversificar, solapamiento.
 > sesión solo el aviso; al registrarse aparecen los tres grupos; la matriz
 > del par da EXACTAMENTE el mínimo esperado (Apple 50 %/30 % → 30 %); la
 > concentración agrega bien (Technology 45 % = 60·½+30·½); mover un peso
-> recalcula; cerrar sesión lo cierra. Batería pura
-> `docs/nuvia-analisis.test.mjs` (series opuestas → ahorro grande; idénticas
-> → ~0; serie plana → null). `npm run validate` en verde; sin desbordes
-> 1440/1024/390; suelo de 12 px.
+> recalcula; cerrar sesión lo cierra. La verificación en navegador simula la
+> realidad de producción: batch en 401 y desgloses fondo a fondo con la forma
+> real. Batería pura `docs/nuvia-analisis.test.mjs` (series opuestas → ahorro
+> grande; idénticas → ~0; serie plana → null; adaptador de la forma real).
+> `npm run validate` en verde; sin desbordes 1440/1024/390; suelo de 12 px.
 
 ### Paso 33 · Análisis del nivel suscriptor
 
