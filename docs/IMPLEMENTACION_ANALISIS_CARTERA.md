@@ -960,6 +960,12 @@ de redacción de la sección 5 de las bases.
 > y sobre el informe renderizado en navegador: cero giros prohibidos
 > (mejor/recomend*/óptimo/atractiva/infravalorada/oportunidad…). 18
 > comprobaciones de navegador en verde; sin desbordes; suelo de 12 px.
+> **Verificado en producción** con cuenta de prueba (creada y suprimida al
+> terminar con el borrado del paso 34): el informe REAL de Telefónica salió
+> con sus seis secciones, la capitalización, el PER pasado ausente como «—»
+> (1 ausencia declarada), la caída del −76,1 %, la pérdida y el payout del
+> 111 % en riesgos, y el pie completo; el de Iberdrola salió con LA MISMA
+> plantilla; y la criba de giros prohibidos dio cero cruces en ambos.
 
 ### Paso 38 · Carteras modelo temáticas
 
