@@ -410,6 +410,14 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Buscador conectado a la maestra (paso 19, 19-08-2026).** `js/nuvia-datos.js`
+abre la sesión anónima (REST de Identity Toolkit, renovada sola) y llama a las
+callable de solo lectura; `js/nuvia-buscador.js` busca por nombre, ticker o
+ISIN con los estados en lenguaje llano. Para que funcionara hubo que habilitar
+el proveedor anónimo del proyecto y reabrir el alta de usuarios
+(`disabledUserSignup` estaba a `true`); autorizado por Óscar el 19-08-2026 —
+detalle en la nota del paso 19 de la guía de implementación.
+
 **Fase 3 en marcha — sección propia del visitante (paso 18, 19-08-2026).**
 `cartera.html` ya no incrusta la suite del núcleo: sirve su propia sección
 `#laboratorio` con el simulador por clases (`js/nuvia-simulador.js`, montado

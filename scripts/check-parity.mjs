@@ -104,6 +104,14 @@ if (portfolioPage.includes('portfolioPreview=1')) {
 if (!portfolioPage.includes('id="simulador"')) {
   throw new Error('Falta el punto de montaje del simulador con su aviso sin JavaScript');
 }
+/* Paso 19: el buscador consulta la maestra vía js/nuvia-datos.js; la página
+   solo debe montar el módulo, nunca llamar a Firestore ni a EODHD directo. */
+if (!portfolioPage.includes('js/nuvia-buscador.js') || !portfolioPage.includes('id="buscador"')) {
+  throw new Error('La página de cartera no monta el buscador de activos del catálogo');
+}
+if (/eodhd/i.test(portfolioPage)) {
+  throw new Error('La página de cartera no debe mencionar ni llamar a EODHD (bases §6)');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

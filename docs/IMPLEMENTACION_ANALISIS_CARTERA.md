@@ -427,6 +427,27 @@ completo. Visible y usable para todos desde el primer momento.
 **Verificación.** Escribir «telefonica» sin tilde debe encontrarlo. Escribir un
 ISIN completo, también.
 
+> **Hecho y verificado (19-08-2026).** Dos módulos nuevos: `js/nuvia-datos.js`
+> (sesión anónima por REST de Identity Toolkit —persistida y renovada— y
+> llamadas a las callable de la maestra, con caché de búsquedas de 10 min y
+> batería propia en `docs/nuvia-datos.test.mjs`) y `js/nuvia-buscador.js`
+> (campo único con retardo de 300 ms, estados «Buscando…»/«Sin resultados»/
+> error llano; elegir un resultado emite `nuvia:activo-elegido`, que usará el
+> constructor del paso 20). Verificado contra la función real desde el equipo
+> de Óscar: «telefonica» sin tilde devuelve Telefónica y el ISIN completo
+> también (`search_assets` normaliza acentos en servidor). El contrato de
+> paridad exige ahora el buscador y prohíbe que la página mencione EODHD.
+>
+> **Nota de infraestructura (cierra de verdad el paso 6).** El proveedor
+> «Anonymous» del proyecto `bbdd-activos-financieros` no estaba habilitado y,
+> además, el alta de usuarios estaba desactivada a nivel de proyecto
+> (`disabledUserSignup: true`), lo que bloqueaba también las sesiones
+> anónimas. El 19-08-2026, con autorización de Óscar, se habilitó el proveedor
+> anónimo y se reabrió el alta. Efecto colateral consciente: también puede
+> autorregistrarse una cuenta de email; queda con los mismos permisos de solo
+> lectura y límite de 120 llamadas/min que un anónimo (el panel admin sigue
+> tras claims de administrador).
+
 ### Paso 20 · Construcción de la cartera
 
 **Hacer.** Añadir hasta 5 posiciones con su peso. Los pesos deben normalizarse a

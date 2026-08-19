@@ -103,6 +103,16 @@
           </div>
 
           <div class="nuvia-lab__bloque">
+            <h2 id="buscador-title">Busca en el catálogo</h2>
+            <p>Busca por nombre, ticker o ISIN entre los fondos, ETF, acciones e índices del catálogo. Los datos vienen de la base de datos NUVIA, de solo lectura.</p>
+            <div id="buscador" class="nv-buscador" aria-labelledby="buscador-title">
+              <div class="nv-note">
+                <p>El buscador necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nuvia-lab__bloque">
             <h2 id="supuestos-title">Los supuestos, a la vista</h2>
             <p>El simulador usa exactamente estas cifras. Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
             <div class="nuvia-lab__tabla-scroll">
@@ -239,6 +249,9 @@ class Component extends DCLogic {
     });
     import('./js/nuvia-simulador.js')
       .then((m) => { const sim = document.getElementById('simulador'); if (sim) m.montaSimulador(sim); })
+      .catch(() => {});
+    import('./js/nuvia-buscador.js')
+      .then((m) => { const nodo = document.getElementById('buscador'); if (nodo) m.montaBuscador(nodo); })
       .catch(() => {});
     const applyCompanyHeight = (height) => {
       const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));
