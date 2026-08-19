@@ -899,6 +899,14 @@ derechos. Si alguno requiere intervención manual por correo, no está operativo
 > suelo de 12 px. Baterías: paquete de portabilidad (normalización, solo
 > ids+pesos, fechas), `borraRastroLocal` selectivo, y los tres métodos de
 > cuenta con fetch falso (update/oob/delete y limpieza de sesión).
+> **Verificado en producción, ejerciendo los cuatro derechos con una cuenta
+> de prueba real y un fondo real guardado:** acceso enseñó correo, cartera
+> con id+peso y permiso con fecha; la descarga interceptada era el JSON
+> versionado exacto; la contraseña cambió al momento (y el reinicio de
+> sesión con la nueva funcionó); el cambio de correo devolvió su enlace de
+> verificación; la supresión en dos pasos dejó «Nada queda» — y el intento
+> de iniciar sesión después respondió INVALID_LOGIN_CREDENTIALS: la cuenta
+> ya no existe en el proveedor. Sin intervención manual en ningún derecho.
 
 ---
 
@@ -910,6 +918,13 @@ derechos. Si alguno requiere intervención manual por correo, no está operativo
 **Criterio de las bases:** se cobra aparte lo que se percibe como extra desde el
 principio, no un trozo del análisis que se le ha quitado. **No cobrar por
 cálculos ya precalculados.**
+
+> **Aplazados por decisión de Óscar (19-08-2026): «35 y 36 los saltas».**
+> No se implementan por ahora; el plan sigue directamente por el paso 37.
+> Mientras tanto la suscripción no puede contratarse y el nivel suscriptor
+> queda como lo dejó el paso 33: implementado, descrito en la página y
+> cerrado (nadie tiene el marcador `nuvia.suscripcion.v1`, que escribiría
+> la pasarela cuando estos pasos se retomen).
 
 ### Paso 37 · Informes genéricos
 
