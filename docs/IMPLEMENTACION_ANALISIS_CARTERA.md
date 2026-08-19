@@ -142,23 +142,38 @@ rechaza al usuario anónimo pese a pasar `request.auth != null`, revisar si
 tiene una comprobación adicional (por ejemplo, email verificado) que excluya
 cuentas anónimas — habría que pedir un ajuste en el repositorio profesional.
 
-### Paso 8 · Resolver la matriz de correlaciones
+### Paso 8 · Calcular la matriz de correlaciones en el cliente — resuelto
 
-**El paso que arregla la limitación del motor actual, y el más incierto.**
+**Decisión tomada, verificada contra el código de `get_price_series`.** No
+hace falta Cloud Function nueva: se calcula en el navegador con lo que ya
+sirve esa función.
 
-**Hacer, en este orden:**
-1. Comprobar si `get_price_series` devuelve suficiente histórico como para
-   calcular correlaciones de Pearson **en el cliente**, para los activos de una
-   cartera concreta (máximo 20 → 190 pares, asumible en el navegador).
-2. Si no alcanza, plantear una Cloud Function nueva que la devuelva ya
-   calculada. **Esto es escribir código en el repositorio de la plataforma
-   profesional** (`oantiza/BDB-ACTIVOS`), no una consulta: requiere acuerdo
-   explícito antes de tocarlo, con las mismas garantías de solo lectura sobre
-   los datos y sin afectar al rendimiento de la app profesional.
+**Por qué es viable, con datos concretos de la implementación:**
+- Acepta hasta **25 `asset_ids`** por llamada (`MAX_REBASED_SERIES_ASSETS`),
+  por encima del límite de 20 del suscriptor.
+- Con `frequency: "DAILY"` y `window: "3Y"` devuelve series diarias de tres
+  años por activo — la ventana estándar para una correlación de Pearson.
+- Devuelve fechas ya **alineadas entre activos** y niveles rebasados a 100:
+  de ahí se derivan los retornos diarios sin trabajo adicional de casado de
+  calendarios.
+- Los activos sin histórico suficiente vienen marcados (`INSUFFICIENT_HISTORY`
+  y otros motivos en `excluded`), no hacen fallar la llamada entera.
 
-**Verificación.** Comprobaciones de coherencia sobre el resultado, sea cual sea
-el camino:
+**Hacer.** Para la cartera del usuario (máximo 20 activos → 190 pares):
+1. Llamar a `get_price_series` con `frequency: "DAILY"`, `window: "3Y"` y los
+   `asset_ids` de la cartera.
+2. Derivar retornos diarios de los niveles rebasados de cada serie.
+3. Calcular Pearson por pares sobre las fechas comunes.
+4. Si algún activo vuelve en `excluded`, avisar en la interfaz de qué activo
+   falta y por qué — nunca fallar en silencio ni inventar una correlación.
+
+**Verificación.**
 - La diagonal debe ser 1.
+- Telefónica–BBVA debe salir claramente por encima de Telefónica–Toyota.
+- Dos ETF del mismo índice deben salir cerca de 0,99.
+- Ningún valor fuera de [−1, 1].
+- 190 pares para 20 activos se calculan sin percibirse un retraso en el
+  navegador; si no, revisar antes de dar el paso por cerrado.
 - Telefónica–BBVA debe salir claramente por encima de Telefónica–Toyota.
 - Dos ETF del mismo índice deben salir cerca de 0,99.
 - Ningún valor fuera de [−1, 1].

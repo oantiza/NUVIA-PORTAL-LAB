@@ -386,11 +386,13 @@ diversificar** (cálculo propio del portal).
 correlacionan mucho más que un valor español y uno japonés—. Para resultados
 creíbles hacen falta **correlaciones reales entre pares**.
 
-**Cómo se resuelve, tras la decisión de reutilizar `bbdd-activos-financieros`
-(sección 6):** ninguna Cloud Function existente sirve hoy esa matriz. O se
-confirma que puede derivarse de `get_price_series` en el cliente, o hace falta
-una función nueva en el repositorio de la plataforma profesional —lo segundo
-requiere acuerdo explícito antes de tocar ese código, no es una simple consulta.
+**Cómo se resuelve — decidido y verificado.** Se calcula en el cliente a
+partir de `get_price_series`, sin Cloud Function nueva. Esa función acepta
+hasta 25 activos por llamada —por encima del límite de 20 del suscriptor— y,
+con `frequency: "DAILY"` y `window: "3Y"`, devuelve series diarias de tres
+años ya alineadas por fecha entre activos: exactamente lo que hace falta para
+una correlación de Pearson por pares. El detalle técnico está en
+`IMPLEMENTACION_ANALISIS_CARTERA.md`, paso 8.
 
 **Lo que hay publicado hoy** en `cartera.html` es un build antiguo de la
 plataforma servido en un iframe, con su propio sistema de diseño. Es lo que se
@@ -441,5 +443,3 @@ va a sustituir.
    proyecto `bbdd-activos-financieros`, con Anonymous Auth para el visitante
    (sección 6). Queda abierto solo el pago (pasarela, facturación).
 7. **Supuestos de mercado** para el modo por clases: pendientes de validación.
-8. **Matriz de correlaciones:** confirmar si sale de `get_price_series` en
-   cliente o requiere una Cloud Function nueva (sección 7).
