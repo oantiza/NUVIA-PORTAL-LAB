@@ -90,6 +90,45 @@ console.log('\n— Caché de búsquedas —');
   comprueba('Mayúsculas y espacios no rompen la clave de caché', llamadas.funcion === 2);
 }
 
+console.log('\n— Carteras en la nube (paso 30) —');
+{
+  const registro = { llamada: [] };
+  const fnNube = async (url, opciones) => {
+    const respuesta = (json, ok = true, status = 200) => ({ ok, status, json: async () => json });
+    if (url.includes('accounts:signUp')) return respuesta({ idToken: 't', refreshToken: 'r', expiresIn: '3600' });
+    const cuerpo = JSON.parse(opciones.body);
+    const fn = url.split('/').pop();
+    registro.llamada.push({ fn, data: cuerpo.data });
+    if (fn === 'save_portfolio') return respuesta({ result: { portfolio_id: 'pid-9', portfolio: cuerpo.data, warnings: [] } });
+    if (fn === 'list_portfolios') return respuesta({ result: { portfolios: [{ portfolio_id: 'pid-9', name: 'Nube', positions: [{ asset_id: 'A', weight_percent: 100 }] }], count: 1 } });
+    if (fn === 'get_portfolio') return respuesta({ result: { portfolio_id: cuerpo.data.portfolio_id, name: 'Nube', positions: [{ asset_id: 'A', weight_percent: 100 }] } });
+    if (fn === 'delete_portfolio') return respuesta({ result: { ok: true } });
+    if (fn === 'get_asset_detail') return respuesta({ result: { asset_id: cuerpo.data.asset_id, instrument_type: 'STOCK', economic_asset_class: 'EQUITY', identity: { display_name: 'Alfa' } } });
+    return respuesta({ result: {} });
+  };
+  const cliente = creaClienteMaestra({ fetchFn: fnNube, almacen: almacenFalso(), ahora: () => 1 });
+
+  const guardada = await cliente.guardaCarteraNube({ name: 'Nube', base_currency: 'EUR', positions: [{ asset_id: 'A', weight_percent: 100 }] });
+  comprueba('guardaCarteraNube llama a save_portfolio y devuelve el portfolio_id',
+    registro.llamada.at(-1).fn === 'save_portfolio' && guardada.portfolio_id === 'pid-9');
+  comprueba('El cuerpo guardado no arrastra datos maestros (solo asset_id y weight_percent)',
+    registro.llamada.at(-1).data.positions.every((p) => Object.keys(p).sort().join(',') === 'asset_id,weight_percent'));
+
+  const lista = await cliente.listaCarterasNube();
+  comprueba('listaCarterasNube devuelve el array de portfolios', Array.isArray(lista) && lista[0].name === 'Nube');
+
+  const leida = await cliente.leeCarteraNube('pid-9');
+  comprueba('leeCarteraNube pide get_portfolio con el id', registro.llamada.at(-1).fn === 'get_portfolio'
+    && registro.llamada.at(-1).data.portfolio_id === 'pid-9' && leida.positions[0].asset_id === 'A');
+
+  const borrada = await cliente.borraCarteraNube('pid-9');
+  comprueba('borraCarteraNube llama a delete_portfolio y devuelve ok', registro.llamada.at(-1).fn === 'delete_portfolio' && borrada.ok === true);
+
+  const ficha = await cliente.detalleActivo('A');
+  comprueba('detalleActivo trae nombre, tipo y clase para reconstruir al abrir',
+    ficha.identity.display_name === 'Alfa' && ficha.instrument_type === 'STOCK' && ficha.economic_asset_class === 'EQUITY');
+}
+
 console.log('\n— Etiquetas de tipo —');
 comprueba('STOCK → Acción', etiquetaTipo('STOCK') === 'Acción');
 comprueba('FUND → Fondo', etiquetaTipo('FUND') === 'Fondo');

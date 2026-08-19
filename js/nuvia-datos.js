@@ -238,9 +238,44 @@ export function creaClienteMaestra({
     return { enviado: true };
   }
 
+  /* ── Carteras en la nube (paso 30) ──
+   *  Las funciones callable son app-owned y aisladas por UID: cada cuenta ve
+   *  solo las suyas. Se guarda lo mínimo —qué activos y con qué peso—; el
+   *  cálculo no se persiste, se rehace al abrir. */
+
+  /** Guarda (o reemplaza, si trae portfolio_id) una cartera. Devuelve el
+   *  resultado con el portfolio_id asignado. */
+  function guardaCarteraNube(cartera) {
+    return llama('save_portfolio', cartera);
+  }
+
+  /** Lista las carteras de la cuenta, ya ordenadas por fecha (más reciente
+   *  primero). */
+  async function listaCarterasNube() {
+    const r = await llama('list_portfolios', {});
+    return r?.portfolios || [];
+  }
+
+  /** Lee una cartera concreta (identificadores y pesos). */
+  function leeCarteraNube(portfolioId) {
+    return llama('get_portfolio', { portfolio_id: portfolioId });
+  }
+
+  /** Borra una cartera de la cuenta. Devuelve { ok }. */
+  function borraCarteraNube(portfolioId) {
+    return llama('delete_portfolio', { portfolio_id: portfolioId });
+  }
+
+  /** Ficha de un activo para reconstruir nombre, tipo y clase al abrir una
+   *  cartera guardada (get_asset_detail). */
+  function detalleActivo(assetId) {
+    return llama('get_asset_detail', { asset_id: assetId });
+  }
+
   return {
     llama, buscaActivos, sesion,
     sesionActual, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
+    guardaCarteraNube, listaCarterasNube, leeCarteraNube, borraCarteraNube, detalleActivo,
   };
 }
 

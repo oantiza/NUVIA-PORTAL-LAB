@@ -415,6 +415,17 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Persistencia en la nube (paso 30, 19-08-2026).** Con la sesión iniciada, el
+constructor guarda las carteras en la cuenta (callable app-owned aisladas por
+UID) en vez de en el navegador. Se guarda solo el mínimo —`asset_id` y
+`weight_percent`—; ni cálculo ni resultados, que se rehacen al abrir con
+`get_asset_detail` y `get_price_series`. Así el dato guardado nunca queda
+viejo. Sin tope de carteras en el nivel gratuito. `nuvia-datos.js`
+(guarda/lista/lee/borraCarteraNube, detalleActivo) + mapas puros en
+`nuvia-constructor.js`; el guardado local (paso 24) sigue para quien no ha
+iniciado sesión. La migración de lo local a la cuenta llega en el paso 31, con
+permiso explícito.
+
 **Consentimiento granular (paso 29, 19-08-2026).** El bloque «Tu cuenta»
 separa lo necesario (cuenta y guardado, sin casilla y explicado) de lo
 opcional (comunicaciones y análisis de uso). Lo opcional es opt-in de verdad:

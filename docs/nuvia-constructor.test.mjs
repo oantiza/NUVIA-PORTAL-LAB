@@ -8,6 +8,7 @@ import {
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
   lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
+  AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -177,6 +178,40 @@ console.log('\n— Guardado local (paso 24) —');
     AVISO_GUARDADO.includes('este navegador') && AVISO_GUARDADO.includes('se pierden')
     && AVISO_GUARDADO.includes('otro ordenador')
     && !/localStorage|caché|cookie|sesión|almacenamiento/i.test(AVISO_GUARDADO));
+}
+
+console.log('\n— Guardado en la nube: solo ids y pesos (paso 30) —');
+{
+  const posiciones = [
+    { activo: { asset_id: 'A', display_name: 'Alfa', instrument_type: 'STOCK', economic_asset_class: 'EQUITY' }, bruto: 30 },
+    { activo: { asset_id: 'B', display_name: 'Beta', instrument_type: 'FUND', economic_asset_class: 'FIXED_INCOME' }, bruto: 10 },
+  ];
+  const carga = carteraNubeParaGuardar('  Mi nube  ', posiciones);
+  comprueba('El nombre se recorta y hay moneda base EUR', carga.name === 'Mi nube' && carga.base_currency === 'EUR');
+  comprueba('Cada posición lleva SOLO asset_id y weight_percent (nada maestro)',
+    carga.positions.every((p) => Object.keys(p).sort().join(',') === 'asset_id,weight_percent'));
+  comprueba('Los pesos van normalizados a 0–100 y suman 100',
+    Math.abs(carga.positions[0].weight_percent - 75) < 1e-6
+    && Math.abs(carga.positions[1].weight_percent - 25) < 1e-6);
+  comprueba('Sin nombre → «Cartera»', carteraNubeParaGuardar('', posiciones).name === 'Cartera');
+  comprueba('Con portfolio_id se reenvía para reemplazar',
+    carteraNubeParaGuardar('x', posiciones, 'pid-1').portfolio_id === 'pid-1'
+    && !('portfolio_id' in carteraNubeParaGuardar('x', posiciones)));
+
+  const reconstruidas = posicionesDesdeNube(
+    [{ asset_id: 'A', weight_percent: 75 }, { asset_id: 'B', weight_percent: 25 }],
+    { A: { display_name: 'Alfa', instrument_type: 'STOCK', economic_asset_class: 'EQUITY' } });
+  comprueba('Al abrir, la ficha conocida reconstruye nombre y clase',
+    reconstruidas[0].activo.display_name === 'Alfa' && reconstruidas[0].activo.economic_asset_class === 'EQUITY'
+    && reconstruidas[0].bruto === 75);
+  comprueba('Sin ficha, se muestra el identificador y sin clase (nunca se inventa)',
+    reconstruidas[1].activo.display_name === 'B' && reconstruidas[1].activo.economic_asset_class === undefined);
+  comprueba('Nunca se cargan más de las posiciones del nivel',
+    posicionesDesdeNube(Array.from({ length: 9 }, (_, i) => ({ asset_id: `X${i}`, weight_percent: 10 }))).length === MAX_POSICIONES);
+  comprueba('El aviso de la nube dice que solo se guardan activos y pesos, sin jerga',
+    AVISO_GUARDADO_NUBE.includes('tu cuenta') && AVISO_GUARDADO_NUBE.includes('qué activos y con qué peso')
+    && AVISO_GUARDADO_NUBE.includes('base de datos NUVIA')
+    && !/localStorage|caché|cookie|token|endpoint/i.test(AVISO_GUARDADO_NUBE));
 }
 
 console.log('\n— Fechas —');

@@ -705,6 +705,37 @@ desde el perfil.
 **Hacer.** Guardar solo lo mínimo: identificador de activos y pesos. Ni el
 cálculo ni los resultados: se recalculan al abrir.
 
+> **Hecho y verificado (19-08-2026).** Con la sesión iniciada, el bloque «Tus
+> carteras» del constructor pasa de local (paso 24) a **la cuenta**: título
+> «Tus carteras, en tu cuenta», guardar / cargar / borrar contra las callable
+> app-owned `save_portfolio` / `list_portfolios` / `get_portfolio` /
+> `delete_portfolio` (aisladas por UID). Se guarda **solo** `asset_id` +
+> `weight_percent` (peso normalizado 0–100): ni nombres, ni tipos, ni clases,
+> ni métricas. Al abrir una cartera se reconstruye desde la maestra
+> (`get_asset_detail` da nombre/tipo/clase) y se recalcula con
+> `get_price_series`, así que el dato guardado no puede quedar viejo — se dice
+> tal cual en el aviso. Sin tope de carteras (nivel gratuito). Mapas puros
+> `carteraNubeParaGuardar` (solo ids+pesos, `portfolio_id` opcional para
+> reemplazar) y `posicionesDesdeNube` (cap a `MAX_POSICIONES`, sin ficha →
+> muestra el identificador, nunca inventa nombre) en `nuvia-constructor.js`;
+> métodos de red `guarda/lista/lee/borraCarteraNube` + `detalleActivo` en
+> `nuvia-datos.js`. El cambio de sesión lo comunica `nuvia-cuenta.js` con el
+> evento `nuvia:sesion-cambiada`, y el constructor re-pinta el bloque.
+>
+> **Contrato probado en real** (PC de Óscar, antes de codificar): alta anónima
+> → `save_portfolio` persiste exactamente `[{asset_id, weight_percent}]` y
+> devuelve `portfolio_id` (uuid); `list_portfolios` los devuelve; `get_asset_detail`
+> da `identity.display_name` + `instrument_type` + `economic_asset_class`.
+> (El puente PowerShell mangla los objetos anidados al parsearlos, así que el
+> contrato se leyó del **contenido crudo** de la respuesta; el `fetch` del
+> navegador parsea bien.) **Verificado en navegador** con las cuatro callable y
+> `get_asset_detail` simuladas: sin sesión el guardado es local; al registrarse
+> pasa a la cuenta; guardar manda solo ids+pesos; cargar reconstruye el nombre
+> desde la base y recalcula; persiste tras recargar; borrar la quita; al cerrar
+> sesión vuelve el local. `npm run validate` en verde; sin desbordes
+> 1440/1024/390. Baterías nuevas en `docs/nuvia-constructor.test.mjs` (mapas) y
+> `docs/nuvia-datos.test.mjs` (llamadas y desempaquetado).
+
 ### Paso 31 · Migración desde local
 
 **Hacer.** Al registrarse, si hay carteras locales, ofrecer migrarlas.

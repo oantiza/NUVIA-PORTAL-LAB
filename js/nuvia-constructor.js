@@ -218,6 +218,53 @@ export function borraCartera(lista, indice) {
   return lista.filter((_, i) => i !== indice);
 }
 
+/* ── Guardado en la nube (paso 30) ──
+ *  A la cuenta va lo mínimo: qué activos y con qué peso normalizado. Ni
+ *  nombres, ni tipos, ni clases, ni métricas: nada de la base maestra. Al
+ *  abrir se reconstruye desde la propia base, así que el dato guardado no
+ *  puede quedar «viejo». */
+
+export const AVISO_GUARDADO_NUBE = 'Estas carteras se guardan en tu cuenta: '
+  + 'las verás al entrar desde cualquier navegador o dispositivo. Guardamos '
+  + 'solo qué activos y con qué peso; los nombres y las cifras se traen de la '
+  + 'base de datos NUVIA al abrir, nunca se quedan viejos aquí.';
+
+/** Convierte las posiciones de pantalla en el mínimo que viaja a la cuenta:
+ *  identificador y peso normalizado (0–100). Nada más. */
+export function carteraNubeParaGuardar(nombre, posiciones, portfolioId = null) {
+  const pesos = pesosNormalizados(posiciones) || {};
+  const positions = posiciones
+    .filter((p) => p.activo?.asset_id)
+    .map((p) => ({
+      asset_id: p.activo.asset_id,
+      weight_percent: Math.round((pesos[p.activo.asset_id] || 0) * 100 * 1e6) / 1e6,
+    }));
+  return {
+    ...(portfolioId ? { portfolio_id: portfolioId } : {}),
+    name: String(nombre || '').trim() || 'Cartera',
+    base_currency: 'EUR',
+    positions,
+  };
+}
+
+/** Reconstruye las posiciones de pantalla a partir de lo guardado (ids+pesos)
+ *  y de las fichas traídas de la maestra. Sin ficha, el activo se muestra por
+ *  su identificador y sin clase: nunca se inventa un nombre. */
+export function posicionesDesdeNube(positions, detalles = {}) {
+  return (positions || []).slice(0, MAX_POSICIONES).map((p) => {
+    const ficha = detalles[p.asset_id] || {};
+    return {
+      activo: {
+        asset_id: p.asset_id,
+        display_name: ficha.display_name || p.asset_id,
+        instrument_type: ficha.instrument_type,
+        economic_asset_class: ficha.economic_asset_class,
+      },
+      bruto: Number(p.weight_percent) || 0,
+    };
+  });
+}
+
 /** Fecha del punto más bajo de la caída máxima, o null si no puede saberse. */
 export function fechaDelMinimo(niveles, fechas) {
   if (!niveles?.length || !fechas || fechas.length !== niveles.length) return null;
@@ -255,24 +302,20 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   nivel.append(el('p', {}, NOTA_NIVEL));
   const resultados = el('div', { class: 'nv-cons__resultados', 'aria-live': 'polite' });
 
-  /* ── Guardado local (paso 24) ── */
-  const guardado = el('div', { class: 'nv-cons__guardado' });
-  guardado.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tus carteras en este navegador'));
-  guardado.append(el('p', { class: 'nv-cons__aviso-guardado' }, AVISO_GUARDADO));
-  const formulario = el('div', { class: 'nv-cons__guardar' });
-  const campoNombre = el('div', { class: 'nv-field nv-cons__nombre-campo' });
-  const etiquetaNombre = el('label', { for: 'nombre-cartera' }, 'Nombre para guardarla');
-  const cajaNombre = el('div', { class: 'nv-field__box' });
-  const inputNombre = el('input', { id: 'nombre-cartera', type: 'text', maxlength: '40', autocomplete: 'off', placeholder: 'Por ejemplo: Mi primera prueba' });
-  cajaNombre.append(inputNombre);
-  campoNombre.append(etiquetaNombre, cajaNombre);
-  const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en este navegador');
-  formulario.append(campoNombre, botonGuardar);
-  const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
-  const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
-  guardado.append(formulario, estadoGuardado, listaGuardadas);
+  /* ── Guardado: local (paso 24) o en la cuenta (paso 30) según la sesión ── */
+  const guardadoRaiz = el('div', { class: 'nv-cons__guardado' });
+  raiz.append(contador, lista, estado, nivel, resultados, guardadoRaiz);
 
-  raiz.append(contador, lista, estado, nivel, resultados, guardado);
+  function esRegistrada() {
+    try { return datos.sesionActual?.().tipo === 'registrada'; } catch { return false; }
+  }
+
+  function cargaPosiciones(nuevas, mensaje, estadoNodo) {
+    posiciones = nuevas;
+    pintaLista();
+    recalcula();
+    if (estadoNodo) estadoNodo.textContent = mensaje;
+  }
 
   function leeGuardadas() {
     try {
@@ -286,55 +329,167 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     try { localStorage.setItem(CLAVE_CARTERAS, JSON.stringify(carteras)); } catch { /* sin persistencia */ }
   }
 
-  function pintaGuardadas() {
-    const carteras = leeGuardadas();
-    listaGuardadas.textContent = '';
-    for (const [indice, cartera] of carteras.entries()) {
-      const item = el('li', { class: 'nv-cons__guardada' });
-      item.append(
-        el('span', { class: 'nv-cons__guardada-nombre' }, cartera.nombre),
-        el('span', { class: 'nv-cons__guardada-detalle' },
-          `${cartera.posiciones.length} ${cartera.posiciones.length === 1 ? 'posición' : 'posiciones'}`),
-      );
-      const cargar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Cargar');
-      cargar.addEventListener('click', () => {
-        posiciones = cartera.posiciones.map((p) => ({ activo: { ...p.activo }, bruto: Number(p.bruto) || 0 }));
-        pintaLista();
-        recalcula();
-        estadoGuardado.textContent = `Cartera «${cartera.nombre}» cargada.`;
-      });
-      const borrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Borrar');
-      borrar.addEventListener('click', () => {
-        escribeGuardadas(borraCartera(leeGuardadas(), indice));
-        pintaGuardadas();
-        estadoGuardado.textContent = `Cartera «${cartera.nombre}» borrada de este navegador.`;
-      });
-      item.append(cargar, borrar);
-      listaGuardadas.append(item);
+  /* Guardado local: para quien no ha iniciado sesión (paso 24). */
+  function pintaGuardadoLocal() {
+    guardadoRaiz.textContent = '';
+    guardadoRaiz.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tus carteras en este navegador'));
+    guardadoRaiz.append(el('p', { class: 'nv-cons__aviso-guardado' }, AVISO_GUARDADO));
+    const formulario = el('div', { class: 'nv-cons__guardar' });
+    const campoNombre = el('div', { class: 'nv-field nv-cons__nombre-campo' });
+    const cajaNombre = el('div', { class: 'nv-field__box' });
+    const inputNombre = el('input', { id: 'nombre-cartera', type: 'text', maxlength: '40', autocomplete: 'off', placeholder: 'Por ejemplo: Mi primera prueba' });
+    cajaNombre.append(inputNombre);
+    campoNombre.append(el('label', { for: 'nombre-cartera' }, 'Nombre para guardarla'), cajaNombre);
+    const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en este navegador');
+    formulario.append(campoNombre, botonGuardar);
+    const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+    const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
+    guardadoRaiz.append(formulario, estadoGuardado, listaGuardadas);
+
+    function pinta() {
+      const carteras = leeGuardadas();
+      listaGuardadas.textContent = '';
+      for (const [indice, cartera] of carteras.entries()) {
+        const item = el('li', { class: 'nv-cons__guardada' });
+        item.append(
+          el('span', { class: 'nv-cons__guardada-nombre' }, cartera.nombre),
+          el('span', { class: 'nv-cons__guardada-detalle' },
+            `${cartera.posiciones.length} ${cartera.posiciones.length === 1 ? 'posición' : 'posiciones'}`),
+        );
+        const cargar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Cargar');
+        cargar.addEventListener('click', () => {
+          cargaPosiciones(
+            cartera.posiciones.map((p) => ({ activo: { ...p.activo }, bruto: Number(p.bruto) || 0 })),
+            `Cartera «${cartera.nombre}» cargada.`, estadoGuardado);
+        });
+        const borrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Borrar');
+        borrar.addEventListener('click', () => {
+          escribeGuardadas(borraCartera(leeGuardadas(), indice));
+          pinta();
+          estadoGuardado.textContent = `Cartera «${cartera.nombre}» borrada de este navegador.`;
+        });
+        item.append(cargar, borrar);
+        listaGuardadas.append(item);
+      }
+      botonGuardar.textContent = `Guardar en este navegador (${carteras.length} de ${MAX_CARTERAS})`;
     }
-    botonGuardar.textContent = `Guardar en este navegador (${carteras.length} de ${MAX_CARTERAS})`;
+
+    botonGuardar.addEventListener('click', () => {
+      const { lista: nuevas, motivo } = agregaCartera(leeGuardadas(), carteraParaGuardar(inputNombre.value, posiciones));
+      if (motivo === 'sin-posiciones') {
+        estadoGuardado.textContent = 'No hay nada que guardar todavía: añade algún activo primero.';
+        return;
+      }
+      if (motivo === 'limite') {
+        estadoGuardado.textContent = `Este navegador guarda hasta ${MAX_CARTERAS} carteras. Borra alguna para guardar esta.`;
+        return;
+      }
+      escribeGuardadas(nuevas);
+      pinta();
+      const nombre = nuevas[nuevas.length - 1]?.nombre;
+      estadoGuardado.textContent = motivo === 'reemplazada'
+        ? `Cartera «${inputNombre.value.trim()}» actualizada.`
+        : `Cartera guardada${nombre ? ` como «${nombre}»` : ''}.`;
+      inputNombre.value = '';
+    });
+
+    pinta();
   }
 
-  botonGuardar.addEventListener('click', () => {
-    const { lista: nuevas, motivo } = agregaCartera(leeGuardadas(), carteraParaGuardar(inputNombre.value, posiciones));
-    if (motivo === 'sin-posiciones') {
-      estadoGuardado.textContent = 'No hay nada que guardar todavía: añade algún activo primero.';
-      return;
-    }
-    if (motivo === 'limite') {
-      estadoGuardado.textContent = `Este navegador guarda hasta ${MAX_CARTERAS} carteras. Borra alguna para guardar esta.`;
-      return;
-    }
-    escribeGuardadas(nuevas);
-    pintaGuardadas();
-    const nombre = nuevas[nuevas.length - 1]?.nombre;
-    estadoGuardado.textContent = motivo === 'reemplazada'
-      ? `Cartera «${inputNombre.value.trim()}» actualizada.`
-      : `Cartera guardada${nombre ? ` como «${nombre}»` : ''}.`;
-    inputNombre.value = '';
-  });
+  /* Guardado en la cuenta: para quien ha iniciado sesión (paso 30). Guarda
+     solo identificadores y pesos; el resto se rehace al abrir. */
+  function pintaGuardadoNube() {
+    guardadoRaiz.textContent = '';
+    guardadoRaiz.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tus carteras, en tu cuenta'));
+    guardadoRaiz.append(el('p', { class: 'nv-cons__aviso-guardado' }, AVISO_GUARDADO_NUBE));
+    const formulario = el('div', { class: 'nv-cons__guardar' });
+    const campoNombre = el('div', { class: 'nv-field nv-cons__nombre-campo' });
+    const cajaNombre = el('div', { class: 'nv-field__box' });
+    const inputNombre = el('input', { id: 'nombre-cartera', type: 'text', maxlength: '40', autocomplete: 'off', placeholder: 'Por ejemplo: Mi primera prueba' });
+    cajaNombre.append(inputNombre);
+    campoNombre.append(el('label', { for: 'nombre-cartera' }, 'Nombre para guardarla'), cajaNombre);
+    const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en la cuenta');
+    formulario.append(campoNombre, botonGuardar);
+    const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+    const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
+    guardadoRaiz.append(formulario, estadoGuardado, listaGuardadas);
 
-  pintaGuardadas();
+    let ocupado = false;
+    async function protege(boton, textoOcupado, accion) {
+      if (ocupado) return;
+      ocupado = true;
+      const original = boton.textContent;
+      boton.disabled = true;
+      boton.textContent = textoOcupado;
+      try { await accion(); }
+      catch (e) { estadoGuardado.textContent = e?.message || 'No se ha podido completar la operación.'; }
+      finally { ocupado = false; boton.disabled = false; boton.textContent = original; }
+    }
+
+    async function abre(cartera) {
+      const ids = [...new Set((cartera.positions || []).map((p) => p.asset_id))].slice(0, MAX_POSICIONES);
+      const fichas = await Promise.all(ids.map((id) => datos.detalleActivo(id).catch(() => null)));
+      const detalles = {};
+      fichas.forEach((f, i) => {
+        if (f) detalles[ids[i]] = {
+          display_name: f.identity?.display_name,
+          instrument_type: f.instrument_type,
+          economic_asset_class: f.economic_asset_class,
+        };
+      });
+      cargaPosiciones(posicionesDesdeNube(cartera.positions, detalles),
+        `Cartera «${cartera.name}» cargada desde tu cuenta.`, estadoGuardado);
+    }
+
+    async function pinta() {
+      listaGuardadas.textContent = '';
+      estadoGuardado.textContent = 'Cargando tus carteras…';
+      let carteras = [];
+      try { carteras = await datos.listaCarterasNube(); }
+      catch (e) { estadoGuardado.textContent = e?.message || 'No se han podido cargar tus carteras.'; return; }
+      estadoGuardado.textContent = carteras.length ? '' : 'Aún no has guardado ninguna cartera en tu cuenta.';
+      for (const cartera of carteras) {
+        const n = (cartera.positions || []).length;
+        const item = el('li', { class: 'nv-cons__guardada' });
+        item.append(
+          el('span', { class: 'nv-cons__guardada-nombre' }, cartera.name),
+          el('span', { class: 'nv-cons__guardada-detalle' }, `${n} ${n === 1 ? 'posición' : 'posiciones'}`),
+        );
+        const cargar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Cargar');
+        cargar.addEventListener('click', () => protege(cargar, 'Abriendo…', () => abre(cartera)));
+        const borrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Borrar');
+        borrar.addEventListener('click', () => protege(borrar, 'Borrando…', async () => {
+          await datos.borraCarteraNube(cartera.portfolio_id);
+          await pinta();
+          estadoGuardado.textContent = `Cartera «${cartera.name}» borrada de tu cuenta.`;
+        }));
+        item.append(cargar, borrar);
+        listaGuardadas.append(item);
+      }
+    }
+
+    botonGuardar.addEventListener('click', () => protege(botonGuardar, 'Guardando…', async () => {
+      if (!posiciones.some((p) => p.activo?.asset_id && Number.isFinite(p.bruto) && p.bruto > 0)) {
+        estadoGuardado.textContent = 'No hay nada que guardar todavía: añade algún activo primero.';
+        return;
+      }
+      const carga = carteraNubeParaGuardar(inputNombre.value, posiciones);
+      await datos.guardaCarteraNube(carga);
+      inputNombre.value = '';
+      await pinta();
+      estadoGuardado.textContent = `Cartera guardada en tu cuenta como «${carga.name}».`;
+    }));
+
+    pinta();
+  }
+
+  function pintaGuardado() {
+    if (esRegistrada()) pintaGuardadoNube();
+    else pintaGuardadoLocal();
+  }
+
+  document.addEventListener('nuvia:sesion-cambiada', pintaGuardado);
+  pintaGuardado();
 
   function seriesDelConjunto(ids) {
     const clave = [...ids].sort().join('|');

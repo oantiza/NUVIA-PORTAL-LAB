@@ -129,6 +129,14 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
 
   function avisa(texto) { estado.textContent = texto || ''; }
 
+  /** Avisa al resto del laboratorio (p. ej. al constructor) de que la sesión
+   *  ha cambiado, para que muestre el guardado que toca (paso 30). */
+  function avisaSesionCambiada() {
+    try {
+      document.dispatchEvent(new CustomEvent('nuvia:sesion-cambiada', { bubbles: true }));
+    } catch { /* entorno sin CustomEvent: no pasa nada */ }
+  }
+
   async function protege(boton, accion) {
     if (ocupado) return;
     ocupado = true;
@@ -201,6 +209,7 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
       const s = datos.cierraSesion();
       pintaDesconectado();
       avisa('Sesión cerrada en este navegador.');
+      avisaSesionCambiada();
       void s;
     });
 
@@ -264,6 +273,7 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
         }
         pintaConectado(s);
         avisa('Cuenta creada. Sesión iniciada en este navegador.');
+        avisaSesionCambiada();
       });
     });
 
@@ -272,6 +282,7 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
         const s = await datos.iniciaSesion(correo.value, clave.value);
         pintaConectado(s);
         avisa('Sesión iniciada.');
+        avisaSesionCambiada();
       });
     });
 
