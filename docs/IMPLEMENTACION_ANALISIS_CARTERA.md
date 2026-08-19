@@ -475,6 +475,20 @@ de «calcular». Esa inmediatez es lo que engancha.
 **Hacer.** Al llegar a 5 posiciones, decir por qué y qué se gana registrándose.
 Nunca dejar montar y bloquear al final (bases, sección 3).
 
+> **Hecho y verificado (19-08-2026).** Tres piezas en el constructor: (1) un
+> contador «Posiciones: N de 5» visible desde la primera posición — el límite
+> se comunica antes, no después; (2) al llegar a 5, una nota de nivel
+> (`NOTA_NIVEL`) que explica el porqué del tope (con pocas posiciones la
+> tabla se lee con claridad), qué añadirá la cuenta gratuita (mismas 5
+> posiciones, guardado en la nube, carteras sin tope, análisis más amplio) y
+> hasta dónde llega la suscripción (20 posiciones) — y dice honestamente que
+> el registro se abre en una fase posterior; (3) el sexto intento no borra
+> nada: se rechaza con la explicación delante. La nota describe sin
+> aconsejar; la batería lo comprueba (incluido el filtro de lenguaje de la
+> sección 2 de las bases) y el ciclo completo está verificado con navegador
+> real: la nota no aparece antes del tope, aparece al llegar y se oculta al
+> quitar una posición.
+
 ### Paso 22 · Tabla de métricas
 
 **Hacer.** Rentabilidad, volatilidad, máxima caída. **Cada cifra con su lectura

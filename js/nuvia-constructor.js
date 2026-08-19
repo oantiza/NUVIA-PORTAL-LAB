@@ -17,6 +17,24 @@ import { metricasDesdeSerie, pct, DIAS_MERCADO } from './nuvia-cartera.js';
 export const MAX_POSICIONES = 5;
 const PESO_INICIAL = 20;
 
+/** Texto del contador, visible desde la primera posición (el límite se
+ *  comunica antes, no después — bases §3). */
+export function textoContador(n) {
+  return `Posiciones: ${n} de ${MAX_POSICIONES}`;
+}
+
+/**
+ * Nota de nivel, mostrada al llegar al tope. Describe qué añade cada nivel;
+ * no aconseja. El registro llega en una fase posterior y se dice tal cual.
+ */
+export const NOTA_NIVEL = 'Este nivel de la página trabaja con hasta '
+  + `${MAX_POSICIONES} posiciones: bastan para ver el efecto de combinar `
+  + 'activos y la tabla se lee con claridad. Una cuenta gratuita, cuando el '
+  + 'registro se abra en una fase posterior del portal, mantendrá las '
+  + `${MAX_POSICIONES} posiciones por cartera y añadirá guardado en la nube, `
+  + 'carteras sin tope y análisis más amplio; la suscripción ampliará el '
+  + 'análisis y llegará a 20 posiciones.';
+
 /* ── Lógica pura (probada en docs/nuvia-constructor.test.mjs) ── */
 
 /** Añade un activo. Devuelve { posiciones, motivo } — motivo explica un rechazo. */
@@ -91,10 +109,13 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   let generacion = 0;
 
   raiz.textContent = '';
+  const contador = el('p', { class: 'nv-cons__contador' });
   const lista = el('ul', { class: 'nv-cons__lista' });
   const estado = el('p', { class: 'nv-cons__estado', role: 'status' });
+  const nivel = el('div', { class: 'nv-note nv-cons__nivel', hidden: '' });
+  nivel.append(el('p', {}, NOTA_NIVEL));
   const resultados = el('div', { class: 'nv-cons__resultados', 'aria-live': 'polite' });
-  raiz.append(lista, estado, resultados);
+  raiz.append(contador, lista, estado, nivel, resultados);
 
   function seriesDelConjunto(ids) {
     const clave = [...ids].sort().join('|');
@@ -148,6 +169,8 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   }
 
   async function recalcula() {
+    contador.textContent = posiciones.length ? textoContador(posiciones.length) : '';
+    nivel.hidden = posiciones.length < MAX_POSICIONES;
     if (!posiciones.length) {
       estado.textContent = `Busca un activo arriba y elígelo para añadirlo aquí (hasta ${MAX_POSICIONES} posiciones).`;
       resultados.textContent = '';
@@ -184,9 +207,6 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const partes = [];
     if (excluidos.length) {
       partes.push(`Sin historial suficiente en la base de datos: ${excluidos.map((p) => p.activo.display_name || p.activo.asset_id).join(', ')}. No entra en el cálculo.`);
-    }
-    if (posiciones.length >= MAX_POSICIONES) {
-      partes.push(`Has llegado a las ${MAX_POSICIONES} posiciones de este nivel.`);
     }
     estado.textContent = partes.join(' ');
 
@@ -232,7 +252,8 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   document.addEventListener('nuvia:activo-elegido', (evento) => {
     const { posiciones: nuevas, motivo } = agregaPosicion(posiciones, evento.detail);
     if (motivo === 'limite') {
-      estado.textContent = `Este nivel admite ${MAX_POSICIONES} posiciones. Quita alguna para probar otra combinación.`;
+      estado.textContent = `La cartera ya tiene sus ${MAX_POSICIONES} posiciones. Quita alguna para probar otra combinación.`;
+      nivel.hidden = false;
       return;
     }
     if (motivo === 'repetido') {

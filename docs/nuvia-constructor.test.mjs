@@ -5,7 +5,7 @@
  */
 import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
-  pesosNormalizados, serieCartera, fechaCorta,
+  pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -79,6 +79,16 @@ console.log('\n— Enlace con las métricas del visitante —');
     `anualizada=${m.rentabilidadAnualizada}`);
   comprueba('Subida monótona → máxima caída 0', m.maximaCaida === 0);
 }
+
+console.log('\n— Límite comunicado (paso 21) —');
+comprueba('El contador dice cuántas posiciones hay y cuál es el tope', textoContador(3) === 'Posiciones: 3 de 5');
+comprueba('La nota de nivel explica el porqué del tope', NOTA_NIVEL.includes('se lee con claridad'));
+comprueba('…y qué añade la cuenta gratuita', NOTA_NIVEL.includes('cuenta gratuita')
+  && NOTA_NIVEL.includes('guardado en la nube') && NOTA_NIVEL.includes('carteras sin tope'));
+comprueba('…y hasta dónde llega la suscripción', NOTA_NIVEL.includes('20 posiciones'));
+comprueba('Dice honestamente que el registro aún no está abierto', NOTA_NIVEL.includes('fase posterior'));
+comprueba('La nota describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
+  !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_NIVEL));
 
 console.log('\n— Fechas —');
 comprueba('2026-08-15 → 15-08-2026', fechaCorta('2026-08-15') === '15-08-2026');
