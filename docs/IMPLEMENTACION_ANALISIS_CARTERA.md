@@ -45,10 +45,16 @@ pasar). Punto de partida propuesto:
 | Concentración sectorial y geográfica | — | sí | sí |
 | Ahorro por diversificar | — | sí | sí |
 | **Solapamiento entre fondos** | — | sí | sí |
-| Frontera eficiente | — | — | sí |
+| **Frontera eficiente (estática, cartera marcada)** | — | **sí** | sí |
+| **Frontera eficiente (interactiva)** | — | — | **sí** |
 | Monte Carlo | — | — | sí |
 | Matriz de correlaciones | — | — | sí |
 | Carteras modelo temáticas | ver | ver | ver |
+
+**Frontera eficiente en dos niveles, no en uno.** El registrado la ve —con su
+cartera marcada en el gráfico— pero no puede tocar los pesos y verla recalcular
+al vuelo. Es un caramelo visual deliberado: se enseña la herramienta sin regalar
+la exploración completa, que es donde está buena parte del valor pagado.
 
 **Verificación.** Se puede dibujar en papel la pantalla de cada nivel y se
 entiende, sin explicación, qué gana quien sube de escalón.
