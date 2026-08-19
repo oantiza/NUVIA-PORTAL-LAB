@@ -230,35 +230,69 @@
 
 </div>
 </x-dc>
-</div>
 
 <script>
 /* El <h1> se publica con el tema por defecto ya escrito, para que un rastreador
    que no ejecute JavaScript lea texto real en lugar de "{{ titulo }}".
-   Este bloque lo sincroniza con el tema seleccionado una vez montado. */
+
+   Este bloque lo sincroniza con el tema activo. Antes solo corría en
+   DOMContentLoaded y el runtime, al repintar la plantilla al montar, devolvía
+   el <h1> a «Jubilación»: con ?topic=bienestar —el enlace que la cabecera
+   repite en las 15 páginas— la portada decía «Tema NUVIA · 04 de 04»,
+   «Jubilación» y debajo el contenido de Cuerpo, mente y salud. Tampoco cambiaba
+   al pulsar una píldora. Ahora recibe el tema activo del componente y se
+   reaplica dentro de su ciclo de vida, antes de pintar.
+
+   Las claves son las del componente. Se mantienen las antiguas como alias
+   porque llegaron a publicarse enlaces con ellas. */
 (function () {
   const TEMAS = {
-    vivienda:  ['Vivienda y coste de vida', 'Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.'],
-    fiscalidad:['Mis impuestos', 'Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.'],
-    jubilacion:['Jubilación', 'Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.'],
-    bienestar: ['Cuerpo, mente y salud', 'Hábitos, descanso y equilibrio: cuidar la energía también sostiene las decisiones patrimoniales.']
+    'vivienda-coste-vida': ['Vivienda y coste de vida', 'Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.'],
+    'mis-impuestos':       ['Mis impuestos', 'Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.'],
+    'jubilacion':          ['Jubilación', 'Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.'],
+    'bienestar':           ['Cuerpo, mente y salud', 'Hábitos para cuidar el cuerpo, mantener la mente en calma y equilibrar familia, trabajo y tiempo propio.']
   };
-  function sincronizar() {
-    const id = new URLSearchParams(location.search).get('topic');
+  const ALIAS = { vivienda: 'vivienda-coste-vida', fiscalidad: 'mis-impuestos' };
+  const resuelve = (id) => (id && (TEMAS[id] ? id : ALIAS[id])) || null;
+
+  /* El observador reaplica sin argumento; si volviera a mirar la URL, cada
+     repintado desharía el tema recién elegido con una píldora. */
+  let ultimoId = null;
+
+  function sincronizar(idActivo) {
+    const id = resuelve(idActivo) || ultimoId || resuelve(new URLSearchParams(location.search).get('topic'));
     const t = TEMAS[id];
     if (!t) return;
-    const h1 = document.getElementById('tema-titulo');
-    const p  = document.getElementById('tema-intro');
-    if (h1) h1.textContent = t[0];
-    if (p)  p.textContent  = t[1];
-    document.title = t[0] + ' | Temas clave · NUVIA';
+    ultimoId = id;
+    const poner = (el, texto) => { if (el && el.textContent !== texto) el.textContent = texto; };
+    poner(document.getElementById('tema-titulo'), t[0]);
+    poner(document.getElementById('tema-intro'), t[1]);
+    const titulo = t[0] + ' | Temas clave · NUVIA';
+    if (document.title !== titulo) document.title = titulo;
   }
+
+  /* React llama a componentDidMount y componentDidUpdate después de tocar el
+     DOM y antes de pintar: desde ahí la corrección no se ve. */
+  window.__nuviaSincronizarTema = sincronizar;
+
+  let pendiente = false;
+  const programar = () => {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(() => { pendiente = false; sincronizar(); });
+  };
+  /* Sin esperar a DOMContentLoaded: este bloque va después de la cabecera, así
+     que los nodos ya existen. */
+  sincronizar();
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', sincronizar, { once: true });
-  } else { sincronizar(); }
-  window.addEventListener('popstate', sincronizar);
+    document.addEventListener('DOMContentLoaded', programar, { once: true });
+  } else { programar(); }
+  new MutationObserver(programar).observe(document, { childList: true, subtree: true });
+  window.addEventListener('popstate', programar);
 })();
 </script>
+</div>
+
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;jubilacion&quot;, &quot;options&quot;: [&quot;vivienda-coste-vida&quot;, &quot;jubilacion&quot;, &quot;bienestar&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tema&quot;}}">
 class Component extends DCLogic {
@@ -278,10 +312,21 @@ class Component extends DCLogic {
         R('Familia, trabajo y tiempo propio', 'Límites saludables para separar responsabilidades, estar presente y proteger el equilibrio personal.') ] },
     ];
   }
+  /* La cabecera vive fuera de la plantilla (ver el bloque de arriba). Se le
+     pasa el tema activo en cada render, antes de pintar. El título de la
+     pestaña lo pone ella: aquí se fijaba a «Temas clave» y borraba el del tema. */
+  sincronizaCabecera() {
+    if (typeof window.__nuviaSincronizarTema === 'function') {
+      window.__nuviaSincronizarTema(this.state.topic ?? this.props.temaInicial ?? 'jubilacion');
+    }
+  }
+  componentDidUpdate() { this.sincronizaCabecera(); }
   componentDidMount() {
-    document.title = 'Temas clave | NUVIA Family Wealth';
     const p = new URLSearchParams(window.location.search).get('topic');
-    if (p && p !== 'mis-impuestos' && p !== 'vivienda-coste-vida' && this.temas().some(t => t.id === p)) this.setState({ topic: p });
+    const alias = { vivienda: 'vivienda-coste-vida', fiscalidad: 'mis-impuestos' };
+    const id = (p && alias[p]) || p;
+    if (id && id !== 'mis-impuestos' && id !== 'vivienda-coste-vida' && this.temas().some(t => t.id === id)) this.setState({ topic: id });
+    this.sincronizaCabecera();
   }
   ir(id) { this.setState({ topic: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   renderVals() {

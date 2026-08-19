@@ -190,12 +190,22 @@
      ?guia=inheritance el <h1> se quedaba en «Calendario fiscal» aunque el
      iframe sí cargara la guía correcta. Se resuelve con el mismo observador
      que ya usa nuvia-site-unified.js: reaplicar en cuanto el DOM cambie. */
+  /* React ejecuta componentDidMount y componentDidUpdate después de tocar el
+     DOM y ANTES de pintar: llamando desde ahí, la corrección no se ve. El
+     observador de más abajo se queda como red de seguridad para cualquier
+     repintado que no pase por el ciclo del componente. */
+  window.__nuviaSincronizarGuiaFiscal = sincronizar;
+
   let pendiente = false;
   const programar = () => {
     if (pendiente) return;
     pendiente = true;
     requestAnimationFrame(() => { pendiente = false; sincronizar(); });
   };
+  /* Sin esperar a DOMContentLoaded: este bloque va después de la cabecera en el
+     documento, así que los nodos ya existen. Esperar dejaba pintado el título
+     de la guía por defecto mientras se descargaban los scripts diferidos. */
+  sincronizar();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', programar, { once: true });
   } else { programar(); }
@@ -228,7 +238,14 @@ class Component extends DCLogic {
     const key = Object.prototype.hasOwnProperty.call(guias, id) ? id : 'calendar';
     return { key, ...guias[key] };
   }
+  /* Antes de pintar, después de cada render: sin esto la cabecera parpadeaba
+     ~110 ms con el título de la guía por defecto antes de corregirse. */
+  sincronizaCabecera() {
+    if (typeof window.__nuviaSincronizarGuiaFiscal === 'function') window.__nuviaSincronizarGuiaFiscal();
+  }
+  componentDidUpdate() { this.sincronizaCabecera(); }
   componentDidMount() {
+    this.sincronizaCabecera();
     const frame = document.getElementById('nuvia-tax-guide');
     if (!frame) return;
     /* El suelo era 1.000 px. Con la guía en estado vacío dejaba casi mil
