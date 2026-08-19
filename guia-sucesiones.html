@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Guía NUVIA de sucesiones y donaciones: comparar heredar, donar o mantener, ordenar el inventario, seguir el proceso y detectar la falta de liquidez.">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/guia-sucesiones.html">
+<title>Sucesiones y donaciones | NUVIA</title>
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
+</head>
+<body>
+<x-dc>
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/logo-rec-transp-web-04.svg"
+             alt="NUVIA Family Wealth" width="278" height="68" loading="lazy">
+      </a>
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Cartera</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="cartera.html">Visión de cartera</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="jubilacion.html">Jubilación</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ══ CABECERA ══════════════════════════════════════════════════════════
+         El <h1> es fijo y está escrito en el HTML publicado: esta página es
+         una guía, no tres guías compartiendo fichero. Lo único que depende del
+         territorio es el texto de apoyo, y eso sí va interpolado.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="guia" data-screen-label="Cabecera Sucesiones y donaciones" class="nv-hero nv-hero--institutional gt-hero">
+      <div class="nv-container">
+        <div class="nv-hero__inner">
+          <div>
+            <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+              <ol>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="temas.html">Temas clave</a></li>
+                <li><a href="fiscalidad.html#guias">Mis impuestos</a></li>
+                <li><span aria-current="page">Sucesiones y donaciones</span></li>
+              </ol>
+            </nav>
+
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Planificación patrimonial</p>
+
+            <h1 class="gt-title">Sucesiones y donaciones</h1>
+
+            <p class="nv-hero__lead">
+              Ordena las decisiones patrimoniales, fiscales y documentales de una
+              transmisión en {{ territorio }} sin convertir una guía educativa en
+              una recomendación automática.
+            </p>
+          </div>
+
+          <aside class="nv-hero__aside gt-marco">
+            <p class="gt-marco__label">Marco de esta guía</p>
+            <ul class="gt-chips">
+              <li>{{ territorio }}</li>
+              <li>Ejercicio 2026</li>
+              <li class="gt-chips__accent">Contenido orientativo</li>
+            </ul>
+            <button type="button" class="gt-print" onClick="{{ imprimir }}">Imprimir guía</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ BARRA DE LA SECCIÓN ═══════════════════════════════════════════════ -->
+    <section data-screen-label="Barra de la sección" class="nv-container">
+      <div class="gt-strip">
+        <span class="gt-strip__label">
+          <span class="gt-strip__mark" aria-hidden="true">◆</span>
+          <span>Normativa de {{ territorio }} · ejercicio 2026</span>
+        </span>
+        <a class="gt-strip__change" href="fiscalidad.html">Cambiar de territorio →</a>
+      </div>
+
+      <nav class="gt-tabs" aria-label="Guías de Mis impuestos">
+        <a href="guia-ahorro.html">Fiscalidad del ahorro</a>
+        <a href="guia-calendario.html">Calendario fiscal</a>
+        <a href="guia-sucesiones.html" aria-current="page">Sucesiones y donaciones</a>
+      </nav>
+    </section>
+
+
+    <!-- ══ ESTADO EDITORIAL Y QUÉ APRENDERÁS ═════════════════════════════════ -->
+    <section data-screen-label="Estado editorial" class="nv-container">
+      <p class="gt-aviso">
+        <strong>Pendiente de revisión fiscal independiente.</strong>
+        El contenido está disponible como guía orientativa y todavía no cuenta con aprobación profesional externa.
+      </p>
+
+      <div class="gt-aprender">
+        <p class="gu-kicker">Qué aprenderás</p>
+        <ul class="gt-aprender__lista">
+          <li>Comparar heredar, donar o mantener atendiendo a control, liquidez y documentación.</li>
+          <li>Construir un inventario completo y seguir el proceso en el orden correcto.</li>
+          <li>Detectar falta de liquidez y factores que aumentan la complejidad.</li>
+          <li>Preparar documentos y preguntas concretas antes de acudir a un profesional.</li>
+        </ul>
+      </div>
+
+      <nav class="gt-indice" aria-label="Contenido de la guía">
+        <span class="gt-indice__label">En esta guía</span>
+        <a href="#comparar">Comparar alternativas</a>
+        <a href="#inventario">Componer el patrimonio</a>
+        <a href="#proceso">Proceso sucesorio</a>
+        <a href="#planificacion">Testamento y planificación</a>
+        <a href="#donaciones">Donaciones</a>
+        <a href="#liquidez">Liquidez</a>
+        <a href="#diagnostico">Diagnóstico</a>
+        <a href="#preguntas">Preguntas frecuentes</a>
+      </nav>
+    </section>
+
+
+    <div class="nv-container gu-section">
+
+      <!-- ══ 01 · DECISIÓN ═══════════════════════════════════════════════════ -->
+      <section id="comparar" data-screen-label="01 Comparar alternativas" class="gu-anchor--sm">
+        <p class="gu-kicker">01 · Decisión</p>
+        <h2 class="gu-title">Heredar, donar o mantener</h2>
+
+        <div class="gt-tabla-envoltorio">
+          <table class="gt-tabla">
+            <caption class="nv-visually-hidden">Comparación de las tres alternativas en siete dimensiones</caption>
+            <thead>
+              <tr><th scope="col">Dimensión</th><th scope="col">Heredar</th><th scope="col">Donar</th><th scope="col">Mantener</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Momento</th>
+                <td>La transmisión se produce por fallecimiento.</td>
+                <td>La transmisión se realiza en vida.</td>
+                <td>No hay transmisión actual.</td>
+              </tr>
+              <tr>
+                <th scope="row">Control</th>
+                <td>El titular conserva el control hasta el fallecimiento.</td>
+                <td>El donante puede perder control o liquidez desde la entrega.</td>
+                <td>Se mantiene la capacidad de decidir y modificar el plan.</td>
+              </tr>
+              <tr>
+                <th scope="row">Fiscalidad de quien recibe</th>
+                <td>Debe analizarse el impuesto sucesorio y la valoración aplicable.</td>
+                <td>Debe analizarse la donación y el territorio competente.</td>
+                <td>No hay impuesto por transmitir porque todavía no se transmite.</td>
+              </tr>
+              <tr>
+                <th scope="row">Efectos en quien transmite</th>
+                <td>No hay una venta o donación en vida.</td>
+                <td>Puede haber efectos adicionales que requieren revisión separada.</td>
+                <td>Se mantienen los rendimientos, riesgos y obligaciones del activo.</td>
+              </tr>
+              <tr>
+                <th scope="row">Liquidez</th>
+                <td>Los herederos necesitan prever gastos, tributos y reparto.</td>
+                <td>El donante debe conservar recursos suficientes para su futuro.</td>
+                <td>Permite preparar reservas antes de decidir.</td>
+              </tr>
+              <tr>
+                <th scope="row">Documentación</th>
+                <td>Testamento, certificados, inventario, valoración, aceptación y adjudicación.</td>
+                <td>Escritura o documento, aceptación, valoración y justificación de la entrega.</td>
+                <td>Inventario, titularidades, beneficiarios, testamento y plan de contingencia.</td>
+              </tr>
+              <tr>
+                <th scope="row">Reversibilidad</th>
+                <td>La planificación puede cambiarse en vida; tras el fallecimiento el proceso queda condicionado.</td>
+                <td>La donación perfeccionada suele ser difícil de revertir.</td>
+                <td>Es la opción más flexible mientras no se formalice una transmisión.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="gu-rule-top">
+          La tabla no elige una alternativa ni calcula impuestos. La respuesta depende del
+          territorio, parentesco, tipo de bien, situación familiar, necesidades del titular
+          y normativa vigente.
+        </p>
+      </section>
+
+
+      <!-- ══ 02 · INVENTARIO ═════════════════════════════════════════════════ -->
+      <section id="inventario" data-screen-label="02 Componer el patrimonio" class="gu-anchor--sm">
+        <p class="gu-kicker">02 · Inventario</p>
+        <h2 class="gu-title">¿Qué compone el patrimonio?</h2>
+
+        <div class="gu-grid-4">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Vivienda e inmuebles</h3>
+            <p class="gu-text--fill">Titularidad, cargas, referencia, valor, uso y localización.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Cuentas y depósitos</h3>
+            <p class="gu-text--fill">Entidad, titulares, saldos a fecha relevante y movimientos justificables.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Fondos, acciones y ETF</h3>
+            <p class="gu-text--fill">Titularidad, valoración, fechas y costes fiscales históricos.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Seguros de vida</h3>
+            <p class="gu-text--fill">Póliza, persona asegurada, tomador, beneficiarios y prestación.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Empresa familiar</h3>
+            <p class="gu-text--fill">Participaciones, actividad, funciones, cuentas y requisitos documentales.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Bienes compartidos</h3>
+            <p class="gu-text--fill">Porcentajes, régimen matrimonial, copropiedad y acuerdos existentes.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Deudas y cargas</h3>
+            <p class="gu-text--fill">Principal pendiente, acreedor, garantías y prueba de la obligación.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Bienes en el extranjero</h3>
+            <p class="gu-text--fill">País, título, valor, fiscalidad y trámites de cada jurisdicción.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ 03 · PROCESO ════════════════════════════════════════════════════ -->
+      <section id="proceso" data-screen-label="03 Proceso sucesorio" class="gu-anchor--sm">
+        <p class="gu-kicker">03 · Orden de trabajo</p>
+        <h2 class="gu-title">Proceso sucesorio en diez pasos</h2>
+
+        <ol class="gt-pasos">
+          <li class="gu-row--plain"><span class="gu-num">01</span><div><p class="gu-block-strong">Certificados iniciales</p><p class="gu-muted">Obtener defunción y últimas voluntades; comprobar seguros cuando proceda.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">02</span><div><p class="gu-block-strong">Testamento o herederos</p><p class="gu-muted">Localizar el testamento o iniciar la declaración de herederos.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">03</span><div><p class="gu-block-strong">Inventario completo</p><p class="gu-muted">Reunir bienes, derechos, seguros, deudas y cargas sin omitir titularidades.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">04</span><div><p class="gu-block-strong">Valoraciones</p><p class="gu-muted">Documentar los valores con el criterio y fecha que correspondan.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">05</span><div><p class="gu-block-strong">Régimen matrimonial</p><p class="gu-muted">Separar qué era propio del causante y qué pertenecía a otras personas.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">06</span><div><p class="gu-block-strong">Aceptar o renunciar</p><p class="gu-muted">Valorar consecuencias civiles, patrimoniales y fiscales antes de firmar.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">07</span><div><p class="gu-block-strong">Partición</p><p class="gu-muted">Acordar lotes, compensaciones, indivisiones y adjudicaciones.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">08</span><div><p class="gu-block-strong">Presentación fiscal</p><p class="gu-muted">Preparar el modelo, anexos y justificantes dentro del plazo aplicable.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">09</span><div><p class="gu-block-strong">Pago y liquidez</p><p class="gu-muted">Coordinar fondos, financiación y vencimientos sin ventas precipitadas.</p></div></li>
+          <li class="gu-row--plain"><span class="gu-num">10</span><div><p class="gu-block-strong">Cambios de titularidad</p><p class="gu-muted">Actualizar registros, entidades, vehículos, inversiones y contratos.</p></div></li>
+        </ol>
+
+        <div class="gu-note">
+          <p class="gu-text">{{ notaPlazos }}</p>
+        </div>
+      </section>
+
+
+      <!-- ══ 04 · PLANIFICACIÓN ══════════════════════════════════════════════ -->
+      <section id="planificacion" data-screen-label="04 Testamento y planificación" class="gu-anchor--sm">
+        <p class="gu-kicker">04 · Preparación</p>
+        <h2 class="gu-title">Testamento y planificación</h2>
+
+        <div class="gu-grid-3">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Testamento vigente</h3>
+            <p class="gu-text--fill">Revisar herederos, legados, sustituciones, albacea y encaje con la legítima y la situación familiar.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Beneficiarios de seguros</h3>
+            <p class="gu-text--fill">Comprobar que las designaciones coinciden con la voluntad actual y no contradicen el plan.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Documentación localizable</h3>
+            <p class="gu-text--fill">Mantener un inventario seguro y accesible sin incluir claves ni datos sensibles en esta web.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Gobierno familiar</h3>
+            <p class="gu-text--fill">Anticipar quién administrará, cómo se tomarán decisiones y qué bienes podrían quedar indivisos.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Empresa familiar</h3>
+            <p class="gu-text--fill">Preparar continuidad, valoración, funciones y prueba de los requisitos antes de una urgencia.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Revisión periódica</h3>
+            <p class="gu-text--fill">Actualizar el plan ante matrimonios, divorcios, nacimientos, fallecimientos, mudanzas o ventas.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ 05 · DONACIONES ═════════════════════════════════════════════════ -->
+      <section id="donaciones" data-screen-label="05 Donaciones" class="gu-anchor--sm">
+        <p class="gu-kicker">05 · Transmitir en vida</p>
+        <h2 class="gu-title">Donaciones: qué revisar</h2>
+
+        <div class="gu-grid-4">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Dinero</h3>
+            <p class="gu-text--fill">Acreditar origen, entrega, aceptación, parentesco, finalidad si la hubiera y liquidez futura del donante.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Inmuebles</h3>
+            <p class="gu-text--fill">Revisar titularidad, cargas, valoración, escritura, tributos relacionados y pérdida de control o uso.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Cartera financiera</h3>
+            <p class="gu-text--fill">Identificar activos, valoración, historia fiscal y efectos tanto en quien entrega como en quien recibe.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Empresa o participaciones</h3>
+            <p class="gu-text--fill">Analizar gobierno, valoración, continuidad y requisitos documentales con revisión profesional.</p>
+          </article>
+        </div>
+
+        <p class="gu-rule-top">
+          Una donación no debe analizarse solo desde quien recibe. Conviene revisar también el
+          patrimonio y las necesidades futuras de quien dona, la pérdida de control, la
+          documentación y los posibles efectos en otros impuestos.
+        </p>
+      </section>
+
+
+      <!-- ══ 06 · LIQUIDEZ ═══════════════════════════════════════════════════ -->
+      <section id="liquidez" data-screen-label="06 Liquidez" class="gu-anchor--sm">
+        <p class="gu-kicker">06 · Punto crítico</p>
+        <h2 class="gu-title">Liquidez antes de transmitir</h2>
+
+        <div class="gu-split">
+          <div class="gu-dark">
+            <p class="gu-kicker">No todo patrimonio paga facturas</p>
+            <h3 class="gu-strong gu-title--xs">Una herencia valiosa puede ser poco líquida</h3>
+            <p class="gu-text">
+              Inmuebles, empresas o carteras concentradas pueden exigir efectivo para gastos,
+              tributos, mantenimiento y compensaciones. Anticiparlo evita decisiones precipitadas.
+            </p>
+          </div>
+          <ul class="gt-lista-check">
+            <li>Estimar efectivo realmente disponible.</li>
+            <li>Separar gastos inmediatos y vencimientos.</li>
+            <li>Prever compensaciones entre adjudicatarios.</li>
+            <li>Revisar seguros y beneficiarios.</li>
+            <li>Evitar ventas sin historia fiscal completa.</li>
+            <li>Documentar cualquier financiación puente.</li>
+          </ul>
+        </div>
+      </section>
+
+
+      <!-- ══ 07 · DIAGNÓSTICO ════════════════════════════════════════════════
+           Misma lógica de puntuación que la versión anterior, portada entera:
+           cada factor suma, el nivel sale de dos umbrales y de ahí salen los
+           documentos y las preguntas. No calcula cuota ni pide datos personales.
+           ═══════════════════════════════════════════════════════════════════ -->
+      <section id="diagnostico" data-screen-label="07 Diagnóstico" class="gu-anchor--sm">
+        <p class="gu-kicker">07 · Herramienta orientativa</p>
+        <h2 class="gu-title">Diagnóstico de complejidad</h2>
+
+        <div class="gt-diag">
+          <form class="gt-diag__form">
+            <div class="gt-campo">
+              <label for="diag-parentesco">Parentesco</label>
+              <select id="diag-parentesco" name="relationship" value="{{ v.relationship }}" onChange="{{ setStr }}">
+                <option value="descendant">Descendiente</option>
+                <option value="spouse">Cónyuge o pareja</option>
+                <option value="ascendant">Ascendiente</option>
+                <option value="sibling">Hermano/a</option>
+                <option value="other">Otro parentesco</option>
+              </select>
+            </div>
+
+            <div class="gt-campo">
+              <label for="diag-liquidez">Liquidez prevista</label>
+              <select id="diag-liquidez" name="liquidity" value="{{ v.liquidity }}" onChange="{{ setStr }}">
+                <option value="enough">Suficiente</option>
+                <option value="uncertain">No está claro</option>
+                <option value="insufficient">Parece insuficiente</option>
+              </select>
+            </div>
+
+            <div class="gt-campo">
+              <label for="diag-herederos">Número aproximado de herederos</label>
+              <input id="diag-herederos" type="number" min="1" max="30" name="heirsCount" defaultValue="{{ v.heirsCount }}" onChange="{{ setNum }}">
+            </div>
+
+            <fieldset class="gt-grupo">
+              <legend>Datos conocidos</legend>
+              <label class="gt-casilla"><input type="checkbox" name="territoryConfirmed" checked="{{ v.territoryConfirmed }}" onChange="{{ setChk }}"><span>Territorio competente confirmado</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="residenceHistoryKnown" checked="{{ v.residenceHistoryKnown }}" onChange="{{ setChk }}"><span>Historial de residencia conocido</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="approximateEstateKnown" checked="{{ v.approximateEstateKnown }}" onChange="{{ setChk }}"><span>Valor aproximado conocido</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasWill" checked="{{ v.hasWill }}" onChange="{{ setChk }}"><span>Existe testamento</span></label>
+            </fieldset>
+
+            <fieldset class="gt-grupo">
+              <legend>Factores presentes</legend>
+              <label class="gt-casilla"><input type="checkbox" name="hasFamilyBusiness" checked="{{ v.hasFamilyBusiness }}" onChange="{{ setChk }}"><span>Empresa familiar</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasAssetsInMultipleTerritories" checked="{{ v.hasAssetsInMultipleTerritories }}" onChange="{{ setChk }}"><span>Bienes en varios territorios</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasForeignAssets" checked="{{ v.hasForeignAssets }}" onChange="{{ setChk }}"><span>Bienes en el extranjero</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasSharedAssets" checked="{{ v.hasSharedAssets }}" onChange="{{ setChk }}"><span>Bienes compartidos</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasPotentialDisagreement" checked="{{ v.hasPotentialDisagreement }}" onChange="{{ setChk }}"><span>Posible desacuerdo</span></label>
+              <label class="gt-casilla"><input type="checkbox" name="hasMinorsOrVulnerablePeople" checked="{{ v.hasMinorsOrVulnerablePeople }}" onChange="{{ setChk }}"><span>Menores o personas vulnerables</span></label>
+            </fieldset>
+
+            <p class="gu-foot">
+              Las respuestas solo se procesan en esta pantalla durante la visita.
+              No se guardan ni se envían a un servidor.
+            </p>
+          </form>
+
+          <div class="gt-diag__salida" aria-live="polite">
+            <p class="gu-kicker">Resultado educativo</p>
+            <p class="gt-nivel {{ nivelClase }}">{{ nivelEtiqueta }}</p>
+            <p class="gu-muted">
+              Este nivel orienta la preparación documental y la necesidad de coordinación.
+              No estima una cuota ni sustituye una revisión civil o fiscal.
+            </p>
+
+            <p class="gu-block-strong">Factores detectados</p>
+            <ul class="gt-lista">
+              <sc-for list="{{ detectados }}" as="d" hint-placeholder-count="1"><li>{{ d.texto }}</li></sc-for>
+            </ul>
+
+            <p class="gu-block-strong">Documentos para preparar</p>
+            <ul class="gt-lista">
+              <sc-for list="{{ documentos }}" as="doc" hint-placeholder-count="4"><li>{{ doc.texto }}</li></sc-for>
+            </ul>
+
+            <p class="gu-block-strong">Preguntas para la revisión</p>
+            <ul class="gt-lista">
+              <sc-for list="{{ preguntas }}" as="q" hint-placeholder-count="1"><li>{{ q.texto }}</li></sc-for>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ══ 08 · PREGUNTAS ══════════════════════════════════════════════════ -->
+      <section id="preguntas" data-screen-label="08 Preguntas frecuentes" class="gu-anchor--sm">
+        <p class="gu-kicker">08 · Cierre</p>
+        <h2 class="gu-title">Preguntas frecuentes</h2>
+
+        <div class="gu-stack">
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿La residencia del heredero es el único criterio territorial?</h3>
+            <p class="gu-text">No. La competencia puede depender de la clase de adquisición, residencia de las personas implicadas y localización de determinados bienes. Debe confirmarse caso por caso.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿Tener testamento evita todos los trámites?</h3>
+            <p class="gu-text">No. Facilita identificar la voluntad, pero siguen siendo necesarios inventario, valoraciones, aceptación o renuncia, partición, presentación fiscal y cambios de titularidad.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿El plazo de una donación es igual al de una herencia?</h3>
+            <p class="gu-text">No. Son plazos distintos y dependen del territorio competente. Esta guía muestra la referencia aplicable, pero el cómputo concreto debe verificarse antes de formalizar.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿El diagnóstico calcula cuánto se pagará?</h3>
+            <p class="gu-text">No. Solo detecta factores organizativos de complejidad y propone documentación y preguntas. No solicita datos personales ni calcula impuestos.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ FUENTES ═════════════════════════════════════════════════════════ -->
+      <section data-screen-label="Fuentes oficiales" class="gt-fuentes">
+        <h2 class="gu-kicker">Fuentes oficiales</h2>
+        <ul class="gt-fuentes__lista">
+          <sc-for list="{{ fuentes }}" as="f" hint-placeholder-count="4">
+            <li>
+              <a href="{{ f.href }}" target="_blank" rel="noopener noreferrer">{{ f.etiqueta }} ↗</a>
+              <span class="gu-muted">{{ f.comprobada }}</span>
+            </li>
+          </sc-for>
+        </ul>
+        <p class="gu-foot">
+          Esta guía no constituye una declaración tributaria, una liquidación fiscal ni
+          asesoramiento individual. Confirma siempre la normativa y tus circunstancias
+          antes de actuar.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/brand/nuvia-family-wealth-footer-reversed.svg"
+               alt="NUVIA Family Wealth" width="852" height="412" loading="lazy">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
+          <div class="nuvia-site-footer__links">
+            <a href="vivienda.html">Temas clave</a>
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h2 class="nuvia-site-footer__heading">Información</h2>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  /* Estado del diagnóstico. Son exactamente los valores de partida que tenía la
+     versión anterior: todo conocido, sin factores especiales y liquidez
+     suficiente, para que el primer resultado sea el más sencillo posible. */
+  state = {
+    territorio: null,
+    v: {
+      relationship: 'descendant',
+      liquidity: 'enough',
+      heirsCount: 2,
+      territoryConfirmed: true,
+      residenceHistoryKnown: true,
+      approximateEstateKnown: true,
+      hasWill: true,
+      hasFamilyBusiness: false,
+      hasAssetsInMultipleTerritories: false,
+      hasForeignAssets: false,
+      hasSharedAssets: false,
+      hasPotentialDisagreement: false,
+      hasMinorsOrVulnerablePeople: false,
+    },
+  };
+
+  /* Contenido que cambia con el territorio. Sale de pageContent del núcleo, sin
+     reescribir ni una fecha: comprobado el 03/08/2026. */
+  contenido() {
+    const C = '03/08/2026';
+    const f = (etiqueta, href) => ({ etiqueta, href, comprobada: 'Incluida en la actualización del ' + C });
+    return {
+      'bizkaia': {
+        nombre: 'Bizkaia',
+        plazos: 'Como referencia general, Bizkaia establece un año para las herencias y treinta días hábiles para las donaciones. Si existe poder testatorio o testamento por comisario, el fallecimiento, el inventario, el ejercicio del poder y su extinción pueden activar obligaciones y cómputos distintos; deben revisarse antes de presentar el modelo 650.',
+        fuentes: [
+          f('Hacienda Foral: Impuesto sobre Sucesiones y Donaciones', 'https://www.bizkaia.eus/es/web/educacion-tributaria/impuesto-sobre-sucesiones-y-donaciones-isd-'),
+          f('Normativa vigente de sucesiones y donaciones', 'https://www.bizkaia.eus/es/normativa-tributaria/normativa-vigente/sucesiones-y-donaciones'),
+          f('Instrucciones oficiales del modelo 650', 'https://www.bizkaia.eus/ogasuna/ereduak/argitaratu/650EurCasInst.pdf'),
+          f('Instrucciones oficiales del modelo 651', 'https://www.bizkaia.eus/ogasuna/ereduak/argitaratu/651EurCasInst.pdf'),
+        ],
+      },
+      'araba': {
+        nombre: 'Araba / Álava',
+        plazos: 'En Álava, el plazo ordinario de sucesiones es de seis meses. Se prorroga automáticamente otros seis meses, con intereses desde el fin del plazo ordinario. Si existe causa legítima, puede solicitarse una prórroga extraordinaria de seis meses más, con intereses y un recargo del 5 %. Las donaciones disponen de treinta días hábiles desde el día siguiente al hecho imponible.',
+        fuentes: [
+          f('Sucesiones y donaciones de Álava', 'https://web.araba.eus/es/hacienda/sucesiones-y-donaciones'),
+          f('Norma Foral 11/2005 del Impuesto sobre Sucesiones y Donaciones', 'https://web.araba.eus/documents/1247685/1248441/INDICE_NORMA%2BFORAL%2BSOBRE%2BSUCESIONES%2BY%2BDONACIONES-CAS%2B%286%29.pdf/59d3f622-3026-21d1-8a6b-af2d1524d847?t=1746001794894'),
+          f('Modelo 650 de sucesiones', 'https://egoitza.araba.eus/es/-/modelo-650'),
+          f('Guía oficial del modelo 651 de donaciones', 'https://web.araba.eus/documents/1247685/1248221/GUIA%2BPROGRAMA%2BMOD%2B651%2BDONACIONES.pdf/a32e88a6-0cad-b557-b553-dc3e2f4a70ba?t=1592471963380'),
+        ],
+      },
+      'gipuzkoa': {
+        nombre: 'Gipuzkoa',
+        plazos: 'En Gipuzkoa, las adquisiciones por causa de muerte disponen de un año desde el fallecimiento para devengos desde el 21 de febrero de 2019 y no existe posibilidad de prórroga. Se utilizan los modelos 670, 671 y 672 según el supuesto. En las donaciones, el plazo general es de treinta días hábiles desde el día siguiente al acto o contrato.',
+        fuentes: [
+          f('Impuesto sobre Sucesiones y Donaciones de Gipuzkoa', 'https://egoitza.gipuzkoa.eus/es/listado-tramites/-/tramiteak/xehetasuna/3006'),
+          f('Norma Foral 2/2022 del Impuesto sobre Sucesiones y Donaciones', 'https://www.gipuzkoa.eus/documents/2456431/2847867/NF%2B2-2022%2B%282025%29.pdf/1cee10a6-b9b2-a684-a2af-5a5cd3ad5445?t=1747374346843'),
+          f('Modelos y plazos del Impuesto sobre Sucesiones y Donaciones', 'https://www.gipuzkoa.eus/documents/2456431/2529807/ORDEN%2BFORAL%2B361-2013%2C%2Bde%2B15%2Bde%2Babril%2C%2Bpor%2Bla%2Bque%2Bse%2Baprueban%2Blos%2Bnuevos%2Bmodelos%2B670%2C%2B671%2By%2B672%2Bde%2Bautoliquidaci%C3%B3n%2Bdel%2BImpuesto%2Bsobre%2BSucesiones%2By%2BDonaciones.%2B.pdf/40e21f25-ecb7-e0e8-b979-039a9bc3b353'),
+        ],
+      },
+      'navarra': {
+        nombre: 'Navarra',
+        plazos: 'En Navarra, el plazo general de sucesiones es de seis meses desde el devengo, o diez meses si el fallecimiento se produce fuera de España. La prórroga debe solicitarse dentro de los cinco primeros meses —nueve en el segundo caso—. Para donaciones y demás supuestos inter vivos, el plazo general es de dos meses.',
+        fuentes: [
+          f('Sucesiones y donaciones de Navarra', 'https://www.navarra.es/es/hacienda/sucesiones-y-donaciones'),
+          f('Declaración de sucesiones · modelo 660', 'https://www.navarra.es/es/tramites/on/-/line/Impuesto-sobre-Sucesiones'),
+          f('Reglamento del Impuesto sobre Sucesiones y Donaciones', 'https://www.navarra.es/NR/rdonlyres/A7551364-F4C8-4B9D-9EE6-C5EE3BE2FB8A/0/RgtoSuc_htmv08.html'),
+          f('Modelos 651, 660 y 661 de sucesiones y donaciones', 'https://www.navarra.es/es/web/normativa-hacienda/-/modelos-de-autoliquidaci%C3%B3n-y-declaraci%C3%B3n-en-el-impuesto-sobre-sucesiones-y-donaciones-modelos-651-660-y-661-of-95/2019-de-1-de-julio-'),
+        ],
+      },
+      'common-territory': {
+        nombre: 'Territorio común',
+        plazos: 'Como referencia de la normativa estatal, las herencias disponen de seis meses desde el fallecimiento y las donaciones de treinta días hábiles desde el acto o contrato. No existe un régimen único para todo el territorio común: deben confirmarse la comunidad autónoma competente, su procedimiento, sus modelos y sus beneficios fiscales antes de actuar.',
+        fuentes: [
+          f('Reglamento estatal del Impuesto sobre Sucesiones y Donaciones', 'https://www.boe.es/buscar/act.php?id=BOE-A-1991-27678'),
+          f('Ley 22/2009 · puntos de conexión con las comunidades autónomas', 'https://www.boe.es/buscar/act.php?id=BOE-A-2009-20375'),
+          f('Delimitación de competencias entre el Estado y las comunidades autónomas', 'https://sede.agenciatributaria.gob.es/Sede/no-residentes/impuesto-sobre-sucesiones-donaciones/delimitacion-competencias-estado-comunidades-autonomas.html'),
+          f('Impuesto sobre Sucesiones y Donaciones para no residentes · AEAT', 'https://sede.agenciatributaria.gob.es/Sede/no-residentes/impuesto-sobre-sucesiones-donaciones.html'),
+        ],
+      },
+    };
+  }
+
+  /* Mismo criterio de puntuación que la versión anterior, factor a factor:
+     cada uno suma, algunos añaden documento y pregunta, y el nivel sale de dos
+     umbrales. No calcula cuota ni pide dato personal alguno. */
+  diagnostico(v) {
+    const DOCS_BASE = [
+      'Certificados de defunción y últimas voluntades.',
+      'Testamento o documentación para la declaración de herederos.',
+      'Inventario de bienes, derechos, seguros y deudas con sus justificantes.',
+      'Acreditación de la residencia y del parentesco.',
+    ];
+    let puntos = 0;
+    const factores = [];
+    const documentos = [...DOCS_BASE];
+    const preguntas = [];
+    const suma = (n, factor, pregunta) => { puntos += n; factores.push(factor); if (pregunta) preguntas.push(pregunta); };
+
+    if (!v.territoryConfirmed) suma(3, 'El territorio competente no está confirmado.', '¿Qué territorio resulta competente para cada bien y transmisión?');
+    if (!v.residenceHistoryKnown) suma(2, 'Falta reconstruir la residencia fiscal relevante.', '¿Dónde residieron las personas implicadas durante el periodo que debe acreditarse?');
+    if (v.hasAssetsInMultipleTerritories) suma(3, 'Existen bienes en varios territorios.', '¿La localización de cada bien cambia la administración competente?');
+    if (v.hasForeignAssets) {
+      suma(3, 'Hay bienes o derechos en el extranjero.', '¿Qué trámites, valoraciones o impuestos extranjeros deben coordinarse?');
+      documentos.push('Títulos, extractos y valoraciones de los bienes situados en el extranjero.');
+    }
+    if (v.hasFamilyBusiness) {
+      suma(3, 'La transmisión incluye empresa familiar o participaciones no cotizadas.', '¿Se cumplen y pueden documentarse los requisitos del régimen aplicable?');
+      documentos.push('Cuentas, estatutos, titularidad y documentación de la actividad empresarial.');
+    }
+    if (v.hasMinorsOrVulnerablePeople) suma(3, 'Intervienen menores o personas que pueden necesitar medidas de apoyo.', '¿Hace falta autorización o una representación específica para aceptar o repartir?');
+    if (!v.hasWill) suma(1, 'No consta testamento.', '¿Es necesaria una declaración de herederos antes de continuar?');
+    if (Number(v.heirsCount) >= 4) suma(1, 'Hay cuatro o más personas llamadas a la herencia.');
+    if (v.hasPotentialDisagreement) suma(3, 'Puede existir desacuerdo sobre la aceptación, valoración o reparto.', '¿Qué decisiones necesitan consenso antes de firmar?');
+    if (v.hasSharedAssets) {
+      suma(1, 'Hay bienes compartidos o con titularidad que debe delimitarse.');
+      documentos.push('Escrituras y documentos que acrediten porcentajes de titularidad y régimen económico matrimonial.');
+    }
+    if (v.relationship === 'other' || v.relationship === 'sibling') suma(1, 'El parentesco requiere una revisión específica del tratamiento aplicable.');
+    if (!v.approximateEstateKnown) suma(1, 'Todavía no existe una valoración patrimonial aproximada.');
+    if (v.liquidity === 'uncertain') suma(1, 'La liquidez disponible no está confirmada.', '¿Hay efectivo suficiente para gastos, tributos y compensaciones entre herederos?');
+    else if (v.liquidity === 'insufficient') suma(2, 'La liquidez parece insuficiente para atender gastos o equilibrar el reparto.', '¿Qué alternativas de financiación o reparto pueden estudiarse antes del vencimiento?');
+
+    if (factores.length === 0) factores.push('No se han señalado factores especiales en este primer cribado.');
+    if (preguntas.length === 0) preguntas.push('¿Están completos y actualizados el inventario, las valoraciones y la documentación personal?');
+
+    const nivel = puntos <= 3 ? 'baja' : puntos <= 8 ? 'media' : 'alta';
+    return { nivel, factores, documentos: [...new Set(documentos)], preguntas };
+  }
+
+  /* El territorio se elige en fiscalidad.html y viaja en el mismo almacén. Si
+     no hay ninguno guardado, la guía se lee con Bizkaia y la franja lo dice. */
+  territorioGuardado() {
+    try {
+      const p = JSON.parse(window.localStorage.getItem('nuvia-tax-preference') || 'null');
+      const permitidos = Object.keys(this.contenido());
+      return p && p.version === '1' && permitidos.includes(p.jurisdiction) ? p.jurisdiction : null;
+    } catch (error) { return null; }
+  }
+
+  componentDidMount() {
+    document.title = 'Sucesiones y donaciones | NUVIA Family Wealth';
+    const guardado = this.territorioGuardado();
+    if (guardado && guardado !== this.state.territorio) this.setState({ territorio: guardado });
+  }
+
+  renderVals() {
+    const datos = this.contenido();
+    const id = this.state.territorio ?? 'bizkaia';
+    const t = datos[id] || datos['bizkaia'];
+    const v = this.state.v;
+    const d = this.diagnostico(v);
+    const set = (campo, valor) => this.setState({ v: { ...this.state.v, [campo]: valor } });
+
+    return {
+      territorio: t.nombre,
+      notaPlazos: t.plazos,
+      fuentes: t.fuentes,
+      v,
+      setStr: (e) => set(e.target.name, e.target.value),
+      setNum: (e) => set(e.target.name, Math.min(30, Math.max(1, Number(e.target.value) || 1))),
+      setChk: (e) => set(e.target.name, e.target.checked),
+      imprimir: () => window.print(),
+      nivelEtiqueta: 'Complejidad inicial ' + d.nivel,
+      nivelClase: 'gt-nivel--' + d.nivel,
+      detectados: d.factores.map((texto, i) => ({ texto, _k: i })),
+      documentos: d.documentos.map((texto, i) => ({ texto, _k: i })),
+      preguntas: d.preguntas.map((texto, i) => ({ texto, _k: i })),
+    };
+  }
+}
+</script>
+
+</body>
+</html>

@@ -21,7 +21,8 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '..');
 const pages = [
   'index.html', 'mercados.html', 'cartera.html', 'temas.html', 'vivienda.html',
-  'fiscalidad.html', 'jubilacion.html', 'guia-fiscal.html', 'guia-impuestos.html',
+  'fiscalidad.html', 'jubilacion.html', 'guia-fiscal.html',
+  'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
   'guia-planificacion.html', 'academia.html', 'curso.html', 'lecturas.html',
 ];
 

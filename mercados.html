@@ -424,7 +424,7 @@
               <div class="markets-lab__controls">
                 <label class="markets-lab__search">
                   <span class="nv-visually-hidden">Buscar empresa o ticker</span>
-                  <input type="search" data-dc-value="{{ busquedaMercado }}" onInput="{{ cambiarBusquedaMercado }}" placeholder="Buscar empresa o ticker" autocomplete="off">
+                  <input type="search" defaultValue="{{ busquedaMercado }}" onInput="{{ cambiarBusquedaMercado }}" placeholder="Buscar empresa o ticker" autocomplete="off">
                 </label>
                 <div class="markets-lab__chips" aria-label="Filtrar por sector">
                   <sc-for list="{{ sectoresCotizacion }}" as="sector" hint-placeholder-count="5">

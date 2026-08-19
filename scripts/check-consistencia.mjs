@@ -47,6 +47,9 @@ const PRESUPUESTO_INLINE = {
   'guia-fiscal.html': 0,
   'guia-impuestos.html': 0,
   'guia-planificacion.html': 1,  // barra de progreso de la hoja de ruta
+  'guia-sucesiones.html': 0,
+  'guia-ahorro.html': 0,
+  'guia-calendario.html': 0,
   'index.html': 0,
   'jubilacion.html': 0,
   'lecturas.html': 0,

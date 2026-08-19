@@ -64,8 +64,24 @@ for (const htmlPath of htmlFiles) {
   if (!usesDesignComponentRuntime && /\s(?:d|points)=["']\s*\{\{/i.test(html)) {
     missing.push(`${htmlPath}: contiene un atributo SVG dinámico que provoca errores al cargar`);
   }
-  if (/<(?:input|select)\b[^>]*\svalue=["']\s*\{\{/i.test(html)) {
-    missing.push(`${htmlPath}: contiene un valor de formulario dinámico que provoca avisos al cargar`);
+  /* En un <input>, un value="{{ … }}" se pinta tal cual mientras no arranca el
+     runtime: el usuario ve la llave. Se usa defaultValue, que React entiende y
+     el navegador ignora. En un <select> el value no se pinta —lo hacen las
+     <option>—, así que ahí sí se enlaza, y con onChange en la misma etiqueta no
+     hay aviso de campo controlado sin manejador.
+
+     Ojo: data-dc-value NO enlaza nada. El runtime lo pasa como atributo data-
+     tal cual, así que el campo se queda vacío o con la primera opción. */
+  if (/<input\b[^>]*\svalue=["']\s*\{\{/i.test(html)) {
+    missing.push(`${htmlPath}: un <input> con value="{{ … }}" enseña la plantilla antes de arrancar; usa defaultValue`);
+  }
+  for (const etiqueta of html.match(/<select\b[^>]*>/gi) || []) {
+    if (/\svalue=["']\s*\{\{/i.test(etiqueta) && !/\sonChange=/i.test(etiqueta)) {
+      missing.push(`${htmlPath}: un <select> enlaza value sin onChange y React avisará de campo controlado`);
+    }
+  }
+  if (/<(?:input|select)\b[^>]*\sdata-dc-value=/i.test(html)) {
+    missing.push(`${htmlPath}: data-dc-value no enlaza el valor de un campo; usa value con onChange, o defaultValue`);
   }
   for (const match of html.matchAll(referencePattern)) {
     const target = localTarget(match[1]);

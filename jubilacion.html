@@ -134,23 +134,23 @@
           <div class="jub-grid-4">
             <div>
               <label for="age" class="nv-field__label">Edad actual</label>
-              <div class="nv-field__box"><input id="age" name="age" type="number" min="40" max="95" data-dc-value="{{ v.age }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
+              <div class="nv-field__box"><input id="age" name="age" type="number" min="40" max="95" defaultValue="{{ v.age }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
             </div>
             <div>
               <label for="sex" class="nv-field__label">Sexo (referencia de longevidad)</label>
-              <select class="nv-select" id="sex" name="sex" data-dc-value="{{ v.sex }}" onChange="{{ setStr }}">
+              <select class="nv-select" id="sex" name="sex" value="{{ v.sex }}" onChange="{{ setStr }}">
                 <option value="male">Hombre</option>
                 <option value="female">Mujer</option>
               </select>
             </div>
             <div>
               <label for="pensionMonthly" class="nv-field__label">Pensión pública bruta mensual</label>
-              <div class="nv-field__box"><input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" data-dc-value="{{ v.pensionMonthly }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div>
+              <div class="nv-field__box"><input id="pensionMonthly" name="pensionMonthly" type="number" min="0" step="50" defaultValue="{{ v.pensionMonthly }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div>
               <p class="nv-field__note">Antes de IRPF · 14 pagas.</p>
             </div>
             <div>
               <label for="pensionRevalPct" class="nv-field__label">Subida anual estimada de la pensión</label>
-              <div class="nv-field__box"><input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" data-dc-value="{{ v.pensionRevalPct }}" onChange="{{ setRev }}"><span class="nv-field__unit">%</span></div>
+              <div class="nv-field__box"><input id="pensionRevalPct" name="pensionRevalPct" type="number" min="-2" max="8" step="0.1" defaultValue="{{ v.pensionRevalPct }}" onChange="{{ setRev }}"><span class="nv-field__unit">%</span></div>
               <p class="nv-field__note">Si prefieres no suponer subidas, escribe 0.</p>
             </div>
           </div>
@@ -165,13 +165,13 @@
               <sc-if value="{{ hTarget }}" hint-placeholder-val="{{ true }}">
                 <div class="jub-narrow">
                   <label for="targetAge" class="nv-field__label">Planificar hasta la edad de</label>
-                  <div class="nv-field__box"><input id="targetAge" name="targetAge" type="number" min="41" max="110" data-dc-value="{{ v.targetAge }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
+                  <div class="nv-field__box"><input id="targetAge" name="targetAge" type="number" min="41" max="110" defaultValue="{{ v.targetAge }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
                 </div>
               </sc-if>
               <sc-if value="{{ hLongevity }}" hint-placeholder-val="{{ false }}">
                 <div class="jub-narrow">
                   <label for="longevityMargin" class="nv-field__label">Años de seguridad adicionales</label>
-                  <select class="nv-select" id="longevityMargin" name="longevityMargin" data-dc-value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}">
+                  <select class="nv-select" id="longevityMargin" name="longevityMargin" value="{{ v.longevityMargin }}" onChange="{{ setNumSel }}">
                     <option value="0">Sin margen</option>
                     <option value="5">+5 años</option>
                     <option value="10">+10 años</option>
@@ -208,32 +208,32 @@
           </div>
           <div class="jub-assets__row">
             <div><strong class="jub-row__name">Liquidez y efectivo</strong><span class="jub-muted">Cuentas corrientes y dinero disponible.</span></div>
-            <div class="nv-field__box"><input aria-label="Valor actual de liquidez" name="cashValue" type="number" min="0" step="1000" data-dc-value="{{ v.cashValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de liquidez" name="cashValue" type="number" min="0" step="1000" defaultValue="{{ v.cashValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
             <span class="jub-muted">—</span>
             <span class="jub-note">Retirada de principal no sujeta.</span>
           </div>
           <div class="jub-assets__row">
             <div><strong class="jub-row__name">Fondos de inversión</strong><span class="jub-muted">Se estima qué parte de cada retirada es ganancia.</span></div>
-            <div class="nv-field__box"><input aria-label="Valor actual de fondos" name="fundsValue" type="number" min="0" step="1000" data-dc-value="{{ v.fundsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
-            <div class="nv-field__box"><input aria-label="Aportado a fondos" name="fundsCost" type="number" min="0" step="1000" data-dc-value="{{ v.fundsCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de fondos" name="fundsValue" type="number" min="0" step="1000" defaultValue="{{ v.fundsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Aportado a fondos" name="fundsCost" type="number" min="0" step="1000" defaultValue="{{ v.fundsCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
             <span class="jub-note">Ganancia positiva a la base del ahorro.</span>
           </div>
           <div class="jub-assets__row">
             <div><strong class="jub-row__name">Acciones y ETF</strong><span class="jub-muted">Estimación simplificada, sin FIFO por lotes.</span></div>
-            <div class="nv-field__box"><input aria-label="Valor actual de acciones y ETF" name="sharesValue" type="number" min="0" step="1000" data-dc-value="{{ v.sharesValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
-            <div class="nv-field__box"><input aria-label="Pagado por acciones y ETF" name="sharesCost" type="number" min="0" step="1000" data-dc-value="{{ v.sharesCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de acciones y ETF" name="sharesValue" type="number" min="0" step="1000" defaultValue="{{ v.sharesValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Pagado por acciones y ETF" name="sharesCost" type="number" min="0" step="1000" defaultValue="{{ v.sharesCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
             <span class="jub-note">Ganancia positiva a la base del ahorro.</span>
           </div>
           <div class="jub-assets__row">
             <div><strong class="jub-row__name">Depósitos y renta fija</strong><span class="jub-muted">El capital no tributa; los intereses sí pueden.</span></div>
-            <div class="nv-field__box"><input aria-label="Valor actual de depósitos" name="depositsValue" type="number" min="0" step="1000" data-dc-value="{{ v.depositsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Valor actual de depósitos" name="depositsValue" type="number" min="0" step="1000" defaultValue="{{ v.depositsValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
             <span class="jub-muted">Principal = valor actual</span>
             <span class="jub-note">Intereses a la base del ahorro.</span>
           </div>
           <div class="jub-assets__row">
             <div><strong class="jub-row__name">Seguros de ahorro</strong><span class="jub-muted">Rescates ordinarios; sin rentas vitalicias aseguradas.</span></div>
-            <div class="nv-field__box"><input aria-label="Valor de rescate del seguro" name="insuranceValue" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
-            <div class="nv-field__box"><input aria-label="Primas aportadas al seguro" name="insuranceCost" type="number" min="0" step="1000" data-dc-value="{{ v.insuranceCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Valor de rescate del seguro" name="insuranceValue" type="number" min="0" step="1000" defaultValue="{{ v.insuranceValue }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+            <div class="nv-field__box"><input aria-label="Primas aportadas al seguro" name="insuranceCost" type="number" min="0" step="1000" defaultValue="{{ v.insuranceCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
             <span class="jub-note">Rendimiento positivo a la base del ahorro.</span>
           </div>
           <p class="jub-footnote">Si un producto vale menos de lo que pagaste, el simulador no utiliza automáticamente esa pérdida para reducir el impuesto: esa compensación depende del resto de operaciones del año.</p>
@@ -256,19 +256,19 @@
             <div class="jub-subpanel">
               <h3 class="jub-subtitle">Derechos anteriores al 1/1/2026</h3>
               <label for="epsvPre" class="nv-field__label">Saldo actual de esta parte</label>
-              <div class="nv-field__box"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPre }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+              <div class="nv-field__box"><input id="epsvPre" name="epsvPre" type="number" min="0" step="1000" defaultValue="{{ v.epsvPre }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
                 <label for="epsvPreReturn" class="nv-field__label">Ganancias incluidas en ese saldo</label>
-                <div class="nv-field__box"><input id="epsvPreReturn" name="epsvPreReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPreReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+                <div class="nv-field__box"><input id="epsvPreReturn" name="epsvPreReturn" type="number" min="0" step="500" defaultValue="{{ v.epsvPreReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               </sc-if>
             </div>
             <div class="jub-subpanel">
               <h3 class="jub-subtitle">Derechos desde el 1/1/2026</h3>
               <label for="epsvPost" class="nv-field__label">Saldo actual de esta parte</label>
-              <div class="nv-field__box"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" data-dc-value="{{ v.epsvPost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+              <div class="nv-field__box"><input id="epsvPost" name="epsvPost" type="number" min="0" step="1000" defaultValue="{{ v.epsvPost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               <sc-if value="{{ dmDetailed }}" hint-placeholder-val="{{ true }}">
                 <label for="epsvPostReturn" class="nv-field__label">Ganancias incluidas en ese saldo</label>
-                <div class="nv-field__box"><input id="epsvPostReturn" name="epsvPostReturn" type="number" min="0" step="500" data-dc-value="{{ v.epsvPostReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+                <div class="nv-field__box"><input id="epsvPostReturn" name="epsvPostReturn" type="number" min="0" step="500" defaultValue="{{ v.epsvPostReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               </sc-if>
             </div>
           </div>
@@ -288,7 +288,7 @@
                 </label>
                 <div>
                   <label for="seniorityKnown" class="nv-field__label">¿Conoces los años de antigüedad?</label>
-                  <select class="nv-select" id="seniorityKnown" name="seniorityKnown" data-dc-value="{{ v.seniorityKnown }}" onChange="{{ setStr }}">
+                  <select class="nv-select" id="seniorityKnown" name="seniorityKnown" value="{{ v.seniorityKnown }}" onChange="{{ setStr }}">
                     <option value="yes">Sí</option>
                     <option value="no">No</option>
                   </select>
@@ -296,7 +296,7 @@
                 <sc-if value="{{ seniorityYes }}" hint-placeholder-val="{{ true }}">
                   <div>
                     <label for="seniorityYears" class="nv-field__label">Años desde la primera aportación</label>
-                    <div class="nv-field__box"><input id="seniorityYears" name="seniorityYears" type="number" min="1" max="60" data-dc-value="{{ v.seniorityYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
+                    <div class="nv-field__box"><input id="seniorityYears" name="seniorityYears" type="number" min="1" max="60" defaultValue="{{ v.seniorityYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
                   </div>
                 </sc-if>
               </div>
@@ -315,7 +315,7 @@
                 <div class="jub-mt jub-narrow--wide">
                   <label for="epsvCapitalPct" class="nv-field__label">Parte que cobrarías de una sola vez</label>
                   <div class="jub-slider">
-                    <input id="epsvCapitalPct" name="epsvCapitalPct" type="range" min="0" max="100" step="5" data-dc-value="{{ v.epsvCapitalPct }}" onChange="{{ setNum }}" class="jub-slider__input">
+                    <input id="epsvCapitalPct" name="epsvCapitalPct" type="range" min="0" max="100" step="5" defaultValue="{{ v.epsvCapitalPct }}" onChange="{{ setNum }}" class="jub-slider__input">
                     <span class="jub-slider__value">{{ v.epsvCapitalPct }} %</span>
                   </div>
                 </div>
@@ -323,7 +323,7 @@
             </div>
             <div>
               <label for="taxRegime" class="nv-field__label">Régimen del cobro anterior a 2026</label>
-              <select class="nv-select" id="taxRegime" name="taxRegime" data-dc-value="{{ v.taxRegime }}" onChange="{{ setStr }}">
+              <select class="nv-select" id="taxRegime" name="taxRegime" value="{{ v.taxRegime }}" onChange="{{ setStr }}">
                 <option value="auto">Automático: comparar y elegir menor impuesto</option>
                 <option value="transitory">Régimen transitorio: integrar el 60 %</option>
                 <option value="new">Régimen desde 2026: separar aportación y ganancia</option>
@@ -334,7 +334,7 @@
           <div class="jub-block jub-grid-2">
             <div>
               <label for="contingency" class="nv-field__label">Motivo por el que cobras la EPSV</label>
-              <select class="nv-select" id="contingency" name="contingency" data-dc-value="{{ v.contingency }}" onChange="{{ setStr }}">
+              <select class="nv-select" id="contingency" name="contingency" value="{{ v.contingency }}" onChange="{{ setStr }}">
                 <option value="retirement">Jubilación</option>
                 <option value="disability">Invalidez</option>
                 <option value="dependency">Dependencia</option>
@@ -356,7 +356,7 @@
           <div class="jub-block jub-grid-2">
             <div>
               <label for="epsvRentQualification" class="nv-field__label">Tipo de renta formalizada con la EPSV</label>
-              <select class="nv-select" id="epsvRentQualification" name="epsvRentQualification" data-dc-value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}">
+              <select class="nv-select" id="epsvRentQualification" name="epsvRentQualification" value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}">
                 <option value="none">Pagos ordinarios: la ganancia puede tributar</option>
                 <option value="temporary">Renta temporal formalizada de 15 años o más</option>
                 <option value="life">Renta vitalicia formalizada por la EPSV</option>
@@ -365,7 +365,7 @@
             <sc-if value="{{ rentTemporary }}" hint-placeholder-val="{{ false }}">
               <div>
                 <label for="epsvRentYears" class="nv-field__label">Duración del contrato</label>
-                <div class="nv-field__box"><input id="epsvRentYears" name="epsvRentYears" type="number" min="15" max="50" data-dc-value="{{ v.epsvRentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
+                <div class="nv-field__box"><input id="epsvRentYears" name="epsvRentYears" type="number" min="15" max="50" defaultValue="{{ v.epsvRentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
               </div>
               <label class="jub-check">
                 <input type="checkbox" name="constantRent" checked="{{ v.constantRent }}" onChange="{{ setChk }}" class="jub-check__input">
@@ -388,17 +388,17 @@
           <div class="jub-grid-4">
             <div>
               <label for="expectedReturn" class="nv-field__label">Rentabilidad anual estimada</label>
-              <div class="nv-field__box"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" data-dc-value="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
+              <div class="nv-field__box"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" defaultValue="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
               <p class="nv-field__note">Una cifra menor produce una estimación más prudente.</p>
             </div>
             <div>
               <label for="incomeGrowth" class="nv-field__label">Subida anual de las retiradas</label>
-              <div class="nv-field__box"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" data-dc-value="{{ v.incomeGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
+              <div class="nv-field__box"><input id="incomeGrowth" name="incomeGrowth" type="number" min="0" max="6" step="0.1" defaultValue="{{ v.incomeGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>
               <p class="nv-field__note">Para compensar parcialmente el coste de vida.</p>
             </div>
             <div>
               <label for="otherDeductions" class="nv-field__label">Otras deducciones (opcional)</label>
-              <div class="nv-field__box"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" data-dc-value="{{ v.otherDeductions }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
+              <div class="nv-field__box"><input id="otherDeductions" name="otherDeductions" type="number" min="0" step="100" defaultValue="{{ v.otherDeductions }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div>
               <p class="nv-field__note">La deducción por edad se calcula automáticamente.</p>
             </div>
             <label class="jub-check">

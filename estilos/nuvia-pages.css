@@ -4267,36 +4267,21 @@
 }
 
 
-/* ══ GUÍA DE IMPUESTOS ═════════════════════════════════════════════════════
-   Cáscara alrededor de un iframe con la guía territorial. El <h1> era
-   {{ titulo }}: sin JavaScript, un buscador leía el marcador de plantilla.
+/* ══ GUÍAS TRIBUTARIAS ═════════════════════════════════════════════════════
+   Calendario fiscal, fiscalidad del ahorro y sucesiones y donaciones. Hasta
+   ahora vivían dentro de un iframe del núcleo, con su propia portada, su
+   propio «volver» y una paleta granate que no es la de la interfaz. Son ya
+   páginas del sitio: una por guía, con su <h1> escrito en el HTML publicado.
 
-   Homogeneización (19-08-2026):
-     · .gi-back desaparece. Era el único «volver» suelto de la sección y,
-       además, competía con los dos que el núcleo pinta dentro del iframe.
-       Su sitio lo ocupa .nv-breadcrumb, como en las demás páginas.
-     · El título pasa de 44 px sueltos a --nv-display-md, el escalón de la
-       escala que ya usan los héroes de segundo nivel.
-     · La franja deja de anunciar una conexión y dice de qué Hacienda son las
-       reglas que se leen, con salida para cambiar de territorio.
+   Reutilizan el repertorio .gu-* de las guías editoriales —kicker, título,
+   texto, tarjetas, rejillas, nota, cierre— porque son el mismo tipo de página.
+   Aquí solo están las piezas que no existían.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.gi-hero .nv-container { padding-block: var(--nv-space-16) var(--nv-space-12); }
-
-/* La regla iba en `.gi-title` a secas y perdía siempre contra `.nv-hero h1`
-   (0,1,1 frente a 0,1,0): los 44 px declarados nunca llegaron a pintarse, el
-   título salía a 57,6 px como el del hub. Se cualifica con el héroe para que
-   el segundo nivel se lea como segundo nivel. */
-.gi-hero .gi-title {
-  max-width: 18em;
-  margin: var(--nv-space-3) 0 0;
-  color: var(--nv-white);
-  font-size: var(--nv-display-md);
-  letter-spacing: -.015em;
-  line-height: 1.08;
-}
-
-.gi-strip {
+/* Franja de sección: de qué Hacienda son las reglas que se están leyendo.
+   Venía de la cáscara del iframe (.gi-strip); se queda porque la usan las tres
+   guías, ahora con el nombre de su familia. */
+.gt-strip {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -4305,7 +4290,7 @@
   padding-block: var(--nv-space-5) var(--nv-space-3);
 }
 
-.gi-strip__label {
+.gt-strip__label {
   display: inline-flex;
   align-items: center;
   gap: var(--nv-space-2);
@@ -4316,30 +4301,722 @@
   text-transform: uppercase;
 }
 
-/* El mismo rombo que marca el territorio elegido en el héroe de fiscalidad:
-   una sola señal para la misma idea en las dos páginas. */
-.gi-strip__mark { color: var(--nv-green-600); font-size: var(--nv-label); line-height: 1; }
+/* El mismo rombo que marca el territorio elegido en el héroe de fiscalidad. */
+.gt-strip__mark { color: var(--nv-green-600); font-size: var(--nv-label); line-height: 1; }
 
-.gi-strip__change {
+.gt-strip__change {
   color: var(--nv-text-muted);
   font-size: var(--nv-label);
   text-decoration: none;
 }
 
-.gi-strip__change:hover { color: var(--nv-text-link); text-decoration: underline; }
+.gt-strip__change:hover { color: var(--nv-text-link); text-decoration: underline; }
 
-.gi-frame {
-  overflow: hidden;
-  width: 100%;
-  border-radius: var(--nv-radius-lg);
+.gt-hero .gt-title {
+  max-width: 18em;
+  margin: var(--nv-space-3) 0 0;
+  color: var(--nv-white);
+  font-size: var(--nv-display-md);
+  letter-spacing: -.015em;
+  line-height: 1.08;
+}
+
+/* Panel del héroe: de qué Hacienda y de qué ejercicio se está hablando. */
+.gt-marco {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-4);
+}
+
+.gt-marco__label {
+  margin: 0;
+  color: var(--nv-text-on-dark-soft);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.gt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gt-chips li {
+  border: 1px solid var(--nv-line-on-dark-strong);
+  border-radius: var(--nv-radius-pill);
+  color: var(--nv-text-on-dark);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  padding: var(--nv-space-1) var(--nv-space-3);
+  text-transform: uppercase;
+}
+
+.gt-chips__accent {
+  border-color: var(--nv-green-300);
+  color: var(--nv-green-300);
+}
+
+.gt-print {
+  align-self: flex-start;
+  border: 1px solid var(--nv-line-on-dark-strong);
+  border-radius: var(--nv-radius-md);
+  background: transparent;
+  color: var(--nv-text-on-dark);
+  cursor: pointer;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  padding: var(--nv-space-2) var(--nv-space-4);
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.gt-print:hover {
+  border-color: var(--nv-green-300);
+  background: var(--nv-surface-on-dark);
+}
+
+/* Las tres guías de la sección, siempre a la vista. */
+.gt-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+  padding-bottom: var(--nv-space-6);
+}
+
+.gt-tabs a {
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  padding: var(--nv-space-2) var(--nv-space-4);
+  text-decoration: none;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.gt-tabs a:hover { border-color: var(--nv-green-600); color: var(--nv-text-link); }
+
+.gt-tabs a[aria-current="page"] {
+  border-color: var(--nv-navy-900);
+  background: var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+}
+
+/* Estado editorial. Lo dice antes que nada porque condiciona todo lo demás. */
+.gt-aviso {
+  border-left: 2px solid var(--nv-warning);
+  border-radius: 0 var(--nv-radius-md) var(--nv-radius-md) 0;
+  background: var(--nv-paper-light);
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.6;
+  margin: 0 0 var(--nv-space-6);
+  padding: var(--nv-space-4) var(--nv-space-5);
+}
+
+.gt-aviso strong { color: var(--nv-text); font-weight: var(--nv-weight-title); }
+
+.gt-aprender {
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface-editorial);
+  padding: var(--nv-space-6);
+}
+
+.gt-aprender__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-3) var(--nv-space-8);
+  margin: var(--nv-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gt-aprender__lista li {
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.6;
+  padding-left: var(--nv-space-5);
+  position: relative;
+}
+
+.gt-aprender__lista li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--nv-text-link);
+  content: "◆";
+  font-size: var(--nv-label);
+}
+
+/* Índice: una fila, no una columna lateral que deje media pantalla vacía. */
+.gt-indice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2) var(--nv-space-4);
+  border-top: 1px solid var(--nv-line);
+  border-bottom: 1px solid var(--nv-line);
+  margin-top: var(--nv-space-6);
+  padding: var(--nv-space-4) 0;
+}
+
+.gt-indice__label {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.gt-indice a {
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  text-decoration: none;
+}
+
+.gt-indice a:hover { color: var(--nv-text-link); text-decoration: underline; }
+
+/* Tabla comparativa. */
+.gt-tabla-envoltorio {
+  overflow-x: auto;
+  border-radius: var(--nv-radius-md);
   background: var(--nv-surface);
   box-shadow: var(--nv-shadow-sm);
 }
 
-/* Sin min-height fijo: el mínimo de 1.600 px dejaba casi mil píxeles de blanco
-   cuando la guía muestra el estado vacío. El puente ajusta la altura real por
-   postMessage y, si no llegara, el iframe conserva su barra propia. */
-.gi-frame__iframe { display: block; width: 100%; min-height: 60vh; border: 0; background: transparent; }
+.gt-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--nv-body-sm);
+  line-height: 1.55;
+}
+
+.gt-tabla th,
+.gt-tabla td {
+  border-bottom: 1px solid var(--nv-line);
+  padding: var(--nv-space-3) var(--nv-space-4);
+  text-align: left;
+  vertical-align: top;
+}
+
+.gt-tabla thead th {
+  background: var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gt-tabla tbody th {
+  color: var(--nv-text);
+  font-weight: var(--nv-weight-title);
+  white-space: nowrap;
+}
+
+.gt-tabla tbody td { color: var(--nv-text-soft); }
+.gt-tabla tbody tr:last-child th,
+.gt-tabla tbody tr:last-child td { border-bottom: 0; }
+
+/* Proceso numerado. */
+.gt-pasos {
+  margin: var(--nv-space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gt-lista-check {
+  display: grid;
+  gap: var(--nv-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gt-lista-check li {
+  border-bottom: 1px solid var(--nv-line);
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.55;
+  padding: 0 0 var(--nv-space-3) var(--nv-space-5);
+  position: relative;
+}
+
+.gt-lista-check li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: var(--nv-text-link);
+  content: "✓";
+  font-size: var(--nv-body-sm);
+}
+
+.gt-lista-check li:last-child { border-bottom: 0; }
+
+/* Diagnóstico: formulario a la izquierda, lectura a la derecha. */
+.gt-diag {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: var(--nv-space-6);
+  margin-top: var(--nv-space-6);
+}
+
+.gt-diag__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-4);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: var(--nv-space-6);
+}
+
+.gt-diag__salida {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-2);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface-editorial);
+  padding: var(--nv-space-6);
+}
+
+.gt-campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-2);
+}
+
+.gt-campo label {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gt-campo select,
+.gt-campo input {
+  border: 1px solid var(--nv-line-strong);
+  border-radius: var(--nv-radius-sm);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  padding: var(--nv-space-2) var(--nv-space-3);
+}
+
+.gt-campo select:hover,
+.gt-campo input:hover { border-color: var(--nv-green-600); }
+
+.gt-grupo {
+  display: grid;
+  gap: var(--nv-space-2);
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.gt-grupo legend {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  margin-bottom: var(--nv-space-2);
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.gt-casilla {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-sm);
+  color: var(--nv-text-soft);
+  cursor: pointer;
+  font-size: var(--nv-body-sm);
+  line-height: 1.45;
+  padding: var(--nv-space-2) var(--nv-space-3);
+  transition: border-color .2s ease;
+}
+
+.gt-casilla:hover { border-color: var(--nv-green-600); }
+
+.gt-casilla input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--nv-green-600);
+  margin-top: 2px;
+}
+
+/* El nivel es una lectura, no un semáforo: se acompaña siempre del texto que
+   explica qué significa y de qué no dice. */
+.gt-nivel {
+  align-self: flex-start;
+  border: 1px solid;
+  border-radius: var(--nv-radius-pill);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  margin: 0 0 var(--nv-space-2);
+  padding: var(--nv-space-1) var(--nv-space-4);
+}
+
+/* Los tres modificadores se componen en tiempo de ejecución ('gt-nivel--' +
+   nivel): no aparecen literales en el HTML y un barrido de CSS muerto podría
+   darlos por no usados. */
+.gt-nivel--baja  { border-color: var(--nv-green-600); background: var(--nv-green-100); color: var(--nv-green-900); }
+.gt-nivel--media { border-color: var(--nv-bronze-500); background: var(--nv-paper-light); color: var(--nv-warning); }
+.gt-nivel--alta  { border-color: var(--nv-negative); background: var(--nv-surface); color: var(--nv-negative); }
+
+.gt-lista {
+  margin: 0 0 var(--nv-space-3);
+  padding-left: var(--nv-space-5);
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.6;
+}
+
+.gt-lista li { margin-bottom: var(--nv-space-1); }
+
+
+/* Selector por producto y su ficha. */
+.gt-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+  margin-top: var(--nv-space-6);
+}
+
+.gt-selector__opcion {
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-surface);
+  color: var(--nv-text-soft);
+  cursor: pointer;
+  font-family: var(--nv-font-sans);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  padding: var(--nv-space-2) var(--nv-space-4);
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.gt-selector__opcion:hover { border-color: var(--nv-green-600); color: var(--nv-text-link); }
+
+.gt-selector__opcion.is-active {
+  border-color: var(--nv-navy-900);
+  background: var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+}
+
+.gt-ficha {
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  margin-top: var(--nv-space-4);
+  padding: var(--nv-space-6);
+}
+
+.gt-ficha__datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--nv-space-8);
+  margin: var(--nv-space-4) 0 0;
+}
+
+.gt-ficha__datos > div {
+  border-top: 1px solid var(--nv-line);
+  padding: var(--nv-space-3) 0;
+}
+
+.gt-ficha__datos dt {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gt-ficha__datos dd {
+  margin: var(--nv-space-1) 0 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.55;
+}
+
+/* Resultado del simulador: cifras sobre azul, como el resto de lecturas
+   numéricas del sitio. */
+.gt-resultado {
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+  padding: var(--nv-space-6);
+}
+
+.gt-resultado__label {
+  margin: 0;
+  color: var(--nv-green-300);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.gt-resultado__datos { margin: var(--nv-space-4) 0 0; }
+
+.gt-resultado__datos > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--nv-space-4);
+  border-top: 1px solid var(--nv-line-on-dark);
+  padding: var(--nv-space-3) 0;
+}
+
+.gt-resultado__datos > div:first-child { border-top: 0; }
+.gt-resultado__datos dt { color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); line-height: 1.45; }
+
+.gt-resultado__datos dd {
+  margin: 0;
+  color: var(--nv-white);
+  font-size: var(--nv-body-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-title);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.gt-checklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-2) var(--nv-space-4);
+  margin-top: var(--nv-space-6);
+}
+
+
+/* Calendario: filtros, línea de eventos y fichas. */
+.gt-filtros {
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  margin-top: var(--nv-space-6);
+  padding: var(--nv-space-6);
+}
+
+.gt-filtros__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-space-4);
+  margin-bottom: var(--nv-space-5);
+}
+
+.gt-filtros .gt-selector { margin-top: 0; }
+.gt-filtros .gt-grupo + .gt-grupo { margin-top: var(--nv-space-5); }
+
+.gt-reset {
+  border: 0;
+  background: none;
+  color: var(--nv-text-link);
+  cursor: pointer;
+  font-family: var(--nv-font-sans);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.gt-reset:hover { color: var(--nv-text-link-hover); }
+
+.gt-reset--bloque {
+  border: 1px solid var(--nv-line-strong);
+  border-radius: var(--nv-radius-md);
+  margin-top: var(--nv-space-5);
+  padding: var(--nv-space-2) var(--nv-space-4);
+  text-decoration: none;
+}
+
+.gt-reset--bloque:hover { border-color: var(--nv-green-600); }
+
+.gt-eventos__resumen {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--nv-space-3);
+  margin: var(--nv-space-6) 0 var(--nv-space-4);
+}
+
+.gt-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-3);
+}
+
+.gt-evento {
+  border-left: 2px solid var(--nv-line-strong);
+  border-radius: 0 var(--nv-radius-md) var(--nv-radius-md) 0;
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: var(--nv-space-5) var(--nv-space-6);
+}
+
+.gt-evento.is-revisado { border-left-color: var(--nv-green-600); background: var(--nv-surface-editorial); }
+
+.gt-evento__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2);
+  margin: 0 0 var(--nv-space-2);
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gt-evento__sello {
+  border: 1px solid var(--nv-line-strong);
+  border-radius: var(--nv-radius-pill);
+  color: var(--nv-text-muted);
+  letter-spacing: .1em;
+  padding: 2px var(--nv-space-3);
+}
+
+.gt-evento__sello--oficial {
+  border-color: var(--nv-navy-900);
+  background: var(--nv-navy-900);
+  color: var(--nv-text-on-dark);
+}
+
+.gt-evento__periodo {
+  margin: var(--nv-space-1) 0 var(--nv-space-2);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+}
+
+.gt-evento__ficha {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--nv-space-8);
+  margin: var(--nv-space-4) 0 0;
+}
+
+.gt-evento__ficha > div {
+  border-top: 1px solid var(--nv-line);
+  padding: var(--nv-space-3) 0;
+}
+
+.gt-evento__ficha dt {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gt-evento__ficha dd {
+  margin: var(--nv-space-1) 0 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.55;
+}
+
+.gt-evento__fuente {
+  display: inline-block;
+  margin-top: var(--nv-space-3);
+  color: var(--nv-text-link);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  text-decoration: none;
+}
+
+.gt-evento__fuente:hover { text-decoration: underline; }
+
+.gt-evento__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-space-3);
+  border-top: 1px solid var(--nv-line);
+  margin-top: var(--nv-space-4);
+  padding-top: var(--nv-space-3);
+}
+
+.gt-evento__mas {
+  border: 0;
+  background: none;
+  color: var(--nv-text-link);
+  cursor: pointer;
+  font-family: var(--nv-font-sans);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.gt-casilla--revisado { border: 0; padding: 0; }
+
+.gt-lista-check--dos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-3) var(--nv-space-8);
+  margin-top: var(--nv-space-6);
+}
+
+/* Fuentes oficiales, al cierre de cada guía. */
+.gt-fuentes {
+  border-top: 1px solid var(--nv-line);
+  margin-top: var(--nv-space-12);
+  padding-top: var(--nv-space-6);
+}
+
+.gt-fuentes__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-3) var(--nv-space-8);
+  margin: var(--nv-space-4) 0 var(--nv-space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.gt-fuentes__lista li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-1);
+  border-top: 1px solid var(--nv-line);
+  padding-top: var(--nv-space-3);
+}
+
+.gt-fuentes__lista a {
+  color: var(--nv-text-link);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  text-decoration: none;
+}
+
+.gt-fuentes__lista a:hover { text-decoration: underline; }
+.gt-fuentes__lista span { font-size: var(--nv-label); }
+
+@media (max-width: 1120px) {
+  .gt-diag,
+  .gt-aprender__lista,
+  .gt-checklist,
+  .gt-ficha__datos,
+  .gt-evento__ficha,
+  .gt-lista-check--dos,
+  .gt-fuentes__lista { grid-template-columns: minmax(0, 1fr); }
+}
 
 
 /* ══ TEMAS CLAVE ═══════════════════════════════════════════════════════════

@@ -20,7 +20,12 @@ const marketsPage = await readFile(resolve(root, 'mercados.html'), 'utf8');
 const portfolioPage = await readFile(resolve(root, 'cartera.html'), 'utf8');
 const topicsPage = await readFile(resolve(root, 'temas.html'), 'utf8');
 const taxPage = await readFile(resolve(root, 'fiscalidad.html'), 'utf8');
-const taxGuidePage = await readFile(resolve(root, 'guia-impuestos.html'), 'utf8');
+const taxGuidePages = {
+  calendar: await readFile(resolve(root, 'guia-calendario.html'), 'utf8'),
+  savings: await readFile(resolve(root, 'guia-ahorro.html'), 'utf8'),
+  inheritance: await readFile(resolve(root, 'guia-sucesiones.html'), 'utf8'),
+};
+const taxGuideRedirect = await readFile(resolve(root, 'guia-impuestos.html'), 'utf8');
 const readingsPage = await readFile(resolve(root, 'lecturas.html'), 'utf8');
 const coreBridge = await readFile(resolve(root, 'web2-core-bridge.js'), 'utf8');
 const expectedRoutes = [
@@ -146,15 +151,28 @@ for (const [title, guide] of [
   ['Fiscalidad del ahorro', 'savings'],
   ['Sucesiones y donaciones', 'inheritance'],
 ]) {
-  if (!taxPage.includes(`'${title}': '${guide}'`)) {
-    throw new Error(`Falta el acceso a la guía fiscal: ${guide}`);
+  /* Cada guía es una página propia. El hub debe apuntar a ella, la página debe
+     llevar su título en el HTML publicado —no interpolado— y debe traer los
+     cinco territorios con sus fuentes oficiales. */
+  const archivo = { calendar: 'guia-calendario.html', savings: 'guia-ahorro.html', inheritance: 'guia-sucesiones.html' }[guide];
+  if (!taxPage.includes(`'${title}': '${archivo}'`)) {
+    throw new Error(`Falta el acceso a la guía fiscal: ${archivo}`);
   }
-  if (!taxGuidePage.includes(`${guide}: {`)) {
-    throw new Error(`Falta la presentación Web 2 de la guía fiscal: ${guide}`);
+  const pagina = taxGuidePages[guide];
+  if (!pagina.includes(`<h1 class="gt-title">${title}</h1>`)) {
+    throw new Error(`La guía ${archivo} no publica su título en el HTML`);
   }
-}
-if (!taxGuidePage.includes("'&embedded=web2'")) {
-  throw new Error('La presentación de guías fiscales no integra el contenido funcional del núcleo');
+  for (const territorio of ['bizkaia', 'araba', 'gipuzkoa', 'navarra', 'common-territory']) {
+    if (!pagina.includes(territorio)) {
+      throw new Error(`La guía ${archivo} no cubre el territorio ${territorio}`);
+    }
+  }
+  if (!pagina.includes('gt-fuentes__lista')) {
+    throw new Error(`La guía ${archivo} no publica sus fuentes oficiales`);
+  }
+  if (!taxGuideRedirect.includes(archivo)) {
+    throw new Error(`El reenvío de guia-impuestos.html no contempla ${archivo}`);
+  }
 }
 if (!coreBridge.includes("params.get('embedded') === 'web2'") || !coreBridge.includes("type: 'resize'") || !coreBridge.includes("params.get('suiteTab')")) {
   throw new Error('El puente de la suite analítica no prepara el modo integrado o su altura dinámica');

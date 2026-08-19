@@ -127,11 +127,11 @@
           <div class="viv-card__split">
             <div class="viv-card__form">
               <div class="nv-fields">
-                <div class="nv-field"><label>Precio de la vivienda</label><div class="nv-field__box"><input name="purchasePrice" type="number" step="5000" data-dc-value="{{ v.purchasePrice }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-                <div class="nv-field"><label>Entrada prevista</label><div class="nv-field__box"><input name="downPayment" type="number" step="5000" data-dc-value="{{ v.downPayment }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-                <div class="nv-field"><label>Impuestos de compra</label><div class="nv-field__box"><input name="purchaseTaxPercent" type="number" step="0.5" max="20" data-dc-value="{{ v.purchaseTaxPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Dependen de vivienda nueva/usada y del territorio.</p></div><div class="nv-field"><label>Notaría y otros gastos</label><div class="nv-field__box"><input name="purchaseOtherCosts" type="number" step="100" data-dc-value="{{ v.purchaseOtherCosts }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-                <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="appraisalCost" type="number" step="50" data-dc-value="{{ v.appraisalCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-                <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="years" type="number" min="1" max="40" data-dc-value="{{ v.years }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+                <div class="nv-field"><label>Precio de la vivienda</label><div class="nv-field__box"><input name="purchasePrice" type="number" step="5000" defaultValue="{{ v.purchasePrice }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Entrada prevista</label><div class="nv-field__box"><input name="downPayment" type="number" step="5000" defaultValue="{{ v.downPayment }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Impuestos de compra</label><div class="nv-field__box"><input name="purchaseTaxPercent" type="number" step="0.5" max="20" defaultValue="{{ v.purchaseTaxPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Dependen de vivienda nueva/usada y del territorio.</p></div><div class="nv-field"><label>Notaría y otros gastos</label><div class="nv-field__box"><input name="purchaseOtherCosts" type="number" step="100" defaultValue="{{ v.purchaseOtherCosts }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="appraisalCost" type="number" step="50" defaultValue="{{ v.appraisalCost }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+                <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="years" type="number" min="1" max="40" defaultValue="{{ v.years }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
                 <div class="nv-field--wide">
                   <p class="viv-section-label">Modalidad</p>
                   <div class="viv-pill-row">
@@ -141,16 +141,16 @@
                   </div>
                 </div>
                 <sc-if value="{{ noEsVariable }}" hint-placeholder-val="{{ true }}">
-                  <div class="nv-field"><label>{{ etiquetaTinFijo }}</label><div class="nv-field__box"><input name="fixedRate" type="number" step="0.05" max="20" data-dc-value="{{ v.fixedRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>{{ etiquetaTinFijo }}</label><div class="nv-field__box"><input name="fixedRate" type="number" step="0.05" max="20" defaultValue="{{ v.fixedRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
                 </sc-if>
                 <sc-if value="{{ esMixta }}" hint-placeholder-val="{{ true }}">
-                  <div class="nv-field"><label>Duración del tramo fijo</label><div class="nv-field__box"><input name="fixedYears" type="number" min="1" max="40" data-dc-value="{{ v.fixedYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+                  <div class="nv-field"><label>Duración del tramo fijo</label><div class="nv-field__box"><input name="fixedYears" type="number" min="1" max="40" defaultValue="{{ v.fixedYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
                 </sc-if>
                 <sc-if value="{{ noEsFija }}" hint-placeholder-val="{{ true }}">
-                  <div class="nv-field"><label>Índice de referencia</label><div class="nv-field__box"><input name="referenceRate" type="number" step="0.05" max="20" data-dc-value="{{ v.referenceRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Introduce el valor de referencia que quieras simular.</p></div><div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="spread" type="number" step="0.05" max="10" data-dc-value="{{ v.spread }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Índice de referencia</label><div class="nv-field__box"><input name="referenceRate" type="number" step="0.05" max="20" defaultValue="{{ v.referenceRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div><p class="nv-field__note">Introduce el valor de referencia que quieras simular.</p></div><div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="spread" type="number" step="0.05" max="10" defaultValue="{{ v.spread }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
                 </sc-if>
-                <div class="nv-field"><label>Ingresos netos del hogar</label><div class="nv-field__box"><input name="annualHouseholdIncome" type="number" step="1000" data-dc-value="{{ v.annualHouseholdIncome }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
-                <div class="nv-field"><label>Otras cuotas de deuda</label><div class="nv-field__box"><input name="monthlyOtherDebt" type="number" step="25" data-dc-value="{{ v.monthlyOtherDebt }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+                <div class="nv-field"><label>Ingresos netos del hogar</label><div class="nv-field__box"><input name="annualHouseholdIncome" type="number" step="1000" defaultValue="{{ v.annualHouseholdIncome }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+                <div class="nv-field"><label>Otras cuotas de deuda</label><div class="nv-field__box"><input name="monthlyOtherDebt" type="number" step="25" defaultValue="{{ v.monthlyOtherDebt }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
               </div>
               <p class="viv-figure">La entrada, impuestos, compraventa y tasación se pagan con recursos propios. Conserva además un colchón separado. La revisión variable se representa con un índice constante: es un escenario, no una predicción.</p>
             </div>
@@ -232,16 +232,16 @@
                   <span class="{{ o.claseBadge }}">{{ o.badge }}</span>
                 </div>
                 <div class="viv-result-grid">
-                  <div class="nv-field nv-field--wide"><label>Modalidad</label><div class="nv-field__box"><select class="nv-select" name="{{ o.campoKind }}" data-dc-value="{{ o.kind }}" onChange="{{ setOfertaStr }}" ><option value="Fija">Fija</option><option value="Variable">Variable</option><option value="Mixta">Mixta</option></select></div></div>
-                  <div class="nv-field"><label>TIN fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedRate }}" type="number" step="0.05" data-dc-value="{{ o.fixedRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
-                  <div class="nv-field"><label>Tramo fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedYears }}" type="number" min="0" max="40" data-dc-value="{{ o.fixedYears }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
-                  <div class="nv-field"><label>Índice</label><div class="nv-field__box"><input name="{{ o.campoReferenceRate }}" type="number" step="0.05" data-dc-value="{{ o.referenceRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
-                  <div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="{{ o.campoSpread }}" type="number" step="0.05" data-dc-value="{{ o.spread }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
-                  <div class="nv-field"><label>TAE</label><div class="nv-field__box"><input name="{{ o.campoTae }}" type="number" step="0.05" data-dc-value="{{ o.tae }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
-                  <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="{{ o.campoYears }}" type="number" min="1" max="40" data-dc-value="{{ o.years }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
-                  <div class="nv-field"><label>Apertura</label><div class="nv-field__box"><input name="{{ o.campoOpeningFee }}" type="number" step="100" data-dc-value="{{ o.openingFee }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
-                  <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="{{ o.campoAppraisalCost }}" type="number" step="50" data-dc-value="{{ o.appraisalCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
-                  <div class="nv-field"><label>Productos</label><div class="nv-field__box"><input name="{{ o.campoAnnualProductsCost }}" type="number" step="50" data-dc-value="{{ o.annualProductsCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€/año</span></div></div>
+                  <div class="nv-field nv-field--wide"><label>Modalidad</label><div class="nv-field__box"><select class="nv-select" name="{{ o.campoKind }}" value="{{ o.kind }}" onChange="{{ setOfertaStr }}" ><option value="Fija">Fija</option><option value="Variable">Variable</option><option value="Mixta">Mixta</option></select></div></div>
+                  <div class="nv-field"><label>TIN fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedRate }}" type="number" step="0.05" defaultValue="{{ o.fixedRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Tramo fijo</label><div class="nv-field__box"><input name="{{ o.campoFixedYears }}" type="number" min="0" max="40" defaultValue="{{ o.fixedYears }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
+                  <div class="nv-field"><label>Índice</label><div class="nv-field__box"><input name="{{ o.campoReferenceRate }}" type="number" step="0.05" defaultValue="{{ o.referenceRate }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Diferencial</label><div class="nv-field__box"><input name="{{ o.campoSpread }}" type="number" step="0.05" defaultValue="{{ o.spread }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>TAE</label><div class="nv-field__box"><input name="{{ o.campoTae }}" type="number" step="0.05" defaultValue="{{ o.tae }}" onChange="{{ setOferta }}"><span class="nv-field__unit">%</span></div></div>
+                  <div class="nv-field"><label>Plazo</label><div class="nv-field__box"><input name="{{ o.campoYears }}" type="number" min="1" max="40" defaultValue="{{ o.years }}" onChange="{{ setOferta }}"><span class="nv-field__unit">años</span></div></div>
+                  <div class="nv-field"><label>Apertura</label><div class="nv-field__box"><input name="{{ o.campoOpeningFee }}" type="number" step="100" defaultValue="{{ o.openingFee }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
+                  <div class="nv-field"><label>Tasación</label><div class="nv-field__box"><input name="{{ o.campoAppraisalCost }}" type="number" step="50" defaultValue="{{ o.appraisalCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€</span></div></div>
+                  <div class="nv-field"><label>Productos</label><div class="nv-field__box"><input name="{{ o.campoAnnualProductsCost }}" type="number" step="50" defaultValue="{{ o.annualProductsCost }}" onChange="{{ setOferta }}"><span class="nv-field__unit">€/año</span></div></div>
                 </div>
                 <div class="viv-offer__result">
                   <div class="viv-offer__result-grid">
@@ -270,12 +270,12 @@
             <h2 class="viv-card__title">Compara patrimonio, no solo mensualidades</h2>
             <p class="viv-card__lead">El modelo asigna al alquiler la entrada y los gastos que no desembolsa, e invierte cada mes la diferencia de coste. La compra acumula la revalorización de la vivienda y el capital amortizado.</p>
             <div class="nv-fields">
-              <div class="nv-field"><label>Alquiler comparable</label><div class="nv-field__box"><input name="monthlyRent" type="number" step="50" data-dc-value="{{ v.monthlyRent }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
-              <div class="nv-field"><label>Horizonte</label><div class="nv-field__box"><input name="comparisonYears" type="number" min="1" max="30" data-dc-value="{{ v.comparisonYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
-              <div class="nv-field"><label>Revalorización vivienda</label><div class="nv-field__box"><input name="homeAppreciation" type="number" step="0.25" max="15" data-dc-value="{{ v.homeAppreciation }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
-              <div class="nv-field"><label>Crecimiento alquiler</label><div class="nv-field__box"><input name="rentGrowth" type="number" step="0.25" max="15" data-dc-value="{{ v.rentGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
-              <div class="nv-field"><label>Rentabilidad alternativa</label><div class="nv-field__box"><input name="investmentReturn" type="number" step="0.25" max="20" data-dc-value="{{ v.investmentReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
-              <div class="nv-field"><label>Costes de venta</label><div class="nv-field__box"><input name="saleCostsPercent" type="number" step="0.25" max="15" data-dc-value="{{ v.saleCostsPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+              <div class="nv-field"><label>Alquiler comparable</label><div class="nv-field__box"><input name="monthlyRent" type="number" step="50" defaultValue="{{ v.monthlyRent }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Horizonte</label><div class="nv-field__box"><input name="comparisonYears" type="number" min="1" max="30" defaultValue="{{ v.comparisonYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+              <div class="nv-field"><label>Revalorización vivienda</label><div class="nv-field__box"><input name="homeAppreciation" type="number" step="0.25" max="15" defaultValue="{{ v.homeAppreciation }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Crecimiento alquiler</label><div class="nv-field__box"><input name="rentGrowth" type="number" step="0.25" max="15" defaultValue="{{ v.rentGrowth }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Rentabilidad alternativa</label><div class="nv-field__box"><input name="investmentReturn" type="number" step="0.25" max="20" defaultValue="{{ v.investmentReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">% anual</span></div></div>
+              <div class="nv-field"><label>Costes de venta</label><div class="nv-field__box"><input name="saleCostsPercent" type="number" step="0.25" max="15" defaultValue="{{ v.saleCostsPercent }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
             </div>
             <p class="viv-card__disclaimer">La hipoteca, la entrada y los costes de propietario se toman de las pestañas Hipoteca y Presupuesto.</p>
           </div>
@@ -304,11 +304,11 @@
           <p class="viv-card__lead">Simula una aportación extraordinaria sobre una hipoteca existente y descuenta la compensación indicada en tu contrato.</p>
           <div class="viv-card__split">
             <div class="nv-fields">
-              <div class="nv-field"><label>Capital pendiente</label><div class="nv-field__box"><input name="repaymentBalance" type="number" step="5000" data-dc-value="{{ v.repaymentBalance }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-              <div class="nv-field"><label>TIN actual</label><div class="nv-field__box"><input name="repaymentRate" type="number" step="0.05" data-dc-value="{{ v.repaymentRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
-              <div class="nv-field"><label>Plazo restante</label><div class="nv-field__box"><input name="repaymentYears" type="number" min="1" max="40" data-dc-value="{{ v.repaymentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
-              <div class="nv-field"><label>Importe a amortizar</label><div class="nv-field__box"><input name="repaymentAmount" type="number" step="1000" data-dc-value="{{ v.repaymentAmount }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
-              <div class="nv-field"><label>Compensación aplicable</label><div class="nv-field__box"><input name="repaymentFee" type="number" step="0.05" data-dc-value="{{ v.repaymentFee }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+              <div class="nv-field"><label>Capital pendiente</label><div class="nv-field__box"><input name="repaymentBalance" type="number" step="5000" defaultValue="{{ v.repaymentBalance }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+              <div class="nv-field"><label>TIN actual</label><div class="nv-field__box"><input name="repaymentRate" type="number" step="0.05" defaultValue="{{ v.repaymentRate }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
+              <div class="nv-field"><label>Plazo restante</label><div class="nv-field__box"><input name="repaymentYears" type="number" min="1" max="40" defaultValue="{{ v.repaymentYears }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div></div>
+              <div class="nv-field"><label>Importe a amortizar</label><div class="nv-field__box"><input name="repaymentAmount" type="number" step="1000" defaultValue="{{ v.repaymentAmount }}" onChange="{{ setNum }}"><span class="nv-field__unit">€</span></div></div>
+              <div class="nv-field"><label>Compensación aplicable</label><div class="nv-field__box"><input name="repaymentFee" type="number" step="0.05" defaultValue="{{ v.repaymentFee }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div></div>
               <div>
                 <p class="viv-section-label">Objetivo</p>
                 <div class="viv-pill-row">
@@ -341,17 +341,17 @@
             <p class="viv-card__lead">Los ingresos, la cuota y otras deudas se toman de la pestaña Hipoteca. Añade aquí los costes de propietario y de vida diaria.</p>
             <p class="viv-figure__label">Costes de propietario</p>
             <div class="nv-fields">
-              <div class="nv-field"><label>Comunidad</label><div class="nv-field__box"><input name="communityFees" type="number" step="10" data-dc-value="{{ v.communityFees }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
-              <div class="nv-field"><label>IBI</label><div class="nv-field__box"><input name="propertyTaxAnnual" type="number" step="50" data-dc-value="{{ v.propertyTaxAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
-              <div class="nv-field"><label>Seguro de hogar</label><div class="nv-field__box"><input name="homeInsuranceAnnual" type="number" step="50" data-dc-value="{{ v.homeInsuranceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
-              <div class="nv-field"><label>Mantenimiento</label><div class="nv-field__box"><input name="maintenanceAnnual" type="number" step="100" data-dc-value="{{ v.maintenanceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+              <div class="nv-field"><label>Comunidad</label><div class="nv-field__box"><input name="communityFees" type="number" step="10" defaultValue="{{ v.communityFees }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>IBI</label><div class="nv-field__box"><input name="propertyTaxAnnual" type="number" step="50" defaultValue="{{ v.propertyTaxAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+              <div class="nv-field"><label>Seguro de hogar</label><div class="nv-field__box"><input name="homeInsuranceAnnual" type="number" step="50" defaultValue="{{ v.homeInsuranceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
+              <div class="nv-field"><label>Mantenimiento</label><div class="nv-field__box"><input name="maintenanceAnnual" type="number" step="100" defaultValue="{{ v.maintenanceAnnual }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/año</span></div></div>
             </div>
             <p class="viv-figure__label">Gastos de vida diaria</p>
             <div class="nv-fields">
-              <div class="nv-field"><label>Alimentación y suministros</label><div class="nv-field__box"><input name="essentials" type="number" step="25" data-dc-value="{{ v.essentials }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
-              <div class="nv-field"><label>Transporte</label><div class="nv-field__box"><input name="transport" type="number" step="25" data-dc-value="{{ v.transport }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
-              <div class="nv-field"><label>Seguros y cuidados</label><div class="nv-field__box"><input name="insuranceCare" type="number" step="25" data-dc-value="{{ v.insuranceCare }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
-              <div class="nv-field"><label>Ocio y otros</label><div class="nv-field__box"><input name="leisureOther" type="number" step="25" data-dc-value="{{ v.leisureOther }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Alimentación y suministros</label><div class="nv-field__box"><input name="essentials" type="number" step="25" defaultValue="{{ v.essentials }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Transporte</label><div class="nv-field__box"><input name="transport" type="number" step="25" defaultValue="{{ v.transport }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Seguros y cuidados</label><div class="nv-field__box"><input name="insuranceCare" type="number" step="25" defaultValue="{{ v.insuranceCare }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
+              <div class="nv-field"><label>Ocio y otros</label><div class="nv-field__box"><input name="leisureOther" type="number" step="25" defaultValue="{{ v.leisureOther }}" onChange="{{ setNum }}"><span class="nv-field__unit">€/mes</span></div></div>
             </div>
           </div>
           <div class="viv-card__aside">

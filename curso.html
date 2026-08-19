@@ -299,7 +299,7 @@
                 <label class="curso-campo">
                   <span><b>{{ campo.etiqueta }}</b><small>{{ campo.ayuda }}</small></span>
                   <span class="curso-campo__input">
-                    <input type="number" min="0" step="50" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
+                    <input type="number" min="0" step="50" defaultValue="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
                     <span class="curso-campo__unit">€</span>
                   </span>
                 </label>
@@ -312,7 +312,7 @@
                 <label class="curso-campo">
                   <span><b>{{ campo.etiqueta }}</b><small>{{ campo.ayuda }}</small></span>
                   <span class="curso-campo__input">
-                    <input type="number" min="0" step="100" data-dc-value="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
+                    <input type="number" min="0" step="100" defaultValue="{{ campo.valor }}" onChange="{{ campo.cambiar }}">
                     <span class="curso-campo__unit">€</span>
                   </span>
                 </label>

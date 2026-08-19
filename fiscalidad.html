@@ -103,8 +103,12 @@
             </label>
 
             <div class="fiscal-selector__field">
+              <!-- data-dc-value no enlaza nada: el runtime lo pasa tal cual como
+                   atributo data-. El selector se quedaba en la primera opción no
+                   deshabilitada —Bizkaia— aunque hubiera otro territorio guardado,
+                   así que la página decía «Gipuzkoa» y el desplegable «Bizkaia». -->
               <select id="residencia-fiscal"
-                      data-dc-value="{{ seleccion }}"
+                      value="{{ seleccion }}"
                       onChange="{{ cambiarTerritorio }}"
                       aria-describedby="ayuda-residencia">
                 <option value="sin-seleccion" disabled="{{ true }}">Selecciona tu territorio</option>
@@ -232,7 +236,7 @@
                 <p class="fiscal-guia__nota">{{ tarjeta.nota }}</p>
 
                 <div class="fiscal-guia__acciones">
-                  <a class="nv-btn nv-btn--primary" href="guia-impuestos.html?guia={{ tarjeta.guia }}">Abrir guía →</a>
+                  <a class="nv-btn nv-btn--primary" href="{{ tarjeta.guia }}">Abrir guía →</a>
                   <a class="fiscal-guia__fuente"
                      href="{{ tarjeta.fuenteHref }}" target="_blank" rel="noopener noreferrer">Fuente oficial ↗</a>
                 </div>
@@ -409,10 +413,13 @@ class Component extends DCLogic {
   }
   renderVals() {
     const jur = this.datos();
+    /* Cada guía es ya una página del sitio, con su propio <h1> en el HTML
+       publicado. Antes las tres compartían guia-impuestos.html y se distinguían
+       por un parámetro. */
     const guideByTitle = {
-      'Calendario fiscal': 'calendar',
-      'Fiscalidad del ahorro': 'savings',
-      'Sucesiones y donaciones': 'inheritance',
+      'Calendario fiscal': 'guia-calendario.html',
+      'Fiscalidad del ahorro': 'guia-ahorro.html',
+      'Sucesiones y donaciones': 'guia-sucesiones.html',
     };
     const seleccion = this.state.seleccion ?? this.props.territorioInicial ?? 'bizkaia';
     const t = jur[seleccion] || null;

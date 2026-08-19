@@ -3,276 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Guía fiscal territorial de NUVIA: calendario, modelos y plazos adaptados a tu Hacienda competente.">
-<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/guia-impuestos.html">
-<title>Guía de impuestos | NUVIA</title>
+<meta name="description" content="Las guías fiscales de NUVIA tienen ahora una página propia: calendario fiscal, fiscalidad del ahorro y sucesiones y donaciones.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/fiscalidad.html">
+<title>Guías de Mis impuestos | NUVIA</title>
 <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
 <link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
 <link rel="stylesheet" href="estilos/nuvia-pages.css">
-<script defer src="support.js"></script>
-<script defer src="nuvia-site-unified.js"></script>
-</head>
-<body>
-<x-dc>
-<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
 
-
-<div class="nuvia-page">
-  <header data-screen-label="Header" class="nuvia-site-header">
-    <div class="nuvia-site-header__inner">
-      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
-        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/logo-rec-transp-web-04.svg"
-             alt="NUVIA Family Wealth" width="278" height="68" loading="lazy">
-      </a>
-      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Academia</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
-            <a href="jubilacion.html">Jubilación</a>
-            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
-          </div>
-        </details>
-        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="contenido">
-    <!-- ══ CABECERA ══════════════════════════════════════════════════════════
-         Antes había aquí un enlace suelto «← Volver a Mis impuestos». Era la
-         única página de la sección sin miga de pan, y además competía con los
-         otros dos «volver» que el núcleo pinta dentro del iframe. Ahora usa
-         .nv-breadcrumb, igual que fiscalidad, guia-fiscal y guia-planificacion.
-         ═══════════════════════════════════════════════════════════════════ -->
-    <section data-screen-label="Hero guía fiscal" class="nv-hero nv-hero--institutional gi-hero">
-      <div class="nv-container">
-        <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-          <ol>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="temas.html">Temas clave</a></li>
-            <li><a href="fiscalidad.html#guias">Mis impuestos</a></li>
-            <li><span aria-current="page" id="guia-migaja">Calendario fiscal</span></li>
-          </ol>
-        </nav>
-        <span class="nv-eyebrow nv-eyebrow--on-dark" id="guia-eyebrow">Planificación fiscal</span>
-        <h1 class="gi-title" id="guia-titulo">Calendario fiscal</h1>
-        <p class="nv-hero__lead" id="guia-descripcion">Revisa obligaciones, fechas oficiales y decisiones que conviene preparar con tiempo.</p>
-      </div>
-    </section>
-
-    <section class="nv-container">
-      <!-- La franja decía «Guía NUVIA conectada»: vocabulario de desarrollo.
-           Ahora dice de qué Hacienda son las reglas que se están leyendo, que
-           es la única pregunta que el lector tiene aquí, y ofrece el cambio.
-           El .nv-container anidado se ha quitado: dejaba la franja 48 px más
-           estrecha que el marco de debajo. -->
-      <div class="gi-strip">
-        <span class="gi-strip__label">
-          <span class="gi-strip__mark" aria-hidden="true">◆</span>
-          <span id="guia-territorio">Contenido según tu territorio fiscal</span>
-        </span>
-        <a class="gi-strip__change" href="fiscalidad.html">Cambiar de territorio →</a>
-      </div>
-      <div class="gi-frame">
-        <iframe id="nuvia-tax-guide" src="{{ iframeSrc }}" title="{{ iframeTitle }}" loading="eager" class="gi-frame__iframe"></iframe>
-      </div>
-    </section>
-  </main>
-
-  <footer data-screen-label="Footer" class="nuvia-site-footer">
-    <div class="nuvia-site-footer__inner">
-      <div class="nuvia-site-footer__grid">
-        <div class="nuvia-site-footer__brand">
-          <img src="src/assets/brand/nuvia-family-wealth-footer-reversed.svg"
-               alt="NUVIA Family Wealth" width="852" height="412" loading="lazy">
-          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
-        </div>
-        <div>
-          <h2 class="nuvia-site-footer__heading">Navegación</h2>
-          <div class="nuvia-site-footer__links">
-            <a href="index.html">Inicio</a>
-            <a href="mercados.html">Mercados</a>
-            <a href="cartera.html">Analítica de cartera</a>
-            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </div>
-        <div>
-          <h2 class="nuvia-site-footer__heading">Recursos</h2>
-          <div class="nuvia-site-footer__links">
-            <a href="vivienda.html">Temas clave</a>
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="academia.html?tab=interes">Interés compuesto</a>
-            <a href="academia.html?tab=calculadora">Simulador</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-          </div>
-        </div>
-        <div class="nuvia-site-footer__info-column">
-          <h2 class="nuvia-site-footer__heading">Información</h2>
-          <div class="nuvia-site-footer__info">
-            <span>Contenido educativo e informativo.</span>
-            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
-            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
-          </div>
-        </div>
-      </div>
-      <div class="nuvia-site-footer__legal">
-        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
-        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
-      </div>
-    </div>
-  </footer>
-
-</div>
-
-</x-dc>
-
+<!-- ══ REENVÍO ═══════════════════════════════════════════════════════════════
+     Esta página fue durante un tiempo la cáscara de un iframe que servía las
+     tres guías fiscales del núcleo. Cada guía tiene ya una página propia, con
+     su título escrito en el HTML publicado. Se conserva el fichero porque los
+     enlaces con ?guia= llegaron a publicarse: reenvía al destino correcto y,
+     sin JavaScript, muestra las tres puertas.
+     ═══════════════════════════════════════════════════════════════════════ -->
 <script>
-/* Igual que en temas.html: la cabecera se publica con la guía por defecto ya
-   escrita para que sea legible sin JavaScript, y se sincroniza al montar. */
 (function () {
-  const GUIAS = {
-    calendar:    ['Planificación fiscal',     'Calendario fiscal',        'Revisa obligaciones, fechas oficiales y decisiones que conviene preparar con tiempo.'],
-    savings:     ['Inversión y patrimonio',   'Fiscalidad del ahorro',    'Comprende cuándo tributan rendimientos, ganancias y pérdidas, y qué documentación conviene conservar.'],
-    inheritance: ['Planificación patrimonial','Sucesiones y donaciones',  'Ordena los aspectos fiscales, patrimoniales y documentales de una transmisión familiar.']
+  var DESTINOS = {
+    calendar: 'guia-calendario.html',
+    savings: 'guia-ahorro.html',
+    inheritance: 'guia-sucesiones.html'
   };
-  /* El mismo nombre y el mismo orden que el selector de fiscalidad.html. Si
-     alguien guardó un territorio que ya no existe, la franja se queda con su
-     texto neutro en lugar de inventar una Hacienda. */
-  const TERRITORIOS = {
-    'bizkaia': 'Bizkaia', 'araba': 'Araba / Álava', 'gipuzkoa': 'Gipuzkoa',
-    'navarra': 'Navarra', 'common-territory': 'Territorio común'
-  };
-  function territorioGuardado() {
-    try {
-      const p = JSON.parse(window.localStorage.getItem('nuvia-tax-preference') || 'null');
-      return p && p.version === '1' && TERRITORIOS[p.jurisdiction] ? TERRITORIOS[p.jurisdiction] : null;
-    } catch (error) { return null; }
-  }
-  function sincronizar() {
-    const poner = (el, texto) => { if (el && el.textContent !== texto) el.textContent = texto; };
-
-    const nombre = territorioGuardado();
-    if (nombre) poner(document.getElementById('guia-territorio'), 'Normativa de ' + nombre + ' · ejercicio 2026');
-
-    const g = GUIAS[new URLSearchParams(location.search).get('guia')];
-    if (!g) return;
-    poner(document.getElementById('guia-eyebrow'), g[0]);
-    poner(document.getElementById('guia-titulo'), g[1]);
-    poner(document.getElementById('guia-descripcion'), g[2]);
-    poner(document.getElementById('guia-migaja'), g[1]);
-    if (document.title !== g[1] + ' | NUVIA') document.title = g[1] + ' | NUVIA';
-  }
-  /* El runtime de componentes vuelve a pintar la plantilla después de montar y
-     devolvía la cabecera a sus valores por defecto: con ?guia=savings y
-     ?guia=inheritance el <h1> se quedaba en «Calendario fiscal» aunque el
-     iframe sí cargara la guía correcta. Se resuelve con el mismo observador
-     que ya usa nuvia-site-unified.js: reaplicar en cuanto el DOM cambie. */
-  /* React ejecuta componentDidMount y componentDidUpdate después de tocar el
-     DOM y ANTES de pintar: llamando desde ahí, la corrección no se ve. El
-     observador de más abajo se queda como red de seguridad para cualquier
-     repintado que no pase por el ciclo del componente. */
-  window.__nuviaSincronizarGuiaFiscal = sincronizar;
-
-  let pendiente = false;
-  const programar = () => {
-    if (pendiente) return;
-    pendiente = true;
-    requestAnimationFrame(() => { pendiente = false; sincronizar(); });
-  };
-  /* Sin esperar a DOMContentLoaded: este bloque va después de la cabecera en el
-     documento, así que los nodos ya existen. Esperar dejaba pintado el título
-     de la guía por defecto mientras se descargaban los scripts diferidos. */
-  sincronizar();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', programar, { once: true });
-  } else { programar(); }
-  new MutationObserver(programar).observe(document, { childList: true, subtree: true });
-  window.addEventListener('popstate', programar);
+  var destino = DESTINOS[new URLSearchParams(window.location.search).get('guia')] || 'fiscalidad.html#guias';
+  window.location.replace(destino);
 })();
 </script>
+</head>
+<body>
 
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
-class Component extends DCLogic {
-  guia() {
-    const id = new URLSearchParams(window.location.search).get('guia') || 'calendar';
-    const guias = {
-      calendar: {
-        eyebrow: 'Planificación fiscal',
-        titulo: 'Calendario fiscal',
-        descripcion: 'Revisa obligaciones, fechas oficiales y decisiones que conviene preparar con tiempo.',
-      },
-      savings: {
-        eyebrow: 'Inversión y patrimonio',
-        titulo: 'Fiscalidad del ahorro',
-        descripcion: 'Comprende cuándo tributan rendimientos, ganancias y pérdidas, y qué documentación conviene conservar.',
-      },
-      inheritance: {
-        eyebrow: 'Planificación patrimonial',
-        titulo: 'Sucesiones y donaciones',
-        descripcion: 'Ordena los aspectos fiscales, patrimoniales y documentales de una transmisión familiar.',
-      },
-    };
-    const key = Object.prototype.hasOwnProperty.call(guias, id) ? id : 'calendar';
-    return { key, ...guias[key] };
-  }
-  /* Antes de pintar, después de cada render: sin esto la cabecera parpadeaba
-     ~110 ms con el título de la guía por defecto antes de corregirse. */
-  sincronizaCabecera() {
-    if (typeof window.__nuviaSincronizarGuiaFiscal === 'function') window.__nuviaSincronizarGuiaFiscal();
-  }
-  componentDidUpdate() { this.sincronizaCabecera(); }
-  componentDidMount() {
-    this.sincronizaCabecera();
-    const frame = document.getElementById('nuvia-tax-guide');
-    if (!frame) return;
-    /* El suelo era 1.000 px. Con la guía en estado vacío dejaba casi mil
-       píxeles de blanco antes del pie; 360 basta para que no dé un salto. */
-    const applyHeight = (height) => {
-      const safeHeight = Math.max(360, Math.min(Number(height) || 0, 16000));
-      if (safeHeight) frame.style.height = safeHeight + 'px';
-    };
-    this._onMsg = (event) => {
-      if (event.origin !== window.location.origin || event.source !== frame.contentWindow) return;
-      if (event.data && event.data.source === 'nuvia-core' && event.data.type === 'resize') applyHeight(event.data.height);
-    };
-    window.addEventListener('message', this._onMsg);
-    frame.addEventListener('load', () => {
-      try { applyHeight(frame.contentDocument && frame.contentDocument.documentElement && frame.contentDocument.documentElement.scrollHeight); } catch (e) { /* el puente mantiene el ajuste */ }
-    });
-  }
-  componentWillUnmount() { if (this._onMsg) window.removeEventListener('message', this._onMsg); }
-  renderVals() {
-    const guia = this.guia();
-    return {
-      ...guia,
-      iframeTitle: guia.titulo + ' — guía fiscal NUVIA',
-      iframeSrc: 'core/index.html?bridge=36&topic=mis-impuestos&taxPage=' + guia.key + '&embedded=web2',
-    };
-  }
-}
-</script>
+<div class="nuvia-page">
+  <main id="contenido" class="nv-container gu-section">
+    <h1 class="gu-title">Las guías de Mis impuestos han cambiado de dirección</h1>
+    <p class="gu-lead">Cada guía tiene ahora su propia página. Si no se te redirige automáticamente, elige la que buscabas.</p>
+
+    <nav class="gt-tabs" aria-label="Guías de Mis impuestos">
+      <a href="guia-calendario.html">Calendario fiscal</a>
+      <a href="guia-ahorro.html">Fiscalidad del ahorro</a>
+      <a href="guia-sucesiones.html">Sucesiones y donaciones</a>
+    </nav>
+
+    <p class="gu-rule-top"><a href="fiscalidad.html#guias">Volver a Mis impuestos</a></p>
+  </main>
+</div>
+
 </body>
 </html>

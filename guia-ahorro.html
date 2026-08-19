@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Guía NUVIA de fiscalidad del ahorro: qué hecho genera tributación en cada producto, cómo se ordenan ganancias y pérdidas y qué documentación revisar antes de vender.">
+<link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/guia-ahorro.html">
+<title>Fiscalidad del ahorro | NUVIA</title>
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-48.png" type="image/png" sizes="48x48">
+<link rel="icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-apple-touch-icon-180.png">
+<link rel="stylesheet" href="estilos/nuvia-tokens.css">
+<link rel="stylesheet" href="estilos/nuvia-components.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css">
+<script defer src="support.js"></script>
+<script defer src="nuvia-site-unified.js"></script>
+</head>
+<body>
+<x-dc>
+<a class="nv-skip-link" href="#contenido">Ir al contenido</a>
+
+<div class="nuvia-page">
+  <header data-screen-label="Header" class="nuvia-site-header">
+    <div class="nuvia-site-header__inner">
+      <a class="nuvia-site-header__brand" href="index.html" aria-label="Inicio de NUVIA">
+        <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/logo-rec-transp-web-04.svg"
+             alt="NUVIA Family Wealth" width="278" height="68" loading="lazy">
+      </a>
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="mercados.html">Mercados</a>
+        <details class="nuvia-site-nav__topics">
+          <summary>Cartera</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="cartera.html">Visión de cartera</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics is-active">
+          <summary aria-current="page">Temas clave</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="vivienda.html">Vivienda y coste de vida</a>
+            <a href="fiscalidad.html">Mis impuestos</a>
+            <a href="jubilacion.html">Jubilación</a>
+            <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
+          </div>
+        </details>
+        <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- ══ CABECERA ═════════════════════════════════════════════════════════ -->
+    <section id="guia" data-screen-label="Cabecera Fiscalidad del ahorro" class="nv-hero nv-hero--institutional gt-hero">
+      <div class="nv-container">
+        <div class="nv-hero__inner">
+          <div>
+            <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+              <ol>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="temas.html">Temas clave</a></li>
+                <li><a href="fiscalidad.html#guias">Mis impuestos</a></li>
+                <li><span aria-current="page">Fiscalidad del ahorro</span></li>
+              </ol>
+            </nav>
+
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Inversión y patrimonio</p>
+
+            <h1 class="gt-title">Fiscalidad del ahorro</h1>
+
+            <p class="nv-hero__lead">
+              Entiende qué hecho genera tributación, cuándo se materializa y qué
+              documentación conviene revisar antes de vender, cobrar o traspasar.
+            </p>
+          </div>
+
+          <aside class="nv-hero__aside gt-marco">
+            <p class="gt-marco__label">Marco de esta guía</p>
+            <ul class="gt-chips">
+              <li>{{ territorio }}</li>
+              <li>Ejercicio 2026</li>
+              <li class="gt-chips__accent">Contenido orientativo</li>
+            </ul>
+            <button type="button" class="gt-print" onClick="{{ imprimir }}">Imprimir guía</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ BARRA DE LA SECCIÓN ══════════════════════════════════════════════ -->
+    <section data-screen-label="Barra de la sección" class="nv-container">
+      <div class="gt-strip">
+        <span class="gt-strip__label">
+          <span class="gt-strip__mark" aria-hidden="true">◆</span>
+          <span>Normativa de {{ territorio }} · ejercicio 2026</span>
+        </span>
+        <a class="gt-strip__change" href="fiscalidad.html">Cambiar de territorio →</a>
+      </div>
+
+      <nav class="gt-tabs" aria-label="Guías de Mis impuestos">
+        <a href="guia-ahorro.html" aria-current="page">Fiscalidad del ahorro</a>
+        <a href="guia-calendario.html">Calendario fiscal</a>
+        <a href="guia-sucesiones.html">Sucesiones y donaciones</a>
+      </nav>
+    </section>
+
+
+    <!-- ══ ESTADO EDITORIAL Y QUÉ APRENDERÁS ════════════════════════════════ -->
+    <section data-screen-label="Estado editorial" class="nv-container">
+      <p class="gt-aviso">
+        <strong>Pendiente de revisión fiscal independiente.</strong>
+        El contenido está disponible como guía orientativa y todavía no cuenta con aprobación profesional externa.
+      </p>
+
+      <div class="gt-aprender">
+        <p class="gu-kicker">Qué aprenderás</p>
+        <ul class="gt-aprender__lista">
+          <li>Distinguir rendimientos, ganancias, pérdidas, retenciones y diferimiento.</li>
+          <li>Reconocer las diferencias fiscales básicas entre fondos, acciones y ETF.</li>
+          <li>Ordenar pérdidas realizadas y pendientes sin confundirlas con caídas latentes.</li>
+          <li>Preparar una operación con documentación y preguntas concretas.</li>
+        </ul>
+      </div>
+
+      <nav class="gt-indice" aria-label="Contenido de la guía">
+        <span class="gt-indice__label">En esta guía</span>
+        <a href="#conceptos">Conceptos esenciales</a>
+        <a href="#productos">Productos</a>
+        <a href="#comparacion">Fondos frente a ETF</a>
+        <a href="#compensacion">Ganancias y pérdidas</a>
+        <a href="#simulador">Simulador orientativo</a>
+        <a href="#antes-de-vender">Antes de vender</a>
+        <a href="#casos">Casos prácticos</a>
+        <a href="#preguntas">Preguntas frecuentes</a>
+      </nav>
+    </section>
+
+
+    <div class="nv-container gu-section">
+
+      <!-- ══ 01 · FUNDAMENTOS ═══════════════════════════════════════════════ -->
+      <section id="conceptos" data-screen-label="01 Conceptos esenciales" class="gu-anchor--sm">
+        <p class="gu-kicker">01 · Fundamentos</p>
+        <h2 class="gu-title">Conceptos esenciales</h2>
+
+        <div class="gu-note">
+          <p class="gu-text"><strong class="gu-strong">Qué ejercicio estás viendo.</strong> {{ notaEjercicio }}</p>
+        </div>
+
+        <div class="gu-grid-3">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Rendimiento del capital mobiliario</h3>
+            <p class="gu-text--fill">Intereses y dividendos son ejemplos habituales. No son una venta y pueden llevar retención.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Ganancia patrimonial</h3>
+            <p class="gu-text--fill">Aparece cuando una transmisión genera una diferencia positiva conforme a las reglas de valoración.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Pérdida patrimonial</h3>
+            <p class="gu-text--fill">Existe cuando la pérdida se realiza fiscalmente; una caída de mercado sin venta suele seguir siendo latente.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Base del ahorro</h3>
+            <p class="gu-text--fill">Agrupa categorías fiscales, pero no autoriza a compensarlas libremente entre sí.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Retención</h3>
+            <p class="gu-text--fill">Es un pago a cuenta informado por la entidad, no necesariamente la cuota fiscal definitiva.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Diferimiento</h3>
+            <p class="gu-text--fill">Pospone el cómputo de una ganancia bajo requisitos concretos; no equivale a una exención.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ 02 · PRODUCTOS ═════════════════════════════════════════════════ -->
+      <section id="productos" data-screen-label="02 Selector por producto" class="gu-anchor--sm">
+        <p class="gu-kicker">02 · Qué producto tienes</p>
+        <h2 class="gu-title">Selector por producto</h2>
+
+        <div class="gt-selector" role="tablist" aria-label="Producto">
+          <sc-for list="{{ productos }}" as="p" hint-placeholder-count="9">
+            <button type="button" role="tab" aria-selected="{{ p.activo }}" class="{{ p.clase }}" onClick="{{ p.abrir }}">{{ p.etiqueta }}</button>
+          </sc-for>
+        </div>
+
+        <article class="gt-ficha">
+          <h3 class="gu-strong gu-title--sm">{{ producto.etiqueta }}</h3>
+          <dl class="gt-ficha__datos">
+            <div><dt>Qué hecho genera tributación</dt><dd>{{ producto.hecho }}</dd></div>
+            <div><dt>Cuándo se produce</dt><dd>{{ producto.cuando }}</dd></div>
+            <div><dt>Importe de referencia</dt><dd>{{ producto.importe }}</dd></div>
+            <div><dt>Retención</dt><dd>{{ producto.retencion }}</dd></div>
+            <div><dt>Diferimiento</dt><dd>{{ producto.diferimiento }}</dd></div>
+            <div><dt>Documentación</dt><dd>{{ producto.documentacion }}</dd></div>
+          </dl>
+          <p class="gu-foot"><strong class="gu-strong">Error frecuente:</strong> {{ producto.error }}</p>
+        </article>
+      </section>
+
+
+      <!-- ══ 03 · FONDOS FRENTE A ETF ═══════════════════════════════════════ -->
+      <section id="comparacion" data-screen-label="03 Fondos frente a ETF" class="gu-anchor--sm">
+        <p class="gu-kicker">03 · Decisión de vehículo</p>
+        <h2 class="gu-title">Fondos frente a ETF</h2>
+
+        <div class="gt-tabla-envoltorio">
+          <table class="gt-tabla">
+            <caption class="nv-visually-hidden">Comparación entre un fondo elegible y un ETF en seis dimensiones</caption>
+            <thead>
+              <tr><th scope="col">Dimensión</th><th scope="col">Fondo elegible</th><th scope="col">ETF</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Venta o reembolso</th><td>Materializa ganancia o pérdida.</td><td>Materializa ganancia o pérdida.</td></tr>
+              <tr><th scope="row">Traspaso</th><td>Puede diferir la tributación si cumple requisitos.</td><td>No aplica el régimen de traspaso.</td></tr>
+              <tr><th scope="row">Historia fiscal</th><td>En un traspaso se conservan valor y fecha.</td><td>Cada venta cierra la operación fiscal.</td></tr>
+              <tr><th scope="row">Retención en la transmisión</th><td>Puede existir según la operación.</td><td>La ganancia por venta suele no estar sujeta a retención, con excepciones.</td></tr>
+              <tr><th scope="row">Documentación</th><td>Valores, fechas y cadena de traspasos.</td><td>Compras, ventas, comisiones y divisa.</td></tr>
+              <tr><th scope="row">Qué revisar</th><td>Que la orden sea realmente un traspaso.</td><td>Que no se asuma el tratamiento de un fondo tradicional.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="gu-rule-top">
+          Ninguno de los dos productos es universalmente mejor. La fiscalidad es una dimensión
+          más junto al coste, liquidez, diversificación y operativa.
+        </p>
+      </section>
+
+
+      <!-- ══ 04 · COMPENSACIÓN ══════════════════════════════════════════════ -->
+      <section id="compensacion" data-screen-label="04 Compensación" class="gu-anchor--sm">
+        <p class="gu-kicker">04 · Orden fiscal</p>
+        <h2 class="gu-title">Compensación de ganancias y pérdidas</h2>
+
+        <div class="gu-grid-4">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Pérdida latente</h3>
+            <p class="gu-text--fill">El activo vale menos, pero no se ha transmitido. No debe introducirse como pérdida realizada.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Pérdida realizada</h3>
+            <p class="gu-text--fill">La transmisión ya se ha producido y debe documentarse conforme a las reglas aplicables.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Orden básico</h3>
+            <p class="gu-text--fill">Las pérdidas patrimoniales del ahorro se compensan con ganancias patrimoniales del mismo tipo.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Plazo pendiente</h3>
+            <p class="gu-text--fill">El saldo negativo no aplicado puede trasladarse a los cuatro ejercicios siguientes, sujeto a las reglas del territorio aplicable.</p>
+          </article>
+        </div>
+
+        <div class="gu-note">
+          <p class="gu-text">
+            No vendas únicamente para «crear una pérdida» sin revisar recompras, operaciones
+            vinculadas, costes, horizonte y restricciones aplicables. La herramienta no evalúa
+            esas reglas.
+          </p>
+        </div>
+
+        <p class="gu-rule-top">
+          La declaración real puede permitir una compensación limitada entre el saldo de
+          ganancias y pérdidas patrimoniales y el saldo de rendimientos del capital mobiliario.
+          Esta herramienta no aplica ese cruce: debe comprobarse el porcentaje, el orden y los
+          saldos pendientes conforme al territorio y al ejercicio.
+        </p>
+      </section>
+
+
+      <!-- ══ 05 · SIMULADOR ═════════════════════════════════════════════════
+           Mismo cálculo que la versión anterior: las pérdidas disponibles son
+           las realizadas más las pendientes, se compensan hasta donde llegan
+           las ganancias y el resto queda pendiente. No aplica tarifa ni cuota.
+           ═══════════════════════════════════════════════════════════════════ -->
+      <section id="simulador" data-screen-label="05 Simulador orientativo" class="gu-anchor--sm">
+        <p class="gu-kicker">05 · Herramienta pedagógica</p>
+        <h2 class="gu-title">Simulador orientativo</h2>
+
+        <div class="gt-diag">
+          <form class="gt-diag__form">
+            <div class="gt-campo">
+              <label for="sim-ganancias">Ganancias patrimoniales realizadas (€)</label>
+              <input id="sim-ganancias" type="number" min="0" step="0.01" name="realizedGains" defaultValue="{{ v.realizedGains }}" onChange="{{ setNum }}">
+            </div>
+            <div class="gt-campo">
+              <label for="sim-perdidas">Pérdidas patrimoniales realizadas (€)</label>
+              <input id="sim-perdidas" type="number" min="0" step="0.01" name="realizedLosses" defaultValue="{{ v.realizedLosses }}" onChange="{{ setNum }}">
+            </div>
+            <div class="gt-campo">
+              <label for="sim-rendimientos">Rendimientos positivos del ahorro (€)</label>
+              <input id="sim-rendimientos" type="number" min="0" step="0.01" name="savingsIncome" defaultValue="{{ v.savingsIncome }}" onChange="{{ setNum }}">
+            </div>
+            <div class="gt-campo">
+              <label for="sim-pendientes">Pérdidas pendientes anteriores (€)</label>
+              <input id="sim-pendientes" type="number" min="0" step="0.01" name="priorPendingLosses" defaultValue="{{ v.priorPendingLosses }}" onChange="{{ setNum }}">
+            </div>
+          </form>
+
+          <div class="gt-resultado" aria-live="polite">
+            <p class="gt-resultado__label">Resultado educativo</p>
+            <dl class="gt-resultado__datos">
+              <div><dt>Saldo inicial de ganancias y pérdidas</dt><dd>{{ r.saldoInicial }}</dd></div>
+              <div><dt>Pérdidas disponibles</dt><dd>{{ r.disponibles }}</dd></div>
+              <div><dt>Compensación patrimonial ilustrada</dt><dd>{{ r.compensacion }}</dd></div>
+              <div><dt>Ganancia patrimonial neta orientativa</dt><dd>{{ r.gananciaNeta }}</dd></div>
+              <div><dt>Importes positivos del ejercicio, sin integrar</dt><dd>{{ r.positivos }}</dd></div>
+              <div><dt>Pérdidas que podrían quedar pendientes</dt><dd>{{ r.pendientes }}</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <p class="gu-rule-top">
+          El resultado no calcula la cuota, no aplica la tarifa, no modeliza recompras,
+          actualización de valores, divisas, retenciones, gastos ni excepciones. Los
+          rendimientos se muestran junto a la ganancia neta solo como lectura pedagógica.
+        </p>
+      </section>
+
+
+      <!-- ══ 06 · ANTES DE VENDER ═══════════════════════════════════════════ -->
+      <section id="antes-de-vender" data-screen-label="06 Checklist" class="gu-anchor--sm">
+        <p class="gu-kicker">06 · Preparación</p>
+        <h2 class="gu-title">Checklist antes de vender</h2>
+
+        <div class="gt-checklist">
+          <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="10">
+            <label class="gt-casilla">
+              <input type="checkbox" checked="{{ c.marcado }}" onChange="{{ c.cambia }}">
+              <span>{{ c.texto }}</span>
+            </label>
+          </sc-for>
+        </div>
+
+        <p class="gu-foot">Marcadas: {{ marcadas }} de 10. Esta selección solo permanece durante la visita actual.</p>
+      </section>
+
+
+      <!-- ══ 07 · CASOS ═════════════════════════════════════════════════════ -->
+      <section id="casos" data-screen-label="07 Casos prácticos" class="gu-anchor--sm">
+        <p class="gu-kicker">07 · Aplicación</p>
+        <h2 class="gu-title">Casos prácticos</h2>
+
+        <div class="gu-grid-3">
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Venta de acciones con ganancia</h3>
+            <p class="gu-text--fill">Se materializa una ganancia patrimonial. Conviene recuperar compras, comisiones, operaciones corporativas y pérdidas pendientes antes de confirmar la venta.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Venta de un fondo con pérdida</h3>
+            <p class="gu-text--fill">El reembolso materializa la pérdida. Un traspaso elegible mantiene el valor y la fecha fiscal y, por tanto, no materializa esa pérdida en ese momento.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Traspaso entre fondos</h3>
+            <p class="gu-text--fill">Si cumple los requisitos y se ejecuta directamente entre entidades, la ganancia o pérdida no se computa entonces y se conserva la historia fiscal.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Cobro de dividendos</h3>
+            <p class="gu-text--fill">Es rendimiento del capital mobiliario. Debe revisarse el importe íntegro y las retenciones, especialmente si procede del extranjero.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Rescate de previsión social</h3>
+            <p class="gu-text--fill">No se trata como vender un fondo de inversión. La forma, el momento de cobro y el territorio requieren un análisis específico.</p>
+          </article>
+          <article class="gu-card--column gu-card--top">
+            <h3 class="gu-strong gu-title--xs">Compensación de ganancias y pérdidas</h3>
+            <p class="gu-text--fill">La herramienta ilustra la compensación entre ganancias y pérdidas patrimoniales; la declaración real puede incluir reglas y excepciones no modelizadas.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ 08 · PREGUNTAS ═════════════════════════════════════════════════ -->
+      <section id="preguntas" data-screen-label="08 Preguntas frecuentes" class="gu-anchor--sm">
+        <p class="gu-kicker">08 · Cierre</p>
+        <h2 class="gu-title">Preguntas frecuentes</h2>
+
+        <div class="gu-stack">
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿Una pérdida en pantalla ya compensa?</h3>
+            <p class="gu-text">No. Debe analizarse si se ha realizado fiscalmente mediante una transmisión y qué reglas de valoración se aplican.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿Reinvertir evita siempre tributar?</h3>
+            <p class="gu-text">No. Solo determinados traspasos entre instituciones elegibles aplican el diferimiento previsto; reinvertir por cuenta propia no basta.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿Fondo y ETF son iguales fiscalmente?</h3>
+            <p class="gu-text">No. La normativa aplicable excluye los ETF del régimen de diferimiento por traspaso previsto para determinados fondos de inversión. Consulta la fuente oficial de tu territorio.</p>
+          </article>
+          <article class="gu-card">
+            <h3 class="gu-strong gu-title--xs">¿El simulador dice cuánto pagaré?</h3>
+            <p class="gu-text">No. Solo ordena importes básicos de forma pedagógica y no calcula una declaración.</p>
+          </article>
+        </div>
+      </section>
+
+
+      <!-- ══ FUENTES ════════════════════════════════════════════════════════ -->
+      <section data-screen-label="Fuentes oficiales" class="gt-fuentes">
+        <h2 class="gu-kicker">Fuentes oficiales</h2>
+        <ul class="gt-fuentes__lista">
+          <sc-for list="{{ fuentes }}" as="f" hint-placeholder-count="4">
+            <li>
+              <a href="{{ f.href }}" target="_blank" rel="noopener noreferrer">{{ f.etiqueta }} ↗</a>
+              <span class="gu-muted">{{ f.comprobada }}</span>
+            </li>
+          </sc-for>
+        </ul>
+        <p class="gu-foot">
+          Esta guía no constituye una declaración tributaria, una liquidación fiscal ni
+          asesoramiento individual. Confirma siempre la normativa y tus circunstancias
+          antes de actuar.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+
+  <footer data-screen-label="Footer" class="nuvia-site-footer">
+    <div class="nuvia-site-footer__inner">
+      <div class="nuvia-site-footer__grid">
+        <div class="nuvia-site-footer__brand">
+          <img src="src/assets/brand/nuvia-family-wealth-footer-reversed.svg"
+               alt="NUVIA Family Wealth" width="852" height="412" loading="lazy">
+          <p>Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.</p>
+        </div>
+        <div>
+          <h2 class="nuvia-site-footer__heading">Navegación</h2>
+          <div class="nuvia-site-footer__links">
+            <a href="index.html">Inicio</a>
+            <a href="mercados.html">Mercados</a>
+            <a href="cartera.html">Analítica de cartera</a>
+            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+            <a href="lecturas.html">Lecturas con criterio</a>
+          </div>
+        </div>
+        <div>
+          <h2 class="nuvia-site-footer__heading">Recursos</h2>
+          <div class="nuvia-site-footer__links">
+            <a href="vivienda.html">Temas clave</a>
+            <a href="academia.html">Academia Nuvia</a>
+            <a href="academia.html?tab=interes">Interés compuesto</a>
+            <a href="academia.html?tab=calculadora">Simulador</a>
+            <a href="curso.html">Curso · Dinero con criterio</a>
+          </div>
+        </div>
+        <div class="nuvia-site-footer__info-column">
+          <h2 class="nuvia-site-footer__heading">Información</h2>
+          <div class="nuvia-site-footer__info">
+            <span>Contenido educativo e informativo.</span>
+            <a href="sistema-visual.html" rel="nofollow">Sistema visual</a>
+            <span>No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+          </div>
+        </div>
+      </div>
+      <div class="nuvia-site-footer__legal">
+        <span>© 2026 NUVIA Family Wealth. Todos los derechos reservados.</span>
+        <span>Las decisiones patrimoniales deben valorar las circunstancias personales de cada familia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
+class Component extends DCLogic {
+  state = {
+    territorio: null,
+    producto: 'funds',
+    v: { realizedGains: 10000, realizedLosses: 3000, savingsIncome: 1200, priorPendingLosses: 2000 },
+    marcadas: {},
+  };
+
+  /* Nota del ejercicio y fuentes oficiales, tal como las publica pageContent
+     del núcleo. Comprobadas el 03/08/2026. */
+  contenido() {
+    const C = '03/08/2026';
+    const f = (etiqueta, href) => ({ etiqueta, href, comprobada: 'Incluida en la actualización del ' + C });
+    const NOTA_FORAL = 'La campaña abierta en 2026 declara el IRPF de 2025: su escala del ahorro tiene cinco tramos, del 20 % al 25 %. La nueva escala de nueve tramos, del 19 % al 28 %, se aplica a las operaciones de 2026 y se declarará en 2027.';
+    return {
+      'bizkaia': {
+        nombre: 'Bizkaia', nota: NOTA_FORAL,
+        fuentes: [
+          f('Norma Foral 13/2013 del IRPF, consolidada a 01/01/2026', 'https://www.bizkaia.eus/documents/880307/15187815/CA_13_2013.pdf?idioma=CA'),
+          f('Hacienda Foral: traspaso entre fondos de inversión', 'https://www.bizkaia.eus/ogasuna/Faq/faq_detalle.asp?N1=20&N2=247&N3=249&Nivel4=291&Nivel5=959&Pagina=13&Tem_Codigo=7884&idioma=ca&idregistro=900001584&pant=listado'),
+          f('Hacienda Foral: tributación de los ETF', 'https://www.bizkaia.eus/ogasuna/faq/faq_detalle.asp?Idioma=CA&N1=20&N2=247&N3=249&Nivel4=290&Nivel5=788&Nivel6=835&Nivel7=951&Pagina=14&Tem_Codigo=10672&idregistro=900001583&pant=listado'),
+          f('Hacienda Foral: compensación de pérdidas patrimoniales', 'https://www.bizkaia.eus/ogasuna/guregida/noticia.asp?IdEtiquetaBuscar2=180&Idioma=CA&N1=20&N2=247&N3=250&Pagina=19&Tem_Codigo=7884&Tem_Plid=7994115&idregistro=900004374&pant=listado'),
+        ],
+      },
+      'araba': {
+        nombre: 'Araba / Álava', nota: NOTA_FORAL,
+        fuentes: [
+          f('Norma Foral 33/2013 del IRPF de Álava, texto actualizado', 'https://web.araba.eus/documents/d/araba/indice_norma-foral_irpf_cas-4-pdf'),
+          f('Información oficial del IRPF de Álava', 'https://web.araba.eus/es/hacienda/renta/informacion'),
+          f('Disposiciones vigentes sobre IRPF', 'https://web.araba.eus/es/hacienda/normativa/disposiciones-sobre-irpf'),
+        ],
+      },
+      'gipuzkoa': {
+        nombre: 'Gipuzkoa', nota: NOTA_FORAL,
+        fuentes: [
+          f('Norma Foral 3/2014 del IRPF de Gipuzkoa', 'https://www.gipuzkoa.eus/documents/2456431/80760262/NF%2B3-2014%2B%282025-3%29.pdf/8ab5c95c-3f89-8fdf-5cb8-01950e3983cc?t=1748507203620'),
+          f('Norma Foral 1/2025 de reforma del sistema tributario', 'https://egoitza.gipuzkoa.eus/es/bog?_BoletinOficial_WAR_LEEboletinOficialportlet_anio=2025&_BoletinOficial_WAR_LEEboletinOficialportlet_numBoletin=90&_BoletinOficial_WAR_LEEboletinOficialportlet_myaction=detalleAnuncio&_BoletinOficial_WAR_LEEboletinOficialportlet_pdf=https%3A%2F%2Fegoitza.gipuzkoa.eus%2Fgao-bog%2Fcastell%2Fbog%2F2025%2F05%2F15%2Fc2503564.pdf'),
+          f('Criterios administrativos sobre las novedades del IRPF', 'https://zergabidea.gipuzkoa.eus/WAS/HACI/HGFZergaBideaWEB/asistente/inicio/1498?locale=es_ES'),
+        ],
+      },
+      'navarra': {
+        nombre: 'Navarra',
+        nota: 'Las fechas de campaña de 2026 corresponden al IRPF de 2025. La escala citada en esta guía es la aplicable a ese ejercicio; las operaciones realizadas en 2026 se declararán en la campaña de 2027.',
+        fuentes: [
+          f('Texto Refundido de la Ley Foral del IRPF', 'https://www.navarra.es/es/web/normativa-hacienda/-/texto-refundido-de-la-ley-foral-del-impuesto-sobre-la-renta-de-las-personas-f%C3%ADsicas-dfl-4/2008-de-2-de-junio-'),
+          f('Normativa vigente del IRPF de Navarra', 'https://www.navarra.es/es/web/normativa-Hacienda/normativa?P_r_p_categoryid=56740975'),
+          f('Materiales oficiales de la campaña de Renta 2025', 'https://www.navarra.es/documents/48192/35409067/Manual%2Bte%C3%B3rico%2Bde%2Bla%2Bcampa%C3%B1a%2Bde%2B2025.pdf/c9e11ce5-ae6f-eb9a-040b-265f1f040525?download=true&t=1775726152475'),
+        ],
+      },
+      'common-territory': {
+        nombre: 'Territorio común',
+        nota: 'Las fechas de campaña de 2026 corresponden al IRPF de 2025. Los tipos del 19 % al 30 % mostrados son el gravamen total que resulta de combinar las escalas estatal y autonómica de la base del ahorro.',
+        fuentes: [
+          f('Manual práctico de Renta 2025 · gravamen de la base del ahorro', 'https://sede.agenciatributaria.gob.es/Sede/ayuda/manuales-videos-folletos/manuales-ayuda-presentacion/irpf-2025/8-cumplimentacion-irpf/8_4-cuota-integra/8_4_4-gravamen-base-liquidable-ahorro.html'),
+          f('Manual práctico de Renta 2025 · AEAT', 'https://sede.agenciatributaria.gob.es/static_files/Sede/Biblioteca/Manual/Practicos/IRPF/IRPF-2025/ManualRenta2025Parte1_es_es.pdf'),
+          f('Ley 35/2006 del Impuesto sobre la Renta de las Personas Físicas', 'https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764'),
+        ],
+      },
+    };
+  }
+
+  productosDatos() {
+    return [
+      { id: 'funds', etiqueta: 'Fondos de inversión',
+        hecho: 'Reembolso o transmisión de participaciones.',
+        cuando: 'La ganancia o pérdida aparece al reembolsar, salvo traspaso elegible.',
+        importe: 'Diferencia entre valor fiscal de reembolso y adquisición.',
+        retencion: 'La ganancia suele estar sujeta a retención, con excepciones.',
+        diferimiento: 'Puede existir diferimiento mediante traspaso directo entre instituciones elegibles.',
+        documentacion: 'Extractos, valores y fechas de adquisición, gastos y trazabilidad de traspasos.',
+        error: 'Ordenar un reembolso a la cuenta pensando que es un traspaso.' },
+      { id: 'stocks', etiqueta: 'Acciones',
+        hecho: 'Venta o transmisión; el dividendo se trata por separado.',
+        cuando: 'La venta materializa una ganancia o pérdida patrimonial.',
+        importe: 'Precio de transmisión menos valor de adquisición y gastos computables.',
+        retencion: 'La venta cotizada no equivale a un dividendo ni sigue su misma retención.',
+        diferimiento: 'No existe un traspaso fiscal equivalente al de determinados fondos.',
+        documentacion: 'Órdenes, liquidaciones, comisiones, fechas y operaciones corporativas.',
+        error: 'Olvidar comisiones, ampliaciones, canjes o compras antiguas.' },
+      { id: 'etf', etiqueta: 'ETF',
+        hecho: 'Venta de participaciones cotizadas.',
+        cuando: 'La venta produce una ganancia o pérdida patrimonial.',
+        importe: 'Valor de transmisión frente al valor de adquisición.',
+        retencion: 'La ganancia por transmisión suele no estar sujeta a retención, sin perjuicio de las excepciones aplicables.',
+        diferimiento: 'No se aplica el régimen de diferimiento por traspaso desde o hacia ETF.',
+        documentacion: 'Compras, ventas, comisiones, divisa y distribuciones si las hubiera.',
+        error: 'Dar por hecho que un ETF puede traspasarse como un fondo tradicional.' },
+      { id: 'deposits', etiqueta: 'Cuentas y depósitos',
+        hecho: 'Cobro o abono de intereses.',
+        cuando: 'Los intereses se integran como rendimiento del capital mobiliario.',
+        importe: 'Importe íntegro del interés y gastos fiscalmente admitidos, si proceden.',
+        retencion: 'Habitualmente existe retención informada por la entidad.',
+        diferimiento: 'No hay diferimiento por mover el saldo a otra cuenta.',
+        documentacion: 'Certificado fiscal y extractos de intereses y retenciones.',
+        error: 'Confundir el interés neto recibido con el rendimiento íntegro declarado.' },
+      { id: 'bonds', etiqueta: 'Bonos y renta fija',
+        hecho: 'Cupón, amortización, reembolso o transmisión.',
+        cuando: 'El tratamiento depende de cómo se genera el rendimiento.',
+        importe: 'Cupones, precio de compra/venta y gastos asociados.',
+        retencion: 'Puede existir retención según el rendimiento y el instrumento.',
+        diferimiento: 'No debe asumirse un régimen de traspaso.',
+        documentacion: 'Condiciones de emisión, cupones, amortización, operaciones y retenciones.',
+        error: 'Tratar todo bono como si solo generase intereses periódicos.' },
+      { id: 'dividends', etiqueta: 'Dividendos',
+        hecho: 'Cobro del dividendo o modalidad equivalente.',
+        cuando: 'Se integra como rendimiento del capital mobiliario.',
+        importe: 'Importe íntegro y retenciones, incluida la información extranjera cuando proceda.',
+        retencion: 'Suele existir retención; en valores extranjeros puede haber dos niveles.',
+        diferimiento: 'Reinvertir el dividendo no elimina por sí mismo la tributación.',
+        documentacion: 'Certificados, retenciones nacionales/extranjeras y tipo de cambio.',
+        error: 'Declarar solo el importe neto ingresado en cuenta.' },
+      { id: 'pensions', etiqueta: 'Previsión social',
+        hecho: 'Aportación, contingencia y forma de cobro del sistema de previsión.',
+        cuando: 'No sigue la mecánica ordinaria de la base del ahorro.',
+        importe: 'Las prestaciones suelen analizarse como rendimientos del trabajo.',
+        retencion: 'Depende del cobro y de la situación personal.',
+        diferimiento: 'La decisión clave es cuándo y cómo rescatar, no un traspaso de ahorro ordinario.',
+        documentacion: 'Certificados de aportaciones, prestaciones y antigüedad de derechos.',
+        error: 'Aplicar a un plan de pensiones, EPSV u otro sistema las reglas de venta de un fondo de inversión.' },
+      { id: 'insurance', etiqueta: 'Seguros de ahorro',
+        hecho: 'Rescate, vencimiento o prestación según la póliza.',
+        cuando: 'El tratamiento depende del tipo de seguro, la contingencia y quién interviene en el contrato.',
+        importe: 'Prestación, primas satisfechas, antigüedad y condiciones del producto.',
+        retencion: 'Puede existir retención según la naturaleza del rendimiento y la forma de cobro.',
+        diferimiento: 'No debe asumirse el régimen de traspaso de los fondos de inversión.',
+        documentacion: 'Póliza, primas, valor de rescate, tomador, asegurado, beneficiarios y certificados fiscales.',
+        error: 'Tratar cualquier seguro como un depósito o ignorar quién es tomador y beneficiario.' },
+      { id: 'rentals', etiqueta: 'Inmuebles alquilados',
+        hecho: 'Cobro de rentas y gastos asociados al alquiler.',
+        cuando: 'Se analiza como rendimiento del capital inmobiliario.',
+        importe: 'Ingresos y gastos conforme al régimen aplicable al alquiler.',
+        retencion: 'No debe deducirse de las reglas de productos financieros.',
+        diferimiento: 'No aplica el régimen de traspaso de fondos.',
+        documentacion: 'Contrato, cobros, gastos, mejoras, financiación y justificantes.',
+        error: 'Introducir el alquiler en el simulador simplificado de ahorro financiero.' },
+    ];
+  }
+
+  preguntasChecklist() {
+    return [
+      '¿La operación genera realmente una ganancia o una pérdida?',
+      '¿Conoces el valor y la fecha fiscal de adquisición?',
+      '¿Has incluido comisiones y gastos documentados?',
+      '¿Existen pérdidas pendientes de ejercicios anteriores?',
+      '¿Necesitas el dinero o basta un traspaso elegible?',
+      '¿El producto es un fondo tradicional, una acción o un ETF?',
+      '¿La operación afecta a una futura donación o herencia?',
+      '¿Hay divisa extranjera o retención en otro país?',
+      '¿La titularidad y el territorio fiscal son correctos?',
+      '¿Conservarás certificados, órdenes y justificantes?',
+    ];
+  }
+
+  /* Mismo cálculo que la versión anterior, cifra a cifra. */
+  simula(v) {
+    const t = (n) => (!Number.isFinite(n) || n < 0 ? 0 : Math.round(n * 100) / 100);
+    const ganancias = t(Number(v.realizedGains));
+    const perdidas = t(Number(v.realizedLosses));
+    const rendimientos = t(Number(v.savingsIncome));
+    const pendientesPrevias = t(Number(v.priorPendingLosses));
+    const disponibles = t(perdidas + pendientesPrevias);
+    const compensacion = Math.min(ganancias, disponibles);
+    const gananciaNeta = t(ganancias - compensacion);
+    const pendientes = t(disponibles - compensacion);
+    return {
+      saldoInicial: Math.round((ganancias - perdidas) * 100) / 100,
+      disponibles, compensacion, gananciaNeta,
+      positivos: t(gananciaNeta + rendimientos),
+      pendientes,
+    };
+  }
+
+  territorioGuardado() {
+    try {
+      const p = JSON.parse(window.localStorage.getItem('nuvia-tax-preference') || 'null');
+      const permitidos = Object.keys(this.contenido());
+      return p && p.version === '1' && permitidos.includes(p.jurisdiction) ? p.jurisdiction : null;
+    } catch (error) { return null; }
+  }
+
+  componentDidMount() {
+    document.title = 'Fiscalidad del ahorro | NUVIA Family Wealth';
+    const guardado = this.territorioGuardado();
+    if (guardado && guardado !== this.state.territorio) this.setState({ territorio: guardado });
+  }
+
+  renderVals() {
+    const datos = this.contenido();
+    const t = datos[this.state.territorio ?? 'bizkaia'] || datos['bizkaia'];
+    const productos = this.productosDatos();
+    const activo = productos.find((p) => p.id === this.state.producto) || productos[0];
+    const v = this.state.v;
+    const r = this.simula(v);
+    const euro = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+    const preguntas = this.preguntasChecklist();
+    const marcadas = this.state.marcadas;
+
+    return {
+      territorio: t.nombre,
+      notaEjercicio: t.nota,
+      fuentes: t.fuentes,
+      imprimir: () => window.print(),
+
+      productos: productos.map((p) => ({
+        _k: p.id,
+        etiqueta: p.etiqueta,
+        activo: p.id === activo.id,
+        clase: 'gt-selector__opcion' + (p.id === activo.id ? ' is-active' : ''),
+        abrir: () => this.setState({ producto: p.id }),
+      })),
+      producto: activo,
+
+      v,
+      setNum: (e) => this.setState({ v: { ...this.state.v, [e.target.name]: Math.max(0, Number(e.target.value) || 0) } }),
+      r: {
+        saldoInicial: euro.format(r.saldoInicial),
+        disponibles: euro.format(r.disponibles),
+        compensacion: euro.format(r.compensacion),
+        gananciaNeta: euro.format(r.gananciaNeta),
+        positivos: euro.format(r.positivos),
+        pendientes: euro.format(r.pendientes),
+      },
+
+      checklist: preguntas.map((texto, i) => ({
+        _k: i,
+        texto,
+        marcado: Boolean(marcadas[i]),
+        cambia: (e) => this.setState({ marcadas: { ...this.state.marcadas, [i]: e.target.checked } }),
+      })),
+      marcadas: preguntas.filter((_, i) => marcadas[i]).length,
+    };
+  }
+}
+</script>
+
+</body>
+</html>
