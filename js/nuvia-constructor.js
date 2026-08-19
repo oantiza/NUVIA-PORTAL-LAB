@@ -479,7 +479,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       escribeGuardadas(leeGuardadas().filter((c) => !subidas.includes(c.nombre)));
       await pinta();
       pintaOfertaMigracion();
-      estadoGuardado.textContent = `Subida${subidas.length === 1 ? '' : 's'} ${subidas.length} cartera${subidas.length === 1 ? '' : 's'} a tu cuenta. Ya no están solo en este navegador.`;
+      estadoGuardado.textContent = subidas.length === 1
+        ? 'Subida 1 cartera a tu cuenta. Ya no está solo en este navegador.'
+        : `Subidas ${subidas.length} carteras a tu cuenta. Ya no están solo en este navegador.`;
     }
 
     async function abre(cartera) {
