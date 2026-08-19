@@ -558,6 +558,23 @@ sección 2 de las bases. Buscar y eliminar: «mejor», «recomendado», «óptim
 **Verificación.** Leer la pantalla entera y preguntarse: *¿de esto se deduce qué
 debería hacer alguien con su dinero?* Si sí, reescribir.
 
+> **Hecho y verificado (19-08-2026).** Revisión doble. (1) Etiqueta a
+> etiqueta: extraídas todas las cadenas visibles de `cartera.html` y de los
+> módulos del laboratorio y contrastadas con la sección 2 de las bases. Un
+> hallazgo corregido: los valores iniciales del simulador (40/40/15/5) no se
+> declaraban como ejemplo y podían leerse como reparto sugerido — ahora la
+> página dice que son «solo un punto de partida, el mismo para todo el que
+> abre la página». (2) Pantalla entera: montada la página con datos y leída
+> completa; ninguna frase juzga una combinación, personaliza la conveniencia
+> ni apunta dirección de operación. Además, la revisión queda **permanente**:
+> `scripts/check-lenguaje.mjs` (dentro de `npm run validate`) rompe la build
+> si en las superficies del visitante aparece «mejor», «recomendado» (fuera
+> de la declaración «no emite recomendaciones»), «óptimo», «conviene»,
+> «deberías», «ideal/adecuado para», «para ti/usted», perfiles de idoneidad,
+> «garantizado» o direcciones de operación, y exige que la página declare
+> «no previsiones», «pendientes de validación profesional» y «no constituye
+> asesoramiento».
+
 ### Paso 26 · Nota al pie con fuentes
 
 **Hacer.** En cada vista con datos: origen y fecha. En el simulador, la fuente
