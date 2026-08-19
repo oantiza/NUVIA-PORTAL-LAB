@@ -6,6 +6,7 @@
 import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
+  lecturasDeMetricas, fechaDelMinimo,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -89,6 +90,31 @@ comprueba('…y hasta dónde llega la suscripción', NOTA_NIVEL.includes('20 pos
 comprueba('Dice honestamente que el registro aún no está abierto', NOTA_NIVEL.includes('fase posterior'));
 comprueba('La nota describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
   !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_NIVEL));
+
+console.log('\n— Lecturas en lenguaje llano (paso 22) —');
+{
+  const niveles = [1, 1.1, 0.935, 1.2];
+  const fechas = ['2023-09-01', '2024-03-01', '2025-03-15', '2026-08-14'];
+  const m = { rentabilidadTotal: 0.2, rentabilidadAnualizada: 0.0627, volatilidad: 0.124, maximaCaida: -0.15 };
+  const l = lecturasDeMetricas(m, { niveles, fechas });
+  comprueba('La rentabilidad se traduce a euros: 10.000 € → 12.000 €', l.rentabilidad.includes('12.000'),
+    l.rentabilidad);
+  comprueba('…y recuerda que el pasado no asegura el futuro', l.rentabilidad.includes('El pasado no asegura el futuro'));
+  comprueba('La volatilidad lleva su cifra dentro de la frase («en torno a un 12,4 %»)',
+    l.volatilidad.includes('en torno a un 12,4 %'));
+  comprueba('La caída lleva su cifra y la fecha del punto más bajo', l.caida.includes('15,0 %')
+    && l.caida.includes('punto más bajo: 15-03-2025'), l.caida);
+  comprueba('fechaDelMinimo encuentra el valle correcto', fechaDelMinimo(niveles, fechas) === '15-03-2025');
+  comprueba('Longitudes descuadradas → sin fecha, nunca una inventada', fechaDelMinimo(niveles, fechas.slice(1)) === null);
+
+  const sinCaida = lecturasDeMetricas({ ...m, maximaCaida: 0 }, { niveles: [1, 1.1, 1.2], fechas: fechas.slice(1) });
+  comprueba('Sin caídas → se dice, sin cifra forzada', sinCaida.caida.includes('no llegó a caer'));
+  const vacio = lecturasDeMetricas(undefined);
+  comprueba('Sin métricas → «no hay datos suficientes» en las tres lecturas',
+    [vacio.rentabilidad, vacio.volatilidad, vacio.caida].every((t) => t.includes('No hay datos suficientes')));
+  comprueba('Las lecturas describen sin aconsejar (filtro de lenguaje de bases §2)',
+    ![l.rentabilidad, l.volatilidad, l.caida].some((t) => /mejor|recomendad|óptim|conviene|deberías|ideal/i.test(t)));
+}
 
 console.log('\n— Fechas —');
 comprueba('2026-08-15 → 15-08-2026', fechaCorta('2026-08-15') === '15-08-2026');

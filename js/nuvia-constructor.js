@@ -12,7 +12,7 @@
  */
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
-import { metricasDesdeSerie, pct, DIAS_MERCADO } from './nuvia-cartera.js';
+import { metricasDesdeSerie, serieDeCaidas, pct, DIAS_MERCADO } from './nuvia-cartera.js';
 
 export const MAX_POSICIONES = 5;
 const PESO_INICIAL = 20;
@@ -89,6 +89,53 @@ export function serieCartera(series, pesos) {
 export function fechaCorta(iso) {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
   return m ? `${m[3]}-${m[2]}-${m[1]}` : null;
+}
+
+const EUROS = new Intl.NumberFormat('es-ES', {
+  style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
+});
+
+/**
+ * Lecturas en lenguaje llano de la tabla de métricas (paso 22): cada cifra
+ * dentro de una frase que la traduce, no solo el número. Describen lo que
+ * pasó; nunca aconsejan ni proyectan. Si falta el dato, se dice.
+ */
+export function lecturasDeMetricas(m, { niveles = null, fechas = null } = {}) {
+  const sinDato = 'No hay datos suficientes para calcularla.';
+  if (!m) return { rentabilidad: sinDato, volatilidad: sinDato, caida: sinDato };
+
+  const rentabilidad = m.rentabilidadTotal != null
+    ? `Cada 10.000 € al inicio habrían acabado en ${EUROS.format(Math.round(10000 * (1 + m.rentabilidadTotal)))} tres años después (${pct(m.rentabilidadAnualizada)} de media anual). El pasado no asegura el futuro.`
+    : sinDato;
+
+  const volatilidad = m.volatilidad != null
+    ? `En un año normal, el valor de esta combinación se ha movido arriba o abajo en torno a un ${pct(m.volatilidad)}.`
+    : sinDato;
+
+  let caida = sinDato;
+  if (m.maximaCaida != null) {
+    if (m.maximaCaida === 0) {
+      caida = 'En estos 3 años no llegó a caer por debajo de un máximo anterior.';
+    } else {
+      caida = `En el peor tramo, la cartera llegó a estar un ${pct(-m.maximaCaida)} por debajo de su máximo anterior`;
+      const cuando = fechaDelMinimo(niveles, fechas);
+      caida += cuando ? ` (punto más bajo: ${cuando}).` : '.';
+      caida += ' Da idea del bache que habría tocado aguantar.';
+    }
+  }
+  return { rentabilidad, volatilidad, caida };
+}
+
+/** Fecha del punto más bajo de la caída máxima, o null si no puede saberse. */
+export function fechaDelMinimo(niveles, fechas) {
+  if (!niveles?.length || !fechas || fechas.length !== niveles.length) return null;
+  const caidas = serieDeCaidas(niveles);
+  let indice = -1;
+  let peor = 0;
+  for (let t = 0; t < caidas.length; t += 1) {
+    if (Number.isFinite(caidas[t]) && caidas[t] < peor) { peor = caidas[t]; indice = t; }
+  }
+  return indice >= 0 ? fechaCorta(fechas[indice]) : null;
 }
 
 /* ── Montaje ── */
@@ -228,16 +275,12 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const trh = el('tr');
     trh.append(el('th', { scope: 'col' }, 'Métrica'), el('th', { scope: 'col' }, 'Valor'), el('th', { scope: 'col' }, 'Cómo leerla'));
     thead.append(trh);
+    const lecturas = lecturasDeMetricas(m, { niveles, fechas: payload?.dates || null });
     const tbody = el('tbody');
     tbody.append(
-      filaMetrica('Rentabilidad anualizada (3 años)', pct(m.rentabilidadAnualizada),
-        'Lo que esta combinación, con estos pesos fijados al inicio, ha rendido de media al año en los últimos 3 años. El pasado no asegura el futuro.'),
-      filaMetrica('Volatilidad (3 años)', pct(m.volatilidad),
-        m.volatilidad != null
-          ? `En un año normal, el valor de esta combinación se ha movido arriba o abajo en torno a un ${pct(m.volatilidad)}.`
-          : 'No hay datos suficientes para estimarla.'),
-      filaMetrica('Máxima caída (3 años)', pct(m.maximaCaida),
-        'La mayor pérdida desde un máximo hasta el mínimo posterior en esos 3 años. Da idea del peor tramo que habría tocado aguantar.'),
+      filaMetrica('Rentabilidad (3 años)', pct(m.rentabilidadTotal), lecturas.rentabilidad),
+      filaMetrica('Volatilidad (3 años)', pct(m.volatilidad), lecturas.volatilidad),
+      filaMetrica('Máxima caída (3 años)', pct(m.maximaCaida), lecturas.caida),
     );
     tabla.append(thead, tbody);
     const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });

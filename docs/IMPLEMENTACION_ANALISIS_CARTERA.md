@@ -497,6 +497,19 @@ en lenguaje llano**, no solo el número.
 > Ejemplo del tono: «Volatilidad 12,4 % — en un año normal, el valor de esta
 > cartera puede moverse arriba o abajo alrededor de un 12 %.»
 
+> **Hecho y verificado (19-08-2026).** `lecturasDeMetricas()` en
+> `js/nuvia-constructor.js`: cada cifra va dentro de una frase que la
+> traduce. Rentabilidad → «Cada 10.000 € al inicio habrían acabado en X €
+> tres años después (Y % de media anual). El pasado no asegura el futuro.»
+> Volatilidad → «…se ha movido arriba o abajo en torno a un X %.» Máxima
+> caída → «…llegó a estar un X % por debajo de su máximo anterior (punto más
+> bajo: dd-mm-aaaa)», con la fecha real del valle calculada con
+> `serieDeCaidas()` sobre la serie de la cartera. Casos límite dichos tal
+> cual: sin caídas («no llegó a caer…»), sin datos («no hay datos
+> suficientes»), fechas descuadradas → sin fecha, nunca una inventada. La
+> batería cubre las lecturas y les pasa el filtro de lenguaje de las bases
+> §2; verificado también en navegador real.
+
 ### Paso 23 · Reparto por clase de activo
 
 **Hacer.** Un gráfico. Uno solo, y que enseñe una idea (bases, sección 4).
