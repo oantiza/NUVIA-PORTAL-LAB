@@ -29,3 +29,6 @@ src/assets/brand/nuvia-three-leaf-final-2026/nuvia-family-wealth-horizontal-fami
 # Andamiaje de trabajo
 nuvia-commits.ps1
 src/assets/home/nuvia-home-header-logo.png
+
+# PDFs generados de docs/ (regenerables con docs/_a-pdf.mjs)
+docs/pdf/
