@@ -741,6 +741,26 @@ cálculo ni los resultados: se recalculan al abrir.
 **Hacer.** Al registrarse, si hay carteras locales, ofrecer migrarlas.
 **Con permiso explícito, nunca en silencio.**
 
+> **Hecho y verificado (19-08-2026).** Con la sesión iniciada, si el navegador
+> guarda carteras del nivel visitante (paso 24), el bloque «Tus carteras» de la
+> cuenta muestra una **oferta**: «Tienes N carteras guardadas en este
+> navegador. Puedes subirlas a tu cuenta… se suben solo los activos y sus
+> pesos, como el resto», con dos botones: **«Subir a mi cuenta»** y **«Ahora
+> no»**. Nada se mueve sin pulsar. Al subir, cada cartera local se guarda en la
+> nube con `carteraNubeParaGuardar` (solo `asset_id` + `weight_percent`; se
+> descartan las vacías o a cero) y, una vez confirmada su subida, se quita del
+> navegador: es una **mudanza**, no una copia doble. Si una subida falla, las ya
+> subidas se retiran de local (para no duplicar al reintentar) y el resto se
+> queda en el navegador, dicho en llano. «Ahora no» descarta la oferta durante
+> la sesión sin tocar nada. Mapa puro `carterasLocalesParaNube` en
+> `nuvia-constructor.js` (una carga por cartera, filtrando las sin peso), con
+> batería propia. **Verificado en navegador** (localStorage sembrado, callable
+> simuladas): la oferta aparece al registrarse, subir mueve las dos a la cuenta
+> enviando solo ids+pesos, el `localStorage` queda vacío, la oferta desaparece
+> y al cerrar sesión vuelve el guardado local ya vacío. `npm run validate` en
+> verde; sin desbordes 1440/1024/390. (Los consentimientos no necesitan
+> migración: en el paso 29 se guardan ya bajo el correo de la cuenta.)
+
 ### Paso 32 · Análisis del nivel registrado
 
 **Hacer.** Los desbloqueados en el paso 1: concentración, ahorro por

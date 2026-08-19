@@ -500,6 +500,16 @@
   color: var(--nv-text-muted);
 }
 
+/* Oferta de migración de lo local a la cuenta (paso 31) */
+.nv-cons__migracion { display: grid; gap: var(--nv-space-2); min-width: 0; }
+.nv-cons__migracion[hidden] { display: none; }
+.nv-cons__migracion p { margin: 0; }
+.nv-cons__migracion-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+}
+
 /* ── Cuenta con datos mínimos (paso 28) ── */
 
 .nv-cuenta { display: grid; gap: var(--nv-space-3); }

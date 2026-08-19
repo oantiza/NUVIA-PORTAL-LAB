@@ -415,6 +415,13 @@ caída, con `serieDeCaidas()` portada de `underwater.ts`— y la batería entera
 `npm run validate`. El motor de cálculo del portal queda completo a falta
 del Monte Carlo de proyección (nivel suscriptor, fase 4).
 
+**Migración desde local (paso 31, 19-08-2026).** Al registrarse, si el
+navegador guarda carteras del nivel visitante, la cuenta ofrece subirlas —con
+un botón, nunca en silencio— y, tras confirmar cada subida, las retira del
+navegador (mudanza, no copia doble). Se sube lo mismo que todo: identificadores
+y pesos. Mapa puro `carterasLocalesParaNube` en `nuvia-constructor.js`. Los
+consentimientos no se migran: ya se guardan bajo el correo de la cuenta.
+
 **Persistencia en la nube (paso 30, 19-08-2026).** Con la sesión iniciada, el
 constructor guarda las carteras en la cuenta (callable app-owned aisladas por
 UID) en vez de en el navegador. Se guarda solo el mínimo —`asset_id` y

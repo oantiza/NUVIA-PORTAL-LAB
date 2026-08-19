@@ -247,6 +247,20 @@ export function carteraNubeParaGuardar(nombre, posiciones, portfolioId = null) {
   };
 }
 
+/* ── Migración de lo local a la cuenta (paso 31) ──
+ *  Al registrarse, las carteras guardadas en el navegador (paso 24) pueden
+ *  subirse a la cuenta. Solo con permiso explícito (un botón), nunca en
+ *  silencio, y subiendo lo mismo que el resto: identificadores y pesos. */
+
+/** Prepara la subida de las carteras locales: una carga por cartera, en el
+ *  formato de la nube (solo ids+pesos). Descarta las que no tengan ninguna
+ *  posición con peso. */
+export function carterasLocalesParaNube(locales) {
+  return (locales || [])
+    .map((c) => ({ nombre: c.nombre, carga: carteraNubeParaGuardar(c.nombre, (c.posiciones || []).map((p) => ({ activo: p.activo || {}, bruto: Number(p.bruto) || 0 }))) }))
+    .filter((x) => x.carga.positions.some((p) => p.weight_percent > 0));
+}
+
 /** Reconstruye las posiciones de pantalla a partir de lo guardado (ids+pesos)
  *  y de las fichas traídas de la maestra. Sin ficha, el activo se muestra por
  *  su identificador y sin clase: nunca se inventa un nombre. */
@@ -293,6 +307,7 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   let posiciones = [];
   const cacheSeries = new Map(); // clave (ids ordenados) -> promesa del payload
   let generacion = 0;
+  let ofertaMigracionDescartada = false; // «ahora no» de la migración (paso 31)
 
   raiz.textContent = '';
   const contador = el('p', { class: 'nv-cons__contador' });
@@ -411,8 +426,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en la cuenta');
     formulario.append(campoNombre, botonGuardar);
     const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+    const oferta = el('div', { class: 'nv-note nv-cons__migracion', hidden: '' });
     const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
-    guardadoRaiz.append(formulario, estadoGuardado, listaGuardadas);
+    guardadoRaiz.append(formulario, estadoGuardado, oferta, listaGuardadas);
 
     let ocupado = false;
     async function protege(boton, textoOcupado, accion) {
@@ -424,6 +440,46 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       try { await accion(); }
       catch (e) { estadoGuardado.textContent = e?.message || 'No se ha podido completar la operación.'; }
       finally { ocupado = false; boton.disabled = false; boton.textContent = original; }
+    }
+
+    /* Oferta de migración (paso 31): si hay carteras en el navegador, ofrecer
+       subirlas a la cuenta. Solo con un botón; nada se mueve en silencio. */
+    function pintaOfertaMigracion() {
+      const migrables = carterasLocalesParaNube(leeGuardadas());
+      if (!migrables.length || ofertaMigracionDescartada) { oferta.hidden = true; oferta.textContent = ''; return; }
+      oferta.hidden = false;
+      oferta.textContent = '';
+      const n = migrables.length;
+      oferta.append(el('p', {}, `Tienes ${n} cartera${n === 1 ? '' : 's'} guardada${n === 1 ? '' : 's'} en este navegador. `
+        + 'Puedes subirlas a tu cuenta para verlas desde cualquier sitio; se suben solo los activos y sus pesos, como el resto.'));
+      const botones = el('div', { class: 'nv-cons__migracion-botones' });
+      const subir = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Subir a mi cuenta');
+      const ahoraNo = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Ahora no');
+      subir.addEventListener('click', () => protege(subir, 'Subiendo…', migra));
+      ahoraNo.addEventListener('click', () => { ofertaMigracionDescartada = true; pintaOfertaMigracion(); estadoGuardado.textContent = 'Tus carteras siguen guardadas en este navegador.'; });
+      botones.append(subir, ahoraNo);
+      oferta.append(botones);
+    }
+
+    async function migra() {
+      const pendientes = carterasLocalesParaNube(leeGuardadas());
+      const subidas = [];
+      try {
+        for (const { nombre, carga } of pendientes) {
+          await datos.guardaCarteraNube(carga);
+          subidas.push(nombre);
+        }
+      } catch (e) {
+        escribeGuardadas(leeGuardadas().filter((c) => !subidas.includes(c.nombre)));
+        await pinta();
+        pintaOfertaMigracion();
+        estadoGuardado.textContent = `Se subieron ${subidas.length}; el resto sigue en el navegador (${e?.message || 'error de red'}).`;
+        return;
+      }
+      escribeGuardadas(leeGuardadas().filter((c) => !subidas.includes(c.nombre)));
+      await pinta();
+      pintaOfertaMigracion();
+      estadoGuardado.textContent = `Subida${subidas.length === 1 ? '' : 's'} ${subidas.length} cartera${subidas.length === 1 ? '' : 's'} a tu cuenta. Ya no están solo en este navegador.`;
     }
 
     async function abre(cartera) {
@@ -466,6 +522,7 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
         item.append(cargar, borrar);
         listaGuardadas.append(item);
       }
+      pintaOfertaMigracion();
     }
 
     botonGuardar.addEventListener('click', () => protege(botonGuardar, 'Guardando…', async () => {

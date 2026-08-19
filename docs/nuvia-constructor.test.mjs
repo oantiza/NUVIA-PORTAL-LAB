@@ -9,6 +9,7 @@ import {
   lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
+  carterasLocalesParaNube,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -212,6 +213,28 @@ console.log('\n— Guardado en la nube: solo ids y pesos (paso 30) —');
     AVISO_GUARDADO_NUBE.includes('tu cuenta') && AVISO_GUARDADO_NUBE.includes('qué activos y con qué peso')
     && AVISO_GUARDADO_NUBE.includes('base de datos NUVIA')
     && !/localStorage|caché|cookie|token|endpoint/i.test(AVISO_GUARDADO_NUBE));
+}
+
+console.log('\n— Migración de lo local a la cuenta (paso 31) —');
+{
+  const locales = [
+    { nombre: 'Una', posiciones: [
+      { activo: { asset_id: 'A', display_name: 'Alfa' }, bruto: 30 },
+      { activo: { asset_id: 'B', display_name: 'Beta' }, bruto: 10 },
+    ] },
+    { nombre: 'Vacía', posiciones: [] },
+    { nombre: 'Solo ceros', posiciones: [{ activo: { asset_id: 'C' }, bruto: 0 }] },
+  ];
+  const paraNube = carterasLocalesParaNube(locales);
+  comprueba('Solo se suben las carteras con posiciones válidas (se descartan vacías o a cero)',
+    paraNube.length === 1 && paraNube[0].nombre === 'Una');
+  comprueba('Cada carga conserva el nombre y va en formato nube (solo ids+pesos)',
+    paraNube[0].carga.name === 'Una'
+    && paraNube[0].carga.positions.every((p) => Object.keys(p).sort().join(',') === 'asset_id,weight_percent'));
+  comprueba('Los pesos suben ya normalizados (30/10 → 75/25)',
+    Math.abs(paraNube[0].carga.positions[0].weight_percent - 75) < 1e-6
+    && Math.abs(paraNube[0].carga.positions[1].weight_percent - 25) < 1e-6);
+  comprueba('Sin carteras locales, no hay nada que migrar', carterasLocalesParaNube([]).length === 0);
 }
 
 console.log('\n— Fechas —');
