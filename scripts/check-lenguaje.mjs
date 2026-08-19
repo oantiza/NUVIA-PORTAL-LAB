@@ -63,13 +63,22 @@ for (const fichero of FICHEROS) {
   }
 }
 
-/* Las estimaciones deben declararse como tales en la página (bases §2:
-   «los supuestos, visibles»). */
-const pagina = await readFile(resolve(root, 'cartera.html'), 'utf8');
-for (const exigido of ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento']) {
-  if (!pagina.includes(exigido)) {
-    console.error(`EN   cartera.html: falta la declaración «${exigido}»`);
-    errores += 1;
+/* Declaraciones exigidas: estimaciones dichas como tales (bases §2, «los
+   supuestos, visibles») y nota de fuentes en cada vista con datos (paso 26).
+   En esta página nunca se cita EODHD: esa atribución es de la vista de
+   análisis de empresas (lo vigila check-parity). */
+const EXIGIDO = [
+  ['cartera.html', ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento', 'base de datos NUVIA']],
+  ['js/nuvia-simulador.js', ['supuestos propios de NUVIA']],
+  ['js/nuvia-constructor.js', ['Datos de cierre', 'base de datos NUVIA']],
+];
+for (const [fichero, declaraciones] of EXIGIDO) {
+  const texto = await readFile(resolve(root, fichero), 'utf8');
+  for (const exigido of declaraciones) {
+    if (!texto.includes(exigido)) {
+      console.error(`EN   ${fichero}: falta la declaración «${exigido}»`);
+      errores += 1;
+    }
   }
 }
 

@@ -583,6 +583,19 @@ EODHD aquí: esa atribución corresponde a Análisis y valoración de empresas,
 la única vista que lo consulta. Mezclar las dos rutas de datos en la misma
 nota confundiría al usuario sobre de dónde sale cada cifra.
 
+> **Hecho y verificado (19-08-2026).** Cada vista con datos lleva su nota:
+> el constructor ya decía «Datos de cierre del [fecha], base de datos NUVIA.
+> Ventana de 3 años, en euros. N observaciones.» (desde el paso 20); el
+> simulador por clases añade ahora la suya (`FUENTE_SIMULADOR`): «Fuente:
+> supuestos propios de NUVIA — la tabla “Los supuestos, a la vista” de esta
+> página. Este simulador no usa datos de mercado en vivo.» — su origen son
+> supuestos, no la maestra, y decir otra cosa sería inventar. El bloque
+> «Fuentes y límites» explica las dos rutas. EODHD no se cita en ninguna
+> parte de la página (el contrato de paridad lo prohíbe desde el paso 19); su
+> atribución vive solo en Análisis y valoración de empresas.
+> `check-lenguaje.mjs` exige ahora estas declaraciones, con lo que la nota de
+> fuentes no puede desaparecer sin romper la build.
+
 ### Paso 27 · Verificación final del nivel
 
 **Hacer, sin excepciones:**
