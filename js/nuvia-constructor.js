@@ -168,6 +168,56 @@ export function repartoPorClase(posiciones, pesos) {
     .sort((a, b) => b.peso - a.peso);
 }
 
+/* ── Guardado local (paso 24) ── */
+
+export const MAX_CARTERAS = 4;
+const CLAVE_CARTERAS = 'nuvia.carteras-visitante.v1';
+
+/** Aviso del guardado, en lenguaje llano: comprensible sin saber qué es un
+ *  navegador por dentro. */
+export const AVISO_GUARDADO = 'Tus carteras se guardan solo en este navegador '
+  + 'y en este dispositivo. Si borras los datos de navegación se pierden, y no '
+  + 'aparecerán si abres la página en otro ordenador o en el móvil.';
+
+/** Se guarda solo lo necesario para reconstruir la cartera; nada más. */
+export function carteraParaGuardar(nombre, posiciones) {
+  return {
+    nombre: String(nombre || '').trim(),
+    posiciones: posiciones.map((p) => ({
+      activo: {
+        asset_id: p.activo.asset_id,
+        display_name: p.activo.display_name,
+        instrument_type: p.activo.instrument_type,
+        economic_asset_class: p.activo.economic_asset_class,
+      },
+      bruto: p.bruto,
+    })),
+  };
+}
+
+/**
+ * Añade (o reemplaza, si el nombre coincide) una cartera a la lista.
+ * Devuelve { lista, motivo }: 'limite' si no cabe, 'sin-posiciones' si no hay
+ * nada que guardar, 'reemplazada' si pisó una con el mismo nombre.
+ */
+export function agregaCartera(lista, cartera) {
+  if (!cartera.posiciones?.length) return { lista, motivo: 'sin-posiciones' };
+  const nombre = cartera.nombre || `Cartera ${lista.length + 1}`;
+  const definitiva = { ...cartera, nombre };
+  const indice = lista.findIndex((c) => c.nombre === nombre);
+  if (indice >= 0) {
+    const nueva = [...lista];
+    nueva[indice] = definitiva;
+    return { lista: nueva, motivo: 'reemplazada' };
+  }
+  if (lista.length >= MAX_CARTERAS) return { lista, motivo: 'limite' };
+  return { lista: [...lista, definitiva], motivo: null };
+}
+
+export function borraCartera(lista, indice) {
+  return lista.filter((_, i) => i !== indice);
+}
+
 /** Fecha del punto más bajo de la caída máxima, o null si no puede saberse. */
 export function fechaDelMinimo(niveles, fechas) {
   if (!niveles?.length || !fechas || fechas.length !== niveles.length) return null;
@@ -204,7 +254,87 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   const nivel = el('div', { class: 'nv-note nv-cons__nivel', hidden: '' });
   nivel.append(el('p', {}, NOTA_NIVEL));
   const resultados = el('div', { class: 'nv-cons__resultados', 'aria-live': 'polite' });
-  raiz.append(contador, lista, estado, nivel, resultados);
+
+  /* ── Guardado local (paso 24) ── */
+  const guardado = el('div', { class: 'nv-cons__guardado' });
+  guardado.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tus carteras en este navegador'));
+  guardado.append(el('p', { class: 'nv-cons__aviso-guardado' }, AVISO_GUARDADO));
+  const formulario = el('div', { class: 'nv-cons__guardar' });
+  const campoNombre = el('div', { class: 'nv-field nv-cons__nombre-campo' });
+  const etiquetaNombre = el('label', { for: 'nombre-cartera' }, 'Nombre para guardarla');
+  const cajaNombre = el('div', { class: 'nv-field__box' });
+  const inputNombre = el('input', { id: 'nombre-cartera', type: 'text', maxlength: '40', autocomplete: 'off', placeholder: 'Por ejemplo: Mi primera prueba' });
+  cajaNombre.append(inputNombre);
+  campoNombre.append(etiquetaNombre, cajaNombre);
+  const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en este navegador');
+  formulario.append(campoNombre, botonGuardar);
+  const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+  const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
+  guardado.append(formulario, estadoGuardado, listaGuardadas);
+
+  raiz.append(contador, lista, estado, nivel, resultados, guardado);
+
+  function leeGuardadas() {
+    try {
+      const crudo = JSON.parse(localStorage.getItem(CLAVE_CARTERAS) || '[]');
+      if (Array.isArray(crudo)) return crudo.filter((c) => c?.nombre && Array.isArray(c.posiciones));
+    } catch { /* datos ilegibles: se parte de cero */ }
+    return [];
+  }
+
+  function escribeGuardadas(carteras) {
+    try { localStorage.setItem(CLAVE_CARTERAS, JSON.stringify(carteras)); } catch { /* sin persistencia */ }
+  }
+
+  function pintaGuardadas() {
+    const carteras = leeGuardadas();
+    listaGuardadas.textContent = '';
+    for (const [indice, cartera] of carteras.entries()) {
+      const item = el('li', { class: 'nv-cons__guardada' });
+      item.append(
+        el('span', { class: 'nv-cons__guardada-nombre' }, cartera.nombre),
+        el('span', { class: 'nv-cons__guardada-detalle' },
+          `${cartera.posiciones.length} ${cartera.posiciones.length === 1 ? 'posición' : 'posiciones'}`),
+      );
+      const cargar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Cargar');
+      cargar.addEventListener('click', () => {
+        posiciones = cartera.posiciones.map((p) => ({ activo: { ...p.activo }, bruto: Number(p.bruto) || 0 }));
+        pintaLista();
+        recalcula();
+        estadoGuardado.textContent = `Cartera «${cartera.nombre}» cargada.`;
+      });
+      const borrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Borrar');
+      borrar.addEventListener('click', () => {
+        escribeGuardadas(borraCartera(leeGuardadas(), indice));
+        pintaGuardadas();
+        estadoGuardado.textContent = `Cartera «${cartera.nombre}» borrada de este navegador.`;
+      });
+      item.append(cargar, borrar);
+      listaGuardadas.append(item);
+    }
+    botonGuardar.textContent = `Guardar en este navegador (${carteras.length} de ${MAX_CARTERAS})`;
+  }
+
+  botonGuardar.addEventListener('click', () => {
+    const { lista: nuevas, motivo } = agregaCartera(leeGuardadas(), carteraParaGuardar(inputNombre.value, posiciones));
+    if (motivo === 'sin-posiciones') {
+      estadoGuardado.textContent = 'No hay nada que guardar todavía: añade algún activo primero.';
+      return;
+    }
+    if (motivo === 'limite') {
+      estadoGuardado.textContent = `Este navegador guarda hasta ${MAX_CARTERAS} carteras. Borra alguna para guardar esta.`;
+      return;
+    }
+    escribeGuardadas(nuevas);
+    pintaGuardadas();
+    const nombre = nuevas[nuevas.length - 1]?.nombre;
+    estadoGuardado.textContent = motivo === 'reemplazada'
+      ? `Cartera «${inputNombre.value.trim()}» actualizada.`
+      : `Cartera guardada${nombre ? ` como «${nombre}»` : ''}.`;
+    inputNombre.value = '';
+  });
+
+  pintaGuardadas();
 
   function seriesDelConjunto(ids) {
     const clave = [...ids].sort().join('|');

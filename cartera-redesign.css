@@ -437,6 +437,58 @@
   color: var(--nv-text-muted);
 }
 
+/* ── Guardado local (paso 24) ── */
+
+.nv-cons__guardado {
+  display: grid;
+  gap: var(--nv-space-3);
+  border-top: 1px solid var(--nv-line);
+  padding-top: var(--nv-space-4);
+}
+
+.nv-cons__aviso-guardado {
+  margin: 0;
+  max-width: 72ch;
+  font-size: 14px;
+  color: var(--nv-text-muted);
+}
+
+.nv-cons__guardar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--nv-space-3);
+}
+
+.nv-cons__nombre-campo { flex: 1 1 260px; max-width: 420px; }
+
+.nv-cons__guardadas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nv-space-2);
+}
+
+.nv-cons__guardada {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2) var(--nv-space-3);
+  padding: var(--nv-space-2) var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 12px;
+  background: var(--nv-white);
+}
+
+.nv-cons__guardada-nombre { font-weight: 600; color: var(--nv-text); }
+
+.nv-cons__guardada-detalle {
+  font-size: 13px;
+  color: var(--nv-text-muted);
+  margin-right: auto;
+}
+
 .nv-cons__fuente {
   margin: 0;
   font-size: 12px;

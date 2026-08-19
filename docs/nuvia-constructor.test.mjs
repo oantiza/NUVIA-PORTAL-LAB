@@ -7,6 +7,7 @@ import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
   lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
+  MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -139,6 +140,42 @@ console.log('\n— Reparto por clase (paso 23) —');
   comprueba('Sin pesos → null, nunca un gráfico vacío inventado', repartoPorClase(posiciones, null) === null);
   comprueba('claseVisual da color del sistema para cada clase', claseVisual('EQUITY').color.startsWith('var(--nv-cat-')
     && claseVisual('lo-que-sea').etiqueta === 'Sin clasificar');
+}
+
+console.log('\n— Guardado local (paso 24) —');
+{
+  const posiciones = [{
+    activo: { asset_id: 'ES0178430E18', display_name: 'Telefonica', instrument_type: 'STOCK', economic_asset_class: 'EQUITY', metrics: { volatility_3y: 0.2 }, _basura: true },
+    bruto: 60,
+    _salida: { value: 'x' },
+  }];
+  const cartera = carteraParaGuardar('  Mi prueba  ', posiciones);
+  comprueba('Se guarda solo lo necesario (sin métricas ni referencias de pantalla)',
+    cartera.posiciones[0].activo.metrics === undefined && cartera.posiciones[0]._salida === undefined
+    && cartera.posiciones[0].activo.asset_id === 'ES0178430E18' && cartera.posiciones[0].bruto === 60);
+  comprueba('El nombre se limpia de espacios', cartera.nombre === 'Mi prueba');
+
+  let lista = [];
+  ({ lista } = agregaCartera(lista, cartera));
+  comprueba('Guardar añade la cartera', lista.length === 1 && lista[0].nombre === 'Mi prueba');
+  const sinNombre = agregaCartera(lista, carteraParaGuardar('', posiciones));
+  comprueba('Sin nombre → nombre automático «Cartera 2»', sinNombre.lista[1].nombre === 'Cartera 2');
+  const repetida = agregaCartera(sinNombre.lista, carteraParaGuardar('Mi prueba', [{ ...posiciones[0], bruto: 30 }]));
+  comprueba('Mismo nombre → se actualiza, no se duplica', repetida.motivo === 'reemplazada'
+    && repetida.lista.length === 2 && repetida.lista[0].posiciones[0].bruto === 30);
+  let llena = repetida.lista;
+  while (llena.length < MAX_CARTERAS) ({ lista: llena } = agregaCartera(llena, carteraParaGuardar('', posiciones)));
+  const quinta = agregaCartera(llena, carteraParaGuardar('Una más', posiciones));
+  comprueba(`La cartera ${MAX_CARTERAS + 1} se rechaza con motivo «limite»`,
+    quinta.motivo === 'limite' && quinta.lista.length === MAX_CARTERAS);
+  comprueba('Guardar sin posiciones se rechaza con explicación',
+    agregaCartera([], carteraParaGuardar('Vacía', [])).motivo === 'sin-posiciones');
+  comprueba('Borrar quita solo la elegida', borraCartera(llena, 0).length === MAX_CARTERAS - 1
+    && !borraCartera(llena, 0).some((c) => c.nombre === 'Mi prueba'));
+  comprueba('El aviso se entiende sin jerga: navegador y dispositivo, sin tecnicismos',
+    AVISO_GUARDADO.includes('este navegador') && AVISO_GUARDADO.includes('se pierden')
+    && AVISO_GUARDADO.includes('otro ordenador')
+    && !/localStorage|caché|cookie|sesión|almacenamiento/i.test(AVISO_GUARDADO));
 }
 
 console.log('\n— Fechas —');

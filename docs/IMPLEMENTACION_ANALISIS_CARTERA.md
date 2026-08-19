@@ -533,6 +533,20 @@ limpiar datos y de que no hay continuidad entre dispositivos.
 **Verificación.** Abrir en incógnito: no debe verse nada de la sesión anterior,
 y el aviso debe ser comprensible sin conocer cómo funciona un navegador.
 
+> **Hecho y verificado (19-08-2026).** Hasta 4 carteras en `localStorage`
+> (`nuvia.carteras-visitante.v1`), con nombre libre (o «Cartera N»
+> automático), botón «Guardar en este navegador (N de 4)» —el límite a la
+> vista antes de tocarlo—, y Cargar/Borrar por cartera. Mismo nombre →
+> actualiza en vez de duplicar; el 5.º guardado se rechaza explicándolo.
+> Solo se guarda lo necesario para reconstruir (identidad del activo y peso
+> bruto), nunca métricas ni datos de pantalla. El aviso (`AVISO_GUARDADO`)
+> evita tecnicismos: «Tus carteras se guardan solo en este navegador y en
+> este dispositivo. Si borras los datos de navegación se pierden, y no
+> aparecerán si abres la página en otro ordenador o en el móvil.» — la
+> batería comprueba que no contiene jerga. Verificado con navegador real:
+> guardar → recargar → cargar → borrar, y en contexto limpio (incógnito) no
+> se ve nada de la sesión anterior.
+
 ### Paso 25 · Revisión del lenguaje, una etiqueta a una
 
 **El paso que más se salta y más consecuencias tiene.**
