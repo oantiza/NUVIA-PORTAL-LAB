@@ -21,6 +21,7 @@ import {
   volatilidadCartera,
   volatilidadSinDiversificar,
   analizaCartera,
+  frontera,
 } from './nuvia-cartera.js';
 
 let fallos = 0;
@@ -174,6 +175,61 @@ const sinVol = volatilidadSinDiversificar([{ id: 'ACTIVO_SIN_HISTORICO', peso: 1
 comprueba('Posición sin σ conocida → undefined', sinVol === undefined);
 
 estableceCorrelaciones(null);
+
+/* ── Paso 15 · Frontera sobre activos reales ────────────────────────────── */
+
+// Modo por clases: sigue funcionando igual (regresión) y sale monótona.
+const porClases = frontera();
+const esMonotona = (f) => f.every((p, i) => i === 0
+  || (p.volatilidad > f[i - 1].volatilidad && p.rentabilidad > f[i - 1].rentabilidad));
+comprueba('Frontera por clases: nube completa y sin datos pendientes',
+  porClases.nube.length === 4000 && porClases.sinDatos.length === 0);
+comprueba('Frontera por clases: monótona creciente en riesgo y rentabilidad',
+  porClases.frontera.length > 5 && esMonotona(porClases.frontera),
+  `${porClases.frontera.length} puntos`);
+
+// Con activos concretos y sin matriz registrada: se niega, y dice por qué.
+const sinMatriz2 = frontera({ activos: [
+  { id: 'A', rentabilidad: 0.06, volatilidad: 0.2 },
+  { id: 'B', rentabilidad: 0.05, volatilidad: 0.2 },
+] });
+comprueba('Frontera de activos sin matriz → vacía, con el motivo en sinDatos',
+  sinMatriz2.nube.length === 0 && sinMatriz2.sinDatos.some((m) => m.includes('sin correlación')));
+
+// Tres activos MUY correlacionados frente a tres poco correlacionados:
+// la frontera correlacionada debe ser mucho más plana (guía, paso 15).
+const activos3 = [
+  { id: 'A', rentabilidad: 0.04, volatilidad: 0.2 },
+  { id: 'B', rentabilidad: 0.06, volatilidad: 0.2 },
+  { id: 'C', rentabilidad: 0.08, volatilidad: 0.2 },
+];
+const matrizRho = (rho) => ({
+  ids: ['A', 'B', 'C'],
+  rho: {
+    A: { A: 1, B: rho, C: rho },
+    B: { A: rho, B: 1, C: rho },
+    C: { A: rho, B: rho, C: 1 },
+  },
+});
+const rangoVol = (r) => Math.max(...r.nube.map((p) => p.volatilidad))
+  - Math.min(...r.nube.map((p) => p.volatilidad));
+
+estableceCorrelaciones(matrizRho(0.95));
+const correlada = frontera({ activos: activos3 });
+estableceCorrelaciones(matrizRho(0.1));
+const diversificada = frontera({ activos: activos3 });
+estableceCorrelaciones(null);
+
+comprueba('Frontera de activos reales: monótona creciente',
+  correlada.frontera.length > 0 && esMonotona(correlada.frontera)
+  && diversificada.frontera.length > 0 && esMonotona(diversificada.frontera));
+comprueba('Activos muy correlacionados → frontera mucho más plana',
+  rangoVol(correlada) < rangoVol(diversificada) * 0.25,
+  `rango σ: correlada ${rangoVol(correlada).toFixed(4)} · diversificada ${rangoVol(diversificada).toFixed(4)}`);
+comprueba('Con ρ baja, diversificar reduce el riesgo muy por debajo del activo suelto',
+  Math.min(...diversificada.nube.map((p) => p.volatilidad)) < 0.14
+  && Math.min(...correlada.nube.map((p) => p.volatilidad)) > 0.19,
+  `mín σ: diversificada ${Math.min(...diversificada.nube.map((p) => p.volatilidad))} · correlada ${Math.min(...correlada.nube.map((p) => p.volatilidad))}`);
 
 /* ───────────────────────────────────────────────────────────────────────── */
 

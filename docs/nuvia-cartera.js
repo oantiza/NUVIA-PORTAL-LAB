@@ -338,28 +338,60 @@ function aleatorio(semilla) {
 
 /**
  * Nube de carteras aleatorias y su frontera eficiente.
- * Versión reducida de computeFrontier() de frontier.ts: Monte Carlo sobre las
- * cuatro clases, quedándose con la mejor rentabilidad de cada tramo de riesgo.
+ * Versión reducida de computeFrontier() de frontier.ts: Monte Carlo de pesos,
+ * quedándose con la mejor rentabilidad de cada tramo de riesgo y filtrando
+ * después a una frontera monótona creciente en rentabilidad (guía, paso 15).
+ *
+ * Dos modos (guía, pasos 12 y 15):
+ *   - Sin `activos`: sobre las cuatro CLASES, como siempre (visitante).
+ *   - Con `activos`: sobre posiciones reales. Cada activo es
+ *     { id, rentabilidad, volatilidad? } — la σ puede venir en el propio
+ *     activo o de la matriz registrada (estableceCorrelaciones), y la ρ de
+ *     cada par sale SIEMPRE de esa matriz. Si a algún activo le falta σ o
+ *     rentabilidad, o a algún par le falta ρ, no se calcula nada y el
+ *     problema se devuelve en `sinDatos` — nunca se inventa una cifra.
  */
-export function frontera({ muestras = 4000, tramos = 28, semilla = 42 } = {}) {
-  const claves = Object.keys(CLASES);
+export function frontera({ muestras = 4000, tramos = 28, semilla = 42, activos = null } = {}) {
+  const conActivos = Array.isArray(activos) && activos.length > 0;
+  const base = conActivos
+    ? activos.map((a) => ({ id: a.id, rentabilidad: a.rentabilidad, volatilidad: a.volatilidad }))
+    : Object.keys(CLASES).map((clase) => ({ clase }));
+
+  if (conActivos) {
+    const sinDatos = [];
+    for (const a of base) {
+      if (!Number.isFinite(volDe(a))) sinDatos.push(`${a.id}: sin volatilidad`);
+      if (!Number.isFinite(a.rentabilidad)) sinDatos.push(`${a.id}: sin rentabilidad`);
+    }
+    for (let i = 0; i < base.length; i += 1) {
+      for (let j = i + 1; j < base.length; j += 1) {
+        if (!Number.isFinite(correlacion(base[i].id, base[j].id))) {
+          sinDatos.push(`${base[i].id}–${base[j].id}: sin correlación`);
+        }
+      }
+    }
+    if (sinDatos.length) return { nube: [], frontera: [], sinDatos };
+  }
+
   const rnd = aleatorio(semilla);
   const nube = [];
 
   for (let n = 0; n < muestras; n += 1) {
-    const brutos = claves.map(() => rnd());
+    const brutos = base.map(() => rnd());
     const suma = brutos.reduce((s, v) => s + v, 0) || 1;
-    const posiciones = claves.map((clase, i) => ({ clase, peso: (brutos[i] / suma) * 100 }));
+    const posiciones = base.map((activo, i) => ({ ...activo, peso: (brutos[i] / suma) * 100 }));
     const vol = volatilidadCartera(posiciones);
     const rent = rentabilidadCartera(posiciones);
     if (vol == null || rent == null) continue;
     nube.push({ volatilidad: vol, rentabilidad: rent, pesos: posiciones });
   }
 
+  if (!nube.length) return { nube: [], frontera: [], sinDatos: [] };
+
   // Frontera: la cartera de mayor rentabilidad dentro de cada tramo de riesgo.
   const min = Math.min(...nube.map((p) => p.volatilidad));
   const max = Math.max(...nube.map((p) => p.volatilidad));
-  const ancho = (max - min) / tramos;
+  const ancho = (max - min) / tramos || 1;
   const mejores = [];
   for (let t = 0; t < tramos; t += 1) {
     const desde = min + t * ancho;
@@ -369,7 +401,18 @@ export function frontera({ muestras = 4000, tramos = 28, semilla = 42 } = {}) {
     mejores.push(enTramo.reduce((a, b) => (b.rentabilidad > a.rentabilidad ? b : a)));
   }
 
-  return { nube, frontera: mejores.sort((a, b) => a.volatilidad - b.volatilidad) };
+  // Monótona: más riesgo solo aparece en la frontera si paga más rentabilidad.
+  mejores.sort((a, b) => a.volatilidad - b.volatilidad);
+  const monotona = [];
+  let mejorRentabilidad = -Infinity;
+  for (const punto of mejores) {
+    if (punto.rentabilidad > mejorRentabilidad) {
+      monotona.push(punto);
+      mejorRentabilidad = punto.rentabilidad;
+    }
+  }
+
+  return { nube, frontera: monotona, sinDatos: [] };
 }
 
 /* ── Formato ─────────────────────────────────────────────────────────────── */

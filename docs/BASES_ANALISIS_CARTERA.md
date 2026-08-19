@@ -397,6 +397,12 @@ ponderadas por exposición a renta variable, con la calidad del dato declarada
 Batería en `nuvia-concentracion.test.mjs` (cuatro bancos españoles → 100 %
 financiero y 100 % España).
 
+**También hecho — frontera sobre activos reales (paso 15, 19-08-2026):**
+`frontera()` opera ya sobre posiciones reales (σ y ρ de la matriz del paso
+12), mantiene intacto el modo por clases del visitante, sale monótona
+creciente y, si faltan datos, devuelve el motivo en `sinDatos` en vez de
+calcular con cifras inventadas.
+
 **Correlaciones reales — resuelto (paso 12, 19-08-2026).** El módulo ya no
 asume ρ por clase para activos concretos: `correlacionesDesdeSeries()` calcula
 la matriz de Pearson sobre retornos diarios a partir de las series de

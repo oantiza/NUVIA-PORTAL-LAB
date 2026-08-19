@@ -341,6 +341,21 @@ usuario en vez de sobre las cuatro clases.
 activos muy correlacionados debe ser mucho más plana que con una cartera
 diversificada: si no, las correlaciones no están entrando.
 
+> **Hecho y verificado (19-08-2026).** `frontera()` acepta ahora `activos`
+> —posiciones reales con su rentabilidad y, opcionalmente, su σ; la σ que
+> falte sale de la matriz registrada y la ρ de cada par sale SIEMPRE de esa
+> matriz—. Sin `activos` sigue operando sobre las cuatro clases, intacto para
+> el visitante. Si falta σ, rentabilidad o alguna ρ, devuelve la frontera
+> vacía con el motivo en `sinDatos`: nunca calcula con cifras inventadas.
+> La frontera se filtra además a monótona creciente (más riesgo solo aparece
+> si paga más rentabilidad), que es la verificación del enunciado. Batería:
+> tres activos con ρ = 0,95 dan un rango de σ 22 veces más estrecho que con
+> ρ = 0,1 (0,0031 frente a 0,0686), y con ρ baja la cartera de mínimo riesgo
+> baja a 12,7 % frente a 19,7 %. Contraste real: frontera BBVA+SAN+CABK con
+> la matriz semanal 2023–2026 → monótona y plana (σ de 24,2 % a 25,3 %),
+> con la σ mínima de cartera pegada a la del banco menos volátil — entre
+> activos con ρ 0,70–0,79 apenas hay diversificación que rascar.
+
 ### Paso 16 · Métricas de la tabla del visitante
 
 **Hacer.** Rentabilidad a 3 años, volatilidad, **máxima caída** (peor caída de
