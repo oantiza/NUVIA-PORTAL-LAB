@@ -851,6 +851,13 @@ diversificar, solapamiento.
 > (1+r)^años, σ=0 → percentiles iguales, reproducible, más σ → banda más
 > ancha, entrada inválida → null), límite por nivel y `leeSuscripcion`
 > (silencio = no; correo normalizado; marcador ilegible → no).
+> **Verificado en producción** con cuenta de prueba (creada y borrada) y dos
+> fondos reales: nivel registrado con la frontera estática (500 puntos de
+> nube, línea y su combinación marcada) y la nota del suscriptor; puesto el
+> marcador de suscripción a mano, el bloque pasa a «Análisis completo»:
+> contador «2 de 20», la frontera se recorre y marca el punto elegido
+> (reparto real Bestinver/Cobas en cada punto), proyección con percentiles
+> reales y matriz con ρ = 0,65 entre los dos fondos value.
 
 ### Paso 34 · Derechos RGPD operativos
 
