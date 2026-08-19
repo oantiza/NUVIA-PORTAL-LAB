@@ -178,6 +178,39 @@ sirve esa función.
 - Dos ETF del mismo índice deben salir cerca de 0,99.
 - Ningún valor fuera de [−1, 1].
 
+**Esquema resumen del paso 8:**
+
+```
+  20 activos de la cartera del suscriptor
+         │
+         │  1 llamada a get_price_series
+         │  { asset_ids: [...20], frequency: "DAILY", window: "3Y" }
+         ▼
+  ┌─────────────────────────────────────────┐
+  │  Límite de la función: 25 asset_ids      │   20 < 25 → una sola llamada,
+  │  margen: 5 activos                       │   margen de sobra
+  └─────────────────────────────────────────┘
+         │
+         ▼
+  20 series diarias · 3 años · ya alineadas por fecha · rebasadas a 100
+  (+ excluded: activos sin histórico suficiente, con motivo)
+         │
+         │  en el cliente, sin red
+         ▼
+  niveles → retornos diarios → Pearson por pares
+         ▼
+  190 pares de correlación  (20 × 19 / 2)
+```
+
+| | |
+|---|---|
+| **Dónde se calcula** | En el navegador, no en una Cloud Function nueva |
+| **Con qué dato** | `get_price_series`, ya existente, sin modificar |
+| **Límite técnico real** | 25 activos por llamada |
+| **Límite de negocio** | 20 activos (suscriptor) — con 5 de margen |
+| **Verificado con** | idénticas → 1,0000 · invertida → −0,9996 · ruido → 0,0412 |
+| **Repositorio profesional** | No se toca |
+
 ### Paso 9 · Definir el catálogo visible en el portal
 
 **Hacer.** El catálogo completo ya existe en la maestra; el portal filtra qué
