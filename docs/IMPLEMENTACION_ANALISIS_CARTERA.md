@@ -1129,6 +1129,16 @@ Nivel registrado.
 > (Europa > América > Asia con el desglose de la prueba); criba §5 a
 > cero sobre todo el bloque; sin desbordes; suelo de 12 px; sin errores
 > de consola.
+>
+> **Publicado en producción (20-08-2026, `1450c37`).** Los tres módulos
+> servidos y comprobados en la web publicada (`nuvia-mapa.js`,
+> `nuvia-mapa-siluetas.js` y el `nuvia-analisis.js` con abanico y mapa
+> riesgo). El repaso visual en el navegador de producción quedó para la
+> siguiente sesión con Chrome abierto: en el momento de publicar estaba
+> cerrado, y no se da por visto lo que no se ha visto. Nota de
+> publicación: `origin/main` se movió dos veces durante el paso (React
+> autoalojado y auditoría de consola, de otra sesión); ambos rebases
+> limpios y `npm run validate` en verde sobre el estado combinado.
 
 ---
 
