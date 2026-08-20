@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
 <link rel="stylesheet" href="estilos/nuvia-pages.css">
-<link rel="stylesheet" href="mercados-cotizaciones.css">
 
 <script defer src="web2-integration.js"></script>
 <script defer src="support.js"></script>
@@ -250,7 +249,7 @@
                   <h4 data-market-news-field="headline">Las letras a tres meses alcanzan el 2,4 %</h4>
                   <p class="markets-secondary-card__context" data-market-news-field="context">La incertidumbre sobre los tipos eleva su rentabilidad al máximo desde febrero de 2025.</p>
                   <div class="markets-secondary-card__foot">
-                    <span class="markets-secondary-card__date is-up" data-market-news-field="change">11 ago 2026</span>
+                    <span class="markets-secondary-card__date" data-market-news-field="change">11 ago 2026</span>
                     <span class="markets-news-source"><span data-market-news-field="source-name">Cinco Días</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>
@@ -264,7 +263,7 @@
                   <h4 data-market-news-field="headline">Nvidia moviliza 500.000 millones para infraestructura de IA</h4>
                   <p class="markets-secondary-card__context" data-market-news-field="context">Se alía con seis gigantes financieros para acelerar centros de datos y capacidad de cómputo.</p>
                   <div class="markets-secondary-card__foot">
-                    <span class="markets-secondary-card__date is-flat" data-market-news-field="change">10 ago 2026</span>
+                    <span class="markets-secondary-card__date" data-market-news-field="change">10 ago 2026</span>
                     <span class="markets-news-source"><span data-market-news-field="source-name">Axios</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>
@@ -278,7 +277,7 @@
                   <h4 data-market-news-field="headline">Wall Street aguanta cerca de sus máximos históricos</h4>
                   <p class="markets-secondary-card__context" data-market-news-field="context">Las bolsas se mantienen firmes pese a las oscilaciones del crudo y la cautela sobre los tipos.</p>
                   <div class="markets-secondary-card__foot">
-                    <span class="markets-secondary-card__date is-up" data-market-news-field="change">11 ago 2026</span>
+                    <span class="markets-secondary-card__date" data-market-news-field="change">11 ago 2026</span>
                     <span class="markets-news-source"><span data-market-news-field="source-name">AP News</span><span aria-hidden="true">Ampliar →</span></span>
                   </div>
                 </article>              </div>
@@ -346,10 +345,17 @@
     <sc-if value="{{ esInformes }}" hint-placeholder-val="{{ false }}">
       <section id="informes" data-screen-label="Informe diario" class="nv-section" aria-labelledby="titulo-archivo">
         <div class="nv-container">
-          <div class="nv-reading">
-            <p class="nv-eyebrow">Análisis de cada jornada</p>
-            <h2 id="titulo-archivo">Informe diario</h2>
-            <p class="markets-report__lead">Las claves de apertura y cierre, con seguimiento de renta variable, renta fija, divisas y materias primas. Consulta la última edición o accede al archivo.</p>
+          <!-- Las otras dos vistas encabezan con .nv-section-heading y el título
+               sale a 36 px. Esta usaba .nv-reading, que no tiene regla para h2:
+               el mismo título de sección se pintaba a los 24 px por defecto del
+               navegador. .nv-reading no se usa en ninguna otra página. -->
+          <div class="nv-section-heading">
+            <div>
+              <p class="nv-eyebrow">Análisis de cada jornada</p>
+              <h2 id="titulo-archivo">Informe diario</h2>
+              <p class="markets-report__lead">Las claves de apertura y cierre, con seguimiento de renta variable, renta fija, divisas y materias primas. Consulta la última edición o accede al archivo.</p>
+            </div>
+            <p>Archivo de ediciones anteriores</p>
           </div>
 
           <div class="markets-archive">
@@ -394,8 +400,8 @@
             </sc-for>
           </nav>
 
-          <!-- Panel de cotizaciones: ya era 100 % clases (mercados-cotizaciones.css),
-               así que se conserva tal cual. -->
+          <!-- Panel de cotizaciones. Era 100 % clases, pero vivían en una hoja
+               propia fuera del sistema; ahora están en el bloque MERCADOS. -->
           <sc-if value="{{ esPanelCotizaciones }}" hint-placeholder-val="{{ true }}">
             <div class="markets-lab" aria-label="Cotizaciones de componentes de índices europeos">
               <div class="markets-lab__overview">

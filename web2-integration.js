@@ -32,10 +32,21 @@
 
   if (page !== 'index.html' && page !== '' && page !== 'mercados.html') return;
 
+  /* Los tres colores vivían aquí en crudo y no coincidían con los tokens: la
+     flecha de «baja» era #a8c97a y --nv-trend-down es #72c99a, así que el
+     indicador cambiaba de tono al hidratarse. Además llegaban por style.color,
+     que gana a cualquier hoja. Ahora esto solo decide la clase; el color lo
+     pone nuvia-pages.css, igual que en el HTML publicado. */
   const DIRECTION = {
-    up: { symbol: '↗', color: '#e4bd67' },
-    down: { symbol: '↘', color: '#a8c97a' },
-    stable: { symbol: '→', color: '#b9c7d8' },
+    up: { symbol: '↗', clase: 'is-up' },
+    down: { symbol: '↘', clase: 'is-down' },
+    stable: { symbol: '→', clase: 'is-flat' },
+  };
+  const TENDENCIAS = ['is-up', 'is-down', 'is-flat'];
+  const marcarTendencia = (elemento, clase) => {
+    if (!elemento) return;
+    elemento.classList.remove(...TENDENCIAS);
+    elemento.classList.add(clase);
   };
 
   const setText = (selector, value) => {
@@ -158,9 +169,8 @@
         const direction = DIRECTION[indicator.direction];
         if (direction) {
           const arrow = card.querySelector('[data-macro-field="direction"]');
-          if (arrow) { arrow.textContent = direction.symbol; arrow.style.color = direction.color; }
-          const change = card.querySelector('[data-macro-field="change"]');
-          if (change) change.style.color = direction.color;
+          if (arrow) { arrow.textContent = direction.symbol; marcarTendencia(arrow, direction.clase); }
+          marcarTendencia(card.querySelector('[data-macro-field="change"]'), direction.clase);
         }
       });
 
