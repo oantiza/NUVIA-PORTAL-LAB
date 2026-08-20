@@ -13,7 +13,7 @@ import {
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
-  caminoSuave,
+  caminoSuave, envolventeConcava, suavizaEsquinas,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -215,6 +215,47 @@ console.log('\n— El tramo eficiente de la frontera (Fase 7) —');
   comprueba('El punto dominado (más riesgo, menos rentabilidad) queda fuera',
     !tramo.some((p) => p.volatilidad === 0.14) && tramo.length === 4);
   comprueba('Sin puntos no revienta', tramoEficiente(null).length === 0);
+}
+
+console.log('\n— La envolvente cóncava de la frontera (el arco limpio del clásico) —');
+{
+  const dientes = [
+    { volatilidad: 0.04, rentabilidad: 0.05 },
+    { volatilidad: 0.05, rentabilidad: 0.075 }, /* diente: se sale del arco */
+    { volatilidad: 0.06, rentabilidad: 0.08 },
+    { volatilidad: 0.08, rentabilidad: 0.10 },
+    { volatilidad: 0.10, rentabilidad: 0.105 },
+  ];
+  const arco = envolventeConcava(dientes);
+  const pend = (a, b) => (b.rentabilidad - a.rentabilidad) / (b.volatilidad - a.volatilidad);
+  comprueba('La pendiente del arco siempre decrece: cóncavo como la frontera real',
+    arco.length >= 3 && arco.every((p, i) => i < 2 || pend(arco[i - 1], p) < pend(arco[i - 2], arco[i - 1])));
+  comprueba('Ningún punto muestreado queda por encima del arco',
+    dientes.every((p) => {
+      const i = arco.findIndex((q, k) => k < arco.length - 1
+        && arco[k].volatilidad <= p.volatilidad && p.volatilidad <= arco[k + 1].volatilidad);
+      if (i < 0) return true;
+      const [a, b] = [arco[i], arco[i + 1]];
+      const t = (p.volatilidad - a.volatilidad) / ((b.volatilidad - a.volatilidad) || 1);
+      return p.rentabilidad <= a.rentabilidad + t * (b.rentabilidad - a.rentabilidad) + 1e-9;
+    }));
+  comprueba('Los dos extremos del tramo se conservan',
+    arco[0].volatilidad === 0.04 && arco[arco.length - 1].volatilidad === 0.10);
+  comprueba('Sin puntos no revienta', envolventeConcava(null).length === 0);
+}
+
+console.log('\n— El redondeo de esquinas (Chaikin) —');
+{
+  const esquina = [{ x: 0, y: 100 }, { x: 50, y: 20 }, { x: 100, y: 10 }];
+  const redondeada = suavizaEsquinas(esquina, 3);
+  comprueba('Los extremos no se mueven',
+    redondeada[0].x === 0 && redondeada[0].y === 100
+    && redondeada[redondeada.length - 1].x === 100 && redondeada[redondeada.length - 1].y === 10);
+  comprueba('La esquina se puebla de puntos intermedios', redondeada.length > 10);
+  comprueba('El camino sigue avanzando siempre hacia la derecha',
+    redondeada.every((p, i) => i === 0 || p.x >= redondeada[i - 1].x));
+  comprueba('Con dos puntos no hay esquina que redondear',
+    suavizaEsquinas([{ x: 0, y: 0 }, { x: 1, y: 1 }], 3).length === 2);
 }
 
 console.log('\n— La curva suave (referencia: laboratorio clásico) —');

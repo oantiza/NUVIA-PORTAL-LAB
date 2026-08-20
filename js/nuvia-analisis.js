@@ -309,6 +309,61 @@ export function paresDestacados(ids, rho, cuantos = 3) {
 }
 
 /**
+ * Envolvente cóncava del tramo eficiente (Fase 7): la frontera muestreada
+ * por Montecarlo sale con dientes de sierra; la curva real es un arco liso.
+ * Se queda con los vértices superiores (pendiente siempre decreciente), de
+ * modo que ningún punto muestreado queda por encima y el dibujo es el arco
+ * limpio del laboratorio clásico. Pura y probada.
+ */
+export function envolventeConcava(puntos) {
+  const orden = [...(puntos || [])]
+    .filter((p) => Number.isFinite(p?.volatilidad) && Number.isFinite(p?.rentabilidad))
+    .sort((a, b) => a.volatilidad - b.volatilidad);
+  /* Dos muestras con la misma volatilidad: se queda la que más rentó. */
+  const limpio = [];
+  for (const p of orden) {
+    const ultimo = limpio[limpio.length - 1];
+    if (ultimo && Math.abs(ultimo.volatilidad - p.volatilidad) < 1e-12) {
+      if (p.rentabilidad > ultimo.rentabilidad) limpio[limpio.length - 1] = p;
+    } else {
+      limpio.push(p);
+    }
+  }
+  const pendiente = (a, b) => (b.rentabilidad - a.rentabilidad) / (b.volatilidad - a.volatilidad);
+  const casco = [];
+  for (const p of limpio) {
+    while (casco.length >= 2
+      && pendiente(casco[casco.length - 2], casco[casco.length - 1]) <= pendiente(casco[casco.length - 1], p)) {
+      casco.pop();
+    }
+    casco.push(p);
+  }
+  return casco;
+}
+
+/**
+ * Redondeo de esquinas (Chaikin): cada esquina de la polilínea se sustituye
+ * por dos puntos a un cuarto y tres cuartos del tramo, varias veces, con los
+ * extremos fijos. Una polilínea cóncava sigue cóncava y los codos pasan a
+ * ser arcos, que es como dibuja el laboratorio clásico. Pura y probada.
+ */
+export function suavizaEsquinas(puntos, iteraciones = 4) {
+  let pts = [...(puntos || [])].filter((p) => Number.isFinite(p?.x) && Number.isFinite(p?.y));
+  for (let k = 0; k < iteraciones; k += 1) {
+    if (pts.length < 3) break;
+    const salida = [pts[0]];
+    for (let i = 0; i < pts.length - 1; i += 1) {
+      const a = pts[i]; const b = pts[i + 1];
+      salida.push({ x: a.x * 0.75 + b.x * 0.25, y: a.y * 0.75 + b.y * 0.25 });
+      salida.push({ x: a.x * 0.25 + b.x * 0.75, y: a.y * 0.25 + b.y * 0.75 });
+    }
+    salida.push(pts[pts.length - 1]);
+    pts = salida;
+  }
+  return pts;
+}
+
+/**
  * Camino SVG suave por los puntos dados (Catmull-Rom a Bézier), como la
  * curva del laboratorio clásico: una línea que se lee de un vistazo, sin
  * quiebros. Recibe [{x, y}] en coordenadas de pantalla. Pura y probada.
@@ -575,9 +630,12 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
     x: 18, y: cyTitulo, transform: `rotate(-90 18 ${cyTitulo})`, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo',
   }, 'Rentabilidad anual ↑'));
 
-  /* La curva, suave y gruesa como en el clásico. */
+  /* La curva, suave y gruesa como en el clásico: el arco limpio de la
+     envolvente cóncava, con las esquinas redondeadas. */
+  const arco = suavizaEsquinas(
+    envolventeConcava(eficiente).map((p) => ({ x: x(p.volatilidad), y: y(p.rentabilidad) })));
   svg.append(svgEl('path', {
-    d: caminoSuave(eficiente.map((p) => ({ x: x(p.volatilidad), y: y(p.rentabilidad) }))),
+    d: arco.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),
     class: 'nv-frontera__linea', fill: 'none',
   }));
   if (metricas) {
