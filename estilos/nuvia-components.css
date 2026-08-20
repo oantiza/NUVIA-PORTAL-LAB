@@ -453,16 +453,20 @@
    lo que falta es más honesto que dejar un hueco mudo.
    ─────────────────────────────────────────────────────────────────────────── */
 
+/* El suelo de 12 px se aplicó en su día a las páginas, pero no a estos tres
+   componentes: la etiqueta y la nota de campo iban a 11 y 10,5 px, y la píldora
+   a 10. Como jubilacion.html tiene treinta campos, ahí se veía especialmente.
+   Ahora los tres leen --nv-label. */
 .nv-tag {
   display: inline-flex;
   width: fit-content;
   align-items: center;
   border: 1px solid var(--nv-line);
   border-radius: var(--nv-radius-pill);
-  font-size: 10px;
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-label);
   letter-spacing: .12em;
-  padding: 6px 12px;
+  padding: var(--nv-space-1) var(--nv-space-3);
   text-transform: uppercase;
 }
 
@@ -536,7 +540,13 @@
   padding-left: var(--nv-space-6);
 }
 
+/* En fila: cuando la nota lleva icono —el simulador de jubilación pone un «!»
+   delante— sin esto el signo caía solo en una línea, encima del texto, con
+   pinta de fallo de renderizado. */
 .nv-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nv-space-3);
   border-left: 3px solid var(--nv-green-600);
   background: var(--nv-green-100);
   border-radius: 0 var(--nv-radius-sm) var(--nv-radius-sm) 0;
@@ -544,6 +554,8 @@
   font-size: var(--nv-body-sm);
   padding: var(--nv-space-5) var(--nv-space-6);
 }
+
+.nv-note > p { margin: 0; }
 
 .nv-disclaimer {
   color: var(--nv-text-muted);
@@ -977,7 +989,7 @@
   display: block;
   margin-bottom: var(--nv-space-1);
   color: var(--nv-text-soft);
-  font-size: 11px;
+  font-size: var(--nv-label);
   letter-spacing: .09em;
   text-transform: uppercase;
 }
@@ -1017,9 +1029,9 @@
 }
 
 .nv-field__note {
-  margin: 5px 0 0;
+  margin: var(--nv-space-1) 0 0;
   color: var(--nv-text-muted);
-  font-size: 10.5px;
+  font-size: var(--nv-label);
   line-height: 1.5;
 }
 

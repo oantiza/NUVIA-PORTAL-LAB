@@ -474,21 +474,31 @@
           <article class="jub-panel">
             <p class="jub-label">Proyección del patrimonio</p>
             <h3 class="jub-panel__title">Cuánto podría durar tu dinero</h3>
+            <!-- Los rótulos de los ejes iban dentro del <svg> como <text>{{ … }}</text>.
+                 El runtime envuelve toda interpolación en un <span>, y un <span>
+                 de HTML dentro de un SVG no lo pinta el navegador: los cuatro
+                 rótulos interpolados llevaban ahí sin verse, y solo se leía el
+                 «0», que es texto fijo. Ahora son HTML colocado sobre el marco,
+                 con la misma geometría: el dibujo no se toca. -->
+            <div class="jub-chart-wrap">
+              <div class="jub-chart-wrap__plot">
+                <span class="jub-chart-wrap__y jub-chart-wrap__y--max">{{ chartMax }}</span>
+                <span class="jub-chart-wrap__y jub-chart-wrap__y--mid">{{ chartMid }}</span>
+                <span class="jub-chart-wrap__y jub-chart-wrap__y--zero">0</span>
+                <span class="jub-chart-wrap__x jub-chart-wrap__x--ini">{{ edadInicio }}</span>
+                <span class="jub-chart-wrap__x jub-chart-wrap__x--fin">{{ edadFin }}</span>
             <svg viewBox="0 0 640 210" class="jub-chart" role="img" aria-label="Evolución del patrimonio por escenario">
-              <line x1="46" y1="10" x2="46" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
-              <line x1="46" y1="180" x2="632" y2="180" stroke="#cbd5e1" stroke-width="1"></line>
-              <line x1="46" y1="95" x2="632" y2="95" stroke="#edf1f6" stroke-width="1"></line>
-              <line x1="46" y1="10" x2="632" y2="10" stroke="#edf1f6" stroke-width="1"></line>
-              <text x="40" y="14" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMax }}</text>
-              <text x="40" y="99" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMid }}</text>
-              <text x="40" y="184" text-anchor="end" font-size="10" fill="#6b7686">0</text>
-              <text x="46" y="200" font-size="10" fill="#6b7686">{{ edadInicio }}</text>
-              <text x="632" y="200" text-anchor="end" font-size="10" fill="#6b7686">{{ edadFin }}</text>
-              <polyline points="{{ lineaConservador }}" fill="none" stroke="#946E29" stroke-width="2" stroke-linecap="round"></polyline>
-              <polyline points="{{ lineaOptimista }}" fill="none" stroke="#3C9A69" stroke-width="2" stroke-linecap="round"></polyline>
-              <polyline points="{{ lineaEstres }}" fill="none" stroke="#C2453A" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round"></polyline>
-              <polyline points="{{ lineaBase }}" fill="none" stroke="#7C9A44" stroke-width="2.6" stroke-linecap="round"></polyline>
+              <line x1="46" y1="10" x2="46" y2="180" stroke="currentColor" stroke-width="1" class="jub-chart__axis"></line>
+              <line x1="46" y1="180" x2="632" y2="180" stroke="currentColor" stroke-width="1" class="jub-chart__axis"></line>
+              <line x1="46" y1="95" x2="632" y2="95" stroke="currentColor" stroke-width="1" class="jub-chart__grid"></line>
+              <line x1="46" y1="10" x2="632" y2="10" stroke="currentColor" stroke-width="1" class="jub-chart__grid"></line>
+              <polyline points="{{ lineaConservador }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--prudente"></polyline>
+              <polyline points="{{ lineaOptimista }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--favorable"></polyline>
+              <polyline points="{{ lineaEstres }}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round" class="jub-chart__line jub-chart__line--estres"></polyline>
+              <polyline points="{{ lineaBase }}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" class="jub-chart__line jub-chart__line--base"></polyline>
             </svg>
+              </div>
+            </div>
             <div class="jub-legend">
               <span class="jub-chip"><span class="jub-swatch jub-swatch--base"></span>Base</span>
               <span class="jub-chip"><span class="jub-swatch jub-swatch--prudente"></span>Conservador</span>
@@ -740,8 +750,20 @@ class Component extends DCLogic {
           hipotesis: sc.stress ? 'caída inicial −12 % / −5 %' : (sc.rate * 100).toFixed(1).replace('.', ',') + ' % anual',
           neta: fmt(sc.totalNetMonthly) + ' €',
           saldoFinal: fmt(sc.projection[sc.projection.length - 1] || 0) + ' €',
-          estado: sc.depletionYear ? 'Se agota en el año ' + sc.depletionYear + ' (edad ' + (plan.state.age + sc.depletionYear) + ')' : 'Cubre todo el horizonte',
-          estadoClase: sc.depletionYear ? 'is-alert' : 'is-ok',
+          /* Tres lecturas, no dos. La fórmula de renta está pensada para
+             consumir el patrimonio justo al final del plan, así que con los
+             valores por defecto los tres escenarios normales llegaban al año
+             30 —la edad hasta la que el usuario había pedido planificar— y se
+             pintaban en rojo como si fuera un aviso. Ahora el rojo se reserva
+             para cuando el dinero se acaba ANTES del horizonte. */
+          estado: !sc.depletionYear
+            ? 'Cubre todo el horizonte'
+            : sc.depletionYear >= sc.horizon.years
+              ? 'Llega hasta el final del plan (edad ' + (plan.state.age + sc.depletionYear) + ')'
+              : 'Se agota en el año ' + sc.depletionYear + ' (edad ' + (plan.state.age + sc.depletionYear) + ')',
+          estadoClase: !sc.depletionYear
+            ? 'is-ok'
+            : sc.depletionYear >= sc.horizon.years ? 'is-neutral' : 'is-alert',
         })),
         chartMax: fmt(maxY) + ' €',
         chartMid: fmt(maxY / 2) + ' €',

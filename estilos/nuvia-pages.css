@@ -3582,6 +3582,8 @@
   padding: var(--nv-space-5) 0 var(--nv-space-1);
 }
 
+/* Nació en Vivienda, pero el simulador de jubilación la usa para todos sus
+   selectores. Es un control compartido de hecho, así que sigue la escala. */
 .viv-pill {
   border: 1px solid var(--nv-line);
   border-radius: var(--nv-radius-pill);
@@ -3589,9 +3591,9 @@
   color: var(--nv-text-soft);
   cursor: pointer;
   font-family: var(--nv-font-sans);
-  font-size: 12.5px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-title);
-  padding: var(--nv-space-2) 17px;
+  padding: var(--nv-space-2) var(--nv-space-4);
   transition: background .2s ease, color .2s ease, border-color .2s ease;
   white-space: nowrap;
 }
@@ -4104,27 +4106,27 @@
 .jub-nowrap { white-space: nowrap; }
 .jub-stack { display: flex; flex-direction: column; gap: var(--nv-space-1); }
 .jub-strong { color: var(--nv-text); font-weight: var(--nv-weight-title); }
-.jub-btn-small { flex-shrink: 0; font-size: 12.5px; }
+.jub-btn-small { flex-shrink: 0; font-size: var(--nv-body-sm); }
 
 /* ── Cabecera y guía de uso ──────────────────────────────────────────────── */
 
 .jub-hero .nv-hero__inner { min-height: 0; padding-block: var(--nv-space-16) var(--nv-space-8); }
 .jub-hero__grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: var(--nv-space-12); align-items: center; }
-.jub-hero h1 { font-size: 40px; margin: 0 0 var(--nv-space-3); }
+.jub-hero h1 { font-size: var(--nv-display-md); margin: 0 0 var(--nv-space-3); }
 
 .jub-howto {
   border-radius: var(--nv-radius-md);
-  background: rgba(255, 255, 255, .08);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .14);
+  background: var(--nv-surface-on-dark);
+  box-shadow: 0 0 0 1px var(--nv-line-on-dark);
   backdrop-filter: blur(8px);
   padding: var(--nv-space-6);
 }
 
 .jub-howto__label { color: var(--nv-text-on-dark-soft); font-size: var(--nv-label); font-weight: var(--nv-weight-title); letter-spacing: .18em; text-transform: uppercase; }
 .jub-howto__list { display: flex; flex-direction: column; gap: var(--nv-space-3); margin-top: var(--nv-space-4); }
-.jub-howto__step { display: flex; align-items: flex-start; gap: 13px; }
+.jub-howto__step { display: flex; align-items: flex-start; gap: var(--nv-space-3); }
 .jub-howto__num { color: var(--nv-green-300); font-size: var(--nv-space-4); font-variant-numeric: tabular-nums; line-height: 1.4; }
-.jub-howto__text { margin: 0; color: var(--nv-text-on-dark-soft); font-size: 13px; line-height: 1.55; }
+.jub-howto__text { margin: 0; color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); line-height: 1.55; }
 .jub-howto__title { display: block; color: var(--nv-white); font-weight: var(--nv-weight-title); }
 
 /* ── Aviso de ámbito territorial ─────────────────────────────────────────── */
@@ -4153,7 +4155,7 @@
   font-weight: var(--nv-weight-title);
 }
 
-.jub-scope__icon { color: var(--nv-text-link); font-size: 16px; line-height: 1.3; }
+.jub-scope__icon { color: var(--nv-text-link); font-size: var(--nv-body); line-height: 1.3; }
 
 /* ── Tarjetas de apartado ────────────────────────────────────────────────── */
 
@@ -4161,52 +4163,52 @@
 .jub-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--nv-space-4); border-bottom: 1px solid var(--nv-line); padding: var(--nv-space-5) var(--nv-space-6); }
 .jub-card__headrow { display: flex; align-items: flex-start; gap: var(--nv-space-4); }
 .jub-card__body { padding: var(--nv-space-5) var(--nv-space-6) var(--nv-space-6); }
-.jub-card__title { margin: 0 0 5px; font-size: 21px; line-height: 1.2; }
+.jub-card__title { margin: 0 0 var(--nv-space-1); font-size: var(--nv-title-sm); line-height: 1.2; }
 .jub-step-num { color: var(--nv-text-link); font-size: 22px; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.jub-subtitle { margin: 0 0 var(--nv-space-3); color: var(--nv-text); font-size: 15.5px; font-weight: var(--nv-weight-title); }
+.jub-subtitle { margin: 0 0 var(--nv-space-3); color: var(--nv-text); font-size: var(--nv-body); font-weight: var(--nv-weight-title); }
 .jub-block { border-top: 1px solid var(--nv-line); margin-top: var(--nv-space-5); padding-top: var(--nv-space-5); }
 .jub-panel { border-radius: var(--nv-radius-md); background: var(--nv-surface); box-shadow: var(--nv-shadow-sm); padding: var(--nv-space-5) var(--nv-space-6); }
 .jub-subpanel { border-radius: var(--nv-radius-md); background: color-mix(in srgb, var(--nv-bg) 60%, var(--nv-surface)); padding: var(--nv-space-5); }
 .jub-aside-col { border-left: 1px solid var(--nv-line); padding-left: var(--nv-space-6); }
-.jub-panel__title { margin: 0 0 var(--nv-space-5); font-size: 19px; font-weight: var(--nv-weight-title); }
+.jub-panel__title { margin: 0 0 var(--nv-space-5); font-size: var(--nv-body-lg); font-weight: var(--nv-weight-title); }
 .jub-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--nv-space-4); flex-wrap: wrap; margin-bottom: var(--nv-space-4); }
 
 /* ── Texto ───────────────────────────────────────────────────────────────── */
 
 .jub-label { color: var(--nv-text-muted); font-size: var(--nv-label); font-weight: var(--nv-weight-title); letter-spacing: .16em; text-transform: uppercase; }
 .jub-muted { color: var(--nv-text-muted); font-size: 12px; line-height: 1.45; }
-.jub-note { color: var(--nv-text-soft); font-size: 12.5px; line-height: 1.5; }
+.jub-note { color: var(--nv-text-soft); font-size: var(--nv-body-sm); line-height: 1.5; }
 .jub-footnote { color: var(--nv-text-muted); font-size: var(--nv-body-sm); line-height: 1.55; }
 .jub-num { color: var(--nv-text); font-variant-numeric: tabular-nums; font-weight: var(--nv-weight-title); white-space: nowrap; }
 .jub-num.is-negative { color: var(--nv-negative); }
-.jub-num.is-positive { color: var(--nv-positive); font-size: 15px; }
+.jub-num.is-positive { color: var(--nv-positive); font-size: var(--nv-body); }
 .jub-row__name { display: block; color: var(--nv-text); font-size: var(--nv-space-4); font-weight: var(--nv-weight-title); }
 
-.jub-line { display: flex; justify-content: space-between; gap: var(--nv-space-3); border-bottom: 1px solid var(--nv-line); padding: var(--nv-space-2) 0; color: var(--nv-text-soft); font-size: 12.5px; margin: 0; }
+.jub-line { display: flex; justify-content: space-between; gap: var(--nv-space-3); border-bottom: 1px solid var(--nv-line); padding: var(--nv-space-2) 0; color: var(--nv-text-soft); font-size: var(--nv-body-sm); margin: 0; }
 .jub-line--total { border-bottom: 0; border-top: 1px solid var(--nv-line); padding-top: var(--nv-space-3); }
 
-.jub-chip { display: inline-flex; align-items: center; gap: 7px; color: var(--nv-text-soft); font-size: 12px; }
-.jub-tag-dark { display: inline-flex; align-items: center; border: 1px solid rgba(255, 255, 255, .22); border-radius: var(--nv-radius-pill); color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); padding: 5px 13px; }
+.jub-chip { display: inline-flex; align-items: center; gap: var(--nv-space-2); color: var(--nv-text-soft); font-size: var(--nv-label); }
+.jub-tag-dark { display: inline-flex; align-items: center; border: 1px solid var(--nv-line-on-dark-strong); border-radius: var(--nv-radius-pill); color: var(--nv-text-on-dark-soft); font-size: var(--nv-body-sm); padding: var(--nv-space-1) var(--nv-space-3); }
 
 /* ── Casillas ────────────────────────────────────────────────────────────── */
 
-.jub-check { display: flex; align-items: flex-start; gap: 11px; border-radius: var(--nv-radius-md); background: color-mix(in srgb, var(--nv-ink) 4%, transparent); cursor: pointer; padding: var(--nv-space-3) var(--nv-space-4); }
-.jub-check__input { flex-shrink: 0; width: 15px; height: 15px; margin-top: 3px; accent-color: var(--nv-green-600); cursor: pointer; }
+.jub-check { display: flex; align-items: flex-start; gap: var(--nv-space-3); border-radius: var(--nv-radius-md); background: color-mix(in srgb, var(--nv-ink) 4%, transparent); cursor: pointer; padding: var(--nv-space-3) var(--nv-space-4); }
+.jub-check__input { flex-shrink: 0; width: 16px; height: 16px; margin-top: var(--nv-space-1); accent-color: var(--nv-green-600); cursor: pointer; }
 .jub-check strong { display: block; color: var(--nv-text); font-weight: var(--nv-weight-title); }
-.jub-check span { color: var(--nv-text-soft); font-size: 12.5px; line-height: 1.5; }
+.jub-check span { color: var(--nv-text-soft); font-size: var(--nv-body-sm); line-height: 1.5; }
 
 /* ── Deslizador ──────────────────────────────────────────────────────────── */
 
 .jub-slider { display: flex; align-items: center; gap: var(--nv-space-4); }
 .jub-slider__input { flex: 1; accent-color: var(--nv-green-600); cursor: pointer; }
-.jub-slider__value { min-width: 52px; color: var(--nv-text); font-size: 17px; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.jub-slider__value { min-width: 52px; color: var(--nv-text); font-size: var(--nv-body-lg); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 
 /* ── Tabla de patrimonio ─────────────────────────────────────────────────── */
 
 .jub-assets__row {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) 170px 170px minmax(0, .85fr);
-  gap: 0 22px;
+  gap: 0 var(--nv-space-6);
   align-items: center;
   border-bottom: 1px solid var(--nv-line);
   padding: var(--nv-space-3) 0;
@@ -4215,28 +4217,79 @@
 /* ── Alertas y notas ─────────────────────────────────────────────────────── */
 
 .jub-alert { border-left: 2px solid var(--nv-negative); border-radius: 0 var(--nv-radius-md) var(--nv-radius-md) 0; background: color-mix(in srgb, var(--nv-negative) 8%, transparent); padding: var(--nv-space-4) var(--nv-space-5); }
-.jub-alert__title { margin: 0 0 var(--nv-space-2); color: var(--nv-negative); font-size: 13px; font-weight: var(--nv-weight-title); }
+.jub-alert__title { margin: 0 0 var(--nv-space-2); color: var(--nv-negative); font-size: var(--nv-body-sm); font-weight: var(--nv-weight-title); }
 .jub-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-space-4); flex-wrap: wrap; margin-top: var(--nv-space-6); }
 
 /* ── Resultados y escenarios ─────────────────────────────────────────────── */
 
-.jub-results__title { margin: 0 0 var(--nv-space-6); font-size: 32px; letter-spacing: -.012em; }
+.jub-results__title { margin: 0 0 var(--nv-space-6); font-size: var(--nv-title-md); letter-spacing: -.012em; }
 .jub-results__hero { border-radius: var(--nv-radius-md); background: radial-gradient(900px 420px at 85% -40%, color-mix(in srgb, var(--nv-paper-light) 70%, transparent), transparent 64%), var(--nv-surface); box-shadow: var(--nv-shadow-sm); padding: var(--nv-space-8); }
 .jub-figure__value { margin: 0 0 var(--nv-space-1); font-size: 28px; font-variant-numeric: tabular-nums; font-weight: var(--nv-weight-title); line-height: 1; white-space: nowrap; }
-.jub-figure__value--xl { font-size: 48px; }
+.jub-figure__value--xl { font-size: var(--nv-display-md); }
 
 .jub-scenarios { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--nv-space-5); margin-bottom: var(--nv-space-5); }
 .jub-scenario__head { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-space-2); margin-bottom: var(--nv-space-3); }
 .jub-scenario__name { margin: 0; font-size: 16px; font-weight: var(--nv-weight-title); }
 .jub-scenario__foot { display: flex; flex-direction: column; gap: var(--nv-space-1); border-top: 1px solid var(--nv-line); padding-top: var(--nv-space-3); }
-.jub-scenario__state { margin: 2px 0 0; font-size: 12.5px; font-weight: var(--nv-weight-title); }
+/* 2 px es alineación óptica con la cifra de al lado, no ritmo vertical. */
+.jub-scenario__state { margin: 2px 0 0; font-size: var(--nv-body-sm); font-weight: var(--nv-weight-title); }
 .jub-scenario__state.is-ok { color: var(--nv-positive); }
 .jub-scenario__state.is-warn { color: var(--nv-warning); }
 .jub-scenario__state.is-alert { color: var(--nv-negative); }
+/* Llegar justo al final del plan es el resultado previsto, no un aviso. */
+.jub-scenario__state.is-neutral { color: var(--nv-text-muted); }
 
 .jub-chart { display: block; width: 100%; }
 .jub-legend { display: flex; flex-wrap: wrap; gap: var(--nv-space-5); margin-top: var(--nv-space-3); }
-.jub-swatch { width: 16px; height: 3px; border-radius: 2px; }
+/* ── El gráfico de proyección ─────────────────────────────────────────────
+   Los ejes, la rejilla, los rótulos y las cuatro series venían con el color
+   escrito a mano en cada atributo del SVG: doce hexadecimales en el HTML, y
+   tres de ellos ni siquiera de la paleta. Peor aún, la leyenda de aquí abajo
+   sí usaba tokens, así que la clave del gráfico enseñaba un color y la línea
+   que nombraba dibujaba otro en tres de las cuatro series.
+
+   Ahora todo hereda de currentColor y el color lo pone esta hoja, con los
+   mismos tokens que la leyenda. De paso la línea Base pasa de 3,20:1 a 7,29:1
+   de contraste, y era la que el lector debe seguir. */
+
+.jub-chart__axis { color: var(--nv-line-strong); }
+.jub-chart__grid { color: var(--nv-line); }
+/* Los rótulos, ya en HTML, colocados sobre el marco del SVG. Los porcentajes
+   son las coordenadas del propio viewBox (640×210): la rejilla está en y=10,
+   y=95 e y=180, y el área de dibujo va de x=46 a x=632. Van encima de su línea
+   y alineados a la izquierda del área: así no dependen de lo largo que sea el
+   importe, que era lo que antes los dejaba fuera del marco. */
+.jub-chart-wrap { padding-top: var(--nv-space-4); }
+.jub-chart-wrap__plot { position: relative; }
+
+.jub-chart-wrap__y,
+.jub-chart-wrap__x {
+  position: absolute;
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Encima de su línea, no encima DE la línea: si se centra en ella, la
+   rejilla tacha el importe. */
+.jub-chart-wrap__y { left: 7.19%; padding-bottom: var(--nv-space-1); transform: translateY(-100%); }
+.jub-chart-wrap__y--max { top: 4.76%; }
+.jub-chart-wrap__y--mid { top: 45.24%; }
+.jub-chart-wrap__y--zero { top: 85.71%; }
+
+.jub-chart-wrap__x { bottom: 0; }
+.jub-chart-wrap__x--ini { left: 7.19%; }
+.jub-chart-wrap__x--fin { right: 1.25%; }
+
+.jub-chart__line--base { color: var(--nv-green-500); }
+.jub-chart__line--prudente { color: var(--nv-warning); }
+.jub-chart__line--favorable { color: var(--nv-positive); }
+.jub-chart__line--estres { color: var(--nv-negative); }
+
+.jub-swatch { width: 16px; height: 3px; border-radius: var(--nv-radius-pill); }
 .jub-swatch--base { background: var(--nv-green-500); }
 .jub-swatch--prudente { background: var(--nv-warning); }
 .jub-swatch--favorable { background: var(--nv-positive); }
@@ -4250,7 +4303,6 @@
 
 @media (max-width: 1120px) {
   .jub-hero__grid { grid-template-columns: minmax(0, 1fr); gap: var(--nv-space-8); }
-  .jub-hero h1 { font-size: 34px; }
   .jub-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .jub-assets__row { grid-template-columns: minmax(0, 1.1fr) 130px 130px; }
   .jub-aside-col { border-left: 0; border-top: 1px solid var(--nv-line); padding: var(--nv-space-4) 0 0; }
@@ -4263,7 +4315,6 @@
   .jub-assets__row { grid-template-columns: minmax(0, 1fr); }
   .jub-scope { grid-template-columns: minmax(0, 1fr); }
   .jub-card__head { flex-direction: column; }
-  .jub-figure__value--xl { font-size: 36px; }
 }
 
 
