@@ -43,11 +43,35 @@ const raiz = resolve(process.argv[2] || '.');
 const ANCHOS = (process.argv[3] || '1440').split(',').map(Number);
 const ESCALA = [12, 14, 16, 18, 22, 28, 36];
 
+/* Contenido que tiene que estar presente después de arrancar. La auditoría
+   medía cómo se ve la página, no si tenía algo dentro: cuando un cambio en el
+   arranque dejó la tabla de cotizaciones con una fila vacía, todo lo demás
+   siguió dando cero y nadie se enteró. Estas cuentas son el mínimo. */
+const CONTENIDO = {
+  'index.html':            [['.markets-macro__item', 5], ['.home-topic', 3]],
+  'mercados.html':         [['.markets-macro__item', 5], ['.markets-secondary-card', 3]],
+  'mercados.html?vista=cotizaciones': [['.markets-lab__quote', 16], ['.markets-lab__chip', 5]],
+  'curso.html':            [['.curso-resultado', 4], ['.curso-campo', 7]],
+  'jubilacion.html':       [['.nv-field__box', 19]],
+  'vivienda.html':         [['.nv-field__box', 12], ['.viv-pill--dark', 2]],
+  'lecturas.html':         [['.lecturas-card', 4]],
+  'fiscalidad.html':       [['.fiscal-dato', 9]],
+  'cartera.html':          [['.nuvia-analysis-tabs a', 2]],
+  'academia.html':         [['.ac-strong', 1], ['.viv-pill', 2], ['.ac-x10', 1]],
+  'temas.html':            [['.tm-card__title', 3]],
+  'guia-calendario.html':  [['.gt-title', 1]],
+  'guia-ahorro.html':      [['.gt-title', 1]],
+  'guia-sucesiones.html':  [['.gt-title', 1]],
+  'guia-planificacion.html': [['.gp-progress', 1]],
+  'guia-fiscal.html':      [['.gu-hero__title', 1]],
+};
+
 const PAGINAS = [
   'index.html', 'mercados.html', 'cartera.html', 'academia.html', 'curso.html',
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
   'temas.html', 'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
   'guia-planificacion.html', 'guia-fiscal.html', 'sistema-visual.html',
+  'mercados.html?vista=cotizaciones',
 ];
 
 let chromium;
@@ -196,10 +220,17 @@ for (const ancho of ANCHOS) {
       const grande = it.fs >= 24 || (it.fs >= 18.66 && it.peso >= 700);
       if (rr < (grande ? 3 : 4.5)) fallos.push(`${rr.toFixed(2)}:1 ${it.fs}px ${it.color} "${it.t}" [${it.cls}]`);
     }
+    /* ¿está el contenido? */
+    const faltan = [];
+    for (const [sel, minimo] of (CONTENIDO[pag] || [])) {
+      const n = await p.$$eval(sel, (e) => e.length).catch(() => 0);
+      if (n < minimo) faltan.push(`${sel}: ${n} de ${minimo}`);
+    }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(26)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  fugas:${fugas.length}`);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + faltan.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}`);
+    for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of fallos) problemas.push(`${pag} @${ancho} · contraste ${x}`);
     for (const x of r.pequenos) problemas.push(`${pag} @${ancho} · bajo el suelo ${x}`);
     for (const [k, v] of escala) problemas.push(`${pag} @${ancho} · fuera de escala ×${v} ${k}`);

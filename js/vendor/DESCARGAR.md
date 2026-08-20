@@ -1,14 +1,32 @@
 # Dependencias autoalojadas
 
-`support.js` redirige React y ReactDOM a esta carpeta mediante
-`window.__resources`, que asigna `js/recursos.js`. Ese fichero va antes que
-`support.js` en el `<head>` de las quince páginas con componente, y los dos
-llevan `defer`, que conserva el orden del documento.
+React y ReactDOM se cargan con dos `<script defer>` que van **antes** que
+`support.js` en el `<head>` de las dieciséis páginas. `loadReactUmd()` empieza
+comprobando si ya están en `window` y, si lo están, devuelve sin tocar el CDN.
 
-Si los ficheros no están, el navegador cae de vuelta al CDN, así que la web no
-se rompe — pero se pierde la ventaja, que es no depender de unpkg para
-arrancar. Comprobado bloqueando unpkg entero: las quince páginas pintan
-exactamente los mismos píxeles.
+**No usar `window.__resources` para esto.** El mecanismo existe y funciona para
+redirigir la carga, pero `boot()` usa la misma variable para decidir otra cosa:
+
+```js
+if (!window.__resources) {
+  fetch(location.href).then(...)          // vuelve a leer el HTML servido
+    .then((t) => runtime.updateHtml(rootName, parseDcText(t).template));
+}
+```
+
+Ese segundo `fetch` es imprescindible. El analizador de HTML del navegador
+**expulsa fuera de la tabla** cualquier elemento desconocido que encuentre
+dentro de `<table>`, así que el `<sc-for>` que genera las filas de la tabla de
+cotizaciones de Mercados desaparece del DOM vivo. Solo se recupera releyendo el
+HTML en crudo. Asignar `__resources` desactiva ese rescate y la tabla se queda
+con una fila vacía — pasó, se publicó, y se tardó en ver porque la página no da
+ningún error.
+
+Si algún día hace falta `__resources` para otra cosa, hay que resolver antes el
+rescate de la plantilla.
+
+Los ficheros deben ser byte a byte los del CDN: su `sha384` tiene que coincidir
+con `REACT_SRI` y `REACT_DOM_SRI` de `support.js`.
 
 Para descargarlos (una sola vez, y al actualizar versión):
 
