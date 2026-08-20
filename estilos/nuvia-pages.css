@@ -4507,6 +4507,56 @@
 .nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
 .nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
 
+/* Abanico de la proyección Montecarlo (paso 40) */
+.nv-abanico {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-block: var(--nv-space-2);
+}
+.nv-abanico__banda { fill: var(--nv-green-700); opacity: 0.14; }
+.nv-abanico__mediana { stroke: var(--nv-green-700); stroke-width: 2.5; }
+
+/* Mapa riesgo/rentabilidad (paso 41) */
+.nv-mriesgo__activo { fill: var(--nv-bronze-700); stroke: var(--nv-white); stroke-width: 1.5; }
+
+/* Distribución geográfica con mapa (paso 42) */
+.nv-mapa { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }
+.nv-mapa__svg {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin-block: var(--nv-space-1);
+}
+.nv-mapa__zona--n0 { fill: #e4e8e2; }
+.nv-mapa__zona--n1 { fill: #cdd8c2; }
+.nv-mapa__zona--n2 { fill: #a4b98a; }
+.nv-mapa__zona--n3 { fill: #75904c; }
+.nv-mapa__zona--n4 { fill: var(--nv-green-700); }
+.nv-mapa__leyenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-1) var(--nv-space-3);
+  font-size: var(--nv-body-sm);
+}
+.nv-mapa__leyenda-item { display: inline-flex; align-items: center; gap: 6px; }
+.nv-mapa__punto {
+  inline-size: 12px;
+  block-size: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.nv-mapa__punto.nv-mapa__zona--n0 { background: #e4e8e2; }
+.nv-mapa__punto.nv-mapa__zona--n1 { background: #cdd8c2; }
+.nv-mapa__punto.nv-mapa__zona--n2 { background: #a4b98a; }
+.nv-mapa__punto.nv-mapa__zona--n3 { background: #75904c; }
+.nv-mapa__punto.nv-mapa__zona--n4 { background: var(--nv-green-700); }
+
 /* Nota de qué añade el suscriptor, al pie del análisis del registrado */
 .nv-analisis__suscriptor { font-size: var(--nv-label); color: var(--nv-text-muted); }
 

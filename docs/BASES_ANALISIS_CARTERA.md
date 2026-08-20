@@ -380,6 +380,16 @@ rentabilidad.
 
 ## 7. Estado técnico
 
+**También hecho — la Fase 6 completa (pasos 40–42, 20-08-2026):** el
+abanico de la proyección Montecarlo (banda p5–p95 + mediana, tabla debajo;
+nivel completo), el mapa riesgo/rentabilidad (un punto por activo con su
+historial real y la cartera marcada; nivel registrado) y la distribución
+geográfica con mapa (`nuvia-mapa.js` + siluetas del laboratorio clásico
+corregidas: el trazado «africa» del núcleo mezclaba África con EE. UU.,
+Alaska y Groenlandia; ahora cada continente lleva su color, con la cifra
+al lado y la región desconocida declarada). Todo con funciones puras en
+batería, §5 a cero y sin llamadas nuevas a la red.
+
 **También hecho — evolución de la combinación con sus caídas (paso 39,
 20-08-2026):** primer gráfico de la Fase 6 (recuperar en el laboratorio
 nuevo los del clásico, encargo de Óscar). En el constructor y para todos

@@ -1070,6 +1070,66 @@ ya alimenta las métricas.
 > administrador enseñó a la vez el análisis completo y el tope de 20
 > posiciones: el acceso del dueño funciona también en producción.
 
+### Paso 40 · La proyección Montecarlo como abanico
+
+**Hacer.** En el análisis del nivel completo, la simulación deja de ser
+solo tabla: banda del percentil 5 al 95 con la mediana dibujada, año 0
+anclado en la base. La tabla honesta sigue debajo.
+
+> **Hecho y verificado (20-08-2026).** `puntosAbanico(proyeccion)` (pura,
+> en la batería: año 0 en la base, una senda por percentil, p5 ≤ mediana
+> ≤ p95 en todos los años) y el abanico SVG dentro de `grupoProyeccion`:
+> banda `--nv-green-700` al 14 %, mediana en trazo, referencia punteada
+> en la base, etiquetas «Percentil 95/Mediana/Percentil 5» con su cifra
+> final, ejes en años y `aria-label` con los tres finales. La tabla y el
+> texto «no es una previsión» siguen debajo, intactos.
+
+### Paso 41 · Mapa riesgo/rentabilidad
+
+**Hacer.** Cada activo del cálculo como punto (volatilidad, rentabilidad
+anualizada del historial real) y la cartera marcada. Nivel registrado.
+
+> **Hecho y verificado (20-08-2026).** `puntosMapaRiesgo(series, pesos)`
+> (pura, en la batería: métricas por activo con `metricasDesdeSerie`, el
+> activo sin historial queda declarado y fuera, el activo sin peso no
+> entra) y `grupoMapaRiesgo`: dispersión SVG con etiqueta por punto (con
+> recorte y ancla para no salirse), la cartera con el punto marcado de la
+> frontera y el rótulo «Tu combinación», ejes con sus rangos y la nota
+> «Describe el historial, no el futuro». Se pinta tras la frontera para
+> el registrado y el suscriptor.
+
+### Paso 42 · Distribución geográfica con mapa
+
+**Hacer.** El mapa de continentes del laboratorio clásico, con los datos
+reales de `concentracionGeografica` y la cifra siempre al lado del color.
+Nivel registrado.
+
+> **Hecho y verificado (20-08-2026).** `js/nuvia-mapa.js` +
+> `js/nuvia-mapa-siluetas.js`: las siluetas del clásico recuperadas del
+> bundle del núcleo, **con una corrección de datos**: el trazado que allí
+> se llamaba «africa» mezclaba África con EE. UU., Alaska y Groenlandia
+> (el clásico coloreaba EE. UU. con el tono de Europa); los subtrazados
+> occidentales o árticos se reasignaron a América y ahora cada continente
+> lleva su color. `REGIONES_CONTINENTE` traduce las regiones de la
+> concentración a continentes, `exposicionPorContinente` agrega (la
+> región desconocida se declara «fuera del mapa», nunca se pierde en
+> silencio) y `tramoDeColor` da la escala de 5 tramos verdes del sistema.
+> Leyenda con la cifra de cada continente al lado del color y nota que
+> describe sin prescribir («describe dónde está hoy ese dinero, nada
+> más»); `check-lenguaje` vigila el módulo y su batería propia
+> (`nuvia-mapa.test.mjs`) cubre agregación, escala, siluetas y §5. El
+> mapa va justo encima de la tabla de regiones, que sigue siendo la
+> cifra fina.
+>
+> **Verificado en navegador (pasos 40–42 juntos, 17 comprobaciones):**
+> con sesión del nivel completo y dos fondos con desglose regional, el
+> abanico con su banda cerrada y sus once puntos de mediana; el mapa
+> riesgo/rentabilidad con un punto por activo y la cartera marcada; el
+> mapa de continentes con sus cinco siluetas y la leyenda con cifras
+> (Europa > América > Asia con el desglose de la prueba); criba §5 a
+> cero sobre todo el bloque; sin desbordes; suelo de 12 px; sin errores
+> de consola.
+
 ---
 
 # Transversal

@@ -11,7 +11,7 @@
 import {
   etiquetaClave, posicionesParaAnalisis, idsDeFondos,
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
-  activosParaFrontera, filasProyeccion,
+  activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -163,6 +163,39 @@ comprueba('Ningún texto aconseja (sin mejor/recomendado/óptimo/conviene/deber�
   ![NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR, TEXTO_FRONTERA,
     TEXTO_PROYECCION, TEXTO_CORRELACIONES, textoCalidad({ calidad: 'estimated' })]
     .some((t) => /mejor|recomendad|óptim|conviene|deberías|ideal para/i.test(t || '')));
+
+console.log('\n— El abanico de la proyección (paso 40) —');
+{
+  const proyeccion = proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: 0.12 });
+  const ab = puntosAbanico(proyeccion);
+  comprueba('El abanico ancla el año 0 en la base y trae una senda por percentil',
+    ab && ab.anos[0] === 0 && ab.p5[0] === 100 && ab.p50[0] === 100 && ab.p95[0] === 100
+    && ab.anos.length === proyeccion.anos.length + 1
+    && ab.p5.length === ab.anos.length && ab.p95.length === ab.anos.length);
+  comprueba('En cada año el percentil 5 queda por debajo de la mediana y esta del 95',
+    ab.anos.every((_, i) => ab.p5[i] <= ab.p50[i] && ab.p50[i] <= ab.p95[i]));
+  comprueba('Sin proyección no hay abanico', puntosAbanico(null) === null);
+}
+
+console.log('\n— El mapa riesgo/rentabilidad (paso 41) —');
+{
+  const sube = Array.from({ length: 60 }, (_, i) => 1 + i * 0.002);
+  const plano = Array.from({ length: 60 }, () => 1);
+  const series = [
+    { asset_id: 'A', values: sube },
+    { asset_id: 'B', values: plano },
+    { asset_id: 'C', values: [1] },
+    { asset_id: 'FUERA', values: sube },
+  ];
+  const { puntos, sinMetrica } = puntosMapaRiesgo(series, { A: 0.5, B: 0.3, C: 0.2 });
+  comprueba('Cada activo del cálculo sale con su volatilidad y su rentabilidad',
+    puntos.length === 2 && puntos.every((p) => Number.isFinite(p.volatilidad) && Number.isFinite(p.rentabilidad)));
+  comprueba('El activo sin historial queda declarado, no dibujado a ciegas',
+    sinMetrica.length === 1 && sinMetrica[0] === 'C');
+  comprueba('El activo fuera de los pesos no entra en el mapa',
+    !puntos.some((p) => p.id === 'FUERA'));
+  comprueba('Sin series no revienta', puntosMapaRiesgo(null, {}).puntos.length === 0);
+}
 
 if (fallos) {
   console.error(`\n${fallos} comprobación(es) en rojo.`);

@@ -23,6 +23,7 @@ import {
   metricasDesdeSerie, proyeccionMonteCarlo, pct, num,
 } from './nuvia-cartera.js';
 import { concentracionSectorial, concentracionGeografica } from './nuvia-concentracion.js';
+import { grupoMapa } from './nuvia-mapa.js';
 import { matrizSolapamiento } from './nuvia-solapamiento.js';
 
 export const NOTA_ANALISIS_CERRADO = 'Con la sesión iniciada, esta misma '
@@ -194,10 +195,54 @@ export function filasProyeccion(proyeccion, senalados = [1, 3, 5, 10]) {
   return proyeccion.anos.filter((fila) => senalados.includes(fila.ano));
 }
 
+/**
+ * Puntos del abanico de la proyección (paso 40): las tres sendas de
+ * percentiles año a año, con el año 0 anclado en la base. Pura y probada;
+ * null sin proyección.
+ */
+export function puntosAbanico(proyeccion) {
+  if (!proyeccion?.anos?.length) return null;
+  const base = proyeccion.base ?? 100;
+  return {
+    anos: [0, ...proyeccion.anos.map((f) => f.ano)],
+    p5: [base, ...proyeccion.anos.map((f) => f.p5)],
+    p50: [base, ...proyeccion.anos.map((f) => f.p50)],
+    p95: [base, ...proyeccion.anos.map((f) => f.p95)],
+  };
+}
+
+/**
+ * Puntos del mapa riesgo/rentabilidad (paso 41): cada activo en el
+ * cálculo con su volatilidad y su rentabilidad anualizada del historial
+ * real. Pura y probada; el activo sin métrica queda fuera y declarado.
+ */
+export function puntosMapaRiesgo(series, pesos) {
+  const dentro = (series || []).filter((s) => pesos?.[s.asset_id] != null);
+  const puntos = [];
+  const sinMetrica = [];
+  for (const s of dentro) {
+    const m = metricasDesdeSerie(s.values);
+    if (m && Number.isFinite(m.volatilidad) && Number.isFinite(m.rentabilidadAnualizada)) {
+      puntos.push({ id: s.asset_id, volatilidad: m.volatilidad, rentabilidad: m.rentabilidadAnualizada });
+    } else {
+      sinMetrica.push(s.asset_id);
+    }
+  }
+  return { puntos, sinMetrica };
+}
+
 /* ── Montaje ── */
 
 function el(tag, attrs = {}, texto) {
   const nodo = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) nodo.setAttribute(k, v);
+  if (texto != null) nodo.textContent = texto;
+  return nodo;
+}
+
+const NS_SVG = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, texto) {
+  const nodo = document.createElementNS(NS_SVG, tag);
   for (const [k, v] of Object.entries(attrs)) nodo.setAttribute(k, v);
   if (texto != null) nodo.textContent = texto;
   return nodo;
@@ -373,6 +418,40 @@ function grupoProyeccion(metricas) {
       'Sin métricas de la combinación no hay nada que simular; nunca se inventa.'));
     return bloque;
   }
+
+  /* El abanico de percentiles (paso 40): la banda del 5 al 95 y la mediana. */
+  const ab = puntosAbanico(proyeccion);
+  if (ab) {
+    const W = 560; const H = 240; const izq = 56; const der = 122; const arriba = 12; const abajo = 26;
+    const n = ab.anos.length;
+    const vMax = Math.max(...ab.p95);
+    const vMin = Math.min(...ab.p5);
+    const x = (i) => izq + (i / ((n - 1) || 1)) * (W - izq - der);
+    const y = (v) => H - abajo - ((v - vMin) / ((vMax - vMin) || 1)) * (H - arriba - abajo);
+    const camino = (vs) => vs.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+    const svg = svgEl('svg', {
+      viewBox: `0 0 ${W} ${H}`,
+      class: 'nv-abanico',
+      role: 'img',
+      'aria-label': `Abanico de la simulación a ${ab.anos[n - 1]} años: al final, percentil 5 en ${num(ab.p5[n - 1], 0)}, mediana en ${num(ab.p50[n - 1], 0)} y percentil 95 en ${num(ab.p95[n - 1], 0)}, partiendo de ${num(proyeccion.base, 0)}.`,
+    });
+    const banda = ab.p95.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')
+      + ' ' + [...ab.p5].reverse().map((v, i) => `L${x(n - 1 - i).toFixed(1)},${y(v).toFixed(1)}`).join(' ') + ' Z';
+    svg.append(svgEl('path', { d: banda, class: 'nv-abanico__banda' }));
+    const yBase = y(proyeccion.base);
+    svg.append(svgEl('line', { x1: izq, y1: yBase, x2: W - der, y2: yBase, class: 'nv-evolucion__cien' }));
+    svg.append(svgEl('text', { x: izq - 6, y: yBase + 4, 'text-anchor': 'end', class: 'nv-frontera__eje' }, num(proyeccion.base, 0)));
+    svg.append(svgEl('path', { d: camino(ab.p50), class: 'nv-abanico__mediana', fill: 'none' }));
+    for (const [vs, etiqueta] of [[ab.p95, `Percentil 95 · ${num(ab.p95[n - 1], 0)}`], [ab.p50, `Mediana · ${num(ab.p50[n - 1], 0)}`], [ab.p5, `Percentil 5 · ${num(ab.p5[n - 1], 0)}`]]) {
+      svg.append(svgEl('text', { x: W - der + 6, y: y(vs[n - 1]) + 4, class: 'nv-frontera__eje' }, etiqueta));
+    }
+    for (const a of [0, 5, 10].filter((v) => v <= ab.anos[n - 1])) {
+      const i = ab.anos.indexOf(a);
+      if (i >= 0) svg.append(svgEl('text', { x: x(i), y: H - 6, 'text-anchor': i === 0 ? 'start' : 'middle', class: 'nv-frontera__eje' }, `año ${a}`));
+    }
+    bloque.append(svg);
+  }
+
   const tabla = el('table', { class: 'nv-table nv-analisis__matriz' });
   tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Percentiles del valor simulado de 100'));
   const thead = el('thead');
@@ -393,6 +472,72 @@ function grupoProyeccion(metricas) {
   envoltorio.append(tabla);
   bloque.append(envoltorio);
   bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_PROYECCION));
+  return bloque;
+}
+
+/**
+ * Grupo del mapa riesgo/rentabilidad (paso 41): cada activo del cálculo
+ * como punto (volatilidad, rentabilidad anualizada) del historial real,
+ * con la cartera marcada. Nivel registrado en adelante.
+ */
+function grupoMapaRiesgo({ series, pesos, metricas, nombreDe }) {
+  const bloque = el('div', { class: 'nv-analisis__grupo' });
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Mapa riesgo / rentabilidad'));
+  const { puntos, sinMetrica } = puntosMapaRiesgo(series, pesos);
+  if (!puntos.length) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      'Sin métricas de los activos no hay mapa que dibujar; nunca se inventa.'));
+    return bloque;
+  }
+  const todos = metricas
+    ? puntos.concat([{ id: '__cartera__', volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }])
+    : puntos;
+  const W = 560; const H = 300; const izq = 62; const der = 14; const arriba = 14; const abajo = 34;
+  const vMin = Math.min(...todos.map((p) => p.volatilidad));
+  const vMax = Math.max(...todos.map((p) => p.volatilidad));
+  const rMin = Math.min(...todos.map((p) => p.rentabilidad));
+  const rMax = Math.max(...todos.map((p) => p.rentabilidad));
+  const x = (v) => izq + ((v - vMin) / ((vMax - vMin) || 1)) * (W - izq - der);
+  const y = (r) => H - abajo - ((r - rMin) / ((rMax - rMin) || 1)) * (H - abajo - arriba);
+  const svg = svgEl('svg', {
+    viewBox: `0 0 ${W} ${H}`,
+    class: 'nv-frontera',
+    role: 'img',
+    'aria-label': 'Mapa riesgo y rentabilidad de estas posiciones: '
+      + puntos.map((p) => `${nombreDe?.[p.id] || p.id} (volatilidad ${pct(p.volatilidad)}, rentabilidad anual ${pct(p.rentabilidad)})`).join('; ')
+      + (metricas ? `; la cartera junta: volatilidad ${pct(metricas.volatilidad)}, rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
+  });
+  for (const p of puntos) {
+    const cx = x(p.volatilidad); const cy = y(p.rentabilidad);
+    svg.append(svgEl('circle', { cx, cy, r: 5, class: 'nv-mriesgo__activo' }));
+    const nombre = (nombreDe?.[p.id] || p.id);
+    const corto = nombre.length > 22 ? `${nombre.slice(0, 21)}…` : nombre;
+    const anchoEstimado = corto.length * 6.5;
+    const anclaIzq = cx + 8 + anchoEstimado > W - der;
+    svg.append(svgEl('text', {
+      x: anclaIzq ? cx - 8 : cx + 8,
+      y: Math.min(Math.max(cy + 4, arriba + 10), H - abajo - 4),
+      'text-anchor': anclaIzq ? 'end' : 'start',
+      class: 'nv-frontera__eje',
+    }, corto));
+  }
+  if (metricas) {
+    svg.append(svgEl('circle', { cx: x(metricas.volatilidad), cy: y(metricas.rentabilidadAnualizada), r: 7, class: 'nv-frontera__mi-punto' }));
+    svg.append(svgEl('text', {
+      x: x(metricas.volatilidad), y: y(metricas.rentabilidadAnualizada) - 12, 'text-anchor': 'middle', class: 'nv-frontera__eje',
+    }, 'Tu combinación'));
+  }
+  svg.append(svgEl('text', { x: (izq + W - der) / 2, y: H - 6, 'text-anchor': 'middle', class: 'nv-frontera__eje' },
+    `Volatilidad anual: de ${pct(vMin)} a ${pct(vMax)} →`));
+  svg.append(svgEl('text', { x: 12, y: (arriba + H - abajo) / 2, class: 'nv-frontera__eje', transform: `rotate(-90 12 ${(arriba + H - abajo) / 2})`, 'text-anchor': 'middle' },
+    `Rentabilidad anual: de ${pct(rMin)} a ${pct(rMax)} ↑`));
+  bloque.append(svg);
+  if (sinMetrica.length) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      `Sin métrica del historial: ${sinMetrica.map((id) => nombreDe?.[id] || id).join(', ')}. Fuera del mapa.`));
+  }
+  bloque.append(el('p', { class: 'nv-cons__nota' },
+    'Cada punto describe lo que ese activo hizo en la ventana de 3 años; más a la derecha, más se movió; más arriba, más rentó. Describe el historial, no el futuro.'));
   return bloque;
 }
 
@@ -494,6 +639,9 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
   raiz.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
 
+  /* Mapa riesgo/rentabilidad (paso 41): activos y cartera, historial real. */
+  raiz.append(grupoMapaRiesgo({ series, pesos, metricas, nombreDe }));
+
   /* Solo suscriptor: proyección por simulación y matriz de correlaciones. */
   if (esSuscriptor) {
     raiz.append(grupoProyeccion(metricas));
@@ -522,7 +670,11 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
   cargando.remove();
 
   raiz.append(tablaReparto('Concentración sectorial (renta variable)', concentracionSectorial(posAnalisis, activos)));
-  raiz.append(tablaReparto('Concentración geográfica (renta variable)', concentracionGeografica(posAnalisis, activos)));
+  /* Distribución geográfica con mapa (paso 42) + su tabla de regiones. */
+  const repartoGeo = concentracionGeografica(posAnalisis, activos);
+  const mapa = grupoMapa(repartoGeo);
+  if (mapa) raiz.append(mapa);
+  raiz.append(tablaReparto('Concentración geográfica (renta variable)', repartoGeo));
   if (sinFicha.length) {
     raiz.append(el('p', { class: 'nv-cons__nota' },
       `Sin ficha disponible ahora mismo: ${sinFicha.join(', ')}. No entra en la concentración.`));
