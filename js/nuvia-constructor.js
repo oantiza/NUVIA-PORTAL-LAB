@@ -191,7 +191,9 @@ export function grupoEvolucion({ niveles, fechas }) {
   svg.append(nodoSvg('path', { d: trazadoLinea(p.base, escala), class: 'nv-evolucion__linea', fill: 'none' }));
   svg.append(nodoSvg('text', { x: izq, y: H - 8, class: 'nv-grafico__eje' }, desde || ''));
   svg.append(nodoSvg('text', { x: W - der, y: H - 8, 'text-anchor': 'end', class: 'nv-grafico__eje' }, hasta || ''));
-  bloque.append(svg);
+  const panel = el('div', { class: 'nv-grafico__panel' });
+  panel.append(svg);
+  bloque.append(panel);
 
   /* Las caídas desde máximos, en el mismo eje temporal. */
   const caidas = serieDeCaidas(niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
@@ -222,7 +224,9 @@ export function grupoEvolucion({ niveles, fechas }) {
     svg2.append(nodoSvg('path', { d: linea, class: 'nv-evolucion__caida-linea', fill: 'none' }));
   }
   bloque.append(el('p', { class: 'nv-cons__nota-clase' }, 'Caídas desde máximos: la distancia al máximo anterior en cada momento. El cero es estar en máximos.'));
-  bloque.append(svg2);
+  const panel2 = el('div', { class: 'nv-grafico__panel' });
+  panel2.append(svg2);
+  bloque.append(panel2);
   return bloque;
 }
 

@@ -541,7 +541,9 @@ export function proyeccionMonteCarlo({
     anos: porAno.map((valores, a) => ({
       ano: a + 1,
       p5: redondea(percentil(valores, 0.05)),
+      p25: redondea(percentil(valores, 0.25)),
       p50: redondea(percentil(valores, 0.5)),
+      p75: redondea(percentil(valores, 0.75)),
       p95: redondea(percentil(valores, 0.95)),
     })),
   };

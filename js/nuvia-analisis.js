@@ -45,10 +45,9 @@ export const NOTA_ANALISIS_SUSCRIPTOR = 'El nivel suscriptor —aún no abierto 
   + 'simulación y la matriz de correlaciones, con hasta 20 posiciones.';
 
 /** Qué es la frontera, en llano y sin previsión (bases §2). */
-export const TEXTO_FRONTERA = 'Cada punto gris es una mezcla de pesos probada '
-  + 'con estos mismos activos: más a la derecha, más se movió; más arriba, más '
-  + 'rentó. La línea une, a cada nivel de riesgo, la mezcla que más rentó en el '
-  + 'historial de 3 años. Describe ese historial, no el futuro.';
+export const TEXTO_FRONTERA = 'La curva une, a cada nivel de riesgo, la mezcla '
+  + 'de estos mismos activos que más rentó en el historial de 3 años; cualquier '
+  + 'otra mezcla quedó por debajo de la curva. Describe ese historial, no el futuro.';
 
 /** Qué es la proyección: simulación con supuestos a la vista, nunca previsión. */
 export const TEXTO_PROYECCION = 'Simulación de 4.000 trayectorias a pasos '
@@ -206,10 +205,13 @@ export function filasProyeccion(proyeccion, senalados = [1, 3, 5, 10]) {
 export function puntosAbanico(proyeccion) {
   if (!proyeccion?.anos?.length) return null;
   const base = proyeccion.base ?? 100;
+  const conCuartiles = proyeccion.anos.every((f) => Number.isFinite(f.p25) && Number.isFinite(f.p75));
   return {
     anos: [0, ...proyeccion.anos.map((f) => f.ano)],
     p5: [base, ...proyeccion.anos.map((f) => f.p5)],
+    p25: conCuartiles ? [base, ...proyeccion.anos.map((f) => f.p25)] : null,
     p50: [base, ...proyeccion.anos.map((f) => f.p50)],
+    p75: conCuartiles ? [base, ...proyeccion.anos.map((f) => f.p75)] : null,
     p95: [base, ...proyeccion.anos.map((f) => f.p95)],
   };
 }
@@ -306,6 +308,30 @@ export function paresDestacados(ids, rho, cuantos = 3) {
   return { pares, altos, bajos };
 }
 
+/**
+ * Camino SVG suave por los puntos dados (Catmull-Rom a Bézier), como la
+ * curva del laboratorio clásico: una línea que se lee de un vistazo, sin
+ * quiebros. Recibe [{x, y}] en coordenadas de pantalla. Pura y probada.
+ */
+export function caminoSuave(puntos) {
+  const pts = (puntos || []).filter((p) => Number.isFinite(p?.x) && Number.isFinite(p?.y));
+  if (pts.length < 2) return '';
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  if (pts.length === 2) return `${d} L${pts[1].x.toFixed(1)},${pts[1].y.toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i += 1) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1x = p1.x + (p2.x - p0.x) / 6;
+    const c1y = p1.y + (p2.y - p0.y) / 6;
+    const c2x = p2.x - (p3.x - p1.x) / 6;
+    const c2y = p2.y - (p3.y - p1.y) / 6;
+    d += ` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+  }
+  return d;
+}
+
 /** La correlación de un par, dicha en llano. Pura y probada. */
 export function fraseCorrelacion(valor) {
   if (!Number.isFinite(valor)) return 'sin datos comunes';
@@ -369,6 +395,9 @@ function dibujaEjes(svg, {
     svg.append(svgEl('line', { x1: xx, y1: arriba, x2: xx, y2: H - abajo, class: 'nv-grafico__rejilla' }));
     svg.append(svgEl('text', { x: xx, y: H - abajo + 20, 'text-anchor': 'middle', class: 'nv-grafico__eje' }, formatoX(v)));
   }
+  /* Las dos líneas de eje, como en el clásico: el marco que ordena. */
+  svg.append(svgEl('line', { x1: izq, y1: arriba, x2: izq, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
+  svg.append(svgEl('line', { x1: izq, y1: H - abajo, x2: W - der, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
   if (tituloX) {
     svg.append(svgEl('text', {
       x: (izq + W - der) / 2, y: H - 8, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo',
@@ -395,6 +424,30 @@ function leyenda(items) {
     ul.append(li);
   }
   return ul;
+}
+
+/** El panel crema del laboratorio clásico: el gráfico vive dentro, con su
+ *  leyenda de cifras separada por un filete. */
+function panelGrafico(...hijos) {
+  const panel = el('div', { class: 'nv-grafico__panel' });
+  panel.append(...hijos.filter(Boolean));
+  return panel;
+}
+
+/** La fila de cifras al pie del panel, como en el clásico:
+ *  «● Tu combinación: …». Recibe [{clase, nombre, texto}]. */
+function filaDeCifras(items) {
+  const fila = el('ul', { class: 'nv-grafico__cifras' });
+  for (const item of items) {
+    const li = el('li', { class: 'nv-grafico__cifra' });
+    li.append(
+      el('span', { class: `nv-leyenda__marca ${item.clase}`, 'aria-hidden': 'true' }),
+      el('strong', {}, item.nombre),
+      el('span', {}, ` ${item.texto}`),
+    );
+    fila.append(li);
+  }
+  return fila;
 }
 
 /** Fila nombre + cifra + barra, la pieza de todas las listas con peso. */
@@ -483,52 +536,76 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
   }
   const eficiente = tramoEficiente(f.frontera);
 
-  /* Escalas: dominio en marcas redondas, no en el dato justo. */
-  const W = 760; const H = 420; const izq = 78; const der = 24; const arriba = 18; const abajo = 66;
-  const puntos = f.nube.concat(metricas ? [{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }] : []);
-  const ejeX = marcasEje(Math.min(...puntos.map((p) => p.volatilidad)), Math.max(...puntos.map((p) => p.volatilidad)), 6);
-  const ejeY = marcasEje(Math.min(...puntos.map((p) => p.rentabilidad)), Math.max(...puntos.map((p) => p.rentabilidad)), 6);
+  /* El dibujo del clásico: la curva suave sola sobre el panel crema, los dos
+     ejes como marco y las cifras al pie. Sin nube ni rejilla: una idea. */
+  const W = 760; const H = 380; const izq = 74; const der = 30; const arriba = 26; const abajo = 62;
+  const puntos = eficiente.concat(metricas ? [{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }] : []);
+  /* Aire alrededor del dato, como en el clásico: nada pegado a los ejes. */
+  let vMin = Math.min(...puntos.map((p) => p.volatilidad));
+  let vMax = Math.max(...puntos.map((p) => p.volatilidad));
+  let rMin = Math.min(...puntos.map((p) => p.rentabilidad));
+  let rMax = Math.max(...puntos.map((p) => p.rentabilidad));
+  const aireV = ((vMax - vMin) || Math.abs(vMax) || 0.01) * 0.12;
+  const aireR = ((rMax - rMin) || Math.abs(rMax) || 0.01) * 0.12;
+  vMin = Math.max(0, vMin - aireV); vMax += aireV;
+  rMin -= aireR; rMax += aireR;
+  const x = (v) => izq + ((v - vMin) / ((vMax - vMin) || 1)) * (W - izq - der);
+  const y = (r) => H - abajo - ((r - rMin) / ((rMax - rMin) || 1)) * (H - abajo - arriba);
 
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`,
     class: 'nv-frontera',
     role: 'img',
-    'aria-label': 'Nube de combinaciones de estos activos y su frontera: '
-      + `riesgo entre ${pct(ejeX.min)} y ${pct(ejeX.max)}, rentabilidad anual entre ${pct(ejeY.min)} y ${pct(ejeY.max)}.`,
+    'aria-label': 'La frontera de estos activos: '
+      + `riesgo entre ${pct(vMin)} y ${pct(vMax)}, rentabilidad anual entre ${pct(rMin)} y ${pct(rMax)}`
+      + (metricas ? `; tu combinación, con riesgo ${pct(metricas.volatilidad)} y rentabilidad ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
   });
-  const { x, y } = dibujaEjes(svg, {
-    W, H, izq, der, arriba, abajo, ejeX, ejeY,
-    tituloX: 'Cuánto se movió al año (volatilidad) →',
-    tituloY: 'Cuánto rentó al año ↑',
-  });
+  /* El marco: dos ejes con sus extremos en cifra, sin más ruido. */
+  svg.append(svgEl('line', { x1: izq, y1: arriba, x2: izq, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
+  svg.append(svgEl('line', { x1: izq, y1: H - abajo, x2: W - der, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
+  svg.append(
+    svgEl('text', { x: izq, y: H - abajo + 20, class: 'nv-grafico__eje' }, pct(vMin)),
+    svgEl('text', { x: W - der, y: H - abajo + 20, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(vMax)),
+    svgEl('text', { x: izq - 8, y: H - abajo + 4, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(rMin)),
+    svgEl('text', { x: izq - 8, y: arriba + 10, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(rMax)),
+    svgEl('text', { x: (izq + W - der) / 2, y: H - 10, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo' }, 'Riesgo (cuánto se movió al año) →'),
+  );
+  const cyTitulo = (arriba + H - abajo) / 2;
+  svg.append(svgEl('text', {
+    x: 18, y: cyTitulo, transform: `rotate(-90 18 ${cyTitulo})`, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo',
+  }, 'Rentabilidad anual ↑'));
 
-  const salto = Math.max(1, Math.floor(f.nube.length / 450));
-  for (let i = 0; i < f.nube.length; i += salto) {
-    const p = f.nube[i];
-    svg.append(svgEl('circle', { cx: x(p.volatilidad).toFixed(1), cy: y(p.rentabilidad).toFixed(1), r: 2.5, class: 'nv-frontera__punto' }));
-  }
-  svg.append(svgEl('polyline', {
-    points: eficiente.map((p) => `${x(p.volatilidad).toFixed(1)},${y(p.rentabilidad).toFixed(1)}`).join(' '),
+  /* La curva, suave y gruesa como en el clásico. */
+  svg.append(svgEl('path', {
+    d: caminoSuave(eficiente.map((p) => ({ x: x(p.volatilidad), y: y(p.rentabilidad) }))),
     class: 'nv-frontera__linea', fill: 'none',
   }));
   if (metricas) {
     const cx = x(metricas.volatilidad); const cy = y(metricas.rentabilidadAnualizada);
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 7, class: 'nv-frontera__mi-punto' }));
-    const anclaIzq = cx > W - der - 150;
+    const anclaIzq = cx > W - der - 160;
     svg.append(svgEl('text', {
-      x: (anclaIzq ? cx - 12 : cx + 12).toFixed(1),
+      x: (anclaIzq ? cx - 13 : cx + 13).toFixed(1),
       y: (cy + 5).toFixed(1),
       'text-anchor': anclaIzq ? 'end' : 'start',
       class: 'nv-grafico__rotulo',
     }, 'Tu combinación'));
   }
-  bloque.append(svg);
 
-  bloque.append(leyenda([
-    { clase: 'nv-leyenda__marca--nube', texto: 'Una mezcla posible de estos activos' },
-    { clase: 'nv-leyenda__marca--linea', texto: 'La frontera: la mezcla que más rentó a cada nivel de riesgo' },
-    ...(metricas ? [{ clase: 'nv-leyenda__marca--punto', texto: 'Tu combinación actual' }] : []),
-  ]));
+  const cifras = [];
+  if (metricas) {
+    cifras.push({
+      clase: 'nv-leyenda__marca--punto',
+      nombre: 'Tu combinación:',
+      texto: `riesgo ${pct(metricas.volatilidad)} · rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}`,
+    });
+  }
+  cifras.push({
+    clase: 'nv-leyenda__marca--linea',
+    nombre: 'La frontera:',
+    texto: 'a cada nivel de riesgo, la mezcla de estos activos que más rentó',
+  });
+  bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
   if (!metricas) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Tu combinación no tiene historial común suficiente para marcarla.'));
@@ -605,8 +682,8 @@ function grupoRiesgoPorPosicion({ series, pesos, nombreDe }) {
 function grupoProyeccion(metricas) {
   const bloque = grupo('Proyección por simulación (Montecarlo)',
     'Partiendo de 100, se simulan 4.000 caminos con la rentabilidad y la volatilidad '
-    + 'del historial como supuestos. La banda verde recoge nueve de cada diez caminos '
-    + 'simulados; la línea es la mediana.');
+    + 'del historial como supuestos. La banda ancha recoge nueve de cada diez caminos '
+    + 'simulados; la oscura, la mitad central; la línea es la mediana.');
   const proyeccion = metricas
     ? proyeccionMonteCarlo({ rentabilidad: metricas.rentabilidadAnualizada, volatilidad: metricas.volatilidad })
     : null;
@@ -636,9 +713,11 @@ function grupoProyeccion(metricas) {
       svg.append(svgEl('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: 'nv-grafico__rejilla' }));
       svg.append(svgEl('text', { x: izq - 8, y: (y(v) + 5).toFixed(1), 'text-anchor': 'end', class: 'nv-grafico__eje' }, num(v, 0)));
     }
-    const banda = ab.p95.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')
-      + ' ' + [...ab.p5].reverse().map((v, i) => `L${x(n - 1 - i).toFixed(1)},${y(v).toFixed(1)}`).join(' ') + ' Z';
-    svg.append(svgEl('path', { d: banda, class: 'nv-abanico__banda' }));
+    const bandaDe = (arriba95, abajo5) => arriba95.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')
+      + ' ' + [...abajo5].reverse().map((v, i) => `L${x(n - 1 - i).toFixed(1)},${y(v).toFixed(1)}`).join(' ') + ' Z';
+    svg.append(svgEl('path', { d: bandaDe(ab.p95, ab.p5), class: 'nv-abanico__banda' }));
+    /* La banda interior de cuartiles, a dos tonos como en el clásico. */
+    if (ab.p25 && ab.p75) svg.append(svgEl('path', { d: bandaDe(ab.p75, ab.p25), class: 'nv-abanico__banda-interior' }));
     const yBase = y(proyeccion.base);
     svg.append(svgEl('line', { x1: izq, y1: yBase, x2: W - der, y2: yBase, class: 'nv-evolucion__cien' }));
     svg.append(svgEl('path', { d: camino(ab.p50), class: 'nv-abanico__mediana', fill: 'none' }));
@@ -656,7 +735,11 @@ function grupoProyeccion(metricas) {
       const i = ab.anos.indexOf(a);
       if (i >= 0) svg.append(svgEl('text', { x: x(i), y: H - abajo + 20, 'text-anchor': i === 0 ? 'start' : 'middle', class: 'nv-grafico__eje' }, `año ${a}`));
     }
-    bloque.append(svg);
+    bloque.append(panelGrafico(svg, filaDeCifras([
+      { clase: 'nv-leyenda__marca--banda', nombre: 'Banda ancha:', texto: 'nueve de cada diez caminos simulados (percentiles 5–95)' },
+      ...(ab.p25 && ab.p75 ? [{ clase: 'nv-leyenda__marca--banda-interior', nombre: 'Banda oscura:', texto: 'la mitad central (percentiles 25–75)' }] : []),
+      { clase: 'nv-leyenda__marca--mediana', nombre: 'Mediana:', texto: `termina en ${num(ab.p50[n - 1], 0)}` },
+    ])));
   }
 
   const tabla = el('table', { class: 'nv-table nv-analisis__matriz' });
@@ -755,7 +838,6 @@ function grupoMapaRiesgo({ series, pesos, metricas, nombreDe }) {
       'text-anchor': anclaIzq ? 'end' : 'start', class: 'nv-grafico__rotulo',
     }, 'Tu combinación'));
   }
-  bloque.append(svg);
 
   const lista = el('ol', { class: 'nv-mriesgo__lista' });
   orden.forEach((p, i) => {
@@ -767,7 +849,7 @@ function grupoMapaRiesgo({ series, pesos, metricas, nombreDe }) {
     );
     lista.append(item);
   });
-  bloque.append(lista);
+  bloque.append(panelGrafico(svg, lista));
   if (metricas) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       `Tu combinación, junta, se movió un ${pct(metricas.volatilidad)} al año y rentó un ${pct(metricas.rentabilidadAnualizada)} anual.`));

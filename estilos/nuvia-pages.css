@@ -4545,8 +4545,8 @@
 }
 .nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
 .nv-frontera__linea {
-  stroke: var(--nv-green-700);
-  stroke-width: 3;
+  stroke: var(--nv-navy-900);
+  stroke-width: 3.5;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
@@ -4567,19 +4567,48 @@
 .nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); display: grid; gap: var(--nv-space-1); }
 .nv-frontera__resumen { margin: 0; }
 
-/* Piezas comunes de los gráficos rediseñados (Fase 7) */
-.nv-grafico__rejilla { stroke: var(--nv-line); stroke-width: 1; }
+/* Piezas comunes de los gráficos rediseñados (Fase 7, referencia: el
+   laboratorio clásico): panel crema, rejilla punteada discreta, marco de
+   ejes y fila de cifras al pie. */
+.nv-grafico__panel {
+  background: var(--nv-paper-light);
+  border-radius: 18px;
+  padding: var(--nv-space-4) var(--nv-space-4) var(--nv-space-3);
+  display: grid;
+  gap: var(--nv-space-2);
+  min-width: 0;
+}
+.nv-grafico__rejilla { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.45; }
+.nv-grafico__eje-linea { stroke: var(--nv-text-muted); stroke-width: 1.5; }
 .nv-grafico__eje { font-size: var(--nv-body-sm); fill: var(--nv-text-muted); }
-.nv-grafico__eje-titulo { font-size: var(--nv-body-sm); fill: var(--nv-text-soft); }
+.nv-grafico__eje-titulo {
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  fill: var(--nv-text-soft);
+}
 .nv-grafico__rotulo {
   font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-action);
-  fill: var(--nv-text);
+  fill: var(--nv-navy-900);
   paint-order: stroke;
-  stroke: var(--nv-white);
+  stroke: var(--nv-paper-light);
   stroke-width: 4;
   stroke-linejoin: round;
 }
+
+.nv-grafico__cifras {
+  list-style: none;
+  margin: 0;
+  padding: var(--nv-space-2) var(--nv-space-1) 0;
+  border-top: 1px solid var(--nv-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-1) var(--nv-space-6);
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+.nv-grafico__cifra { display: inline-flex; align-items: center; gap: var(--nv-space-1); min-width: 0; }
+.nv-grafico__cifra strong { color: var(--nv-text); font-weight: var(--nv-weight-action); }
 
 .nv-leyenda {
   list-style: none;
@@ -4604,7 +4633,26 @@
   width: 20px;
   height: 4px;
   border-radius: 2px;
+  background: var(--nv-navy-900);
+}
+.nv-leyenda__marca--banda {
+  width: 18px;
+  height: 12px;
+  border-radius: 4px;
   background: var(--nv-green-700);
+  opacity: 0.2;
+}
+.nv-leyenda__marca--banda-interior {
+  width: 18px;
+  height: 12px;
+  border-radius: 4px;
+  background: var(--nv-green-700);
+  opacity: 0.42;
+}
+.nv-leyenda__marca--mediana {
+  width: 20px;
+  height: 0;
+  border-top: 3px dashed var(--nv-navy-900);
 }
 .nv-leyenda__marca--punto {
   width: 14px;
@@ -4625,7 +4673,7 @@
   margin-block: var(--nv-space-1);
 }
 .nv-evolucion__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
-.nv-evolucion__rejilla { stroke: var(--nv-border-strong, #d5dbe3); stroke-width: 1; }
+.nv-evolucion__rejilla { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.45; }
 .nv-evolucion__cien { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
 .nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
 .nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
@@ -4638,8 +4686,13 @@
   height: auto;
   margin-block: var(--nv-space-2);
 }
-.nv-abanico__banda { fill: var(--nv-green-700); opacity: 0.14; }
-.nv-abanico__mediana { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-abanico__banda { fill: var(--nv-green-700); opacity: 0.13; }
+.nv-abanico__banda-interior { fill: var(--nv-green-700); opacity: 0.24; }
+.nv-abanico__mediana {
+  stroke: var(--nv-navy-900);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 5;
+}
 
 /* Mapa riesgo/rentabilidad (paso 41, rediseño Fase 7: marcas numeradas) */
 .nv-mriesgo__activo { fill: var(--nv-bronze-700); stroke: var(--nv-white); stroke-width: 1.5; }

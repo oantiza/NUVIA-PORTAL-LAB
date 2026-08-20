@@ -13,6 +13,7 @@ import {
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
+  caminoSuave,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -214,6 +215,29 @@ console.log('\n— El tramo eficiente de la frontera (Fase 7) —');
   comprueba('El punto dominado (más riesgo, menos rentabilidad) queda fuera',
     !tramo.some((p) => p.volatilidad === 0.14) && tramo.length === 4);
   comprueba('Sin puntos no revienta', tramoEficiente(null).length === 0);
+}
+
+console.log('\n— La curva suave (referencia: laboratorio clásico) —');
+{
+  const suave = caminoSuave([{ x: 0, y: 100 }, { x: 50, y: 60 }, { x: 100, y: 40 }, { x: 150, y: 35 }]);
+  comprueba('Con varios puntos la curva usa tramos Bézier',
+    suave.startsWith('M0.0,100.0') && suave.includes(' C'));
+  comprueba('Con dos puntos es una recta', /^M.+ L[^C]+$/.test(caminoSuave([{ x: 0, y: 0 }, { x: 10, y: 5 }])));
+  comprueba('Con menos de dos puntos no hay camino',
+    caminoSuave([{ x: 1, y: 1 }]) === '' && caminoSuave(null) === '');
+  comprueba('Un punto sin coordenada finita se descarta',
+    caminoSuave([{ x: 0, y: 0 }, { x: NaN, y: 3 }, { x: 10, y: 5 }]).split('C').length === 1);
+}
+
+console.log('\n— El abanico con cuartiles (referencia: clásico a dos tonos) —');
+{
+  const proyeccion = proyeccionMonteCarlo({ rentabilidad: 0.05, volatilidad: 0.12 });
+  const ab = puntosAbanico(proyeccion);
+  comprueba('Las sendas de cuartiles existen y quedan dentro de la banda ancha',
+    ab.p25 && ab.p75 && ab.anos.every((_, i) => ab.p5[i] <= ab.p25[i] && ab.p25[i] <= ab.p50[i]
+      && ab.p50[i] <= ab.p75[i] && ab.p75[i] <= ab.p95[i]));
+  comprueba('Una proyección vieja sin cuartiles no revienta: la banda interior se omite',
+    puntosAbanico({ base: 100, anos: [{ ano: 1, p5: 90, p50: 100, p95: 110 }] }).p25 === null);
 }
 
 console.log('\n— Cuánto riesgo pone cada posición (Fase 7) —');
