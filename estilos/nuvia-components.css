@@ -964,7 +964,19 @@
   transition: border-color .2s ease;
 }
 
-.nv-field__box:focus-within { border-color: var(--nv-green-600); }
+/* El sitio entero señala el foco con --nv-focus-ring: hueco blanco de 3 px y
+   aro verde de 2. Lo llevan los botones, los enlaces, los desplegables y el
+   salto al contenido. Los campos de formulario eran la única excepción: la
+   regla de más abajo anulaba el aro del <input> y a cambio esto solo cambiaba
+   el color de un borde de 1 px. Cumplía el contraste entre estados —3,42:1,
+   por encima del 3:1 que pide WCAG 2.2— pero se quedaba corto de grosor y,
+   sobre todo, no se parecía a nada más del sitio. El aro va ahora en la caja,
+   que es la que dibuja el campo entero; el <input> sigue sin el suyo para no
+   pintar dos. */
+.nv-field__box:focus-within {
+  border-color: var(--nv-green-600);
+  box-shadow: var(--nv-focus-ring);
+}
 
 .nv-field__box input,
 .nv-field__box select {

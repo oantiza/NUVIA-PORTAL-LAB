@@ -59,8 +59,13 @@ for (const htmlPath of htmlFiles) {
   if (!/<title>[^<]+<\/title>/i.test(html)) {
     missing.push(`${htmlPath}: falta un título de página`);
   }
-  // En los Design Components, support.js resuelve las expresiones antes de
-  // entregarlas a React. La misma sintaxis sí sería inválida en HTML estático.
+  // support.js resuelve las expresiones antes de entregarlas a React, así que el
+  // gráfico se pinta bien. Pero el navegador ya ha analizado la plantilla en
+  // crudo para entonces, y un points="{{ … }}" dentro de un <svg> le hace lanzar
+  // un error de consola igualmente: cuatro en jubilacion.html y diez en
+  // academia.html, medidos. Se tolera porque no afecta a lo que se ve, no
+  // porque no ocurra. En una página sin runtime no hay nada que lo resuelva
+  // después, y ahí sí es un fallo de verdad.
   if (!usesDesignComponentRuntime && /\s(?:d|points)=["']\s*\{\{/i.test(html)) {
     missing.push(`${htmlPath}: contiene un atributo SVG dinámico que provoca errores al cargar`);
   }
