@@ -103,8 +103,14 @@ if (!portfolioPage.includes('id="laboratorio"')) {
 if (!portfolioPage.includes('js/nuvia-simulador.js')) {
   throw new Error('La página de cartera no monta el simulador propio');
 }
-if (portfolioPage.includes('portfolioPreview=1')) {
+/* La regla del paso 18 prohíbe INCRUSTAR la suite del núcleo (iframe);
+   un enlace de navegación a la vista clásica sí está permitido: Óscar
+   pidió recuperar el acceso a sus gráficos (20-08-2026). */
+if (/<iframe[^>]*portfolioPreview=1/.test(portfolioPage)) {
   throw new Error('La página de cartera no debe seguir incrustando la suite del núcleo');
+}
+if (!portfolioPage.includes('id="vista-clasica"') || !portfolioPage.includes('core/index.html?portfolioPreview=1')) {
+  throw new Error('Falta el enlace a la vista clásica del laboratorio (los gráficos de siempre)');
 }
 if (!portfolioPage.includes('id="simulador"')) {
   throw new Error('Falta el punto de montaje del simulador con su aviso sin JavaScript');
