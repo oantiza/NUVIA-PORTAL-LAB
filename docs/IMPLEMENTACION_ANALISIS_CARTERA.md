@@ -925,6 +925,15 @@ cálculos ya precalculados.**
 > queda como lo dejó el paso 33: implementado, descrito en la página y
 > cerrado (nadie tiene el marcador `nuvia.suscripcion.v1`, que escribiría
 > la pasarela cuando estos pasos se retomen).
+>
+> **Acceso del administrador (20-08-2026, a petición de Óscar).** Las
+> cuentas de `CORREOS_ADMIN` en `js/nuvia-datos.js` (hoy solo
+> `oantiza@gmail.com`) ven el nivel completo —suscriptor— con solo iniciar
+> sesión, sin marcador ni pasarela: frontera interactiva, Montecarlo,
+> matriz de correlaciones y hasta 20 posiciones. Es acceso del dueño a su
+> propia herramienta para revisarla, no un atajo comercial: la suscripción
+> sigue sin poder contratarse por nadie. `esAdmin()` es pura y está en la
+> batería (correo normalizado; ninguna otra cuenta hereda el nivel).
 
 ### Paso 37 · Informes genéricos
 

@@ -6,7 +6,7 @@
  *
  *   node docs/nuvia-datos.test.mjs
  */
-import { creaClienteMaestra, etiquetaTipo, leeSuscripcion, CLAVE_SUSCRIPCION } from '../js/nuvia-datos.js';
+import { creaClienteMaestra, etiquetaTipo, leeSuscripcion, esAdmin, CLAVE_SUSCRIPCION } from '../js/nuvia-datos.js';
 
 let fallos = 0;
 function comprueba(nombre, condicion, detalle = '') {
@@ -192,6 +192,23 @@ console.log('\n— Suscripción (marcador del paso 35, leído desde el paso 33) 
 
   const cliente = creaClienteMaestra({ almacen, fetchFn: async () => ({ ok: true, status: 200, json: async () => ({}) }) });
   comprueba('nivelSesion: sin sesión registrada → visitante', cliente.nivelSesion() === 'visitante');
+
+  /* Cuenta del administrador: nivel completo con la sesión iniciada,
+     sin marcador de suscripción (la pasarela sigue aplazada). */
+  comprueba('esAdmin: el correo del administrador, normalizado',
+    esAdmin(' OAntiza@Gmail.com ') === true && esAdmin('otro@ejemplo.com') === false
+    && esAdmin('') === false && esAdmin(null) === false);
+  const sesionFalsa = (correo) => JSON.stringify({
+    tipo: 'registrada', correo, idToken: 't', refreshToken: 'r', caducaEn: Date.now() + 3_600_000,
+  });
+  almacen.setItem('nuvia.maestra-sesion.v1', sesionFalsa('oantiza@gmail.com'));
+  almacen.removeItem(CLAVE_SUSCRIPCION);
+  comprueba('nivelSesion: la cuenta del administrador es suscriptor sin marcador',
+    cliente.nivelSesion() === 'suscriptor');
+  almacen.setItem('nuvia.maestra-sesion.v1', sesionFalsa('otro@ejemplo.com'));
+  comprueba('nivelSesion: cualquier otra cuenta sigue en registrada',
+    cliente.nivelSesion() === 'registrada');
+  almacen.removeItem('nuvia.maestra-sesion.v1');
 }
 
 if (fallos) {
