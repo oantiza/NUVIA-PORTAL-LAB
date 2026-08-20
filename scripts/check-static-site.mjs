@@ -106,6 +106,46 @@ if (missing.length) {
   throw new Error(`Referencias locales no válidas:\n${missing.join('\n')}`);
 }
 
+/* ══ Dos reglas de las hojas de estilo ═══════════════════════════════════════
+   Las dos salieron de defectos reales, no de una preferencia:
+
+   1 · Un token de espaciado usado como tamaño de letra. Aparecía en seis
+       sitios (--nv-space-4 y --nv-space-5 dan 16 y 20 px, así que «funciona»
+       por coincidencia) y saltaba a la vista solo al medir la escala.
+
+   2 · Un selector de <span> por descendencia. El runtime envuelve cada
+       interpolación en <span class="sc-interp">, que debe ser transparente;
+       una regla como «.contenedor span» lo alcanza igual y el texto
+       interpolado se pinta distinto del elemento que lo contiene. Rompía la
+       cifra del ejercicio del curso, el enunciado del test, la cuota del test
+       de estrés de vivienda, el nombre de la compañía en la tabla de
+       cotizaciones, la fecha de los dos calendarios y el enlace a la fuente de
+       las tres guías fiscales. Se admite el combinador de hijo directo y se
+       admite una clase.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const problemasCss = [];
+for (const hoja of ['estilos/nuvia-tokens.css', 'estilos/nuvia-components.css', 'estilos/nuvia-pages.css']) {
+  const css = await readFile(resolve(root, hoja), 'utf8');
+  const sinComentarios = css.replace(/\/\*[\s\S]*?\*\//g, '');
+
+  for (const m of sinComentarios.matchAll(/font-size:\s*var\(--nv-space-\d+\)/g)) {
+    problemasCss.push(`${hoja}: «${m[0]}» usa un token de espaciado como tamaño de letra; la escala es --nv-label, --nv-body-sm, --nv-body, --nv-body-lg, --nv-title-*, --nv-display-*`);
+  }
+
+  for (const m of sinComentarios.matchAll(/([^{}\n;]+?)\s*\{[^{}]*\}/g)) {
+    for (const selector of m[1].split(',')) {
+      const s2 = selector.trim();
+      if (!s2 || s2.startsWith('@') || s2.startsWith('%')) continue;
+      if (/(?:^|\s)(?:[.#][\w-]+|\])\s+span(?![\w-])(?![^\s]*\.)/.test(s2) && !/>\s*span/.test(s2)) {
+        problemasCss.push(`${hoja}: «${s2}» alcanza el <span class="sc-interp"> del runtime; usa «> span» o la clase del elemento`);
+      }
+    }
+  }
+}
+if (problemasCss.length) {
+  throw new Error(`Reglas de estilo no válidas:\n${problemasCss.join('\n')}`);
+}
+
 const daily = JSON.parse(await readFile(resolve(root, 'data/daily-content.json'), 'utf8'));
 if (!daily.dailyEconomicNews?.title || daily.dailyEconomicNews.impactPoints?.length !== 3) {
   throw new Error('La noticia diaria debe incluir titular y exactamente tres claves de impacto.');

@@ -416,7 +416,7 @@
           <sc-for list="{{ preguntas }}" as="pregunta" hint-placeholder-count="5">
             <fieldset class="curso-pregunta">
               <legend>
-                <span>{{ pregunta.numero }}</span>
+                <span class="curso-pregunta__num">{{ pregunta.numero }}</span>
                 {{ pregunta.texto }}
               </legend>
               <div class="curso-pregunta__opciones">

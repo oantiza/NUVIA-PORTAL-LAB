@@ -408,7 +408,7 @@
 
 .nv-card--editorial h3 {
   font-family: var(--nv-font-serif);
-  font-size: 25px;
+  font-size: var(--nv-title-sm);
 }
 
 .nv-card p {
@@ -432,7 +432,7 @@
 .nv-card__step {
   color: var(--nv-green-700);
   font-family: var(--nv-font-serif);
-  font-size: 30px;
+  font-size: var(--nv-title-md);
   line-height: 1;
 }
 
@@ -768,7 +768,7 @@
   position: relative;
   flex: 0 0 auto;
   color: var(--nv-text-soft);
-  font-size: 13.5px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-title);
   line-height: var(--nv-header-height);
   text-decoration: none;
@@ -858,7 +858,7 @@
 .nuvia-site-nav__menu a {
   border-radius: 9px;
   color: var(--nv-text-soft);
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-title);
   line-height: 1.25;
   padding: 11px 13px;
@@ -913,7 +913,7 @@
 .nuvia-site-footer__brand p {
   max-width: 30em;
   margin: var(--nv-space-4) 0 0;
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
   line-height: 1.65;
 }
 
@@ -921,7 +921,7 @@
 .nuvia-site-footer__heading {
   margin: 0 0 var(--nv-space-4);
   color: var(--nv-white);
-  font-size: 12px; /* suelo tipográfico (bases §4) */
+  font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
   letter-spacing: .14em;
   line-height: 1.3;
@@ -937,8 +937,8 @@
 }
 
 .nuvia-site-footer__links a,
-.nuvia-site-footer__info span {
-  font-size: 13px;
+.nuvia-site-footer__info > span {
+  font-size: var(--nv-body-sm);
   line-height: 1.5;
   text-decoration: none;
 }
@@ -949,7 +949,7 @@
   gap: var(--nv-space-6);
   border-top: 1px solid rgba(255, 255, 255, .12);
   margin-top: var(--nv-space-8);
-  font-size: 12px; /* suelo tipográfico (bases §4) */
+  font-size: var(--nv-label);
   line-height: 1.5;
   padding-top: var(--nv-space-5);
 }
@@ -967,7 +967,7 @@
 
   .nuvia-site-nav { gap: var(--nv-space-4); }
   .nuvia-site-nav > a,
-  .nuvia-site-nav__topics > summary { font-size: 12px; }
+  .nuvia-site-nav__topics > summary { font-size: var(--nv-label); }
 
   .nuvia-site-footer__grid {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
@@ -1056,7 +1056,7 @@
   background: var(--nv-bg);
   color: var(--nv-text);
   cursor: pointer;
-  font-size: 13.5px;
+  font-size: var(--nv-body-sm);
   padding: var(--nv-space-2) var(--nv-space-3);
   transition: border-color .2s ease;
 }
