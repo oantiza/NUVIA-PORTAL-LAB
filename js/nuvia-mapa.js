@@ -17,7 +17,11 @@ export const NOTA_MAPA = 'El mapa colorea cada continente según el peso de '
   + 'la parte de renta variable de esta combinación que le corresponde, '
   + 'con la cifra al lado: describe dónde está hoy ese dinero, nada más.';
 
-/** Región de la concentración → continente del mapa. */
+/** Región de la concentración → continente del mapa. Incluye tanto las
+ *  claves de la distribución estimada como las que sirven los desgloses
+ *  reales de la base (p. ej. «iberia» o «middle_east», vistas en
+ *  producción). Una clave que no esté aquí —como «other»— no se pinta:
+ *  se declara «fuera del mapa», nunca se adivina. */
 export const REGIONES_CONTINENTE = {
   united_states: 'america',
   canada: 'america',
@@ -27,7 +31,16 @@ export const REGIONES_CONTINENTE = {
   europe_ex_euro: 'europa',
   united_kingdom: 'europa',
   europe: 'europa',
+  developed_europe: 'europa',
+  emerging_europe: 'europa',
+  iberia: 'europa',
+  spain: 'europa',
+  portugal: 'europa',
+  nordics: 'europa',
+  switzerland: 'europa',
   africa_middle_east: 'africa',
+  middle_east: 'africa',
+  africa: 'africa',
   japan: 'asia',
   asia_developed: 'asia',
   asia_emerging: 'asia',

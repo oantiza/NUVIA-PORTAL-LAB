@@ -1133,12 +1133,23 @@ Nivel registrado.
 > **Publicado en producción (20-08-2026, `1450c37`).** Los tres módulos
 > servidos y comprobados en la web publicada (`nuvia-mapa.js`,
 > `nuvia-mapa-siluetas.js` y el `nuvia-analisis.js` con abanico y mapa
-> riesgo). El repaso visual en el navegador de producción quedó para la
-> siguiente sesión con Chrome abierto: en el momento de publicar estaba
-> cerrado, y no se da por visto lo que no se ha visto. Nota de
-> publicación: `origin/main` se movió dos veces durante el paso (React
-> autoalojado y auditoría de consola, de otra sesión); ambos rebases
-> limpios y `npm run validate` en verde sobre el estado combinado.
+> riesgo). Nota de publicación: `origin/main` se movió dos veces durante
+> el paso (React autoalojado y auditoría de consola, de otra sesión);
+> ambos rebases limpios y `npm run validate` en verde sobre el estado
+> combinado.
+>
+> **Verificado en producción (20-08-2026).** Con la sesión del
+> administrador y una cartera real (Iberdrola + Cobas Selection): el
+> abanico con su banda cerrada; el mapa riesgo/rentabilidad con sus dos
+> puntos y «Tu combinación» marcada; el mapa de continentes con las
+> cinco siluetas y la leyenda con cifras. La regla de honestidad hizo su
+> trabajo a la primera: los desgloses REALES de la base usan claves que
+> el diccionario no cubría —«iberia» (¡51,4 % de esa cartera!),
+> «middle_east», «other»— y quedaron **declaradas «fuera del mapa» en
+> vez de perderse en silencio**. Se amplió `REGIONES_CONTINENTE` con las
+> claves reales (iberia/spain/portugal/nordics/… → Europa; middle_east →
+> África y O. Medio) y la batería las cubre; «other» sigue declarada,
+> que es lo honesto: no se adivina dónde está «otro sitio».
 
 ---
 

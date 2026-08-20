@@ -40,6 +40,14 @@ console.log('— Agregación por continentes —');
     a.sinContinente.length === 1 && a.sinContinente[0].clave === 'marte');
   comprueba('La clave se normaliza a minúsculas',
     exposicionPorContinente([{ clave: 'Japan', peso: 10 }]).pesos.asia === 10);
+  /* Claves de los desgloses REALES de la base, vistas en producción. */
+  const reales = exposicionPorContinente([
+    { clave: 'iberia', peso: 51.4 }, { clave: 'middle_east', peso: 0.7 }, { clave: 'other', peso: 6.9 },
+  ]);
+  comprueba('Iberia cuenta como Europa y Oriente Medio con África (claves reales)',
+    Math.abs(reales.pesos.europa - 51.4) < 1e-9 && Math.abs(reales.pesos.africa - 0.7) < 1e-9);
+  comprueba('«other» no se adivina: queda declarada fuera del mapa',
+    reales.sinContinente.length === 1 && reales.sinContinente[0].clave === 'other');
   comprueba('Sin filas no hay mapa, nada se inventa',
     exposicionPorContinente([]) === null && exposicionPorContinente(null) === null);
 }
