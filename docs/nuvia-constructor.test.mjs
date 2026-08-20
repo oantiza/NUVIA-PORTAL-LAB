@@ -11,6 +11,7 @@ import {
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
   carterasLocalesParaNube,
   MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
+  puntosEvolucion, trazadoLinea,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -268,6 +269,33 @@ console.log('\n— Límite por nivel (paso 33) —');
 console.log('\n— Fechas —');
 comprueba('2026-08-15 → 15-08-2026', fechaCorta('2026-08-15') === '15-08-2026');
 comprueba('Fecha ilegible → null, no una fecha inventada', fechaCorta('ayer') === null && fechaCorta(null) === null);
+
+console.log('\n— Evolución de la combinación (gráfico, encargo 20-08) —');
+{
+  const niveles = [1, 1.1, 0.99, 1.2];
+  const fechas = ['2023-08-18', '2024-08-18', '2025-08-18', '2026-08-18'];
+  const p = puntosEvolucion(niveles, fechas);
+  comprueba('Los niveles se rebasan a base 100 con su mínimo y su máximo',
+    p && p.base[0] === 100 && p.base[3] === 120 && p.min === 99 && p.max === 120);
+  comprueba('Sin fechas casadas con los niveles no hay gráfico, nada se inventa',
+    puntosEvolucion(niveles, fechas.slice(0, 3)) === null
+    && puntosEvolucion([1], ['2026-01-01']) === null
+    && puntosEvolucion([NaN, NaN], fechas.slice(0, 2)) === null);
+
+  const escala = { W: 560, H: 220, izq: 56, der: 14, arriba: 12, abajo: 26, min: 99, max: 120 };
+  const d = trazadoLinea(p.base, escala);
+  comprueba('El trazado es un camino SVG que arranca en M y avanza con L',
+    /^M[\d.]+,[\d.]+( L[\d.]+,[\d.]+){3}$/.test(d));
+  const xs = [...d.matchAll(/[ML]([\d.]+),/g)].map((m2) => Number(m2[1]));
+  comprueba('La x avanza de izquierda a derecha, un punto por sesión',
+    xs.length === 4 && xs.every((x, i) => i === 0 || x > xs[i - 1])
+    && xs[0] === 56 && xs[3] === 546);
+  const ys = [...d.matchAll(/,([\d.]+)/g)].map((m2) => Number(m2[1]));
+  comprueba('El máximo toca el borde de arriba y el mínimo el de abajo',
+    Math.min(...ys) === 12 && Math.max(...ys) === 194);
+  comprueba('Un hueco no numérico se salta sin romper el camino',
+    /^M[\d.]+,[\d.]+ L[\d.]+,[\d.]+$/.test(trazadoLinea([100, NaN, 110], { ...escala, min: 100, max: 110 })));
+}
 
 if (fallos) {
   console.error(`\n${fallos} comprobación(es) fallida(s).`);

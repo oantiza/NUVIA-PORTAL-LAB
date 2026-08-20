@@ -380,6 +380,17 @@ rentabilidad.
 
 ## 7. Estado técnico
 
+**También hecho — evolución de la combinación con sus caídas (paso 39,
+20-08-2026):** primer gráfico de la Fase 6 (recuperar en el laboratorio
+nuevo los del clásico, encargo de Óscar). En el constructor y para todos
+los niveles: `puntosEvolucion` + `trazadoLinea` (puras, en la batería) y
+`grupoEvolucion` (dos paneles SVG con los tokens del sistema: línea en
+base 100 con referencia punteada en 100 y las dos fechas de la ventana;
+debajo, caídas desde máximos con área). Sin llamadas nuevas a la red: el
+mismo `get_price_series` de las métricas. Textos que describen sin
+proyectar («Describe lo ocurrido, no lo que viene»); §5 con cero cruces
+sobre el bloque renderizado.
+
 **Ya hecho:** módulo de cálculo `js/nuvia-cartera.js`, extraído de
 `src/core/portfolioRiskModel.ts`, `quantConfig.ts` y `frontier.ts` de la
 plataforma. Funciones puras: volatilidad con matriz de correlaciones,

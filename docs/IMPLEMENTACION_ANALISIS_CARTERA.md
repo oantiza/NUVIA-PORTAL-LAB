@@ -1027,6 +1027,42 @@ contratarlas: eso cerraría el círculo hacia la recomendación.
 
 ---
 
+# Fase 6 · Los gráficos del laboratorio clásico, en el nuevo
+
+**Encargo de Óscar (20-08-2026):** «quiero por lo menos los que había
+antes». Los gráficos del laboratorio clásico (la suite del núcleo, hoy
+enlazada como «Laboratorio clásico (gráficos)» en la cabecera) se
+reconstruyen dentro del laboratorio nuevo, con datos reales de la base y
+respetando la tabla de niveles del paso 1. Orden acordado: evolución +
+caídas (39), Montecarlo como abanico (40), mapa riesgo/rentabilidad (41),
+distribución geográfica con mapa (42).
+
+### Paso 39 · Evolución de la combinación y sus caídas
+
+**Hacer.** En el constructor, para todos los niveles: la línea de la
+cartera en base 100 sobre la ventana real de 3 años y, debajo, la curva de
+caídas desde máximos. Sin llamadas nuevas: el mismo `get_price_series` que
+ya alimenta las métricas.
+
+> **Hecho y verificado (20-08-2026).** `puntosEvolucion(niveles, fechas)`
+> (rebase a 100; null si fechas y niveles no casan o hay menos de dos
+> puntos válidos) y `trazadoLinea(valores, escala)` (camino SVG puro; los
+> huecos no numéricos se saltan sin cortar) en `js/nuvia-constructor.js`,
+> ambos en la batería. `grupoEvolucion` pinta los dos paneles SVG con los
+> tokens del sistema (línea `--nv-green-700`, caídas `--nv-bronze-700` con
+> área al 14 %), referencia punteada en 100, etiquetas de eje que no se
+> pisan cuando el mínimo queda pegado a 100, las dos fechas de la ventana
+> y `aria-label` descriptivo por panel. Textos honestos: «Describe lo
+> ocurrido, no lo que viene» y «El cero es estar en máximos». La fuente
+> del bloque (fecha de cierre, base NUVIA, observaciones) cubre también
+> estos paneles. **Verificado en navegador** (14 comprobaciones): los dos
+> paneles aparecen al montar la combinación; la línea lleva los ~300
+> puntos reales; el área de caídas cerrada; criba §5 con cero cruces
+> sobre el bloque renderizado; sin desbordes a 1440/1024/390; suelo de
+> 12 px; sin errores de consola.
+
+---
+
 # Transversal
 
 ## Antes de publicar cualquier cosa

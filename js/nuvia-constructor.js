@@ -12,7 +12,7 @@
  */
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
-import { metricasDesdeSerie, serieDeCaidas, pct, DIAS_MERCADO } from './nuvia-cartera.js';
+import { metricasDesdeSerie, serieDeCaidas, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
 import { montaAnalisis } from './nuvia-analisis.js';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
@@ -109,6 +109,122 @@ export function fechaCorta(iso) {
 const EUROS = new Intl.NumberFormat('es-ES', {
   style: 'currency', currency: 'EUR', maximumFractionDigits: 0,
 });
+
+/* ── Evolución de la combinación (encargo de Óscar, 20-08-2026): la línea
+   en base 100 y, debajo, las caídas desde máximos. Todo sale del mismo
+   historial real ya descargado; no hay ninguna llamada nueva a la red. ── */
+
+/**
+ * Prepara los puntos del gráfico de evolución: niveles (que arrancan en 1)
+ * rebasados a 100, con sus fechas. Devuelve null si no hay al menos dos
+ * puntos válidos o si fechas y niveles no casan: nada se inventa.
+ */
+export function puntosEvolucion(niveles, fechas) {
+  if (!Array.isArray(niveles) || niveles.length < 2) return null;
+  if (!Array.isArray(fechas) || fechas.length !== niveles.length) return null;
+  const base = niveles.map((v) => (Number.isFinite(v) ? v * 100 : NaN));
+  const validos = base.filter(Number.isFinite);
+  if (validos.length < 2) return null;
+  return { base, fechas, min: Math.min(...validos), max: Math.max(...validos) };
+}
+
+/**
+ * Trazado SVG («d» de un <path>) de una serie de valores: x avanza por
+ * índice, y escala entre min y max dentro de los márgenes dados. Los
+ * valores no numéricos se saltan sin cortar la línea. Pura y probada.
+ */
+export function trazadoLinea(valores, { W, H, izq, der, arriba, abajo, min, max }) {
+  const n = valores.length;
+  const anchoX = W - izq - der;
+  const altoY = H - arriba - abajo;
+  const rango = (max - min) || 1;
+  let d = '';
+  for (let i = 0; i < n; i += 1) {
+    const v = valores[i];
+    if (!Number.isFinite(v)) continue;
+    const x = izq + (i / ((n - 1) || 1)) * anchoX;
+    const y = H - abajo - ((v - min) / rango) * altoY;
+    d += `${d ? ' L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }
+  return d;
+}
+
+/** El gráfico de evolución con su panel de caídas. Null si faltan datos. */
+export function grupoEvolucion({ niveles, fechas }) {
+  const p = puntosEvolucion(niveles, fechas);
+  if (!p) return null;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const nodoSvg = (tag, attrs, texto) => {
+    const e = document.createElementNS(ns, tag);
+    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+    if (texto != null) e.textContent = texto;
+    return e;
+  };
+  const desde = fechaCorta(p.fechas[0]);
+  const hasta = fechaCorta(p.fechas[p.fechas.length - 1]);
+  const bloque = el('div', { class: 'nv-evolucion' });
+  bloque.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Evolución de la combinación'));
+  bloque.append(el('p', { class: 'nv-cons__nota-clase' },
+    'La línea arranca en 100 al principio de la ventana y sigue, día a día, el valor de este reparto. Describe lo ocurrido, no lo que viene.'));
+
+  /* La línea en base 100. */
+  const W = 560; const H = 220; const izq = 56; const der = 14; const arriba = 12; const abajo = 26;
+  const svg = nodoSvg('svg', {
+    viewBox: `0 0 ${W} ${H}`,
+    class: 'nv-evolucion__svg',
+    role: 'img',
+    'aria-label': `Evolución en base 100 del ${desde} al ${hasta}: entre ${num(p.min, 0)} y ${num(p.max, 0)}, terminando en ${num(p.base[p.base.length - 1], 0)}.`,
+  });
+  const escala = { W, H, izq, der, arriba, abajo, min: p.min, max: p.max };
+  const yDe = (v) => H - abajo - ((v - p.min) / ((p.max - p.min) || 1)) * (H - arriba - abajo);
+  const yaPintadas = [];
+  for (const ref of [...new Set([100, p.min, p.max])].filter((v) => v >= p.min && v <= p.max)) {
+    const yy = yDe(ref);
+    svg.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: ref === 100 ? 'nv-evolucion__cien' : 'nv-evolucion__rejilla' }));
+    /* La etiqueta solo si no se pisa con otra ya puesta (mínimos pegados a 100). */
+    if (yaPintadas.every((otra) => Math.abs(otra - yy) > 12)) {
+      svg.append(nodoSvg('text', { x: izq - 6, y: yy + 4, 'text-anchor': 'end', class: 'nv-frontera__eje' }, num(ref, 0)));
+      yaPintadas.push(yy);
+    }
+  }
+  svg.append(nodoSvg('path', { d: trazadoLinea(p.base, escala), class: 'nv-evolucion__linea', fill: 'none' }));
+  svg.append(nodoSvg('text', { x: izq, y: H - 6, class: 'nv-frontera__eje' }, desde || ''));
+  svg.append(nodoSvg('text', { x: W - der, y: H - 6, 'text-anchor': 'end', class: 'nv-frontera__eje' }, hasta || ''));
+  bloque.append(svg);
+
+  /* Las caídas desde máximos, en el mismo eje temporal. */
+  const caidas = serieDeCaidas(niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
+  const cMin = Math.min(0, ...caidas.filter(Number.isFinite));
+  const H2 = 120;
+  const svg2 = nodoSvg('svg', {
+    viewBox: `0 0 ${W} ${H2}`,
+    class: 'nv-evolucion__svg',
+    role: 'img',
+    'aria-label': `Caídas desde máximos en el mismo periodo: la peor llegó al ${num(cMin, 1)} %.`,
+  });
+  const escala2 = { W, H: H2, izq, der, arriba: 10, abajo: 18, min: cMin, max: 0 };
+  const yDe2 = (v) => H2 - 18 - ((v - cMin) / ((0 - cMin) || 1)) * (H2 - 10 - 18);
+  for (const ref of [...new Set([0, cMin])]) {
+    const yy = yDe2(ref);
+    svg2.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: 'nv-evolucion__rejilla' }));
+    svg2.append(nodoSvg('text', { x: izq - 6, y: yy + 4, 'text-anchor': 'end', class: 'nv-frontera__eje' }, `${num(ref, 0)} %`));
+  }
+  const linea = trazadoLinea(caidas, escala2);
+  if (linea) {
+    const primeraX = izq.toFixed(1);
+    const ultimaX = (W - der).toFixed(1);
+    const suelo = yDe2(0).toFixed(1);
+    svg2.append(nodoSvg('path', {
+      d: `${linea} L${ultimaX},${suelo} L${primeraX},${suelo} Z`,
+      class: 'nv-evolucion__caida-area',
+    }));
+    svg2.append(nodoSvg('path', { d: linea, class: 'nv-evolucion__caida-linea', fill: 'none' }));
+  }
+  bloque.append(el('p', { class: 'nv-cons__nota-clase' }, 'Caídas desde máximos: la distancia al máximo anterior en cada momento. El cero es estar en máximos.'));
+  bloque.append(svg2);
+  return bloque;
+}
 
 /**
  * Lecturas en lenguaje llano de la tabla de métricas (paso 22): cada cifra
@@ -740,6 +856,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
     envoltorio.append(tabla);
     resultados.append(envoltorio);
+
+    const evolucion = grupoEvolucion({ niveles, fechas: payload?.dates || null });
+    if (evolucion) resultados.append(evolucion);
 
     const fecha = fechaCorta(payload?.coverage?.last_date);
     resultados.append(el('p', { class: 'nv-cons__fuente' },

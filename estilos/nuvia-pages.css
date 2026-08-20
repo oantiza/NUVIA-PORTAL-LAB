@@ -4492,6 +4492,21 @@
 .nv-frontera__etiqueta { font-size: var(--nv-body-sm); }
 .nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); }
 
+/* Evolución de la combinación y sus caídas (encargo 20-08-2026) */
+.nv-evolucion { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }
+.nv-evolucion__svg {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-block: var(--nv-space-1);
+}
+.nv-evolucion__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-evolucion__rejilla { stroke: var(--nv-border-strong, #d5dbe3); stroke-width: 1; }
+.nv-evolucion__cien { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
+.nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
+.nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
+
 /* Nota de qué añade el suscriptor, al pie del análisis del registrado */
 .nv-analisis__suscriptor { font-size: var(--nv-label); color: var(--nv-text-muted); }
 
