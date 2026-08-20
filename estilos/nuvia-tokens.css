@@ -197,6 +197,13 @@
   --nv-line-on-dark: rgba(255, 255, 255, .14);
   --nv-line-on-dark-strong: rgba(255, 255, 255, .25);
 
+  /* El filete de un control sobre oscuro tiene tres estados, y los tres
+     estaban escritos a mano en cada sitio con valores distintos: las
+     pastillas de vivienda usaban .3/.6/.9, la llamada de Academia .35/.7 y
+     las pestañas de mercados .22/.25. Reposo es --nv-line-on-dark-strong,
+     activo es --nv-white, y este es el de en medio. */
+  --nv-line-on-dark-hover: rgba(255, 255, 255, .55);
+
   /* Superficies */
   --nv-surface: var(--nv-white);
   --nv-surface-technical: var(--nv-mist);

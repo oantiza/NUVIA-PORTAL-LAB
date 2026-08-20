@@ -43,9 +43,6 @@
 
 .nv-section--deep p { color: var(--nv-text-on-dark-soft); }
 
-.nv-stack     { display: grid; gap: var(--nv-space-5); }
-.nv-stack--sm { gap: var(--nv-space-3); }
-.nv-stack--lg { gap: var(--nv-space-10); }
 
 
 /* ── ETIQUETAS Y ENCABEZADOS DE SECCIÓN ─────────────────────────────────── */
@@ -354,7 +351,7 @@
 .nv-hero--photo .nv-btn--soft,
 .nv-hero--institutional .nv-btn--soft,
 .nv-section--deep .nv-btn--soft {
-  border-color: rgba(255, 255, 255, .28);
+  border-color: var(--nv-line-on-dark-hover);
   background: transparent;
   color: var(--nv-white);
 }
@@ -429,13 +426,6 @@
 
 /* Numeración SOLO cuando el contenido es realmente una secuencia
    (capítulos de curso, pasos de una guía). Nunca como adorno. */
-.nv-card__step {
-  color: var(--nv-green-700);
-  font-family: var(--nv-font-serif);
-  font-size: var(--nv-title-md);
-  line-height: 1;
-}
-
 .nv-card > .nv-btn,
 .nv-card > .nv-btn-row {
   align-self: flex-start;
@@ -565,37 +555,6 @@
 
 /* ── DATOS ──────────────────────────────────────────────────────────────── */
 
-.nv-figure-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--nv-space-5);
-}
-
-.nv-figure {
-  border-top: 1px solid var(--nv-line);
-  padding-top: var(--nv-space-4);
-}
-
-.nv-figure__value {
-  display: block;
-  font-size: var(--nv-title-md);
-  font-variant-numeric: tabular-nums;
-  font-weight: var(--nv-weight-title);
-  letter-spacing: -.02em;
-  line-height: 1.1;
-}
-
-.nv-figure__label {
-  display: block;
-  margin-top: var(--nv-space-2);
-  color: var(--nv-text-muted);
-  font-size: var(--nv-label);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.nv-figure--positive .nv-figure__value { color: var(--nv-positive); }
-.nv-figure--negative .nv-figure__value { color: var(--nv-negative); }
 
 .nv-table {
   width: 100%;
@@ -721,7 +680,7 @@
   z-index: 80;
   top: 0;
   border-bottom: 1px solid var(--nv-line);
-  background: rgba(255, 255, 255, .94);
+  background: var(--nv-white);
   box-shadow: 0 8px 24px rgba(6, 23, 47, .04);
   backdrop-filter: blur(16px);
 }
@@ -877,7 +836,7 @@
 /* ── Pie ────────────────────────────────────────────────────────────────── */
 
 .nuvia-site-footer {
-  border-top: 1px solid rgba(255, 255, 255, .12);
+  border-top: 1px solid var(--nv-line-on-dark);
   background: var(--nv-navy-950);
   color: var(--nv-text-on-dark-soft);
 }
@@ -947,7 +906,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--nv-space-6);
-  border-top: 1px solid rgba(255, 255, 255, .12);
+  border-top: 1px solid var(--nv-line-on-dark);
   margin-top: var(--nv-space-8);
   font-size: var(--nv-label);
   line-height: 1.5;
@@ -1043,7 +1002,6 @@
   gap: var(--nv-space-4);
 }
 
-.nv-fields--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 
 /* Desplegable suelto, fuera de .nv-field__box. Sin esta regla el select se

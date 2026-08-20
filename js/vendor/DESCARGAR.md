@@ -1,8 +1,14 @@
 # Dependencias autoalojadas
 
 `support.js` redirige React y ReactDOM a esta carpeta mediante
-`window.__resources`. Si los ficheros no están, el navegador cae de vuelta
-al CDN, así que la web no se rompe — pero se pierde la ventaja.
+`window.__resources`, que asigna `js/recursos.js`. Ese fichero va antes que
+`support.js` en el `<head>` de las quince páginas con componente, y los dos
+llevan `defer`, que conserva el orden del documento.
+
+Si los ficheros no están, el navegador cae de vuelta al CDN, así que la web no
+se rompe — pero se pierde la ventaja, que es no depender de unpkg para
+arrancar. Comprobado bloqueando unpkg entero: las quince páginas pintan
+exactamente los mismos píxeles.
 
 Para descargarlos (una sola vez, y al actualizar versión):
 
