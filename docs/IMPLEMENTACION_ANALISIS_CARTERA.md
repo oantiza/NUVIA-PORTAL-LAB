@@ -1060,6 +1060,15 @@ ya alimenta las métricas.
 > puntos reales; el área de caídas cerrada; criba §5 con cero cruces
 > sobre el bloque renderizado; sin desbordes a 1440/1024/390; suelo de
 > 12 px; sin errores de consola.
+>
+> **Verificado en producción (20-08-2026).** En la página publicada, con
+> Iberdrola en el constructor: la línea con **766 observaciones reales**
+> de la base (ventana 17-08-2023 → 19-08-2026), de 100 a 229 —la misma
+> rentabilidad del 110,3 % que declara la tabla—, la referencia punteada
+> en 100 y el panel de caídas llegando al −12 %, que casa con la máxima
+> caída de la tabla (−12,2 %, punto más bajo 03-10-2023). La sesión del
+> administrador enseñó a la vez el análisis completo y el tope de 20
+> posiciones: el acceso del dueño funciona también en producción.
 
 ---
 
