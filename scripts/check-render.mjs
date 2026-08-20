@@ -66,6 +66,25 @@ const CONTENIDO = {
   'guia-fiscal.html':      [['.gu-hero__title', 1]],
 };
 
+/* Errores de consola conocidos, con su recuento exacto.
+
+   El navegador analiza la plantilla en crudo antes de que el runtime la
+   sustituya, y un points="{{ … }}" o un d="{{ … }}" dentro de un <svg> le hace
+   quejarse. No afecta a nada: el gráfico se pinta bien en cuanto React entrega
+   los valores. Pero veinte errores permanentes son veinte sitios donde puede
+   esconderse uno nuevo, así que se cuentan: si aparece otro, o si estos
+   cambian de número, la auditoría falla.
+
+   Para quitarlos habría que cambiar cómo se escriben los gráficos, no la hoja
+   de estilo: la sintaxis del runtime obliga a poner la interpolación en el
+   atributo. */
+const RUIDO_CONOCIDO = /<(polyline|polygon|path|circle|rect|line)>\s+attribute\s+(points|d|cx|cy|r|x|y)\b/i;
+const ERRORES_ESPERADOS = {
+  'academia.html': 10,
+  'jubilacion.html': 4,
+  'fiscalidad.html': 1,
+};
+
 const PAGINAS = [
   'index.html', 'mercados.html', 'cartera.html', 'academia.html', 'curso.html',
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
@@ -191,8 +210,19 @@ for (const ancho of ANCHOS) {
   const ctx = await navegador.newContext({ viewport: { width: ancho, height: 1000 } });
   const p = await ctx.newPage();
   for (const pag of PAGINAS) {
+    const consola = [];
+    const anotar = (m) => { if (m.type() === 'error' && !/ERR_TUNNEL|ERR_BLOCKED|ERR_NAME|Failed to load resource|tradingview|fonts\.googleapis|identitytoolkit/i.test(m.text())) consola.push(m.text().slice(0, 90)); };
+    const anotarError = (e) => consola.push('pageerror: ' + e.message.slice(0, 90));
+    p.on('console', anotar); p.on('pageerror', anotarError);
     await p.goto(base + pag, { waitUntil: 'load', timeout: 60000 });
     await p.waitForTimeout(4200);
+    p.off('console', anotar); p.off('pageerror', anotarError);
+    const ruido = consola.filter((t) => RUIDO_CONOCIDO.test(t));
+    const nuevos = consola.filter((t) => !RUIDO_CONOCIDO.test(t));
+    const esperados = ERRORES_ESPERADOS[pag] || 0;
+    const desvio = ruido.length !== esperados
+      ? [`el ruido conocido de plantilla pasó de ${esperados} a ${ruido.length} errores`]
+      : [];
     const r = await p.evaluate(MEDIR, ESCALA);
     const fallos = [];
     for (const it of r.textos) {
@@ -228,9 +258,11 @@ for (const ancho of ANCHOS) {
     }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + faltan.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}`);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
+    for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
+    for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
     for (const x of fallos) problemas.push(`${pag} @${ancho} · contraste ${x}`);
     for (const x of r.pequenos) problemas.push(`${pag} @${ancho} · bajo el suelo ${x}`);
     for (const [k, v] of escala) problemas.push(`${pag} @${ancho} · fuera de escala ×${v} ${k}`);
