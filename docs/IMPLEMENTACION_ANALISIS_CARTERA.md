@@ -1153,6 +1153,68 @@ Nivel registrado.
 
 ---
 
+# Fase 7 · Rediseño de los gráficos para lectores no avezados
+
+**El encargo (20-08-2026).** Óscar rechazó la primera entrega de la Fase 6
+en pleno: «Los gráficos no nos quedan nada claros, la frontera eficiente
+está deformada, no hay un gráfico de riesgos… No aparecen las carteras
+modelo. Esto no hay quien lo trabaje, ni estética ni funcional ni de
+diseño.» Y dio la referencia: **los gráficos del laboratorio clásico**
+(`core/index.html?portfolioPreview=1`). El diagnóstico con sus ojos, sobre
+su cartera real de 12 posiciones: frontera como un garabato con gancho,
+mapa de riesgo con las etiquetas montadas en una mancha, carteras modelo
+enterradas a 4.500 px sin enlace, sectores y regiones en inglés crudo, y
+matrices que se desbordaban.
+
+**Hecho y verificado (20-08-2026, commits fd79504 + cb0f38e + 167b40b).**
+
+- **El lenguaje del clásico, con tokens NUVIA**: cada gráfico vive en un
+  panel crema (`--nv-paper-light`) con título legible, una línea de «qué
+  enseña», rejilla punteada discreta y una fila de cifras al pie.
+- **La frontera es un arco liso**: `tramoEficiente()` (solo los puntos que
+  rentan más que todo lo anterior), `envolventeConcava()` (los vértices
+  superiores, pendiente siempre decreciente: fuera los dientes del
+  muestreo de Montecarlo) y `suavizaEsquinas()` (Chaikin, extremos fijos).
+  Curva gruesa azul marino, «Tu combinación» rotulada, sin nube de puntos.
+  El recorrido interactivo del suscriptor pinta el reparto de cada punto
+  como lista con barras, no como párrafo.
+- **Mapa de riesgo numerado**: cada posición es un círculo con número
+  (separados por `separaVerticalmente()`, con trazo de unión si la marca
+  se aparta del punto) y la lista de debajo dice qué es cada número con
+  sus cifras. Se acabaron las etiquetas montadas.
+- **Gráfico de riesgos nuevo**: «Cuánto riesgo pone cada posición»
+  (`contribucionesRiesgo()`, contribución a la varianza en % del total,
+  suma 100; la negativa se declara como amortiguación).
+- **Correlaciones y solapamiento en llano**: pares destacados
+  (`paresDestacados()`, `fraseCorrelacion()`) y la matriz completa plegada
+  en `<details>` con nombres cortos (`nombreCorto()`) y celdas tintadas.
+- **Todo en castellano**: `js/nuvia-etiquetas.js` traduce sectores y
+  regiones (bases §4, «cero jerga sin traducir»); una clave desconocida se
+  enseña aseada, nunca se esconde. `europe_emerging` (clave real vista en
+  producción) cuenta ya como Europa.
+- **Abanico a dos tonos**: `proyeccionMonteCarlo()` sirve ahora p25/p75 y
+  la banda interior de cuartiles va sobre la ancha, con la mediana
+  discontinua en azul marino, como el clásico.
+- **La página, ordenada**: carteras modelo justo después del constructor y
+  barra de atajos arriba (`.nv-atajos`) con las seis secciones a un clic.
+- **Escalas con marcas redondas** (`marcasEje()`) y gráficos a 760 px.
+
+Baterías nuevas en `docs/nuvia-etiquetas.test.mjs` y ampliadas en
+`docs/nuvia-analisis.test.mjs` (arco cóncavo: pendiente decreciente y
+ningún punto muestreado por encima). Verificación Playwright con cartera
+de 6 fondos: 26 comprobaciones en verde, sin desbordes a 1440/1024/390 y
+suelo de 12 px en todo el análisis.
+
+> **Verificado en producción (20-08-2026).** Publicado por el canal del
+> PC (bundle de 3 commits, 20 tramos verificados por SHA-256, dos tramos
+> reparados por cuartos). `origin/main` = `167b40b`; Pages desplegado y
+> comprobado desde el PC: atajos servidos, carteras modelo antes de «Tu
+> cuenta» y el arco nuevo en `nuvia-analisis.js`. El repaso visual en el
+> Chrome de Óscar queda pendiente de que vuelva a abrirlo (la extensión
+> se desconectó tras aprobar la publicación).
+
+---
+
 # Transversal
 
 ## Antes de publicar cualquier cosa
