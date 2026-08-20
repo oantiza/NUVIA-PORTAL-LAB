@@ -24,7 +24,11 @@
   display: block;
   max-width: 100%;
 }
-.nv-system a {
+/* Esta regla existe para que los enlaces de las muestras no salgan en verde
+   de enlace. Pero con (0,1,1) le gana a .nv-btn--primary (0,1,0), y los
+   botones primarios de esta página heredaban el color del contenedor: tinta
+   sobre tinta. El texto del botón no se veía. */
+.nv-system a:not([class*="nv-btn"]) {
   color: inherit;
 }
 .nv-system button,
@@ -62,7 +66,7 @@
 }
 .nv-section-heading h2 {
   font-size: var(--nv-title-lg);
-  font-weight: 500;
+  font-weight: var(--nv-weight-title);
   letter-spacing: -.025em;
   line-height: 1.1;
 }
@@ -70,13 +74,16 @@
   color: var(--nv-muted);
   font-size: var(--nv-body-sm);
 }
+/* El verde criterio es de fondo, filete e icono; nunca de texto: lo dice el
+   comentario del propio token. Aquí iba a 2,96:1 sobre crema, y precisamente
+   en la página que fija la regla. */
 .nv-eyebrow {
   display: inline-flex;
-  gap: 12px;
+  gap: var(--nv-space-3);
   align-items: center;
-  color: var(--nv-green-500);
+  color: var(--nv-text-link);
   font-size: var(--nv-label);
-  font-weight: 700;
+  font-weight: var(--nv-weight-label);
   letter-spacing: .18em;
   line-height: 1.2;
   text-transform: uppercase;
@@ -106,7 +113,7 @@
   gap: 30px;
   align-items: center;
   color: var(--nv-copy);
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
 }
 .nv-header-preview__nav a {
   text-decoration: none;
@@ -121,8 +128,8 @@
   border-radius: var(--nv-radius-pill);
   background: var(--nv-green-100);
   color: var(--nv-green-700);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
   letter-spacing: .12em;
   padding: 7px 12px;
   text-transform: uppercase;
@@ -133,8 +140,12 @@
   background:
     radial-gradient(circle at 88% 8%, rgba(124, 154, 68, .18), transparent 28rem),
     linear-gradient(135deg, var(--nv-navy-950), var(--nv-navy-800));
-  color: white;
+  color: var(--nv-text-on-dark);
 }
+
+/* El antetítulo del héroe va sobre azul oscuro, así que necesita el verde
+   claro, no el de enlace: sobre este fondo daba 2,34:1. */
+.nv-guide-hero .nv-eyebrow { color: var(--nv-green-300); }
 .nv-guide-hero::after {
   position: absolute;
   right: -180px;
@@ -160,7 +171,7 @@
   max-width: 880px;
   margin: var(--nv-space-6) 0;
   font-size: var(--nv-display-lg);
-  font-weight: 500;
+  font-weight: var(--nv-weight-title);
   letter-spacing: -.045em;
   line-height: 1.02;
 }
@@ -180,7 +191,7 @@
   margin-top: var(--nv-space-4);
   font-family: var(--nv-font-serif);
   font-size: var(--nv-title-sm);
-  font-weight: 500;
+  font-weight: var(--nv-weight-title);
 }
 .nv-guide-hero__aside p {
   margin: var(--nv-space-3) 0 0;
@@ -209,35 +220,44 @@
   display: block;
 }
 .nv-swatch__caption strong {
-  font-size: 14px;
+  font-size: var(--nv-body-sm);
 }
 .nv-swatch__caption span {
   margin-top: 3px;
   color: var(--nv-muted);
-  font-size: 12px;
+  font-size: var(--nv-label);
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+/* Los <h3> de las muestras de tipografía y de héroe no tenían regla propia y
+   salían a los 18,72 px por defecto del navegador, en la página que enseña
+   la escala. */
+.nv-type-panel h3,
+.nv-hero-sample h3 { margin: 0; font-size: var(--nv-title-sm); line-height: 1.2; }
+
 .nv-type-row {
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
   gap: var(--nv-space-5);
   align-items: baseline;
 }
-.nv-type-row span {
-  color: var(--nv-muted);
-  font-size: 11px;
+.nv-type-row > span {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 .nv-type-row strong {
-  font-weight: 500;
+  font-weight: var(--nv-weight-title);
   line-height: 1.15;
 }
-.nv-type-row:nth-child(1) strong { font-size: 44px; }
-.nv-type-row:nth-child(2) strong { font-size: 32px; }
-.nv-type-row:nth-child(3) strong { font-size: 22px; }
-.nv-type-row:nth-child(4) strong { font-size: 16px; }
+/* Las muestras enseñaban 44, 32, 22 y 16 px con los rótulos «Display 44-72»
+   y «Título 32-36». Ni el 44 ni el 32 existen en la escala. Ahora cada
+   muestra usa el token que dice su rótulo. */
+.nv-type-row:nth-child(1) strong { font-size: var(--nv-display-lg); }
+.nv-type-row:nth-child(2) strong { font-size: var(--nv-title-lg); }
+.nv-type-row:nth-child(3) strong { font-size: var(--nv-title-sm); }
+.nv-type-row:nth-child(4) strong { font-size: var(--nv-body); }
 .nv-rules {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -258,16 +278,16 @@
   border-radius: 50%;
   background: var(--nv-green-100);
   color: var(--nv-green-700);
-  font-weight: 700;
+  font-weight: var(--nv-weight-label);
 }
 .nv-rule strong {
   display: block;
-  font-size: 15px;
+  font-size: var(--nv-body);
 }
 .nv-rule p {
   margin: 5px 0 0;
   color: var(--nv-muted);
-  font-size: 13px;
+  font-size: var(--nv-body-sm);
 }
 .nv-footer-preview {
   border-top: 1px solid rgba(255, 255, 255, .12);
@@ -280,7 +300,7 @@
   gap: var(--nv-space-8);
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: var(--nv-label);
 }
 .nv-footer-preview img {
   width: 124px;

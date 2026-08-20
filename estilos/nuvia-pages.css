@@ -3917,6 +3917,815 @@
 }
 
 
+/* ══ CARTERA Y ANÁLISIS ════════════════════════════════════════════════════
+   La última hoja de estilo propia de una página que quedaba en el sitio.
+   Entra ya tokenizada: 21 colores crudos a la paleta —incluidos el
+   #071a38/#0b2a50/#23475f del héroe y el #9db861, que era un verde que no
+   está en ninguna parte—, 15 pesos numéricos a los cuatro tokens y 45
+   tamaños a los siete escalones. Los cuatro !important del principio se
+   quedan: pelean contra el ancho y el relleno que impone el armazón común
+   a todos los <main>, y esta página necesita ocupar el ancho entero.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.nuvia-route-cartera main {
+  padding: 0 0 76px !important;
+  background: var(--nv-cloud);
+}
+
+.nuvia-route-cartera main > .nuvia-analysis-page {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.nuvia-analysis-hero {
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(108deg, var(--nv-navy-950) 0%, var(--nv-navy-900) 58%, var(--nv-navy-700) 100%);
+  color: var(--nv-white);
+}
+
+.nuvia-analysis-hero::before {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7,26,56,.16), transparent 56%, rgba(95,139,153,.08));
+  content: "";
+  pointer-events: none;
+}
+
+.nuvia-analysis-hero::after {
+  position: absolute;
+  right: -460px;
+  bottom: -880px;
+  width: 1040px;
+  height: 1040px;
+  border: 1px solid var(--nv-surface-on-dark);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.nuvia-analysis-content {
+  width: min(var(--nv-container), calc(100% - 96px));
+  margin-inline: auto;
+}
+
+.nuvia-analysis-hero__inner {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding: 64px 48px 32px;
+}
+
+.nuvia-analysis-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 16px;
+  color: var(--nv-green-300);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-body);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.nuvia-analysis-eyebrow > span {
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  background: var(--nv-green-300);
+}
+
+.nuvia-analysis-hero h1 {
+  max-width: 16em;
+  margin: 0 0 14px;
+  color: var(--nv-white);
+  font-family: var(--font-body);
+  font-size: var(--nv-display-md);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: -.015em;
+  line-height: 1.08;
+}
+
+.nuvia-analysis-lead {
+  max-width: 62ch;
+  margin: 0 0 32px;
+  color: var(--nv-text-on-dark-soft);
+  font-size: var(--nv-body);
+  line-height: 1.6;
+}
+
+.nuvia-analysis-tabs {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--nv-line-on-dark-strong);
+  border-radius: var(--radius-md);
+}
+
+.nuvia-analysis-tabs a {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border-left: 1px solid var(--nv-line-on-dark-strong);
+  background: transparent;
+  color: var(--nv-text-on-dark-soft);
+  font-family: var(--font-heading);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-title);
+  line-height: normal;
+  padding: 9px 18px;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+
+.nuvia-analysis-tabs a:first-child { border-left: 0; }
+.nuvia-analysis-tabs a:hover { background: var(--nv-surface-on-dark); color: var(--nv-white); }
+.nuvia-analysis-tabs a[aria-current="page"] {
+  border-color: var(--nv-line-on-dark-strong) !important;
+  background: var(--nv-white) !important;
+  color: var(--nv-ink) !important;
+}
+
+.nuvia-analysis-hero__divider {
+  height: 1px;
+  margin-top: 36px;
+  background: linear-gradient(to right, transparent, var(--nv-line-on-dark-strong) 48px, var(--nv-line-on-dark-strong) calc(100% - 48px), transparent);
+}
+
+.nuvia-analysis-content {
+  padding-top: 42px;
+}
+
+.nuvia-suite-shell {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  background: var(--nv-white);
+  box-shadow: var(--nv-shadow-md);
+}
+
+.nuvia-suite-shell iframe {
+  display: block;
+  width: 100%;
+  min-height: 1320px;
+  border: 0;
+  background: transparent;
+}
+
+.nuvia-suite-shell iframe[hidden] {
+  display: none;
+}
+
+/* ── Laboratorio de cartera (sección propia, paso 18) ─────────────────── */
+
+/* Suelo tipográfico de 12 px del nivel (paso 27): el nv-tag global es de
+   10 px; dentro del laboratorio se eleva al suelo. */
+.nuvia-lab .nv-tag { font-size: var(--nv-label); }
+.nuvia-lab .nv-field label { font-size: var(--nv-label); }
+
+.nuvia-lab {
+  display: grid;
+  gap: var(--nv-space-8);
+  padding-bottom: var(--nv-space-12);
+}
+
+/* La regla display:grid ganaría al atributo hidden; esto restaura su efecto. */
+.nuvia-lab[hidden] { display: none; }
+
+.nuvia-lab__bloque {
+  min-width: 0;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  background: var(--nv-white);
+  box-shadow: var(--nv-shadow-md);
+  padding: var(--nv-space-5) var(--nv-space-6);
+}
+
+.nuvia-lab__bloque > h2 {
+  margin: 0 0 var(--nv-space-3);
+  font-size: var(--nv-title-sm);
+  line-height: 1.25;
+  color: var(--nv-text);
+}
+
+.nuvia-lab__bloque > p {
+  margin: 0 0 var(--nv-space-4);
+  max-width: 72ch;
+  color: var(--nv-text-soft);
+}
+
+.nuvia-lab__bloque > p:last-child { margin-bottom: 0; }
+
+.nuvia-lab__nota {
+  margin: var(--nv-space-3) 0 0;
+  max-width: 72ch;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nuvia-lab__cartas { margin-top: var(--nv-space-2); }
+
+.nuvia-lab__tabla-scroll { overflow-x: auto; }
+
+.nuvia-lab__tabla { width: 100%; min-width: 520px; }
+
+/* ── Simulador ── */
+
+.nuvia-lab__simulador {
+  display: grid;
+  gap: var(--nv-space-5);
+}
+
+.nuvia-lab__simulador > *,
+.nv-sim-resultados > * { min-width: 0; }
+
+.nv-sim-resultados {
+  display: grid;
+  gap: var(--nv-space-4);
+}
+
+.nv-sim-tabla-scroll { overflow-x: auto; }
+
+.nv-sim-tabla { width: 100%; min-width: 480px; }
+
+.nv-sim-controles {
+  display: grid;
+  gap: var(--nv-space-3);
+}
+
+.nv-sim-fila {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, 2fr) 64px;
+  align-items: center;
+  gap: var(--nv-space-3);
+}
+
+.nv-sim-etiqueta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--nv-space-2);
+  align-items: baseline;
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-sim-punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  align-self: center;
+}
+
+.nv-sim-desc {
+  grid-column: 2;
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-body);
+  color: var(--nv-text-muted);
+}
+
+.nv-sim-fila input[type="range"] { width: 100%; accent-color: var(--nv-green-700); }
+
+.nv-sim-valor {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--nv-text-soft);
+}
+
+.nv-sim-barra {
+  display: flex;
+  height: 18px;
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--nv-line);
+}
+
+.nv-sim-seg { display: block; height: 100%; }
+
+/* ── Buscador de activos (paso 19) ── */
+
+.nv-buscador { display: grid; gap: var(--nv-space-3); }
+
+.nv-buscador__campo { max-width: 520px; }
+
+.nv-buscador__estado {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nv-buscador__resultados {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nv-space-2);
+}
+
+.nv-buscador__resultado {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--nv-space-3);
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: var(--nv-space-2) var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 12px;
+  background: var(--nv-white);
+  cursor: pointer;
+  font: inherit;
+}
+
+.nv-buscador__resultado:hover,
+.nv-buscador__resultado:focus-visible {
+  border-color: var(--nv-green-600);
+}
+
+.nv-buscador__nombre {
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-buscador__detalle {
+  grid-row: 2;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nv-buscador__tipo { grid-row: 1 / span 2; }
+
+/* ── Constructor de cartera (paso 20) ── */
+
+.nv-cons { display: grid; gap: var(--nv-space-4); }
+
+.nv-cons__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nv-space-3);
+}
+
+.nv-cons__fila {
+  display: grid;
+  gap: var(--nv-space-2);
+  padding: var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 12px;
+  background: var(--nv-white);
+}
+
+.nv-cons__activo {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+}
+
+.nv-cons__nombre { font-weight: var(--nv-weight-action); color: var(--nv-text); }
+
+.nv-cons__quitar {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--nv-line);
+  border-radius: 50%;
+  background: var(--nv-white);
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.nv-cons__quitar:hover,
+.nv-cons__quitar:focus-visible { border-color: var(--nv-green-600); color: var(--nv-text); }
+
+.nv-cons__peso {
+  display: grid;
+  grid-template-columns: 1fr 110px;
+  align-items: center;
+  gap: var(--nv-space-3);
+}
+
+.nv-cons__peso input[type="range"] { width: 100%; accent-color: var(--nv-green-700); }
+
+.nv-cons__valor {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+
+.nv-cons__contador {
+  margin: 0;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--nv-text-muted);
+}
+
+.nv-cons__nivel[hidden] { display: none; }
+
+.nv-cons__estado {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nv-cons__resultados { display: grid; gap: var(--nv-space-3); min-width: 0; }
+
+.nv-cons__nota { margin: 0; color: var(--nv-text-soft); }
+
+.nv-cons__subtitulo {
+  margin: var(--nv-space-2) 0 0;
+  font-size: var(--nv-body);
+  color: var(--nv-text);
+}
+
+.nv-cons__leyenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2) var(--nv-space-4);
+}
+
+.nv-cons__leyenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+
+.nv-cons__nota-clase {
+  margin: 0;
+  font-size: var(--nv-label);
+  color: var(--nv-text-muted);
+}
+
+/* ── Guardado local (paso 24) ── */
+
+.nv-cons__guardado {
+  display: grid;
+  gap: var(--nv-space-3);
+  border-top: 1px solid var(--nv-line);
+  padding-top: var(--nv-space-4);
+}
+
+.nv-cons__aviso-guardado {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nv-cons__guardar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--nv-space-3);
+}
+
+.nv-cons__nombre-campo { flex: 1 1 260px; max-width: 420px; }
+
+.nv-cons__guardadas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nv-space-2);
+}
+
+.nv-cons__guardada {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--nv-space-2) var(--nv-space-3);
+  padding: var(--nv-space-2) var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 12px;
+  background: var(--nv-white);
+}
+
+.nv-cons__guardada-nombre { font-weight: var(--nv-weight-action); color: var(--nv-text); }
+
+.nv-cons__guardada-detalle {
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+  margin-right: auto;
+}
+
+.nv-cons__fuente {
+  margin: 0;
+  font-size: var(--nv-label);
+  color: var(--nv-text-muted);
+}
+
+/* ── Análisis ampliado del nivel registrado (paso 32) ── */
+
+.nv-analisis { display: grid; gap: var(--nv-space-3); min-width: 0; }
+
+.nv-analisis__cerrado {
+  margin: 0;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+.nv-analisis__grupo { display: grid; gap: var(--nv-space-2); min-width: 0; }
+
+.nv-analisis__titulo {
+  margin: 0;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-analisis__filas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.nv-analisis__fila {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--nv-space-3);
+  align-items: baseline;
+  min-width: 0;
+}
+
+.nv-analisis__clave { color: var(--nv-text); font-size: var(--nv-body-sm); }
+
+.nv-analisis__peso {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text);
+}
+
+.nv-analisis__barra {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--nv-green-600);
+  opacity: 0.55;
+}
+
+.nv-analisis__calidad {
+  margin: 0;
+  font-size: var(--nv-label);
+  color: var(--nv-text-muted);
+}
+
+.nv-analisis__matriz td,
+.nv-analisis__matriz th {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Frontera del nivel registrado/suscriptor (paso 33) */
+.nv-frontera {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin-block: var(--nv-space-2);
+}
+.nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
+.nv-frontera__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-frontera__mi-punto {
+  fill: var(--nv-green-700);
+  stroke: var(--nv-white);
+  stroke-width: 2;
+}
+.nv-frontera__elegido {
+  fill: none;
+  stroke: var(--nv-bronze-700);
+  stroke-width: 3;
+}
+.nv-frontera__eje { font-size: var(--nv-label); fill: var(--nv-text-muted); }
+.nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
+.nv-frontera__control input[type='range'] { width: 100%; max-width: 560px; }
+.nv-frontera__etiqueta { font-size: var(--nv-body-sm); }
+.nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); }
+
+/* Nota de qué añade el suscriptor, al pie del análisis del registrado */
+.nv-analisis__suscriptor { font-size: var(--nv-label); color: var(--nv-text-muted); }
+
+/* Informe genérico de compañía (paso 37) */
+.nv-informe__cuerpo { display: grid; gap: var(--nv-space-3); min-inline-size: 0; }
+.nv-informe__cerrado { margin: 0; font-size: var(--nv-body-sm); color: var(--nv-text-muted); }
+.nv-informe__campo { max-width: 420px; }
+.nv-informe__resultados { display: grid; gap: 4px; }
+.nv-informe__resultado {
+  text-align: left;
+  font: inherit;
+  font-size: var(--nv-body-sm);
+  padding: 8px 10px;
+  border: 1px solid var(--nv-line);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+.nv-informe__resultado:hover { background: var(--nv-cloud); }
+.nv-informe__articulo { display: grid; gap: var(--nv-space-3); }
+.nv-informe__nombre { margin: 0; }
+.nv-informe__seccion h4 { margin: 0 0 6px; }
+.nv-informe__filas {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 4px 12px;
+  font-size: var(--nv-body-sm);
+}
+.nv-informe__filas dt { color: var(--nv-text-muted); }
+.nv-informe__filas dd { margin: 0; font-variant-numeric: tabular-nums; }
+.nv-informe__riesgos ul { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 6px; font-size: var(--nv-body-sm); }
+
+/* Carteras modelo temáticas (paso 38) */
+.nv-modelos { display: grid; gap: var(--nv-space-3); min-inline-size: 0; }
+.nv-modelos__nota { margin: 0; font-size: var(--nv-body-sm); color: var(--nv-text-muted); }
+.nv-modelos__lista {
+  display: grid;
+  gap: var(--nv-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+}
+.nv-modelos__tarjeta { display: grid; gap: var(--nv-space-2); align-content: start; min-inline-size: 0; }
+.nv-modelos__nombre { margin: 0; }
+.nv-modelos__tema { margin: 0; font-size: var(--nv-body-sm); }
+.nv-modelos__criterio { margin: 0; font-size: var(--nv-label); color: var(--nv-text-muted); }
+.nv-modelos__composicion { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 4px; font-size: var(--nv-body-sm); }
+.nv-modelos__tarjeta .nv-btn { justify-self: start; }
+.nv-modelos__metricas { display: grid; gap: var(--nv-space-2); font-size: var(--nv-body-sm); }
+.nv-modelos__tabla th { text-align: left; }
+
+/* «Tus datos y tus derechos» (paso 34) */
+.nv-cuenta__derechos { display: grid; gap: var(--nv-space-2); min-inline-size: 0; }
+.nv-cuenta__derechos h3 { margin: 0; }
+.nv-cuenta__derechos-fila { display: flex; flex-wrap: wrap; gap: var(--nv-space-2); }
+.nv-cuenta__acceso[hidden] { display: none; }
+.nv-cuenta__acceso-lista { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 4px; font-size: var(--nv-body-sm); }
+.nv-cuenta__rectifica { display: grid; gap: var(--nv-space-2); }
+.nv-cuenta__confirma-borrado { display: grid; gap: var(--nv-space-2); }
+.nv-cuenta__confirma-borrado[hidden] { display: none; }
+.nv-cuenta__confirma-borrado p { margin: 0; }
+.nv-cuenta__borrar-definitivo { justify-self: start; }
+
+/* Oferta de migración de lo local a la cuenta (paso 31) */
+.nv-cons__migracion { display: grid; gap: var(--nv-space-2); min-width: 0; }
+.nv-cons__migracion[hidden] { display: none; }
+.nv-cons__migracion p { margin: 0; }
+.nv-cons__migracion-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+}
+
+/* ── Cuenta con datos mínimos (paso 28) ── */
+
+.nv-cuenta { display: grid; gap: var(--nv-space-3); }
+
+.nv-cuenta__cuerpo { display: grid; gap: var(--nv-space-3); min-width: 0; }
+
+.nv-cuenta__minimos {
+  margin: 0;
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-cuenta__nota,
+.nv-cuenta__quien {
+  margin: 0;
+  color: var(--nv-text-soft);
+}
+
+.nv-cuenta__forma {
+  display: grid;
+  gap: var(--nv-space-3);
+  max-width: 520px;
+}
+
+.nv-cuenta__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+}
+
+.nv-cuenta__olvido {
+  justify-self: start;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+  text-decoration: underline;
+}
+
+.nv-cuenta__estado {
+  margin: 0;
+  min-height: 1.4em;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-muted);
+}
+
+/* Consentimiento granular (paso 29) */
+
+.nv-cuenta__permisos {
+  display: grid;
+  gap: var(--nv-space-3);
+  margin: 0;
+  min-width: 0;
+  padding: var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 12px;
+}
+
+/* El fieldset del alta no debe imponer su ancho de contenido mínimo
+   (comportamiento propio de <fieldset>) ni desbordar en móvil. */
+.nv-cuenta__permisos--alta {
+  min-inline-size: 0;
+}
+
+.nv-cuenta__permisos h3,
+.nv-cuenta__permisos legend {
+  margin: 0;
+  padding: 0;
+  font-size: var(--nv-body);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-cuenta__permiso { display: grid; gap: 4px; }
+
+.nv-cuenta__permiso-linea {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-space-2);
+  cursor: pointer;
+}
+
+.nv-cuenta__permiso-linea input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  accent-color: var(--nv-green-600);
+  cursor: pointer;
+}
+
+.nv-cuenta__permiso-nombre { font-weight: var(--nv-weight-action); color: var(--nv-text); }
+
+.nv-cuenta__permiso-explica {
+  margin: 0;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+
+.nv-sim-cifra {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-weight: var(--nv-weight-action);
+}
+
+@media (max-width: 640px) {
+  .nv-sim-fila {
+    grid-template-columns: 1fr 64px;
+  }
+  .nv-sim-fila input[type="range"] { grid-column: 1; }
+  .nv-sim-etiqueta { grid-column: 1 / -1; }
+  .nv-sim-valor { grid-row: 2; }
+}
+
+#nuvia-company-suite {
+  height: 720px;
+  min-height: 720px;
+  background: var(--nv-paper);
+}
+
+@media (max-width: 1120px) and (min-width: 768px) {
+  .nuvia-analysis-hero__inner,
+  .nuvia-analysis-content {
+    width: calc(100% - 56px);
+  }
+
+  .nuvia-analysis-hero__inner {
+    padding: 54px 0 46px;
+  }
+
+}
+
+
 /* ══ VIVIENDA Y COSTE DE VIDA ══════════════════════════════════════════════
    Cinco herramientas en una página: hipoteca, comparador de ofertas, compra o
    alquiler, amortización anticipada y presupuesto.

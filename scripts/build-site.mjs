@@ -47,7 +47,6 @@ const ficherosRaiz = [
   'web2-integration.js',
   'web2-core-bridge.js',
   'nuvia-site-unified.js',        // sigue haciendo falta: rutas y desplegables
-  'cartera-redesign.css',
   'favicon.svg',
 ];
 
