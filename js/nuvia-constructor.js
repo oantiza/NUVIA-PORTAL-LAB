@@ -169,7 +169,7 @@ export function grupoEvolucion({ niveles, fechas }) {
     'La línea arranca en 100 al principio de la ventana y sigue, día a día, el valor de este reparto. Describe lo ocurrido, no lo que viene.'));
 
   /* La línea en base 100. */
-  const W = 560; const H = 220; const izq = 56; const der = 14; const arriba = 12; const abajo = 26;
+  const W = 760; const H = 280; const izq = 64; const der = 18; const arriba = 14; const abajo = 30;
   const svg = nodoSvg('svg', {
     viewBox: `0 0 ${W} ${H}`,
     class: 'nv-evolucion__svg',
@@ -183,32 +183,32 @@ export function grupoEvolucion({ niveles, fechas }) {
     const yy = yDe(ref);
     svg.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: ref === 100 ? 'nv-evolucion__cien' : 'nv-evolucion__rejilla' }));
     /* La etiqueta solo si no se pisa con otra ya puesta (mínimos pegados a 100). */
-    if (yaPintadas.every((otra) => Math.abs(otra - yy) > 12)) {
-      svg.append(nodoSvg('text', { x: izq - 6, y: yy + 4, 'text-anchor': 'end', class: 'nv-frontera__eje' }, num(ref, 0)));
+    if (yaPintadas.every((otra) => Math.abs(otra - yy) > 14)) {
+      svg.append(nodoSvg('text', { x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje' }, num(ref, 0)));
       yaPintadas.push(yy);
     }
   }
   svg.append(nodoSvg('path', { d: trazadoLinea(p.base, escala), class: 'nv-evolucion__linea', fill: 'none' }));
-  svg.append(nodoSvg('text', { x: izq, y: H - 6, class: 'nv-frontera__eje' }, desde || ''));
-  svg.append(nodoSvg('text', { x: W - der, y: H - 6, 'text-anchor': 'end', class: 'nv-frontera__eje' }, hasta || ''));
+  svg.append(nodoSvg('text', { x: izq, y: H - 8, class: 'nv-grafico__eje' }, desde || ''));
+  svg.append(nodoSvg('text', { x: W - der, y: H - 8, 'text-anchor': 'end', class: 'nv-grafico__eje' }, hasta || ''));
   bloque.append(svg);
 
   /* Las caídas desde máximos, en el mismo eje temporal. */
   const caidas = serieDeCaidas(niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
   const cMin = Math.min(0, ...caidas.filter(Number.isFinite));
-  const H2 = 120;
+  const H2 = 150;
   const svg2 = nodoSvg('svg', {
     viewBox: `0 0 ${W} ${H2}`,
     class: 'nv-evolucion__svg',
     role: 'img',
     'aria-label': `Caídas desde máximos en el mismo periodo: la peor llegó al ${num(cMin, 1)} %.`,
   });
-  const escala2 = { W, H: H2, izq, der, arriba: 10, abajo: 18, min: cMin, max: 0 };
-  const yDe2 = (v) => H2 - 18 - ((v - cMin) / ((0 - cMin) || 1)) * (H2 - 10 - 18);
+  const escala2 = { W, H: H2, izq, der, arriba: 12, abajo: 20, min: cMin, max: 0 };
+  const yDe2 = (v) => H2 - 20 - ((v - cMin) / ((0 - cMin) || 1)) * (H2 - 12 - 20);
   for (const ref of [...new Set([0, cMin])]) {
     const yy = yDe2(ref);
     svg2.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: 'nv-evolucion__rejilla' }));
-    svg2.append(nodoSvg('text', { x: izq - 6, y: yy + 4, 'text-anchor': 'end', class: 'nv-frontera__eje' }, `${num(ref, 0)} %`));
+    svg2.append(nodoSvg('text', { x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje' }, `${num(ref, 0)} %`));
   }
   const linea = trazadoLinea(caidas, escala2);
   if (linea) {

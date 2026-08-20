@@ -12,6 +12,7 @@ import {
   etiquetaClave, posicionesParaAnalisis, idsDeFondos,
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
+  tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -195,6 +196,66 @@ console.log('\n— El mapa riesgo/rentabilidad (paso 41) —');
   comprueba('El activo fuera de los pesos no entra en el mapa',
     !puntos.some((p) => p.id === 'FUERA'));
   comprueba('Sin series no revienta', puntosMapaRiesgo(null, {}).puntos.length === 0);
+}
+
+console.log('\n— El tramo eficiente de la frontera (Fase 7) —');
+{
+  const cruda = [
+    { volatilidad: 0.10, rentabilidad: 0.05 },
+    { volatilidad: 0.08, rentabilidad: 0.04 },
+    { volatilidad: 0.12, rentabilidad: 0.09 },
+    { volatilidad: 0.14, rentabilidad: 0.07 }, /* más riesgo y menos rentabilidad: fuera */
+    { volatilidad: 0.16, rentabilidad: 0.11 },
+  ];
+  const tramo = tramoEficiente(cruda);
+  comprueba('La línea siempre sube: más riesgo solo entra si rentó más',
+    tramo.every((p, i) => i === 0
+      || (p.volatilidad > tramo[i - 1].volatilidad && p.rentabilidad > tramo[i - 1].rentabilidad)));
+  comprueba('El punto dominado (más riesgo, menos rentabilidad) queda fuera',
+    !tramo.some((p) => p.volatilidad === 0.14) && tramo.length === 4);
+  comprueba('Sin puntos no revienta', tramoEficiente(null).length === 0);
+}
+
+console.log('\n— Cuánto riesgo pone cada posición (Fase 7) —');
+{
+  const alza = Array.from({ length: 90 }, (_, i) => 100 * (1 + 0.002 * i) * (1 + 0.03 * Math.sin(i / 4)));
+  const calma = Array.from({ length: 90 }, (_, i) => 100 * (1 + 0.0004 * i) * (1 + 0.004 * Math.sin(i / 5)));
+  const series = [{ asset_id: 'MOVIDO', values: alza }, { asset_id: 'TRANQUILO', values: calma }];
+  const c = contribucionesRiesgo(series, { MOVIDO: 0.5, TRANQUILO: 0.5 });
+  comprueba('Las contribuciones existen y suman ~100',
+    c && Math.abs(c.reduce((s, x) => s + x.porcentaje, 0) - 100) < 0.5,
+    c && c.map((x) => `${x.id} ${x.porcentaje}`).join(' · '));
+  comprueba('A igual peso, el activo que más se mueve pone más riesgo',
+    c && c[0].id === 'MOVIDO' && c[0].porcentaje > 50);
+  comprueba('Con una sola posición no hay reparto que hacer',
+    contribucionesRiesgo(series.slice(0, 1), { MOVIDO: 1 }) === null);
+  comprueba('Serie plana (σ indefinida) → null, nunca se inventa',
+    contribucionesRiesgo([series[0], { asset_id: 'PLANO', values: Array(90).fill(100) }],
+      { MOVIDO: 0.5, PLANO: 0.5 }) === null);
+}
+
+console.log('\n— Pares destacados y frase de la correlación (Fase 7) —');
+{
+  const rho = {
+    A: { B: 0.9, C: 0.1, D: -0.4 },
+    B: { A: 0.9, C: 0.5, D: 0.2 },
+    C: { A: 0.1, B: 0.5, D: 0.3 },
+    D: { A: -0.4, B: 0.2, C: 0.3 },
+  };
+  const { pares, altos, bajos } = paresDestacados(['A', 'B', 'C', 'D'], rho, 2);
+  comprueba('Salen todos los pares una sola vez', pares.length === 6);
+  comprueba('Los altos son los que más se mueven a la vez',
+    altos[0].valor === 0.9 && altos.length === 2);
+  comprueba('Los bajos empiezan por el de sentido más contrario',
+    bajos[0].valor === -0.4);
+  comprueba('Altos y bajos no repiten par',
+    !altos.some((p) => bajos.some((q) => p.a === q.a && p.b === q.b)));
+  comprueba('La frase acompaña a la cifra sin juzgarla',
+    fraseCorrelacion(0.9) === 'casi siempre a la vez'
+    && fraseCorrelacion(0.6) === 'a menudo a la vez'
+    && fraseCorrelacion(0) === 'poca relación'
+    && fraseCorrelacion(-0.5) === 'en sentido contrario'
+    && fraseCorrelacion(NaN) === 'sin datos comunes');
 }
 
 if (fallos) {

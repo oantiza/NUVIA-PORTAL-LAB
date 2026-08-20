@@ -46,6 +46,8 @@ console.log('— Agregación por continentes —');
   ]);
   comprueba('Iberia cuenta como Europa y Oriente Medio con África (claves reales)',
     Math.abs(reales.pesos.europa - 51.4) < 1e-9 && Math.abs(reales.pesos.africa - 0.7) < 1e-9);
+  comprueba('«europe_emerging» (clave real vista en producción) cuenta como Europa',
+    exposicionPorContinente([{ clave: 'europe_emerging', peso: 3 }]).pesos.europa === 3);
   comprueba('«other» no se adivina: queda declarada fuera del mapa',
     reales.sinContinente.length === 1 && reales.sinContinente[0].clave === 'other');
   comprueba('Sin filas no hay mapa, nada se inventa',

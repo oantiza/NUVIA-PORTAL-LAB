@@ -27,6 +27,7 @@ const FICHEROS = [
   'js/nuvia-informe.js',
   'js/nuvia-modelos.js',
   'js/nuvia-mapa.js',
+  'js/nuvia-etiquetas.js',
 ];
 
 /** Patrones prohibidos, con el porqué al lado. */

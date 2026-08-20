@@ -3992,7 +3992,9 @@
 
 .nuvia-analysis-tabs {
   display: inline-flex;
+  flex-wrap: wrap;
   overflow: hidden;
+  max-width: 100%;
   border: 1px solid var(--nv-line-on-dark-strong);
   border-radius: var(--radius-md);
 }
@@ -4092,6 +4094,34 @@
 }
 
 .nuvia-lab__bloque > p:last-child { margin-bottom: 0; }
+
+/* Atajos a las secciones del laboratorio (Fase 7): un clic desde arriba. */
+.nv-atajos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2);
+  margin-top: var(--nv-space-4);
+}
+.nv-atajos__enlace {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: 999px;
+  background: var(--nv-surface-technical);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  text-decoration: none;
+}
+.nv-atajos__enlace:hover,
+.nv-atajos__enlace:focus-visible {
+  border-color: var(--nv-green-700);
+  color: var(--nv-green-800);
+}
+
+/* Que el salto del ancla no esconda el título bajo la cabecera fija. */
+.nuvia-lab__bloque > h2 { scroll-margin-top: 96px; }
 
 .nuvia-lab__nota {
   margin: var(--nv-space-3) 0 0;
@@ -4404,7 +4434,7 @@
 
 /* ── Análisis ampliado del nivel registrado (paso 32) ── */
 
-.nv-analisis { display: grid; gap: var(--nv-space-3); min-width: 0; }
+.nv-analisis { display: grid; gap: var(--nv-space-6); min-width: 0; }
 
 .nv-analisis__cerrado {
   margin: 0;
@@ -4412,10 +4442,32 @@
   color: var(--nv-text-muted);
 }
 
-.nv-analisis__grupo { display: grid; gap: var(--nv-space-2); min-width: 0; }
+/* Cada gráfico es una tarjeta dentro del análisis: separación clara,
+   título que se ve y una línea que dice qué enseña (Fase 7). */
+.nv-analisis__grupo {
+  display: grid;
+  gap: var(--nv-space-2);
+  min-width: 0;
+  padding-top: var(--nv-space-4);
+  border-top: 1px solid var(--nv-line);
+}
 
 .nv-analisis__titulo {
   margin: 0;
+  font-size: var(--nv-body-lg);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+}
+
+.nv-analisis__lectura {
+  margin: 0;
+  max-width: 72ch;
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+
+.nv-analisis__subtitulo-lista {
+  margin: var(--nv-space-2) 0 0;
   font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-action);
   color: var(--nv-text);
@@ -4454,6 +4506,23 @@
   opacity: 0.55;
 }
 
+.nv-analisis__barra--contraria { background: var(--nv-bronze-700); }
+
+/* La matriz completa vive plegada: el detalle no tapa la lectura. */
+.nv-analisis__despliegue { min-width: 0; }
+.nv-analisis__despliegue > summary {
+  cursor: pointer;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-green-800);
+}
+.nv-analisis__despliegue[open] > summary { margin-bottom: var(--nv-space-2); }
+
+/* Tintes de las celdas de correlación: el color acompaña, la cifra manda. */
+.nv-cor--alta { background: #cdd8c2; }
+.nv-cor--media { background: #e4e8e2; }
+.nv-cor--contraria { background: #ead9bd; }
+
 .nv-analisis__calidad {
   margin: 0;
   font-size: var(--nv-label);
@@ -4466,16 +4535,21 @@
   white-space: nowrap;
 }
 
-/* Frontera del nivel registrado/suscriptor (paso 33) */
+/* Frontera del nivel registrado/suscriptor (paso 33, rediseño Fase 7) */
 .nv-frontera {
   display: block;
   width: 100%;
-  max-width: 560px;
+  max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-2);
 }
 .nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
-.nv-frontera__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-frontera__linea {
+  stroke: var(--nv-green-700);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
 .nv-frontera__mi-punto {
   fill: var(--nv-green-700);
   stroke: var(--nv-white);
@@ -4488,16 +4562,65 @@
 }
 .nv-frontera__eje { font-size: var(--nv-label); fill: var(--nv-text-muted); }
 .nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
-.nv-frontera__control input[type='range'] { width: 100%; max-width: 560px; }
+.nv-frontera__control input[type='range'] { width: 100%; max-width: 760px; }
 .nv-frontera__etiqueta { font-size: var(--nv-body-sm); }
-.nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); }
+.nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); display: grid; gap: var(--nv-space-1); }
+.nv-frontera__resumen { margin: 0; }
+
+/* Piezas comunes de los gráficos rediseñados (Fase 7) */
+.nv-grafico__rejilla { stroke: var(--nv-line); stroke-width: 1; }
+.nv-grafico__eje { font-size: var(--nv-body-sm); fill: var(--nv-text-muted); }
+.nv-grafico__eje-titulo { font-size: var(--nv-body-sm); fill: var(--nv-text-soft); }
+.nv-grafico__rotulo {
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  fill: var(--nv-text);
+  paint-order: stroke;
+  stroke: var(--nv-white);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+.nv-leyenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-2) var(--nv-space-4);
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+}
+.nv-leyenda__item { display: inline-flex; align-items: center; gap: var(--nv-space-1); }
+.nv-leyenda__marca { display: inline-block; flex: none; }
+.nv-leyenda__marca--nube {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--nv-text-muted);
+  opacity: 0.45;
+}
+.nv-leyenda__marca--linea {
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--nv-green-700);
+}
+.nv-leyenda__marca--punto {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--nv-green-700);
+  border: 2px solid var(--nv-white);
+  box-shadow: 0 0 0 1px var(--nv-line);
+}
 
 /* Evolución de la combinación y sus caídas (encargo 20-08-2026) */
 .nv-evolucion { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }
 .nv-evolucion__svg {
   display: block;
   width: 100%;
-  max-width: 560px;
+  max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-1);
 }
@@ -4507,19 +4630,63 @@
 .nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
 .nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
 
-/* Abanico de la proyección Montecarlo (paso 40) */
+/* Abanico de la proyección Montecarlo (paso 40, rediseño Fase 7) */
 .nv-abanico {
   display: block;
   width: 100%;
-  max-width: 560px;
+  max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-2);
 }
 .nv-abanico__banda { fill: var(--nv-green-700); opacity: 0.14; }
 .nv-abanico__mediana { stroke: var(--nv-green-700); stroke-width: 2.5; }
 
-/* Mapa riesgo/rentabilidad (paso 41) */
+/* Mapa riesgo/rentabilidad (paso 41, rediseño Fase 7: marcas numeradas) */
 .nv-mriesgo__activo { fill: var(--nv-bronze-700); stroke: var(--nv-white); stroke-width: 1.5; }
+.nv-mriesgo__marca { fill: var(--nv-bronze-700); stroke: var(--nv-white); stroke-width: 1.5; }
+.nv-mriesgo__numero {
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-action);
+  fill: var(--nv-white);
+}
+.nv-mriesgo__union { stroke: var(--nv-bronze-700); stroke-width: 1; opacity: 0.5; }
+
+.nv-mriesgo__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: var(--nv-space-1) var(--nv-space-4);
+}
+.nv-mriesgo__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: var(--nv-space-2);
+  align-items: baseline;
+  min-width: 0;
+}
+.nv-mriesgo__indice {
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--nv-bronze-700);
+  color: var(--nv-white);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-action);
+}
+.nv-mriesgo__nombre { font-size: var(--nv-body-sm); color: var(--nv-text); min-width: 0; }
+.nv-mriesgo__cifras {
+  font-size: var(--nv-body-sm);
+  color: var(--nv-text-soft);
+  font-variant-numeric: tabular-nums;
+}
 
 /* Distribución geográfica con mapa (paso 42) */
 .nv-mapa { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }

@@ -12,6 +12,7 @@
 
 import { VIEWBOX_MAPA, SILUETAS } from './nuvia-mapa-siluetas.js';
 import { num } from './nuvia-cartera.js';
+import { etiquetaRegion } from './nuvia-etiquetas.js';
 
 export const NOTA_MAPA = 'El mapa colorea cada continente según el peso de '
   + 'la parte de renta variable de esta combinación que le corresponde, '
@@ -33,6 +34,7 @@ export const REGIONES_CONTINENTE = {
   europe: 'europa',
   developed_europe: 'europa',
   emerging_europe: 'europa',
+  europe_emerging: 'europa',
   iberia: 'europa',
   spain: 'europa',
   portugal: 'europa',
@@ -103,8 +105,9 @@ export function grupoMapa(reparto) {
   const agregado = exposicionPorContinente(reparto?.filas);
   if (!agregado) return null;
 
-  const bloque = el('div', { class: 'nv-mapa' });
-  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Distribución geográfica (mapa)'));
+  const bloque = el('div', { class: 'nv-mapa nv-analisis__grupo' });
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Dónde está invertida la renta variable (mapa)'));
+  bloque.append(el('p', { class: 'nv-analisis__lectura' }, NOTA_MAPA));
 
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
@@ -133,8 +136,7 @@ export function grupoMapa(reparto) {
   if (agregado.sinContinente.length) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       `Fuera del mapa por región sin continente asignado: ${agregado.sinContinente
-        .map((f) => `${f.clave} (${num(f.peso, 1)} %)`).join(', ')}.`));
+        .map((f) => `${etiquetaRegion(f.clave)} (${num(f.peso, 1)} %)`).join(', ')}.`));
   }
-  bloque.append(el('p', { class: 'nv-cons__nota' }, NOTA_MAPA));
   return bloque;
 }
