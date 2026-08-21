@@ -1295,6 +1295,21 @@ genérica `.nv-portada-lab__texto p { margin: 0 }` pisaba los márgenes de
 las clases hijas (0,2,1 > 0,1,0) y comprimía el banner — los márgenes van
 en cada clase, sin regla genérica.
 
+**Menos ruido y canon del sitio** (`7980f9f`, mismo día): fuera la
+tarjeta «Un laboratorio para entender…» — los atajos quedan como fila
+propia bajo la portada (envueltos con ella en `.nv-portada-grupo`),
+centrados y con el lenguaje de píldora del sistema (versalitas, tracking
+.12em, borde fino, `--nv-label`), en lugar de las cápsulas grises con
+texto en negrita. El párrafo regulatorio de esa tarjeta se movió al final
+de la página, dentro de «Fuentes y límites» (las frases EXIGIDAS por
+`check-lenguaje` viven en otros bloques, así que el traslado no rompe
+nada — comprobado). Y las tarjetas `.nuvia-lab__bloque` pasan al canon
+del resto de la web: `--nv-radius-md` (12 px), `--nv-surface`,
+`--nv-shadow-sm` y sin borde, como `viv-card` o `fiscal-paso` (antes:
+22 px, borde gris y sombra grande, distintas de todas las demás
+páginas). La sección pierde `aria-labelledby="lab-title"` (el título ya
+no existe) y pasa a `aria-label="Laboratorio de cartera"`.
+
 ---
 
 # Transversal
