@@ -446,6 +446,36 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
 
   raiz.textContent = '';
   const contador = el('p', { class: 'nv-cons__contador' });
+
+  /* ── Importe opcional: solo para mostrar el capital por posición ──
+   *  No se envía a ningún sitio ni se guarda: vive en la página. Sin él,
+   *  la columna de capital queda en «—», nunca se inventa una cifra. */
+  let importeCartera = null;
+  const eur = (v) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+  const importeCampo = el('div', { class: 'nv-cons__importe', hidden: '' });
+  const importeInput = el('input', {
+    type: 'number', id: 'importe-cartera', min: '0', step: '1000',
+    inputmode: 'decimal', placeholder: 'p. ej. 100 000',
+  });
+  importeInput.addEventListener('input', () => {
+    const v = Number(importeInput.value);
+    importeCartera = Number.isFinite(v) && v > 0 ? v : null;
+    recalcula();
+  });
+  importeCampo.append(
+    el('label', { for: 'importe-cartera' }, 'Importe de la cartera (€)'),
+    importeInput,
+    el('span', { class: 'nv-cons__importe-nota' }, 'Opcional: solo sirve para mostrar el capital por posición y no sale de tu navegador.'),
+  );
+
+  const cabeceraLista = el('div', { class: 'nv-cons__cabecera', hidden: '', 'aria-hidden': 'true' });
+  cabeceraLista.append(
+    el('span', {}, 'Activo'),
+    el('span', { class: 'nv-cons__cab-cifra' }, 'Peso'),
+    el('span', { class: 'nv-cons__cab-cifra' }, 'Capital'),
+    el('span', {}, ''),
+  );
+
   const lista = el('ul', { class: 'nv-cons__lista' });
   const estado = el('p', { class: 'nv-cons__estado', role: 'status' });
   const nivel = el('div', { class: 'nv-note nv-cons__nivel', hidden: '' });
@@ -455,7 +485,7 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
 
   /* ── Guardado: local (paso 24) o en la cuenta (paso 30) según la sesión ── */
   const guardadoRaiz = el('div', { class: 'nv-cons__guardado' });
-  raiz.append(contador, lista, estado, nivel, resultados, guardadoRaiz);
+  raiz.append(contador, importeCampo, cabeceraLista, lista, estado, nivel, resultados, guardadoRaiz);
 
   function esRegistrada() {
     try { return datos.sesionActual?.().tipo === 'registrada'; } catch { return false; }
@@ -719,35 +749,52 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     return cacheSeries.get(clave);
   }
 
+  /* La lista se presenta como se enseñaría una cartera: activo, peso y
+   *  capital en columnas, una posición bajo otra, con una barra fina que
+   *  dibuja el peso. El peso se edita en su propia casilla. */
   function pintaLista() {
     lista.textContent = '';
+    importeCampo.hidden = !posiciones.length;
+    cabeceraLista.hidden = !posiciones.length;
     for (const p of posiciones) {
+      const nombreActivo = p.activo.display_name || p.activo.asset_id;
       const item = el('li', { class: 'nv-cons__fila' });
+
       const cabecera = el('div', { class: 'nv-cons__activo' });
       cabecera.append(
-        el('span', { class: 'nv-cons__nombre' }, p.activo.display_name || p.activo.asset_id),
+        el('span', { class: 'nv-cons__nombre' }, nombreActivo),
         el('span', { class: 'nv-tag nv-cons__tipo' }, etiquetaTipo(p.activo.instrument_type)),
       );
-      const quitar = el('button', { type: 'button', class: 'nv-cons__quitar', 'aria-label': `Quitar ${p.activo.display_name || p.activo.asset_id}` }, '×');
+      const barra = el('div', { class: 'nv-cons__peso-barra', 'aria-hidden': 'true' });
+      const tramo = el('span', { class: 'nv-cons__peso-tramo' });
+      barra.append(tramo);
+      p._tramo = tramo;
+      cabecera.append(barra);
+
+      const idInput = `peso-${p.activo.asset_id}`;
+      const peso = el('span', { class: 'nv-cons__peso' });
+      const etiqueta = el('label', { class: 'nv-visually-hidden', for: idInput }, `Peso de ${nombreActivo}`);
+      const input = el('input', {
+        type: 'number', id: idInput, min: '0', max: '100', step: '1',
+        inputmode: 'decimal', class: 'nv-cons__peso-campo', value: String(p.bruto),
+      });
+      input.addEventListener('input', () => {
+        posiciones = cambiaPeso(posiciones, p.activo.asset_id, input.value);
+        recalcula();
+      });
+      peso.append(etiqueta, input, el('span', { class: 'nv-cons__unidad', 'aria-hidden': 'true' }, '%'));
+
+      const capital = el('span', { class: 'nv-cons__capital' }, '—');
+      p._capital = capital;
+
+      const quitar = el('button', { type: 'button', class: 'nv-cons__quitar', 'aria-label': `Quitar ${nombreActivo}` }, '×');
       quitar.addEventListener('click', () => {
         posiciones = quitaPosicion(posiciones, p.activo.asset_id);
         pintaLista();
         recalcula();
       });
-      cabecera.append(quitar);
 
-      const idInput = `peso-${p.activo.asset_id}`;
-      const control = el('div', { class: 'nv-cons__peso' });
-      const etiqueta = el('label', { class: 'nv-visually-hidden', for: idInput }, `Peso de ${p.activo.display_name || p.activo.asset_id}`);
-      const input = el('input', { type: 'range', id: idInput, min: '0', max: '100', step: '5', value: String(p.bruto) });
-      const salida = el('output', { for: idInput, class: 'nv-cons__valor' });
-      p._salida = salida;
-      input.addEventListener('input', () => {
-        posiciones = cambiaPeso(posiciones, p.activo.asset_id, input.value);
-        recalcula();
-      });
-      control.append(etiqueta, input, salida);
-      item.append(cabecera, control);
+      item.append(cabecera, peso, capital, quitar);
       lista.append(item);
     }
   }
@@ -789,10 +836,12 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const pesos = pesosNormalizados(posiciones, idsConSerie);
 
     for (const p of posiciones) {
-      if (p._salida) {
-        p._salida.value = pesos && pesos[p.activo.asset_id] != null
-          ? pct(pesos[p.activo.asset_id], 0)
-          : 'fuera del cálculo';
+      const pesoNorm = pesos && pesos[p.activo.asset_id] != null ? pesos[p.activo.asset_id] : null;
+      if (p._tramo) p._tramo.style.width = pesoNorm != null ? `${(pesoNorm * 100).toFixed(1)}%` : '0%';
+      if (p._capital) {
+        if (pesoNorm == null) p._capital.textContent = 'fuera del cálculo';
+        else if (importeCartera) p._capital.textContent = eur(pesoNorm * importeCartera);
+        else p._capital.textContent = '—';
       }
     }
 

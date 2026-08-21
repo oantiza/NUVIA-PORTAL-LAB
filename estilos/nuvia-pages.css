@@ -4421,33 +4421,119 @@
 
 .nv-cons { display: grid; gap: var(--nv-space-4); }
 
+/* La cartera se presenta como a un cliente: columnas Activo · Peso · Capital,
+   una posición bajo otra con filete fino, y una barra discreta que dibuja el
+   peso. El peso se edita en su casilla; el capital sale del importe opcional. */
+.nv-cons__importe {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--nv-space-2) var(--nv-space-3);
+  margin-bottom: var(--nv-space-3);
+}
+.nv-cons__importe label { font-weight: var(--nv-weight-action); font-size: var(--nv-body-sm); }
+.nv-cons__importe input {
+  width: 11ch;
+  padding: 4px 8px;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-sm);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nv-cons__importe-nota { flex-basis: 100%; color: var(--nv-text-muted); font-size: var(--nv-label); }
+
+.nv-cons__cabecera,
+.nv-cons__fila {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 96px 130px 28px;
+  column-gap: var(--nv-space-3);
+  align-items: center;
+}
+.nv-cons__cabecera {
+  padding: 0 var(--nv-space-2) var(--nv-space-1);
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.nv-cons__cab-cifra { text-align: right; }
+
 .nv-cons__lista {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: var(--nv-space-3);
+  border-top: 1px solid var(--nv-line);
 }
 
 .nv-cons__fila {
-  display: grid;
-  gap: var(--nv-space-2);
-  padding: var(--nv-space-3);
-  border: 1px solid var(--nv-line);
-  border-radius: 12px;
-  background: var(--nv-white);
+  padding: var(--nv-space-3) var(--nv-space-2);
+  border-bottom: 1px solid var(--nv-line);
 }
 
 .nv-cons__activo {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--nv-space-2);
+  gap: var(--nv-space-1) var(--nv-space-2);
+  min-width: 0;
+}
+
+.nv-cons__peso-barra {
+  flex: 1 0 100%; /* sin encoger: siempre salta a su propia línea */
+  height: 3px;
+  border-radius: 999px;
+  background: var(--nv-mist);
+  overflow: hidden;
+}
+.nv-cons__peso-tramo {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--nv-green-700);
+  transition: width .25s ease;
+}
+
+.nv-cons__peso {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px;
+}
+.nv-cons__peso-campo {
+  width: 5.5ch;
+  padding: 4px 6px;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-sm);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nv-cons__unidad { color: var(--nv-text-muted); font-size: var(--nv-body-sm); }
+
+.nv-cons__capital {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .nv-cons__cabecera { display: none; }
+  .nv-cons__fila {
+    grid-template-columns: minmax(0, 1fr) auto 28px;
+    row-gap: var(--nv-space-1);
+  }
+  .nv-cons__activo { grid-column: 1 / -1; }
+  .nv-cons__peso { grid-column: 1; justify-content: flex-start; }
+  .nv-cons__capital { text-align: left; }
 }
 
 .nv-cons__nombre { font-weight: var(--nv-weight-action); color: var(--nv-text); }
 
 .nv-cons__quitar {
-  margin-left: auto;
   width: 28px;
   height: 28px;
   border: 1px solid var(--nv-line);
@@ -4461,22 +4547,6 @@
 
 .nv-cons__quitar:hover,
 .nv-cons__quitar:focus-visible { border-color: var(--nv-green-600); color: var(--nv-text); }
-
-.nv-cons__peso {
-  display: grid;
-  grid-template-columns: 1fr 110px;
-  align-items: center;
-  gap: var(--nv-space-3);
-}
-
-.nv-cons__peso input[type="range"] { width: 100%; accent-color: var(--nv-green-700); }
-
-.nv-cons__valor {
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  font-size: var(--nv-body-sm);
-  color: var(--nv-text-soft);
-}
 
 .nv-cons__contador {
   margin: 0;
@@ -4697,6 +4767,7 @@
   max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-2);
+  margin-inline: auto;
 }
 .nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
 .nv-frontera__linea {
@@ -4897,6 +4968,7 @@
   max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-1);
+  margin-inline: auto;
 }
 .nv-evolucion__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
 .nv-evolucion__rejilla { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.45; }
@@ -4975,6 +5047,7 @@
   max-width: 640px;
   height: auto;
   margin-block: var(--nv-space-1);
+  margin-inline: auto;
 }
 /* Cada continente con su propio color (encargo de Óscar, 21-08); el peso
    marca la intensidad del tono mezclando el color base con el papel. Los
