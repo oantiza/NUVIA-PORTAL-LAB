@@ -1310,6 +1310,29 @@ del resto de la web: `--nv-radius-md` (12 px), `--nv-surface`,
 páginas). La sección pierde `aria-labelledby="lab-title"` (el título ya
 no existe) y pasa a `aria-label="Laboratorio de cartera"`.
 
+**La cartera como se presenta a un cliente** (`e27b7a1` + `3e0c85e` +
+`2bab2a5`, encargo del 21-08 con capturas): la lista del constructor dejó
+las cajas grises con deslizadores y pasó a columnas **Activo · Peso ·
+Capital** con cabecera en versalitas, filas separadas por filete fino,
+una barra fina verde bajo cada nombre que dibuja el peso normalizado, y
+el peso editable en su casilla (`input number`, % al lado). Campo
+opcional «Importe de la cartera (€)»: si se rellena, Capital = peso
+normalizado × importe (`Intl.NumberFormat` es-ES); si no, «—»; sin
+historial, «fuera del cálculo». El importe no se guarda ni se envía —
+vive en la página. Lecciones: (1) una barra con `flex-basis: 100%` y
+`max-width` NO salta de línea — el corte flex usa el tamaño hipotético
+(la base recortada por max-width), así que cabía en la primera línea con
+nombres cortos; se quita el max-width y se usa `flex: 1 0 100%`. (2) el
+`display: grid/flex` de una clase le gana al atributo `hidden` (mismo
+caso que `.nuvia-lab[hidden]`): guardas `[hidden] { display: none }`
+para `.nv-cons__importe` y `.nv-cons__cabecera`. Además, frontera, mapa
+de perfiles, proyección, evolución y mapa del mundo van **centrados** en
+sus paneles (`margin-inline: auto` en los SVG) y, a petición de Óscar
+(«centra tambien el texto de dichos elementos»), su texto también:
+título, lectura, leyenda y fila de cifras se centran vía
+`.nv-analisis__grupo:has(.nv-frontera/.nv-abanico/.nv-mapa__svg)`; los
+grupos de barras y tablas siguen a la izquierda.
+
 ---
 
 # Transversal
