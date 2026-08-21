@@ -2,15 +2,14 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = resolve(process.argv[2] || '.');
+/* La app antigua (core/) se eliminó el 21-08-2026 por encargo de Óscar; de
+   ella solo quedan los PDF del curso, que la página nueva sigue sirviendo. */
 const required = [
-  'core/index.html',
-  'core/reports/reports_manifest.json',
   'core/downloads/nuvia-academy/capitulo-01-pon-orden-a-tu-dinero.pdf',
   'data/daily-content.json',
   'company-analysis/index.html',
   'company-analysis/src/App.jsx',
   'web2-integration.js',
-  'web2-core-bridge.js',
 ];
 
 await Promise.all(required.map((entry) => access(resolve(root, entry))));
@@ -27,30 +26,6 @@ const taxGuidePages = {
 };
 const taxGuideRedirect = await readFile(resolve(root, 'guia-impuestos.html'), 'utf8');
 const readingsPage = await readFile(resolve(root, 'lecturas.html'), 'utf8');
-const coreBridge = await readFile(resolve(root, 'web2-core-bridge.js'), 'utf8');
-const expectedRoutes = [
-  'portfolioPreview',
-  'mis-impuestos',
-  'vivienda-coste-vida',
-  'retirement-simulator',
-  'retirement-fiscal-guide',
-  'retirement-planning-guide',
-  'educationGuide',
-  'lecturasConCriterio',
-  'daily-report',
-  'archive',
-  'weekly',
-];
-const expectedCourseVideos = [
-  '8bkXWpsZ1YI',
-  'WtoHCXogKiw',
-  '-afhqOyS-UQ',
-  'yRWuM64CAe8',
-  'idMdu9nTRmM',
-];
-for (const route of expectedRoutes) {
-  if (!integration.includes(route)) throw new Error(`Falta la ruta funcional: ${route}`);
-}
 
 const expectedHomeLinks = [
   'href="vivienda.html"',
@@ -103,14 +78,13 @@ if (!portfolioPage.includes('id="laboratorio"')) {
 if (!portfolioPage.includes('js/nuvia-simulador.js')) {
   throw new Error('La página de cartera no monta el simulador propio');
 }
-/* La regla del paso 18 prohíbe INCRUSTAR la suite del núcleo (iframe);
-   un enlace de navegación a la vista clásica sí está permitido: Óscar
-   pidió recuperar el acceso a sus gráficos (20-08-2026). */
+/* La app antigua ya no existe (21-08-2026): la página de cartera no debe
+   incrustarla ni enlazarla — el laboratorio nuevo es el único. */
 if (/<iframe[^>]*portfolioPreview=1/.test(portfolioPage)) {
   throw new Error('La página de cartera no debe seguir incrustando la suite del núcleo');
 }
-if (!portfolioPage.includes('id="vista-clasica"') || !portfolioPage.includes('core/index.html?portfolioPreview=1')) {
-  throw new Error('Falta el enlace a la vista clásica del laboratorio (los gráficos de siempre)');
+if (portfolioPage.includes('core/index.html')) {
+  throw new Error('La página de cartera enlaza a la app antigua, que ya no existe');
 }
 if (!portfolioPage.includes('id="simulador"')) {
   throw new Error('Falta el punto de montaje del simulador con su aviso sin JavaScript');
@@ -180,10 +154,6 @@ for (const [title, guide] of [
     throw new Error(`El reenvío de guia-impuestos.html no contempla ${archivo}`);
   }
 }
-if (!coreBridge.includes("params.get('embedded') === 'web2'") || !coreBridge.includes("type: 'resize'") || !coreBridge.includes("params.get('suiteTab')")) {
-  throw new Error('El puente de la suite analítica no prepara el modo integrado o su altura dinámica');
-}
-
 /* Diseño de portada.
 
    Antes esto comprobaba cadenas de estilo inline literales —'background:#1C3A5E',
@@ -217,41 +187,4 @@ for (const indicator of daily.dailyMacroIndicators) {
   }
 }
 
-const manifest = JSON.parse(await readFile(resolve(root, 'core/reports/reports_manifest.json'), 'utf8'));
-if (!Array.isArray(manifest) || manifest.length === 0) {
-  throw new Error('El archivo de informes diarios está vacío');
-}
-await Promise.all(manifest.map(({ filename }) => access(resolve(root, 'core/reports', filename))));
-
-const coreIndex = await readFile(resolve(root, 'core/index.html'), 'utf8');
-if (!coreIndex.includes('../web2-core-bridge.js')) {
-  throw new Error('El núcleo no incluye el enlace de regreso a Web 2');
-}
-const suiteLoaderMatch = coreIndex.match(/PortfolioAnalyticsSuite-Web2-([a-f0-9]{8,})\.js/i);
-if (!suiteLoaderMatch) {
-  throw new Error('El núcleo no activa un cargador versionado de la navegación Web 2');
-}
-
-const assetFiles = await readdir(resolve(root, 'core/assets'));
-for (const prefix of ['PortfolioAnalyticsSuite-', 'TechnicalAnalysisModule-', 'FundamentalAnalysisModule-']) {
-  if (!assetFiles.some((filename) => filename.startsWith(prefix) && filename.endsWith('.js'))) {
-    throw new Error(`Falta el módulo analítico real: ${prefix}`);
-  }
-}
-await access(resolve(root, 'core/assets', suiteLoaderMatch[0]));
-/* Paso 18: la página de cartera ya no escucha suite-tab-change (no incrusta la
-   suite del núcleo); el puente del núcleo lo conserva para otros anfitriones. */
-if (!coreBridge.includes('suite-tab-change')) {
-  throw new Error('El puente del núcleo perdió la sincronización de pestañas de la suite');
-}
-const courseBundles = await Promise.all(
-  assetFiles
-    .filter((filename) => filename.startsWith('FinancialCourseChapterOne-') && filename.endsWith('.js'))
-    .map((filename) => readFile(resolve(root, 'core/assets', filename), 'utf8')),
-);
-const courseBundle = courseBundles.join('\n');
-for (const videoId of expectedCourseVideos) {
-  if (!courseBundle.includes(videoId)) throw new Error(`Falta el vídeo de Academia Nuvia: ${videoId}`);
-}
-
-console.log(`Paridad funcional preparada: ${required.length} recursos, ${manifest.length} informes, ${expectedRoutes.length} rutas críticas, ${expectedHomeLinks.length} accesos y ${expectedCourseVideos.length} vídeos.`);
+console.log(`Paridad funcional preparada: ${required.length} recursos y ${expectedHomeLinks.length} accesos; la app antigua eliminada (21-08-2026) y sin enlaces que apunten a ella.`);

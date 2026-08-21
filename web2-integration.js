@@ -1,34 +1,13 @@
 (function () {
   'use strict';
   // NUVIA Portal Lab — integración v2 (rediseño canónico).
-  // Cambios vs v1: SIN redirecciones a core/ — las 12 páginas rediseñadas son las que se ven.
-  // core/ sigue publicado y accesible directamente en ./core/index.html.
+  // La app antigua (core/) se eliminó el 21-08-2026 por encargo de Óscar: las
+  // páginas rediseñadas son las únicas; de core/ solo quedan los PDF del curso.
   // En la portada hidrata la noticia del día y monta el ticker; en Mercados hidrata
   // los indicadores macroeconómicos y las tres lecturas editoriales (data-*) con la misma fuente de datos diaria,
   // manteniendo su cabecera, bordes y fundidos laterales. Sin red, queda el contenido estático.
 
   const page = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
-
-  // Enlaces profundos a la app completa (core/). NO se redirige a ellos: se publican en
-  // window.NUVIA_CORE_LINKS como referencia navegable y para la validación de paridad
-  // (scripts/check-parity.mjs exige estas rutas funcionales en este fichero).
-  const CORE_DEEP_LINKS = {
-    'academia.html': 'core/index.html?educationGuide=1',
-    'cartera.html': 'core/index.html?portfolioPreview=1',
-    'curso.html': 'core/index.html?educationGuide=1&tab=curso',
-    'fiscalidad.html': 'core/index.html?topic=mis-impuestos',
-    'guia-fiscal.html': 'core/index.html?view=retirement-fiscal-guide',
-    'guia-planificacion.html': 'core/index.html?view=retirement-planning-guide',
-    'jubilacion.html': 'core/index.html?view=retirement-simulator',
-    'lecturas.html': 'core/index.html?lecturasConCriterio=1',
-    'vivienda.html': 'core/index.html?topic=vivienda-coste-vida',
-    'mercados.html': {
-      diario: 'core/index.html?view=daily-report',
-      archivo: 'core/index.html?view=archive',
-      semanal: 'core/index.html?view=weekly',
-    },
-  };
-  window.NUVIA_CORE_LINKS = CORE_DEEP_LINKS;
 
   if (page !== 'index.html' && page !== '' && page !== 'mercados.html') return;
 
