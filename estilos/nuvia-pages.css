@@ -4696,6 +4696,32 @@
   color: var(--nv-text-soft);
 }
 
+/* Los grupos cuyo gráfico va centrado centran también su texto: título,
+   lectura, leyenda y fila de cifras. Los grupos de barras y tablas siguen
+   alineados a la izquierda. */
+.nv-analisis__grupo:has(.nv-frontera),
+.nv-analisis__grupo:has(.nv-abanico),
+.nv-analisis__grupo:has(.nv-mapa__svg),
+.nv-evolucion {
+  text-align: center;
+}
+.nv-analisis__grupo:has(.nv-frontera) .nv-analisis__lectura,
+.nv-analisis__grupo:has(.nv-abanico) .nv-analisis__lectura,
+.nv-analisis__grupo:has(.nv-mapa__svg) .nv-analisis__lectura {
+  margin-inline: auto;
+}
+.nv-analisis__grupo:has(.nv-frontera) .nv-leyenda,
+.nv-analisis__grupo:has(.nv-abanico) .nv-leyenda,
+.nv-analisis__grupo:has(.nv-mapa__svg) .nv-mapa__leyenda,
+.nv-analisis__grupo:has(.nv-frontera) .nv-grafico__cifras,
+.nv-analisis__grupo:has(.nv-abanico) .nv-grafico__cifras {
+  justify-content: center;
+}
+.nv-evolucion .nv-cons__nota-clase,
+.nv-analisis__grupo:has(.nv-mapa__svg) .nv-cons__nota {
+  margin-inline: auto;
+}
+
 .nv-analisis__subtitulo-lista {
   margin: var(--nv-space-2) 0 0;
   font-size: var(--nv-body-sm);
