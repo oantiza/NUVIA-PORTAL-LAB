@@ -860,19 +860,21 @@ function grupoMapaRiesgo({ series, pesos, metricas, nombreDe }) {
     tituloY: 'Cuánto rentó al año ↑',
   });
 
-  /* Los números se separan por columnas de 48 px para no pisarse; si el
-     número se aparta de su punto, un trazo fino los une. */
+  /* Los números se separan para no pisarse: los puntos que quedan a menos
+     de 26 px de anchura forman un grupo y sus marcas se reparten en
+     vertical; si la marca se aparta de su punto, un trazo fino los une. */
   const cxs = orden.map((p) => x(p.volatilidad));
   const cys = orden.map((p) => y(p.rentabilidad));
   const yMarca = new Array(orden.length);
-  const porColumna = new Map();
-  orden.forEach((p, i) => {
-    const col = Math.round(cxs[i] / 48);
-    if (!porColumna.has(col)) porColumna.set(col, []);
-    porColumna.get(col).push(i);
-  });
-  for (const indices of porColumna.values()) {
-    const sep = separaVerticalmente(indices.map((i) => cys[i]), 24, arriba + 14, H - abajo - 12);
+  const porX = orden.map((_, i) => i).sort((a, b) => cxs[a] - cxs[b]);
+  const grupos = [];
+  for (const i of porX) {
+    const ultimo = grupos[grupos.length - 1];
+    if (ultimo && cxs[i] - cxs[ultimo[ultimo.length - 1]] < 26) ultimo.push(i);
+    else grupos.push([i]);
+  }
+  for (const indices of grupos) {
+    const sep = separaVerticalmente(indices.map((i) => cys[i]), 25, arriba + 14, H - abajo - 12);
     indices.forEach((i, k) => { yMarca[i] = sep[k]; });
   }
   orden.forEach((p, i) => {
