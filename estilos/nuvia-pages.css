@@ -4560,6 +4560,28 @@
   stroke: var(--nv-bronze-700);
   stroke-width: 3;
 }
+.nv-frontera__sharpe {
+  fill: var(--nv-navy-900);
+  stroke: var(--nv-paper-light);
+  stroke-width: 2;
+}
+.nv-frontera__tranquila {
+  fill: var(--nv-bronze-700);
+  stroke: var(--nv-paper-light);
+  stroke-width: 2;
+}
+
+/* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7) */
+.nv-perfiles__linea {
+  stroke: var(--nv-text-soft);
+  stroke-width: 2;
+  stroke-dasharray: 7 6;
+}
+.nv-perfiles__rombo {
+  fill: var(--nv-text-soft);
+  stroke: var(--nv-paper-light);
+  stroke-width: 1.5;
+}
 .nv-frontera__eje { font-size: var(--nv-label); fill: var(--nv-text-muted); }
 .nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
 .nv-frontera__control input[type='range'] { width: 100%; max-width: 760px; }
@@ -4662,6 +4684,55 @@
   border: 2px solid var(--nv-white);
   box-shadow: 0 0 0 1px var(--nv-line);
 }
+.nv-leyenda__marca--sharpe {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--nv-navy-900);
+}
+.nv-leyenda__marca--tranquila {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--nv-bronze-700);
+}
+.nv-leyenda__marca--rombo {
+  width: 11px;
+  height: 11px;
+  background: var(--nv-text-soft);
+  transform: rotate(45deg);
+}
+
+/* La matriz de solapamiento como rejilla de calor numerada (Fase 7) */
+.nv-solape {
+  border-collapse: separate;
+  border-spacing: 4px;
+  margin: 0 auto;
+}
+.nv-solape__eje {
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-text-muted);
+  padding: 2px 6px;
+  text-align: center;
+}
+.nv-solape__hueco { padding: 0; text-align: center; }
+.nv-solape__celda {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: var(--nv-body-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--nv-text);
+}
+.nv-solape--total { background: var(--nv-navy-900); color: var(--nv-white); }
+.nv-solape--alto { background: #a4b98a; }
+.nv-solape--medio { background: #cdd8c2; }
+.nv-solape--bajo { background: #e4e8e2; }
+.nv-solape--cero { background: var(--nv-mist); color: var(--nv-text-soft); }
 
 /* Evolución de la combinación y sus caídas (encargo 20-08-2026) */
 .nv-evolucion { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }

@@ -13,7 +13,7 @@ import {
   ahorroDeSeries, textoAhorro, textoCalidad, carteraDesdeHoldings,
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
-  caminoSuave, envolventeConcava, suavizaEsquinas,
+  caminoSuave, envolventeConcava, suavizaEsquinas, puntosSenalados, perfilesReferencia,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -242,6 +242,31 @@ console.log('\n— La envolvente cóncava de la frontera (el arco limpio del cl�
   comprueba('Los dos extremos del tramo se conservan',
     arco[0].volatilidad === 0.04 && arco[arco.length - 1].volatilidad === 0.10);
   comprueba('Sin puntos no revienta', envolventeConcava(null).length === 0);
+}
+
+console.log('\n— Los puntos señalados de la frontera (encargo 21-08) —');
+{
+  const eficiente = [
+    { volatilidad: 0.04, rentabilidad: 0.045 },
+    { volatilidad: 0.06, rentabilidad: 0.08 },  /* Sharpe (0.08-0.019)/0.06 ≈ 1.02, el mayor */
+    { volatilidad: 0.10, rentabilidad: 0.10 },
+  ];
+  const s = puntosSenalados(eficiente);
+  comprueba('La de menor riesgo es la de menor volatilidad', s.menorRiesgo.volatilidad === 0.04);
+  comprueba('La de mayor Sharpe descuenta la tasa sin riesgo', s.mayorSharpe.volatilidad === 0.06);
+  comprueba('Sin puntos no hay señalados', puntosSenalados([]) === null && puntosSenalados(null) === null);
+}
+
+console.log('\n— Los perfiles de referencia del mapa riesgo-retorno (encargo 21-08) —');
+{
+  const perfiles = perfilesReferencia();
+  comprueba('Cinco perfiles, del 10 % al 90 % de renta variable',
+    perfiles.length === 5 && perfiles[0].rv === 10 && perfiles[4].rv === 90);
+  comprueba('A más renta variable, más riesgo y más rentabilidad estimada (con estos supuestos)',
+    perfiles.every((p, i) => i === 0
+      || (p.volatilidad > perfiles[i - 1].volatilidad && p.rentabilidad > perfiles[i - 1].rentabilidad)));
+  comprueba('Cada perfil arriesga menos que la renta variable pura y más que la fija pura',
+    perfiles.every((p) => p.volatilidad < 0.16 && p.volatilidad > 0.055 * 0.5));
 }
 
 console.log('\n— El redondeo de esquinas (Chaikin) —');

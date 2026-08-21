@@ -21,6 +21,7 @@
 import {
   correlacionesDesdeSeries, estableceCorrelaciones, frontera,
   metricasDesdeSerie, proyeccionMonteCarlo, pct, num,
+  sharpe, volatilidadCartera, rentabilidadCartera,
 } from './nuvia-cartera.js';
 import { concentracionSectorial, concentracionGeografica } from './nuvia-concentracion.js';
 import { grupoMapa } from './nuvia-mapa.js';
@@ -387,6 +388,47 @@ export function caminoSuave(puntos) {
   return d;
 }
 
+/**
+ * Los dos puntos señalados de la frontera (encargo de Óscar, 21-08): la
+ * mezcla de menor volatilidad y la de mayor Sharpe del historial. Son
+ * hechos del cálculo, no un juicio: «la que menos se movió» y «la que más
+ * rentó por unidad de riesgo». Pura y probada; null sin puntos.
+ */
+export function puntosSenalados(eficiente) {
+  const puntos = (eficiente || []).filter((p) => Number.isFinite(p?.volatilidad) && Number.isFinite(p?.rentabilidad));
+  if (!puntos.length) return null;
+  const menorRiesgo = puntos.reduce((m, p) => (p.volatilidad < m.volatilidad ? p : m));
+  const mayorSharpe = puntos.reduce((m, p) => {
+    const sp = sharpe(p.rentabilidad, p.volatilidad);
+    const sm = sharpe(m.rentabilidad, m.volatilidad);
+    return Number.isFinite(sp) && (!Number.isFinite(sm) || sp > sm) ? p : m;
+  });
+  return { menorRiesgo, mayorSharpe };
+}
+
+/**
+ * Perfiles de referencia para el mapa riesgo-retorno (encargo de Óscar,
+ * 21-08): mezclas de renta variable y renta fija globales a distintas
+ * proporciones, calculadas con los supuestos publicados en la página
+ * (CLASES y sus correlaciones). Idénticos para cualquiera que mire; no
+ * describen a ningún lector. Pura y probada.
+ */
+export function perfilesReferencia(proporciones = [10, 30, 50, 70, 90]) {
+  return proporciones
+    .map((rv) => {
+      const posiciones = [
+        { clase: 'EQUITY', peso: rv },
+        { clase: 'FIXED_INCOME', peso: 100 - rv },
+      ];
+      return {
+        rv,
+        volatilidad: volatilidadCartera(posiciones),
+        rentabilidad: rentabilidadCartera(posiciones),
+      };
+    })
+    .filter((p) => Number.isFinite(p.volatilidad) && Number.isFinite(p.rentabilidad));
+}
+
 /** La correlación de un par, dicha en llano. Pura y probada. */
 export function fraseCorrelacion(valor) {
   if (!Number.isFinite(valor)) return 'sin datos comunes';
@@ -638,16 +680,34 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
     d: arco.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),
     class: 'nv-frontera__linea', fill: 'none',
   }));
+  /* Los tres puntos que pidió Óscar: tu combinación, la mezcla de mayor
+     Sharpe y la de menor volatilidad del historial. Nada más. */
+  const senalados = puntosSenalados(eficiente);
+  const rotulo = (cx, cy, texto, dy = 5) => {
+    const anclaIzq = cx > W - der - 150;
+    svg.append(svgEl('text', {
+      x: (anclaIzq ? cx - 13 : cx + 13).toFixed(1),
+      y: (cy + dy).toFixed(1),
+      'text-anchor': anclaIzq ? 'end' : 'start',
+      class: 'nv-grafico__rotulo',
+    }, texto));
+  };
+  if (senalados) {
+    const mr = senalados.menorRiesgo;
+    svg.append(svgEl('circle', {
+      cx: x(mr.volatilidad).toFixed(1), cy: y(mr.rentabilidad).toFixed(1), r: 6, class: 'nv-frontera__tranquila',
+    }));
+    rotulo(x(mr.volatilidad), y(mr.rentabilidad), 'Menor riesgo', -12);
+    const ms = senalados.mayorSharpe;
+    svg.append(svgEl('circle', {
+      cx: x(ms.volatilidad).toFixed(1), cy: y(ms.rentabilidad).toFixed(1), r: 6.5, class: 'nv-frontera__sharpe',
+    }));
+    rotulo(x(ms.volatilidad), y(ms.rentabilidad), 'Mayor Sharpe', -12);
+  }
   if (metricas) {
     const cx = x(metricas.volatilidad); const cy = y(metricas.rentabilidadAnualizada);
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 7, class: 'nv-frontera__mi-punto' }));
-    const anclaIzq = cx > W - der - 160;
-    svg.append(svgEl('text', {
-      x: (anclaIzq ? cx - 13 : cx + 13).toFixed(1),
-      y: (cy + 5).toFixed(1),
-      'text-anchor': anclaIzq ? 'end' : 'start',
-      class: 'nv-grafico__rotulo',
-    }, 'Tu combinación'));
+    rotulo(cx, cy, 'Tu combinación');
   }
 
   const cifras = [];
@@ -658,54 +718,46 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
       texto: `riesgo ${pct(metricas.volatilidad)} · rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}`,
     });
   }
-  cifras.push({
-    clase: 'nv-leyenda__marca--linea',
-    nombre: 'La frontera:',
-    texto: 'a cada nivel de riesgo, la mezcla de estos activos que más rentó',
-  });
+  if (senalados) {
+    cifras.push({
+      clase: 'nv-leyenda__marca--sharpe',
+      nombre: 'Mayor Sharpe:',
+      texto: `riesgo ${pct(senalados.mayorSharpe.volatilidad)} · rentabilidad anual ${pct(senalados.mayorSharpe.rentabilidad)}`,
+    });
+    cifras.push({
+      clase: 'nv-leyenda__marca--tranquila',
+      nombre: 'Menor riesgo:',
+      texto: `riesgo ${pct(senalados.menorRiesgo.volatilidad)} · rentabilidad anual ${pct(senalados.menorRiesgo.rentabilidad)}`,
+    });
+  }
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
+  bloque.append(el('p', { class: 'nv-cons__nota' },
+    'El Sharpe es la rentabilidad obtenida por cada unidad de riesgo, descontada la tasa sin riesgo: '
+    + '«mayor Sharpe» señala la mezcla del historial que más rentó por cada punto de movimiento, y '
+    + '«menor riesgo», la que menos se movió. Describen ese historial, no el futuro.'));
   if (!metricas) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Tu combinación no tiene historial común suficiente para marcarla.'));
   }
 
-  if (!interactiva) return bloque;
-
-  /* Parte interactiva del suscriptor: recorrer la frontera punto a punto. */
-  const control = el('div', { class: 'nv-frontera__control' });
-  const idControl = 'frontera-punto';
-  control.append(el('label', { for: idControl, class: 'nv-frontera__etiqueta' },
-    'Recorre la frontera y mira el reparto de cada punto:'));
-  const rango = el('input', {
-    type: 'range', id: idControl, min: '0',
-    max: String(eficiente.length - 1), step: '1', value: String(Math.floor(eficiente.length / 2)),
-  });
-  const detalle = el('div', { class: 'nv-frontera__detalle', 'aria-live': 'polite' });
-  let marcador = null;
-  const pinta = () => {
-    const p = eficiente[Number(rango.value)];
-    if (!p) return;
-    if (marcador) marcador.remove();
-    marcador = svgEl('circle', {
-      cx: x(p.volatilidad).toFixed(1), cy: y(p.rentabilidad).toFixed(1), r: 6, class: 'nv-frontera__elegido',
-    });
-    svg.append(marcador);
-    detalle.textContent = '';
-    detalle.append(el('p', { class: 'nv-frontera__resumen' },
-      `Ese punto del historial se movió un ${pct(p.volatilidad)} al año y rentó un ${pct(p.rentabilidad)} anual. Su reparto:`));
-    const visibles = [...p.pesos].sort((a, b) => b.peso - a.peso).filter((w) => w.peso >= 0.5).slice(0, 8);
-    const resto = 100 - visibles.reduce((s, w) => s + w.peso, 0);
-    const lista = el('ul', { class: 'nv-analisis__filas' });
-    for (const w of visibles) {
-      lista.append(filaConBarra(nombreDe?.[w.id] || w.id, pct(w.peso / 100, 0), w.peso));
+  /* El reparto de las dos mezclas señaladas, plegado (nivel completo). */
+  if (interactiva && senalados) {
+    const pliegue = el('details', { class: 'nv-analisis__despliegue' });
+    pliegue.append(el('summary', {}, 'Ver el reparto de esas dos mezclas'));
+    for (const [titulo, punto] of [['La de mayor Sharpe', senalados.mayorSharpe], ['La de menor riesgo', senalados.menorRiesgo]]) {
+      pliegue.append(el('p', { class: 'nv-analisis__subtitulo-lista' },
+        `${titulo} — se movió un ${pct(punto.volatilidad)} al año y rentó un ${pct(punto.rentabilidad)} anual:`));
+      const visibles = [...(punto.pesos || [])].sort((a, b) => b.peso - a.peso).filter((w) => w.peso >= 0.5).slice(0, 8);
+      const resto = 100 - visibles.reduce((s, w) => s + w.peso, 0);
+      const lista = el('ul', { class: 'nv-analisis__filas' });
+      for (const w of visibles) {
+        lista.append(filaConBarra(nombreDe?.[w.id] || w.id, pct(w.peso / 100, 0), w.peso));
+      }
+      if (resto >= 0.5) lista.append(filaConBarra('Resto de posiciones', pct(resto / 100, 0), resto));
+      pliegue.append(lista);
     }
-    if (resto >= 0.5) lista.append(filaConBarra('Resto de posiciones', pct(resto / 100, 0), resto));
-    detalle.append(lista);
-  };
-  rango.addEventListener('input', pinta);
-  control.append(rango, detalle);
-  bloque.append(control);
-  pinta();
+    bloque.append(pliegue);
+  }
   return bloque;
 }
 
@@ -828,96 +880,86 @@ function grupoProyeccion(metricas) {
  * como punto (volatilidad, rentabilidad anualizada) del historial real,
  * con la cartera marcada. Nivel registrado en adelante.
  */
-function grupoMapaRiesgo({ series, pesos, metricas, nombreDe }) {
-  const bloque = grupo('Cada posición en el mapa de riesgo',
-    'Cada número es una posición, sola: más a la derecha, más se movió; más arriba, '
-    + 'más rentó en la ventana de 3 años. Debajo, la lista dice qué es cada número. '
-    + 'Describe el historial, no el futuro.');
-  const { puntos, sinMetrica } = puntosMapaRiesgo(series, pesos);
-  if (!puntos.length) {
+function grupoMapaRiesgo({ metricas }) {
+  const bloque = grupo('Mapa riesgo-retorno frente a perfiles de referencia',
+    'Tu combinación (con su historial real de 3 años) frente a cinco mezclas de '
+    + 'referencia de renta variable y renta fija globales, calculadas con los '
+    + 'supuestos publicados en esta página. Son puntos de comparación fijos, '
+    + 'idénticos para cualquiera; no describen a ningún lector.');
+  const perfiles = perfilesReferencia();
+  if (!perfiles.length) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
-      'Sin métricas de los activos no hay mapa que dibujar; nunca se inventa.'));
+      'Sin supuestos de las clases no hay perfiles que dibujar; nunca se inventa.'));
     return bloque;
   }
-  const orden = [...puntos].sort((a, b) => a.volatilidad - b.volatilidad);
   const todos = metricas
-    ? orden.concat([{ id: '__cartera__', volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }])
-    : orden;
-  const W = 760; const H = 420; const izq = 78; const der = 24; const arriba = 18; const abajo = 66;
-  const ejeX = marcasEje(Math.min(...todos.map((p) => p.volatilidad)), Math.max(...todos.map((p) => p.volatilidad)), 6);
-  const ejeY = marcasEje(Math.min(...todos.map((p) => p.rentabilidad)), Math.max(...todos.map((p) => p.rentabilidad)), 6);
+    ? perfiles.concat([{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }])
+    : perfiles;
+  const W = 760; const H = 420; const izq = 78; const der = 24; const arriba = 26; const abajo = 66;
+  const ejeX = marcasEje(Math.min(0, ...todos.map((p) => p.volatilidad)), Math.max(...todos.map((p) => p.volatilidad)), 6);
+  const ejeY = marcasEje(Math.min(0, ...todos.map((p) => p.rentabilidad)), Math.max(...todos.map((p) => p.rentabilidad)), 6);
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`,
     class: 'nv-frontera',
     role: 'img',
-    'aria-label': 'Mapa riesgo y rentabilidad de estas posiciones: '
-      + orden.map((p, i) => `${i + 1}: ${nombreDe?.[p.id] || p.id} (volatilidad ${pct(p.volatilidad)}, rentabilidad anual ${pct(p.rentabilidad)})`).join('; ')
-      + (metricas ? `; la cartera junta: volatilidad ${pct(metricas.volatilidad)}, rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
+    'aria-label': 'Mapa riesgo-retorno: perfiles de referencia '
+      + perfiles.map((p) => `${p.rv} % de renta variable (volatilidad ${pct(p.volatilidad)}, rentabilidad ${pct(p.rentabilidad)})`).join('; ')
+      + (metricas ? `; tu combinación: volatilidad ${pct(metricas.volatilidad)}, rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
   });
   const { x, y } = dibujaEjes(svg, {
     W, H, izq, der, arriba, abajo, ejeX, ejeY,
-    tituloX: 'Cuánto se movió al año (volatilidad) →',
-    tituloY: 'Cuánto rentó al año ↑',
+    tituloX: 'Cuánto se mueve al año (volatilidad) →',
+    tituloY: 'Rentabilidad anual ↑',
   });
 
-  /* Los números se separan para no pisarse: los puntos que quedan a menos
-     de 26 px de anchura forman un grupo y sus marcas se reparten en
-     vertical; si la marca se aparta de su punto, un trazo fino los une. */
-  const cxs = orden.map((p) => x(p.volatilidad));
-  const cys = orden.map((p) => y(p.rentabilidad));
-  const yMarca = new Array(orden.length);
-  const porX = orden.map((_, i) => i).sort((a, b) => cxs[a] - cxs[b]);
-  const grupos = [];
-  for (const i of porX) {
-    const ultimo = grupos[grupos.length - 1];
-    if (ultimo && cxs[i] - cxs[ultimo[ultimo.length - 1]] < 26) ultimo.push(i);
-    else grupos.push([i]);
-  }
-  for (const indices of grupos) {
-    const sep = separaVerticalmente(indices.map((i) => cys[i]), 25, arriba + 14, H - abajo - 12);
-    indices.forEach((i, k) => { yMarca[i] = sep[k]; });
-  }
-  orden.forEach((p, i) => {
-    if (Math.abs(yMarca[i] - cys[i]) > 12) {
-      svg.append(svgEl('circle', { cx: cxs[i].toFixed(1), cy: cys[i].toFixed(1), r: 3, class: 'nv-mriesgo__activo' }));
-      svg.append(svgEl('line', {
-        x1: cxs[i].toFixed(1), y1: cys[i].toFixed(1), x2: cxs[i].toFixed(1), y2: yMarca[i].toFixed(1), class: 'nv-mriesgo__union',
-      }));
-    }
-    svg.append(svgEl('circle', { cx: cxs[i].toFixed(1), cy: yMarca[i].toFixed(1), r: 11, class: 'nv-mriesgo__marca' }));
+  /* La línea discontinua que une los perfiles, y un rombo por perfil. */
+  svg.append(svgEl('polyline', {
+    points: perfiles.map((p) => `${x(p.volatilidad).toFixed(1)},${y(p.rentabilidad).toFixed(1)}`).join(' '),
+    class: 'nv-perfiles__linea', fill: 'none',
+  }));
+  perfiles.forEach((p, i) => {
+    const cx = x(p.volatilidad); const cy = y(p.rentabilidad);
+    svg.append(svgEl('rect', {
+      x: (cx - 5.5).toFixed(1), y: (cy - 5.5).toFixed(1), width: 11, height: 11,
+      transform: `rotate(45 ${cx.toFixed(1)} ${cy.toFixed(1)})`, class: 'nv-perfiles__rombo',
+    }));
+    /* El rótulo alterna abajo y arriba para que dos vecinos no se pisen. */
     svg.append(svgEl('text', {
-      x: cxs[i].toFixed(1), y: (yMarca[i] + 4.5).toFixed(1), 'text-anchor': 'middle', class: 'nv-mriesgo__numero',
-    }, String(i + 1)));
+      x: cx.toFixed(1), y: (i % 2 ? cy - 14 : cy + 26).toFixed(1), 'text-anchor': 'middle', class: 'nv-grafico__eje',
+    }, `${p.rv} % bolsa`));
   });
   if (metricas) {
     const cx = x(metricas.volatilidad); const cy = y(metricas.rentabilidadAnualizada);
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 8, class: 'nv-frontera__mi-punto' }));
     const anclaIzq = cx > W - der - 150;
     svg.append(svgEl('text', {
-      x: (anclaIzq ? cx - 13 : cx + 13).toFixed(1), y: (cy + 5).toFixed(1),
+      x: (anclaIzq ? cx - 14 : cx + 14).toFixed(1), y: (cy - 10).toFixed(1),
       'text-anchor': anclaIzq ? 'end' : 'start', class: 'nv-grafico__rotulo',
     }, 'Tu combinación'));
   }
 
-  const lista = el('ol', { class: 'nv-mriesgo__lista' });
-  orden.forEach((p, i) => {
-    const item = el('li', { class: 'nv-mriesgo__item' });
-    item.append(
-      el('span', { class: 'nv-mriesgo__indice', 'aria-hidden': 'true' }, String(i + 1)),
-      el('span', { class: 'nv-mriesgo__nombre' }, nombreDe?.[p.id] || p.id),
-      el('span', { class: 'nv-mriesgo__cifras' }, `se movió ${pct(p.volatilidad)} · rentó ${pct(p.rentabilidad)}`),
-    );
-    lista.append(item);
-  });
-  bloque.append(panelGrafico(svg, lista));
+  const cifras = [];
   if (metricas) {
-    bloque.append(el('p', { class: 'nv-cons__nota' },
-      `Tu combinación, junta, se movió un ${pct(metricas.volatilidad)} al año y rentó un ${pct(metricas.rentabilidadAnualizada)} anual.`));
+    cifras.push({
+      clase: 'nv-leyenda__marca--punto',
+      nombre: 'Tu combinación:',
+      texto: `se movió ${pct(metricas.volatilidad)} · rentó ${pct(metricas.rentabilidadAnualizada)} anual (historial de 3 años)`,
+    });
   }
-  if (sinMetrica.length) {
+  cifras.push({
+    clase: 'nv-leyenda__marca--rombo',
+    nombre: 'Perfiles de referencia:',
+    texto: 'del 10 % al 90 % de renta variable, con los supuestos de esta página',
+  });
+  bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
+  if (!metricas) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
-      `Sin métrica del historial: ${sinMetrica.map((id) => nombreDe?.[id] || id).join(', ')}. Fuera del mapa.`));
+      'Tu combinación no tiene historial común suficiente para marcarla.'));
   }
+  bloque.append(el('p', { class: 'nv-cons__nota' },
+    'Los perfiles salen de los supuestos publicados más abajo (estimaciones de largo plazo, '
+    + 'pendientes de validación profesional); tu combinación, de su historial real. '
+    + 'Son puntos de referencia, no una propuesta.'));
   return bloque;
 }
 
@@ -1074,8 +1116,8 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
   raiz.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
 
-  /* Mapa riesgo/rentabilidad (paso 41): activos y cartera, historial real. */
-  raiz.append(grupoMapaRiesgo({ series, pesos, metricas, nombreDe }));
+  /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7). */
+  raiz.append(grupoMapaRiesgo({ metricas }));
 
   /* Solo suscriptor: proyección por simulación y matriz de correlaciones. */
   if (esSuscriptor) {
@@ -1120,9 +1162,10 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
   }
 
   /* Solapamiento entre fondos y ETF. */
-  const grupoSolape = grupo('Solapamiento entre fondos',
-    'El porcentaje de cartera que dos fondos comparten, posición a posición: cuanto '
-    + 'más alto, más repetido está el mismo contenido dentro de la combinación.');
+  const grupoSolape = grupo('Matriz de solapamiento',
+    'El porcentaje de subyacentes comunes entre cada par de fondos y ETF, posición a '
+    + 'posición: cuanto más oscuro el recuadro, más contenido comparten. La diagonal '
+    + 'es cada fondo consigo mismo (100 %). Debajo, la lista dice qué fondo es cada número.');
   const fondos = idsDeFondos(posiciones).filter((id) => pesos[id] != null);
   if (fondos.length < 2) {
     grupoSolape.append(el('p', { class: 'nv-cons__nota' },
@@ -1140,53 +1183,48 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
         grupoSolape.append(el('p', { class: 'nv-cons__nota' },
           'Sin desglose disponible para comparar estos fondos; nunca se inventa un solapamiento.'));
       } else {
-        /* Los pares con más solapamiento, en llano. */
-        const paresSolape = [];
-        for (let i = 0; i < conDatos.length; i += 1) {
-          for (let j = i + 1; j < conDatos.length; j += 1) {
-            paresSolape.push({
-              a: conDatos[i], b: conDatos[j], valor: matriz.porcentaje[conDatos[i]]?.[conDatos[j]] ?? 0,
-            });
-          }
-        }
-        paresSolape.sort((p, q) => q.valor - p.valor);
-        const destacadosSolape = paresSolape.slice(0, 3).filter((p) => p.valor > 0);
-        if (!destacadosSolape.length) {
-          grupoSolape.append(el('p', { class: 'nv-cons__nota' },
-            'Ningún par comparte posiciones en el desglose disponible.'));
-        } else {
-          const ul = el('ul', { class: 'nv-analisis__filas' });
-          for (const p of destacadosSolape) {
-            ul.append(filaPar(nombreCorto(nombreDe[p.a] || p.a, 34), nombreCorto(nombreDe[p.b] || p.b, 34),
-              pct(p.valor / 100, 1), 'compartido', p.valor));
-          }
-          grupoSolape.append(ul);
-        }
-        if (conDatos.length > 2) {
-          const pliegue = el('details', { class: 'nv-analisis__despliegue' });
-          pliegue.append(el('summary', {}, `Ver todos los pares (${conDatos.length} fondos)`));
-          const tabla = el('table', { class: 'nv-table nv-analisis__matriz' });
-          tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Solapamiento entre los fondos de la cartera'));
-          const thead = el('thead');
-          const trh = el('tr');
-          trh.append(el('th', { scope: 'col' }, ''));
-          for (const id of conDatos) trh.append(el('th', { scope: 'col' }, nombreCorto(nombreDe[id] || id, 16)));
-          thead.append(trh);
-          const tbody = el('tbody');
-          for (const a of conDatos) {
-            const tr = el('tr');
-            tr.append(el('th', { scope: 'row' }, nombreCorto(nombreDe[a] || a, 24)));
-            for (const b of conDatos) {
-              tr.append(el('td', {}, a === b ? '—' : pct((matriz.porcentaje[a]?.[b] ?? 0) / 100, 1)));
-            }
-            tbody.append(tr);
-          }
-          tabla.append(thead, tbody);
-          const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
-          envoltorio.append(tabla);
-          pliegue.append(envoltorio);
-          grupoSolape.append(pliegue);
-        }
+        /* La matriz de calor numerada (encargo de Óscar, 21-08): cuanto más
+           oscuro, más contenido comparten; la diagonal es cada fondo consigo
+           mismo (100 %). Debajo, la lista dice qué fondo es cada número. */
+        const tinte = (v, diagonal) => {
+          if (diagonal) return ' nv-solape--total';
+          if (v >= 25) return ' nv-solape--alto';
+          if (v >= 5) return ' nv-solape--medio';
+          if (v > 0) return ' nv-solape--bajo';
+          return ' nv-solape--cero';
+        };
+        const tabla = el('table', { class: 'nv-solape' });
+        tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Solapamiento entre los fondos de la cartera, en porcentaje'));
+        const thead = el('thead');
+        const trh = el('tr');
+        trh.append(el('th', { scope: 'col' }, ''));
+        conDatos.forEach((_, j) => trh.append(el('th', { scope: 'col', class: 'nv-solape__eje' }, String(j + 1))));
+        thead.append(trh);
+        const tbody = el('tbody');
+        conDatos.forEach((a, i) => {
+          const tr = el('tr');
+          tr.append(el('th', { scope: 'row', class: 'nv-solape__eje' }, String(i + 1)));
+          conDatos.forEach((b, j) => {
+            const v = i === j ? 100 : (matriz.porcentaje[a]?.[b] ?? 0);
+            const td = el('td', { class: 'nv-solape__hueco' });
+            td.append(el('span', { class: `nv-solape__celda${tinte(v, i === j)}` }, pct(v / 100, 0)));
+            tr.append(td);
+          });
+          tbody.append(tr);
+        });
+        tabla.append(thead, tbody);
+        const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+        envoltorio.append(tabla);
+        const listaFondos = el('ol', { class: 'nv-mriesgo__lista' });
+        conDatos.forEach((id, i) => {
+          const item = el('li', { class: 'nv-mriesgo__item' });
+          item.append(
+            el('span', { class: 'nv-mriesgo__indice', 'aria-hidden': 'true' }, String(i + 1)),
+            el('span', { class: 'nv-mriesgo__nombre' }, nombreDe[id] || id),
+          );
+          listaFondos.append(item);
+        });
+        grupoSolape.append(panelGrafico(envoltorio, listaFondos));
       }
       if (sinDatos.length) {
         grupoSolape.append(el('p', { class: 'nv-cons__nota' },
