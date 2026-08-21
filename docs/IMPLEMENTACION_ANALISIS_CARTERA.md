@@ -1254,6 +1254,36 @@ tokens y las reglas MiFID de NUVIA — nunca copiar el interfaz tal cual
 (bases §1: OAA es cantera de cálculos, no modelo de interfaz; la
 traducción a nuestro sistema es el trabajo).
 
+## Tercer encargo: menos ruido y adiós a la app antigua (21-08-2026, commits 0192828 + 6431537)
+
+Dos peticiones de espacio y una de limpieza definitiva:
+
+- **Las carteras guardadas, plegadas** (`0192828`): en «Tu cartera y su
+  análisis», la lista de carteras guardadas —local y en la nube— vive en
+  un `<details>` con contador («Ver tus carteras guardadas (N)») que solo
+  aparece cuando hay alguna. Ocupaban media pantalla con tres carteras.
+- **«Tu cuenta» en una ventana** (`0192828`): el bloque de cuenta dejó de
+  ser una sección de la página y pasó a un `<dialog>` (`#dialogo-cuenta`)
+  que abre el botón «Tu cuenta» de la barra de atajos. Cierra con ✕, con
+  Escape o pulsando el fondo. Ojo al runtime x-dc: el cableado del
+  diálogo debe vivir DENTRO del bloque `text/x-dc` (con guardia
+  `dataset.conectado`), porque el runtime re-renderiza el DOM y destruye
+  los listeners de cualquier `<script>` normal.
+- **Eliminada la app antigua** (`6431537`, «elimina la version antigua»):
+  fuera `core/index.html`, `core/assets/` (6,5 MB), `core/reports/`,
+  `core/weekly/`, `portfolio-real.*`, `web2-core-bridge.js` y
+  `scripts/prepare-core.mjs` — 93 ficheros. **Se conserva
+  `core/downloads/`**: son los cinco PDF del curso que sirve
+  `curso.html`. La cabecera de cartera pierde la pestaña «Laboratorio
+  clásico (gráficos)»; `web2-integration.js` pierde `CORE_DEEP_LINKS`;
+  `check-parity.mjs` pasa de exigir ese enlace a **prohibirlo** (si
+  `cartera.html` vuelve a mencionar `core/index.html`, la validación
+  revienta). En producción `core/index.html` responde 404 y los PDF del
+  curso siguen en 200.
+
+Verificado con Playwright (todo en verde tras cada commit) y en el Chrome
+de Óscar sobre el sitio publicado. `origin/main` = `6431537`.
+
 ---
 
 # Transversal
