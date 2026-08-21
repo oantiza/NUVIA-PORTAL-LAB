@@ -1282,7 +1282,18 @@ Dos peticiones de espacio y una de limpieza definitiva:
   curso siguen en 200.
 
 Verificado con Playwright (todo en verde tras cada commit) y en el Chrome
-de Óscar sobre el sitio publicado. `origin/main` = `6431537`.
+de Óscar sobre el sitio publicado.
+
+**Portada de entrada del laboratorio** (`c5d9c8b`, encargo del 21-08):
+el banner que abre «Análisis y valoración de empresas» (panel con rejilla
+fina, anillos, silueta de montaña, NUVIA en serif con rótulo espaciado y
+raya bajo el lema), replicado como entrada del Laboratorio de cartera con
+la paleta propia: marino y verde en lugar del burdeos y el petróleo
+(`.nv-portada-lab*` en `nuvia-pages.css`; el HTML va estático al
+principio de `#laboratorio`). Ojo con la especificidad: una regla
+genérica `.nv-portada-lab__texto p { margin: 0 }` pisaba los márgenes de
+las clases hijas (0,2,1 > 0,1,0) y comprimía el banner — los márgenes van
+en cada clase, sin regla genérica.
 
 ---
 
