@@ -4449,6 +4449,11 @@
   column-gap: var(--nv-space-3);
   align-items: center;
 }
+
+/* display:flex/grid de las clases le ganaría al atributo hidden (mismo caso
+   que .nuvia-lab[hidden]): esto le devuelve su efecto. */
+.nv-cons__importe[hidden],
+.nv-cons__cabecera[hidden] { display: none; }
 .nv-cons__cabecera {
   padding: 0 var(--nv-space-2) var(--nv-space-1);
   color: var(--nv-text-muted);
