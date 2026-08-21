@@ -116,10 +116,12 @@ export function grupoMapa(reparto) {
   svg.setAttribute('role', 'img');
   svg.setAttribute('aria-label', 'Mapa de continentes coloreado por exposición: '
     + CONTINENTES.map((c) => `${ETIQUETAS_CONTINENTE[c]} ${num(agregado.pesos[c], 1)} %`).join(', ') + '.');
+  /* Cada continente con su propio color (encargo de Óscar, 21-08); la
+     intensidad del tono sigue diciendo el peso. */
   for (const c of CONTINENTES) {
     const path = document.createElementNS(ns, 'path');
     path.setAttribute('d', SILUETAS[c]);
-    path.setAttribute('class', `nv-mapa__zona nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`);
+    path.setAttribute('class', `nv-mapa__zona nv-mapa__zona--${c} nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`);
     svg.append(path);
   }
   bloque.append(svg);
@@ -127,7 +129,10 @@ export function grupoMapa(reparto) {
   const leyenda = el('ul', { class: 'nv-mapa__leyenda' });
   for (const c of CONTINENTES) {
     const item = el('li', { class: 'nv-mapa__leyenda-item' });
-    const punto = el('span', { class: `nv-mapa__punto nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`, 'aria-hidden': 'true' });
+    const punto = el('span', {
+      class: `nv-mapa__punto nv-mapa__zona--${c} nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`,
+      'aria-hidden': 'true',
+    });
     item.append(punto, el('span', {}, `${ETIQUETAS_CONTINENTE[c]} · ${num(agregado.pesos[c], 1)} %`));
     leyenda.append(item);
   }

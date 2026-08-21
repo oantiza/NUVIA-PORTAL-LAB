@@ -4749,11 +4749,11 @@
 .nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
 .nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
 
-/* Abanico de la proyección Montecarlo (paso 40, rediseño Fase 7) */
+/* Abanico de la proyección Montecarlo (paso 40, rediseño Fase 7):
+   a todo el ancho de la tarjeta (encargo de Óscar, 21-08). */
 .nv-abanico {
   display: block;
   width: 100%;
-  max-width: 760px;
   height: auto;
   margin-block: var(--nv-space-2);
 }
@@ -4821,11 +4821,29 @@
   height: auto;
   margin-block: var(--nv-space-1);
 }
-.nv-mapa__zona--n0 { fill: #e4e8e2; }
-.nv-mapa__zona--n1 { fill: #cdd8c2; }
-.nv-mapa__zona--n2 { fill: #a4b98a; }
-.nv-mapa__zona--n3 { fill: #75904c; }
-.nv-mapa__zona--n4 { fill: var(--nv-green-700); }
+/* Cada continente con su propio color (encargo de Óscar, 21-08); el peso
+   marca la intensidad del tono mezclando el color base con el papel. Los
+   chips de la leyenda usan las mismas clases vía background. */
+.nv-mapa__zona--america { --zona-base: #2e4f7c; }   /* azul */
+.nv-mapa__zona--europa { --zona-base: #4a5d23; }    /* verde NUVIA */
+.nv-mapa__zona--africa { --zona-base: #a04e2a; }    /* terracota */
+.nv-mapa__zona--asia { --zona-base: #8a6a1f; }      /* dorado */
+.nv-mapa__zona--oceania { --zona-base: #256f6a; }   /* verde azulado */
+
+.nv-mapa__zona--n0 { fill: #e7e5da; background: #e7e5da; }
+.nv-mapa__zona--n1 {
+  fill: color-mix(in srgb, var(--zona-base) 28%, #f0eee3);
+  background: color-mix(in srgb, var(--zona-base) 28%, #f0eee3);
+}
+.nv-mapa__zona--n2 {
+  fill: color-mix(in srgb, var(--zona-base) 50%, #f0eee3);
+  background: color-mix(in srgb, var(--zona-base) 50%, #f0eee3);
+}
+.nv-mapa__zona--n3 {
+  fill: color-mix(in srgb, var(--zona-base) 74%, #f0eee3);
+  background: color-mix(in srgb, var(--zona-base) 74%, #f0eee3);
+}
+.nv-mapa__zona--n4 { fill: var(--zona-base); background: var(--zona-base); }
 .nv-mapa__leyenda {
   list-style: none;
   margin: 0;
@@ -4842,11 +4860,8 @@
   border-radius: 3px;
   display: inline-block;
 }
-.nv-mapa__punto.nv-mapa__zona--n0 { background: #e4e8e2; }
-.nv-mapa__punto.nv-mapa__zona--n1 { background: #cdd8c2; }
-.nv-mapa__punto.nv-mapa__zona--n2 { background: #a4b98a; }
-.nv-mapa__punto.nv-mapa__zona--n3 { background: #75904c; }
-.nv-mapa__punto.nv-mapa__zona--n4 { background: var(--nv-green-700); }
+/* Los chips heredan el color por continente de las clases nv-mapa__zona--*
+   (el background va en la misma regla que el fill, más arriba). */
 
 /* Nota de qué añade el suscriptor, al pie del análisis del registrado */
 .nv-analisis__suscriptor { font-size: var(--nv-label); color: var(--nv-text-muted); }

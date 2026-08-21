@@ -806,7 +806,8 @@ function grupoProyeccion(metricas) {
   /* El abanico de percentiles (paso 40): la banda del 5 al 95 y la mediana. */
   const ab = puntosAbanico(proyeccion);
   if (ab) {
-    const W = 760; const H = 320; const izq = 64; const der = 190; const arriba = 16; const abajo = 46;
+    /* A todo el ancho de la tarjeta (encargo de Óscar, 21-08). */
+    const W = 1080; const H = 380; const izq = 70; const der = 185; const arriba = 18; const abajo = 50;
     const n = ab.anos.length;
     const ejeY = marcasEje(Math.min(...ab.p5), Math.max(...ab.p95), 5);
     const x = (i) => izq + (i / ((n - 1) || 1)) * (W - izq - der);
