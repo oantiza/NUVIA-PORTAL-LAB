@@ -4113,7 +4113,57 @@
   font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-action);
   text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
 }
+
+/* La ventana de la cuenta (encargo 21-08): se abre desde la barra de atajos. */
+.nv-dialogo {
+  width: min(92vw, 880px);
+  max-height: 86vh;
+  overflow: auto;
+  border: 1px solid var(--nv-line);
+  border-radius: 22px;
+  padding: var(--nv-space-5) var(--nv-space-6);
+  background: var(--nv-white);
+  color: var(--nv-text);
+  box-shadow: var(--nv-shadow-md);
+}
+.nv-dialogo::backdrop { background: rgba(11, 35, 71, 0.45); }
+.nv-dialogo__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-space-3);
+  margin-bottom: var(--nv-space-3);
+}
+.nv-dialogo__cabecera h2 { margin: 0; font-size: var(--nv-title-sm); }
+.nv-dialogo__cerrar {
+  border: 1px solid var(--nv-line);
+  border-radius: 999px;
+  background: var(--nv-surface-technical);
+  color: var(--nv-text);
+  width: 36px;
+  height: 36px;
+  font-size: var(--nv-body);
+  font-family: inherit;
+  cursor: pointer;
+}
+.nv-dialogo__intro {
+  margin: 0 0 var(--nv-space-4);
+  max-width: 72ch;
+  color: var(--nv-text-soft);
+}
+
+/* La lista de carteras guardadas, plegada (encargo 21-08). */
+.nv-cons__pliegue { min-width: 0; }
+.nv-cons__pliegue > summary {
+  cursor: pointer;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  color: var(--nv-green-800);
+}
+.nv-cons__pliegue[open] > summary { margin-bottom: var(--nv-space-2); }
 .nv-atajos__enlace:hover,
 .nv-atajos__enlace:focus-visible {
   border-color: var(--nv-green-700);

@@ -500,12 +500,18 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en este navegador');
     formulario.append(campoNombre, botonGuardar);
     const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+    /* La lista, plegada para no comerse la página (encargo 21-08). */
     const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
-    guardadoRaiz.append(formulario, estadoGuardado, listaGuardadas);
+    const resumenGuardadas = el('summary', {}, 'Ver tus carteras guardadas');
+    const pliegueGuardadas = el('details', { class: 'nv-analisis__despliegue nv-cons__pliegue' });
+    pliegueGuardadas.append(resumenGuardadas, listaGuardadas);
+    guardadoRaiz.append(formulario, estadoGuardado, pliegueGuardadas);
 
     function pinta() {
       const carteras = leeGuardadas();
       listaGuardadas.textContent = '';
+      pliegueGuardadas.hidden = !carteras.length;
+      resumenGuardadas.textContent = `Ver tus carteras guardadas (${carteras.length})`;
       for (const [indice, cartera] of carteras.entries()) {
         const item = el('li', { class: 'nv-cons__guardada' });
         item.append(
@@ -569,8 +575,12 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     formulario.append(campoNombre, botonGuardar);
     const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
     const oferta = el('div', { class: 'nv-note nv-cons__migracion', hidden: '' });
+    /* La lista, plegada para no comerse la página (encargo 21-08). */
     const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
-    guardadoRaiz.append(formulario, estadoGuardado, oferta, listaGuardadas);
+    const resumenGuardadas = el('summary', {}, 'Ver tus carteras guardadas');
+    const pliegueGuardadas = el('details', { class: 'nv-analisis__despliegue nv-cons__pliegue' });
+    pliegueGuardadas.append(resumenGuardadas, listaGuardadas);
+    guardadoRaiz.append(formulario, estadoGuardado, oferta, pliegueGuardadas);
 
     let ocupado = false;
     async function protege(boton, textoOcupado, accion) {
@@ -648,6 +658,8 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       try { carteras = await datos.listaCarterasNube(); }
       catch (e) { estadoGuardado.textContent = e?.message || 'No se han podido cargar tus carteras.'; return; }
       estadoGuardado.textContent = carteras.length ? '' : 'Aún no has guardado ninguna cartera en tu cuenta.';
+      pliegueGuardadas.hidden = !carteras.length;
+      resumenGuardadas.textContent = `Ver tus carteras guardadas (${carteras.length})`;
       for (const cartera of carteras) {
         const n = (cartera.positions || []).length;
         const item = el('li', { class: 'nv-cons__guardada' });
