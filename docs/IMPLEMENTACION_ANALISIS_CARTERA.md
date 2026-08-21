@@ -1213,6 +1213,47 @@ suelo de 12 px en todo el análisis.
 > Chrome de Óscar queda pendiente de que vuelva a abrirlo (la extensión
 > se desconectó tras aprobar la publicación).
 
+## El segundo encargo de Óscar (21-08-2026, commits 166c2a6 + 60fe464)
+
+Con la Fase 7 ya en producción, Óscar la revisó sobre su cartera real y
+mandó tres cambios con capturas de referencia de su propia plataforma:
+
+- **La frontera, con tres puntos y nada más**: tu combinación, la mezcla
+  de **mayor Sharpe** y la de **menor volatilidad** del historial
+  (`puntosSenalados()`, pura y probada; descuenta la tasa sin riesgo).
+  Fuera el deslizador; el reparto de las dos mezclas señaladas queda
+  plegado en un `<details>` del nivel completo. La palabra «óptima» no se
+  usa: la vigila `check-lenguaje` y además los rótulos descriptivos
+  («Mayor Sharpe», «Menor riesgo») son hechos del cálculo, no un juicio.
+- **Mapa riesgo-retorno frente a perfiles de referencia**: cinco mezclas
+  de renta variable y renta fija globales (10–90 % de bolsa) calculadas
+  con los supuestos publicados en la página (`perfilesReferencia()`,
+  sobre CLASES y sus correlaciones), como rombos unidos por línea
+  discontinua, y tu combinación (historial 3A) como punto verde. Las dos
+  bases distintas se declaran en el propio gráfico. Sustituye al mapa de
+  posiciones numeradas del primer rediseño; el detalle por posición sigue
+  en «Cuánto riesgo pone cada posición». Sin nombres de perfil tipo
+  «conservador» (los prohíbe `check-lenguaje`): se etiquetan por su
+  composición, «10 % bolsa … 90 % bolsa».
+- **La matriz de solapamiento como rejilla de calor numerada**: ejes 1…N,
+  diagonal al 100 % en azul marino con texto blanco, celdas tintadas por
+  tramo (0 / <5 / <25 / ≥25) y la lista numerada de fondos debajo.
+  Antes de esto (`166c2a6`) las marcas del mapa numerado pasaron a
+  agruparse por proximidad real (<26 px) en vez de columnas fijas: dos
+  números se rozaban con 12 posiciones reales.
+
+Verificado con Playwright (25 comprobaciones en verde, sin desbordes) y
+en el Chrome de Óscar sobre el sitio publicado con su cartera de 12
+posiciones: frontera con los tres puntos y sus cifras, cinco rombos con
+su línea, matriz 10×10 con la diagonal oscura. `origin/main` = `60fe464`.
+
+**Método que está funcionando con Óscar**: enseñar capturas antes de
+publicar, y cuando da una referencia visual (el laboratorio clásico, sus
+capturas de la plataforma OAA), replicar el LENGUAJE del gráfico con los
+tokens y las reglas MiFID de NUVIA — nunca copiar el interfaz tal cual
+(bases §1: OAA es cantera de cálculos, no modelo de interfaz; la
+traducción a nuestro sistema es el trabajo).
+
 ---
 
 # Transversal
