@@ -226,7 +226,285 @@ por hex nuevos.
    efectivos»), la rompo a propósito primero.
 4. `npm run validate` en verde es condición de salida.
 
-## 9 · Preguntas para ti
+## 10 · Decisiones de Óscar (22-08-2026) — cierran el §9
+
+1. **Dirección B**, sobre el banner de entrada actual (Innegociable 9) y con la
+   identidad NUVIA de los tokens: resumen «de un vistazo» + rótulos de fase
+   Composición · Riesgo · Futuro. A queda como variante de mínimos, C descartada
+   (Innegociable 10). Color del banner: **sin tocar** salvo el suelo de 12 px y
+   la escala de P13.
+2. **El simulador por clases baja al final, plegado**, como «banco de pruebas».
+   Ya recogido en §2 (paso 7) y en el esquema de §3; queda confirmado, no
+   propuesto. Al moverlo hay que re-verificar `check-lenguaje.mjs`: la frase
+   «no es una previsión» vive hoy en la lectura de ese bloque.
+3. **Autoalojar fuentes (F7): pendiente de tu OK, con recomendación medida
+   abajo (§11).**
+
+## 11 · Autoalojar las fuentes: la decisión, con las cifras
+
+> **HECHO el 22-08-2026, sin publicar.** Ver §12 para lo ejecutado y lo medido.
+
+Medido el 22-08 en Chromium real sobre `cartera.html` servida en local
+(`tmp-medir-fuentes.mjs`, borrado tras medir):
+
+| Medida | Hoy (Google Fonts por `@import`) |
+|---|---|
+| Peticiones a dominios de Google | **3** (1 a `fonts.googleapis.com`, 2 a `fonts.gstatic.com`) |
+| Peso descargado | **126,4 KB** — CSS 13,6 + Inter latin 47,1 + Fraunces latin 65,7 |
+| Momento en que llega el CSS de fuentes | **+296 ms** |
+| Momento en que llega el primer `woff2` | **+403 ms** |
+| Cadena | HTML → `tokens.css` → CSS de Google → `woff2`: **tres viajes en serie**; el `@import` impide adelantar ninguno |
+| Subsets realmente descargados | solo `latin` (el castellano y el euskera caben ahí); los otros 6 subsets no se piden |
+| Ficheros por familia | **1 cada una**: son variables, los 3 pesos de Fraunces y los 4 de Inter salen del mismo fichero |
+| ¿Se usa Fraunces? | **Sí** — `.nv-portada-lab__marca` resuelve a Fraunces en el render; 14 usos de `--nv-font-serif` en el CSS. No se puede quitar |
+
+**Qué cambia si se autoaloja:** los mismos **112,8 KB** de `woff2` pasan a
+servirse desde GitHub Pages junto al resto. Desaparecen la petición del CSS
+(13,6 KB), **dos resoluciones DNS + dos handshakes TLS** a dominios nuevos y
+**un viaje completo** de la cadena: el `woff2` se pide en cuanto se analiza
+`tokens.css`, no después de una segunda hoja. En una conexión buena eso son los
+~110 ms medidos entre el CSS y la fuente; en móvil con latencia alta, bastante
+más, y es tiempo con el texto pintado en Georgia/`system-ui`.
+
+**Lo que ya no es argumento:** la caché compartida entre sitios de Google Fonts
+**no existe desde 2020** (los navegadores la particionan por sitio). Traerla del
+CDN no ahorra descarga a nadie.
+
+**Lo que sí pesa, además del rendimiento:**
+- **Privacidad.** Hoy cada visita envía la IP del lector a Google sin que el
+  portal lo declare: **no hay página de privacidad en el repositorio** (0 de 18
+  páginas). Para un portal cuyo valor declarado es la independencia, es
+  incoherente. Autoalojar elimina el tercero, no hay que documentarlo.
+- **Coherencia con lo ya decidido.** React se autoalojó en su día exactamente
+  por esto («el sitio no necesita internet para arrancar»). Las fuentes son la
+  única dependencia de tercero que queda en la ruta crítica.
+
+**El coste honesto:** +113 KB en el repositorio y reponer los ficheros a mano
+cuando salga una versión nueva de las familias (rara vez). Riesgo bajo,
+reversible sin residuo: se quitan los `@font-face` y vuelve el `@import`.
+
+**Recomendación: sí, pero como paso aparte del rediseño.** Toca
+`nuvia-tokens.css` y afecta a las 18 páginas, no solo a `#laboratorio`; meterlo
+dentro del rediseño mezcla dos cambios con perímetros distintos y hace que una
+regresión tipográfica en cualquier página parezca culpa del laboratorio.
+Orden propuesto: autoalojar primero (una tarde, verificable bloqueando
+`fonts.googleapis.com` en el navegador como ya se hizo con unpkg), y el
+rediseño después, ya sobre fuentes propias.
+
+**Opcional, sin prometer cifra:** el `woff2` de Fraunces son 65,7 KB porque
+trae el eje óptico completo (`opsz 9..144`). Si se fija ese eje o se recorta el
+juego de caracteres, baja bastante — pero eso hay que medirlo antes de
+ofrecerlo, no estimarlo.
+
+## 12 · Ejecutado: fuentes autoalojadas (22-08-2026, en el árbol de trabajo, sin publicar)
+
+**Qué se ha hecho**
+
+- Cuatro `woff2` traídos a `estilos/fuentes/`, los mismos que servía Google:
+  `inter-latin.woff2` (47,1 KB), `inter-latin-ext.woff2` (83,1 KB),
+  `fraunces-latin.woff2` (65,7 KB), `fraunces-latin-ext.woff2` (58,0 KB).
+  Un fichero variable por familia y subset: los 3 pesos de Fraunces y los 4 de
+  Inter salen del mismo.
+- `nuvia-tokens.css`: fuera el `@import`, dentro **14 bloques `@font-face`**
+  calcados del CSS de Google — mismos pesos, mismo `font-display: swap`, mismos
+  `unicode-range`. Por eso el render no se mueve: un lector en castellano baja
+  solo los dos ficheros `latin` (112,8 KB) y los `latin-ext` solo si aparece un
+  carácter que los pida.
+- `estilos/` se copia entero en `build-site.mjs` (L55), así que
+  `estilos/fuentes/` se publica sin tocar el build.
+
+**Tres controles nuevos en `check-static-site.mjs`, y los tres rotos a propósito**
+
+| Control | Roto a propósito | Resultado |
+|---|---|---|
+| Ningún `@import`/`url()` a Google en las tres hojas | se reañadió el `@import` | **falla** «…vuelve a traer las fuentes de Google» |
+| Ningún `<link>`/`preconnect` a Google en el HTML | `<link>` a Google en `temas.html` | **falla** |
+| Un `woff2` declarado existe en disco | `inter-latin.woff2` renombrado | **falla** «…y ese fichero no existe» |
+
+Con todo en su sitio, los tres pasan. El primero mira el CSS **sin comentarios**,
+así que la nota que explica la migración no dispara la regla.
+
+**Comprobación en navegador real (Chromium, 1440 y 1024 px, 6 páginas)**
+
+Dos pasadas sobre el mismo servidor: **A** con el `tokens.css` de `HEAD` y
+Google permitido (el render publicado hoy) y **B** con el nuevo y
+`fonts.googleapis.com` + `fonts.gstatic.com` **bloqueados enteros**.
+
+| Comprobación | Resultado |
+|---|---|
+| Peticiones a Google — pasada A | **36** (control de que la medición mide algo) |
+| Peticiones a Google — pasada B | **0** |
+| `woff2` pedidos al propio sitio en B | `inter-latin.woff2`, `fraunces-latin.woff2` |
+| Inter en uso, no el fallback | 698,11 px de texto sonda frente a 652,89 px de la reserva — **distintos**, en las 12 combinaciones |
+| Fraunces en uso donde se usa | 679,78 px frente a 665,27 px de Georgia (index y cartera; en las otras cuatro páginas Fraunces no llega a cargarse porque nada visible la pide) |
+| B pinta igual que A | anchos de sonda y geometría de `h1/h2/cabecera/pie` **idénticos** en las 12 combinaciones |
+
+Y la comparación **no se cree a sí misma**: con `inter-latin.woff2` renombrado da
+**24 fallos** — «Inter no aparece como cargada» y `inter400: 698,11 ≠ 608,77`.
+Esa es justo la trampa en la que cayó la migración de React: dos lados rotos
+igual daban 0,000 % de diferencia.
+
+**`npm run validate`: verde.** Pero ojo con el punto de partida — ver §13.
+
+## 13 · Tres cosas que aparecieron al hacerlo (fuera del perímetro salvo la primera)
+
+1. **`npm run validate` estaba EN ROJO en `main` antes de tocar nada**, por un
+   solo motivo: `cartera.html @1440 · bajo el suelo 11px «Laboratorio de
+   cartera» [nv-portada-lab__seccion]` — el hallazgo **D1/D3** de la auditoría.
+   Corregido ya, como primer paso de P13 y porque sin él no hay condición de
+   salida: `font-size: 11px` → `var(--nv-label)`, `font-weight: 650` → `600`,
+   `margin: 15px` → `var(--nv-space-4)`. La composición del banner no se toca
+   (Innegociable 9). Lo demás de P13 —los 48/43 px de `__marca`— se queda para
+   la fase B: el auditor no los marca fuera de escala y cambiarlos sí mueve el
+   banner.
+2. **`company-analysis/` sigue trayendo fuentes de Google** (`index.html:8-11` y
+   su `build/`: `preconnect` ×2 y Fraunces + **Roboto Flex**). Es la app de
+   «Análisis y valoración de empresas», se compila aparte y está fuera del
+   perímetro: el control nuevo la excluye explícitamente. **Anotado, no tocado.**
+   Consecuencia real: el portal ya no depende de Google, pero esa sección sí, y
+   usa una tercera familia (Roboto Flex) que no está en los tokens.
+3. **A 390 px hay cuatro páginas con desbordes, y son anteriores a este cambio.**
+   Medido con el árbol guardado (`git stash`) y sin él, mismos números:
+   `index.html` **17**, `vivienda.html` **64**, `sistema-visual.html` **21**,
+   `mercados.html?vista=cotizaciones` **1**. `cartera.html` pasa a 390 px.
+   `npm run validate` no lo ve porque `check-render.mjs` mide **solo 1440 px**
+   por defecto (`ANCHOS = process.argv[3] || '1440'`, L43); el móvil nunca ha
+   estado en la tubería. Fuera del perímetro: anotado, no tocado.
+
+## 14 · Prototipo de la dirección B (22-08-2026) — referencia aprobable
+
+**`prototipos/laboratorio-cartera-B.html`**, autónomo, sin dependencias, datos
+inventados. Escrito de cero: el que había dejado la sesión anterior se descartó
+y se borró a petición de Óscar.
+
+### 14.1 · Qué cubre
+
+Siete fases numeradas, cada una con su pregunta en llano: **01** tu cartera
+(resumen de cuatro cifras, lista posición a posición, buscador y guardado
+plegados) · **02** qué tienes (clases, zonas, mapa) · **03** cuánto se mueve
+(recorrido y caídas, riesgo por posición, frontera, perfiles de referencia) ·
+**04** apuestas repetidas · **05** escenarios · **06** otras carteras (modelo e
+informe de compañía) · **07** cómo leerlo (glosario, supuestos, banco de pruebas
+plegado, fuentes y límites).
+
+Decisiones que no estaban en el plan y conviene conservar:
+
+| Qué | Por qué |
+|---|---|
+| Fraunces en titulares, Inter en todo dato | el emparejamiento que pedía el encargo, sin salirse de los tokens |
+| La barra de riesgo por posición lleva una marca fina con el **peso** | contesta «no es lo mismo que el peso» dentro del dibujo: bolsa mundial aporta 46 y pesa 34; los bonos aportan 8 y pesan 22 |
+| Glosario en línea con `popover` nativo | definición donde se está leyendo, sin JS |
+| «Cuánto se mueve», «borde del abanico», «cuatro mil recorridos» | el nombre técnico (volatilidad, percentil, Montecarlo) vive en el glosario, no en el rótulo |
+| Reparto por clases como barra apilada, no anillo | se comparan mejor los tramos y no necesita SVG |
+| Cartera de ejemplo cargada, con botón para vaciarla | nadie ve la sección en blanco |
+| Recorrido con **784 cierres diarios** | con datos mensuales el promedio se come los mínimos y la peor racha sale más suave de lo que fue |
+
+### 14.2 · Los dos gráficos de producción que Óscar señaló, y sus defectos
+
+**Mapa riesgo-retorno frente a perfiles — cruza dos bases en los mismos ejes.**
+`nuvia-analisis.js:884` lo declara en su propio texto: el punto del lector va
+con su historial real de tres años y los cinco perfiles salen de
+`perfilesReferencia()` (`nuvia-analisis.js:416`), que usa los supuestos de
+`CLASES`. El techo de los perfiles es por tanto el 7,0 % de renta variable de la
+tabla: **ninguna mezcla puede subir de ahí**. En la captura de Óscar el punto
+sale a 22,1 % sobre unos perfiles que llegan a 6,6 %, y el dibujo sugiere una
+conclusión que el dato no sostiene. La nota al pie lo aclara; gana el dibujo.
+Roza el problema de MiFID sin usar ni una palabra prohibida.
+
+> **Decidido:** en el prototipo las dos series se calculan **con los mismos
+> supuestos**. El historial real ya tiene su gráfico —la frontera— y allí se
+> compara contra combinaciones de los propios activos del lector, que también
+> son historial. Cada gráfico, una base, y una nota que lo dice.
+> La alternativa —dar historial a los perfiles— exigiría series de índices que
+> hoy no están; esta no necesita ningún dato nuevo.
+> Con los supuestos, el reparto de ejemplo (52/22/12/14) da **9,6 % de
+> oscilación y 5,3 % de cambio estimado** y cae justo debajo de la línea, entre
+> el 50 y el 70 % en bolsa. Los perfiles: 5,3/3,6 · 6,3/4,3 · 8,6/5,1 · 11,4/5,9
+> · 14,4/6,6.
+
+**Mapa del mundo — el color no distingue 0 de 22.** África y Oriente Medio sale
+pintado con 0,0 % y Oceanía también, las dos en un crema casi idéntico al beige de
+Asia (22,3 %). Y un **5,6 % queda fuera del mapa**, contado en una nota al pie.
+Un mapa cuyo canal principal es el color y en el que 0 y 22 se ven igual hace de
+decoración, no de dato.
+
+> **Corregido en el prototipo:** un tono por continente **solo si hay
+> exposición**; los que están a cero van en gris y la leyenda dice «sin
+> exposición», no «0,0 %»; lo que no cabe en un mapa se cuenta **antes** del
+> dibujo y con su motivo (emisores sin país asignado); y la lectura avisa de lo
+> que un mapa no puede hacer — Oceanía ocupa media pantalla y pesa diez veces
+> menos que Europa. Siluetas: las del propio repositorio,
+> `js/nuvia-mapa-siluetas.js`, así que es el mismo mapa.
+
+### 14.3 · Cuatro defectos de dibujo que solo aparecieron midiendo
+
+Ninguno se ve a ojo y los cuatro son de la misma familia —un elemento colocado
+por su caja en lugar de por su dato—, así que **los controles correspondientes
+deben entrar en `check-render.mjs` al portar**:
+
+| Defecto | Cómo se detectó | Control que hace falta |
+|---|---|---|
+| **8 de 9 puntos fuera de su coordenada**, hasta 12,5 puntos porcentuales. El rótulo iba en el flujo del punto, así que el `translate(-50%,50%)` se calculaba sobre círculo + rótulo. «Aquí estás tú» decía 7,2 % y se pintaba en 7,8; «Mayor caída» decía −14,6 y se pintaba en −18 | centro real del círculo contra el valor del eje | toda marca cae donde dice su coordenada (±1,5 pp) |
+| **Rótulos que se pisan**: dos perfiles debajo de la píldora de «Tu reparto» | rectángulos de todos los rótulos de cada marco, a los cuatro anchos | ningún rótulo solapa con otro |
+| **Texto dentro de un SVG escalado**: el px declarado no es el px que se ve | tamaño **efectivo** = declarado × factor del viewBox | el suelo de 12 px se mide sobre el efectivo |
+| **Puntos ovalados**: `<circle>` dentro de un SVG con `preserveAspectRatio="none"` | ampliando la captura | nada circular dentro de un marco estirado |
+
+El detector de choques y el de coordenadas están **probados rompiendo el
+prototipo a propósito**: 2 choques por ancho y 8 puntos desviados,
+respectivamente, y cero con todo en su sitio.
+
+### 14.4 · Coherencia interna del ejemplo
+
+Al medir la serie diaria salieron dos cifras que se contradecían con el resto de
+la página, y las dos venían de dibujar cada bloque por separado:
+
+- el recorrido tenía un bache de fondo tan hondo que, con la volatilidad
+  declarada encima, la peor racha se iba al 21,7 %;
+- el abanico estaba dibujado con una dispersión del 6,4 % anual mientras la
+  cartera dice moverse un 10,8 %: enseñaba un futuro más estrecho del que sus
+  propios supuestos permiten.
+
+Se fijó la volatilidad en el 10,8 % —es la que corresponde a un 52 % en bolsa;
+bajarla obligaba a rehacer la composición— y se alisó el bache, que era una
+elección de guion y no un dato. Calibración iterada seis vueltas porque los dos
+parámetros se desplazan entre sí. Resultado: **10,8 % de oscilación, −14,6 % de
+peor racha, Sharpe 0,49**, y el abanico redibujado en **87 · 151 · 263**.
+Comprobado extrayendo del navegador todas las cifras con decimal visibles: no
+queda ninguna huérfana.
+
+**Lección para el porte:** cada gráfico se dibujaba por su cuenta y por eso las
+contradicciones sobrevivían. En producción todas las cifras salen de
+`nuvia-cartera.js`, así que el riesgo es otro: que un gráfico use una ventana o
+una base distinta de la del vecino sin decirlo. Merece una comprobación de que
+dos bloques que citan la misma medida citan el mismo número.
+
+### 14.5 · Estado de verificación
+
+A 1440, 1180, 1024 y 390 px: **0 fallos AA, 0 textos por debajo de 12 px
+efectivos, 0 tamaños fuera de escala, 0 desbordes, un solo `<h1>`, 0 choques de
+rótulo y 0 puntos desviados**. Cero hexadecimales fuera de `:root`, cero
+`!important`, cero `span` genérico por descendencia, cero `<text>` dentro de SVG.
+
+### 14.6 · Lo que el prototipo aún no enseña
+
+- «Tu cuenta» (la ventana de `<dialog>`) y los tres niveles visitante /
+  registrado / suscriptor: el prototipo enseña el nivel completo.
+- El banco de pruebas por clases, desplegado.
+- Estados de error: activo sin historial, límite de posiciones alcanzado,
+  catálogo no disponible.
+
+### 14.7 · Anotado para el porte, fuera del prototipo
+
+El detalle diario del recorrido depende de que la serie de la base de datos
+NUVIA venga con cierres diarios y no resumida. **No lo he comprobado.**
+
+### 14.8 · Un fichero que no es mío
+
+`prototipos/ejemplos-mapas-laboratorio-cartera.html` (24 KB, 22-08 a las 12:35)
+apareció después de vaciar la carpeta y no lo creé yo. Pendiente de que Óscar
+diga si se queda o se retira.
+
+## 9 · Preguntas para ti (respondidas el 22-08 — ver §10)
 
 1. **Dirección:** ¿B (recomendada, con identidad NUVIA sobre el banner
    actual) o A (mínimos)? C está descartada (Innegociable 10). El banner de
