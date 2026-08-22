@@ -4160,10 +4160,10 @@
 }
 
 .nv-portada-lab__seccion {
-  margin: 15px 0 0;
+  margin: var(--nv-space-4) 0 0;
   color: var(--nv-green-700);
-  font-size: 11px;
-  font-weight: 650;
+  font-size: var(--nv-label);
+  font-weight: 600;
   letter-spacing: 0.31em;
   line-height: 1.45;
   text-transform: uppercase;

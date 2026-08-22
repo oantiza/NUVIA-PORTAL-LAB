@@ -88,6 +88,16 @@ for (const htmlPath of htmlFiles) {
   if (/<(?:input|select)\b[^>]*\sdata-dc-value=/i.test(html)) {
     missing.push(`${htmlPath}: data-dc-value no enlaza el valor de un campo; usa value con onChange, o defaultValue`);
   }
+  /* Las fuentes se autoalojan (22-08-2026): ni un <link> ni un preconnect a
+     Google. Se mira el HTML sin comentarios.
+     company-analysis/ queda fuera: es la app de «Análisis y valoración de
+     empresas», que se compila aparte y trae Fraunces + Roboto Flex de Google
+     en su propio <head> (index.html:8-11 y su build). Está fuera del perímetro
+     de este trabajo: anotado, no tocado. */
+  if (!htmlPath.includes(`${sep}company-analysis${sep}`)
+      && /fonts\.(?:googleapis|gstatic)\.com/i.test(html.replace(/<!--[\s\S]*?-->/g, ''))) {
+    missing.push(`${htmlPath}: enlaza las fuentes de Google; van autoalojadas en estilos/fuentes/`);
+  }
   for (const match of html.matchAll(referencePattern)) {
     const target = localTarget(match[1]);
     if (!target) continue;
@@ -111,8 +121,8 @@ if (missing.length) {
   throw new Error(`Referencias locales no válidas:\n${missing.join('\n')}`);
 }
 
-/* ══ Dos reglas de las hojas de estilo ═══════════════════════════════════════
-   Las dos salieron de defectos reales, no de una preferencia:
+/* ══ Cuatro reglas de las hojas de estilo ════════════════════════════════════
+   Las cuatro salieron de defectos reales, no de una preferencia:
 
    1 · Un token de espaciado usado como tamaño de letra. Aparecía en seis
        sitios (--nv-space-4 y --nv-space-5 dan 16 y 20 px, así que «funciona»
@@ -127,6 +137,14 @@ if (missing.length) {
        cotizaciones, la fecha de los dos calendarios y el enlace a la fuente de
        las tres guías fiscales. Se admite el combinador de hijo directo y se
        admite una clase.
+
+   3 · Las fuentes, traídas de Google. Venían por @import en nuvia-tokens.css:
+       tres viajes en serie antes del primer woff2 (403 ms medidos) y la IP de
+       cada lector enviada a un tercero. Desde el 22-08-2026 se autoalojan.
+
+   4 · Un woff2 declarado que no existe. Renombrar o no subir el fichero deja
+       todo el sitio en Georgia/system-ui sin que nada avise: el CSS es válido
+       y la página «funciona».
    ═══════════════════════════════════════════════════════════════════════════ */
 const problemasCss = [];
 for (const hoja of ['estilos/nuvia-tokens.css', 'estilos/nuvia-components.css', 'estilos/nuvia-pages.css']) {
@@ -135,6 +153,27 @@ for (const hoja of ['estilos/nuvia-tokens.css', 'estilos/nuvia-components.css', 
 
   for (const m of sinComentarios.matchAll(/font-size:\s*var\(--nv-space-\d+\)/g)) {
     problemasCss.push(`${hoja}: «${m[0]}» usa un token de espaciado como tamaño de letra; la escala es --nv-label, --nv-body-sm, --nv-body, --nv-body-lg, --nv-title-*, --nv-display-*`);
+  }
+
+  /* 3 · Ninguna dependencia externa de fuentes (22-08-2026).
+     Las familias se autoalojan en estilos/fuentes/. Un @import o un url() a
+     fonts.googleapis.com / fonts.gstatic.com vuelve a meter un tercero en la
+     ruta crítica de pintado —tres viajes en serie, medidos: el primer woff2 no
+     llegaba hasta los 403 ms— y manda la IP de cada lector a Google. Se mira el
+     CSS ya sin comentarios, así que la nota que explica todo esto en
+     nuvia-tokens.css no dispara la regla. */
+  for (const m of sinComentarios.matchAll(/(?:@import|url\()[^;{}]*?fonts\.(?:googleapis|gstatic)\.com/g)) {
+    problemasCss.push(`${hoja}: «${m[0].slice(0, 70)}…» vuelve a traer las fuentes de Google; van autoalojadas en estilos/fuentes/`);
+  }
+
+  /* 4 · Y un woff2 declarado tiene que existir. Sin esto, renombrar o no subir
+     un fichero deja el sitio en Georgia/system-ui sin que nada avise. */
+  for (const m of sinComentarios.matchAll(/url\(['"]?([^'")]+\.woff2?)['"]?\)/g)) {
+    try {
+      await access(resolve(root, 'estilos', m[1]));
+    } catch {
+      problemasCss.push(`${hoja}: declara ${m[1]} y ese fichero no existe en estilos/`);
+    }
   }
 
   for (const m of sinComentarios.matchAll(/([^{}\n;]+?)\s*\{[^{}]*\}/g)) {
