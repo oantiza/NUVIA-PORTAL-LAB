@@ -17,6 +17,16 @@ cabecera con filete. Los hallazgos de la portada (D1–D3, F1, F2) se corrigen
 composición —panel con rejilla, anillos, silueta de montaña, NUVIA en serif,
 rótulo y raya—, que es justo lo que lo hace gemelo del de empresas.
 
+**INNEGOCIABLE 10 (Óscar, 22-08, tras el informe «NUVIA — Visión consolidada
+y modelo funcional v0.2»):** NUVIA **no se mezcla con el trabajo de banca
+privada de Óscar**. Ninguna dirección visual puede replicar el lenguaje de sus
+informes profesionales (papel crema tipo informe impreso, filetes de informe,
+composición de «ficha de banca privada»). NUVIA es una organización con
+identidad propia, centrada en la Comunidad de Familias (visión §6): su
+estética sale de `nuvia-tokens.css` y de su propio carácter — cercana, clara y
+de confianza —, no del de una entidad financiera. La dirección C del plan
+original queda **descartada por este motivo** (ver §7).
+
 ---
 
 ## 1 · Tesis de diseño (tres frases)
@@ -108,24 +118,27 @@ vistazo» destacado, y los grupos agrupados bajo **rótulos de fase**
 resuelve el recorrido (**B1/B3**).
 *Coste:* medio. *Gana:* orientación; el lector sabe siempre en qué parte está.
 
-**C · Ficha de banca privada** — `?dir=C`. Fondo papel crema en toda la sección,
-titulares **Fraunces**, filetes bronce finos: se lee como el informe impreso que
-un banquero privado te entrega. Es el más alineado con «imagen NUVIA: sobria,
-editorial» del encargo. **El banner de entrada se conserva tal cual** (el
-prototipo lo sustituía por una cabecera con filete; corregido por el
-Innegociable 9): el banner abre la sección y debajo va la ficha editorial.
-*Coste:* medio-alto (Fraunces en más sitios → ver tipografía). *Gana:* identidad;
-no se parece a ninguna plataforma de trading.
+**C · Ficha de banca privada** — `?dir=C`. **DESCARTADA (Innegociable 10):**
+replicaba el lenguaje visual de los informes profesionales de banca privada de
+Óscar (papel crema de informe impreso, filetes, composición de ficha), y NUVIA
+no debe mezclarse con ese trabajo. Se conserva en el histórico del prototipo
+solo como evidencia de lo explorado.
 
-**El banner es común a las tres:** las direcciones se diferencian de la portada
-**hacia abajo**; el banner de entrada es el mismo en A, B y C (Innegociable 9).
-Su color puede afinarse (el marino/verde actual, o el tono que prefieras), pero
-la pieza no se quita.
+**El banner es común a las direcciones vivas:** A y B se diferencian de la
+portada **hacia abajo**; el banner de entrada es el mismo (Innegociable 9). Su
+color puede afinarse, pero la pieza no se quita.
 
-**Recomendación:** **C para la piel, con la estructura de B** (fases + resumen),
-sobre el banner de entrada actual. La ficha editorial es lo que distingue a
-NUVIA; las fases de B son las que resuelven el recorrido. A queda como red de
-seguridad si prefieres no mover tipografía.
+**Recomendación (revisada tras la visión consolidada): B sobre el banner
+actual, con la identidad NUVIA de los tokens.** La estructura de B —resumen
+«de un vistazo» + fases Composición · Riesgo · Futuro— es la que resuelve el
+recorrido (B1/B3) y encaja con la visión: los primeros niveles «especialmente
+visuales, ligeros y accesibles» (§1.5) para una Comunidad de Familias, no para
+clientes de banca. La piel es la propia de NUVIA: superficies nube/blanco,
+marino y verde de los tokens, Fraunces solo donde los tokens ya lo permiten
+(`.nv-editorial`/`.nv-title-serif`), sin imitar informes profesionales. La
+portada marino del prototipo B no sobrevive (el banner del Innegociable 9 abre
+la sección); el resto de B —tiles de resumen, rótulos de fase en verde
+NUVIA— funciona igual debajo del banner. A queda como variante de mínimos.
 
 ### Paleta ampliada (dentro de `nuvia-tokens.css`, P14)
 
@@ -177,6 +190,14 @@ por hex nuevos.
 
 ## 7 · Lo que descarto y por qué
 
+- **La dirección C («ficha de banca privada») entera.** Tras leer «NUVIA —
+  Visión consolidada y modelo funcional v0.2»: NUVIA es una organización con
+  identidad propia centrada en la Comunidad de Familias, y no debe mezclarse
+  con el trabajo profesional de banca privada de Óscar (Innegociable 10). La
+  estética de informe impreso de banquero privado era exactamente esa mezcla.
+  El componente útil de C que se salva es neutro: la disciplina editorial
+  (jerarquía clara, poco adorno), que ya está en los tokens de NUVIA.
+
 - **Rehacer los cálculos o el motor de gráficos SVG entero.** El innegociable 2
   lo prohíbe y la auditoría no encontró error de cálculo. Solo cambia cómo se
   dibuja el texto (P1), no qué se dibuja.
@@ -207,9 +228,10 @@ por hex nuevos.
 
 ## 9 · Preguntas para ti
 
-1. **Dirección:** ¿A, B, C, o la mezcla recomendada (piel C + estructura B)?
-   El banner de entrada se mantiene en todas (Innegociable 9); solo dime si
-   quieres afinar su color o lo dejo como está.
+1. **Dirección:** ¿B (recomendada, con identidad NUVIA sobre el banner
+   actual) o A (mínimos)? C está descartada (Innegociable 10). El banner de
+   entrada se mantiene en ambas (Innegociable 9); dime si quieres afinar su
+   color o lo dejo como está.
 2. **Autoalojar fuentes (F7):** ¿lo incluyo en este rediseño (toca `tokens.css`,
    fuera del perímetro estricto) o lo dejo como tarea aparte?
 3. **Simulador por clases:** ¿lo bajo al final como «banco de pruebas» plegado, o
