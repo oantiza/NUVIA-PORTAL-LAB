@@ -9,6 +9,14 @@ Dos correcciones de la auditoría, halladas al preparar el plan (verificar antes
 - **F2:** 20 px y 48 px SÍ están en la escala (`--nv-space-5/12`); fuera de escala real son 34/15/30/26/18/6/10 px. Corregido en la auditoría.
 - **F7 (nuevo):** las fuentes **no** están autoalojadas — vienen por `@import` de Google Fonts (`nuvia-tokens.css:15`). La premisa del encargo «arranca sin internet» no se cumple hoy; autoalojar es trabajo, no preservación. Cambia la sección de tipografía de abajo.
 
+**INNEGOCIABLE 9 (Óscar, 21-08):** el banner de entrada (`.nv-portada-lab`) se
+**mantiene siempre**, con este color u otro, homogéneo con el de «Análisis y
+valoración de empresas». Ninguna dirección lo elimina ni lo sustituye por una
+cabecera con filete. Los hallazgos de la portada (D1–D3, F1, F2) se corrigen
+**dentro** del banner (suelo de 12 px, escala, tokens), sin tocar su
+composición —panel con rejilla, anillos, silueta de montaña, NUVIA en serif,
+rótulo y raya—, que es justo lo que lo hace gemelo del de empresas.
+
 ---
 
 ## 1 · Tesis de diseño (tres frases)
@@ -43,7 +51,7 @@ Los párrafos de intro dejan de ser bloques de 72ch a la izquierda dentro de
 tarjetas anchas (**E1**): van centrados y estrechos (máx. 64ch) bajo su título.
 
 ```
-[ Portada ...................................... 1180, centrada ]
+[ BANNER DE ENTRADA (se mantiene, Innegoc. 9) . 1180, centrado ]
 [ Tu cartera de un vistazo ..... 4 tiles, 1180 ]
 [ Tu cartera posición a posición .... lista, 1180 ]
 ── Composición ───────────────────────────────  (rótulo de fase, solo dir. B)
@@ -101,16 +109,23 @@ resuelve el recorrido (**B1/B3**).
 *Coste:* medio. *Gana:* orientación; el lector sabe siempre en qué parte está.
 
 **C · Ficha de banca privada** — `?dir=C`. Fondo papel crema en toda la sección,
-titulares **Fraunces**, filetes bronce finos, sin cajas: se lee como el informe
-impreso que un banquero privado te entrega. Es el más alineado con «imagen
-NUVIA: sobria, editorial» del encargo.
+titulares **Fraunces**, filetes bronce finos: se lee como el informe impreso que
+un banquero privado te entrega. Es el más alineado con «imagen NUVIA: sobria,
+editorial» del encargo. **El banner de entrada se conserva tal cual** (el
+prototipo lo sustituía por una cabecera con filete; corregido por el
+Innegociable 9): el banner abre la sección y debajo va la ficha editorial.
 *Coste:* medio-alto (Fraunces en más sitios → ver tipografía). *Gana:* identidad;
 no se parece a ninguna plataforma de trading.
 
-**Recomendación:** **C para la piel, con la estructura de B** (fases + resumen).
-La ficha editorial es lo que distingue a NUVIA; las fases de B son las que
-resuelven el recorrido. A queda como red de seguridad si prefieres no mover
-tipografía.
+**El banner es común a las tres:** las direcciones se diferencian de la portada
+**hacia abajo**; el banner de entrada es el mismo en A, B y C (Innegociable 9).
+Su color puede afinarse (el marino/verde actual, o el tono que prefieras), pero
+la pieza no se quita.
+
+**Recomendación:** **C para la piel, con la estructura de B** (fases + resumen),
+sobre el banner de entrada actual. La ficha editorial es lo que distingue a
+NUVIA; las fases de B son las que resuelven el recorrido. A queda como red de
+seguridad si prefieres no mover tipografía.
 
 ### Paleta ampliada (dentro de `nuvia-tokens.css`, P14)
 
@@ -193,6 +208,8 @@ por hex nuevos.
 ## 9 · Preguntas para ti
 
 1. **Dirección:** ¿A, B, C, o la mezcla recomendada (piel C + estructura B)?
+   El banner de entrada se mantiene en todas (Innegociable 9); solo dime si
+   quieres afinar su color o lo dejo como está.
 2. **Autoalojar fuentes (F7):** ¿lo incluyo en este rediseño (toca `tokens.css`,
    fuera del perímetro estricto) o lo dejo como tarea aparte?
 3. **Simulador por clases:** ¿lo bajo al final como «banco de pruebas» plegado, o
