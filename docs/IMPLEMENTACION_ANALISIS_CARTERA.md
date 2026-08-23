@@ -928,9 +928,9 @@ cálculos ya precalculados.**
 >
 > **Acceso del administrador (20-08-2026, a petición de Óscar).** Las
 > cuentas de `CORREOS_ADMIN` en `js/nuvia-datos.js` (hoy solo
-> `oantiza@gmail.com`) ven el nivel completo —suscriptor— con solo iniciar
+> `oantiza@gmail.com`) reciben el nivel explícito `admin` con solo iniciar
 > sesión, sin marcador ni pasarela: frontera interactiva, Montecarlo,
-> matriz de correlaciones y hasta 20 posiciones. Es acceso del dueño a su
+> matriz de correlaciones y sin tope de posiciones en la interfaz. Es acceso del dueño a su
 > propia herramienta para revisarla, no un atajo comercial: la suscripción
 > sigue sin poder contratarse por nadie. `esAdmin()` es pura y está en la
 > batería (correo normalizado; ninguna otra cuenta hereda el nivel).

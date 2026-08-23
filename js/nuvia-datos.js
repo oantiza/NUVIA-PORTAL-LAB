@@ -34,10 +34,9 @@ const TTL_BUSQUEDA_MS = 10 * 60_000;
  *  queda descrito pero cerrado. */
 export const CLAVE_SUSCRIPCION = 'nuvia.suscripcion.v1';
 
-/** Cuentas del administrador del portal: con la sesión iniciada ven el
- *  nivel completo (suscriptor) sin pasar por la pasarela, que está
- *  aplazada. Es acceso del dueño a su propia herramienta, no un atajo
- *  comercial: la suscripción sigue sin poder contratarse. */
+/** Cuentas del administrador del portal: con la sesión iniciada reciben el
+ *  nivel administrativo explícito, con todos los módulos de la interfaz y
+ *  sin límites comerciales. La base maestra permanece en solo lectura. */
 export const CORREOS_ADMIN = ['oantiza@gmail.com'];
 
 /** ¿Es este correo una cuenta del administrador? Pura y probada. */
@@ -227,12 +226,13 @@ export function creaClienteMaestra({
     return { tipo: 'anonima' };
   }
 
-  /** Nivel de la sesión para la interfaz: visitante, registrada o suscriptor
-   *  (registrada + marcador de suscripción del paso 35). */
+  /** Nivel de la sesión para la interfaz: visitante, registrada, suscriptor
+   *  o administrador. El administrador se reconoce antes que cualquier
+   *  marcador comercial. */
   function nivelSesion() {
     const s = sesionActual();
     if (s.tipo !== 'registrada') return 'visitante';
-    if (esAdmin(s.correo)) return 'suscriptor';
+    if (esAdmin(s.correo)) return 'admin';
     return leeSuscripcion(almacen, s.correo) ? 'suscriptor' : 'registrada';
   }
 

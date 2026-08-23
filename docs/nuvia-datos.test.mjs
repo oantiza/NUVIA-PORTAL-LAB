@@ -203,8 +203,8 @@ console.log('\n— Suscripción (marcador del paso 35, leído desde el paso 33) 
   });
   almacen.setItem('nuvia.maestra-sesion.v1', sesionFalsa('oantiza@gmail.com'));
   almacen.removeItem(CLAVE_SUSCRIPCION);
-  comprueba('nivelSesion: la cuenta del administrador es suscriptor sin marcador',
-    cliente.nivelSesion() === 'suscriptor');
+  comprueba('nivelSesion: la cuenta del administrador tiene nivel propio sin marcador',
+    cliente.nivelSesion() === 'admin');
   almacen.setItem('nuvia.maestra-sesion.v1', sesionFalsa('otro@ejemplo.com'));
   comprueba('nivelSesion: cualquier otra cuenta sigue en registrada',
     cliente.nivelSesion() === 'registrada');

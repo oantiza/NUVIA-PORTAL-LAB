@@ -10,7 +10,7 @@ import {
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
   carterasLocalesParaNube,
-  MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
+  MAX_POSICIONES_SUSCRIPTOR, MAX_POSICIONES_ADMIN, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
   puntosEvolucion, trazadoLinea, serieSemanalTresAnos,
   tasaSinRiesgoAnualTresAnos, sharpeHistoricoTresAnos,
   BENCHMARKS_EVOLUCION, benchmarkDesdePayload, alineaSeriesSemanales,
@@ -269,12 +269,21 @@ console.log('\n— Límite por nivel (paso 33) —');
     maxPosiciones('suscriptor') === MAX_POSICIONES_SUSCRIPTOR
     && maxPosiciones('registrada') === MAX_POSICIONES && maxPosiciones('visitante') === MAX_POSICIONES
     && MAX_POSICIONES_SUSCRIPTOR === 20);
+  comprueba('El administrador no tiene tope de posiciones en la interfaz',
+    maxPosiciones('admin') === MAX_POSICIONES_ADMIN
+    && maxPosiciones('admin') === Number.POSITIVE_INFINITY
+    && textoContador(27, maxPosiciones('admin')) === 'Posiciones: 27 · acceso administrador');
 
   let lista = [];
   for (let i = 0; i < 6; i += 1) {
     lista = agregaPosicion(lista, { asset_id: `A${i}`, display_name: `Activo ${i}` }, maxPosiciones('suscriptor')).posiciones;
   }
   comprueba('Con límite de suscriptor, la sexta posición entra', lista.length === 6);
+  let listaAdmin = [];
+  for (let i = 0; i < 30; i += 1) {
+    listaAdmin = agregaPosicion(listaAdmin, { asset_id: `ADMIN${i}` }, maxPosiciones('admin')).posiciones;
+  }
+  comprueba('El administrador puede superar el tope del suscriptor', listaAdmin.length === 30);
   comprueba('Con el límite normal, la sexta se rechaza con motivo «limite»',
     agregaPosicion(lista.slice(0, 5), { asset_id: 'A9' }).motivo === 'limite');
 

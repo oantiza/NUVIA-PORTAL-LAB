@@ -25,7 +25,7 @@
  * (carteras de la nube incluidas) sin intervención de nadie.
  */
 
-import { maestra, leeSuscripcion, CLAVE_SUSCRIPCION } from './nuvia-datos.js';
+import { maestra, leeSuscripcion, CLAVE_SUSCRIPCION, esAdmin } from './nuvia-datos.js';
 
 export const NOTA_DATOS_MINIMOS = 'Solo pedimos correo y contraseña. '
   + 'Sin teléfono, sin datos de patrimonio y sin preguntas sobre tu manera de '
@@ -260,6 +260,9 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
     quien.append('.');
 
     const nota = el('p', { class: 'nv-cuenta__nota' }, NOTA_QUE_APORTA);
+    const distintivoAdmin = esAdmin(sesion.correo)
+      ? el('p', { class: 'nv-cuenta__admin' }, 'Administrador · acceso completo a todos los niveles y módulos')
+      : null;
 
     const permisos = el('div', { class: 'nv-cuenta__permisos' });
     permisos.append(el('h3', {}, 'Tus permisos'));
@@ -281,7 +284,9 @@ export function montaCuenta(raiz, { cliente = null, almacen = null } = {}) {
       void s;
     });
 
-    cuerpo.append(quien, nota, permisos, seccionDerechos(sesion), salir);
+    cuerpo.append(quien);
+    if (distintivoAdmin) cuerpo.append(distintivoAdmin);
+    cuerpo.append(nota, permisos, seccionDerechos(sesion), salir);
   }
 
   /* ── «Tus datos y tus derechos» (paso 34, RGPD) ── */

@@ -6020,6 +6020,19 @@
   color: var(--nv-text-soft);
 }
 
+.nv-cuenta__admin {
+  width: fit-content;
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--nv-cat-purple) 28%, var(--nv-line));
+  border-radius: var(--nv-radius-pill);
+  background: color-mix(in srgb, var(--nv-cat-purple) 9%, var(--nv-white));
+  color: var(--nv-cat-purple);
+  padding: 7px 12px;
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .04em;
+}
+
 .nv-cuenta__forma {
   display: grid;
   gap: var(--nv-space-3);

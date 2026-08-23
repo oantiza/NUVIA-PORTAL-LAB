@@ -1353,7 +1353,7 @@ export async function montaAnalisis(raiz, {
       'Los escenarios simulados pertenecen al nivel suscriptor, todavía no abierto a contratación.'));
     return;
   }
-  const esSuscriptor = nivelEfectivo === 'suscriptor';
+  const esSuscriptor = nivelEfectivo === 'suscriptor' || nivelEfectivo === 'admin';
 
   const nombreDe = {};
   for (const p of posiciones) nombreDe[p.activo.asset_id] = p.activo.display_name || p.activo.asset_id;

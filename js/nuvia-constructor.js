@@ -19,17 +19,21 @@ import { montaAnalisis, perfilesReferencia } from './nuvia-analisis.js?v=2026082
 
 export const MAX_POSICIONES = 5;
 export const MAX_POSICIONES_SUSCRIPTOR = 20;
+export const MAX_POSICIONES_ADMIN = Number.POSITIVE_INFINITY;
 const PESO_INICIAL = 20;
 
 /** Límite de posiciones por nivel (bases §3): 20 para el suscriptor —por
- *  encima de 15–20 los gráficos dejan de comunicar—, 5 para el resto. */
+ *  encima de 15–20 los gráficos dejan de comunicar—, 5 para el resto y sin
+ *  tope de interfaz para el administrador. */
 export function maxPosiciones(nivel) {
+  if (nivel === 'admin') return MAX_POSICIONES_ADMIN;
   return nivel === 'suscriptor' ? MAX_POSICIONES_SUSCRIPTOR : MAX_POSICIONES;
 }
 
 /** Texto del contador, visible desde la primera posición (el límite se
  *  comunica antes, no después — bases §3). */
 export function textoContador(n, limite = MAX_POSICIONES) {
+  if (!Number.isFinite(limite)) return `Posiciones: ${n} · acceso administrador`;
   return `Posiciones: ${n} de ${limite}`;
 }
 
@@ -1220,11 +1224,14 @@ export function montaConstructor(raiz, {
 
   async function recalcula() {
     const limite = limiteActual();
+    const esNivelAdmin = nivelActual() === 'admin';
     contador.textContent = posiciones.length ? textoContador(posiciones.length, limite) : '';
-    nivel.hidden = posiciones.length < limite;
+    nivel.hidden = esNivelAdmin || posiciones.length < limite;
     notaNivel.textContent = nivelActual() === 'suscriptor' ? NOTA_NIVEL_SUSCRIPTOR : NOTA_NIVEL;
     if (!posiciones.length) {
-      estado.textContent = `Busca un activo arriba y elígelo para añadirlo aquí (hasta ${limite} posiciones).`;
+      estado.textContent = esNivelAdmin
+        ? 'Busca un activo arriba y elígelo para añadirlo aquí. Tu acceso administrador no tiene tope de posiciones.'
+        : `Busca un activo arriba y elígelo para añadirlo aquí (hasta ${limite} posiciones).`;
       resultados.textContent = '';
       return;
     }
@@ -1307,10 +1314,11 @@ export function montaConstructor(raiz, {
     const pintaAnalisis = () => {
       const nodo = el('div', { class: 'nv-analisis' });
       fase03.contenido.append(nodo);
+      const nivelSesionActual = nivelActual();
       montaAnalisis(nodo, {
         posiciones, pesos, series, datos,
         registrada: Boolean(nivelAnalisis) || esRegistrada(),
-        nivel: nivelAnalisis || nivelActual(),
+        nivel: nivelSesionActual === 'admin' ? 'admin' : (nivelAnalisis || nivelSesionActual),
         metricas: m,
         tasaSinRiesgo,
         destinos: {
