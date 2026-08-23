@@ -118,6 +118,9 @@ if (!portfolioPage.includes('id="vista-models"') || !portfolioPage.includes('vis
   || !portfolioPage.includes('id="modelo-analisis-dinamico"')) {
   throw new Error('Las carteras modelo no tienen su pestaña y análisis completo propios');
 }
+if (!portfolioPage.includes("nivelAnalisis: 'registrada'")) {
+  throw new Error('El análisis completo de las carteras modelo sigue oculto para quien no ha iniciado sesión');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

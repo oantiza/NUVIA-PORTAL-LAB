@@ -552,6 +552,7 @@ export function montaConstructor(raiz, {
   editable = true,
   destinoAnalisis = null,
   prefijoId = '',
+  nivelAnalisis = null,
 } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
@@ -1013,7 +1014,9 @@ export function montaConstructor(raiz, {
       fase03.contenido.append(nodo);
       montaAnalisis(nodo, {
         posiciones, pesos, series, datos,
-        registrada: esRegistrada(), nivel: nivelActual(), metricas: m,
+        registrada: Boolean(nivelAnalisis) || esRegistrada(),
+        nivel: nivelAnalisis || nivelActual(),
+        metricas: m,
         destinos: {
           composicion: fase02.contenido,
           sectores: cajaSectores,
