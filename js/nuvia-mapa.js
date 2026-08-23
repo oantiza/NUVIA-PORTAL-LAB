@@ -14,9 +14,9 @@ import { VIEWBOX_MAPA, SILUETAS } from './nuvia-mapa-siluetas.js';
 import { num } from './nuvia-cartera.js';
 import { etiquetaRegion } from './nuvia-etiquetas.js';
 
-export const NOTA_MAPA = 'El mapa colorea cada continente según el peso de '
-  + 'la parte de renta variable de esta combinación que le corresponde, '
-  + 'con la cifra al lado: describe dónde está hoy ese dinero, nada más.';
+export const NOTA_MAPA = 'Cada continente lleva su color cuando hay exposición allí; '
+  + 'los que están a cero quedan en gris. La cifra sobre el mapa permite comparar '
+  + 'el peso: describe dónde está hoy la renta variable, nada más.';
 
 /** Región de la concentración → continente del mapa. Incluye tanto las
  *  claves de la distribución estimada como las que sirven los desgloses
@@ -63,6 +63,16 @@ export const ETIQUETAS_CONTINENTE = {
 
 const CONTINENTES = ['america', 'europa', 'africa', 'asia', 'oceania'];
 
+/* Posición de las cifras sobre las siluetas originales del laboratorio B.
+ * Son porcentajes del mismo dibujo y, por tanto, escalan con él. */
+const POSICION_CIFRA = {
+  america: ['20%', '33%'],
+  europa: ['55%', '33.5%'],
+  africa: ['50.4%', '57%'],
+  asia: ['78.8%', '33.8%'],
+  oceania: ['87.1%', '80%'],
+};
+
 /**
  * Agrega las filas de la concentración geográfica por continente.
  * Devuelve { pesos: {america,…}, sinContinente: [{clave, peso}] } o null
@@ -106,13 +116,12 @@ export function grupoMapa(reparto) {
   if (!agregado) return null;
 
   const bloque = el('div', { class: 'nv-mapa nv-analisis__grupo' });
-  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Dónde está invertida la renta variable (mapa)'));
+  bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'El mismo reparto, sobre el mapa'));
   bloque.append(el('p', { class: 'nv-analisis__lectura' }, NOTA_MAPA));
 
-  if (agregado.sinContinente.length) {
-    bloque.append(el('p', { class: 'nv-cons__nota' },
-      `Antes del mapa: ${num(agregado.sinContinente.reduce((s, f) => s + f.peso, 0), 1)} % queda fuera porque la región no tiene continente asignado.`));
-  }
+  const fuera = agregado.sinContinente.reduce((s, f) => s + f.peso, 0);
+  if (fuera > 0) bloque.append(el('p', { class: 'nv-mapa__fuera' },
+    `${num(fuera, 1)} % no aparece en el mapa porque la región no tiene un continente asignado.`));
 
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
@@ -129,7 +138,19 @@ export function grupoMapa(reparto) {
     path.setAttribute('class', `nv-mapa__zona nv-mapa__zona--${c} nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`);
     svg.append(path);
   }
-  bloque.append(svg);
+  const dibujo = el('div', { class: 'nv-mapa__dibujo' });
+  dibujo.append(svg);
+  for (const c of CONTINENTES) {
+    const [left, top] = POSICION_CIFRA[c];
+    const cifra = el('span', {
+      class: `nv-mapa__cifra${agregado.pesos[c] > 0 ? '' : ' nv-mapa__cifra--cero'}`,
+      'aria-hidden': 'true',
+    }, `${num(agregado.pesos[c], 1)} %`);
+    cifra.style.left = left;
+    cifra.style.top = top;
+    dibujo.append(cifra);
+  }
+  bloque.append(dibujo);
 
   const leyenda = el('ul', { class: 'nv-mapa__leyenda' });
   for (const c of CONTINENTES) {
@@ -139,13 +160,33 @@ export function grupoMapa(reparto) {
       'aria-hidden': 'true',
     });
     const cifra = agregado.pesos[c] > 0 ? `${num(agregado.pesos[c], 1)} %` : 'sin exposición';
-    item.append(punto, el('span', {}, `${ETIQUETAS_CONTINENTE[c]} · ${cifra}`));
+    item.append(
+      punto,
+      el('span', { class: 'nv-mapa__nombre' }, ETIQUETAS_CONTINENTE[c]),
+      el('strong', { class: 'nv-mapa__peso' }, cifra),
+    );
+    leyenda.append(item);
+  }
+  if (fuera > 0) {
+    const item = el('li', { class: 'nv-mapa__leyenda-item' });
+    item.append(
+      el('span', { class: 'nv-mapa__punto nv-mapa__punto--fuera', 'aria-hidden': 'true' }),
+      el('span', { class: 'nv-mapa__nombre' }, 'Fuera del mapa'),
+      el('strong', { class: 'nv-mapa__peso' }, `${num(fuera, 1)} %`),
+    );
     leyenda.append(item);
   }
   bloque.append(leyenda);
 
   if (agregado.sinContinente.length) bloque.append(el('p', { class: 'nv-cons__nota' },
-    `Fuera del mapa: ${agregado.sinContinente
+    `Regiones fuera del dibujo: ${agregado.sinContinente
       .map((f) => `${etiquetaRegion(f.clave)} (${num(f.peso, 1)} %)`).join(', ')}.`));
+
+  const lectura = el('p', { class: 'nv-analisis__conclusion' });
+  lectura.append(
+    el('strong', {}, 'El color dice dónde; la cifra dice cuánto.'),
+    document.createTextNode(' El tamaño de un continente no representa su peso en la cartera.'),
+  );
+  bloque.append(lectura);
   return bloque;
 }

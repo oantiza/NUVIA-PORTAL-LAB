@@ -4359,7 +4359,6 @@
 .nv-grafico__panel > .nv-frontera,
 .nv-grafico__panel > .nv-abanico { min-width: 680px; }
 .nv-mapa__svg { min-width: 640px; }
-.nv-mapa { overflow-x: auto; }
 
 @media (max-width: 1080px) {
   .nv-lab-dos-columnas { grid-template-columns: 1fr; }
@@ -4977,6 +4976,33 @@
   border-top: 1px solid var(--nv-line);
 }
 
+/* En la dirección B cada pregunta principal vive en su propia tarjeta. Los
+   grupos insertados dentro de una subcaja (donut/sectores) conservan el
+   tratamiento compacto de las dos columnas. */
+.nv-lab-fase__contenido > .nv-analisis__grupo,
+.nv-lab-geografia > .nv-analisis__grupo {
+  gap: var(--nv-space-3);
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: clamp(22px, 3vw, 38px);
+}
+
+.nv-lab-fase__contenido > .nv-analisis__grupo > .nv-analisis__titulo,
+.nv-lab-geografia > .nv-analisis__grupo > .nv-analisis__titulo {
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-sm);
+  font-weight: var(--nv-weight-title);
+  text-align: center;
+}
+
+.nv-lab-fase__contenido > .nv-analisis__grupo > .nv-analisis__lectura,
+.nv-lab-geografia > .nv-analisis__grupo > .nv-analisis__lectura {
+  margin-inline: auto;
+  text-align: center;
+}
+
 .nv-analisis__titulo {
   margin: 0;
   font-size: var(--nv-body-lg);
@@ -5058,6 +5084,58 @@
 }
 
 .nv-analisis__barra--contraria { background: var(--nv-bronze-700); }
+
+/* Aportación al riesgo (B): la barra es la aportación y la raya fina marca
+   el peso real de la posición sobre la misma escala de 0 a 100. */
+.nv-riesgo {
+  width: min(100%, 920px);
+  margin-inline: auto;
+  gap: var(--nv-space-3);
+}
+
+.nv-riesgo__pista {
+  position: relative;
+  grid-column: 1 / -1;
+  display: block;
+  height: 12px;
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-mist);
+}
+
+.nv-riesgo__valor {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-green-600);
+}
+
+.nv-riesgo__valor--contraria { background: var(--nv-bronze-700); }
+
+.nv-riesgo__marca {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--nv-navy-900);
+  transform: translateX(-1px);
+}
+
+.nv-analisis__conclusion {
+  width: min(100%, 920px);
+  margin: var(--nv-space-3) auto 0;
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-green-100);
+  color: var(--nv-green-900);
+  padding: var(--nv-space-4) var(--nv-space-5);
+  font-size: var(--nv-body-sm);
+  text-align: left;
+}
+
+.nv-analisis__conclusion strong {
+  display: block;
+  margin-bottom: var(--nv-space-1);
+  font-size: var(--nv-body);
+}
 
 /* La matriz completa vive plegada: el detalle no tapa la lectura. */
 .nv-analisis__despliegue { min-width: 0; }
@@ -5365,54 +5443,92 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Distribución geográfica con mapa (paso 42) */
-.nv-mapa { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }
+/* Distribución geográfica con mapa (dirección B): un dibujo amplio,
+   porcentajes sobre los continentes y leyenda estructurada debajo. */
+.nv-mapa { display: grid; gap: var(--nv-space-3); min-inline-size: 0; }
+.nv-mapa__dibujo {
+  position: relative;
+  width: min(100%, 960px);
+  min-width: 640px;
+  margin-inline: auto;
+}
 .nv-mapa__svg {
   display: block;
   width: 100%;
-  max-width: 640px;
+  max-width: none;
   height: auto;
-  margin-block: var(--nv-space-1);
-  margin-inline: auto;
 }
-/* Cada continente con su propio color (encargo de Óscar, 21-08); el peso
-   marca la intensidad del tono mezclando el color base con el papel. Los
-   chips de la leyenda usan las mismas clases vía background. */
-.nv-mapa__zona--america { --zona-base: #2e4f7c; }   /* azul */
-.nv-mapa__zona--europa { --zona-base: #4a5d23; }    /* verde NUVIA */
-.nv-mapa__zona--africa { --zona-base: #a04e2a; }    /* terracota */
-.nv-mapa__zona--asia { --zona-base: #8a6a1f; }      /* dorado */
-.nv-mapa__zona--oceania { --zona-base: #256f6a; }   /* verde azulado */
+/* El color identifica la zona; la cifra es la que comunica el peso. */
+.nv-mapa__zona--america { --zona-base: var(--nv-serie-1); }
+.nv-mapa__zona--europa { --zona-base: var(--nv-green-700); }
+.nv-mapa__zona--africa { --zona-base: var(--nv-serie-5); }
+.nv-mapa__zona--asia { --zona-base: var(--nv-serie-3); }
+.nv-mapa__zona--oceania { --zona-base: var(--nv-bronze-700); }
 
-.nv-mapa__zona--n0 { fill: #e7e5da; background: #e7e5da; }
-.nv-mapa__zona--n1 {
-  fill: color-mix(in srgb, var(--zona-base) 28%, #f0eee3);
-  background: color-mix(in srgb, var(--zona-base) 28%, #f0eee3);
-}
-.nv-mapa__zona--n2 {
-  fill: color-mix(in srgb, var(--zona-base) 50%, #f0eee3);
-  background: color-mix(in srgb, var(--zona-base) 50%, #f0eee3);
-}
-.nv-mapa__zona--n3 {
-  fill: color-mix(in srgb, var(--zona-base) 74%, #f0eee3);
-  background: color-mix(in srgb, var(--zona-base) 74%, #f0eee3);
-}
+.nv-mapa__zona--n0 { fill: var(--nv-mist); background: var(--nv-mist); }
+.nv-mapa__zona--n1,
+.nv-mapa__zona--n2,
+.nv-mapa__zona--n3,
 .nv-mapa__zona--n4 { fill: var(--zona-base); background: var(--zona-base); }
+
+.nv-mapa__cifra {
+  position: absolute;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: 3px var(--nv-space-2);
+  color: var(--nv-text);
+  font-size: var(--nv-label);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
+  white-space: nowrap;
+}
+
+.nv-mapa__cifra--cero { color: var(--nv-text-muted); }
+
+.nv-mapa__fuera {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  text-align: center;
+}
+
 .nv-mapa__leyenda {
   list-style: none;
-  margin: 0;
+  width: min(100%, 920px);
+  margin: 0 auto;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--nv-space-1) var(--nv-space-3);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--nv-space-5);
   font-size: var(--nv-body-sm);
 }
-.nv-mapa__leyenda-item { display: inline-flex; align-items: center; gap: 6px; }
+.nv-mapa__leyenda-item {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--nv-space-2);
+  border-bottom: 1px solid var(--nv-line);
+  padding-block: var(--nv-space-2);
+}
 .nv-mapa__punto {
   inline-size: 12px;
   block-size: 12px;
   border-radius: 3px;
   display: inline-block;
+}
+.nv-mapa__punto--fuera {
+  border: 1px solid var(--nv-line-strong);
+  background: repeating-linear-gradient(45deg, var(--nv-mist) 0 3px, var(--nv-surface) 3px 6px);
+}
+.nv-mapa__nombre { min-width: 0; color: var(--nv-text); }
+.nv-mapa__peso {
+  color: var(--nv-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
 }
 /* Los chips heredan el color por continente de las clases nv-mapa__zona--*
    (el background va en la misma regla que el fill, más arriba). */

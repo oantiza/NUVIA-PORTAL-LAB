@@ -586,6 +586,30 @@ function filaConBarra(nombre, cifra, anchoPct, { negativa = false } = {}) {
   return item;
 }
 
+/** Barra de aportación al riesgo con la marca fina del peso de la posición.
+ * Ambas cifras usan la misma escala de 0 a 100, como en la dirección B. */
+function filaRiesgoConPeso(nombre, aportacion, peso) {
+  const item = el('li', { class: 'nv-analisis__fila nv-riesgo__fila' });
+  item.append(
+    el('span', { class: 'nv-analisis__clave' }, nombre),
+    el('span', { class: 'nv-analisis__peso' }, pct(aportacion / 100, 0)),
+  );
+  const pista = el('span', { class: 'nv-riesgo__pista' });
+  const barra = el('span', {
+    class: `nv-riesgo__valor${aportacion < 0 ? ' nv-riesgo__valor--contraria' : ''}`,
+    'aria-hidden': 'true',
+  });
+  barra.style.width = `${Math.min(100, Math.max(0, Math.abs(aportacion)))}%`;
+  const marca = el('span', {
+    class: 'nv-riesgo__marca',
+    title: `Peso de la posición: ${pct(peso, 0)}`,
+  });
+  marca.style.left = `${Math.min(100, Math.max(0, peso * 100))}%`;
+  pista.append(barra, marca);
+  item.append(pista);
+  return item;
+}
+
 const cacheDetalles = new Map(); // asset_id -> promesa de ficha (o null)
 const cacheHoldings = new Map(); // clave ids ordenados -> promesa {id: doc|null}
 
@@ -792,22 +816,31 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
 function grupoRiesgoPorPosicion({ series, pesos, nombreDe }) {
   const contribuciones = contribucionesRiesgo(series, pesos);
   if (!contribuciones) return null;
-  const bloque = grupo('Cuánto riesgo pone cada posición',
-    'De cada 100 unidades de movimiento de esta combinación en el historial de 3 años, '
-    + 'las que puso cada posición. Pesa el tamaño de la posición, lo que se movió por su '
-    + 'cuenta y cuánto acompañó al resto.');
-  const lista = el('ul', { class: 'nv-analisis__filas' });
-  const tope = Math.max(...contribuciones.map((c) => Math.abs(c.porcentaje)), 1);
+  const bloque = grupo('Qué posición puso más riesgo',
+    'No es lo mismo que el peso: una posición pequeña que se mueve mucho puede aportar '
+    + 'más movimiento que una grande y tranquila. La marca fina señala cuánto pesa cada una.');
+  const lista = el('ul', { class: 'nv-analisis__filas nv-riesgo' });
   for (const c of contribuciones) {
-    lista.append(filaConBarra(nombreDe?.[c.id] || c.id, pct(c.porcentaje / 100, 0),
-      (Math.abs(c.porcentaje) / tope) * 100, { negativa: c.porcentaje < 0 }));
+    lista.append(filaRiesgoConPeso(
+      nombreDe?.[c.id] || c.id,
+      c.porcentaje,
+      Number(pesos[c.id]) || 0,
+    ));
   }
   bloque.append(lista);
   if (contribuciones.some((c) => c.porcentaje < 0)) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Una cifra negativa significa que esa posición amortiguó el movimiento del conjunto en ese historial.'));
   }
-  bloque.append(el('p', { class: 'nv-cons__nota' }, 'Describe el historial, no el futuro.'));
+  const principales = contribuciones.slice(0, Math.min(2, contribuciones.length));
+  const aportacionPrincipal = principales.reduce((s, c) => s + c.porcentaje, 0);
+  const pesoPrincipal = principales.reduce((s, c) => s + (Number(pesos[c.id]) || 0), 0);
+  const lectura = el('p', { class: 'nv-analisis__conclusion' });
+  lectura.append(
+    el('strong', {}, `Las dos primeras posiciones aportaron ${pct(aportacionPrincipal / 100, 0)} del movimiento y pesan ${pct(pesoPrincipal, 0)}.`),
+    document.createTextNode(' La barra muestra la aportación; la marca fina, el peso. Describe el historial, no el futuro.'),
+  );
+  bloque.append(lectura);
   return bloque;
 }
 

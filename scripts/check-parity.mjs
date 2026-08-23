@@ -105,9 +105,10 @@ if (!portfolioPage.includes('js/nuvia-constructor.js') || !portfolioPage.include
 if (!portfolioPage.includes('js/nuvia-cuenta.js') || !portfolioPage.includes('id="cuenta"')) {
   throw new Error('La página de cartera no monta el bloque de cuenta con datos mínimos');
 }
-/* Paso 37: informe genérico de compañía, misma plantilla para todas. */
-if (!portfolioPage.includes('js/nuvia-informe.js') || !portfolioPage.includes('id="informe"')) {
-  throw new Error('La página de cartera no monta el informe genérico de compañía');
+/* El informe genérico se retiró del laboratorio: la función completa vive en
+   la copia local de Análisis y valoración de empresas. */
+if (portfolioPage.includes('js/nuvia-informe.js') || portfolioPage.includes('id="informe"')) {
+  throw new Error('La página de cartera vuelve a montar el informe genérico redundante');
 }
 /* Paso 38: carteras modelo temáticas, publicadas e idénticas para todos. */
 if (!portfolioPage.includes('js/nuvia-modelos.js') || !portfolioPage.includes('id="modelos"')) {

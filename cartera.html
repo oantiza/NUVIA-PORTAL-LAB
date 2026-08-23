@@ -144,22 +144,13 @@
               <span class="nv-lab-fase__numero" aria-hidden="true">06</span>
               <div><p class="nv-lab-fase__pregunta">¿Con qué referencias puedes contrastarla?</p><h2 id="fase-06-title">Otras carteras</h2></div>
             </header>
-            <div class="nv-lab-dos-columnas">
-              <article class="nv-lab-caja">
-                <h3 id="modelos-title">Carteras modelo temáticas</h3>
-                <p>Composiciones fijas, con criterio y fecha declarados. Son referencias editoriales; no describen a ningún lector.</p>
-                <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
-                  <div class="nv-note"><p>Las carteras modelo necesitan JavaScript y conexión.</p></div>
-                </div>
-              </article>
-              <article class="nv-lab-caja">
-                <h3 id="informe-title">Informe de compañía</h3>
-                <p>Hechos, fuente y riesgos de cada acción del catálogo. La conclusión la saca quien lee: no contiene recomendaciones ni firma.</p>
-                <div id="informe" class="nv-informe" aria-labelledby="informe-title">
-                  <div class="nv-note"><p>El informe necesita JavaScript y conexión.</p></div>
-                </div>
-              </article>
-            </div>
+            <article class="nv-lab-caja">
+              <h3 id="modelos-title">Carteras modelo temáticas</h3>
+              <p>Composiciones fijas, con criterio y fecha declarados. Son referencias editoriales; no describen a ningún lector.</p>
+              <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
+                <div class="nv-note"><p>Las carteras modelo necesitan JavaScript y conexión.</p></div>
+              </div>
+            </article>
           </section>
 
           <dialog id="dialogo-cuenta" class="nv-dialogo" aria-labelledby="cuenta-title">
@@ -341,9 +332,6 @@ class Component extends DCLogic {
         ?.addEventListener('click', () => dialogoCuenta.close());
       dialogoCuenta.addEventListener('click', (e) => { if (e.target === dialogoCuenta) dialogoCuenta.close(); });
     }
-    import('./js/nuvia-informe.js')
-      .then((m) => { const nodo = document.getElementById('informe'); if (nodo) m.montaInforme(nodo); })
-      .catch(() => {});
     import('./js/nuvia-modelos.js')
       .then((m) => { const nodo = document.getElementById('modelos'); if (nodo) m.montaModelos(nodo); })
       .catch(() => {});
