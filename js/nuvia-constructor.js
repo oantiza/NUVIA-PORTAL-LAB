@@ -754,7 +754,11 @@ function el(tag, attrs = {}, texto) {
 }
 
 function creaFase(numero, id, pregunta, titulo) {
-  const seccion = el('section', { id, class: 'nv-lab-fase', 'aria-labelledby': `${id}-title` });
+  const seccion = el('section', {
+    id,
+    class: `nv-lab-fase nv-lab-fase--${numero}`,
+    'aria-labelledby': `${id}-title`,
+  });
   const cabecera = el('header', { class: 'nv-lab-fase__cabecera' });
   const textos = el('div');
   textos.append(
@@ -1288,7 +1292,7 @@ export function montaConstructor(raiz, {
     const geografia = el('div', { class: 'nv-lab-geografia' });
     composicionGrid.append(cajaActivos, cajaSectores);
     fase02.contenido.append(composicionGrid, geografia);
-    const cajaRiesgo = el('article', { class: 'nv-lab-subcaja' });
+    const cajaRiesgo = el('article', { class: 'nv-lab-subcaja nv-lab-subcaja--historial' });
     fase03.contenido.append(cajaRiesgo);
 
     /* El donut muestra el reparto por tipo de activo: renta variable, renta

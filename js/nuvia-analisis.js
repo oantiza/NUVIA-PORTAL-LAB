@@ -654,7 +654,7 @@ function filaConBarra(nombre, cifra, anchoPct, { negativa = false } = {}) {
     class: `nv-analisis__barra${negativa ? ' nv-analisis__barra--contraria' : ''}`,
     'aria-hidden': 'true',
   });
-  barra.style.width = `${Math.min(100, Math.max(2, Math.abs(anchoPct)))}%`;
+  barra.style.setProperty('--nv-barra-ancho', `${Math.min(100, Math.max(2, Math.abs(anchoPct)))}%`);
   item.append(barra);
   return item;
 }
@@ -734,6 +734,7 @@ function holdingsDe(datos, ids) {
  */
 function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) {
   const bloque = grupo('Todas las mezclas posibles y su frontera', TEXTO_FRONTERA);
+  bloque.classList.add('nv-analisis__grupo--rendimiento');
 
   const activos = activosParaFrontera(series, pesos);
   if (activos.length < 2) {
@@ -929,20 +930,50 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) 
 
   /* El reparto de las dos mezclas señaladas, plegado (nivel completo). */
   if (interactiva && senalados) {
-    const pliegue = el('details', { class: 'nv-analisis__despliegue' });
+    const pliegue = el('details', { class: 'nv-analisis__despliegue nv-mezclas' });
     pliegue.append(el('summary', {}, 'Ver el reparto de esas dos mezclas'));
-    for (const [titulo, punto] of [['La de mayor Sharpe', senalados.mayorSharpe], ['La de menor riesgo', senalados.menorRiesgo]]) {
-      pliegue.append(el('p', { class: 'nv-analisis__subtitulo-lista' },
-        `${titulo} — se movió un ${pct(punto.volatilidad)} al año y rentó un ${pct(punto.rentabilidad)} anual:`));
+    const comparador = el('div', { class: 'nv-mezclas__comparador' });
+    const mezclas = [
+      {
+        tono: 'sharpe',
+        kicker: 'Rentabilidad por riesgo',
+        titulo: 'Mayor Sharpe',
+        punto: senalados.mayorSharpe,
+      },
+      {
+        tono: 'tranquila',
+        kicker: 'Estabilidad histórica',
+        titulo: 'Menor riesgo',
+        punto: senalados.menorRiesgo,
+      },
+    ];
+    for (const { tono, kicker, titulo, punto } of mezclas) {
+      const tarjeta = el('article', { class: `nv-mezclas__tarjeta nv-mezclas__tarjeta--${tono}` });
+      const cabecera = el('header', { class: 'nv-mezclas__cabecera' });
+      cabecera.append(
+        el('p', { class: 'nv-mezclas__kicker' }, kicker),
+        el('h5', { class: 'nv-mezclas__titulo' }, titulo),
+      );
+      const metricas = el('dl', { class: 'nv-mezclas__metricas' });
+      const anadeMetrica = (etiqueta, valor) => {
+        const dato = el('div', { class: 'nv-mezclas__metrica' });
+        dato.append(el('dt', {}, etiqueta), el('dd', {}, valor));
+        metricas.append(dato);
+      };
+      anadeMetrica('Riesgo anual', pct(punto.volatilidad));
+      anadeMetrica('Rentabilidad anual', pct(punto.rentabilidad));
+      cabecera.append(metricas);
       const visibles = [...(punto.pesos || [])].sort((a, b) => b.peso - a.peso).filter((w) => w.peso >= 0.5).slice(0, 8);
       const resto = 100 - visibles.reduce((s, w) => s + w.peso, 0);
-      const lista = el('ul', { class: 'nv-analisis__filas' });
+      const lista = el('ul', { class: 'nv-analisis__filas nv-mezclas__filas' });
       for (const w of visibles) {
         lista.append(filaConBarra(nombreDe?.[w.id] || w.id, pct(w.peso / 100, 0), w.peso));
       }
       if (resto >= 0.5) lista.append(filaConBarra('Resto de posiciones', pct(resto / 100, 0), resto));
-      pliegue.append(lista);
+      tarjeta.append(cabecera, lista);
+      comparador.append(tarjeta);
     }
+    pliegue.append(comparador);
     bloque.append(pliegue);
   }
   return bloque;
@@ -959,6 +990,7 @@ function grupoRiesgoPorPosicion({ series, pesos, nombreDe }) {
   const bloque = grupo('Qué posición puso más riesgo',
     'No es lo mismo que el peso: una posición pequeña que se mueve mucho puede aportar '
     + 'más movimiento que una grande y tranquila. La marca fina señala cuánto pesa cada una.');
+  bloque.classList.add('nv-analisis__grupo--riesgo');
   const lista = el('ul', { class: 'nv-analisis__filas nv-riesgo' });
   for (const c of contribuciones) {
     lista.append(filaRiesgoConPeso(
@@ -990,6 +1022,7 @@ function grupoProyeccion(metricas) {
     'Partiendo de 100, se simulan 4.000 caminos con la rentabilidad y la volatilidad '
     + 'del historial como supuestos. La banda ancha recoge nueve de cada diez caminos '
     + 'simulados; la oscura, la mitad central; la línea es la mediana.');
+  bloque.classList.add('nv-analisis__grupo--escenario');
   const proyeccion = metricas
     ? proyeccionMonteCarlo({ rentabilidad: metricas.rentabilidadAnualizada, volatilidad: metricas.volatilidad })
     : null;
@@ -1083,6 +1116,7 @@ function grupoMapaRiesgo({ referencia }) {
     + 'y Agresivo— calculados sobre los mismos supuestos por clase de activo. '
     + 'La posición relativa se puede comparar; '
     + 'ningún punto es una propuesta ni una previsión.');
+  bloque.classList.add('nv-analisis__grupo--riesgo');
   const perfiles = perfilesReferencia();
   if (!perfiles.length) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
@@ -1200,6 +1234,7 @@ function filaPar(nombreA, nombreB, cifra, frase, anchoPct, { negativa = false } 
  *  y la matriz completa plegada para quien quiera el detalle. */
 function grupoCorrelaciones(series, pesos, nombreDe) {
   const bloque = grupo('Qué posiciones se mueven a la vez', TEXTO_CORRELACIONES);
+  bloque.classList.add('nv-analisis__grupo--solape');
   const enCalculo = (series || []).filter((s) => pesos[s.asset_id] != null);
   if (enCalculo.length < 2) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
