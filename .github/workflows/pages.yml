@@ -5,6 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+  schedule:
+    # El BCE publica el €STR cada día hábil a las 08:00 CET.
+    # A las 08:30 UTC ya está disponible tanto en horario de invierno
+    # como de verano; en fines de semana conserva la última observación.
+    - cron: '30 8 * * *'
 
 permissions:
   contents: read
@@ -32,6 +37,13 @@ jobs:
 
       - name: Preparar GitHub Pages
         uses: actions/configure-pages@v5
+
+      - name: Actualizar la tasa sin riesgo oficial del BCE
+        run: node scripts/update-ecb-risk-free.mjs
+        # Si el portal del BCE tiene una incidencia puntual, se publica la
+        # última copia verificada incluida en el repositorio y la fecha visible
+        # deja claro hasta qué observación llega.
+        continue-on-error: true
 
       - name: Construir y validar la web
         run: npm run build

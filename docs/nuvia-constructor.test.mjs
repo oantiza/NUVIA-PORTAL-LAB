@@ -12,6 +12,7 @@ import {
   carterasLocalesParaNube,
   MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
   puntosEvolucion, trazadoLinea, serieSemanalTresAnos,
+  tasaSinRiesgoAnualTresAnos, sharpeHistoricoTresAnos,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -145,6 +146,28 @@ console.log('\n— Reparto por clase (paso 23) —');
   comprueba('Sin pesos → null, nunca un gráfico vacío inventado', repartoPorClase(posiciones, null) === null);
   comprueba('claseVisual da color del sistema para cada clase', claseVisual('EQUITY').color.startsWith('var(--nv-cat-')
     && claseVisual('lo-que-sea').etiqueta === 'Sin clasificar');
+}
+
+console.log('\n— Sharpe histórico de 3 años con €STR diario del BCE —');
+{
+  const inicio = Date.UTC(2023, 7, 20);
+  const fin = Date.UTC(2026, 7, 20);
+  const observaciones = [];
+  for (let t = inicio; t <= fin; t += 86_400_000) {
+    observaciones.push([new Date(t).toISOString().slice(0, 10), 3.6]);
+  }
+  const fechas = ['2023-08-20', '2026-08-20'];
+  const tasa = tasaSinRiesgoAnualTresAnos(observaciones, fechas);
+  const esperada = (1 + 0.036 / 360) ** 365.2425 - 1;
+  comprueba('El €STR se compone día a día y se anualiza sobre la misma ventana',
+    Math.abs(tasa - esperada) < 1e-10, `tasa=${tasa}`);
+  const ratio = sharpeHistoricoTresAnos({ rentabilidadAnualizada: 0.08, volatilidad: 0.12 }, tasa);
+  comprueba('Sharpe = (rentabilidad anualizada 3a − €STR 3a) / volatilidad anualizada 3a',
+    Math.abs(ratio - ((0.08 - tasa) / 0.12)) < 1e-4, `sharpe=${ratio}`);
+  comprueba('Sin una observación del BCE previa al inicio no se inventa una tasa',
+    tasaSinRiesgoAnualTresAnos([['2024-01-01', 3.5]], fechas) === undefined);
+  comprueba('Sin tasa oficial disponible tampoco se recupera el antiguo 1,9 % fijo',
+    sharpeHistoricoTresAnos({ rentabilidadAnualizada: 0.08, volatilidad: 0.12 }, undefined) === undefined);
 }
 
 console.log('\n— Guardado local (paso 24) —');

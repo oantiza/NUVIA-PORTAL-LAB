@@ -15,7 +15,7 @@
     "firebase:preview": "npm run build && firebase hosting:channel:deploy revision --project nuvia-family-wealth --expires 7d",
     "firebase:deploy": "npm run build && firebase deploy --only hosting --project nuvia-family-wealth",
     "logo:optimizar": "node scripts/optimizar-logos.mjs",
-    "test:analisis": "node docs/nuvia-cartera.test.mjs && node docs/nuvia-solapamiento.test.mjs && node docs/nuvia-concentracion.test.mjs && node docs/nuvia-datos.test.mjs && node docs/nuvia-constructor.test.mjs && node docs/nuvia-cuenta.test.mjs && node docs/nuvia-analisis.test.mjs && node docs/nuvia-informe.test.mjs && node docs/nuvia-modelos.test.mjs && node docs/nuvia-mapa.test.mjs && node docs/nuvia-etiquetas.test.mjs"
+    "test:analisis": "node docs/nuvia-cartera.test.mjs && node docs/nuvia-solapamiento.test.mjs && node docs/nuvia-concentracion.test.mjs && node docs/nuvia-datos.test.mjs && node docs/nuvia-constructor.test.mjs && node docs/ecb-risk-free.test.mjs && node docs/nuvia-cuenta.test.mjs && node docs/nuvia-analisis.test.mjs && node docs/nuvia-informe.test.mjs && node docs/nuvia-modelos.test.mjs && node docs/nuvia-mapa.test.mjs && node docs/nuvia-etiquetas.test.mjs"
   },
   "devDependencies": {
     "sharp": "^0.35.3"

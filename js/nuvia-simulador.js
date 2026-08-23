@@ -10,7 +10,7 @@
  * inventa una cifra.
  */
 
-import { CLASES, analizaCartera, pct, num, TASA_SIN_RIESGO } from './nuvia-cartera.js';
+import { CLASES, analizaCartera, pct } from './nuvia-cartera.js';
 
 /** Reparto de partida: un ejemplo neutro para que la pantalla no salga vacía. */
 const REPARTO_INICIAL = {
@@ -159,8 +159,6 @@ export function montaSimulador(raiz) {
         'La que tendría la combinación si todas las clases se movieran siempre a la vez.'),
       filaMetrica('Efecto de la diversificación', r.ahorroPorDiversificar != null ? pct(r.ahorroPorDiversificar) : '—',
         'Diferencia entre las dos volatilidades: lo que aporta combinar clases que no se mueven igual.'),
-      filaMetrica('Ratio de Sharpe', num(r.sharpe),
-        `Rentabilidad estimada por encima de la tasa sin riesgo (${pct(TASA_SIN_RIESGO)}) por cada unidad de volatilidad.`),
     );
   }
 

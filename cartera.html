@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css?v=20260823-3">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=20260823-4">
 
 <!-- React y ReactDOM, servidos por el sitio. Van antes que support.js: su
      loadReactUmd() empieza comprobando si ya están en window y, si lo
@@ -315,14 +315,14 @@ class Component extends DCLogic {
     });
     this._onPop = () => activaVista(new URLSearchParams(window.location.search).get('vista'));
     window.addEventListener('popstate', this._onPop);
-    import('./js/nuvia-simulador.js')
+    import('./js/nuvia-simulador.js?v=20260823-2')
       .then((m) => { const sim = document.getElementById('simulador'); if (sim) m.montaSimulador(sim); })
       .catch(() => {});
     import('./js/nuvia-buscador.js')
       .then((m) => { const nodo = document.getElementById('buscador'); if (nodo) m.montaBuscador(nodo); })
       .catch(() => {});
     Promise.all([
-      import('./js/nuvia-constructor.js?v=20260823-6'),
+      import('./js/nuvia-constructor.js?v=20260823-8'),
       import('./js/nuvia-modelos.js?v=20260823-4'),
     ])
       .then(([constructor, modelos]) => {

@@ -28,7 +28,9 @@
  * las series se piden fuera y se le pasan a este módulo ya descargadas.
  */
 
-/** Tasa libre de riesgo anual (€STR aproximado). Igual que quantConfig.ts. */
+/** Valor de compatibilidad para cálculos internos basados en supuestos.
+ * El Sharpe visible de una cartera real NO usa esta constante: cruza sus
+ * tres años con la serie diaria oficial del €STR publicada por el BCE. */
 export const TASA_SIN_RIESGO = 0.019;
 
 /**

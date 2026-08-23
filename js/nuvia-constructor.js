@@ -12,8 +12,8 @@
  */
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
-import { metricasDesdeSerie, serieDeCaidas, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
-import { montaAnalisis } from './nuvia-analisis.js?v=20260823-4';
+import { metricasDesdeSerie, serieDeCaidas, sharpe, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
+import { montaAnalisis } from './nuvia-analisis.js?v=20260823-6';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
 
@@ -147,6 +147,72 @@ export function trazadoLinea(valores, { W, H, izq, der, arriba, abajo, min, max 
     d += `${d ? ' L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`;
   }
   return d;
+}
+
+const DIA_MS = 86_400_000;
+const URL_ESTR_LOCAL = new URL('../data/ecb-estr.json', import.meta.url);
+let promesaEstr = null;
+
+/**
+ * Convierte el €STR diario del BCE en una tasa anual compuesta para la
+ * misma ventana temporal que la cartera. Cada observación, expresada por el
+ * BCE como porcentaje anual, se mantiene hasta la siguiente fecha publicada
+ * y se capitaliza con la convención monetaria ACT/360.
+ */
+export function tasaSinRiesgoAnualTresAnos(observaciones, fechas) {
+  if (!Array.isArray(observaciones) || !Array.isArray(fechas) || fechas.length < 2) return undefined;
+  const desde = Date.parse(fechas[0]);
+  const hasta = Date.parse(fechas.at(-1));
+  if (!Number.isFinite(desde) || !Number.isFinite(hasta) || hasta <= desde) return undefined;
+
+  const serie = observaciones.map((o) => {
+    const fecha = Array.isArray(o) ? o[0] : o?.fecha;
+    const valor = Number(Array.isArray(o) ? o[1] : o?.valor);
+    return { tiempo: Date.parse(fecha), valor };
+  }).filter((o) => Number.isFinite(o.tiempo) && Number.isFinite(o.valor))
+    .sort((a, b) => a.tiempo - b.tiempo);
+  const previa = serie.filter((o) => o.tiempo <= desde).at(-1);
+  if (!previa) return undefined;
+
+  let tasa = previa.valor / 100;
+  let cursor = desde;
+  let factor = 1;
+  for (const observacion of serie) {
+    if (observacion.tiempo <= desde) continue;
+    if (observacion.tiempo > hasta) break;
+    const dias = (observacion.tiempo - cursor) / DIA_MS;
+    factor *= 1 + (tasa * dias) / 360;
+    tasa = observacion.valor / 100;
+    cursor = observacion.tiempo;
+  }
+  factor *= 1 + (tasa * ((hasta - cursor) / DIA_MS)) / 360;
+  const diasTotales = (hasta - desde) / DIA_MS;
+  if (!(factor > 0) || !(diasTotales > 0)) return undefined;
+  return factor ** (365.2425 / diasTotales) - 1;
+}
+
+/** Sharpe ex post: rentabilidad y volatilidad anualizadas de la cartera y
+ * €STR compuesto, todo sobre el mismo historial común de tres años. */
+export function sharpeHistoricoTresAnos(metricas, tasaSinRiesgo) {
+  if (!Number.isFinite(tasaSinRiesgo)) return undefined;
+  return sharpe(metricas?.rentabilidadAnualizada, metricas?.volatilidad, tasaSinRiesgo);
+}
+
+/** Una descarga por sesión. El parámetro diario evita que una caché del
+ * navegador conserve el fichero de ayer tras la actualización automática. */
+export function cargaEstrBce(fetchFn = (...args) => fetch(...args)) {
+  if (!promesaEstr) {
+    const url = new URL(URL_ESTR_LOCAL);
+    url.searchParams.set('dia', new Date().toISOString().slice(0, 10));
+    promesaEstr = fetchFn(url, { cache: 'no-store' }).then((respuesta) => {
+      if (!respuesta.ok) throw new Error(`No se pudo cargar el €STR del BCE (${respuesta.status}).`);
+      return respuesta.json();
+    }).catch((error) => {
+      promesaEstr = null;
+      throw error;
+    });
+  }
+  return promesaEstr;
 }
 
 /** Reduce el historial a un cierre por semana y conserva únicamente los
@@ -943,10 +1009,14 @@ export function montaConstructor(raiz, {
     const ids = posiciones.map((p) => p.activo.asset_id);
     const mia = ++generacion;
     let payload;
+    let estrBce = null;
     try {
       const promesa = seriesDelConjunto(ids);
       estado.textContent = 'Consultando el historial…';
-      payload = await promesa;
+      [payload, estrBce] = await Promise.all([
+        promesa,
+        cargaEstrBce().catch(() => null),
+      ]);
     } catch {
       if (mia !== generacion) return;
       estado.textContent = 'No se ha podido consultar el historial. Prueba de nuevo en unos segundos.';
@@ -984,6 +1054,9 @@ export function montaConstructor(raiz, {
 
     const niveles = serieCartera(series, pesos);
     const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
+    const fechasComunes = payload?.dates || null;
+    const tasaSinRiesgo = tasaSinRiesgoAnualTresAnos(estrBce?.observaciones, fechasComunes);
+    const sharpeTresAnos = sharpeHistoricoTresAnos(m, tasaSinRiesgo);
     const idFase = (numero) => `${prefijoId ? `${prefijoId}-` : ''}fase-${numero}`;
     const fase02 = creaFase('02', idFase('02'), '¿Qué contiene realmente?', 'Qué tienes');
     const fase03 = creaFase('03', idFase('03'), '¿Qué hizo el valor en el pasado?', 'Cuánto se mueve');
@@ -1017,6 +1090,7 @@ export function montaConstructor(raiz, {
         registrada: Boolean(nivelAnalisis) || esRegistrada(),
         nivel: nivelAnalisis || nivelActual(),
         metricas: m,
+        tasaSinRiesgo,
         destinos: {
           composicion: fase02.contenido,
           sectores: cajaSectores,
@@ -1039,7 +1113,7 @@ export function montaConstructor(raiz, {
       metricas: m,
       posiciones: Object.keys(pesos).length,
     }));
-    cajaRiesgo.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tres cifras del historial común'));
+    cajaRiesgo.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Métricas del historial común de 3 años'));
 
     const tabla = el('table', { class: 'nv-table nv-sim-tabla' });
     tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Métricas históricas de la combinación elegida'));
@@ -1047,24 +1121,42 @@ export function montaConstructor(raiz, {
     const trh = el('tr');
     trh.append(el('th', { scope: 'col' }, 'Métrica'), el('th', { scope: 'col' }, 'Valor'), el('th', { scope: 'col' }, 'Cómo leerla'));
     thead.append(trh);
-    const lecturas = lecturasDeMetricas(m, { niveles, fechas: payload?.dates || null });
+    const lecturas = lecturasDeMetricas(m, { niveles, fechas: fechasComunes });
     const tbody = el('tbody');
     tbody.append(
       filaMetrica('Cambio acumulado (3 años)', pct(m.rentabilidadTotal), lecturas.rentabilidad),
       filaMetrica('Oscilación anual', pct(m.volatilidad), lecturas.volatilidad),
       filaMetrica('Mayor caída (3 años)', pct(m.maximaCaida), lecturas.caida),
+      filaMetrica('Ratio de Sharpe (3 años)', num(sharpeTresAnos, 2),
+        Number.isFinite(sharpeTresAnos)
+          ? 'Rentabilidad anualizada de estos 3 años, menos el €STR compuesto del mismo periodo, por cada unidad de oscilación anualizada.'
+          : 'No se ha podido cruzar el historial de la cartera con la serie diaria del €STR del BCE.'),
     );
     tabla.append(thead, tbody);
     const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
     envoltorio.append(tabla);
     cajaRiesgo.append(envoltorio);
 
-    const evolucion = grupoEvolucion({ niveles, fechas: payload?.dates || null });
+    const evolucion = grupoEvolucion({ niveles, fechas: fechasComunes });
     if (evolucion) cajaRiesgo.append(evolucion);
 
     const fecha = fechaCorta(payload?.coverage?.last_date);
     cajaRiesgo.append(el('p', { class: 'nv-cons__fuente' },
       `Datos de cierre${fecha ? ` del ${fecha}` : ''}, base de datos NUVIA. Ventana de 3 años, en euros. ${m.observaciones} observaciones.`));
+    if (Number.isFinite(tasaSinRiesgo)) {
+      const fuenteBce = el('p', { class: 'nv-cons__fuente' });
+      fuenteBce.append(
+        'Tasa sin riesgo: ',
+        el('a', {
+          href: estrBce?.fuente_url || 'https://data.ecb.europa.eu/data/datasets/EST/EST.B.EU000A2X2A25.WT',
+          target: '_blank', rel: 'noopener noreferrer',
+        }, '€STR diario del Banco Central Europeo'),
+        `, compuesto sobre la misma ventana (${pct(tasaSinRiesgo)} anual). `,
+        `Última observación: ${fechaCorta(estrBce?.ultimo?.fecha) || '—'}, ${num(estrBce?.ultimo?.valor, 3)} %. `,
+        'Actualización automática diaria.',
+      );
+      cajaRiesgo.append(fuenteBce);
+    }
     pintaAnalisis();
   }
 

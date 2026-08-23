@@ -256,6 +256,9 @@ console.log('\n— Los puntos señalados de la frontera (encargo 21-08) —');
   const s = puntosSenalados(eficiente);
   comprueba('La de menor riesgo es la de menor volatilidad', s.menorRiesgo.volatilidad === 0.04);
   comprueba('La de mayor Sharpe descuenta la tasa sin riesgo', s.mayorSharpe.volatilidad === 0.06);
+  const conEstrAlto = puntosSenalados(eficiente, 0.07);
+  comprueba('La mezcla de mayor Sharpe admite el €STR compuesto de la ventana',
+    conEstrAlto.mayorSharpe.volatilidad === 0.10);
   comprueba('Sin puntos no hay señalados', puntosSenalados([]) === null && puntosSenalados(null) === null);
 }
 
@@ -291,6 +294,9 @@ console.log('\n— Los perfiles de referencia del mapa riesgo-retorno (encargo 2
   const perfiles = perfilesReferencia();
   comprueba('Cinco perfiles, del 10 % al 90 % de renta variable',
     perfiles.length === 5 && perfiles[0].rv === 10 && perfiles[4].rv === 90);
+  comprueba('Los cinco perfiles llevan sus nombres editoriales, en orden',
+    perfiles.map((p) => p.nombre).join(',')
+      === 'Defensivo,Moderado,Equilibrado,Dinámico,Agresivo');
   comprueba('A más renta variable, más riesgo y más rentabilidad estimada (con estos supuestos)',
     perfiles.every((p, i) => i === 0
       || (p.volatilidad > perfiles[i - 1].volatilidad && p.rentabilidad > perfiles[i - 1].rentabilidad)));

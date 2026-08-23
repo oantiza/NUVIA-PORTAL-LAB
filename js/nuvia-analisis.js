@@ -438,13 +438,13 @@ export function caminoSuave(puntos) {
  * hechos del cálculo, no un juicio: «la que menos se movió» y «la que más
  * rentó por unidad de riesgo». Pura y probada; null sin puntos.
  */
-export function puntosSenalados(eficiente) {
+export function puntosSenalados(eficiente, sinRiesgo) {
   const puntos = (eficiente || []).filter((p) => Number.isFinite(p?.volatilidad) && Number.isFinite(p?.rentabilidad));
   if (!puntos.length) return null;
   const menorRiesgo = puntos.reduce((m, p) => (p.volatilidad < m.volatilidad ? p : m));
   const mayorSharpe = puntos.reduce((m, p) => {
-    const sp = sharpe(p.rentabilidad, p.volatilidad);
-    const sm = sharpe(m.rentabilidad, m.volatilidad);
+    const sp = sharpe(p.rentabilidad, p.volatilidad, sinRiesgo);
+    const sm = sharpe(m.rentabilidad, m.volatilidad, sinRiesgo);
     return Number.isFinite(sp) && (!Number.isFinite(sm) || sp > sm) ? p : m;
   });
   return { menorRiesgo, mayorSharpe };
@@ -458,6 +458,13 @@ export function puntosSenalados(eficiente) {
  * describen a ningún lector. Pura y probada.
  */
 export function perfilesReferencia(proporciones = [10, 30, 50, 70, 90]) {
+  const identidad = {
+    10: { nombre: 'Defensivo', tono: 'defensivo' },
+    30: { nombre: 'Moderado', tono: 'moderado' },
+    50: { nombre: 'Equilibrado', tono: 'equilibrado' },
+    70: { nombre: 'Dinámico', tono: 'dinamico' },
+    90: { nombre: 'Agresivo', tono: 'agresivo' },
+  };
   return proporciones
     .map((rv) => {
       const posiciones = [
@@ -466,6 +473,8 @@ export function perfilesReferencia(proporciones = [10, 30, 50, 70, 90]) {
       ];
       return {
         rv,
+        nombre: identidad[rv]?.nombre || `${rv} % bolsa`,
+        tono: identidad[rv]?.tono || 'personalizado',
         volatilidad: volatilidadCartera(posiciones),
         rentabilidad: rentabilidadCartera(posiciones),
       };
@@ -723,7 +732,7 @@ function holdingsDe(datos, ids) {
  * suscriptor añade un control para recorrer la frontera y ver el reparto
  * de cada punto (la parte interactiva, guía paso 1).
  */
-function grupoFrontera({ series, pesos, interactiva, nombreDe }) {
+function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) {
   const bloque = grupo('Todas las mezclas posibles y su frontera', TEXTO_FRONTERA);
 
   const activos = activosParaFrontera(series, pesos);
@@ -830,7 +839,11 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe }) {
   );
   /* Los tres puntos que pidió Óscar: tu combinación, la mezcla de mayor
      Sharpe y la de menor volatilidad del historial. Nada más. */
-  const senalados = puntosSenalados(arcoDatos);
+  /* Sin la serie oficial del BCE no se sustituye silenciosamente por una
+     tasa fija: se omiten las marcas que dependen del Sharpe. */
+  const senalados = Number.isFinite(tasaSinRiesgo)
+    ? puntosSenalados(arcoDatos, tasaSinRiesgo)
+    : null;
   const rotulo = (cx, cy, texto, dy = 5) => {
     const anclaIzq = cx > W - der - 150;
     svg.append(svgEl('text', {
@@ -905,7 +918,8 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe }) {
   }
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
   bloque.append(el('p', { class: 'nv-cons__nota' },
-    'El Sharpe es la rentabilidad obtenida por cada unidad de riesgo, descontada la tasa sin riesgo: '
+    'El Sharpe usa la rentabilidad y la oscilación anualizadas de estos 3 años y descuenta '
+    + 'el €STR diario del BCE compuesto sobre la misma ventana: '
     + '«mayor Sharpe» señala la mezcla del historial que más rentó por cada punto de movimiento, y '
     + '«menor riesgo», la que menos se movió. Describen ese historial, no el futuro.'));
   if (!puntoActual) {
@@ -1065,8 +1079,9 @@ function grupoProyeccion(metricas) {
  */
 function grupoMapaRiesgo({ referencia }) {
   const bloque = grupo('Mapa riesgo-retorno frente a perfiles de referencia',
-    'Tu combinación y cinco mezclas de referencia, calculadas sobre los mismos '
-    + 'supuestos por clase de activo. La posición relativa se puede comparar; '
+    'Tu combinación y cinco perfiles —Defensivo, Moderado, Equilibrado, Dinámico '
+    + 'y Agresivo— calculados sobre los mismos supuestos por clase de activo. '
+    + 'La posición relativa se puede comparar; '
     + 'ningún punto es una propuesta ni una previsión.');
   const perfiles = perfilesReferencia();
   if (!perfiles.length) {
@@ -1086,7 +1101,7 @@ function grupoMapaRiesgo({ referencia }) {
     class: 'nv-frontera',
     role: 'img',
     'aria-label': 'Mapa riesgo-retorno: perfiles de referencia '
-      + perfiles.map((p) => `${p.rv} % de renta variable (volatilidad ${pct(p.volatilidad)}, rentabilidad ${pct(p.rentabilidad)})`).join('; ')
+      + perfiles.map((p) => `${p.nombre}, ${p.rv} % de renta variable (volatilidad ${pct(p.volatilidad)}, rentabilidad ${pct(p.rentabilidad)})`).join('; ')
       + (referencia ? `; tu combinación: oscilación ${pct(referencia.volatilidad)}, cambio anual estimado ${pct(referencia.rentabilidad)}.` : '.'),
   });
   const { x, y } = dibujaEjes(svg, {
@@ -1095,21 +1110,30 @@ function grupoMapaRiesgo({ referencia }) {
     tituloY: 'Rentabilidad anual ↑',
   });
 
-  /* La línea discontinua que une los perfiles, y un rombo por perfil. */
+  /* Una línea discreta une los perfiles; el color avanza desde el defensivo
+     al agresivo y el porcentaje de bolsa queda como dato secundario. */
   svg.append(svgEl('polyline', {
     points: perfiles.map((p) => `${x(p.volatilidad).toFixed(1)},${y(p.rentabilidad).toFixed(1)}`).join(' '),
     class: 'nv-perfiles__linea', fill: 'none',
   }));
   perfiles.forEach((p, i) => {
     const cx = x(p.volatilidad); const cy = y(p.rentabilidad);
-    svg.append(svgEl('rect', {
-      x: (cx - 5.5).toFixed(1), y: (cy - 5.5).toFixed(1), width: 11, height: 11,
-      transform: `rotate(45 ${cx.toFixed(1)} ${cy.toFixed(1)})`, class: 'nv-perfiles__rombo',
+    svg.append(svgEl('circle', {
+      cx: cx.toFixed(1), cy: cy.toFixed(1), r: 6.5,
+      class: `nv-perfiles__punto nv-perfiles__punto--${p.tono}`,
     }));
-    /* El rótulo alterna abajo y arriba para que dos vecinos no se pisen. */
-    svg.append(svgEl('text', {
-      x: cx.toFixed(1), y: (i % 2 ? cy - 14 : cy + 26).toFixed(1), 'text-anchor': 'middle', class: 'nv-grafico__eje',
-    }, `${p.rv} % bolsa`));
+    const arribaDelPunto = i % 2 === 1;
+    const rotulo = svgEl('text', {
+      x: cx.toFixed(1), y: (arribaDelPunto ? cy - 24 : cy + 24).toFixed(1),
+      'text-anchor': 'middle', class: 'nv-perfiles__etiqueta',
+    });
+    rotulo.append(
+      svgEl('tspan', { x: cx.toFixed(1) }, p.nombre),
+      svgEl('tspan', {
+        x: cx.toFixed(1), dy: arribaDelPunto ? 12 : 13, class: 'nv-perfiles__subetiqueta',
+      }, `${p.rv} % bolsa`),
+    );
+    svg.append(rotulo);
   });
   if (referencia) {
     const cx = x(referencia.volatilidad); const cy = y(referencia.rentabilidad);
@@ -1129,11 +1153,11 @@ function grupoMapaRiesgo({ referencia }) {
       texto: `oscilación ${pct(referencia.volatilidad)} · cambio anual estimado ${pct(referencia.rentabilidad)}`,
     });
   }
-  cifras.push({
-    clase: 'nv-leyenda__marca--rombo',
-    nombre: 'Perfiles de referencia:',
-    texto: 'del 10 % al 90 % de renta variable, con los supuestos de esta página',
-  });
+  perfiles.forEach((p) => cifras.push({
+    clase: `nv-leyenda__marca--perfil nv-leyenda__marca--perfil-${p.tono}`,
+    nombre: `${p.nombre}:`,
+    texto: `${p.rv} % bolsa`,
+  }));
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
   if (!referencia) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
@@ -1267,7 +1291,7 @@ function tablaReparto(titulo, lectura, resultado, etiqueta = etiquetaClave, maxF
  * el documento, lo pintado no se ve y no pasa nada).
  */
 export async function montaAnalisis(raiz, {
-  posiciones, pesos, series, datos, registrada, nivel, metricas, destinos = null,
+  posiciones, pesos, series, datos, registrada, nivel, metricas, tasaSinRiesgo, destinos = null,
 }) {
   if (!raiz) return;
   raiz.textContent = '';
@@ -1318,7 +1342,9 @@ export async function montaAnalisis(raiz, {
 
   /* Frontera (paso 33): estática con la cartera marcada para el registrado,
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
-  objetivo.riesgo.append(grupoFrontera({ series, pesos, interactiva: esSuscriptor, nombreDe }));
+  objetivo.riesgo.append(grupoFrontera({
+    series, pesos, interactiva: esSuscriptor, nombreDe, tasaSinRiesgo,
+  }));
 
   /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7). */
   objetivo.riesgo.append(grupoMapaRiesgo({ referencia: perfilCarteraSupuestos(posiciones, pesos) }));

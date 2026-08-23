@@ -5234,15 +5234,48 @@
 
 /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7) */
 .nv-perfiles__linea {
-  stroke: var(--nv-text-soft);
+  stroke: var(--nv-navy-700);
   stroke-width: 2;
-  stroke-dasharray: 7 6;
+  opacity: .58;
 }
-.nv-perfiles__rombo {
-  fill: var(--nv-text-soft);
+.nv-perfiles__punto {
   stroke: var(--nv-paper-light);
-  stroke-width: 1.5;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
 }
+.nv-perfiles__punto--defensivo { fill: var(--nv-bronze-700); }
+.nv-perfiles__punto--moderado { fill: var(--nv-bronze-500); }
+.nv-perfiles__punto--equilibrado { fill: var(--nv-green-600); }
+.nv-perfiles__punto--dinamico { fill: var(--nv-navy-700); }
+.nv-perfiles__punto--agresivo { fill: var(--nv-navy-900); }
+.nv-perfiles__punto--personalizado { fill: var(--nv-text-soft); }
+.nv-perfiles__etiqueta {
+  fill: var(--nv-navy-900);
+  font-size: 11px;
+  font-weight: var(--nv-weight-action);
+  paint-order: stroke;
+  stroke: var(--nv-paper-light);
+  stroke-linejoin: round;
+  stroke-width: 3px;
+}
+.nv-perfiles__subetiqueta {
+  fill: var(--nv-text-muted);
+  font-size: 9px;
+  font-weight: var(--nv-weight-body);
+}
+.nv-leyenda__marca--perfil {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--nv-white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--nv-line);
+}
+.nv-leyenda__marca--perfil-defensivo { background: var(--nv-bronze-700); }
+.nv-leyenda__marca--perfil-moderado { background: var(--nv-bronze-500); }
+.nv-leyenda__marca--perfil-equilibrado { background: var(--nv-green-600); }
+.nv-leyenda__marca--perfil-dinamico { background: var(--nv-navy-700); }
+.nv-leyenda__marca--perfil-agresivo { background: var(--nv-navy-900); }
+.nv-leyenda__marca--perfil-personalizado { background: var(--nv-text-soft); }
 .nv-frontera__eje { font-size: var(--nv-label); fill: var(--nv-text-muted); }
 .nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
 .nv-frontera__control input[type='range'] { width: 100%; max-width: none; }
