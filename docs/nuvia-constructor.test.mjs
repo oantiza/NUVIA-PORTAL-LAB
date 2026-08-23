@@ -13,6 +13,7 @@ import {
   MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
   puntosEvolucion, trazadoLinea, serieSemanalTresAnos,
   tasaSinRiesgoAnualTresAnos, sharpeHistoricoTresAnos,
+  BENCHMARKS_EVOLUCION, benchmarkDesdePayload, alineaSeriesSemanales,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -328,6 +329,40 @@ console.log('\n— Evolución de la combinación (gráfico, encargo 20-08) —')
     semanal.niveles[0] === 1 && Math.abs(semanal.niveles[1] - (1.05 / 1.02)) < 1e-12);
   comprueba('Sin fechas alineadas no se construye una serie semanal',
     serieSemanalTresAnos([1, 1.1], ['2026-01-01']) === null);
+}
+
+console.log('\n— Comparación con los cinco benchmarks de perfil —');
+{
+  comprueba('Se ofrecen exactamente los cinco perfiles acordados',
+    BENCHMARKS_EVOLUCION.map((p) => p.nombre).join(',')
+      === 'Defensivo,Moderado,Equilibrado,Dinámico,Agresivo');
+  const payload = {
+    dates: ['2026-01-02', '2026-01-09', '2026-01-16'],
+    series: [
+      { asset_id: 'IE00B03HD191', values: [100, 120, 140] },
+      { asset_id: 'IE00BYX5NX33', values: [100, 120, 140] },
+      { asset_id: 'LU0113257694', values: [100, 100, 100] },
+      { asset_id: 'LU0132601682', values: [100, 100, 100] },
+    ],
+  };
+  const equilibrado = benchmarkDesdePayload(payload, BENCHMARKS_EVOLUCION[2]);
+  comprueba('Equilibrado mezcla 50 % bolsa y 50 % bonos con series reales',
+    equilibrado && Math.abs(equilibrado.niveles[2] - 1.2) < 1e-12,
+    `final=${equilibrado?.niveles?.[2]}`);
+  comprueba('Si falta una referencia pero quedan las dos cestas, se declara y se calcula',
+    benchmarkDesdePayload({ ...payload, series: payload.series.slice(1) }, BENCHMARKS_EVOLUCION[2])?.excluidos.length === 1);
+  comprueba('Sin una de las dos cestas no se inventa un benchmark',
+    benchmarkDesdePayload({ ...payload, series: payload.series.slice(0, 2) }, BENCHMARKS_EVOLUCION[2]) === null);
+
+  const alineadas = alineaSeriesSemanales(
+    { fechas: ['2026-01-02', '2026-01-09', '2026-01-16'], niveles: [1, 1.1, 1.2] },
+    { fechas: ['2026-01-01', '2026-01-08', '2026-01-15'], niveles: [2, 2.1, 2.2] },
+  );
+  comprueba('Cartera y benchmark se alinean por semana y arrancan juntos en 100',
+    alineadas?.cartera.niveles.length === 3
+      && alineadas.cartera.niveles[0] === 1
+      && alineadas.benchmark.niveles[0] === 1
+      && alineadas.cartera.fechas.join(',') === '2026-01-02,2026-01-09,2026-01-16');
 }
 
 if (fallos) {

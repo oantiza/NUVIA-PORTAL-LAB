@@ -13,7 +13,7 @@
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
 import { metricasDesdeSerie, serieDeCaidas, sharpe, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
-import { montaAnalisis } from './nuvia-analisis.js?v=20260823-6';
+import { montaAnalisis, perfilesReferencia } from './nuvia-analisis.js?v=20260823-6';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
 
@@ -249,11 +249,97 @@ export function serieSemanalTresAnos(niveles, fechas) {
   };
 }
 
-/** El gráfico de evolución con su panel de caídas. Null si faltan datos. */
-export function grupoEvolucion({ niveles, fechas }) {
-  const semanal = serieSemanalTresAnos(niveles, fechas);
-  const p = semanal ? puntosEvolucion(semanal.niveles, semanal.fechas) : null;
-  if (!p) return null;
+/** Cinco perfiles comparables con los mismos nombres y colores que el mapa
+ * riesgo-retorno. El porcentaje indica el peso de la cesta de bolsa mundial;
+ * el resto corresponde a la cesta de bonos corporativos en euros. */
+export const BENCHMARKS_EVOLUCION = perfilesReferencia().map(({ nombre, tono, rv }) => ({
+  clave: tono,
+  nombre,
+  tono,
+  rv,
+}));
+
+export const ACTIVOS_BENCHMARK = {
+  bolsa: [
+    'IE00B03HD191', // Vanguard Global Stock Index Fund EUR Acc
+    'IE00BYX5NX33', // Fidelity MSCI World Index Fund EUR P Acc
+  ],
+  bonos: [
+    'LU0113257694', // Schroder ISF EURO Corporate Bond A Acc
+    'LU0132601682', // Morgan Stanley Euro Corporate Bond Fund A
+  ],
+};
+
+export const IDS_BENCHMARK = [...ACTIVOS_BENCHMARK.bolsa, ...ACTIVOS_BENCHMARK.bonos];
+
+/** Construye la serie histórica de un perfil con las referencias disponibles
+ * en la respuesta: iguales pesos dentro de bolsa y dentro de bonos, y el
+ * reparto entre ambas cestas indicado por `rv`. */
+export function benchmarkDesdePayload(payload, perfil) {
+  if (!perfil || !Array.isArray(payload?.series) || !Array.isArray(payload?.dates)) return null;
+  const disponibles = new Map(payload.series.map((s) => [s.asset_id, s]));
+  const bolsa = ACTIVOS_BENCHMARK.bolsa.filter((id) => disponibles.has(id));
+  const bonos = ACTIVOS_BENCHMARK.bonos.filter((id) => disponibles.has(id));
+  if (!bolsa.length || !bonos.length) return null;
+
+  const proporcionBolsa = perfil.rv / 100;
+  const pesos = {};
+  bolsa.forEach((id) => { pesos[id] = proporcionBolsa / bolsa.length; });
+  bonos.forEach((id) => { pesos[id] = (1 - proporcionBolsa) / bonos.length; });
+  const niveles = serieCartera([...bolsa, ...bonos].map((id) => disponibles.get(id)), pesos);
+  if (!niveles || niveles.length !== payload.dates.length) return null;
+  return {
+    ...perfil,
+    niveles,
+    fechas: payload.dates,
+    usados: [...bolsa, ...bonos],
+    excluidos: IDS_BENCHMARK.filter((id) => !disponibles.has(id)),
+  };
+}
+
+function claveSemana(fecha) {
+  const tiempo = Date.parse(fecha);
+  if (!Number.isFinite(tiempo)) return null;
+  const dia = new Date(tiempo);
+  const desdeLunes = (dia.getUTCDay() + 6) % 7;
+  dia.setUTCDate(dia.getUTCDate() - desdeLunes);
+  return dia.toISOString().slice(0, 10);
+}
+
+/** Alinea cartera y benchmark por semana, conserva solo semanas presentes en
+ * ambos y rebasa las dos series a 100 en la primera fecha común. */
+export function alineaSeriesSemanales(cartera, benchmark) {
+  if (!cartera || !benchmark) return null;
+  const porSemana = (serie) => new Map(serie.fechas.map((fecha, i) => [
+    claveSemana(fecha),
+    { fecha, nivel: serie.niveles[i] },
+  ]).filter(([clave, punto]) => clave && Number.isFinite(punto.nivel)));
+  const mapaCartera = porSemana(cartera);
+  const mapaBenchmark = porSemana(benchmark);
+  const claves = [...mapaCartera.keys()].filter((clave) => mapaBenchmark.has(clave)).sort();
+  if (claves.length < 2) return null;
+  const baseCartera = mapaCartera.get(claves[0]).nivel;
+  const baseBenchmark = mapaBenchmark.get(claves[0]).nivel;
+  if (!Number.isFinite(baseCartera) || !Number.isFinite(baseBenchmark) || baseCartera === 0 || baseBenchmark === 0) return null;
+  return {
+    cartera: {
+      fechas: claves.map((clave) => mapaCartera.get(clave).fecha),
+      niveles: claves.map((clave) => mapaCartera.get(clave).nivel / baseCartera),
+    },
+    benchmark: {
+      fechas: claves.map((clave) => mapaCartera.get(clave).fecha),
+      niveles: claves.map((clave) => mapaBenchmark.get(clave).nivel / baseBenchmark),
+    },
+  };
+}
+
+/** Evolución semanal de la cartera, con comparación opcional frente a uno de
+ * los cinco perfiles y panel de caídas de la propia cartera. */
+export function grupoEvolucion({
+  niveles, fechas, cargaBenchmark = null, seleccionInicial = '', alSeleccionar = null,
+}) {
+  const semanalOriginal = serieSemanalTresAnos(niveles, fechas);
+  if (!semanalOriginal) return null;
 
   const ns = 'http://www.w3.org/2000/svg';
   const nodoSvg = (tag, attrs, texto) => {
@@ -262,72 +348,203 @@ export function grupoEvolucion({ niveles, fechas }) {
     if (texto != null) e.textContent = texto;
     return e;
   };
-  const desde = fechaCorta(p.fechas[0]);
-  const hasta = fechaCorta(p.fechas[p.fechas.length - 1]);
   const bloque = el('div', { class: 'nv-evolucion' });
   bloque.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Evolución de la combinación'));
   bloque.append(el('p', { class: 'nv-cons__nota-clase' },
-    'La línea arranca en 100 y muestra un cierre por semana durante los últimos 3 años. Describe lo ocurrido, no lo que viene.'));
+    'Las líneas arrancan en 100 y muestran un cierre por semana durante los últimos 3 años. Describen lo ocurrido, no lo que viene.'));
 
-  /* La línea en base 100. */
-  const W = 1120; const H = 320; const izq = 64; const der = 18; const arriba = 14; const abajo = 30;
-  const svg = nodoSvg('svg', {
-    viewBox: `0 0 ${W} ${H}`,
-    class: 'nv-evolucion__svg',
-    role: 'img',
-    'aria-label': `Evolución en base 100 del ${desde} al ${hasta}: entre ${num(p.min, 0)} y ${num(p.max, 0)}, terminando en ${num(p.base[p.base.length - 1], 0)}.`,
-  });
-  const escala = { W, H, izq, der, arriba, abajo, min: p.min, max: p.max };
-  const yDe = (v) => H - abajo - ((v - p.min) / ((p.max - p.min) || 1)) * (H - arriba - abajo);
-  const yaPintadas = [];
-  for (const ref of [...new Set([100, p.min, p.max])].filter((v) => v >= p.min && v <= p.max)) {
-    const yy = yDe(ref);
-    svg.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: ref === 100 ? 'nv-evolucion__cien' : 'nv-evolucion__rejilla' }));
-    /* La etiqueta solo si no se pisa con otra ya puesta (mínimos pegados a 100). */
-    if (yaPintadas.every((otra) => Math.abs(otra - yy) > 14)) {
-      svg.append(nodoSvg('text', { x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje' }, num(ref, 0)));
-      yaPintadas.push(yy);
+  const comparador = el('div', { class: 'nv-evolucion__comparador' });
+  const campo = el('label', { class: 'nv-evolucion__campo' });
+  campo.append(el('span', { class: 'nv-evolucion__etiqueta' }, 'Comparar la evolución con'));
+  const selector = el('select', { class: 'nv-select nv-evolucion__selector' });
+  selector.append(el('option', { value: '' }, 'Ningún benchmark'));
+  BENCHMARKS_EVOLUCION.forEach((perfil) => selector.append(el('option', {
+    value: perfil.clave,
+  }, `${perfil.nombre} · ${perfil.rv} % renta variable`)));
+  selector.value = BENCHMARKS_EVOLUCION.some((p) => p.clave === seleccionInicial) ? seleccionInicial : '';
+  campo.append(selector);
+  const estado = el('p', { class: 'nv-evolucion__estado', role: 'status', 'aria-live': 'polite' });
+  comparador.append(
+    campo,
+    el('p', { class: 'nv-evolucion__explicacion' },
+      'Los cinco perfiles combinan una cesta de bolsa mundial con otra de bonos corporativos en euros. Se comparan solo las semanas comunes.'),
+    estado,
+  );
+  bloque.append(comparador);
+  const zona = el('div', { class: 'nv-evolucion__graficos' });
+  bloque.append(zona);
+
+  const pinta = (perfilBenchmark = null) => {
+    zona.textContent = '';
+    let semanal = semanalOriginal;
+    let semanalBenchmark = null;
+    if (perfilBenchmark) {
+      const limiteDesde = Date.parse(semanalOriginal.fechas[0]);
+      const limiteHasta = Date.parse(semanalOriginal.fechas.at(-1));
+      const paresBenchmark = perfilBenchmark.fechas.map((fecha, i) => ({
+        fecha,
+        nivel: perfilBenchmark.niveles[i],
+        tiempo: Date.parse(fecha),
+      })).filter((punto) => Number.isFinite(punto.tiempo)
+        && punto.tiempo >= limiteDesde && punto.tiempo <= limiteHasta);
+      const brutoBenchmark = serieSemanalTresAnos(
+        paresBenchmark.map((punto) => punto.nivel),
+        paresBenchmark.map((punto) => punto.fecha),
+      );
+      const alineadas = alineaSeriesSemanales(semanalOriginal, brutoBenchmark);
+      if (!alineadas) {
+        estado.textContent = 'No hay semanas comunes suficientes para dibujar esa comparación.';
+        perfilBenchmark = null;
+      } else {
+        semanal = alineadas.cartera;
+        semanalBenchmark = alineadas.benchmark;
+      }
     }
-  }
-  svg.append(nodoSvg('path', { d: trazadoLinea(p.base, escala), class: 'nv-evolucion__linea', fill: 'none' }));
-  svg.append(nodoSvg('text', { x: izq, y: H - 8, class: 'nv-grafico__eje' }, desde || ''));
-  svg.append(nodoSvg('text', { x: W - der, y: H - 8, 'text-anchor': 'end', class: 'nv-grafico__eje' }, hasta || ''));
-  const panel = el('div', { class: 'nv-grafico__panel' });
-  panel.append(svg);
-  bloque.append(panel);
 
-  /* Las caídas desde máximos, en el mismo eje temporal. */
-  const caidas = serieDeCaidas(semanal.niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
-  const cMin = Math.min(0, ...caidas.filter(Number.isFinite));
-  const H2 = 150;
-  const svg2 = nodoSvg('svg', {
-    viewBox: `0 0 ${W} ${H2}`,
-    class: 'nv-evolucion__svg',
-    role: 'img',
-    'aria-label': `Caídas desde máximos en el mismo periodo: la peor llegó al ${num(cMin, 1)} %.`,
-  });
-  const escala2 = { W, H: H2, izq, der, arriba: 12, abajo: 20, min: cMin, max: 0 };
-  const yDe2 = (v) => H2 - 20 - ((v - cMin) / ((0 - cMin) || 1)) * (H2 - 12 - 20);
-  for (const ref of [...new Set([0, cMin])]) {
-    const yy = yDe2(ref);
-    svg2.append(nodoSvg('line', { x1: izq, y1: yy, x2: W - der, y2: yy, class: 'nv-evolucion__rejilla' }));
-    svg2.append(nodoSvg('text', { x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje' }, `${num(ref, 0)} %`));
-  }
-  const linea = trazadoLinea(caidas, escala2);
-  if (linea) {
-    const primeraX = izq.toFixed(1);
-    const ultimaX = (W - der).toFixed(1);
-    const suelo = yDe2(0).toFixed(1);
-    svg2.append(nodoSvg('path', {
-      d: `${linea} L${ultimaX},${suelo} L${primeraX},${suelo} Z`,
-      class: 'nv-evolucion__caida-area',
+    const p = puntosEvolucion(semanal.niveles, semanal.fechas);
+    const pb = semanalBenchmark ? puntosEvolucion(semanalBenchmark.niveles, semanalBenchmark.fechas) : null;
+    if (!p) return;
+    const minTotal = Math.min(p.min, pb?.min ?? p.min);
+    const maxTotal = Math.max(p.max, pb?.max ?? p.max);
+    const desde = fechaCorta(p.fechas[0]);
+    const hasta = fechaCorta(p.fechas.at(-1));
+
+    /* Evolución comparada, ambas series sobre el mismo eje y base 100. */
+    const W = 1120; const H = 320; const izq = 64; const der = 18; const arriba = 14; const abajo = 30;
+    const descripcionBenchmark = pb
+      ? `; ${perfilBenchmark.nombre} termina en ${num(pb.base.at(-1), 0)}`
+      : '';
+    const svg = nodoSvg('svg', {
+      viewBox: `0 0 ${W} ${H}`,
+      class: 'nv-evolucion__svg',
+      role: 'img',
+      'aria-label': `Evolución en base 100 del ${desde} al ${hasta}: tu combinación termina en ${num(p.base.at(-1), 0)}${descripcionBenchmark}.`,
+    });
+    const escala = { W, H, izq, der, arriba, abajo, min: minTotal, max: maxTotal };
+    const yDe = (v) => H - abajo - ((v - minTotal) / ((maxTotal - minTotal) || 1)) * (H - arriba - abajo);
+    const yaPintadas = [];
+    for (const ref of [...new Set([100, minTotal, maxTotal])].filter((v) => v >= minTotal && v <= maxTotal)) {
+      const yy = yDe(ref);
+      svg.append(nodoSvg('line', {
+        x1: izq, y1: yy, x2: W - der, y2: yy,
+        class: ref === 100 ? 'nv-evolucion__cien' : 'nv-evolucion__rejilla',
+      }));
+      if (yaPintadas.every((otra) => Math.abs(otra - yy) > 14)) {
+        svg.append(nodoSvg('text', {
+          x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje',
+        }, num(ref, 0)));
+        yaPintadas.push(yy);
+      }
+    }
+    if (pb) svg.append(nodoSvg('path', {
+      d: trazadoLinea(pb.base, escala),
+      class: `nv-evolucion__benchmark nv-evolucion__benchmark--${perfilBenchmark.tono}`,
+      fill: 'none',
     }));
-    svg2.append(nodoSvg('path', { d: linea, class: 'nv-evolucion__caida-linea', fill: 'none' }));
-  }
-  bloque.append(el('p', { class: 'nv-cons__nota-clase' }, 'Caídas desde máximos: la distancia al máximo anterior en cada momento. El cero es estar en máximos.'));
-  const panel2 = el('div', { class: 'nv-grafico__panel' });
-  panel2.append(svg2);
-  bloque.append(panel2);
+    svg.append(nodoSvg('path', {
+      d: trazadoLinea(p.base, escala), class: 'nv-evolucion__linea', fill: 'none',
+    }));
+    svg.append(nodoSvg('text', { x: izq, y: H - 8, class: 'nv-grafico__eje' }, desde || ''));
+    svg.append(nodoSvg('text', {
+      x: W - der, y: H - 8, 'text-anchor': 'end', class: 'nv-grafico__eje',
+    }, hasta || ''));
+    const panel = el('div', { class: 'nv-grafico__panel' });
+    panel.append(svg);
+    zona.append(panel);
+
+    const leyenda = el('ul', { class: 'nv-evolucion__leyenda', 'aria-label': 'Leyenda de la evolución' });
+    const itemLeyenda = (nombre, final, clase) => {
+      const item = el('li', { class: 'nv-evolucion__leyenda-item' });
+      item.append(
+        el('span', { class: `nv-evolucion__muestra ${clase}`, 'aria-hidden': 'true' }),
+        el('strong', {}, nombre),
+        el('span', {}, `termina en ${num(final, 1)}`),
+      );
+      return item;
+    };
+    leyenda.append(itemLeyenda('Tu combinación', p.base.at(-1), 'nv-evolucion__muestra--cartera'));
+    if (pb) leyenda.append(itemLeyenda(
+      perfilBenchmark.nombre,
+      pb.base.at(-1),
+      `nv-evolucion__muestra--${perfilBenchmark.tono}`,
+    ));
+    zona.append(leyenda);
+
+    /* Las caídas siguen describiendo la cartera elegida, no el benchmark. */
+    const caidas = serieDeCaidas(semanal.niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
+    const cMin = Math.min(0, ...caidas.filter(Number.isFinite));
+    const H2 = 150;
+    const svg2 = nodoSvg('svg', {
+      viewBox: `0 0 ${W} ${H2}`,
+      class: 'nv-evolucion__svg',
+      role: 'img',
+      'aria-label': `Caídas de tu combinación desde máximos: la peor llegó al ${num(cMin, 1)} %.`,
+    });
+    const escala2 = { W, H: H2, izq, der, arriba: 12, abajo: 20, min: cMin, max: 0 };
+    const yDe2 = (v) => H2 - 20 - ((v - cMin) / ((0 - cMin) || 1)) * (H2 - 12 - 20);
+    for (const ref of [...new Set([0, cMin])]) {
+      const yy = yDe2(ref);
+      svg2.append(nodoSvg('line', {
+        x1: izq, y1: yy, x2: W - der, y2: yy, class: 'nv-evolucion__rejilla',
+      }));
+      svg2.append(nodoSvg('text', {
+        x: izq - 6, y: yy + 5, 'text-anchor': 'end', class: 'nv-grafico__eje',
+      }, `${num(ref, 0)} %`));
+    }
+    const linea = trazadoLinea(caidas, escala2);
+    if (linea) {
+      const primeraX = izq.toFixed(1);
+      const ultimaX = (W - der).toFixed(1);
+      const suelo = yDe2(0).toFixed(1);
+      svg2.append(nodoSvg('path', {
+        d: `${linea} L${ultimaX},${suelo} L${primeraX},${suelo} Z`,
+        class: 'nv-evolucion__caida-area',
+      }));
+      svg2.append(nodoSvg('path', {
+        d: linea, class: 'nv-evolucion__caida-linea', fill: 'none',
+      }));
+    }
+    zona.append(el('p', { class: 'nv-cons__nota-clase' },
+      'Caídas de tu combinación desde máximos: la distancia al máximo anterior en cada momento. El cero es estar en máximos.'));
+    const panel2 = el('div', { class: 'nv-grafico__panel' });
+    panel2.append(svg2);
+    zona.append(panel2);
+  };
+
+  pinta();
+  let solicitud = 0;
+  const cambiaBenchmark = async () => {
+    const clave = selector.value;
+    if (typeof alSeleccionar === 'function') alSeleccionar(clave);
+    const mia = ++solicitud;
+    if (!clave) {
+      estado.textContent = '';
+      pinta();
+      return;
+    }
+    const perfil = BENCHMARKS_EVOLUCION.find((p) => p.clave === clave);
+    if (!perfil || typeof cargaBenchmark !== 'function') return;
+    estado.textContent = `Preparando la comparación con ${perfil.nombre}…`;
+    try {
+      const benchmark = await cargaBenchmark(perfil);
+      if (mia !== solicitud || !bloque.isConnected) return;
+      if (!benchmark) {
+        estado.textContent = `No hay historial suficiente para construir el benchmark ${perfil.nombre}.`;
+        pinta();
+        return;
+      }
+      estado.textContent = benchmark.excluidos?.length
+        ? `${perfil.nombre}: ${benchmark.usados.length} referencias con historial; ${benchmark.excluidos.length} sin serie suficiente quedaron fuera.`
+        : `${perfil.nombre}: cuatro referencias con historial, comparadas sobre las mismas semanas.`;
+      pinta(benchmark);
+    } catch {
+      if (mia !== solicitud || !bloque.isConnected) return;
+      estado.textContent = 'No se ha podido cargar ese benchmark. La evolución de la cartera sigue visible.';
+      pinta();
+    }
+  };
+  selector.addEventListener('change', cambiaBenchmark);
+  if (selector.value) queueMicrotask(cambiaBenchmark);
   return bloque;
 }
 
@@ -629,6 +846,7 @@ export function montaConstructor(raiz, {
   }));
   const cacheSeries = new Map(); // clave (ids ordenados) -> promesa del payload
   let generacion = 0;
+  let benchmarkElegido = '';
   let ofertaMigracionDescartada = false; // «ahora no» de la migración (paso 31)
 
   raiz.textContent = '';
@@ -1137,7 +1355,16 @@ export function montaConstructor(raiz, {
     envoltorio.append(tabla);
     cajaRiesgo.append(envoltorio);
 
-    const evolucion = grupoEvolucion({ niveles, fechas: fechasComunes });
+    const evolucion = grupoEvolucion({
+      niveles,
+      fechas: fechasComunes,
+      seleccionInicial: benchmarkElegido,
+      alSeleccionar: (clave) => { benchmarkElegido = clave; },
+      cargaBenchmark: async (perfil) => benchmarkDesdePayload(
+        await seriesDelConjunto(IDS_BENCHMARK),
+        perfil,
+      ),
+    });
     if (evolucion) cajaRiesgo.append(evolucion);
 
     const fecha = fechaCorta(payload?.coverage?.last_date);

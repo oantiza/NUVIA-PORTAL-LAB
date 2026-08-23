@@ -5443,10 +5443,90 @@
   margin-inline: auto;
 }
 .nv-evolucion__linea { stroke: var(--nv-green-700); stroke-width: 2.5; }
+.nv-evolucion__comparador {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--nv-space-2) var(--nv-space-4);
+  padding: var(--nv-space-3) var(--nv-space-4);
+  margin-block: var(--nv-space-2);
+  border: 1px solid var(--nv-line);
+  border-left: 3px solid var(--nv-bronze-600);
+  border-radius: var(--nv-radius-md);
+  background: color-mix(in srgb, var(--nv-paper) 86%, var(--nv-mist));
+}
+.nv-evolucion__campo { display: grid; gap: var(--nv-space-1); min-width: 0; }
+.nv-evolucion__etiqueta {
+  color: var(--nv-navy-900);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-action);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.nv-evolucion__selector { background-color: var(--nv-white); }
+.nv-evolucion__explicacion,
+.nv-evolucion__estado {
+  margin: 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  line-height: 1.45;
+}
+.nv-evolucion__estado {
+  grid-column: 1 / -1;
+  min-height: 1.45em;
+  color: var(--nv-green-800);
+}
+.nv-evolucion__graficos { display: grid; gap: var(--nv-space-1); min-width: 0; }
+.nv-evolucion__benchmark {
+  stroke-width: 2.25;
+  stroke-dasharray: 8 5;
+  opacity: .92;
+  vector-effect: non-scaling-stroke;
+}
+.nv-evolucion__benchmark--defensivo { stroke: var(--nv-bronze-700); }
+.nv-evolucion__benchmark--moderado { stroke: var(--nv-bronze-500); }
+.nv-evolucion__benchmark--equilibrado { stroke: var(--nv-green-600); }
+.nv-evolucion__benchmark--dinamico { stroke: var(--nv-navy-700); }
+.nv-evolucion__benchmark--agresivo { stroke: var(--nv-navy-900); }
+.nv-evolucion__leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--nv-space-2) var(--nv-space-5);
+  padding: 0;
+  margin: 0 0 var(--nv-space-2);
+  list-style: none;
+}
+.nv-evolucion__leyenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-1);
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body-sm);
+  font-variant-numeric: tabular-nums;
+}
+.nv-evolucion__leyenda-item strong { color: var(--nv-navy-900); }
+.nv-evolucion__muestra {
+  display: inline-block;
+  width: 24px;
+  height: 3px;
+  border-radius: 999px;
+}
+.nv-evolucion__muestra--cartera { background: var(--nv-green-700); }
+.nv-evolucion__muestra--defensivo { background: var(--nv-bronze-700); }
+.nv-evolucion__muestra--moderado { background: var(--nv-bronze-500); }
+.nv-evolucion__muestra--equilibrado { background: var(--nv-green-600); }
+.nv-evolucion__muestra--dinamico { background: var(--nv-navy-700); }
+.nv-evolucion__muestra--agresivo { background: var(--nv-navy-900); }
 .nv-evolucion__rejilla { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.45; }
 .nv-evolucion__cien { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
 .nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
 .nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
+
+@media (max-width: 1100px) {
+  .nv-evolucion__comparador { grid-template-columns: 1fr; align-items: start; }
+  .nv-evolucion__estado { grid-column: 1; }
+}
 
 /* Abanico de la proyección Montecarlo (paso 40, rediseño Fase 7):
    a todo el ancho de la tarjeta (encargo de Óscar, 21-08). */
