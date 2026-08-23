@@ -452,6 +452,26 @@ export function perfilCarteraSupuestos(posiciones = [], pesos = {}) {
     : null;
 }
 
+/**
+ * Escalas dinámicas del mapa riesgo-retorno. El dominio se ajusta a los
+ * puntos visibles, añade aire proporcional y termina siempre en marcas
+ * redondas. Solo conserva el cero cuando los datos están realmente cerca.
+ */
+export function escalasMapaRiesgo(puntos = []) {
+  const validos = puntos.filter((p) => Number.isFinite(p?.volatilidad) && Number.isFinite(p?.rentabilidad));
+  if (!validos.length) return null;
+  const ajusta = (valores, objetivo, limitaACero = false) => {
+    const min = Math.min(...valores);
+    const max = Math.max(...valores);
+    const margen = Math.max((max - min) * 0.12, 0.005);
+    return marcasEje(limitaACero ? Math.max(0, min - margen) : min - margen, max + margen, objetivo);
+  };
+  return {
+    x: ajusta(validos.map((p) => p.volatilidad), 7, true),
+    y: ajusta(validos.map((p) => p.rentabilidad), 5),
+  };
+}
+
 /** La correlación de un par, dicha en llano. Pura y probada. */
 export function fraseCorrelacion(valor) {
   if (!Number.isFinite(valor)) return 'sin datos comunes';
@@ -951,9 +971,10 @@ function grupoMapaRiesgo({ referencia }) {
   const todos = referencia
     ? perfiles.concat([referencia])
     : perfiles;
-  const W = 760; const H = 420; const izq = 78; const der = 24; const arriba = 26; const abajo = 66;
-  const ejeX = marcasEje(Math.min(0, ...todos.map((p) => p.volatilidad)), Math.max(...todos.map((p) => p.volatilidad)), 6);
-  const ejeY = marcasEje(Math.min(0, ...todos.map((p) => p.rentabilidad)), Math.max(...todos.map((p) => p.rentabilidad)), 6);
+  const W = 900; const H = 360; const izq = 78; const der = 28; const arriba = 28; const abajo = 66;
+  const escalas = escalasMapaRiesgo(todos);
+  const ejeX = escalas.x;
+  const ejeY = escalas.y;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`,
     class: 'nv-frontera',
@@ -1013,8 +1034,8 @@ function grupoMapaRiesgo({ referencia }) {
       'La cartera contiene alguna clase fuera del modelo de cuatro clases; por eso no se marca un punto que no sería comparable.'));
   }
   bloque.append(el('p', { class: 'nv-cons__nota' },
-    'Todos los puntos salen de los supuestos publicados en «Cómo leerlo»: estimaciones '
-    + 'de largo plazo pendientes de validación profesional.'));
+    'Todos los puntos usan supuestos internos de largo plazo; son referencias comparables, '
+    + 'no previsiones.'));
   return bloque;
 }
 
@@ -1029,7 +1050,7 @@ function tinteCorrelacion(v) {
 
 /** Fila de un par: los dos nombres, la cifra, la frase en llano y una barra. */
 function filaPar(nombreA, nombreB, cifra, frase, anchoPct, { negativa = false } = {}) {
-  const item = el('li', { class: 'nv-analisis__fila' });
+  const item = el('li', { class: 'nv-analisis__fila nv-correlacion__fila' });
   item.append(
     el('span', { class: 'nv-analisis__clave' }, `${nombreA} y ${nombreB}`),
     el('span', { class: 'nv-analisis__peso' }, `${cifra} · ${frase}`),
@@ -1038,7 +1059,9 @@ function filaPar(nombreA, nombreB, cifra, frase, anchoPct, { negativa = false } 
     class: `nv-analisis__barra${negativa ? ' nv-analisis__barra--contraria' : ''}`,
     'aria-hidden': 'true',
   });
-  barra.style.width = `${Math.min(100, Math.max(2, Math.abs(anchoPct)))}%`;
+  /* La barra es una ayuda comparativa, no otro eje: se contiene dentro de
+     la columna de nombres para que nunca alcance ni tape la cifra. */
+  barra.style.width = `${Math.min(72, Math.max(3, Math.abs(anchoPct) * 0.75))}%`;
   item.append(barra);
   return item;
 }
@@ -1062,10 +1085,10 @@ function grupoCorrelaciones(series, pesos, nombreDe) {
     return bloque;
   }
   const nombre = (id) => nombreCorto(nombreDe?.[id] || id, 34);
-  const pintaPares = (titulo, lista) => {
+  const pintaPares = (titulo, lista, tono = 'mixta') => {
     if (!lista.length) return;
-    bloque.append(el('p', { class: 'nv-analisis__subtitulo-lista' }, titulo));
-    const ul = el('ul', { class: 'nv-analisis__filas' });
+    bloque.append(el('p', { class: `nv-analisis__subtitulo-lista nv-correlacion__subtitulo--${tono}` }, titulo));
+    const ul = el('ul', { class: `nv-analisis__filas nv-correlacion__lista--${tono}` });
     for (const par of lista) {
       ul.append(filaPar(nombre(par.a), nombre(par.b), num(par.valor, 2),
         fraseCorrelacion(par.valor), Math.abs(par.valor) * 100, { negativa: par.valor < 0 }));
@@ -1075,8 +1098,8 @@ function grupoCorrelaciones(series, pesos, nombreDe) {
   if (pares.length <= 4) {
     pintaPares('Cada par, con su correlación:', [...pares].sort((a, b) => b.valor - a.valor));
   } else {
-    pintaPares('Los pares que más se movieron a la vez:', altos);
-    pintaPares('Los de menos relación (o en sentido contrario):', bajos);
+    pintaPares('Los pares que más se movieron a la vez:', altos, 'alta');
+    pintaPares('Los de menos relación (o en sentido contrario):', bajos, 'baja');
   }
 
   /* La matriz completa, para quien quiera el detalle. */
@@ -1297,10 +1320,11 @@ export async function montaAnalisis(raiz, {
         envoltorio.append(tabla);
         const listaFondos = el('ol', { class: 'nv-mriesgo__lista' });
         conDatos.forEach((id, i) => {
-          const item = el('li', { class: 'nv-mriesgo__item' });
+          const nombreCompleto = nombreDe[id] || id;
+          const item = el('li', { class: 'nv-mriesgo__item', title: `${i + 1}. ${nombreCompleto}` });
           item.append(
-            el('span', { class: 'nv-mriesgo__indice', 'aria-hidden': 'true' }, String(i + 1)),
-            el('span', { class: 'nv-mriesgo__nombre' }, nombreDe[id] || id),
+            el('span', { class: 'nv-mriesgo__indice' }, String(i + 1)),
+            el('span', { class: 'nv-mriesgo__nombre' }, nombreCorto(nombreCompleto, 48)),
           );
           listaFondos.append(item);
         });

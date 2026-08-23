@@ -22,9 +22,8 @@ const REPARTO_INICIAL = {
 
 /** Nota de fuente del simulador por clases (guía, paso 26): aquí no hay
  *  datos de mercado en vivo; la fuente son los supuestos publicados. */
-export const FUENTE_SIMULADOR = 'Fuente: supuestos propios de NUVIA — la tabla '
-  + '«Los supuestos, a la vista» de esta página. Este simulador no usa datos '
-  + 'de mercado en vivo.';
+export const FUENTE_SIMULADOR = 'Fuente: supuestos propios de NUVIA para su modelo interno de largo plazo. '
+  + 'Este simulador no usa datos de mercado en vivo.';
 
 /** Color de categoría por clase (tokens del sistema de diseño). */
 const COLOR_CLASE = {

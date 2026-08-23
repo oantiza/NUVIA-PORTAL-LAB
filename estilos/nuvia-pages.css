@@ -4194,7 +4194,7 @@
 
 .nv-lab-resumen {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: var(--nv-space-3);
 }
 
@@ -5085,6 +5085,23 @@
 
 .nv-analisis__barra--contraria { background: var(--nv-bronze-700); }
 
+/* Correlaciones: la cifra conserva su propia columna y las dos lecturas se
+   distinguen por color sin convertir la barra en un segundo gráfico. */
+.nv-correlacion__fila {
+  grid-template-columns: minmax(0, 1fr) minmax(220px, auto);
+}
+.nv-correlacion__fila .nv-analisis__barra { grid-column: 1; }
+.nv-correlacion__lista--alta .nv-analisis__barra {
+  background: var(--nv-green-700);
+  opacity: .68;
+}
+.nv-correlacion__lista--baja .nv-analisis__barra {
+  background: var(--nv-bronze-700);
+  opacity: .68;
+}
+.nv-correlacion__subtitulo--alta { color: var(--nv-green-700); }
+.nv-correlacion__subtitulo--baja { color: var(--nv-bronze-700); }
+
 /* Aportación al riesgo (B): la barra es la aportación y la raya fina marca
    el peso real de la posición sobre la misma escala de 0 a 100. */
 .nv-riesgo {
@@ -5415,32 +5432,43 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
-  gap: var(--nv-space-1) var(--nv-space-4);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-2);
 }
 .nv-mriesgo__item {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: var(--nv-space-2);
-  align-items: baseline;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--nv-space-2);
+  align-items: center;
   min-width: 0;
+  min-height: 58px;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-sm);
+  background: color-mix(in srgb, var(--nv-white) 76%, var(--nv-paper));
+  padding: 10px 12px;
 }
 .nv-mriesgo__indice {
-  grid-row: 1 / span 2;
-  align-self: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--nv-bronze-700);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--nv-navy-900);
   color: var(--nv-white);
   font-size: var(--nv-label);
   font-weight: var(--nv-weight-action);
 }
-.nv-mriesgo__nombre { font-size: var(--nv-body-sm); color: var(--nv-text); min-width: 0; }
+.nv-mriesgo__nombre {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--nv-text);
+  font-size: var(--nv-body-sm);
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .nv-mriesgo__cifras {
   font-size: var(--nv-body-sm);
   color: var(--nv-text-soft);
@@ -5455,6 +5483,10 @@
   width: min(100%, 960px);
   min-width: 640px;
   margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .nv-mriesgo__lista { grid-template-columns: 1fr; }
 }
 .nv-mapa__svg {
   display: block;

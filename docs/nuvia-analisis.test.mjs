@@ -14,7 +14,7 @@ import {
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
   caminoSuave, envolventeConcava, suavizaEsquinas, puntosSenalados, perfilesReferencia,
-  perfilCarteraSupuestos,
+  perfilCarteraSupuestos, escalasMapaRiesgo,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -278,6 +278,15 @@ console.log('\n— Los perfiles de referencia del mapa riesgo-retorno (encargo 2
     perfilCarteraSupuestos([
       { activo: { asset_id: 'M', economic_asset_class: 'MIXED' } },
     ], { M: 1 }) === null);
+  const escalas = escalasMapaRiesgo(perfiles.concat([cartera]));
+  comprueba('Las escalas se ajustan a los puntos y no fuerzan un cero lejano',
+    escalas.x.min > 0 && escalas.y.min > 0);
+  comprueba('Todos los puntos quedan dentro del dominio dinámico con aire',
+    perfiles.concat([cartera]).every((p) => p.volatilidad >= escalas.x.min
+      && p.volatilidad <= escalas.x.max
+      && p.rentabilidad >= escalas.y.min
+      && p.rentabilidad <= escalas.y.max));
+  comprueba('Sin puntos no se inventan escalas', escalasMapaRiesgo([]) === null);
 }
 
 console.log('\n— El redondeo de esquinas (Chaikin) —');

@@ -13,7 +13,7 @@
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
 import { metricasDesdeSerie, serieDeCaidas, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
-import { montaAnalisis } from './nuvia-analisis.js';
+import { montaAnalisis } from './nuvia-analisis.js?v=20260823-2';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
 
@@ -487,11 +487,11 @@ function creaFase(numero, id, pregunta, titulo) {
 function resumenCartera({ importe, metricas, posiciones }) {
   const resumen = el('div', { class: 'nv-lab-resumen', 'aria-label': 'Resumen de la cartera' });
   const datos = [
-    ['Valor de referencia', importe ? EUROS.format(importe) : '—'],
     ['Cambio medio anual', pct(metricas?.rentabilidadAnualizada)],
     ['Oscilación anual', pct(metricas?.volatilidad)],
     ['Posiciones con historial', String(posiciones)],
   ];
+  if (importe) datos.unshift(['Importe de la cartera', EUROS.format(importe)]);
   for (const [etiqueta, valor] of datos) {
     const dato = el('div', { class: 'nv-lab-resumen__dato' });
     dato.append(

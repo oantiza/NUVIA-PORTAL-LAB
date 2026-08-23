@@ -15,7 +15,7 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=20260823-2">
 
 <!-- React y ReactDOM, servidos por el sitio. Van antes que support.js: su
      loadReactUmd() empieza comprobando si ya están en window y, si lo
@@ -168,31 +168,6 @@
             </article>
 
             <details class="nv-lab-caja nv-lab-despliegue">
-              <summary id="supuestos-title">Los supuestos, a la vista</summary>
-              <p>Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
-              <div class="nuvia-lab__tabla-scroll">
-            <table class="nv-table nuvia-lab__tabla">
-              <caption class="nv-visually-hidden">Supuestos de rentabilidad y volatilidad por clase de activo</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Clase de activo</th>
-                  <th scope="col">Qué incluye</th>
-                  <th scope="col">Rentabilidad anual estimada</th>
-                  <th scope="col">Volatilidad anual estimada</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Renta variable</th><td>Acciones y fondos de bolsa</td><td>7,0&nbsp;%</td><td>16,0&nbsp;%</td></tr>
-                <tr><th scope="row">Renta fija</th><td>Bonos de Estados y empresas</td><td>3,2&nbsp;%</td><td>5,5&nbsp;%</td></tr>
-                <tr><th scope="row">Monetario</th><td>Letras y depósitos a corto plazo</td><td>2,0&nbsp;%</td><td>0,8&nbsp;%</td></tr>
-                <tr><th scope="row">Activos reales</th><td>Inmobiliario cotizado y oro</td><td>5,0&nbsp;%</td><td>13,0&nbsp;%</td></tr>
-              </tbody>
-            </table>
-              </div>
-              <p class="nuvia-lab__nota">Tasa sin riesgo: 1,9&nbsp;% anual. Al combinar clases se aplican correlaciones aproximadas publicadas con el modelo.</p>
-            </details>
-
-            <details class="nv-lab-caja nv-lab-despliegue">
               <summary id="sim-title">Banco de pruebas: mover el reparto por clases</summary>
               <p>Este simulador genérico no describe tu cartera. Sirve para aislar el efecto de mover el peso entre las cuatro clases.</p>
               <div id="simulador" class="nuvia-lab__simulador" aria-labelledby="sim-title">
@@ -202,7 +177,7 @@
 
             <article class="nv-lab-caja">
               <h3 id="fuentes-title">Fuentes y límites</h3>
-              <p>El banco de pruebas usa los supuestos publicados arriba. El buscador y la cartera consultan la base de datos NUVIA, de solo lectura, y declaran la fecha del último cierre.</p>
+              <p>El banco de pruebas usa supuestos internos de largo plazo: son estimaciones, no previsiones, y están pendientes de validación profesional. El buscador y la cartera consultan la base de datos NUVIA, de solo lectura, y declaran la fecha del último cierre.</p>
               <p>Los cálculos se ejecutan en tu navegador. Cuando falta un dato aparece «—»: nunca se inventa. Todo describe la cartera actual y su historial; no es una previsión. Este contenido no constituye asesoramiento financiero personalizado.</p>
             </article>
           </section>
@@ -362,8 +337,8 @@ class Component extends DCLogic {
       .then((m) => { const nodo = document.getElementById('buscador'); if (nodo) m.montaBuscador(nodo); })
       .catch(() => {});
     Promise.all([
-      import('./js/nuvia-constructor.js?v=20260823-2'),
-      import('./js/nuvia-modelos.js?v=20260823-2'),
+      import('./js/nuvia-constructor.js?v=20260823-4'),
+      import('./js/nuvia-modelos.js?v=20260823-4'),
     ])
       .then(([constructor, modelos]) => {
         const nodo = document.getElementById('constructor');
