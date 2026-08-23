@@ -21,7 +21,7 @@
 import {
   correlacionesDesdeSeries, estableceCorrelaciones, frontera,
   metricasDesdeSerie, proyeccionMonteCarlo, pct, num,
-  sharpe, volatilidadCartera, rentabilidadCartera,
+  sharpe, volatilidadCartera, rentabilidadCartera, CLASES,
 } from './nuvia-cartera.js';
 import { concentracionSectorial, concentracionGeografica } from './nuvia-concentracion.js';
 import { grupoMapa } from './nuvia-mapa.js';
@@ -427,6 +427,29 @@ export function perfilesReferencia(proporciones = [10, 30, 50, 70, 90]) {
       };
     })
     .filter((p) => Number.isFinite(p.volatilidad) && Number.isFinite(p.rentabilidad));
+}
+
+/** Punto comparable de la cartera en el mapa de supuestos. Solo se calcula
+ * cuando todas las posiciones con peso tienen una de las cuatro clases del
+ * modelo. Así no se mezcla historial real con estimaciones ni se descartan
+ * silenciosamente fondos mixtos o clases desconocidas. */
+export function perfilCarteraSupuestos(posiciones = [], pesos = {}) {
+  const porClase = {};
+  for (const p of posiciones) {
+    const id = p?.activo?.asset_id;
+    const peso = Number(pesos?.[id]);
+    if (!Number.isFinite(peso) || peso <= 0) continue;
+    const clase = String(p?.activo?.economic_asset_class || '').toUpperCase();
+    if (!CLASES[clase]) return null;
+    porClase[clase] = (porClase[clase] || 0) + peso * 100;
+  }
+  const clases = Object.entries(porClase).map(([clase, peso]) => ({ clase, peso }));
+  if (!clases.length) return null;
+  const volatilidad = volatilidadCartera(clases);
+  const rentabilidad = rentabilidadCartera(clases);
+  return Number.isFinite(volatilidad) && Number.isFinite(rentabilidad)
+    ? { volatilidad, rentabilidad }
+    : null;
 }
 
 /** La correlación de un par, dicha en llano. Pura y probada. */
@@ -881,20 +904,19 @@ function grupoProyeccion(metricas) {
  * como punto (volatilidad, rentabilidad anualizada) del historial real,
  * con la cartera marcada. Nivel registrado en adelante.
  */
-function grupoMapaRiesgo({ metricas }) {
+function grupoMapaRiesgo({ referencia }) {
   const bloque = grupo('Mapa riesgo-retorno frente a perfiles de referencia',
-    'Tu combinación (con su historial real de 3 años) frente a cinco mezclas de '
-    + 'referencia de renta variable y renta fija globales, calculadas con los '
-    + 'supuestos publicados en esta página. Son puntos de comparación fijos, '
-    + 'idénticos para cualquiera; no describen a ningún lector.');
+    'Tu combinación y cinco mezclas de referencia, calculadas sobre los mismos '
+    + 'supuestos por clase de activo. La posición relativa se puede comparar; '
+    + 'ningún punto es una propuesta ni una previsión.');
   const perfiles = perfilesReferencia();
   if (!perfiles.length) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Sin supuestos de las clases no hay perfiles que dibujar; nunca se inventa.'));
     return bloque;
   }
-  const todos = metricas
-    ? perfiles.concat([{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }])
+  const todos = referencia
+    ? perfiles.concat([referencia])
     : perfiles;
   const W = 760; const H = 420; const izq = 78; const der = 24; const arriba = 26; const abajo = 66;
   const ejeX = marcasEje(Math.min(0, ...todos.map((p) => p.volatilidad)), Math.max(...todos.map((p) => p.volatilidad)), 6);
@@ -905,7 +927,7 @@ function grupoMapaRiesgo({ metricas }) {
     role: 'img',
     'aria-label': 'Mapa riesgo-retorno: perfiles de referencia '
       + perfiles.map((p) => `${p.rv} % de renta variable (volatilidad ${pct(p.volatilidad)}, rentabilidad ${pct(p.rentabilidad)})`).join('; ')
-      + (metricas ? `; tu combinación: volatilidad ${pct(metricas.volatilidad)}, rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
+      + (referencia ? `; tu combinación: oscilación ${pct(referencia.volatilidad)}, cambio anual estimado ${pct(referencia.rentabilidad)}.` : '.'),
   });
   const { x, y } = dibujaEjes(svg, {
     W, H, izq, der, arriba, abajo, ejeX, ejeY,
@@ -929,8 +951,8 @@ function grupoMapaRiesgo({ metricas }) {
       x: cx.toFixed(1), y: (i % 2 ? cy - 14 : cy + 26).toFixed(1), 'text-anchor': 'middle', class: 'nv-grafico__eje',
     }, `${p.rv} % bolsa`));
   });
-  if (metricas) {
-    const cx = x(metricas.volatilidad); const cy = y(metricas.rentabilidadAnualizada);
+  if (referencia) {
+    const cx = x(referencia.volatilidad); const cy = y(referencia.rentabilidad);
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 8, class: 'nv-frontera__mi-punto' }));
     const anclaIzq = cx > W - der - 150;
     svg.append(svgEl('text', {
@@ -940,11 +962,11 @@ function grupoMapaRiesgo({ metricas }) {
   }
 
   const cifras = [];
-  if (metricas) {
+  if (referencia) {
     cifras.push({
       clase: 'nv-leyenda__marca--punto',
       nombre: 'Tu combinación:',
-      texto: `se movió ${pct(metricas.volatilidad)} · rentó ${pct(metricas.rentabilidadAnualizada)} anual (historial de 3 años)`,
+      texto: `oscilación ${pct(referencia.volatilidad)} · cambio anual estimado ${pct(referencia.rentabilidad)}`,
     });
   }
   cifras.push({
@@ -953,14 +975,13 @@ function grupoMapaRiesgo({ metricas }) {
     texto: 'del 10 % al 90 % de renta variable, con los supuestos de esta página',
   });
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
-  if (!metricas) {
+  if (!referencia) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
-      'Tu combinación no tiene historial común suficiente para marcarla.'));
+      'La cartera contiene alguna clase fuera del modelo de cuatro clases; por eso no se marca un punto que no sería comparable.'));
   }
   bloque.append(el('p', { class: 'nv-cons__nota' },
-    'Los perfiles salen de los supuestos publicados más abajo (estimaciones de largo plazo, '
-    + 'pendientes de validación profesional); tu combinación, de su historial real. '
-    + 'Son puntos de referencia, no una propuesta.'));
+    'Todos los puntos salen de los supuestos publicados en «Cómo leerlo»: estimaciones '
+    + 'de largo plazo pendientes de validación profesional.'));
   return bloque;
 }
 
@@ -1083,14 +1104,28 @@ function tablaReparto(titulo, lectura, resultado, etiqueta = etiquetaClave, maxF
  * constructor crea en cada recálculo; si llega tarde y el nodo ya no está en
  * el documento, lo pintado no se ve y no pasa nada).
  */
-export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, registrada, nivel, metricas }) {
+export async function montaAnalisis(raiz, {
+  posiciones, pesos, series, datos, registrada, nivel, metricas, destinos = null,
+}) {
   if (!raiz) return;
   raiz.textContent = '';
   if (!pesos) return;
 
   const nivelEfectivo = nivel || (registrada ? 'registrada' : 'visitante');
+  const objetivo = {
+    composicion: destinos?.composicion || raiz,
+    riesgo: destinos?.riesgo || raiz,
+    solapes: destinos?.solapes || raiz,
+    escenarios: destinos?.escenarios || raiz,
+  };
   if (nivelEfectivo === 'visitante') {
-    raiz.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_CERRADO));
+    objetivo.riesgo.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_CERRADO));
+    objetivo.composicion.append(el('p', { class: 'nv-analisis__cerrado' },
+      'El desglose por sectores y el mapa geográfico se abren al iniciar sesión con una cuenta gratuita.'));
+    objetivo.solapes.append(el('p', { class: 'nv-analisis__cerrado' },
+      'La comparación de subyacentes entre fondos se abre al iniciar sesión.'));
+    objetivo.escenarios.append(el('p', { class: 'nv-analisis__cerrado' },
+      'Los escenarios simulados pertenecen al nivel suscriptor, todavía no abierto a contratación.'));
     return;
   }
   const esSuscriptor = nivelEfectivo === 'suscriptor';
@@ -1098,8 +1133,10 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
   const nombreDe = {};
   for (const p of posiciones) nombreDe[p.activo.asset_id] = p.activo.display_name || p.activo.asset_id;
 
-  raiz.append(el('h3', { class: 'nv-cons__subtitulo' },
-    esSuscriptor ? 'Análisis completo (suscripción)' : 'Análisis ampliado (tu cuenta)'));
+  if (!destinos) {
+    raiz.append(el('h3', { class: 'nv-cons__subtitulo' },
+      esSuscriptor ? 'Análisis completo (suscripción)' : 'Análisis ampliado (tu cuenta)'));
+  }
 
   /* Ahorro por diversificar: sale de las series ya cargadas, sin más red. */
   const ahorro = ahorroDeSeries(series, pesos);
@@ -1107,27 +1144,29 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
   grupoAhorro.append(el('p', { class: 'nv-cons__nota' }, ahorro
     ? textoAhorro(ahorro)
     : 'Con una sola posición en el cálculo, o sin historial común suficiente, no hay diversificación que medir.'));
-  raiz.append(grupoAhorro);
+  objetivo.riesgo.append(grupoAhorro);
 
   /* De dónde sale el riesgo (Fase 7): una posición, una barra, una cifra. */
   const riesgoPorPosicion = grupoRiesgoPorPosicion({ series, pesos, nombreDe });
-  if (riesgoPorPosicion) raiz.append(riesgoPorPosicion);
+  if (riesgoPorPosicion) objetivo.riesgo.append(riesgoPorPosicion);
 
   /* Frontera (paso 33): estática con la cartera marcada para el registrado,
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
-  raiz.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
+  objetivo.riesgo.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
 
   /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7). */
-  raiz.append(grupoMapaRiesgo({ metricas }));
+  objetivo.riesgo.append(grupoMapaRiesgo({ referencia: perfilCarteraSupuestos(posiciones, pesos) }));
 
   /* Solo suscriptor: proyección por simulación y matriz de correlaciones. */
   if (esSuscriptor) {
-    raiz.append(grupoProyeccion(metricas));
-    raiz.append(grupoCorrelaciones(series, pesos, nombreDe));
+    objetivo.escenarios.append(grupoProyeccion(metricas));
+    objetivo.solapes.append(grupoCorrelaciones(series, pesos, nombreDe));
+  } else {
+    objetivo.escenarios.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_SUSCRIPTOR));
   }
 
   const cargando = el('p', { class: 'nv-cons__nota', role: 'status' }, 'Consultando fichas y desgloses…');
-  raiz.append(cargando);
+  objetivo.composicion.append(cargando);
 
   /* Concentración: fichas de la maestra, con la calidad del dato declarada. */
   const posAnalisis = posicionesParaAnalisis(posiciones, pesos);
@@ -1147,18 +1186,21 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
 
   cargando.remove();
 
-  raiz.append(tablaReparto('En qué sectores está la renta variable',
+  objetivo.composicion.append(tablaReparto('En qué sectores está la renta variable',
     'El peso de cada sector dentro de la parte de renta variable de la combinación.',
     concentracionSectorial(posAnalisis, activos), etiquetaSector));
   /* Distribución geográfica con mapa (paso 42) + su tabla de regiones. */
   const repartoGeo = concentracionGeografica(posAnalisis, activos);
   const mapa = grupoMapa(repartoGeo);
-  if (mapa) raiz.append(mapa);
-  raiz.append(tablaReparto('En qué regiones está la renta variable',
+  if (mapa) objetivo.composicion.append(mapa);
+  const regiones = tablaReparto('En qué regiones está la renta variable',
     'El mismo reparto del mapa, región a región.',
-    repartoGeo, etiquetaRegion));
+    repartoGeo, etiquetaRegion);
+  const pliegueRegiones = el('details', { class: 'nv-analisis__despliegue' });
+  pliegueRegiones.append(el('summary', {}, 'Ver el detalle por regiones'), regiones);
+  objetivo.composicion.append(pliegueRegiones);
   if (sinFicha.length) {
-    raiz.append(el('p', { class: 'nv-cons__nota' },
+    objetivo.composicion.append(el('p', { class: 'nv-cons__nota' },
       `Sin ficha disponible ahora mismo: ${sinFicha.join(', ')}. No entra en la concentración.`));
   }
 
@@ -1233,10 +1275,11 @@ export async function montaAnalisis(raiz, { posiciones, pesos, series, datos, re
       }
     }
   }
-  raiz.append(grupoSolape);
+  objetivo.solapes.append(grupoSolape);
 
   if (!esSuscriptor) {
-    raiz.append(el('p', { class: 'nv-analisis__suscriptor' }, NOTA_ANALISIS_SUSCRIPTOR));
+    objetivo.solapes.append(el('p', { class: 'nv-analisis__suscriptor' },
+      'La matriz de correlaciones se añade en el nivel suscriptor.'));
   }
-  raiz.append(el('p', { class: 'nv-cons__fuente' }, FUENTE_ANALISIS));
+  objetivo.solapes.append(el('p', { class: 'nv-cons__fuente' }, FUENTE_ANALISIS));
 }

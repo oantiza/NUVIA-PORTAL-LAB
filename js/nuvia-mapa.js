@@ -109,6 +109,11 @@ export function grupoMapa(reparto) {
   bloque.append(el('h4', { class: 'nv-analisis__titulo' }, 'Dónde está invertida la renta variable (mapa)'));
   bloque.append(el('p', { class: 'nv-analisis__lectura' }, NOTA_MAPA));
 
+  if (agregado.sinContinente.length) {
+    bloque.append(el('p', { class: 'nv-cons__nota' },
+      `Antes del mapa: ${num(agregado.sinContinente.reduce((s, f) => s + f.peso, 0), 1)} % queda fuera porque la región no tiene continente asignado.`));
+  }
+
   const ns = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(ns, 'svg');
   svg.setAttribute('viewBox', VIEWBOX_MAPA);
@@ -133,15 +138,14 @@ export function grupoMapa(reparto) {
       class: `nv-mapa__punto nv-mapa__zona--${c} nv-mapa__zona--n${tramoDeColor(agregado.pesos[c])}`,
       'aria-hidden': 'true',
     });
-    item.append(punto, el('span', {}, `${ETIQUETAS_CONTINENTE[c]} · ${num(agregado.pesos[c], 1)} %`));
+    const cifra = agregado.pesos[c] > 0 ? `${num(agregado.pesos[c], 1)} %` : 'sin exposición';
+    item.append(punto, el('span', {}, `${ETIQUETAS_CONTINENTE[c]} · ${cifra}`));
     leyenda.append(item);
   }
   bloque.append(leyenda);
 
-  if (agregado.sinContinente.length) {
-    bloque.append(el('p', { class: 'nv-cons__nota' },
-      `Fuera del mapa por región sin continente asignado: ${agregado.sinContinente
-        .map((f) => `${etiquetaRegion(f.clave)} (${num(f.peso, 1)} %)`).join(', ')}.`));
-  }
+  if (agregado.sinContinente.length) bloque.append(el('p', { class: 'nv-cons__nota' },
+    `Fuera del mapa: ${agregado.sinContinente
+      .map((f) => `${etiquetaRegion(f.clave)} (${num(f.peso, 1)} %)`).join(', ')}.`));
   return bloque;
 }

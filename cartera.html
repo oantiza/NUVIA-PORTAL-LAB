@@ -101,54 +101,66 @@
               </div>
             </div>
             <nav class="nv-atajos" aria-label="Secciones del laboratorio">
-              <a class="nv-atajos__enlace" href="#sim-title">Reparto por clases</a>
-              <a class="nv-atajos__enlace" href="#buscador-title">Buscar activos</a>
-              <a class="nv-atajos__enlace" href="#constructor-title">Tu cartera y su análisis</a>
-              <a class="nv-atajos__enlace" href="#modelos-title">Carteras modelo</a>
+              <a class="nv-atajos__enlace" href="#fase-01">Tu cartera</a>
+              <a class="nv-atajos__enlace" href="#fase-02">Qué tienes</a>
+              <a class="nv-atajos__enlace" href="#fase-03">Cuánto se mueve</a>
+              <a class="nv-atajos__enlace" href="#fase-04">Apuestas repetidas</a>
+              <a class="nv-atajos__enlace" href="#fase-05">Escenarios</a>
+              <a class="nv-atajos__enlace" href="#fase-06">Otras carteras</a>
+              <a class="nv-atajos__enlace" href="#fase-07">Cómo leerlo</a>
               <button type="button" class="nv-atajos__enlace" id="boton-cuenta">Tu cuenta</button>
-              <a class="nv-atajos__enlace" href="#supuestos-title">Los supuestos</a>
             </nav>
           </div>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="sim-title">Prueba un reparto por clases de activo</h2>
-            <p>Mueve los controles para repartir el peso entre las cuatro clases. Los pesos se normalizan para sumar el 100 % y las métricas se recalculan al instante. Los valores con los que arranca son solo un punto de partida, el mismo para todo el que abre la página: no describen ninguna cartera en particular.</p>
-            <div id="simulador" class="nuvia-lab__simulador" aria-labelledby="sim-title">
-              <div class="nv-note">
-                <p>El simulador interactivo necesita JavaScript. Los supuestos y las explicaciones de esta página pueden leerse igualmente sin él.</p>
-              </div>
-            </div>
-          </div>
+          <p class="nv-lab-tesis">Primero vemos qué contiene la cartera. Después, cuánto se movió, dónde repite apuestas y qué escenarios ayudan a entenderla. Cada gráfico responde a una sola pregunta y muestra su fuente.</p>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="buscador-title">Busca en el catálogo</h2>
-            <p>Busca por nombre, ticker o ISIN entre los fondos, ETF, acciones e índices del catálogo, y elige un resultado para añadirlo a la cartera de abajo. Los datos vienen de la base de datos NUVIA, de solo lectura.</p>
-            <div id="buscador" class="nv-buscador" aria-labelledby="buscador-title">
-              <div class="nv-note">
-                <p>El buscador necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
+          <section id="fase-01" class="nv-lab-fase" aria-labelledby="fase-01-title">
+            <header class="nv-lab-fase__cabecera">
+              <span class="nv-lab-fase__numero" aria-hidden="true">01</span>
+              <div><p class="nv-lab-fase__pregunta">¿Qué cartera quieres analizar?</p><h2 id="fase-01-title">Tu cartera</h2></div>
+            </header>
+            <article class="nv-lab-caja nv-lab-caja--principal">
+              <div class="nv-lab-caja__intro">
+                <h3 id="constructor-title">Posiciones y pesos</h3>
+                <p>Añade activos reales del catálogo. Los pesos se normalizan al 100 % y el análisis se recalcula con el historial común de los últimos tres años.</p>
               </div>
-            </div>
-          </div>
+              <div class="nv-lab-herramientas">
+                <h4 id="buscador-title">Añadir posiciones desde el catálogo</h4>
+                <p>Busca por nombre, ticker o ISIN. Los datos proceden de la base NUVIA, de solo lectura.</p>
+                <div id="buscador" class="nv-buscador" aria-labelledby="buscador-title">
+                  <div class="nv-note"><p>El buscador necesita JavaScript y conexión.</p></div>
+                </div>
+              </div>
+              <div id="constructor" class="nv-cons" aria-labelledby="constructor-title">
+                <div class="nv-note"><p>El constructor necesita JavaScript y conexión.</p></div>
+              </div>
+            </article>
+          </section>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="constructor-title">Monta una cartera con activos reales</h2>
-            <p>Hasta cinco posiciones. Los pesos se normalizan para sumar el 100 % y las métricas —calculadas sobre el historial real de los últimos tres años— se recalculan al instante al mover cualquier peso.</p>
-            <div id="constructor" class="nv-cons" aria-labelledby="constructor-title">
-              <div class="nv-note">
-                <p>El constructor necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
-              </div>
-            </div>
-          </div>
+          <div id="analisis-dinamico" class="nv-lab-analisis-dinamico" aria-label="Análisis de la cartera elegida"></div>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="modelos-title">Carteras modelo temáticas</h2>
-            <p>Composiciones fijas publicadas por el portal, idénticas para cualquiera que las mire, con su criterio y su fecha declarados. Describen un tema; no describen a ningún lector. Sus métricas se calculan sobre el historial real al abrirlas.</p>
-            <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
-              <div class="nv-note">
-                <p>Las carteras modelo necesitan JavaScript y conexión. El resto de la página se lee igualmente sin ellas.</p>
-              </div>
+          <section id="fase-06" class="nv-lab-fase" aria-labelledby="fase-06-title">
+            <header class="nv-lab-fase__cabecera">
+              <span class="nv-lab-fase__numero" aria-hidden="true">06</span>
+              <div><p class="nv-lab-fase__pregunta">¿Con qué referencias puedes contrastarla?</p><h2 id="fase-06-title">Otras carteras</h2></div>
+            </header>
+            <div class="nv-lab-dos-columnas">
+              <article class="nv-lab-caja">
+                <h3 id="modelos-title">Carteras modelo temáticas</h3>
+                <p>Composiciones fijas, con criterio y fecha declarados. Son referencias editoriales; no describen a ningún lector.</p>
+                <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
+                  <div class="nv-note"><p>Las carteras modelo necesitan JavaScript y conexión.</p></div>
+                </div>
+              </article>
+              <article class="nv-lab-caja">
+                <h3 id="informe-title">Informe de compañía</h3>
+                <p>Hechos, fuente y riesgos de cada acción del catálogo. La conclusión la saca quien lee: no contiene recomendaciones ni firma.</p>
+                <div id="informe" class="nv-informe" aria-labelledby="informe-title">
+                  <div class="nv-note"><p>El informe necesita JavaScript y conexión.</p></div>
+                </div>
+              </article>
             </div>
-          </div>
+          </section>
 
           <dialog id="dialogo-cuenta" class="nv-dialogo" aria-labelledby="cuenta-title">
             <div class="nv-dialogo__cabecera">
@@ -163,20 +175,25 @@
             </div>
           </dialog>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="informe-title">Informe de compañía</h2>
-            <p>Un informe genérico por cada acción del catálogo: la misma plantilla para todas las compañías, hechos con su fecha y su fuente, y los riesgos siempre delante. Describe la empresa; la conclusión la saca quien lee. No emite recomendaciones y va sin firma.</p>
-            <div id="informe" class="nv-informe" aria-labelledby="informe-title">
-              <div class="nv-note">
-                <p>El informe necesita JavaScript y conexión. El resto de la página se lee igualmente sin él.</p>
-              </div>
-            </div>
-          </div>
+          <section id="fase-07" class="nv-lab-fase" aria-labelledby="fase-07-title">
+            <header class="nv-lab-fase__cabecera">
+              <span class="nv-lab-fase__numero" aria-hidden="true">07</span>
+              <div><p class="nv-lab-fase__pregunta">¿De dónde salen las cifras?</p><h2 id="fase-07-title">Cómo leerlo</h2></div>
+            </header>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="supuestos-title">Los supuestos, a la vista</h2>
-            <p>El simulador usa exactamente estas cifras. Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
-            <div class="nuvia-lab__tabla-scroll">
+            <article class="nv-lab-caja">
+              <h3 id="lectura-title">Tres ideas para orientarse</h3>
+              <div class="nv-card-grid nuvia-lab__cartas">
+                <article class="nv-card"><h4>Cambio estimado</h4><p>Media anual que resulta de los supuestos mantenidos muchos años. Un año concreto puede quedar muy por encima o por debajo.</p></article>
+                <article class="nv-card"><h4>Oscilación anual</h4><p>Cuánto suele moverse el valor arriba o abajo. Su nombre técnico es volatilidad: mide vaivén, no dirección.</p></article>
+                <article class="nv-card"><h4>Diversificación</h4><p>Cuando las partes no se mueven a la vez, la oscilación del conjunto queda por debajo de la suma de sus piezas.</p></article>
+              </div>
+            </article>
+
+            <details class="nv-lab-caja nv-lab-despliegue">
+              <summary id="supuestos-title">Los supuestos, a la vista</summary>
+              <p>Son estimaciones de largo plazo por clase de activo, no previsiones, y están pendientes de validación profesional.</p>
+              <div class="nuvia-lab__tabla-scroll">
             <table class="nv-table nuvia-lab__tabla">
               <caption class="nv-visually-hidden">Supuestos de rentabilidad y volatilidad por clase de activo</caption>
               <thead>
@@ -194,33 +211,24 @@
                 <tr><th scope="row">Activos reales</th><td>Inmobiliario cotizado y oro</td><td>5,0&nbsp;%</td><td>13,0&nbsp;%</td></tr>
               </tbody>
             </table>
-            </div>
-            <p class="nuvia-lab__nota">La tasa sin riesgo empleada es del 1,9&nbsp;% anual. Al combinar clases se aplican correlaciones aproximadas entre ellas (por ejemplo, 0,05 entre renta variable y renta fija), contrastadas con series reales de mercado en el laboratorio interno del proyecto.</p>
-          </div>
+              </div>
+              <p class="nuvia-lab__nota">Tasa sin riesgo: 1,9&nbsp;% anual. Al combinar clases se aplican correlaciones aproximadas publicadas con el modelo.</p>
+            </details>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="lectura-title">Cómo leer estas cifras</h2>
-            <div class="nv-card-grid nuvia-lab__cartas">
-              <article class="nv-card">
-                <h3>Rentabilidad estimada</h3>
-                <p>Media anual que resultaría de los supuestos de la tabla, mantenidos muchos años. Un año concreto puede quedar muy por encima o muy por debajo.</p>
-              </article>
-              <article class="nv-card">
-                <h3>Volatilidad</h3>
-                <p>Cuánto suele moverse el valor de la cartera en un año, arriba o abajo. Una volatilidad del 12&nbsp;% significa oscilaciones habituales en torno a ese orden de magnitud.</p>
-              </article>
-              <article class="nv-card">
-                <h3>Diversificación</h3>
-                <p>Cuando las clases no se mueven a la vez, la volatilidad del conjunto queda por debajo de la suma de sus partes. La tabla muestra esa diferencia como «efecto de la diversificación».</p>
-              </article>
-            </div>
-          </div>
+            <details class="nv-lab-caja nv-lab-despliegue">
+              <summary id="sim-title">Banco de pruebas: mover el reparto por clases</summary>
+              <p>Este simulador genérico no describe tu cartera. Sirve para aislar el efecto de mover el peso entre las cuatro clases.</p>
+              <div id="simulador" class="nuvia-lab__simulador" aria-labelledby="sim-title">
+                <div class="nv-note"><p>El simulador interactivo necesita JavaScript.</p></div>
+              </div>
+            </details>
 
-          <div class="nuvia-lab__bloque">
-            <h2 id="fuentes-title">Fuentes y límites</h2>
-            <p>Esta página es una herramienta educativa: sirve para ver cómo cambian el riesgo y la rentabilidad estimada de una cartera cuando cambia su reparto entre clases de activo. No pide datos personales, no guarda nada por sí sola y no emite recomendaciones: describe, con los supuestos publicados arriba, cómo se comporta cada combinación.</p>
-            <p>Dos orígenes de datos, cada uno con su nota al pie: el simulador por clases usa los supuestos propios publicados en esta página, y el buscador y el constructor consultan la base de datos NUVIA, de solo lectura — su tabla de métricas indica la fecha del último cierre empleada. Los cálculos se ejecutan en tu navegador; cuando falta un dato, la cifra aparece como «—» en lugar de inventarse. Este contenido es educativo e informativo: no constituye asesoramiento financiero personalizado ni una oferta de servicios de inversión.</p>
-          </div>
+            <article class="nv-lab-caja">
+              <h3 id="fuentes-title">Fuentes y límites</h3>
+              <p>El banco de pruebas usa los supuestos publicados arriba. El buscador y la cartera consultan la base de datos NUVIA, de solo lectura, y declaran la fecha del último cierre.</p>
+              <p>Los cálculos se ejecutan en tu navegador. Cuando falta un dato aparece «—»: nunca se inventa. Todo describe la cartera actual y su historial; no es una previsión. Este contenido no constituye asesoramiento financiero personalizado.</p>
+            </article>
+          </section>
 
         </section>
 

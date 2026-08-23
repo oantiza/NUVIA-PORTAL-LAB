@@ -435,6 +435,39 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
+function creaFase(numero, id, pregunta, titulo) {
+  const seccion = el('section', { id, class: 'nv-lab-fase', 'aria-labelledby': `${id}-title` });
+  const cabecera = el('header', { class: 'nv-lab-fase__cabecera' });
+  const textos = el('div');
+  textos.append(
+    el('p', { class: 'nv-lab-fase__pregunta' }, pregunta),
+    el('h2', { id: `${id}-title` }, titulo),
+  );
+  cabecera.append(el('span', { class: 'nv-lab-fase__numero', 'aria-hidden': 'true' }, numero), textos);
+  const contenido = el('div', { class: 'nv-lab-fase__contenido' });
+  seccion.append(cabecera, contenido);
+  return { seccion, contenido };
+}
+
+function resumenCartera({ importe, metricas, posiciones }) {
+  const resumen = el('div', { class: 'nv-lab-resumen', 'aria-label': 'Resumen de la cartera' });
+  const datos = [
+    ['Valor de referencia', importe ? EUROS.format(importe) : '—'],
+    ['Cambio medio anual', pct(metricas?.rentabilidadAnualizada)],
+    ['Oscilación anual', pct(metricas?.volatilidad)],
+    ['Posiciones con historial', String(posiciones)],
+  ];
+  for (const [etiqueta, valor] of datos) {
+    const dato = el('div', { class: 'nv-lab-resumen__dato' });
+    dato.append(
+      el('span', { class: 'nv-lab-resumen__etiqueta' }, etiqueta),
+      el('strong', { class: 'nv-lab-resumen__valor' }, valor),
+    );
+    resumen.append(dato);
+  }
+  return resumen;
+}
+
 export function montaConstructor(raiz, { cliente = null } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
@@ -485,7 +518,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
 
   /* ── Guardado: local (paso 24) o en la cuenta (paso 30) según la sesión ── */
   const guardadoRaiz = el('div', { class: 'nv-cons__guardado' });
-  raiz.append(contador, importeCampo, cabeceraLista, lista, estado, nivel, resultados, guardadoRaiz);
+  raiz.append(contador, importeCampo, cabeceraLista, lista, estado, nivel, guardadoRaiz);
+  const destinoAnalisis = document.getElementById('analisis-dinamico');
+  (destinoAnalisis || raiz).append(resultados);
 
   function esRegistrada() {
     try { return datos.sesionActual?.().tipo === 'registrada'; } catch { return false; }
@@ -856,10 +891,24 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
       resultados.append(el('p', { class: 'nv-cons__nota' }, 'Sube algún peso para ver las métricas.'));
       return;
     }
+
+    const niveles = serieCartera(series, pesos);
+    const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
+    const fase02 = creaFase('02', 'fase-02', '¿Qué contiene realmente?', 'Qué tienes');
+    const fase03 = creaFase('03', 'fase-03', '¿Qué hizo el valor en el pasado?', 'Cuánto se mueve');
+    const fase04 = creaFase('04', 'fase-04', '¿Dónde se repiten las mismas apuestas?', 'Apuestas repetidas');
+    const fase05 = creaFase('05', 'fase-05', '¿Qué rangos ayudan a entender la incertidumbre?', 'Escenarios');
+    resultados.append(fase02.seccion, fase03.seccion, fase04.seccion, fase05.seccion);
+
+    const cajaClases = el('article', { class: 'nv-lab-subcaja' });
+    fase02.contenido.append(cajaClases);
+    const cajaRiesgo = el('article', { class: 'nv-lab-subcaja' });
+    fase03.contenido.append(cajaRiesgo);
+
     /* ── Reparto por clase de activo: un gráfico, una idea (paso 23) ── */
     const reparto = repartoPorClase(posiciones, pesos);
     if (reparto) {
-      resultados.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Reparto por clase de activo'));
+      cajaClases.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Reparto por clase de activo'));
       const barra = el('div', {
         class: 'nv-sim-barra',
         role: 'img',
@@ -878,10 +927,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
         item.append(punto, el('span', {}, `${r.etiqueta} · ${pct(r.peso, 0)}`));
         leyenda.append(item);
       }
-      resultados.append(barra, leyenda);
-      resultados.append(el('p', { class: 'nv-cons__nota-clase' },
+      cajaClases.append(barra, leyenda);
+      cajaClases.append(el('p', { class: 'nv-cons__nota-clase' },
         'Clase declarada de cada producto en la base de datos; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
-      resultados.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Métricas de la combinación'));
     }
 
     /* Análisis ampliado del nivel registrado (paso 32): se pinta en un nodo
@@ -889,20 +937,31 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
        el resto de resultados y el render tardío cae en un nodo suelto. */
     const pintaAnalisis = () => {
       const nodo = el('div', { class: 'nv-analisis' });
-      resultados.append(nodo);
+      fase03.contenido.append(nodo);
       montaAnalisis(nodo, {
         posiciones, pesos, series, datos,
         registrada: esRegistrada(), nivel: nivelActual(), metricas: m,
+        destinos: {
+          composicion: fase02.contenido,
+          riesgo: fase03.contenido,
+          solapes: fase04.contenido,
+          escenarios: fase05.contenido,
+        },
       });
     };
 
-    const niveles = serieCartera(series, pesos);
-    const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
     if (!m) {
-      resultados.append(el('p', { class: 'nv-cons__nota' }, 'No hay historial común suficiente para calcular las métricas de esta combinación.'));
+      cajaRiesgo.append(el('p', { class: 'nv-cons__nota' }, 'No hay historial común suficiente para calcular las métricas de esta combinación.'));
       pintaAnalisis();
       return;
     }
+
+    cajaRiesgo.append(resumenCartera({
+      importe: importeCartera,
+      metricas: m,
+      posiciones: Object.keys(pesos).length,
+    }));
+    cajaRiesgo.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Tres cifras del historial común'));
 
     const tabla = el('table', { class: 'nv-table nv-sim-tabla' });
     tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Métricas históricas de la combinación elegida'));
@@ -913,20 +972,20 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const lecturas = lecturasDeMetricas(m, { niveles, fechas: payload?.dates || null });
     const tbody = el('tbody');
     tbody.append(
-      filaMetrica('Rentabilidad (3 años)', pct(m.rentabilidadTotal), lecturas.rentabilidad),
-      filaMetrica('Volatilidad (3 años)', pct(m.volatilidad), lecturas.volatilidad),
-      filaMetrica('Máxima caída (3 años)', pct(m.maximaCaida), lecturas.caida),
+      filaMetrica('Cambio acumulado (3 años)', pct(m.rentabilidadTotal), lecturas.rentabilidad),
+      filaMetrica('Oscilación anual', pct(m.volatilidad), lecturas.volatilidad),
+      filaMetrica('Mayor caída (3 años)', pct(m.maximaCaida), lecturas.caida),
     );
     tabla.append(thead, tbody);
     const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
     envoltorio.append(tabla);
-    resultados.append(envoltorio);
+    cajaRiesgo.append(envoltorio);
 
     const evolucion = grupoEvolucion({ niveles, fechas: payload?.dates || null });
-    if (evolucion) resultados.append(evolucion);
+    if (evolucion) cajaRiesgo.append(evolucion);
 
     const fecha = fechaCorta(payload?.coverage?.last_date);
-    resultados.append(el('p', { class: 'nv-cons__fuente' },
+    cajaRiesgo.append(el('p', { class: 'nv-cons__fuente' },
       `Datos de cierre${fecha ? ` del ${fecha}` : ''}, base de datos NUVIA. Ventana de 3 años, en euros. ${m.observaciones} observaciones.`));
     pintaAnalisis();
   }

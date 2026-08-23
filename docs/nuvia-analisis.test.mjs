@@ -14,6 +14,7 @@ import {
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
   caminoSuave, envolventeConcava, suavizaEsquinas, puntosSenalados, perfilesReferencia,
+  perfilCarteraSupuestos,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
@@ -267,6 +268,16 @@ console.log('\n— Los perfiles de referencia del mapa riesgo-retorno (encargo 2
       || (p.volatilidad > perfiles[i - 1].volatilidad && p.rentabilidad > perfiles[i - 1].rentabilidad)));
   comprueba('Cada perfil arriesga menos que la renta variable pura y más que la fija pura',
     perfiles.every((p) => p.volatilidad < 0.16 && p.volatilidad > 0.055 * 0.5));
+  const cartera = perfilCarteraSupuestos([
+    { activo: { asset_id: 'RV', economic_asset_class: 'EQUITY' } },
+    { activo: { asset_id: 'RF', economic_asset_class: 'FIXED_INCOME' } },
+  ], { RV: 0.6, RF: 0.4 });
+  comprueba('La cartera 60/40 usa la misma base de supuestos que los perfiles',
+    cartera?.rentabilidad === 0.0548 && cartera?.volatilidad === 0.0996);
+  comprueba('Una clase fuera del modelo no se dibuja con una base incompleta',
+    perfilCarteraSupuestos([
+      { activo: { asset_id: 'M', economic_asset_class: 'MIXED' } },
+    ], { M: 1 }) === null);
 }
 
 console.log('\n— El redondeo de esquinas (Chaikin) —');

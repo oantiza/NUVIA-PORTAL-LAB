@@ -4071,6 +4071,192 @@
 /* La regla display:grid ganaría al atributo hidden; esto restaura su efecto. */
 .nuvia-lab[hidden] { display: none; }
 
+/* Dirección B (22-08-2026): el laboratorio deja de ser una sucesión de
+   módulos y se lee como siete preguntas. El banner superior permanece como
+   pieza común con el módulo de empresas. */
+.nv-lab-tesis {
+  width: min(100%, 850px);
+  margin: 0 auto;
+  color: var(--nv-text-soft);
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-sm);
+  line-height: 1.48;
+  text-align: center;
+}
+
+.nv-lab-fase,
+.nv-lab-analisis-dinamico {
+  display: grid;
+  gap: var(--nv-space-5);
+  min-width: 0;
+  scroll-margin-top: calc(var(--nv-header-height) + var(--nv-space-4));
+}
+
+.nv-lab-analisis-dinamico:empty { display: none; }
+
+.nv-lab-fase__cabecera {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--nv-space-4);
+  padding-top: var(--nv-space-4);
+  border-top: 1px solid var(--nv-line-strong);
+}
+
+.nv-lab-fase__numero {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 32px;
+  border-radius: var(--nv-radius-pill);
+  background: var(--nv-surface-deep);
+  color: var(--nv-text-on-dark);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .13em;
+}
+
+.nv-lab-fase__pregunta {
+  margin: 0 0 var(--nv-space-1);
+  color: var(--nv-text-editorial);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.nv-lab-fase__cabecera h2 {
+  margin: 0;
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-size: clamp(30px, 3vw, 42px);
+  font-weight: var(--nv-weight-title);
+}
+
+.nv-lab-caja {
+  min-width: 0;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  box-shadow: var(--nv-shadow-sm);
+  padding: clamp(20px, 2.6vw, 32px);
+}
+
+.nv-lab-caja--principal {
+  border-top: 3px solid var(--nv-green-700);
+}
+
+.nv-lab-caja > h3,
+.nv-lab-caja__intro > h3 {
+  margin: 0 0 var(--nv-space-2);
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-sm);
+}
+
+.nv-lab-caja > p,
+.nv-lab-caja__intro > p,
+.nv-lab-herramientas > p,
+.nv-lab-despliegue > p {
+  max-width: 74ch;
+  margin: 0 0 var(--nv-space-4);
+  color: var(--nv-text-soft);
+}
+
+.nv-lab-caja > p:last-child { margin-bottom: 0; }
+
+.nv-lab-herramientas,
+.nv-lab-despliegue {
+  min-width: 0;
+}
+
+.nv-lab-herramientas {
+  margin: var(--nv-space-5) 0;
+  border-block: 1px solid var(--nv-line);
+  padding-block: var(--nv-space-3);
+}
+
+.nv-lab-herramientas > h4,
+.nv-lab-despliegue > summary {
+  margin: 0 0 var(--nv-space-3);
+  color: var(--nv-text);
+  font-weight: var(--nv-weight-action);
+}
+
+.nv-lab-despliegue[open] > summary { margin-bottom: var(--nv-space-3); }
+
+.nv-lab-dos-columnas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+  align-items: start;
+  gap: var(--nv-space-5);
+}
+
+.nv-lab-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--nv-space-3);
+}
+
+.nv-lab-resumen__dato {
+  min-width: 0;
+  border-left: 3px solid var(--nv-green-700);
+  background: var(--nv-lab-tinte);
+  padding: var(--nv-space-4);
+}
+
+.nv-lab-resumen__etiqueta {
+  display: block;
+  min-height: 2.4em;
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-label);
+  letter-spacing: .06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.nv-lab-resumen__valor {
+  display: block;
+  margin-top: var(--nv-space-2);
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-size: clamp(25px, 2.5vw, 34px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.nv-lab-fase__contenido {
+  display: grid;
+  gap: var(--nv-space-5);
+  min-width: 0;
+}
+
+.nv-lab-subcaja {
+  display: grid;
+  gap: var(--nv-space-3);
+  min-width: 0;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  padding: clamp(18px, 2.2vw, 28px);
+}
+
+.nv-lab-subcaja > .nv-cons__subtitulo:first-child { margin-top: 0; }
+
+/* Los SVG conservan su escala tipográfica en tablet. Si el ancho disponible
+   es menor, se desplaza el propio panel y nunca la página completa. */
+.nv-grafico__panel { overflow-x: auto; }
+.nv-grafico__panel > .nv-frontera,
+.nv-grafico__panel > .nv-abanico { min-width: 680px; }
+.nv-mapa__svg { min-width: 640px; }
+.nv-mapa { overflow-x: auto; }
+
+@media (max-width: 1080px) {
+  .nv-lab-dos-columnas { grid-template-columns: 1fr; }
+  .nv-lab-resumen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* Misma tarjeta que el resto de la web (viv-card, fiscal-paso): radio del
    sistema, superficie y sombra suave, sin borde propio. */
 .nuvia-lab__bloque {

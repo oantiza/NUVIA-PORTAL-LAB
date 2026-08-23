@@ -224,6 +224,17 @@
   --nv-cat-slate: #3d5670;
   --nv-cat-clay: #8d4236;
 
+  /* Series del Laboratorio de cartera. Los nombres expresan orden visual,
+     no significado financiero: la semántica la aporta siempre la leyenda. */
+  --nv-serie-1: var(--nv-cat-teal);
+  --nv-serie-2: var(--nv-cat-purple);
+  --nv-serie-3: var(--nv-cat-amber);
+  --nv-serie-4: var(--nv-cat-cyan);
+  --nv-serie-5: var(--nv-cat-clay);
+  --nv-serie-6: var(--nv-cat-slate);
+  --nv-lab-tinte: var(--nv-paper-light);
+  --nv-lab-tinte-frio: var(--nv-mist);
+
   /* Tintes de fondo de Academia. Casi todos son superficies, pero unos pocos
      llevan texto encima (numeros de orden en blanco) y estan ajustados a 4,5:1.
      Pendiente de consolidar en la paleta cuando se rediseñe la sección. */
