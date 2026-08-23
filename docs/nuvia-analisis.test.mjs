@@ -14,11 +14,12 @@ import {
   activosParaFrontera, filasProyeccion, puntosAbanico, puntosMapaRiesgo,
   tramoEficiente, contribucionesRiesgo, paresDestacados, fraseCorrelacion,
   caminoSuave, envolventeConcava, suavizaEsquinas, puntosSenalados, perfilesReferencia,
-  perfilCarteraSupuestos, escalasMapaRiesgo,
+  perfilCarteraSupuestos, escalasMapaRiesgo, puntoCarteraFrontera,
+  envolventeFrontera, rentabilidadEnEnvolvente,
   NOTA_ANALISIS_CERRADO, FUENTE_ANALISIS, NOTA_ANALISIS_SUSCRIPTOR,
   TEXTO_FRONTERA, TEXTO_PROYECCION, TEXTO_CORRELACIONES,
 } from '../js/nuvia-analisis.js';
-import { proyeccionMonteCarlo } from '../js/nuvia-cartera.js';
+import { estableceCorrelaciones, proyeccionMonteCarlo } from '../js/nuvia-cartera.js';
 
 let fallos = 0;
 function comprueba(nombre, condicion, detalle = '') {
@@ -256,6 +257,33 @@ console.log('\n— Los puntos señalados de la frontera (encargo 21-08) —');
   comprueba('La de menor riesgo es la de menor volatilidad', s.menorRiesgo.volatilidad === 0.04);
   comprueba('La de mayor Sharpe descuenta la tasa sin riesgo', s.mayorSharpe.volatilidad === 0.06);
   comprueba('Sin puntos no hay señalados', puntosSenalados([]) === null && puntosSenalados(null) === null);
+}
+
+console.log('\n— La combinación nunca queda por encima de su frontera —');
+{
+  estableceCorrelaciones({
+    ids: ['A', 'B'],
+    rho: { A: { A: 1, B: 0.25 }, B: { A: 0.25, B: 1 } },
+  });
+  const activos = [
+    { id: 'A', rentabilidad: 0.12, volatilidad: 0.18 },
+    { id: 'B', rentabilidad: 0.04, volatilidad: 0.07 },
+  ];
+  const actual = puntoCarteraFrontera(activos, { A: 0.62, B: 0.38 });
+  const muestras = [
+    { volatilidad: 0.07, rentabilidad: 0.04 },
+    { volatilidad: 0.10, rentabilidad: 0.065 },
+    { volatilidad: 0.14, rentabilidad: 0.095 },
+    { volatilidad: 0.18, rentabilidad: 0.12 },
+  ];
+  const arco = envolventeFrontera(muestras, actual);
+  const techo = rentabilidadEnEnvolvente(arco, actual.volatilidad);
+  comprueba('El punto usa el mismo modelo de pesos, volatilidades y correlaciones',
+    actual && Number.isFinite(actual.volatilidad) && Number.isFinite(actual.rentabilidad));
+  comprueba('La combinación queda sobre la línea o por debajo, nunca por encima',
+    Number.isFinite(techo) && actual.rentabilidad <= techo + 1e-10,
+    `cartera=${actual.rentabilidad.toFixed(4)} · frontera=${techo?.toFixed(4)}`);
+  estableceCorrelaciones(null);
 }
 
 console.log('\n— Los perfiles de referencia del mapa riesgo-retorno (encargo 21-08) —');

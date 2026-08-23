@@ -5193,9 +5193,17 @@
 .nv-frontera__punto { fill: var(--nv-text-muted); opacity: 0.3; }
 .nv-frontera__linea {
   stroke: var(--nv-navy-900);
-  stroke-width: 3.5;
+  stroke-width: 3;
   stroke-linejoin: round;
   stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.nv-frontera__halo {
+  stroke: color-mix(in srgb, var(--nv-green-700) 22%, transparent);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
 }
 .nv-frontera__mi-punto {
   fill: var(--nv-green-700);
@@ -5217,6 +5225,12 @@
   stroke: var(--nv-paper-light);
   stroke-width: 2;
 }
+
+.nv-frontera--eficiente { margin-block: 0; }
+.nv-frontera--eficiente .nv-grafico__eje { font-size: 11px; }
+.nv-frontera--eficiente .nv-grafico__eje-titulo { font-size: 12px; }
+.nv-frontera--eficiente .nv-grafico__rotulo { font-size: 11px; }
+.nv-frontera--eficiente .nv-grafico__rejilla { opacity: .22; }
 
 /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7) */
 .nv-perfiles__linea {

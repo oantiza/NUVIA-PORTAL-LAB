@@ -48,7 +48,9 @@ export const NOTA_ANALISIS_SUSCRIPTOR = 'El nivel suscriptor —aún no abierto 
 /** Qué es la frontera, en llano y sin previsión (bases §2). */
 export const TEXTO_FRONTERA = 'La curva une, a cada nivel de riesgo, la mezcla '
   + 'de estos mismos activos que más rentó en el historial de 3 años; cualquier '
-  + 'otra mezcla quedó por debajo de la curva. Describe ese historial, no el futuro.';
+  + 'otra mezcla quedó por debajo de la curva. Tu combinación se calcula con la '
+  + 'misma rentabilidad, volatilidad y correlaciones, para que la comparación sea '
+  + 'coherente. Describe ese historial, no el futuro.';
 
 /** Qué es la proyección: simulación con supuestos a la vista, nunca previsión. */
 export const TEXTO_PROYECCION = 'Simulación de 4.000 trayectorias a pasos '
@@ -190,6 +192,25 @@ export function activosParaFrontera(series, pesos) {
       id: s.asset_id,
       rentabilidad: metricasDesdeSerie(s.values)?.rentabilidadAnualizada,
     }));
+}
+
+/**
+ * Punto de la combinación actual dentro del mismo modelo de la frontera.
+ * Sus coordenadas salen de las mismas rentabilidades, volatilidades y
+ * correlaciones que las demás mezclas, no de una métrica paralela.
+ */
+export function puntoCarteraFrontera(activos = [], pesos = {}) {
+  const posiciones = activos
+    .map((activo) => ({ ...activo, peso: (Number(pesos?.[activo.id]) || 0) * 100 }))
+    .filter((p) => p.peso > 0);
+  if (posiciones.length < 2) return null;
+  const total = posiciones.reduce((s, p) => s + p.peso, 0);
+  if (!(total > 0)) return null;
+  posiciones.forEach((p) => { p.peso = (p.peso / total) * 100; });
+  const volatilidad = volatilidadCartera(posiciones);
+  const rentabilidad = rentabilidadCartera(posiciones);
+  if (!Number.isFinite(volatilidad) || !Number.isFinite(rentabilidad)) return null;
+  return { volatilidad, rentabilidad, pesos: posiciones };
 }
 
 /** Filas de la proyección para la tabla: los años señalados que existan. */
@@ -340,6 +361,29 @@ export function envolventeConcava(puntos) {
     casco.push(p);
   }
   return casco;
+}
+
+/**
+ * Límite superior visible de todas las mezclas calculadas. La combinación
+ * actual se incorpora antes de construir la envolvente: por construcción,
+ * nunca puede aparecer por encima de la línea que se dibuja.
+ */
+export function envolventeFrontera(puntos = [], puntoActual = null) {
+  const universo = puntoActual ? [...puntos, puntoActual] : [...puntos];
+  return envolventeConcava(tramoEficiente(universo));
+}
+
+/** Rentabilidad de la envolvente a una volatilidad dada, por interpolación. */
+export function rentabilidadEnEnvolvente(envolvente = [], volatilidad) {
+  if (!Number.isFinite(volatilidad) || envolvente.length < 2) return null;
+  for (let i = 0; i < envolvente.length - 1; i += 1) {
+    const a = envolvente[i]; const b = envolvente[i + 1];
+    if (a.volatilidad <= volatilidad && volatilidad <= b.volatilidad) {
+      const t = (volatilidad - a.volatilidad) / ((b.volatilidad - a.volatilidad) || 1);
+      return a.rentabilidad + t * (b.rentabilidad - a.rentabilidad);
+    }
+  }
+  return null;
 }
 
 /**
@@ -679,7 +723,7 @@ function holdingsDe(datos, ids) {
  * suscriptor añade un control para recorrer la frontera y ver el reparto
  * de cada punto (la parte interactiva, guía paso 1).
  */
-function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
+function grupoFrontera({ series, pesos, interactiva, nombreDe }) {
   const bloque = grupo('Todas las mezclas posibles y su frontera', TEXTO_FRONTERA);
 
   const activos = activosParaFrontera(series, pesos);
@@ -698,40 +742,76 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
       `Faltan datos para dibujarla (${f.sinDatos.slice(0, 3).join('; ')}); nunca se inventa.`));
     return bloque;
   }
-  const eficiente = tramoEficiente(f.frontera);
+  const puntoActual = puntoCarteraFrontera(activos, pesos);
+  const arcoDatos = envolventeFrontera(f.nube, puntoActual);
 
-  /* El dibujo del clásico: la curva suave sola sobre el panel crema, los dos
-     ejes como marco y las cifras al pie. Sin nube ni rejilla: una idea. */
-  const W = 760; const H = 380; const izq = 74; const der = 30; const arriba = 26; const abajo = 62;
-  const puntos = eficiente.concat(metricas ? [{ volatilidad: metricas.volatilidad, rentabilidad: metricas.rentabilidadAnualizada }] : []);
-  /* Aire alrededor del dato, como en el clásico: nada pegado a los ejes. */
+  /* Panel ancho, escalas redondas y una rejilla muy discreta. El punto de la
+     combinación y la curva comparten exactamente el mismo cálculo. */
+  const W = 900; const H = 410; const izq = 82; const der = 34; const arriba = 30; const abajo = 64;
+  const puntos = arcoDatos.concat(puntoActual ? [puntoActual] : []);
   let vMin = Math.min(...puntos.map((p) => p.volatilidad));
   let vMax = Math.max(...puntos.map((p) => p.volatilidad));
   let rMin = Math.min(...puntos.map((p) => p.rentabilidad));
   let rMax = Math.max(...puntos.map((p) => p.rentabilidad));
-  const aireV = ((vMax - vMin) || Math.abs(vMax) || 0.01) * 0.12;
-  const aireR = ((rMax - rMin) || Math.abs(rMax) || 0.01) * 0.12;
-  vMin = Math.max(0, vMin - aireV); vMax += aireV;
-  rMin -= aireR; rMax += aireR;
+  const aseguraRango = (min, max, amplitudMinima, limitaACero = false) => {
+    if (max - min >= amplitudMinima) return [min, max];
+    const centro = (min + max) / 2;
+    let nuevoMin = centro - amplitudMinima / 2;
+    let nuevoMax = centro + amplitudMinima / 2;
+    if (limitaACero && nuevoMin < 0) { nuevoMax -= nuevoMin; nuevoMin = 0; }
+    return [nuevoMin, nuevoMax];
+  };
+  [vMin, vMax] = aseguraRango(vMin, vMax, 0.025, true);
+  [rMin, rMax] = aseguraRango(rMin, rMax, 0.05);
+  const aireV = ((vMax - vMin) || Math.abs(vMax) || 0.01) * 0.10;
+  const aireR = ((rMax - rMin) || Math.abs(rMax) || 0.01) * 0.10;
+  const ejeX = marcasEje(Math.max(0, vMin - aireV), vMax + aireV, 6);
+  const ejeY = marcasEje(rMin - aireR, rMax + aireR, 5);
+  vMin = ejeX.min; vMax = ejeX.max;
+  rMin = ejeY.min; rMax = ejeY.max;
+  const decimalesMarca = (paso) => {
+    const puntos = Math.abs(paso * 100);
+    return puntos >= 1 ? 0 : puntos >= 0.1 ? 1 : 2;
+  };
+  const decimalesX = decimalesMarca(ejeX.paso);
+  const decimalesY = decimalesMarca(ejeY.paso);
   const x = (v) => izq + ((v - vMin) / ((vMax - vMin) || 1)) * (W - izq - der);
   const y = (r) => H - abajo - ((r - rMin) / ((rMax - rMin) || 1)) * (H - abajo - arriba);
+  const mismoPunto = (a, b) => Boolean(a && b
+    && Math.abs(a.volatilidad - b.volatilidad) <= ejeX.paso * 0.03
+    && Math.abs(a.rentabilidad - b.rentabilidad) <= ejeY.paso * 0.03);
 
   const svg = svgEl('svg', {
     viewBox: `0 0 ${W} ${H}`,
-    class: 'nv-frontera',
+    class: 'nv-frontera nv-frontera--eficiente',
     role: 'img',
     'aria-label': 'La frontera de estos activos: '
       + `riesgo entre ${pct(vMin)} y ${pct(vMax)}, rentabilidad anual entre ${pct(rMin)} y ${pct(rMax)}`
-      + (metricas ? `; tu combinación, con riesgo ${pct(metricas.volatilidad)} y rentabilidad ${pct(metricas.rentabilidadAnualizada)}.` : '.'),
+      + (puntoActual ? `; tu combinación, con riesgo ${pct(puntoActual.volatilidad)} y rentabilidad ${pct(puntoActual.rentabilidad)}.` : '.'),
   });
-  /* El marco: dos ejes con sus extremos en cifra, sin más ruido. */
+  /* Rejilla y marcas: suficientes para comparar sin convertir el gráfico en
+     una hoja de cálculo. */
+  for (const marca of ejeX.marcas) {
+    const px = x(marca);
+    if (marca > vMin && marca < vMax) svg.append(svgEl('line', {
+      x1: px, y1: arriba, x2: px, y2: H - abajo, class: 'nv-grafico__rejilla',
+    }));
+    svg.append(svgEl('text', {
+      x: px, y: H - abajo + 20, 'text-anchor': 'middle', class: 'nv-grafico__eje',
+    }, pct(marca, decimalesX)));
+  }
+  for (const marca of ejeY.marcas) {
+    const py = y(marca);
+    if (marca > rMin && marca < rMax) svg.append(svgEl('line', {
+      x1: izq, y1: py, x2: W - der, y2: py, class: 'nv-grafico__rejilla',
+    }));
+    svg.append(svgEl('text', {
+      x: izq - 10, y: py + 4, 'text-anchor': 'end', class: 'nv-grafico__eje',
+    }, pct(marca, decimalesY)));
+  }
   svg.append(svgEl('line', { x1: izq, y1: arriba, x2: izq, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
   svg.append(svgEl('line', { x1: izq, y1: H - abajo, x2: W - der, y2: H - abajo, class: 'nv-grafico__eje-linea' }));
   svg.append(
-    svgEl('text', { x: izq, y: H - abajo + 20, class: 'nv-grafico__eje' }, pct(vMin)),
-    svgEl('text', { x: W - der, y: H - abajo + 20, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(vMax)),
-    svgEl('text', { x: izq - 8, y: H - abajo + 4, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(rMin)),
-    svgEl('text', { x: izq - 8, y: arriba + 10, 'text-anchor': 'end', class: 'nv-grafico__eje' }, pct(rMax)),
     svgEl('text', { x: (izq + W - der) / 2, y: H - 10, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo' }, 'Riesgo (cuánto se movió al año) →'),
   );
   const cyTitulo = (arriba + H - abajo) / 2;
@@ -739,17 +819,18 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
     x: 18, y: cyTitulo, transform: `rotate(-90 18 ${cyTitulo})`, 'text-anchor': 'middle', class: 'nv-grafico__eje-titulo',
   }, 'Rentabilidad anual ↑'));
 
-  /* La curva, suave y gruesa como en el clásico: el arco limpio de la
-     envolvente cóncava, con las esquinas redondeadas. */
-  const arco = suavizaEsquinas(
-    envolventeConcava(eficiente).map((p) => ({ x: x(p.volatilidad), y: y(p.rentabilidad) })));
-  svg.append(svgEl('path', {
-    d: arco.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),
-    class: 'nv-frontera__linea', fill: 'none',
-  }));
+  /* La línea pasa por los vértices del límite superior. No se redondean las
+     esquinas alterando la geometría: así ningún punto viable puede quedar
+     visualmente por encima de su propia frontera. */
+  const arco = arcoDatos.map((p) => ({ x: x(p.volatilidad), y: y(p.rentabilidad) }));
+  const caminoArco = arco.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  svg.append(
+    svgEl('path', { d: caminoArco, class: 'nv-frontera__halo', fill: 'none' }),
+    svgEl('path', { d: caminoArco, class: 'nv-frontera__linea', fill: 'none' }),
+  );
   /* Los tres puntos que pidió Óscar: tu combinación, la mezcla de mayor
      Sharpe y la de menor volatilidad del historial. Nada más. */
-  const senalados = puntosSenalados(eficiente);
+  const senalados = puntosSenalados(arcoDatos);
   const rotulo = (cx, cy, texto, dy = 5) => {
     const anclaIzq = cx > W - der - 150;
     svg.append(svgEl('text', {
@@ -761,48 +842,73 @@ function grupoFrontera({ series, pesos, metricas, interactiva, nombreDe }) {
   };
   if (senalados) {
     const mr = senalados.menorRiesgo;
-    svg.append(svgEl('circle', {
-      cx: x(mr.volatilidad).toFixed(1), cy: y(mr.rentabilidad).toFixed(1), r: 6, class: 'nv-frontera__tranquila',
-    }));
-    rotulo(x(mr.volatilidad), y(mr.rentabilidad), 'Menor riesgo', -12);
     const ms = senalados.mayorSharpe;
-    svg.append(svgEl('circle', {
-      cx: x(ms.volatilidad).toFixed(1), cy: y(ms.rentabilidad).toFixed(1), r: 6.5, class: 'nv-frontera__sharpe',
-    }));
-    rotulo(x(ms.volatilidad), y(ms.rentabilidad), 'Mayor Sharpe', -12);
+    const coinciden = mismoPunto(mr, ms);
+    if (!mismoPunto(mr, puntoActual)) {
+      svg.append(svgEl('circle', {
+        cx: x(mr.volatilidad).toFixed(1), cy: y(mr.rentabilidad).toFixed(1), r: 6, class: 'nv-frontera__tranquila',
+      }));
+      rotulo(x(mr.volatilidad), y(mr.rentabilidad), coinciden ? 'Menor riesgo · mayor Sharpe' : 'Menor riesgo', -12);
+    }
+    if (!coinciden && !mismoPunto(ms, puntoActual)) {
+      svg.append(svgEl('circle', {
+        cx: x(ms.volatilidad).toFixed(1), cy: y(ms.rentabilidad).toFixed(1), r: 6.5, class: 'nv-frontera__sharpe',
+      }));
+      rotulo(x(ms.volatilidad), y(ms.rentabilidad), 'Mayor Sharpe', -12);
+    }
   }
-  if (metricas) {
-    const cx = x(metricas.volatilidad); const cy = y(metricas.rentabilidadAnualizada);
+  if (puntoActual) {
+    const cx = x(puntoActual.volatilidad); const cy = y(puntoActual.rentabilidad);
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 7, class: 'nv-frontera__mi-punto' }));
     rotulo(cx, cy, 'Tu combinación');
   }
 
   const cifras = [];
-  if (metricas) {
+  if (puntoActual) {
+    let nombreActual = 'Tu combinación:';
+    if (senalados && mismoPunto(puntoActual, senalados.menorRiesgo)
+      && mismoPunto(puntoActual, senalados.mayorSharpe)) {
+      nombreActual = 'Tu combinación · menor riesgo y mayor Sharpe:';
+    } else if (senalados && mismoPunto(puntoActual, senalados.menorRiesgo)) {
+      nombreActual = 'Tu combinación · menor riesgo:';
+    } else if (senalados && mismoPunto(puntoActual, senalados.mayorSharpe)) {
+      nombreActual = 'Tu combinación · mayor Sharpe:';
+    }
     cifras.push({
       clase: 'nv-leyenda__marca--punto',
-      nombre: 'Tu combinación:',
-      texto: `riesgo ${pct(metricas.volatilidad)} · rentabilidad anual ${pct(metricas.rentabilidadAnualizada)}`,
+      nombre: nombreActual,
+      texto: `riesgo ${pct(puntoActual.volatilidad)} · rentabilidad anual ${pct(puntoActual.rentabilidad)}`,
     });
   }
   if (senalados) {
-    cifras.push({
-      clase: 'nv-leyenda__marca--sharpe',
-      nombre: 'Mayor Sharpe:',
-      texto: `riesgo ${pct(senalados.mayorSharpe.volatilidad)} · rentabilidad anual ${pct(senalados.mayorSharpe.rentabilidad)}`,
-    });
-    cifras.push({
-      clase: 'nv-leyenda__marca--tranquila',
-      nombre: 'Menor riesgo:',
-      texto: `riesgo ${pct(senalados.menorRiesgo.volatilidad)} · rentabilidad anual ${pct(senalados.menorRiesgo.rentabilidad)}`,
-    });
+    const mrEsActual = mismoPunto(senalados.menorRiesgo, puntoActual);
+    const msEsActual = mismoPunto(senalados.mayorSharpe, puntoActual);
+    const coinciden = mismoPunto(senalados.menorRiesgo, senalados.mayorSharpe);
+    if (coinciden && !mrEsActual) {
+      cifras.push({
+        clase: 'nv-leyenda__marca--sharpe',
+        nombre: 'Menor riesgo y mayor Sharpe:',
+        texto: `riesgo ${pct(senalados.menorRiesgo.volatilidad)} · rentabilidad anual ${pct(senalados.menorRiesgo.rentabilidad)}`,
+      });
+    } else {
+      if (!msEsActual) cifras.push({
+        clase: 'nv-leyenda__marca--sharpe',
+        nombre: 'Mayor Sharpe:',
+        texto: `riesgo ${pct(senalados.mayorSharpe.volatilidad)} · rentabilidad anual ${pct(senalados.mayorSharpe.rentabilidad)}`,
+      });
+      if (!mrEsActual) cifras.push({
+        clase: 'nv-leyenda__marca--tranquila',
+        nombre: 'Menor riesgo:',
+        texto: `riesgo ${pct(senalados.menorRiesgo.volatilidad)} · rentabilidad anual ${pct(senalados.menorRiesgo.rentabilidad)}`,
+      });
+    }
   }
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
   bloque.append(el('p', { class: 'nv-cons__nota' },
     'El Sharpe es la rentabilidad obtenida por cada unidad de riesgo, descontada la tasa sin riesgo: '
     + '«mayor Sharpe» señala la mezcla del historial que más rentó por cada punto de movimiento, y '
     + '«menor riesgo», la que menos se movió. Describen ese historial, no el futuro.'));
-  if (!metricas) {
+  if (!puntoActual) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Tu combinación no tiene historial común suficiente para marcarla.'));
   }
@@ -1212,7 +1318,7 @@ export async function montaAnalisis(raiz, {
 
   /* Frontera (paso 33): estática con la cartera marcada para el registrado,
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
-  objetivo.riesgo.append(grupoFrontera({ series, pesos, metricas, interactiva: esSuscriptor, nombreDe }));
+  objetivo.riesgo.append(grupoFrontera({ series, pesos, interactiva: esSuscriptor, nombreDe }));
 
   /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7). */
   objetivo.riesgo.append(grupoMapaRiesgo({ referencia: perfilCarteraSupuestos(posiciones, pesos) }));

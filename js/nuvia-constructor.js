@@ -13,7 +13,7 @@
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
 import { metricasDesdeSerie, serieDeCaidas, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
-import { montaAnalisis } from './nuvia-analisis.js?v=20260823-2';
+import { montaAnalisis } from './nuvia-analisis.js?v=20260823-4';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
 
