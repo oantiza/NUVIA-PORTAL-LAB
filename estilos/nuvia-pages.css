@@ -4244,6 +4244,115 @@
 
 .nv-lab-subcaja > .nv-cons__subtitulo:first-child { margin-top: 0; }
 
+.nv-lab-composicion {
+  display: grid;
+  grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
+  align-items: stretch;
+  gap: var(--nv-space-5);
+  min-width: 0;
+}
+
+.nv-lab-geografia {
+  display: grid;
+  gap: var(--nv-space-5);
+  min-width: 0;
+}
+
+.nv-lab-sectores > .nv-analisis__grupo {
+  height: 100%;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.nv-donut {
+  display: grid;
+  gap: var(--nv-space-3);
+  min-width: 0;
+}
+
+.nv-donut__cuerpo {
+  display: grid;
+  justify-items: center;
+  gap: var(--nv-space-4);
+  min-width: 0;
+}
+
+.nv-donut__grafico {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(100%, 210px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--nv-line);
+}
+
+.nv-donut__centro {
+  display: grid;
+  place-content: center;
+  width: 55%;
+  aspect-ratio: 1;
+  border: 1px solid var(--nv-line);
+  border-radius: 50%;
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  text-align: center;
+}
+
+.nv-donut__centro strong {
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-sm);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.nv-donut__centro small {
+  margin-top: var(--nv-space-1);
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+}
+
+.nv-donut__leyenda {
+  display: grid;
+  gap: var(--nv-space-2);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nv-donut__item {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--nv-space-2);
+  min-width: 0;
+  font-size: var(--nv-body-sm);
+}
+
+.nv-donut__punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.nv-donut__nombre {
+  overflow: hidden;
+  color: var(--nv-text-soft);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nv-donut__peso {
+  color: var(--nv-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
+}
+
+@media (max-width: 850px) {
+  .nv-lab-composicion { grid-template-columns: 1fr; }
+}
+
 /* Los SVG conservan su escala tipográfica en tablet. Si el ancho disponible
    es menor, se desplaza el propio panel y nunca la página completa. */
 .nv-grafico__panel { overflow-x: auto; }

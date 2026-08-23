@@ -1114,14 +1114,18 @@ export async function montaAnalisis(raiz, {
   const nivelEfectivo = nivel || (registrada ? 'registrada' : 'visitante');
   const objetivo = {
     composicion: destinos?.composicion || raiz,
+    sectores: destinos?.sectores || destinos?.composicion || raiz,
+    geografia: destinos?.geografia || destinos?.composicion || raiz,
     riesgo: destinos?.riesgo || raiz,
     solapes: destinos?.solapes || raiz,
     escenarios: destinos?.escenarios || raiz,
   };
   if (nivelEfectivo === 'visitante') {
     objetivo.riesgo.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_CERRADO));
-    objetivo.composicion.append(el('p', { class: 'nv-analisis__cerrado' },
-      'El desglose por sectores y el mapa geográfico se abren al iniciar sesión con una cuenta gratuita.'));
+    objetivo.sectores.append(el('p', { class: 'nv-analisis__cerrado' },
+      'El desglose por sectores se abre al iniciar sesión con una cuenta gratuita.'));
+    objetivo.geografia.append(el('p', { class: 'nv-analisis__cerrado' },
+      'El mapa geográfico se abre al iniciar sesión con una cuenta gratuita.'));
     objetivo.solapes.append(el('p', { class: 'nv-analisis__cerrado' },
       'La comparación de subyacentes entre fondos se abre al iniciar sesión.'));
     objetivo.escenarios.append(el('p', { class: 'nv-analisis__cerrado' },
@@ -1166,7 +1170,7 @@ export async function montaAnalisis(raiz, {
   }
 
   const cargando = el('p', { class: 'nv-cons__nota', role: 'status' }, 'Consultando fichas y desgloses…');
-  objetivo.composicion.append(cargando);
+  objetivo.sectores.append(cargando);
 
   /* Concentración: fichas de la maestra, con la calidad del dato declarada. */
   const posAnalisis = posicionesParaAnalisis(posiciones, pesos);
@@ -1186,21 +1190,21 @@ export async function montaAnalisis(raiz, {
 
   cargando.remove();
 
-  objetivo.composicion.append(tablaReparto('En qué sectores está la renta variable',
+  objetivo.sectores.append(tablaReparto('En qué sectores está la renta variable',
     'El peso de cada sector dentro de la parte de renta variable de la combinación.',
     concentracionSectorial(posAnalisis, activos), etiquetaSector));
   /* Distribución geográfica con mapa (paso 42) + su tabla de regiones. */
   const repartoGeo = concentracionGeografica(posAnalisis, activos);
   const mapa = grupoMapa(repartoGeo);
-  if (mapa) objetivo.composicion.append(mapa);
+  if (mapa) objetivo.geografia.append(mapa);
   const regiones = tablaReparto('En qué regiones está la renta variable',
     'El mismo reparto del mapa, región a región.',
     repartoGeo, etiquetaRegion);
   const pliegueRegiones = el('details', { class: 'nv-analisis__despliegue' });
   pliegueRegiones.append(el('summary', {}, 'Ver el detalle por regiones'), regiones);
-  objetivo.composicion.append(pliegueRegiones);
+  objetivo.geografia.append(pliegueRegiones);
   if (sinFicha.length) {
-    objetivo.composicion.append(el('p', { class: 'nv-cons__nota' },
+    objetivo.geografia.append(el('p', { class: 'nv-cons__nota' },
       `Sin ficha disponible ahora mismo: ${sinFicha.join(', ')}. No entra en la concentración.`));
   }
 

@@ -435,6 +435,30 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
+/** Reparto por posición para el donut. En carteras largas se enseñan las
+ * cinco posiciones de mayor peso y se agrupa el resto, evitando una rueda
+ * ilegible sin ocultar porcentaje. */
+export function repartoPorActivo(posiciones, pesos, maxPartes = 6) {
+  if (!pesos) return null;
+  const filas = posiciones
+    .map((p) => ({
+      asset_id: p.activo.asset_id,
+      nombre: p.activo.display_name || p.activo.asset_id,
+      peso: pesos[p.activo.asset_id],
+    }))
+    .filter((p) => Number.isFinite(p.peso) && p.peso > 0)
+    .sort((a, b) => b.peso - a.peso);
+  if (!filas.length) return null;
+  if (filas.length <= maxPartes) return filas;
+  const visibles = filas.slice(0, Math.max(1, maxPartes - 1));
+  visibles.push({
+    asset_id: 'RESTO',
+    nombre: `${filas.length - visibles.length} posiciones más`,
+    peso: filas.slice(visibles.length).reduce((s, p) => s + p.peso, 0),
+  });
+  return visibles;
+}
+
 function creaFase(numero, id, pregunta, titulo) {
   const seccion = el('section', { id, class: 'nv-lab-fase', 'aria-labelledby': `${id}-title` });
   const cabecera = el('header', { class: 'nv-lab-fase__cabecera' });
@@ -466,6 +490,57 @@ function resumenCartera({ importe, metricas, posiciones }) {
     resumen.append(dato);
   }
   return resumen;
+}
+
+function donutActivos(posiciones, pesos, repartoClases) {
+  const partes = repartoPorActivo(posiciones, pesos);
+  if (!partes) return null;
+  const colores = [
+    'var(--nv-serie-1)', 'var(--nv-serie-2)', 'var(--nv-serie-3)',
+    'var(--nv-serie-4)', 'var(--nv-serie-5)', 'var(--nv-serie-6)',
+  ];
+  const bloque = el('div', { class: 'nv-donut' });
+  bloque.append(
+    el('h3', { class: 'nv-analisis__titulo' }, 'Distribución por activo'),
+    el('p', { class: 'nv-analisis__lectura' },
+      'Cada porción representa el peso normalizado de una posición en la cartera.'),
+  );
+  const cuerpo = el('div', { class: 'nv-donut__cuerpo' });
+  const grafico = el('div', {
+    class: 'nv-donut__grafico', role: 'img',
+    'aria-label': `Distribución por activo: ${partes.map((p) => `${p.nombre} ${pct(p.peso, 1)}`).join(', ')}`,
+  });
+  let cursor = 0;
+  const tramos = partes.map((p, i) => {
+    const inicio = cursor;
+    cursor += p.peso * 100;
+    return `${colores[i % colores.length]} ${inicio.toFixed(3)}% ${cursor.toFixed(3)}%`;
+  });
+  grafico.style.background = `conic-gradient(${tramos.join(', ')})`;
+  const centro = el('span', { class: 'nv-donut__centro', 'aria-hidden': 'true' });
+  centro.append(el('strong', {}, '100 %'), el('small', {}, 'cartera'));
+  grafico.append(centro);
+
+  const leyenda = el('ul', { class: 'nv-donut__leyenda' });
+  partes.forEach((p, i) => {
+    const item = el('li', { class: 'nv-donut__item' });
+    const punto = el('span', { class: 'nv-donut__punto', 'aria-hidden': 'true' });
+    punto.style.background = colores[i % colores.length];
+    item.append(
+      punto,
+      el('span', { class: 'nv-donut__nombre', title: p.nombre }, p.nombre),
+      el('strong', { class: 'nv-donut__peso' }, pct(p.peso, 1)),
+    );
+    leyenda.append(item);
+  });
+  cuerpo.append(grafico, leyenda);
+  bloque.append(cuerpo);
+  if (repartoClases?.length) {
+    bloque.append(el('p', { class: 'nv-cons__nota-clase' },
+      `Por clase: ${repartoClases.map((r) => `${r.etiqueta} ${pct(r.peso, 0)}`).join(' · ')}. `
+      + 'Es la clase declarada de cada producto; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
+  }
+  return bloque;
 }
 
 export function montaConstructor(raiz, { cliente = null } = {}) {
@@ -900,37 +975,20 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const fase05 = creaFase('05', 'fase-05', '¿Qué rangos ayudan a entender la incertidumbre?', 'Escenarios');
     resultados.append(fase02.seccion, fase03.seccion, fase04.seccion, fase05.seccion);
 
-    const cajaClases = el('article', { class: 'nv-lab-subcaja' });
-    fase02.contenido.append(cajaClases);
+    const composicionGrid = el('div', { class: 'nv-lab-composicion' });
+    const cajaActivos = el('article', { class: 'nv-lab-subcaja nv-lab-subcaja--donut' });
+    const cajaSectores = el('article', { class: 'nv-lab-subcaja nv-lab-sectores' });
+    const geografia = el('div', { class: 'nv-lab-geografia' });
+    composicionGrid.append(cajaActivos, cajaSectores);
+    fase02.contenido.append(composicionGrid, geografia);
     const cajaRiesgo = el('article', { class: 'nv-lab-subcaja' });
     fase03.contenido.append(cajaRiesgo);
 
-    /* ── Reparto por clase de activo: un gráfico, una idea (paso 23) ── */
+    /* El donut responde a la pregunta inmediata —cuánto pesa cada posición—;
+       el reparto por clase se conserva como lectura textual bajo el gráfico. */
     const reparto = repartoPorClase(posiciones, pesos);
-    if (reparto) {
-      cajaClases.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Reparto por clase de activo'));
-      const barra = el('div', {
-        class: 'nv-sim-barra',
-        role: 'img',
-        'aria-label': `Reparto: ${reparto.map((r) => `${r.etiqueta} ${pct(r.peso, 0)}`).join(', ')}`,
-      });
-      const leyenda = el('ul', { class: 'nv-cons__leyenda' });
-      for (const r of reparto) {
-        const seg = el('span', { class: 'nv-sim-seg' });
-        seg.style.background = r.color;
-        seg.style.width = `${(r.peso * 100).toFixed(2)}%`;
-        seg.title = `${r.etiqueta}: ${pct(r.peso, 0)}`;
-        barra.append(seg);
-        const item = el('li', { class: 'nv-cons__leyenda-item' });
-        const punto = el('span', { class: 'nv-sim-punto', 'aria-hidden': 'true' });
-        punto.style.background = r.color;
-        item.append(punto, el('span', {}, `${r.etiqueta} · ${pct(r.peso, 0)}`));
-        leyenda.append(item);
-      }
-      cajaClases.append(barra, leyenda);
-      cajaClases.append(el('p', { class: 'nv-cons__nota-clase' },
-        'Clase declarada de cada producto en la base de datos; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
-    }
+    const donut = donutActivos(posiciones, pesos, reparto);
+    if (donut) cajaActivos.append(donut);
 
     /* Análisis ampliado del nivel registrado (paso 32): se pinta en un nodo
        propio al final; si el usuario mueve un peso, este nodo se descarta con
@@ -943,6 +1001,8 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
         registrada: esRegistrada(), nivel: nivelActual(), metricas: m,
         destinos: {
           composicion: fase02.contenido,
+          sectores: cajaSectores,
+          geografia,
           riesgo: fase03.contenido,
           solapes: fase04.contenido,
           escenarios: fase05.contenido,

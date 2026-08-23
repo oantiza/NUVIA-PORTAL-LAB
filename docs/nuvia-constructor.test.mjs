@@ -6,7 +6,7 @@
 import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
-  lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
+  lecturasDeMetricas, fechaDelMinimo, repartoPorClase, repartoPorActivo, claseVisual,
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
   carterasLocalesParaNube,
@@ -145,6 +145,22 @@ console.log('\n— Reparto por clase (paso 23) —');
   comprueba('Sin pesos → null, nunca un gráfico vacío inventado', repartoPorClase(posiciones, null) === null);
   comprueba('claseVisual da color del sistema para cada clase', claseVisual('EQUITY').color.startsWith('var(--nv-cat-')
     && claseVisual('lo-que-sea').etiqueta === 'Sin clasificar');
+}
+
+console.log('\n— Distribución por activo para el donut —');
+{
+  const posiciones = Array.from({ length: 8 }, (_, i) => ({
+    activo: { asset_id: `A${i}`, display_name: `Activo ${i + 1}` }, bruto: 10,
+  }));
+  const pesos = Object.fromEntries(posiciones.map((p, i) => [p.activo.asset_id, (8 - i) / 36]));
+  const partes = repartoPorActivo(posiciones, pesos);
+  comprueba('El donut ordena los activos de mayor a menor',
+    partes.slice(0, -1).every((p, i, visibles) => i === 0 || p.peso <= visibles[i - 1].peso));
+  comprueba('Una cartera larga se resume en seis porciones como máximo',
+    partes.length === 6 && partes.at(-1).asset_id === 'RESTO');
+  comprueba('Agrupar el resto conserva exactamente el 100 %',
+    Math.abs(partes.reduce((s, p) => s + p.peso, 0) - 1) < 1e-12);
+  comprueba('Sin pesos no se dibuja un donut vacío', repartoPorActivo(posiciones, null) === null);
 }
 
 console.log('\n— Guardado local (paso 24) —');
