@@ -6,12 +6,12 @@
 import {
   MAX_POSICIONES, agregaPosicion, quitaPosicion, cambiaPeso,
   pesosNormalizados, serieCartera, fechaCorta, textoContador, NOTA_NIVEL,
-  lecturasDeMetricas, fechaDelMinimo, repartoPorClase, repartoPorActivo, claseVisual,
+  lecturasDeMetricas, fechaDelMinimo, repartoPorClase, claseVisual,
   MAX_CARTERAS, AVISO_GUARDADO, carteraParaGuardar, agregaCartera, borraCartera,
   AVISO_GUARDADO_NUBE, carteraNubeParaGuardar, posicionesDesdeNube,
   carterasLocalesParaNube,
   MAX_POSICIONES_SUSCRIPTOR, maxPosiciones, NOTA_NIVEL_SUSCRIPTOR,
-  puntosEvolucion, trazadoLinea,
+  puntosEvolucion, trazadoLinea, serieSemanalTresAnos,
 } from '../js/nuvia-constructor.js';
 import { metricasDesdeSerie } from '../js/nuvia-cartera.js';
 
@@ -145,22 +145,6 @@ console.log('\n— Reparto por clase (paso 23) —');
   comprueba('Sin pesos → null, nunca un gráfico vacío inventado', repartoPorClase(posiciones, null) === null);
   comprueba('claseVisual da color del sistema para cada clase', claseVisual('EQUITY').color.startsWith('var(--nv-cat-')
     && claseVisual('lo-que-sea').etiqueta === 'Sin clasificar');
-}
-
-console.log('\n— Distribución por activo para el donut —');
-{
-  const posiciones = Array.from({ length: 8 }, (_, i) => ({
-    activo: { asset_id: `A${i}`, display_name: `Activo ${i + 1}` }, bruto: 10,
-  }));
-  const pesos = Object.fromEntries(posiciones.map((p, i) => [p.activo.asset_id, (8 - i) / 36]));
-  const partes = repartoPorActivo(posiciones, pesos);
-  comprueba('El donut ordena los activos de mayor a menor',
-    partes.slice(0, -1).every((p, i, visibles) => i === 0 || p.peso <= visibles[i - 1].peso));
-  comprueba('Una cartera larga se resume en seis porciones como máximo',
-    partes.length === 6 && partes.at(-1).asset_id === 'RESTO');
-  comprueba('Agrupar el resto conserva exactamente el 100 %',
-    Math.abs(partes.reduce((s, p) => s + p.peso, 0) - 1) < 1e-12);
-  comprueba('Sin pesos no se dibuja un donut vacío', repartoPorActivo(posiciones, null) === null);
 }
 
 console.log('\n— Guardado local (paso 24) —');
@@ -311,6 +295,16 @@ console.log('\n— Evolución de la combinación (gráfico, encargo 20-08) —')
     Math.min(...ys) === 12 && Math.max(...ys) === 194);
   comprueba('Un hueco no numérico se salta sin romper el camino',
     /^M[\d.]+,[\d.]+ L[\d.]+,[\d.]+$/.test(trazadoLinea([100, NaN, 110], { ...escala, min: 100, max: 110 })));
+
+  const fechasDiarias = ['2022-08-14', '2023-08-14', '2023-08-15', '2023-08-21', '2026-08-14'];
+  const semanal = serieSemanalTresAnos([0.8, 1, 1.02, 1.05, 1.4], fechasDiarias);
+  comprueba('El gráfico conserva solo los últimos 3 años y un cierre por semana',
+    semanal.fechas.length === 3 && semanal.fechas[0] === '2023-08-15'
+    && semanal.fechas[1] === '2023-08-21' && semanal.fechas[2] === '2026-08-14');
+  comprueba('La serie semanal se rebasa para arrancar en 100',
+    semanal.niveles[0] === 1 && Math.abs(semanal.niveles[1] - (1.05 / 1.02)) < 1e-12);
+  comprueba('Sin fechas alineadas no se construye una serie semanal',
+    serieSemanalTresAnos([1, 1.1], ['2026-01-01']) === null);
 }
 
 if (fallos) {

@@ -149,9 +149,44 @@ export function trazadoLinea(valores, { W, H, izq, der, arriba, abajo, min, max 
   return d;
 }
 
+/** Reduce el historial a un cierre por semana y conserva únicamente los
+ * últimos tres años hasta la fecha más reciente disponible. La serie se
+ * rebasa a 1 para que el gráfico arranque en 100. */
+export function serieSemanalTresAnos(niveles, fechas) {
+  if (!Array.isArray(niveles) || !Array.isArray(fechas) || niveles.length !== fechas.length) return null;
+  const pares = niveles.map((nivel, i) => ({
+    nivel,
+    fecha: fechas[i],
+    tiempo: Date.parse(fechas[i]),
+  })).filter((p) => Number.isFinite(p.nivel) && Number.isFinite(p.tiempo))
+    .sort((a, b) => a.tiempo - b.tiempo);
+  if (pares.length < 2) return null;
+
+  const ultima = new Date(pares.at(-1).tiempo);
+  const inicio = new Date(ultima.getTime());
+  inicio.setUTCFullYear(inicio.getUTCFullYear() - 3);
+  const porSemana = new Map();
+  for (const par of pares) {
+    if (par.tiempo < inicio.getTime()) continue;
+    const dia = new Date(par.tiempo);
+    const desdeLunes = (dia.getUTCDay() + 6) % 7;
+    dia.setUTCDate(dia.getUTCDate() - desdeLunes);
+    const clave = dia.toISOString().slice(0, 10);
+    porSemana.set(clave, par); // último cierre disponible de esa semana
+  }
+  const semanales = [...porSemana.values()];
+  const base = semanales[0]?.nivel;
+  if (semanales.length < 2 || !Number.isFinite(base) || base === 0) return null;
+  return {
+    niveles: semanales.map((p) => p.nivel / base),
+    fechas: semanales.map((p) => p.fecha),
+  };
+}
+
 /** El gráfico de evolución con su panel de caídas. Null si faltan datos. */
 export function grupoEvolucion({ niveles, fechas }) {
-  const p = puntosEvolucion(niveles, fechas);
+  const semanal = serieSemanalTresAnos(niveles, fechas);
+  const p = semanal ? puntosEvolucion(semanal.niveles, semanal.fechas) : null;
   if (!p) return null;
 
   const ns = 'http://www.w3.org/2000/svg';
@@ -166,10 +201,10 @@ export function grupoEvolucion({ niveles, fechas }) {
   const bloque = el('div', { class: 'nv-evolucion' });
   bloque.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Evolución de la combinación'));
   bloque.append(el('p', { class: 'nv-cons__nota-clase' },
-    'La línea arranca en 100 al principio de la ventana y sigue, día a día, el valor de este reparto. Describe lo ocurrido, no lo que viene.'));
+    'La línea arranca en 100 y muestra un cierre por semana durante los últimos 3 años. Describe lo ocurrido, no lo que viene.'));
 
   /* La línea en base 100. */
-  const W = 760; const H = 280; const izq = 64; const der = 18; const arriba = 14; const abajo = 30;
+  const W = 1120; const H = 320; const izq = 64; const der = 18; const arriba = 14; const abajo = 30;
   const svg = nodoSvg('svg', {
     viewBox: `0 0 ${W} ${H}`,
     class: 'nv-evolucion__svg',
@@ -196,7 +231,7 @@ export function grupoEvolucion({ niveles, fechas }) {
   bloque.append(panel);
 
   /* Las caídas desde máximos, en el mismo eje temporal. */
-  const caidas = serieDeCaidas(niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
+  const caidas = serieDeCaidas(semanal.niveles).map((c) => (Number.isFinite(c) ? c * 100 : NaN));
   const cMin = Math.min(0, ...caidas.filter(Number.isFinite));
   const H2 = 150;
   const svg2 = nodoSvg('svg', {
@@ -435,30 +470,6 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
-/** Reparto por posición para el donut. En carteras largas se enseñan las
- * cinco posiciones de mayor peso y se agrupa el resto, evitando una rueda
- * ilegible sin ocultar porcentaje. */
-export function repartoPorActivo(posiciones, pesos, maxPartes = 6) {
-  if (!pesos) return null;
-  const filas = posiciones
-    .map((p) => ({
-      asset_id: p.activo.asset_id,
-      nombre: p.activo.display_name || p.activo.asset_id,
-      peso: pesos[p.activo.asset_id],
-    }))
-    .filter((p) => Number.isFinite(p.peso) && p.peso > 0)
-    .sort((a, b) => b.peso - a.peso);
-  if (!filas.length) return null;
-  if (filas.length <= maxPartes) return filas;
-  const visibles = filas.slice(0, Math.max(1, maxPartes - 1));
-  visibles.push({
-    asset_id: 'RESTO',
-    nombre: `${filas.length - visibles.length} posiciones más`,
-    peso: filas.slice(visibles.length).reduce((s, p) => s + p.peso, 0),
-  });
-  return visibles;
-}
-
 function creaFase(numero, id, pregunta, titulo) {
   const seccion = el('section', { id, class: 'nv-lab-fase', 'aria-labelledby': `${id}-title` });
   const cabecera = el('header', { class: 'nv-lab-fase__cabecera' });
@@ -492,29 +503,24 @@ function resumenCartera({ importe, metricas, posiciones }) {
   return resumen;
 }
 
-function donutActivos(posiciones, pesos, repartoClases) {
-  const partes = repartoPorActivo(posiciones, pesos);
+function donutTiposActivo(partes) {
   if (!partes) return null;
-  const colores = [
-    'var(--nv-serie-1)', 'var(--nv-serie-2)', 'var(--nv-serie-3)',
-    'var(--nv-serie-4)', 'var(--nv-serie-5)', 'var(--nv-serie-6)',
-  ];
   const bloque = el('div', { class: 'nv-donut' });
   bloque.append(
-    el('h3', { class: 'nv-analisis__titulo' }, 'Distribución por activo'),
+    el('h3', { class: 'nv-analisis__titulo' }, 'Distribución por tipo de activo'),
     el('p', { class: 'nv-analisis__lectura' },
-      'Cada porción representa el peso normalizado de una posición en la cartera.'),
+      'Cada porción representa el peso normalizado de un tipo de activo en la cartera.'),
   );
   const cuerpo = el('div', { class: 'nv-donut__cuerpo' });
   const grafico = el('div', {
     class: 'nv-donut__grafico', role: 'img',
-    'aria-label': `Distribución por activo: ${partes.map((p) => `${p.nombre} ${pct(p.peso, 1)}`).join(', ')}`,
+    'aria-label': `Distribución por tipo de activo: ${partes.map((p) => `${p.etiqueta} ${pct(p.peso, 1)}`).join(', ')}`,
   });
   let cursor = 0;
-  const tramos = partes.map((p, i) => {
+  const tramos = partes.map((p) => {
     const inicio = cursor;
     cursor += p.peso * 100;
-    return `${colores[i % colores.length]} ${inicio.toFixed(3)}% ${cursor.toFixed(3)}%`;
+    return `${p.color} ${inicio.toFixed(3)}% ${cursor.toFixed(3)}%`;
   });
   grafico.style.background = `conic-gradient(${tramos.join(', ')})`;
   const centro = el('span', { class: 'nv-donut__centro', 'aria-hidden': 'true' });
@@ -522,24 +528,21 @@ function donutActivos(posiciones, pesos, repartoClases) {
   grafico.append(centro);
 
   const leyenda = el('ul', { class: 'nv-donut__leyenda' });
-  partes.forEach((p, i) => {
+  partes.forEach((p) => {
     const item = el('li', { class: 'nv-donut__item' });
     const punto = el('span', { class: 'nv-donut__punto', 'aria-hidden': 'true' });
-    punto.style.background = colores[i % colores.length];
+    punto.style.background = p.color;
     item.append(
       punto,
-      el('span', { class: 'nv-donut__nombre', title: p.nombre }, p.nombre),
+      el('span', { class: 'nv-donut__nombre', title: p.etiqueta }, p.etiqueta),
       el('strong', { class: 'nv-donut__peso' }, pct(p.peso, 1)),
     );
     leyenda.append(item);
   });
   cuerpo.append(grafico, leyenda);
   bloque.append(cuerpo);
-  if (repartoClases?.length) {
-    bloque.append(el('p', { class: 'nv-cons__nota-clase' },
-      `Por clase: ${repartoClases.map((r) => `${r.etiqueta} ${pct(r.peso, 0)}`).join(' · ')}. `
-      + 'Es la clase declarada de cada producto; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
-  }
+  bloque.append(el('p', { class: 'nv-cons__nota-clase' },
+    'Se usa el tipo declarado de cada producto; los fondos mixtos cuentan como «Mixtos», sin mirar dentro.'));
   return bloque;
 }
 
@@ -984,10 +987,10 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     const cajaRiesgo = el('article', { class: 'nv-lab-subcaja' });
     fase03.contenido.append(cajaRiesgo);
 
-    /* El donut responde a la pregunta inmediata —cuánto pesa cada posición—;
-       el reparto por clase se conserva como lectura textual bajo el gráfico. */
+    /* El donut muestra el reparto por tipo de activo: renta variable, renta
+       fija, monetario, activos reales y las demás categorías declaradas. */
     const reparto = repartoPorClase(posiciones, pesos);
-    const donut = donutActivos(posiciones, pesos, reparto);
+    const donut = donutTiposActivo(reparto);
     if (donut) cajaActivos.append(donut);
 
     /* Análisis ampliado del nivel registrado (paso 32): se pinta en un nodo

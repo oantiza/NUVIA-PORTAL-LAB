@@ -5287,11 +5287,11 @@
 .nv-solape--cero { background: var(--nv-mist); color: var(--nv-text-soft); }
 
 /* Evolución de la combinación y sus caídas (encargo 20-08-2026) */
-.nv-evolucion { display: grid; gap: var(--nv-space-1); min-inline-size: 0; }
+.nv-evolucion { display: grid; width: 100%; gap: var(--nv-space-1); min-inline-size: 0; }
 .nv-evolucion__svg {
   display: block;
   width: 100%;
-  max-width: 760px;
+  max-width: none;
   height: auto;
   margin-block: var(--nv-space-1);
   margin-inline: auto;
