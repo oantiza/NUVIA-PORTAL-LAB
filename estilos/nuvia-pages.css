@@ -5088,7 +5088,7 @@
 /* Aportación al riesgo (B): la barra es la aportación y la raya fina marca
    el peso real de la posición sobre la misma escala de 0 a 100. */
 .nv-riesgo {
-  width: min(100%, 920px);
+  width: 100%;
   margin-inline: auto;
   gap: var(--nv-space-3);
 }
@@ -5121,7 +5121,7 @@
 }
 
 .nv-analisis__conclusion {
-  width: min(100%, 920px);
+  width: 100%;
   margin: var(--nv-space-3) auto 0;
   border-radius: var(--nv-radius-md);
   background: var(--nv-green-100);
@@ -5168,7 +5168,7 @@
 .nv-frontera {
   display: block;
   width: 100%;
-  max-width: 760px;
+  max-width: none;
   height: auto;
   margin-block: var(--nv-space-2);
   margin-inline: auto;
@@ -5214,7 +5214,7 @@
 }
 .nv-frontera__eje { font-size: var(--nv-label); fill: var(--nv-text-muted); }
 .nv-frontera__control { display: grid; gap: var(--nv-space-1); min-width: 0; }
-.nv-frontera__control input[type='range'] { width: 100%; max-width: 760px; }
+.nv-frontera__control input[type='range'] { width: 100%; max-width: none; }
 .nv-frontera__etiqueta { font-size: var(--nv-body-sm); }
 .nv-frontera__detalle { margin: 0; font-size: var(--nv-body-sm); display: grid; gap: var(--nv-space-1); }
 .nv-frontera__resumen { margin: 0; }
@@ -5335,6 +5335,9 @@
 
 /* La matriz de solapamiento como rejilla de calor numerada (Fase 7) */
 .nv-solape {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 4px;
   margin: 0 auto;
@@ -5351,7 +5354,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 52px;
+  width: 100%;
+  min-width: 44px;
   padding: 6px 8px;
   border-radius: 6px;
   font-size: var(--nv-body-sm);
@@ -5574,14 +5578,49 @@
   gap: var(--nv-space-3);
   grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
 }
-.nv-modelos__tarjeta { display: grid; gap: var(--nv-space-2); align-content: start; min-inline-size: 0; }
+.nv-modelos__tarjeta {
+  display: grid;
+  gap: var(--nv-space-2);
+  align-content: start;
+  min-inline-size: 0;
+  border: 1px solid var(--nv-line);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.nv-modelos__tarjeta--activa {
+  border-color: var(--nv-green-700);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--nv-green-700) 18%, transparent);
+}
 .nv-modelos__nombre { margin: 0; }
 .nv-modelos__tema { margin: 0; font-size: var(--nv-body-sm); }
 .nv-modelos__criterio { margin: 0; font-size: var(--nv-label); color: var(--nv-text-muted); }
 .nv-modelos__composicion { margin: 0; padding-inline-start: 1.2em; display: grid; gap: 4px; font-size: var(--nv-body-sm); }
 .nv-modelos__tarjeta .nv-btn { justify-self: start; }
-.nv-modelos__metricas { display: grid; gap: var(--nv-space-2); font-size: var(--nv-body-sm); }
-.nv-modelos__tabla th { text-align: left; }
+.nv-modelos__estado { margin: 0; color: var(--nv-text-soft); font-size: var(--nv-body-sm); }
+
+.nv-modelo-seleccionado {
+  display: grid;
+  gap: var(--nv-space-5);
+  scroll-margin-top: calc(var(--nv-header-height) + var(--nv-space-4));
+}
+.nv-modelo-seleccionado[hidden] { display: none; }
+.nv-modelo-seleccionado__cabecera {
+  border-top: 3px solid var(--nv-green-700);
+  text-align: center;
+}
+.nv-modelo-seleccionado__cabecera h2 {
+  margin: 0 0 var(--nv-space-2);
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-size: var(--nv-title-md);
+  font-weight: var(--nv-weight-title);
+}
+.nv-modelo-seleccionado__cabecera > p:not(.nv-lab-fase__pregunta) {
+  max-width: 76ch;
+  margin: 0 auto;
+  color: var(--nv-text-soft);
+}
+.nv-cons--modelo { margin-top: var(--nv-space-2); }
+.nv-cons--modelo .nv-cons__estado { text-align: center; }
 
 /* «Tus datos y tus derechos» (paso 34) */
 .nv-cuenta__derechos { display: grid; gap: var(--nv-space-2); min-inline-size: 0; }

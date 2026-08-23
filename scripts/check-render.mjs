@@ -56,7 +56,8 @@ const CONTENIDO = {
   'vivienda.html':         [['.nv-field__box', 12], ['.viv-pill--dark', 2]],
   'lecturas.html':         [['.lecturas-card', 4]],
   'fiscalidad.html':       [['.fiscal-dato', 9]],
-  'cartera.html':          [['.nuvia-analysis-tabs a', 2]],
+  'cartera.html':          [['.nuvia-analysis-tabs a', 3]],
+  'cartera.html?vista=models': [['.nv-modelos__tarjeta', 4], ['.nuvia-analysis-tabs a', 3]],
   'academia.html':         [['.ac-strong', 1], ['.viv-pill', 2], ['.ac-x10', 1]],
   'temas.html':            [['.tm-card__title', 3]],
   'guia-calendario.html':  [['.gt-title', 1]],
@@ -90,7 +91,7 @@ const PAGINAS = [
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
   'temas.html', 'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
   'guia-planificacion.html', 'guia-fiscal.html', 'sistema-visual.html',
-  'mercados.html?vista=cotizaciones',
+  'mercados.html?vista=cotizaciones', 'cartera.html?vista=models',
 ];
 
 let chromium;

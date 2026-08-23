@@ -114,6 +114,10 @@ if (portfolioPage.includes('js/nuvia-informe.js') || portfolioPage.includes('id=
 if (!portfolioPage.includes('js/nuvia-modelos.js') || !portfolioPage.includes('id="modelos"')) {
   throw new Error('La página de cartera no monta las carteras modelo temáticas');
 }
+if (!portfolioPage.includes('id="vista-models"') || !portfolioPage.includes('vista=models')
+  || !portfolioPage.includes('id="modelo-analisis-dinamico"')) {
+  throw new Error('Las carteras modelo no tienen su pestaña y análisis completo propios');
+}
 if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
   throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
 }

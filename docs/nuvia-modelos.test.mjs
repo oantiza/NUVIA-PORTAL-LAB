@@ -51,6 +51,13 @@ console.log('\n— Formato para el motor del constructor —');
   comprueba('posicionesDeModelo produce {activo:{asset_id, display_name}, bruto}',
     posiciones.length === CARTERAS_MODELO[0].posiciones.length
     && posiciones.every((p) => p.activo.asset_id && p.activo.display_name && Number.isFinite(p.bruto)));
+  const enriquecidas = posicionesDeModelo(CARTERAS_MODELO[0], {
+    IE00B4L5Y983: { instrument_type: 'ETF', economic_asset_class: 'EQUITY' },
+  });
+  comprueba('Las fichas del catálogo completan tipo y clase sin cambiar la composición',
+    enriquecidas[0].activo.instrument_type === 'ETF'
+    && enriquecidas[0].activo.economic_asset_class === 'EQUITY'
+    && enriquecidas[0].bruto === 25);
   comprueba('Un modelo vacío no rompe', posicionesDeModelo(null).length === 0);
 }
 
@@ -76,6 +83,8 @@ console.log('\n— Prueba de la sección 5 sobre todos los textos del bloque —
     NOTA_MODELOS.includes('no hay botón') && NOTA_MODELOS.includes('ni enlace para contratarla'));
   comprueba('La nota declara la identidad y la fuente',
     NOTA_MODELOS.includes('la misma para cualquiera') && NOTA_MODELOS.includes('base de datos NUVIA'));
+  comprueba('La nota declara que se abre el mismo análisis que en «Mi cartera»',
+    NOTA_MODELOS.includes('mismo análisis') && NOTA_MODELOS.includes('Mi cartera'));
 }
 
 if (fallos) {

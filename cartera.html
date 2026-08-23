@@ -77,9 +77,10 @@
           <div>
             <p class="nuvia-analysis-eyebrow"><span aria-hidden="true"></span>Analítica NUVIA</p>
             <h1 id="analysis-title">Analítica de cartera</h1>
-            <p class="nuvia-analysis-lead">Dos herramientas conectadas para estudiar cómo está distribuida una cartera y analizar en profundidad empresas cotizadas.</p>
+            <p class="nuvia-analysis-lead">Un mismo espacio para analizar tu cartera, estudiar composiciones modelo y profundizar en empresas cotizadas.</p>
             <nav class="nuvia-analysis-tabs" aria-label="Vistas de analítica de cartera">
-              <a id="vista-portfolio" href="cartera.html?vista=portfolio#suite-nuvia" aria-current="page">Laboratorio de cartera</a>
+              <a id="vista-portfolio" href="cartera.html?vista=portfolio#laboratorio" aria-current="page">Mi cartera</a>
+              <a id="vista-models" href="cartera.html?vista=models#carteras-modelo">Carteras modelo</a>
               <a id="vista-companies" href="cartera.html?vista=companies#suite-nuvia">Análisis y valoración de empresas</a>
             </nav>
             <div class="nuvia-analysis-hero__divider" aria-hidden="true"></div>
@@ -106,8 +107,7 @@
               <a class="nv-atajos__enlace" href="#fase-03">Cuánto se mueve</a>
               <a class="nv-atajos__enlace" href="#fase-04">Apuestas repetidas</a>
               <a class="nv-atajos__enlace" href="#fase-05">Escenarios</a>
-              <a class="nv-atajos__enlace" href="#fase-06">Otras carteras</a>
-              <a class="nv-atajos__enlace" href="#fase-07">Cómo leerlo</a>
+              <a class="nv-atajos__enlace" href="#fase-06">Cómo leerlo</a>
               <button type="button" class="nv-atajos__enlace" id="boton-cuenta">Tu cuenta</button>
             </nav>
           </div>
@@ -139,20 +139,6 @@
 
           <div id="analisis-dinamico" class="nv-lab-analisis-dinamico" aria-label="Análisis de la cartera elegida"></div>
 
-          <section id="fase-06" class="nv-lab-fase" aria-labelledby="fase-06-title">
-            <header class="nv-lab-fase__cabecera">
-              <span class="nv-lab-fase__numero" aria-hidden="true">06</span>
-              <div><p class="nv-lab-fase__pregunta">¿Con qué referencias puedes contrastarla?</p><h2 id="fase-06-title">Otras carteras</h2></div>
-            </header>
-            <article class="nv-lab-caja">
-              <h3 id="modelos-title">Carteras modelo temáticas</h3>
-              <p>Composiciones fijas, con criterio y fecha declarados. Son referencias editoriales; no describen a ningún lector.</p>
-              <div id="modelos" class="nv-modelos" aria-labelledby="modelos-title">
-                <div class="nv-note"><p>Las carteras modelo necesitan JavaScript y conexión.</p></div>
-              </div>
-            </article>
-          </section>
-
           <dialog id="dialogo-cuenta" class="nv-dialogo" aria-labelledby="cuenta-title">
             <div class="nv-dialogo__cabecera">
               <h2 id="cuenta-title">Tu cuenta</h2>
@@ -166,10 +152,10 @@
             </div>
           </dialog>
 
-          <section id="fase-07" class="nv-lab-fase" aria-labelledby="fase-07-title">
+          <section id="fase-06" class="nv-lab-fase" aria-labelledby="fase-06-title">
             <header class="nv-lab-fase__cabecera">
-              <span class="nv-lab-fase__numero" aria-hidden="true">07</span>
-              <div><p class="nv-lab-fase__pregunta">¿De dónde salen las cifras?</p><h2 id="fase-07-title">Cómo leerlo</h2></div>
+              <span class="nv-lab-fase__numero" aria-hidden="true">06</span>
+              <div><p class="nv-lab-fase__pregunta">¿De dónde salen las cifras?</p><h2 id="fase-06-title">Cómo leerlo</h2></div>
             </header>
 
             <article class="nv-lab-caja">
@@ -223,6 +209,43 @@
 
         </section>
 
+        <section id="carteras-modelo" class="nuvia-lab nuvia-modelos-vista" aria-label="Carteras modelo" hidden>
+          <div class="nv-portada-grupo">
+            <div class="nv-portada-lab nv-portada-lab--modelos" role="presentation">
+              <div class="nv-portada-lab__texto">
+                <p class="nv-portada-lab__marca">NUVIA</p>
+                <p class="nv-portada-lab__seccion">Carteras modelo</p>
+                <p class="nv-portada-lab__lema">Composiciones fijas publicadas por el portal, analizadas con el mismo recorrido y las mismas fuentes que una cartera propia.</p>
+                <i class="nv-portada-lab__raya" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+          <p class="nv-lab-tesis">Elige una composición para ver qué contiene, cómo se movió, cuánto riesgo aportó cada posición, dónde se repiten apuestas y qué muestran sus escenarios.</p>
+
+          <section id="modelos-fase-01" class="nv-lab-fase" aria-labelledby="modelos-fase-01-title">
+            <header class="nv-lab-fase__cabecera">
+              <span class="nv-lab-fase__numero" aria-hidden="true">01</span>
+              <div><p class="nv-lab-fase__pregunta">¿Qué composición quieres estudiar?</p><h2 id="modelos-fase-01-title">Elige una cartera modelo</h2></div>
+            </header>
+            <article class="nv-lab-caja nv-lab-caja--principal">
+              <div id="modelos" class="nv-modelos" aria-labelledby="modelos-fase-01-title">
+                <div class="nv-note"><p>Las carteras modelo necesitan JavaScript y conexión.</p></div>
+              </div>
+            </article>
+          </section>
+
+          <section id="modelo-seleccionado" class="nv-modelo-seleccionado" aria-live="polite" hidden>
+            <article class="nv-lab-caja nv-modelo-seleccionado__cabecera">
+              <p class="nv-lab-fase__pregunta">Cartera modelo seleccionada</p>
+              <h2 id="modelo-seleccionado-nombre"></h2>
+              <p id="modelo-seleccionado-criterio"></p>
+              <div id="modelo-motor" class="nv-cons nv-cons--modelo" aria-label="Estado del análisis de la cartera modelo"></div>
+            </article>
+            <div id="modelo-analisis-dinamico" class="nv-lab-analisis-dinamico" aria-label="Análisis de la cartera modelo elegida"></div>
+          </section>
+        </section>
+
         <section id="suite-nuvia" class="nuvia-suite-shell nuvia-suite-shell--companies" aria-label="Análisis y valoración de empresas" hidden>
           <iframe id="nuvia-company-suite" data-src="company-analysis/index.html?embedded=web2" title="Análisis y valoración de empresas NUVIA" loading="lazy"></iframe>
         </section>
@@ -245,6 +268,7 @@
             <a href="index.html">Inicio</a>
             <a href="mercados.html">Mercados</a>
             <a href="cartera.html">Analítica de cartera</a>
+            <a href="cartera.html?vista=models">Carteras modelo</a>
             <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
             <a href="lecturas.html">Lecturas con criterio</a>
           </div>
@@ -283,40 +307,91 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440}}">
 class Component extends DCLogic {
   componentDidMount() {
-    const SUITE_TABS = ['portfolio', 'companies'];
+    const SUITE_TABS = ['portfolio', 'models', 'companies'];
     const requestedRaw = new URLSearchParams(window.location.search).get('vista');
     const requested = ['technical', 'fundamental'].includes(requestedRaw) ? 'companies' : requestedRaw;
-    const vista = SUITE_TABS.indexOf(requested) >= 0 ? requested : 'portfolio';
+    const vistaInicial = SUITE_TABS.indexOf(requested) >= 0 ? requested : 'portfolio';
     if (requestedRaw !== requested && requested === 'companies') {
       const canonicalUrl = new URL(window.location.href);
       canonicalUrl.searchParams.set('vista', 'companies');
       window.history.replaceState(null, '', canonicalUrl);
     }
-    document.title = 'Analítica de cartera | NUVIA Family Wealth';
     const lab = document.getElementById('laboratorio');
+    const modelosVista = document.getElementById('carteras-modelo');
     const shell = document.getElementById('suite-nuvia');
     const companyFrame = document.getElementById('nuvia-company-suite');
-    if (!lab || !shell || !companyFrame) return;
-    document.body.dataset.suiteVista = vista;
-    const esAnalisisEmpresas = vista === 'companies';
-    lab.hidden = esAnalisisEmpresas;
-    shell.hidden = !esAnalisisEmpresas;
-    if (esAnalisisEmpresas && !companyFrame.getAttribute('src')) {
-      companyFrame.setAttribute('src', companyFrame.dataset.src);
-    }
+    if (!lab || !modelosVista || !shell || !companyFrame) return;
+
+    const activaVista = (vista, actualizaUrl = false) => {
+      const elegida = SUITE_TABS.includes(vista) ? vista : 'portfolio';
+      document.body.dataset.suiteVista = elegida;
+      lab.hidden = elegida !== 'portfolio';
+      modelosVista.hidden = elegida !== 'models';
+      shell.hidden = elegida !== 'companies';
+      if (elegida === 'companies' && !companyFrame.getAttribute('src')) companyFrame.setAttribute('src', companyFrame.dataset.src);
+      SUITE_TABS.forEach((tab) => {
+        const boton = document.getElementById('vista-' + tab);
+        if (boton) boton.setAttribute('aria-current', tab === elegida ? 'page' : 'false');
+      });
+      document.title = elegida === 'models'
+        ? 'Carteras modelo | NUVIA Family Wealth'
+        : elegida === 'companies'
+          ? 'Análisis y valoración de empresas | NUVIA Family Wealth'
+          : 'Mi cartera | NUVIA Family Wealth';
+      if (actualizaUrl) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('vista', elegida);
+        url.hash = elegida === 'models' ? 'carteras-modelo' : elegida === 'companies' ? 'suite-nuvia' : 'laboratorio';
+        window.history.pushState({ vista: elegida }, '', url);
+      }
+    };
+    activaVista(vistaInicial);
     SUITE_TABS.forEach((tab) => {
       const boton = document.getElementById('vista-' + tab);
-      if (boton) boton.setAttribute('aria-current', tab === vista ? 'page' : 'false');
+      boton?.addEventListener('click', (evento) => {
+        evento.preventDefault();
+        activaVista(tab, true);
+      });
     });
+    this._onPop = () => activaVista(new URLSearchParams(window.location.search).get('vista'));
+    window.addEventListener('popstate', this._onPop);
     import('./js/nuvia-simulador.js')
       .then((m) => { const sim = document.getElementById('simulador'); if (sim) m.montaSimulador(sim); })
       .catch(() => {});
     import('./js/nuvia-buscador.js')
       .then((m) => { const nodo = document.getElementById('buscador'); if (nodo) m.montaBuscador(nodo); })
       .catch(() => {});
-    import('./js/nuvia-constructor.js')
-      .then((m) => { const nodo = document.getElementById('constructor'); if (nodo) m.montaConstructor(nodo); })
-      .catch(() => {});
+    Promise.all([import('./js/nuvia-constructor.js'), import('./js/nuvia-modelos.js')])
+      .then(([constructor, modelos]) => {
+        const nodo = document.getElementById('constructor');
+        if (nodo) constructor.montaConstructor(nodo);
+        const raizModelos = document.getElementById('modelos');
+        const seleccionado = document.getElementById('modelo-seleccionado');
+        const nombre = document.getElementById('modelo-seleccionado-nombre');
+        const criterio = document.getElementById('modelo-seleccionado-criterio');
+        const motorRaiz = document.getElementById('modelo-motor');
+        const analisisRaiz = document.getElementById('modelo-analisis-dinamico');
+        let motorModelo = null;
+        if (raizModelos && seleccionado && nombre && criterio && motorRaiz && analisisRaiz) {
+          modelos.montaModelos(raizModelos, {
+            alSeleccionar: ({ modelo, posiciones }) => {
+              seleccionado.hidden = false;
+              nombre.textContent = modelo.nombre;
+              criterio.textContent = modelo.criterio;
+              if (!motorModelo) {
+                motorModelo = constructor.montaConstructor(motorRaiz, {
+                  posicionesIniciales: posiciones,
+                  editable: false,
+                  destinoAnalisis: analisisRaiz,
+                  prefijoId: 'modelo',
+                });
+              } else motorModelo.cargaPosiciones(posiciones);
+              seleccionado.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            },
+          });
+        }
+      })
+      .catch((error) => { console.error('No se ha podido iniciar el análisis de carteras.', error); });
     import('./js/nuvia-cuenta.js')
       .then((m) => { const nodo = document.getElementById('cuenta'); if (nodo) m.montaCuenta(nodo); })
       .catch(() => {});
@@ -332,9 +407,6 @@ class Component extends DCLogic {
         ?.addEventListener('click', () => dialogoCuenta.close());
       dialogoCuenta.addEventListener('click', (e) => { if (e.target === dialogoCuenta) dialogoCuenta.close(); });
     }
-    import('./js/nuvia-modelos.js')
-      .then((m) => { const nodo = document.getElementById('modelos'); if (nodo) m.montaModelos(nodo); })
-      .catch(() => {});
     const applyCompanyHeight = (height) => {
       const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));
       if (safeHeight) companyFrame.style.height = safeHeight + 'px';
@@ -352,6 +424,7 @@ class Component extends DCLogic {
     companyFrame.addEventListener('load', this._onCompanyFrameLoad);
   }
   componentWillUnmount() {
+    if (this._onPop) window.removeEventListener('popstate', this._onPop);
     if (this._onMsg) window.removeEventListener('message', this._onMsg);
     if (this._onCompanyFrameLoad) document.getElementById('nuvia-company-suite')?.removeEventListener('load', this._onCompanyFrameLoad);
   }

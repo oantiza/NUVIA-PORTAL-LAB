@@ -546,11 +546,20 @@ function donutTiposActivo(partes) {
   return bloque;
 }
 
-export function montaConstructor(raiz, { cliente = null } = {}) {
+export function montaConstructor(raiz, {
+  cliente = null,
+  posicionesIniciales = [],
+  editable = true,
+  destinoAnalisis = null,
+  prefijoId = '',
+} = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
 
-  let posiciones = [];
+  let posiciones = (posicionesIniciales || []).map((p) => ({
+    activo: { ...(p.activo || {}) },
+    bruto: Number(p.bruto) || 0,
+  }));
   const cacheSeries = new Map(); // clave (ids ordenados) -> promesa del payload
   let generacion = 0;
   let ofertaMigracionDescartada = false; // «ahora no» de la migración (paso 31)
@@ -564,8 +573,9 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   let importeCartera = null;
   const eur = (v) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
   const importeCampo = el('div', { class: 'nv-cons__importe', hidden: '' });
+  const idImporte = `${prefijoId ? `${prefijoId}-` : ''}importe-cartera`;
   const importeInput = el('input', {
-    type: 'number', id: 'importe-cartera', min: '0', step: '1000',
+    type: 'number', id: idImporte, min: '0', step: '1000',
     inputmode: 'decimal', placeholder: 'p. ej. 100 000',
   });
   importeInput.addEventListener('input', () => {
@@ -574,7 +584,7 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     recalcula();
   });
   importeCampo.append(
-    el('label', { for: 'importe-cartera' }, 'Importe de la cartera (€)'),
+    el('label', { for: idImporte }, 'Importe de la cartera (€)'),
     importeInput,
     el('span', { class: 'nv-cons__importe-nota' }, 'Opcional: solo sirve para mostrar el capital por posición y no sale de tu navegador.'),
   );
@@ -596,9 +606,10 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
 
   /* ── Guardado: local (paso 24) o en la cuenta (paso 30) según la sesión ── */
   const guardadoRaiz = el('div', { class: 'nv-cons__guardado' });
-  raiz.append(contador, importeCampo, cabeceraLista, lista, estado, nivel, guardadoRaiz);
-  const destinoAnalisis = document.getElementById('analisis-dinamico');
-  (destinoAnalisis || raiz).append(resultados);
+  if (editable) raiz.append(contador, importeCampo, cabeceraLista, lista, estado, nivel, guardadoRaiz);
+  else raiz.append(estado);
+  const destinoResultados = destinoAnalisis || document.getElementById('analisis-dinamico');
+  (destinoResultados || raiz).append(resultados);
 
   function esRegistrada() {
     try { return datos.sesionActual?.().tipo === 'registrada'; } catch { return false; }
@@ -845,10 +856,10 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
   }
 
   document.addEventListener('nuvia:sesion-cambiada', () => {
-    pintaGuardado();
+    if (editable) pintaGuardado();
     recalcula(); // el análisis ampliado (paso 32) aparece o se cierra con la sesión
   });
-  pintaGuardado();
+  if (editable) pintaGuardado();
 
   function seriesDelConjunto(ids) {
     const clave = [...ids].sort().join('|');
@@ -972,10 +983,11 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
 
     const niveles = serieCartera(series, pesos);
     const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
-    const fase02 = creaFase('02', 'fase-02', '¿Qué contiene realmente?', 'Qué tienes');
-    const fase03 = creaFase('03', 'fase-03', '¿Qué hizo el valor en el pasado?', 'Cuánto se mueve');
-    const fase04 = creaFase('04', 'fase-04', '¿Dónde se repiten las mismas apuestas?', 'Apuestas repetidas');
-    const fase05 = creaFase('05', 'fase-05', '¿Qué rangos ayudan a entender la incertidumbre?', 'Escenarios');
+    const idFase = (numero) => `${prefijoId ? `${prefijoId}-` : ''}fase-${numero}`;
+    const fase02 = creaFase('02', idFase('02'), '¿Qué contiene realmente?', 'Qué tienes');
+    const fase03 = creaFase('03', idFase('03'), '¿Qué hizo el valor en el pasado?', 'Cuánto se mueve');
+    const fase04 = creaFase('04', idFase('04'), '¿Dónde se repiten las mismas apuestas?', 'Apuestas repetidas');
+    const fase05 = creaFase('05', idFase('05'), '¿Qué rangos ayudan a entender la incertidumbre?', 'Escenarios');
     resultados.append(fase02.seccion, fase03.seccion, fase04.seccion, fase05.seccion);
 
     const composicionGrid = el('div', { class: 'nv-lab-composicion' });
@@ -1053,24 +1065,38 @@ export function montaConstructor(raiz, { cliente = null } = {}) {
     pintaAnalisis();
   }
 
-  document.addEventListener('nuvia:activo-elegido', (evento) => {
-    const { posiciones: nuevas, motivo } = agregaPosicion(posiciones, evento.detail, limiteActual());
-    if (motivo === 'limite') {
-      estado.textContent = `La cartera ya tiene sus ${limiteActual()} posiciones. Quita alguna para probar otra combinación.`;
-      nivel.hidden = false;
-      return;
-    }
-    if (motivo === 'repetido') {
-      estado.textContent = 'Ese activo ya está en la cartera.';
-      return;
-    }
-    if (motivo) return;
-    posiciones = nuevas;
-    pintaLista();
-    recalcula();
-    raiz.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
+  if (editable) {
+    document.addEventListener('nuvia:activo-elegido', (evento) => {
+      const { posiciones: nuevas, motivo } = agregaPosicion(posiciones, evento.detail, limiteActual());
+      if (motivo === 'limite') {
+        estado.textContent = `La cartera ya tiene sus ${limiteActual()} posiciones. Quita alguna para probar otra combinación.`;
+        nivel.hidden = false;
+        return;
+      }
+      if (motivo === 'repetido') {
+        estado.textContent = 'Ese activo ya está en la cartera.';
+        return;
+      }
+      if (motivo) return;
+      posiciones = nuevas;
+      pintaLista();
+      recalcula();
+      raiz.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  }
 
+  pintaLista();
   recalcula();
-  return { recalcula, cuantas: () => posiciones.length };
+  return {
+    recalcula,
+    cuantas: () => posiciones.length,
+    cargaPosiciones(nuevas) {
+      posiciones = (nuevas || []).map((p) => ({
+        activo: { ...(p.activo || {}) },
+        bruto: Number(p.bruto) || 0,
+      }));
+      pintaLista();
+      return recalcula();
+    },
+  };
 }

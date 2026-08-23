@@ -15,16 +15,15 @@
  */
 
 import { maestra } from './nuvia-datos.js';
-import { metricasDesdeSerie, pct, DIAS_MERCADO } from './nuvia-cartera.js';
-import { pesosNormalizados, serieCartera, fechaCorta } from './nuvia-constructor.js';
 
 /** Nota fija del bloque: qué es esto y qué no es. */
 export const NOTA_MODELOS = 'Cada cartera modelo es una composición fija: '
   + 'la misma para cualquiera que la mire, con su criterio y su fecha '
   + 'declarados, y con los pesos a partes iguales. No es una propuesta ni '
   + 'dice nada de ningún lector: por eso no hay botón que la copie a tu '
-  + 'cartera ni enlace para contratarla. Sus métricas salen del historial '
-  + 'real de la base de datos NUVIA, calculadas al abrirlas.';
+  + 'cartera ni enlace para contratarla. Al seleccionarla se abre el mismo '
+  + 'análisis que en «Mi cartera», con el historial real de 3 años de la '
+  + 'base de datos NUVIA.';
 
 /**
  * Las carteras modelo. Composición fijada por criterio propio del portal
@@ -115,9 +114,14 @@ export function validaModelo(modelo) {
 }
 
 /** Posiciones de un modelo en el formato del motor del constructor. */
-export function posicionesDeModelo(modelo) {
+export function posicionesDeModelo(modelo, detalles = {}) {
   return (modelo?.posiciones || []).map((p) => ({
-    activo: { asset_id: p.asset_id, display_name: p.nombre },
+    activo: {
+      asset_id: p.asset_id,
+      display_name: detalles[p.asset_id]?.display_name || p.nombre,
+      instrument_type: detalles[p.asset_id]?.instrument_type,
+      economic_asset_class: detalles[p.asset_id]?.economic_asset_class,
+    },
     bruto: p.peso,
   }));
 }
@@ -131,25 +135,19 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
-export function montaModelos(raiz, { cliente = null } = {}) {
+export function montaModelos(raiz, { cliente = null, alSeleccionar = null } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
   raiz.textContent = '';
 
   raiz.append(el('p', { class: 'nv-modelos__nota' }, NOTA_MODELOS));
   const lista = el('div', { class: 'nv-modelos__lista' });
-  raiz.append(lista);
+  const estado = el('p', { class: 'nv-modelos__estado', role: 'status' });
+  raiz.append(lista, estado);
 
-  const cacheSeries = new Map();
-  function seriesDe(ids) {
-    const clave = [...ids].sort().join('|');
-    if (!cacheSeries.has(clave)) {
-      const promesa = datos.llama('get_price_series', { asset_ids: ids, frequency: 'DAILY', window: '3Y' });
-      promesa.catch(() => cacheSeries.delete(clave));
-      cacheSeries.set(clave, promesa);
-    }
-    return cacheSeries.get(clave);
-  }
+  let seleccionada = null;
+  const botones = new Map();
+  const tarjetas = new Map();
 
   for (const modelo of CARTERAS_MODELO) {
     const tarjeta = el('article', { class: 'nv-card nv-modelos__tarjeta' });
@@ -158,61 +156,42 @@ export function montaModelos(raiz, { cliente = null } = {}) {
     tarjeta.append(el('p', { class: 'nv-modelos__criterio' }, modelo.criterio));
 
     const composicion = el('ul', { class: 'nv-modelos__composicion' });
-    for (const p of modelo.posiciones) {
-      composicion.append(el('li', {}, `${p.nombre} — ${p.peso} %`));
-    }
+    for (const p of modelo.posiciones) composicion.append(el('li', {}, `${p.nombre} — ${p.peso} %`));
     tarjeta.append(composicion);
 
-    const boton = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Ver sus métricas (historial real)');
-    const zona = el('div', { class: 'nv-modelos__metricas' });
+    const boton = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Analizar esta cartera');
+    botones.set(modelo.clave, boton);
+    tarjetas.set(modelo.clave, tarjeta);
     boton.addEventListener('click', async () => {
       boton.disabled = true;
-      zona.textContent = 'Consultando el historial…';
+      boton.textContent = 'Preparando el análisis…';
+      estado.textContent = '';
       try {
-        const ids = modelo.posiciones.map((p) => p.asset_id);
-        const payload = await seriesDe(ids);
-        const series = payload?.series || [];
-        const idsConSerie = series.map((s) => s.asset_id);
-        const posiciones = posicionesDeModelo(modelo);
-        const pesos = pesosNormalizados(posiciones, idsConSerie);
-        const excluidos = posiciones.filter((p) => !idsConSerie.includes(p.activo.asset_id));
-        const niveles = pesos ? serieCartera(series, pesos) : null;
-        const m = niveles ? metricasDesdeSerie(niveles, { periodosPorAno: DIAS_MERCADO }) : undefined;
-        zona.textContent = '';
-        if (!m) {
-          zona.append(el('p', { class: 'nv-cons__nota' },
-            'No hay historial común suficiente en la base para calcular las métricas de esta composición.'));
-        } else {
-          const tabla = el('table', { class: 'nv-table nv-modelos__tabla' });
-          tabla.append(el('caption', { class: 'nv-visually-hidden' }, `Métricas históricas de «${modelo.nombre}»`));
-          const tbody = el('tbody');
-          const filaM = (nombre, valor) => {
-            const tr = el('tr');
-            tr.append(el('th', { scope: 'row' }, nombre), el('td', { class: 'nv-sim-cifra' }, valor));
-            return tr;
+        const fichas = await Promise.all(modelo.posiciones
+          .map((p) => datos.detalleActivo(p.asset_id).catch(() => null)));
+        const detalles = {};
+        fichas.forEach((f, i) => {
+          if (!f) return;
+          detalles[modelo.posiciones[i].asset_id] = {
+            display_name: f.identity?.display_name,
+            instrument_type: f.instrument_type,
+            economic_asset_class: f.economic_asset_class,
           };
-          tbody.append(
-            filaM('Rentabilidad (3 años)', pct(m.rentabilidadTotal)),
-            filaM('Volatilidad (3 años)', pct(m.volatilidad)),
-            filaM('Máxima caída (3 años)', pct(m.maximaCaida)),
-          );
-          tabla.append(tbody);
-          zona.append(tabla);
-          if (excluidos.length) {
-            zona.append(el('p', { class: 'nv-cons__nota' },
-              `Sin historial suficiente en la base: ${excluidos.map((p) => p.activo.display_name).join(', ')}. No entra en el cálculo.`));
-          }
-          const fecha = fechaCorta(payload?.coverage?.last_date);
-          zona.append(el('p', { class: 'nv-cons__fuente' },
-            `Datos de cierre${fecha ? ` del ${fecha}` : ''}, base de datos NUVIA. Ventana de 3 años, en euros. ${m.observaciones} observaciones.`));
-        }
+        });
+        const detalle = { modelo, posiciones: posicionesDeModelo(modelo, detalles) };
+        if (typeof alSeleccionar === 'function') await alSeleccionar(detalle);
+        else raiz.dispatchEvent(new CustomEvent('nuvia:modelo-elegido', { detail: detalle, bubbles: true }));
+        seleccionada = modelo.clave;
+        for (const [clave, b] of botones) b.textContent = clave === seleccionada ? 'Cartera seleccionada' : 'Analizar esta cartera';
+        for (const [clave, t] of tarjetas) t.classList.toggle('nv-modelos__tarjeta--activa', clave === seleccionada);
       } catch {
-        zona.textContent = 'No se ha podido consultar el historial. Prueba de nuevo en unos segundos.';
+        estado.textContent = 'No se ha podido preparar esta cartera. Prueba de nuevo en unos segundos.';
       } finally {
         boton.disabled = false;
+        if (seleccionada !== modelo.clave) boton.textContent = 'Analizar esta cartera';
       }
     });
-    tarjeta.append(boton, zona);
+    tarjeta.append(boton);
     lista.append(tarjeta);
   }
 
