@@ -8330,3 +8330,95 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
    y son los que usa .nv-hero__lead en el resto del sitio.                  */
 .nv-hero .gu-lead { color: var(--nv-text-on-dark-soft); }
 .nv-hero .ac-x02  { color: var(--nv-text-on-dark); }
+
+/* Academia NUVIA · apertura audiovisual de entrada */
+html.has-academy-intro,
+html.has-academy-intro body { overflow: hidden; }
+
+.nuvia-academy-intro {
+  align-items: stretch;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(178, 138, 78, .16), transparent 36%),
+    var(--nv-navy-950);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  opacity: 1;
+  position: fixed;
+  transition: opacity .55s ease, visibility .55s ease;
+  visibility: visible;
+  z-index: 10000;
+}
+
+.nuvia-academy-intro.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.nuvia-academy-intro__video {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.nuvia-academy-intro__controls {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  position: absolute;
+  right: clamp(24px, 3vw, 48px);
+  top: clamp(24px, 3vw, 42px);
+}
+
+.nuvia-academy-intro__status {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.nuvia-academy-intro__button {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: rgba(10, 28, 55, .72);
+  border: 1px solid rgba(255, 255, 255, .5);
+  border-radius: var(--nv-radius-pill);
+  color: var(--nv-white);
+  cursor: pointer;
+  font-family: var(--nv-font-sans);
+  font-size: var(--nv-body-sm);
+  font-weight: 600;
+  letter-spacing: .02em;
+  min-height: 44px;
+  padding: 10px 18px;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.nuvia-academy-intro__button:hover {
+  background: rgba(30, 57, 91, .92);
+  border-color: var(--nv-white);
+  transform: translateY(-1px);
+}
+
+.nuvia-academy-intro__button:focus-visible {
+  outline: 3px solid var(--nv-bronze-400);
+  outline-offset: 3px;
+}
+
+.nuvia-academy-intro__button[hidden] { display: none; }
+
+@media (max-width: 1024px) {
+  .nuvia-academy-intro__controls {
+    right: 24px;
+    top: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nuvia-academy-intro { transition: none; }
+}
