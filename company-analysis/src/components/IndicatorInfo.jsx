@@ -10,12 +10,12 @@ const INDICATOR_HELP = {
     why: 'Muestra cuánto paga el mercado por cada unidad de beneficio actual. Conviene compararlo con el sector y con el crecimiento esperado.'
   },
   'PER estimado': {
-    what: 'Relaciona el precio actual con el beneficio por acción que el consenso espera para los próximos doce meses.',
-    why: 'Permite ver si la valoración parece más exigente o más barata cuando se incorporan las previsiones futuras.'
+    what: 'Relaciona el precio actual con una estimación externa del beneficio por acción para los próximos doce meses.',
+    why: 'Sitúa ese múltiplo junto al basado en beneficio histórico. Depende de la fuente y la fecha de la estimación.'
   },
   PEG: {
     what: 'Divide el PER entre la tasa esperada de crecimiento del beneficio.',
-    why: 'Añade el crecimiento a la lectura del PER. Un valor bajo puede indicar una valoración razonable, aunque depende mucho de la fiabilidad de las previsiones.'
+    why: 'Combina el múltiplo de beneficios con una estimación de crecimiento. Hereda la incertidumbre de ambas variables y se presenta como referencia descriptiva.'
   },
   'Precio / Ventas': {
     what: 'Compara el valor bursátil de la empresa con sus ventas de los últimos doce meses.',
@@ -31,7 +31,7 @@ const INDICATOR_HELP = {
   },
   'EV / Ventas': {
     what: 'Compara el valor de empresa con los ingresos anuales.',
-    why: 'Permite valorar negocios aun cuando no generan beneficio, pero debe interpretarse junto con los márgenes y el potencial de crecimiento.'
+    why: 'Permite comparar negocios aun cuando no generan beneficio, pero debe interpretarse junto con márgenes, deuda, fuente y fecha.'
   },
   'EV / EBITDA': {
     what: 'Compara el valor de empresa con el beneficio operativo antes de intereses, impuestos, depreciaciones y amortizaciones.',
@@ -39,15 +39,15 @@ const INDICATOR_HELP = {
   },
   'Rent. por dividendo': {
     what: 'Es el dividendo anual por acción dividido entre el precio actual de la acción.',
-    why: 'Indica la renta anual que ofrece la inversión, pero una rentabilidad muy alta puede anticipar un recorte del dividendo.'
+    why: 'Relaciona el dividendo publicado o estimado con el precio observado. No establece por sí sola la estabilidad ni la continuidad del pago.'
   },
   'ROE (ttm)': {
     what: 'Mide el beneficio de los últimos doce meses generado por cada unidad de patrimonio neto.',
-    why: 'Ayuda a evaluar la rentabilidad del capital aportado por los accionistas; un ROE alto sostenido suele señalar una ventaja económica.'
+    why: 'Describe la rentabilidad del capital aportado por los accionistas y debe leerse junto al endeudamiento y a la estabilidad histórica.'
   },
   ROE: {
     what: 'Mide el beneficio generado por cada unidad de patrimonio neto.',
-    why: 'Permite juzgar la eficiencia con la que la empresa remunera el capital de los accionistas, vigilando que no esté inflado por un exceso de deuda.'
+    why: 'Describe la eficiencia observada del capital y debe leerse junto al endeudamiento, que puede alterar significativamente el ratio.'
   },
   ROA: {
     what: 'Mide el beneficio generado en relación con el total de activos de la empresa.',
@@ -127,11 +127,11 @@ const INDICATOR_HELP = {
   },
   'Dividendo anual estimado': {
     what: 'Importe por acción que se espera repartir en dividendos durante un año.',
-    why: 'Ayuda a estimar la renta futura, aunque puede variar si cambian los resultados o la política de distribución.'
+    why: 'Recoge una estimación externa fechada; puede variar si cambian los resultados o la política de distribución.'
   },
   'Rentabilidad estimada': {
     what: 'Dividendo anual esperado dividido entre el precio actual de la acción.',
-    why: 'Permite comparar la renta prevista con otras inversiones, vigilando siempre su sostenibilidad.'
+    why: 'Relaciona una estimación externa de dividendo con el precio observado. No determina su sostenibilidad ni implica una comparación de idoneidad.'
   },
   'Pay-out': {
     what: 'Porcentaje del beneficio neto destinado al pago de dividendos.',
@@ -165,17 +165,13 @@ const INDICATOR_HELP = {
     what: 'Estima cuánto tiende a moverse la acción frente al mercado. Una beta de 1 implica una sensibilidad similar al índice.',
     why: 'Ayuda a entender el riesgo de mercado: valores superiores a 1 suelen amplificar movimientos y valores inferiores suelen ser más defensivos.'
   },
-  'Precio objetivo': {
-    what: 'Precio medio que los analistas esperan para la acción dentro de su horizonte de valoración.',
-    why: 'Ofrece una referencia de potencial, pero depende de supuestos y estimaciones que pueden cambiar; no debe tratarse como una garantía.'
-  },
   'RSI (14)': {
     what: 'Oscilador de 0 a 100 que compara la intensidad de las subidas y bajadas de las últimas 14 sesiones.',
-    why: 'Ayuda a detectar impulso y posibles zonas de sobrecompra por encima de 70 o sobreventa por debajo de 30, sin anticipar por sí solo un giro.'
+    why: 'Describe el impulso reciente. Las líneas 30 y 70 son referencias convencionales de la escala, no indicaciones de actuación.'
   },
   MACD: {
-    what: 'Compara dos medias exponenciales del precio y una línea de señal para medir tendencia e impulso.',
-    why: 'Los cruces y el signo del histograma ayudan a identificar cambios de momentum, aunque pueden llegar tarde en mercados laterales.'
+    what: 'Compara dos medias exponenciales del precio y una línea de referencia para medir tendencia e impulso.',
+    why: 'La separación y el signo del histograma describen el comportamiento observado en la serie histórica.'
   },
   'SMA 50': {
     what: 'Media simple del precio de cierre de las últimas 50 sesiones.',
@@ -183,15 +179,15 @@ const INDICATOR_HELP = {
   },
   'SMA 200': {
     what: 'Media simple del precio de cierre de las últimas 200 sesiones.',
-    why: 'Es una referencia habitual de tendencia de largo plazo y puede actuar como zona de soporte o resistencia observada por muchos inversores.'
+    why: 'Es una referencia habitual para resumir el comportamiento de largo plazo y comparar el precio con su propia historia.'
   },
   'SMA 50 / 200': {
     what: 'Compara las medias simples de 50 y 200 sesiones para resumir las tendencias de medio y largo plazo.',
-    why: 'Una SMA 50 sobre la SMA 200 suele asociarse con una estructura alcista; por debajo, con una estructura bajista.'
+    why: 'La diferencia entre ambas medias describe cómo se ordenan dos resúmenes históricos de distinta longitud; no anticipa el precio.'
   },
   'ATR (14)': {
     what: 'Promedio del rango verdadero de las últimas 14 sesiones; mide cuánto se mueve el precio, no su dirección.',
-    why: 'Sirve para dimensionar riesgo, stops y posiciones de acuerdo con la volatilidad real de la acción.'
+    why: 'Cuantifica el rango reciente de variación y permite comparar periodos con distinta volatilidad, sin aportar una pauta operativa.'
   },
   'Volatilidad 30d (anual.)': {
     what: 'Variabilidad de los rendimientos diarios de las últimas 30 sesiones, expresada como una tasa anualizada.',
@@ -199,15 +195,15 @@ const INDICATOR_HELP = {
   },
   'Distancia a máx. 52s': {
     what: 'Diferencia porcentual entre el precio actual y el máximo alcanzado durante las últimas 52 semanas.',
-    why: 'Sitúa el precio dentro de su rango anual y muestra cuánto tendría que avanzar para recuperar su máximo reciente.'
+    why: 'Sitúa el precio observado dentro de su rango anual mediante una distancia porcentual al máximo reciente.'
   },
   'Distancia a mín. 52s': {
     what: 'Diferencia porcentual entre el precio actual y el mínimo alcanzado durante las últimas 52 semanas.',
-    why: 'Ayuda a entender cuánto se ha recuperado la acción desde su suelo anual y su posición dentro del rango reciente.'
+    why: 'Sitúa el precio observado dentro de su rango anual mediante una distancia porcentual al mínimo reciente.'
   },
   'Caída máxima (1a)': {
     what: 'Mayor pérdida porcentual desde un máximo hasta el mínimo posterior registrada durante el último año.',
-    why: 'Resume el peor deterioro sufrido por un inversor en el periodo y aporta una medida intuitiva del riesgo bajista.'
+    why: 'Resume la mayor contracción histórica observada dentro del periodo analizado.'
   },
   Bollinger: {
     what: 'Bandas situadas alrededor de una media móvil a una distancia basada en la volatilidad reciente.',
@@ -217,13 +213,13 @@ const INDICATOR_HELP = {
     what: 'Bandas situadas alrededor de una media móvil a una distancia basada en la volatilidad reciente.',
     why: 'Muestran si el precio está relativamente extendido y si la volatilidad se expande o contrae; tocar una banda no implica por sí solo reversión.'
   },
-  'Tendencia de fondo': {
-    what: 'Clasifica la estructura de largo plazo comparando el precio actual con la media de 200 sesiones.',
-    why: 'Ayuda a distinguir si el mercado mantiene una tendencia principal alcista o bajista antes de valorar señales de más corto plazo.'
+  'Precio vs SMA 200': {
+    what: 'Diferencia porcentual entre el último cierre y la media de los 200 cierres anteriores.',
+    why: 'Sitúa el precio de hoy respecto de su propio promedio largo. Es una comparación de dos cifras ya publicadas, no una lectura sobre lo que hará el precio: la media va por detrás del mercado por construcción.'
   },
-  'Cruce de medias': {
-    what: 'Compara la posición de la media de 50 sesiones con la de 200 sesiones.',
-    why: 'Un cruce al alza puede confirmar fortalecimiento de tendencia y uno a la baja, deterioro; ambos son señales retardadas.'
+  'SMA 50 vs SMA 200': {
+    what: 'Diferencia porcentual entre la media de 50 sesiones y la de 200 sesiones.',
+    why: 'Mide cuánto se separan el promedio corto y el largo. Ambas medias resumen el pasado con retardo, así que su relación describe lo ocurrido y no anticipa nada.'
   }
 };
 

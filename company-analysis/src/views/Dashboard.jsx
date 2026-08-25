@@ -3,30 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { collection, onSnapshot, query, orderBy, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import { api } from '../api.js';
-import { Section } from '../components/Kpi.jsx';
+import { PhaseHeader, Section } from '../components/Kpi.jsx';
 import SearchBox from '../components/SearchBox.jsx';
-import { fmtPrice, fmtPct, fmtNum, clsPN } from '../lib/format.js';
-
-function consLabel(r) {
-  if (r == null) return null;
-  if (r >= 4.5) return 'Compra fuerte';
-  if (r >= 3.5) return 'Compra';
-  if (r >= 2.5) return 'Mantener';
-  if (r >= 1.5) return 'Venta';
-  return 'Venta fuerte';
-}
-
-function consCls(r) {
-  if (r == null) return '';
-  if (r >= 3.5) return 'pos';
-  if (r < 2.5) return 'neg';
-  return '';
-}
+import AnalysisBanner from '../components/AnalysisBanner.jsx';
+import { fmtPrice, fmtPct, clsPN } from '../lib/format.js';
 
 export default function Dashboard() {
   const [items, setItems] = useState(null);
   const [quotes, setQuotes] = useState({});
-  const [cons, setCons] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,16 +27,11 @@ export default function Dashboard() {
     if (!items?.length) return;
     let alive = true;
     (async () => {
-      const [qr, cr] = await Promise.all([
-        Promise.allSettled(items.map((it) => api(`/quote/${it.symbol}`))),
-        Promise.allSettled(items.map((it) => api(`/consensus/${it.symbol}`)))
-      ]);
+      const qr = await Promise.allSettled(items.map((it) => api(`/quote/${it.symbol}`)));
       if (!alive) return;
-      const qMap = {}, cMap = {};
+      const qMap = {};
       qr.forEach((r, i) => { if (r.status === 'fulfilled') qMap[items[i].symbol] = r.value; });
-      cr.forEach((r, i) => { if (r.status === 'fulfilled') cMap[items[i].symbol] = r.value; });
       setQuotes(qMap);
-      setCons(cMap);
     })();
     return () => { alive = false; };
   }, [items]);
@@ -64,38 +43,23 @@ export default function Dashboard() {
 
   return (
     <>
-      <section className="analysis-intro" aria-labelledby="analysis-intro-title">
-        <div className="analysis-intro-copy">
-          <h1 id="analysis-intro-title">
-            <strong>NUVIA</strong>
-            <span>Análisis y valoración de empresas</span>
-          </h1>
-          <p>Estudia la calidad del negocio, su evolución financiera, la valoración del mercado y las expectativas de los analistas con una lectura clara y ordenada.</p>
-          <i aria-hidden="true" />
-        </div>
+      <AnalysisBanner />
+
+      <PhaseHeader number="01" eyebrow="¿Qué compañía quieres estudiar?" title="Elige una empresa" />
+      <section className="watchlist-search" aria-label="Buscar una empresa">
+          <label>Compañía · nombre, ticker o ISIN</label>
+          <SearchBox onPick={(item) => navigate(`/empresa/${item.symbol}`)} placeholder="Apple, SAN.MC, AIR.PA…" />
+          <p>Abre una ficha para consultar datos históricos, fundamentales, indicadores técnicos y noticias atribuidas.</p>
       </section>
 
-      <section className="watchlist-head" aria-labelledby="watchlist-title">
-        <div className="watchlist-heading">
-          <div className="eyebrow">Panel de seguimiento</div>
-          <h2 id="watchlist-title" className="page-title">Mis valores</h2>
-          <p className="lead">Reúne las compañías que quieres seguir y accede a su ficha de análisis desde una sola vista.</p>
-        </div>
-        <div className="watchlist-search">
-          <label>Buscar empresa o ticker</label>
-          <SearchBox onPick={(item) => navigate(`/empresa/${item.symbol}`)} placeholder="Apple, SAN.MC, AIR.PA…" />
-          <p>Busca por nombre, ticker o ISIN para abrir la ficha y añadir la compañía a tu seguimiento.</p>
-        </div>
-      </section>
-      <hr className="rule" />
+      <PhaseHeader number="02" eyebrow="Archivo personal" title="Compañías guardadas" />
 
       {items === null && <div className="loading">Cargando…</div>}
 
       {items?.length === 0 && (
         <div className="empty">
-          <div className="big">Todavía no sigues ningún valor</div>
-          Busca una empresa en el panel de seguimiento — por nombre, ticker o ISIN — y añádela
-          a tu lista desde su ficha.
+          <div className="big">Todavía no has guardado ninguna compañía</div>
+          Busca una empresa por nombre, ticker o ISIN y añádela a tu lista desde su ficha.
         </div>
       )}
 
@@ -108,21 +72,15 @@ export default function Dashboard() {
                   <th className="l">Valor</th>
                   <th>Último</th>
                   <th>Var. día</th>
-                  <th>Precio objetivo</th>
-                  <th>Potencial</th>
-                  <th>Consenso</th>
+                  <th>Mercado</th>
+                  <th>Divisa</th>
+                  <th>Fuente</th>
                   <th />
                 </tr>
               </thead>
               <tbody>
                 {items.map((it) => {
                   const q = quotes[it.symbol];
-                  const c = cons[it.symbol];
-                  const target = c?.targetPrice ?? null;
-                  const potencial = q?.price && target ? ((target - q.price) / q.price) * 100 : null;
-                  const counts = c && c.strongBuy != null
-                    ? `${(c.strongBuy ?? 0) + (c.buy ?? 0)} compra · ${c.hold ?? 0} mantener · ${(c.sell ?? 0) + (c.strongSell ?? 0)} venta`
-                    : null;
                   return (
                     <tr key={it.symbol} className="click" onClick={() => navigate(`/empresa/${it.symbol}`)}>
                       <td className="l">
@@ -131,18 +89,11 @@ export default function Dashboard() {
                       </td>
                       <td className="num">{q ? fmtPrice(q.price, it.currency) : '…'}</td>
                       <td className={`num ${q ? clsPN(q.changePct) : ''}`}>{q ? fmtPct(q.changePct) : '…'}</td>
-                      <td className="num">{target ? fmtPrice(target, c?.currency || it.currency) : '—'}</td>
-                      <td className={`num ${clsPN(potencial)}`}>{potencial != null ? fmtPct(potencial, 1) : '—'}</td>
-                      <td className="num" title={counts || 'Sin cobertura de analistas'}>
-                        {c?.rating != null ? (
-                          <>
-                            <span className={consCls(c.rating)}>{consLabel(c.rating)}</span>
-                            <div className="tiny">{fmtNum(c.rating, 1)} / 5</div>
-                          </>
-                        ) : '—'}
-                      </td>
+                      <td className="num">{it.exchange || '—'}</td>
+                      <td className="num">{it.currency || '—'}</td>
+                      <td className="num tiny">{q?.source === 'yahoo' ? 'Yahoo' : q ? 'EODHD' : '…'}</td>
                       <td>
-                        <button className="mini-btn" title="Quitar de la lista" onClick={(e) => quitar(e, it.symbol)}>✕</button>
+                        <button className="mini-btn" aria-label={`Quitar ${it.name || it.symbol} de la lista`} onClick={(e) => quitar(e, it.symbol)}>✕</button>
                       </td>
                     </tr>
                   );
@@ -151,8 +102,7 @@ export default function Dashboard() {
             </table>
           </div>
           <p className="tiny" style={{ marginTop: 10 }}>
-            Cotizaciones vía EODHD (respaldo Yahoo) · precio objetivo y consenso del agregado de analistas de EODHD,
-            actualizados con los fundamentales (máx. 7 días) · pasa el ratón por el consenso para ver el desglose.
+            Lista organizativa personal. Cotizaciones vía EODHD con Yahoo Finance como respaldo; no ordena ni califica las compañías.
           </p>
         </Section>
       )}

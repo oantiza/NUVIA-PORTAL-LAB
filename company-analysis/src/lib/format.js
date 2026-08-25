@@ -62,6 +62,18 @@ export function clsPN(x) {
   return Number(x) >= 0 ? 'pos' : 'neg';
 }
 
+/**
+ * Diferencia porcentual de `a` respecto de `b`. Hecho aritmético: mide la
+ * relación entre dos cifras publicadas y no la califica. Se usa para situar
+ * el precio frente a sus medias sin emitir un estado ni una señal.
+ */
+export function difPct(a, b) {
+  const x = Number(a);
+  const y = Number(b);
+  if (a == null || b == null || !Number.isFinite(x) || !Number.isFinite(y) || y === 0) return null;
+  return ((x - y) / y) * 100;
+}
+
 /** Convierte una fracción EODHD (o 'NA') a porcentaje, o null si no hay dato. */
 export function pct100(x) {
   if (x == null || x === 'NA') return null;

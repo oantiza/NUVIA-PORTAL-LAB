@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import App from './App.jsx';
 import { applyInitialTheme, ThemeProvider } from './components/Theme.jsx';
 import './theme.css';
+import './theme-b.css';
 
 applyInitialTheme();
 

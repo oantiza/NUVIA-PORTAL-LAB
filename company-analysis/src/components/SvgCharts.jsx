@@ -92,27 +92,3 @@ export function Range52({ low, high, price, fmt }) {
     </div>
   );
 }
-
-/** Distribución de recomendaciones de analistas. */
-export function RatingBars({ ratings }) {
-  if (!ratings) return null;
-  const rows = [
-    ['Compra fuerte', ratings.StrongBuy, '#1e7a46'],
-    ['Compra', ratings.Buy, '#5c9970'],
-    ['Mantener', ratings.Hold, '#8a94a3'],
-    ['Venta', ratings.Sell, '#cf6b60'],
-    ['Venta fuerte', ratings.StrongSell, '#c0303c']
-  ];
-  const total = rows.reduce((a, [, v]) => a + (v || 0), 0) || 1;
-  return (
-    <div className="hb">
-      {rows.map(([label, v, color]) => (
-        <div className="hb-row" key={label}>
-          <span className="hb-lab">{label}</span>
-          <div className="hb-track"><div className="hb-fill" style={{ width: `${((v || 0) / total) * 100}%`, background: color }} /></div>
-          <span className="hb-val">{v ?? 0}</span>
-        </div>
-      ))}
-    </div>
-  );
-}

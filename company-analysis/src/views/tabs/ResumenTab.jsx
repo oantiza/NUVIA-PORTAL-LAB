@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../api.js';
-import { KpiGrid, Kpi, Section, EstadoTag } from '../../components/Kpi.jsx';
+import { KpiGrid, Kpi, Section } from '../../components/Kpi.jsx';
 import { Sparkline, Range52 } from '../../components/SvgCharts.jsx';
 import IndicatorInfo from '../../components/IndicatorInfo.jsx';
-import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, clsPN, fmtDate, pct100 } from '../../lib/format.js';
+import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, clsPN, fmtDate, pct100, difPct } from '../../lib/format.js';
 import { translateCompanyDescription } from '../../lib/translate.js';
 
 export default function ResumenTab({ symbol, fund, quote }) {
@@ -23,7 +23,6 @@ export default function ResumenTab({ symbol, fund, quote }) {
   const v = fund?.Valuation || {};
   const t = fund?.Technicals || {};
   const g = fund?.General || {};
-  const ar = fund?.AnalystRatings;
   const currency = g.CurrencyCode;
   const price = quote?.price ?? null;
   const description = String(g.Description || '').trim();
@@ -50,26 +49,18 @@ export default function ResumenTab({ symbol, fund, quote }) {
     return () => { alive = false; };
   }, [description]);
 
-  const target = h.WallStreetTargetPrice ?? ar?.TargetPrice;
-  const potencial = price && target ? ((target - price) / price) * 100 : null;
-
   return (
     <>
       <Section eyebrow="Claves" title="De un vistazo">
         <KpiGrid>
           <Kpi label="Capitalización" value={fmtBig(h.MarketCapitalization, currency)} />
+          <Kpi label="Ingresos (ttm)" value={fmtBig(h.RevenueTTM, currency)} />
           <Kpi label="PER (ttm)" value={fmtRatio(h.PERatio)} sub={v.ForwardPE ? `Forward ${fmtRatio(v.ForwardPE)}` : null} />
           <Kpi label="EV / EBITDA" value={fmtRatio(v.EnterpriseValueEbitda)} />
           <Kpi label="Rent. por dividendo" value={fmtPct(pct100(h.DividendYield), 2, false)} />
           <Kpi label="ROE (ttm)" value={fmtPct(pct100(h.ReturnOnEquityTTM), 1, false)} />
           <Kpi label="Margen neto" value={fmtPct(pct100(h.ProfitMargin), 1, false)} />
           <Kpi label="Beta" value={t.Beta != null ? fmtNum(t.Beta, 2) : '—'} />
-          <Kpi
-            label="Precio objetivo"
-            value={target ? fmtPrice(target, currency) : '—'}
-            sub={potencial != null ? `Potencial ${fmtPct(potencial, 1)}` : null}
-            cls={clsPN(potencial)}
-          />
         </KpiGrid>
       </Section>
 
@@ -92,17 +83,24 @@ export default function ResumenTab({ symbol, fund, quote }) {
         </div>
 
         <div className="card">
-          <div className="eyebrow">Lectura técnica</div>
-          {tech?.latest?.senales ? (
+          <div className="eyebrow">Precio frente a sus medias</div>
+          {tech?.latest?.sma200 ? (
             <table className="tbl" style={{ marginTop: 12 }}>
               <tbody>
-                {tech.latest.senales.map((s) => (
-                  <tr key={s.nombre}>
-                    <td className="l"><IndicatorInfo name={s.nombre} /></td>
-                    <td className="l muted" style={{ fontSize: 11 }}>{s.detalle}</td>
-                    <td><EstadoTag estado={s.estado} /></td>
-                  </tr>
-                ))}
+                <tr>
+                  <td className="l"><IndicatorInfo name="Precio vs SMA 200" /></td>
+                  <td className="l muted" style={{ fontSize: 11 }}>
+                    {fmtNum(tech.latest.close, 2)} frente a {fmtNum(tech.latest.sma200, 2)}
+                  </td>
+                  <td className="num">{fmtPct(difPct(tech.latest.close, tech.latest.sma200), 1)}</td>
+                </tr>
+                <tr>
+                  <td className="l"><IndicatorInfo name="SMA 50 vs SMA 200" /></td>
+                  <td className="l muted" style={{ fontSize: 11 }}>
+                    {fmtNum(tech.latest.sma50, 2)} frente a {fmtNum(tech.latest.sma200, 2)}
+                  </td>
+                  <td className="num">{fmtPct(difPct(tech.latest.sma50, tech.latest.sma200), 1)}</td>
+                </tr>
               </tbody>
             </table>
           ) : (
@@ -135,24 +133,10 @@ export default function ResumenTab({ symbol, fund, quote }) {
         </Section>
       )}
 
-      {ar && (ar.StrongBuy || ar.Buy || ar.Hold) != null && (
-        <Section eyebrow="Consenso" title="Analistas">
-          <div className="card">
-            <div style={{ display: 'flex', gap: 30, alignItems: 'baseline', flexWrap: 'wrap' }}>
-              <div>
-                <span className="eyebrow">Valoración media</span>
-                <div style={{ fontFamily: 'Fraunces, serif', fontSize: 30, marginTop: 4 }}>
-                  {ar.Rating != null ? fmtNum(ar.Rating, 2) : '—'}<span className="tiny"> / 5</span>
-                </div>
-              </div>
-              <div className="tiny">
-                {(ar.StrongBuy ?? 0) + (ar.Buy ?? 0)} recomendaciones de compra ·{' '}
-                {ar.Hold ?? 0} mantener · {(ar.Sell ?? 0) + (ar.StrongSell ?? 0)} venta
-              </div>
-            </div>
-          </div>
-        </Section>
-      )}
+      <p className="note section">
+        Datos fundamentales de EODHD y cotización de EODHD con Yahoo Finance como respaldo. Las cifras
+        describen información histórica y no incluyen precios objetivo ni recomendaciones de terceros.
+      </p>
     </>
   );
 }

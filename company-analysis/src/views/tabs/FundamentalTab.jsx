@@ -1,6 +1,6 @@
 import React from 'react';
 import { KpiGrid, Kpi, Section } from '../../components/Kpi.jsx';
-import { DualBars, RatingBars } from '../../components/SvgCharts.jsx';
+import { DualBars } from '../../components/SvgCharts.jsx';
 import IndicatorInfo from '../../components/IndicatorInfo.jsx';
 import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtDate, clsPN, pct100 } from '../../lib/format.js';
 
@@ -20,7 +20,6 @@ export default function FundamentalTab({ fund }) {
   const v = fund?.Valuation || {};
   const ss = fund?.SharesStats || {};
   const sd = fund?.SplitsDividends || {};
-  const ar = fund?.AnalystRatings;
   const g = fund?.General || {};
   const currency = fund?.Financials?.Income_Statement?.currency_symbol || g.CurrencyCode;
 
@@ -181,14 +180,8 @@ export default function FundamentalTab({ fund }) {
         </div>
       </div>
 
-      <div className="grid2 section">
-        {ar && (
-          <div className="card">
-            <div className="eyebrow" style={{ marginBottom: 12 }}>Recomendaciones de analistas</div>
-            <RatingBars ratings={ar} />
-          </div>
-        )}
-        {earnHist.length > 0 && (
+      {earnHist.length > 0 && (
+        <div className="section">
           <div className="card" style={{ overflowX: 'auto' }}>
             <div className="eyebrow" style={{ marginBottom: 10 }}>Historial de resultados (BPA)</div>
             <table className="tbl">
@@ -207,12 +200,13 @@ export default function FundamentalTab({ fund }) {
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <p className="note section">
         Fundamentales de EODHD, actualizados como máximo cada 7 días en caché. Los importes se muestran
-        en {currency || 'divisa local'}; «mm» = miles de millones.
+        en {currency || 'divisa local'}; «mm» = miles de millones. Las estimaciones futuras son datos de
+        terceros y se identifican como tales; NUVIA no las convierte en un veredicto.
       </p>
     </>
   );

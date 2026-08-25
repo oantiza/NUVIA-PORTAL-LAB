@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "check:regulatory": "node ../scripts/check-company-regulatory.mjs",
+    "build": "npm run check:regulatory && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

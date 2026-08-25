@@ -3,8 +3,7 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../firebase.js';
 import { api } from '../../api.js';
 import { Sparkline, Range52 } from '../../components/SvgCharts.jsx';
-import { EstadoTag } from '../../components/Kpi.jsx';
-import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, fmtDate, clsPN, pct100 } from '../../lib/format.js';
+import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, fmtDate, clsPN, pct100, difPct } from '../../lib/format.js';
 
 const N = (x) => (x == null || x === 'NA' ? null : Number(x));
 
@@ -17,7 +16,6 @@ export default function InformeTab({ symbol, fund, quote }) {
   const g = fund?.General || {};
   const h = fund?.Highlights || {};
   const v = fund?.Valuation || {};
-  const ar = fund?.AnalystRatings;
   const currency = g.CurrencyCode;
 
   useEffect(() => {
@@ -43,10 +41,9 @@ export default function InformeTab({ symbol, fund, quote }) {
         marketCap: N(h.MarketCapitalization),
         per: N(h.PERatio),
         divYield: N(h.DividendYield),
-        target: N(h.WallStreetTargetPrice ?? ar?.TargetPrice),
-        rating: N(ar?.Rating),
         rsi: l?.rsi14 ?? null,
-        senales: l?.senales ?? [],
+        sma50: l?.sma50 ?? null,
+        sma200: l?.sma200 ?? null,
         perf: l?.perf ?? null
       }
     });
@@ -57,19 +54,17 @@ export default function InformeTab({ symbol, fund, quote }) {
   const income = Object.entries(fund?.Financials?.Income_Statement?.yearly || {}).sort().slice(-5);
   const cash = Object.entries(fund?.Financials?.Cash_Flow?.yearly || {}).sort().slice(-5);
   const topNews = (news?.items || []).slice(0, 5);
-  const target = N(h.WallStreetTargetPrice ?? ar?.TargetPrice);
-  const potencial = quote?.price && target ? ((target - quote.price) / quote.price) * 100 : null;
 
   const Brand = () => (
     <div className="brand-p">
       <div className="b1">NUVIA</div>
-      <div className="b2">Private Bankers</div>
+      <div className="b2">Análisis de empresas</div>
     </div>
   );
 
   const Foot = ({ n }) => (
     <div className="foot-print">
-      <span>NUVIA ∕ Análisis de empresas · Documento interno — no es recomendación de inversión</span>
+      <span>NUVIA ∕ Análisis de empresas · Informe descriptivo</span>
       <span>{hoy} · pág. {n}</span>
     </div>
   );
@@ -114,9 +109,9 @@ export default function InformeTab({ symbol, fund, quote }) {
               <div className="s">Forward {fmtRatio(N(v.ForwardPE))}</div>
             </div>
             <div className="kpi-p">
-              <div className="k">Precio objetivo</div>
-              <div className="v">{target ? fmtPrice(target, currency) : '—'}</div>
-              {potencial != null && <div className={`s ${clsPN(potencial)}`}>Potencial {fmtPct(potencial, 1)}</div>}
+              <div className="k">EV / EBITDA</div>
+              <div className="v">{fmtRatio(N(v.EnterpriseValueEbitda))}</div>
+              <div className="s">Dato fundamental</div>
             </div>
           </div>
 
@@ -159,18 +154,25 @@ export default function InformeTab({ symbol, fund, quote }) {
             </div>
           </div>
 
-          {l?.senales && (
+          {l?.sma200 && (
             <div style={{ marginTop: 18 }}>
-              <div className="eyebrow" style={{ marginBottom: 8 }}>Lectura técnica</div>
+              <div className="eyebrow" style={{ marginBottom: 8 }}>Precio frente a sus medias</div>
               <table>
                 <tbody>
-                  {l.senales.map((s2) => (
-                    <tr key={s2.nombre}>
-                      <td className="l" style={{ width: '30%' }}><strong>{s2.nombre}</strong></td>
-                      <td className="l" style={{ color: 'var(--ink2)' }}>{s2.detalle}</td>
-                      <td style={{ width: 110 }}><EstadoTag estado={s2.estado} /></td>
-                    </tr>
-                  ))}
+                  <tr>
+                    <td className="l" style={{ width: '30%' }}><strong>Precio vs SMA 200</strong></td>
+                    <td className="l" style={{ color: 'var(--ink2)' }}>
+                      {fmtNum(l.close, 2)} frente a {fmtNum(l.sma200, 2)}
+                    </td>
+                    <td style={{ width: 110 }}>{fmtPct(difPct(l.close, l.sma200), 1)}</td>
+                  </tr>
+                  <tr>
+                    <td className="l"><strong>SMA 50 vs SMA 200</strong></td>
+                    <td className="l" style={{ color: 'var(--ink2)' }}>
+                      {fmtNum(l.sma50, 2)} frente a {fmtNum(l.sma200, 2)}
+                    </td>
+                    <td>{fmtPct(difPct(l.sma50, l.sma200), 1)}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -211,21 +213,6 @@ export default function InformeTab({ symbol, fund, quote }) {
                       </tr>
                     );
                   })}
-                </tbody>
-              </table>
-            </div>
-          )}
-
-          {ar && (
-            <div style={{ marginTop: 18 }}>
-              <div className="eyebrow" style={{ marginBottom: 8 }}>Consenso de analistas</div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td className="l">Valoración media (1-5)</td><td>{fmtNum(N(ar.Rating), 2)}</td>
-                    <td className="l" style={{ paddingLeft: 20 }}>Compra / Mantener / Venta</td>
-                    <td>{(ar.StrongBuy ?? 0) + (ar.Buy ?? 0)} / {ar.Hold ?? 0} / {(ar.Sell ?? 0) + (ar.StrongSell ?? 0)}</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -276,8 +263,8 @@ export default function InformeTab({ symbol, fund, quote }) {
 
           <div className="note" style={{ marginTop: 18 }}>
             Datos: EODHD (fundamentales, cotizaciones y noticias financieras) con respaldo de Yahoo Finance y
-            Google News. Documento generado automáticamente el {hoy}. No constituye asesoramiento ni
-            recomendación de compra o venta de valores.
+            Google News. Documento generado automáticamente el {hoy}. Describe información histórica y
+            no incluye recomendaciones, señales operativas ni precios objetivo.
           </div>
 
           <Foot n={2} />

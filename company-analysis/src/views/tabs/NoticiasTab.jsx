@@ -3,13 +3,6 @@ import { api } from '../../api.js';
 import { Section } from '../../components/Kpi.jsx';
 import { fmtDateTime } from '../../lib/format.js';
 
-function sentColor(s) {
-  if (s == null) return 'transparent';
-  if (s > 0.15) return '#1e7a46';
-  if (s < -0.15) return '#c0303c';
-  return '#8a94a3';
-}
-
 export default function NoticiasTab({ symbol, name }) {
   const [news, setNews] = useState(null);
   const [error, setError] = useState(null);
@@ -51,7 +44,6 @@ export default function NoticiasTab({ symbol, name }) {
             <div className="news-body">
               <a className="news-title" href={n.url} target="_blank" rel="noreferrer">{n.title}</a>
               <div className="news-sub">
-                {n.sentiment != null && <span className="sent" style={{ background: sentColor(n.sentiment) }} title={`Sentimiento ${n.sentiment}`} />}
                 <span>{n.source}</span>
                 {n.provider !== 'eodhd' && <span className="tag" style={{ padding: '1px 6px' }}>prensa</span>}
               </div>
@@ -61,7 +53,8 @@ export default function NoticiasTab({ symbol, name }) {
         ))}
       </div>
       <p className="tiny" style={{ marginTop: 10 }}>
-        Fuentes: EODHD News (financieras, con sentimiento) y Google News (prensa general) · actualización cada 30 min.
+        Fuentes: EODHD News (financieras) y Google News (prensa general) · actualización cada 30 min. Titulares
+        y medio tal como los publica cada fuente, sin selección ni valoración de NUVIA.
       </p>
     </Section>
   );

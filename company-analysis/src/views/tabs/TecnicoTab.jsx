@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../api.js';
-import { Section, EstadoTag, KpiGrid, Kpi } from '../../components/Kpi.jsx';
+import { Section, KpiGrid, Kpi } from '../../components/Kpi.jsx';
 import CandleChart, { IndicatorChart } from '../../components/CandleChart.jsx';
 import IndicatorInfo from '../../components/IndicatorInfo.jsx';
-import { fmtNum, fmtPct, fmtPrice, clsPN } from '../../lib/format.js';
+import { fmtNum, fmtPct, fmtPrice, clsPN, difPct } from '../../lib/format.js';
 
 const CHART_RANGES = [
   { key: '6m', label: '6M', days: 183 },
@@ -102,7 +102,7 @@ export default function TecnicoTab({ symbol, currency }) {
 
       <div className="grid2 section">
         <div className="card">
-          <div className="eyebrow indicator-heading" style={{ marginBottom: 8 }}><IndicatorInfo name="RSI (14)" /><span>— 70 sobrecompra · 30 sobreventa</span></div>
+          <div className="eyebrow indicator-heading" style={{ marginBottom: 8 }}><IndicatorInfo name="RSI (14)" /><span>— escala 0–100, referencias en 30 y 70</span></div>
           <IndicatorChart
             dates={dates}
             lines={[{ data: s.rsi, color: '--gold' }]}
@@ -122,30 +122,24 @@ export default function TecnicoTab({ symbol, currency }) {
         </div>
       </div>
 
-      <Section eyebrow="Diagnóstico" title="Señales">
-        <div className="card">
-          <table className="tbl">
-            <tbody>
-              {l.senales.map((sig) => (
-                <tr key={sig.nombre}>
-                  <td className="l" style={{ width: 170 }}><strong><IndicatorInfo name={sig.nombre} /></strong></td>
-                  <td className="l muted">{sig.detalle}</td>
-                  <td style={{ width: 130 }}><EstadoTag estado={sig.estado} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </Section>
-
       <Section eyebrow="Métricas" title="Indicadores y riesgo">
         <KpiGrid>
           <Kpi label="RSI (14)" value={fmtNum(l.rsi14, 1)} />
           <Kpi label="SMA 50 / 200" value={`${fmtNum(l.sma50, 2)} / ${fmtNum(l.sma200, 2)}`} />
+          <Kpi
+            label="Precio vs SMA 200"
+            value={fmtPct(difPct(l.close, l.sma200), 1)}
+            sub={`${fmtNum(l.close, 2)} frente a ${fmtNum(l.sma200, 2)}`}
+          />
+          <Kpi
+            label="SMA 50 vs SMA 200"
+            value={fmtPct(difPct(l.sma50, l.sma200), 1)}
+            sub={`${fmtNum(l.sma50, 2)} frente a ${fmtNum(l.sma200, 2)}`}
+          />
           <Kpi label="ATR (14)" value={fmtNum(l.atr14, 2)} sub={l.close ? `${fmtNum((l.atr14 / l.close) * 100, 1)} % del precio` : null} />
           <Kpi label="Volatilidad 30d (anual.)" value={l.vol30 != null ? fmtPct(l.vol30, 1, false) : '—'} />
-          <Kpi label="Distancia a máx. 52s" value={fmtPct(l.distHigh52, 1)} cls={clsPN(l.distHigh52)} sub={fmtPrice(l.high52, currency)} />
-          <Kpi label="Distancia a mín. 52s" value={fmtPct(l.distLow52, 1)} cls={clsPN(l.distLow52)} sub={fmtPrice(l.low52, currency)} />
+          <Kpi label="Distancia a máx. 52s" value={fmtPct(l.distHigh52, 1)} sub={fmtPrice(l.high52, currency)} />
+          <Kpi label="Distancia a mín. 52s" value={fmtPct(l.distLow52, 1)} sub={fmtPrice(l.low52, currency)} />
           <Kpi label="Caída máxima (1a)" value={fmtPct(l.maxDrawdown1y, 1)} cls="neg" />
           <Kpi label="Bollinger" value={`${fmtNum(l.bbLower, 1)} — ${fmtNum(l.bbUpper, 1)}`} sub={`Media ${fmtNum(l.bbMid, 1)}`} />
         </KpiGrid>
@@ -161,7 +155,7 @@ export default function TecnicoTab({ symbol, currency }) {
 
       <p className="note section">
         Indicadores calculados sobre precios de cierre diarios ({tech.source === 'yahoo' ? 'Yahoo Finance, respaldo' : 'EODHD'}).
-        Lectura orientativa: no constituye recomendación de inversión.
+        Cada indicador se define en su ficha; las cifras describen lo ocurrido y no anticipan lo que ocurrirá.
       </p>
     </>
   );

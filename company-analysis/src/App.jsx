@@ -47,7 +47,7 @@ export default function App() {
 
       <footer className="foot no-print">
         <span>NUVIA ∕ Análisis y valoración de empresas</span>
-        <span>Datos: EODHD · Yahoo Finance · Google News — uso interno, no es recomendación de inversión</span>
+        <span>Datos: EODHD · Yahoo Finance · Google News — contenido descriptivo con fecha y fuente</span>
       </footer>
     </div>
   );

@@ -30,6 +30,14 @@ export function Section({ eyebrow, title, right, children }) {
   );
 }
 
-export function EstadoTag({ estado }) {
-  return <span className={`tag ${estado}`}>{estado}</span>;
+export function PhaseHeader({ number, eyebrow, title }) {
+  return (
+    <header className="phase-head">
+      <span className="phase-number" aria-hidden="true">{number}</span>
+      <div>
+        <p className="phase-eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
+    </header>
+  );
 }
