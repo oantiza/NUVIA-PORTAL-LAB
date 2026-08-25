@@ -53,3 +53,10 @@
 - fuentes y límites visibles;
 - revisión estructural de Dashboard, Resumen, Fundamental, Técnico, Noticias e Informe;
 - despliegue únicamente por GitHub Pages mediante el flujo oficial del repositorio.
+
+## Revisión visual de 25 de agosto de 2026
+
+- Se compactan los KPI sin alterar valores, fórmulas, orden ni significado.
+- El fondo blanco y los acentos cromáticos siguen identificando familias visuales, no resultados favorables o desfavorables.
+- Los gráficos técnicos pasan a blanco sin introducir señales, estados ni llamadas a la acción.
+- Los banners de cartera y empresas comparten estructura y jerarquía; el cambio de paleta diferencia secciones y no califica instrumentos.
