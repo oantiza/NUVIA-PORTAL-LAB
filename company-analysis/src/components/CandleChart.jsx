@@ -34,6 +34,16 @@ function resolveColor(styles, value, fallback) {
   return value?.startsWith('--') ? cssColor(styles, value, fallback) : (value || fallback);
 }
 
+function numericPoints(dates, values) {
+  if (!Array.isArray(values)) return [];
+  return dates.flatMap((date, index) => {
+    const raw = values[index];
+    if (!date || raw == null || raw === '') return [];
+    const value = Number(raw);
+    return Number.isFinite(value) ? [{ time: date, value }] : [];
+  });
+}
+
 /** Gráfico de velas con volumen y overlays (SMA50, SMA200, Bollinger). */
 export default function CandleChart({ candles, sma50, sma200, bbUpper, bbLower, height = 380 }) {
   const ref = useRef(null);
@@ -46,7 +56,7 @@ export default function CandleChart({ candles, sma50, sma200, bbUpper, bbLower, 
     const opts = baseOptions(el);
     const pos = cssColor(styles, '--pos', '#187344');
     const neg = cssColor(styles, '--neg', '#bd2d3d');
-    const chart = createChart(el, { ...opts, width: el.clientWidth, height });
+    const chart = createChart(el, { ...opts, width: Math.max(1, el.clientWidth), height });
 
     const candleSeries = chart.addCandlestickSeries({
       upColor: pos, downColor: neg,
@@ -85,12 +95,15 @@ export default function CandleChart({ candles, sma50, sma200, bbUpper, bbLower, 
 
     chart.timeScale().fitContent();
 
-    const ro = new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth }));
+    const ro = new ResizeObserver(([entry]) => {
+      const width = Math.floor(entry?.contentRect?.width || el.clientWidth);
+      if (width > 0) chart.applyOptions({ width });
+    });
     ro.observe(el);
     return () => { ro.disconnect(); chart.remove(); };
   }, [candles, sma50, sma200, bbUpper, bbLower, height, theme]);
 
-  return <div ref={ref} className="chart-box" />;
+  return <div ref={ref} className="chart-box chart-box--price" />;
 }
 
 /** Gráfico auxiliar de indicador (RSI, MACD…): líneas + histograma + niveles. */
@@ -105,28 +118,34 @@ export function IndicatorChart({ dates, lines = [], histogram, levels = [], heig
     const opts = baseOptions(el);
     const chart = createChart(el, {
       ...opts,
-      width: el.clientWidth,
+      width: Math.max(1, el.clientWidth),
       height,
+      rightPriceScale: {
+        ...opts.rightPriceScale,
+        visible: true,
+        autoScale: true,
+        scaleMargins: { top: 0.12, bottom: 0.12 }
+      },
       timeScale: { ...opts.timeScale, visible: true }
     });
 
-    if (histogram) {
+    const histogramPoints = numericPoints(dates, histogram);
+    if (histogramPoints.length) {
       const h = chart.addHistogramSeries({ priceLineVisible: false, lastValueVisible: false });
-      h.setData(
-        dates.map((d, i) => ({
-          time: d,
-          value: histogram[i],
-          color: (histogram[i] ?? 0) >= 0
-            ? cssColor(styles, '--hist-up', 'rgba(24,115,68,0.48)')
-            : cssColor(styles, '--hist-down', 'rgba(189,45,61,0.48)')
-        })).filter((p) => p.value != null)
-      );
+      h.setData(histogramPoints.map((point) => ({
+        ...point,
+        color: point.value >= 0
+          ? cssColor(styles, '--hist-up', 'rgba(24,115,68,0.48)')
+          : cssColor(styles, '--hist-down', 'rgba(189,45,61,0.48)')
+      })));
     }
 
     let firstLine = null;
     for (const ln of lines) {
+      const points = numericPoints(dates, ln.data);
+      if (!points.length) continue;
       const s = chart.addLineSeries({ color: resolveColor(styles, ln.color, cssColor(styles, '--gold', '#8d6d3d')), lineWidth: ln.width || 2, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false });
-      s.setData(dates.map((d, i) => ({ time: d, value: ln.data[i] })).filter((p) => p.value != null));
+      s.setData(points);
       if (!firstLine) firstLine = s;
     }
 
@@ -138,10 +157,13 @@ export function IndicatorChart({ dates, lines = [], histogram, levels = [], heig
     }
 
     chart.timeScale().fitContent();
-    const ro = new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth }));
+    const ro = new ResizeObserver(([entry]) => {
+      const width = Math.floor(entry?.contentRect?.width || el.clientWidth);
+      if (width > 0) chart.applyOptions({ width });
+    });
     ro.observe(el);
     return () => { ro.disconnect(); chart.remove(); };
   }, [dates, lines, histogram, levels, height, theme]);
 
-  return <div ref={ref} className="chart-box" />;
+  return <div ref={ref} className="chart-box chart-box--indicator" />;
 }

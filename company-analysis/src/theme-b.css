@@ -477,12 +477,17 @@ button, input { font: inherit; }
 .empty .big { margin-bottom: 7px; color: var(--navy); font-family: Fraunces, Georgia, serif; font-size: 26px; }
 
 .chart-box {
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
-  padding: 18px;
+  padding: 0;
   background: var(--surface);
   border: 1px solid color-mix(in srgb, var(--bronze) 14%, var(--line));
   border-radius: 13px;
 }
+
+.chart-box--indicator { min-height: 142px; }
+.chart-box--price { min-height: 382px; }
 
 .chart-controls { gap: 8px; }
 .range-btns { padding: 4px; background: var(--soft-blue); border-radius: 9px; }

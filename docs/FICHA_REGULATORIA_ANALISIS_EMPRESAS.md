@@ -59,4 +59,5 @@
 - Se compactan los KPI sin alterar valores, fórmulas, orden ni significado.
 - El fondo blanco y los acentos cromáticos siguen identificando familias visuales, no resultados favorables o desfavorables.
 - Los gráficos técnicos pasan a blanco sin introducir señales, estados ni llamadas a la acción.
+- El lienzo blanco queda separado del cálculo de tamaño del gráfico; RSI y MACD normalizan únicamente valores numéricos finitos antes de dibujarse.
 - Los banners de cartera y empresas comparten estructura y jerarquía; el cambio de paleta diferencia secciones y no califica instrumentos.
