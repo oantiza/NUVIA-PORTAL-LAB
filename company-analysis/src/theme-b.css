@@ -365,7 +365,7 @@ button, input { font: inherit; }
 
 .co-meta { color: var(--muted); }
 .co-price { min-width: 230px; text-align: right; }
-.co-price .p { color: var(--navy); font-family: Fraunces, Georgia, serif; font-size: 34px; font-weight: 600; }
+.co-price .p { color: var(--navy); font-family: inherit; font-size: 34px; font-variant-numeric: tabular-nums; font-weight: 600; }
 .co-price .c { font-weight: 700; }
 .co-price .src { margin-top: 3px; color: var(--muted); font-size: 11px; }
 .company-save { margin-top: 12px; }
@@ -440,7 +440,7 @@ button, input { font: inherit; }
 .kpi:nth-child(4n + 3) { border-left-color: var(--bronze); }
 .kpi:nth-child(4n + 4) { border-left-color: var(--violet); }
 .kpi .k { color: var(--muted); font-size: 10.5px; font-weight: 800; letter-spacing: .075em; text-transform: uppercase; }
-.kpi .v { margin-top: 8px; color: var(--navy); font-family: Fraunces, Georgia, serif; font-size: 24px; font-weight: 600; }
+.kpi .v { margin-top: 8px; color: var(--navy); font-family: inherit; font-size: 24px; font-variant-numeric: tabular-nums; font-weight: 600; }
 .kpi .s { margin-top: 4px; color: var(--muted); font-size: 10.5px; }
 
 .tbl {

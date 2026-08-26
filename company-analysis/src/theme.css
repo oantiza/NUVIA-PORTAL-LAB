@@ -210,7 +210,7 @@ button { font-family: inherit; }
 @media (max-width: 900px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
 .kpi { padding: 15px 19px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .kpi .k { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); line-height: 1.4; }
-.kpi .v { font-family: Fraunces, Georgia, serif; font-size: 23px; margin-top: 7px; line-height: 1; }
+.kpi .v { font-family: inherit; font-size: 23px; font-variant-numeric: tabular-nums; margin-top: 7px; line-height: 1; }
 .kpi .s { font-size: 10.5px; color: var(--ink2); margin-top: 5px; }
 
 /* ---------- ayuda contextual de indicadores ---------- */
@@ -295,7 +295,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
 .co-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; font-size: 11px; color: var(--ink2); }
 .co-meta .sep { color: var(--line); }
 .co-price { margin-left: auto; text-align: right; flex: none; }
-.co-price .p { font-family: Fraunces, Georgia, serif; font-size: 36px; line-height: 1; }
+.co-price .p { font-family: inherit; font-size: 36px; font-variant-numeric: tabular-nums; line-height: 1; }
 .co-price .c { font-size: 13.5px; margin-top: 5px; }
 .co-price .src { font-size: 9.5px; color: var(--ink3); margin-top: 4px; letter-spacing: 0.06em; }
 
@@ -492,7 +492,7 @@ html.nuvia-company-embedded .login-wrap {
 .page .kpi-p { padding: 12px 16px; border-right: 1px solid var(--line); }
 .page .kpi-p:last-child { border-right: 0; }
 .page .kpi-p .k { font-size: 8.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); }
-.page .kpi-p .v { font-family: Fraunces, Georgia, serif; font-size: 21px; margin-top: 6px; line-height: 1; }
+.page .kpi-p .v { font-family: inherit; font-size: 21px; font-variant-numeric: tabular-nums; margin-top: 6px; line-height: 1; }
 .page .kpi-p .s { font-size: 10px; color: var(--ink2); margin-top: 4px; }
 .page table { width: 100%; border-collapse: collapse; font-size: 10px; }
 .page thead th {

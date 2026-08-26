@@ -4244,9 +4244,10 @@
   display: block;
   margin-top: var(--nv-space-2);
   color: var(--nv-text);
-  font-family: var(--nv-font-serif);
+  font-family: var(--nv-font-sans);
   font-size: clamp(25px, 2.5vw, 34px);
   font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
   line-height: 1;
 }
 
@@ -4328,9 +4329,10 @@
 }
 
 .nv-donut__centro strong {
-  font-family: var(--nv-font-serif);
+  font-family: var(--nv-font-sans);
   font-size: var(--nv-title-sm);
   font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-action);
   line-height: 1;
 }
 
@@ -5719,8 +5721,8 @@
 .nv-evolucion__muestra--agresivo { background: var(--nv-cat-clay); }
 .nv-evolucion__rejilla { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 2 5; opacity: 0.45; }
 .nv-evolucion__cien { stroke: var(--nv-text-muted); stroke-width: 1; stroke-dasharray: 4 4; }
-.nv-evolucion__caida-linea { stroke: var(--nv-bronze-700); stroke-width: 2; }
-.nv-evolucion__caida-area { fill: var(--nv-bronze-700); opacity: 0.14; }
+.nv-evolucion__caida-linea { stroke: var(--nv-negative); stroke-width: 2; }
+.nv-evolucion__caida-area { fill: var(--nv-negative); opacity: 0.14; }
 
 @media (max-width: 1100px) {
   .nv-evolucion__comparador { grid-template-columns: 1fr; align-items: start; }

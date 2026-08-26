@@ -209,7 +209,7 @@
 .nv-hero__aside strong {
   display: block;
   margin-top: var(--nv-space-4);
-  font-family: var(--nv-font-serif);
+  font-family: var(--nv-font-sans);
   font-size: var(--nv-title-sm);
   font-weight: var(--nv-weight-title);
 }
