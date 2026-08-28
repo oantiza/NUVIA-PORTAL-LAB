@@ -32,3 +32,6 @@ src/assets/home/nuvia-home-header-logo.png
 
 # PDFs generados de docs/ (regenerables con docs/_a-pdf.mjs)
 docs/pdf/
+
+# Enlaces simbolicos generados por "npx skills add" (rutas absolutas, por maquina)
+.claude/skills/
