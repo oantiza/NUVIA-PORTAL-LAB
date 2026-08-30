@@ -138,10 +138,8 @@
 
 
     <!-- ══ ECONOMÍA Y MERCADOS ═══════════════════════════════════════════════
-         Antes esta sección ocupaba 447 px para dar un párrafo genérico y una
-         fecha, sin una sola cifra. Ahora abre con los cinco indicadores que
-         ya alimenta web2-integration.js por data-macro-id, los mismos que en
-         mercados.html: se rellenan solos y quedan sincronizados.
+         Acceso a Mercados. Los indicadores se consultan en esa sección;
+         no se duplica su franja de datos en Inicio.
          ═══════════════════════════════════════════════════════════════════ -->
     <section id="mercados" data-screen-label="Resumen macro" class="nv-section" aria-labelledby="titulo-mercados">
       <div class="nv-container">
@@ -159,91 +157,6 @@
           decisiones comprensibles, sin convertir cada dato en una señal para actuar.
         </p>
 
-        <div class="markets-macro">
-          <div class="markets-macro__grid" aria-label="Indicadores macroeconómicos actualizados">
-
-            <article class="markets-macro__item" data-macro-id="inflation-spain">
-              <div class="markets-macro__top">
-                <span class="markets-macro__label" data-macro-field="label">IPC España</span>
-                <span class="markets-macro__dir is-up" data-macro-field="direction" aria-hidden="true">↗</span>
-              </div>
-              <strong class="markets-macro__value" data-macro-field="value">3,5%</strong>
-              <span class="markets-macro__rule"></span>
-              <div class="markets-macro__meta">
-                <span class="markets-macro__change is-up" data-macro-field="change">Sube 0,3 pp</span>
-                <span class="markets-macro__dot" aria-hidden="true"></span>
-                <span class="markets-macro__period" data-macro-field="period">Julio · interanual</span>
-              </div>
-              <p class="markets-macro__context" data-macro-field="context">El avance refleja mayor presión de carburantes y electricidad.</p>
-              <a class="markets-macro__source" data-macro-field="source" href="https://www.ine.es/dyngs/Prensa/adIPC0726.htm" target="_blank" rel="noreferrer">INE · 30 jul 2026</a>
-            </article>
-
-            <article class="markets-macro__item" data-macro-id="euribor">
-              <div class="markets-macro__top">
-                <span class="markets-macro__label" data-macro-field="label">Euríbor a 1 año</span>
-                <span class="markets-macro__dir is-up" data-macro-field="direction" aria-hidden="true">↗</span>
-              </div>
-              <strong class="markets-macro__value" data-macro-field="value">2,86%</strong>
-              <span class="markets-macro__rule"></span>
-              <div class="markets-macro__meta">
-                <span class="markets-macro__change is-up" data-macro-field="change">Sube 0,06 pp</span>
-                <span class="markets-macro__dot" aria-hidden="true"></span>
-                <span class="markets-macro__period" data-macro-field="period">julio 2026 · media mensual</span>
-              </div>
-              <p class="markets-macro__context" data-macro-field="context">Referencia habitual de las hipotecas variables.</p>
-              <a class="markets-macro__source" data-macro-field="source" href="https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA" target="_blank" rel="noreferrer">BCE · julio 2026</a>
-            </article>
-
-            <article class="markets-macro__item" data-macro-id="ecb-rate">
-              <div class="markets-macro__top">
-                <span class="markets-macro__label" data-macro-field="label">Tipo BCE</span>
-                <span class="markets-macro__dir is-flat" data-macro-field="direction" aria-hidden="true">→</span>
-              </div>
-              <strong class="markets-macro__value" data-macro-field="value">2,25%</strong>
-              <span class="markets-macro__rule"></span>
-              <div class="markets-macro__meta">
-                <span class="markets-macro__change is-flat" data-macro-field="change">Sin cambios</span>
-                <span class="markets-macro__dot" aria-hidden="true"></span>
-                <span class="markets-macro__period" data-macro-field="period">Facilidad de depósito</span>
-              </div>
-              <p class="markets-macro__context" data-macro-field="context">Referencia del coste del dinero, el ahorro y la financiación.</p>
-              <a class="markets-macro__source" data-macro-field="source" href="https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html" target="_blank" rel="noreferrer">BCE · 23 jul 2026</a>
-            </article>
-
-            <article class="markets-macro__item" data-macro-id="gdp-spain">
-              <div class="markets-macro__top">
-                <span class="markets-macro__label" data-macro-field="label">PIB España</span>
-                <span class="markets-macro__dir is-up" data-macro-field="direction" aria-hidden="true">↗</span>
-              </div>
-              <strong class="markets-macro__value" data-macro-field="value">+0,7%</strong>
-              <span class="markets-macro__rule"></span>
-              <div class="markets-macro__meta">
-                <span class="markets-macro__change is-up" data-macro-field="change">Acelera 0,1 pp</span>
-                <span class="markets-macro__dot" aria-hidden="true"></span>
-                <span class="markets-macro__period" data-macro-field="period">2T 2026 · trimestral</span>
-              </div>
-              <p class="markets-macro__context" data-macro-field="context">La actividad avanzó apoyada por consumo, inversión y servicios.</p>
-              <a class="markets-macro__source" data-macro-field="source" href="https://www.ine.es/dyngs/Prensa/avCNTR2T26.htm" target="_blank" rel="noreferrer">INE · 30 jul 2026</a>
-            </article>
-
-            <article class="markets-macro__item" data-macro-id="unemployment-spain">
-              <div class="markets-macro__top">
-                <span class="markets-macro__label" data-macro-field="label">Paro España</span>
-                <span class="markets-macro__dir is-down" data-macro-field="direction" aria-hidden="true">↘</span>
-              </div>
-              <strong class="markets-macro__value" data-macro-field="value">9,87%</strong>
-              <span class="markets-macro__rule"></span>
-              <div class="markets-macro__meta">
-                <span class="markets-macro__change is-down" data-macro-field="change">Baja 0,96 pp</span>
-                <span class="markets-macro__dot" aria-hidden="true"></span>
-                <span class="markets-macro__period" data-macro-field="period">2T 2026</span>
-              </div>
-              <p class="markets-macro__context" data-macro-field="context">El empleo aumentó en 486.000 personas durante el trimestre.</p>
-              <a class="markets-macro__source" data-macro-field="source" href="https://www.ine.es/dyngs/Prensa/es/EPA2T26.htm" target="_blank" rel="noreferrer">INE · EPA · 28 jul 2026</a>
-            </article>
-
-          </div>
-        </div>
 
         <p class="home-macro__cta">
           <a class="nv-btn nv-btn--secondary" href="mercados.html">Ver mercados al detalle →</a>
@@ -448,9 +361,9 @@
         <a class="home-academia" href="academia.html"
            aria-label="Entrar en la Academia NUVIA: saber es patrimonio">
           <img class="home-academia__art"
-               src="src/assets/education/nuvia-academy/academia-nuvia-portada.webp"
-               alt="Academia NUVIA · Saber es patrimonio. Una fuente de conocimiento para entender el dinero con calma."
-               width="1024" height="458" loading="lazy">
+               src="src/assets/education/nuvia-academy/nuvia-academy-banner-approved-v2.jpeg"
+               alt="Academy. Saber es patrimonio. Cursos, guías, vídeos y simuladores."
+               width="3552" height="1184" loading="lazy" decoding="async">
           <span class="home-academia__cta">Entrar en la Academia <span aria-hidden="true">→</span></span>
         </a>
 

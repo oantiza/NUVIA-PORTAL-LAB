@@ -133,3 +133,19 @@ a 1440 y 1024 px. Revisadas capturas y navegación a Cursos, Conocimientos
 esenciales y regreso a la portada. `index.html` permanece sin cambios.
 La auditoría automática general de render sigue omitida por falta de Playwright;
 la revisión de esta pieza se ha realizado mediante el navegador disponible.
+
+## Corrección de ubicación confirmada por el usuario
+
+El usuario confirma que se refiere al bloque Academy de Inicio (`index.html`)
+y pide quitar el banner de la cabecera de Academia. Se sustituye únicamente
+la imagen de ese bloque enlazado, manteniendo íntegro el hero fotográfico
+principal. Academia recupera su cabecera institucional azul, título visible
+y pestañas originales. La imagen conserva dimensiones 3:1 y carga diferida
+por estar más abajo en Inicio; no se edita el archivo original.
+
+Se revisan de nuevo los 18 puntos: no cambia la finalidad ni el contenido de
+la imagen; la navegación sigue siendo el acceso educativo a Academia. No se
+añade ningún cálculo, dato, recomendación, personalización, tercero, IA o
+conexión profesional. Clasificación verde limitada a la reubicación. Controles:
+SHA-256, ubicación única en Inicio, ausencia en Academia, hero principal
+preservado, navegación y cabeceras azules; prueba en fuente y `dist/`.

@@ -79,3 +79,49 @@ consentimientos o condiciones existentes. La clasificación verde se limita a
 esta presentación y navegación; no convierte la aprobación interna en un
 dictamen jurídico ni certifica el portal completo. Las validaciones pendientes
 de funciones preexistentes no se dan por resueltas mediante esta ficha.
+
+## Restauración de cabeceras · 30 de agosto de 2026
+
+El usuario solicita recuperar las cabeceras azules y confirma que el banner
+Academy debe estar en el bloque de Academia de Inicio, no en la cabecera de
+Academia. Se retiran las sobreescrituras claras de los heroes y se conserva
+el diseño de tarjetas del cuerpo. Las cabeceras utilizan el estilo
+institucional azul, incluidos sus controles y textos sobre fondo oscuro.
+El hero fotográfico principal de Inicio y la suite de cartera no se alteran.
+
+Prueba previa: los 18 puntos de la ficha siguen aplicando. La única entrada
+adicional es la imagen ya aprobada, movida sin alterar sus bytes; la única
+acción de su bloque sigue siendo navegar a Academia. No cambia el orden de
+datos, contenido, cálculos, fuentes, personalización, almacenamiento, IA,
+terceros ni relación profesional. El azul identifica secciones y no califica
+instrumentos o resultados. Clasificación VERDE para este cambio visual.
+
+Controles previstos: prueba de ubicación exclusiva del banner en Inicio,
+integridad de la imagen, conservación del hero principal y navegación,
+compilación y revisión de cabeceras en escritorio y tablet. No se da por
+superada ninguna validación jurídica pendiente del resto del portal.
+
+Petición adicional: retirar exclusivamente la franja de cinco indicadores
+macroeconómicos de Inicio. No se retiran los datos ni sus fuentes de Mercados,
+ni se modifica su actualización compartida. Se conservan el texto y acceso
+a Mercados, la noticia del día y las demás secciones. Misma clasificación
+verde: eliminación de un bloque duplicado, sin introducir resultados ni
+juicios. La prueba automática verificará su ausencia solo en Inicio y la
+presencia de los cinco indicadores en Mercados.
+
+Verificación completada: compilación y validadores superados; prueba de Inicio
+y cabeceras correcta en fuente y `dist/`; 13 cabeceras con fondo institucional
+azul y título blanco a 1440 y 1024 px (26 combinaciones sin desbordamiento).
+Lecturas adopta también la variante azul y conserva su ilustración editorial;
+se corrige el contraste del texto y del desplegable de la ruta de navegación.
+Vivienda y Lecturas revisadas visualmente. En Inicio se comprueban ausencia
+de indicadores, imagen aprobada en el bloque Academia y hero fotográfico
+sin cambios; el enlace del banner abre Academia correctamente. Se conserva
+el archivo de imagen idéntico y su proporción 3:1. No hay pruebas móviles.
+La auditoría general automatizada de render se sigue omitiendo por falta de
+Playwright; no se afirma una revisión visual exhaustiva de todo el portal.
+
+Retirada reversible mediante Git: la franja macro solo se elimina del HTML
+de Inicio. Sus datos, fuentes, estilos compartidos y presencia en Mercados
+permanecen. No se borra ningún recurso de imagen. Publicación por el flujo
+existente de GitHub Pages, sin modificar sus permisos ni canales.

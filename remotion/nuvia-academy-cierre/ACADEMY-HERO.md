@@ -24,7 +24,8 @@ El punto de entrada versionado es `src/academy-hero.ts`. El estudio local que
 incluye otras composiciones puede seguir abriéndose con su entrada
 `src/index.ts`; esas composiciones no forman parte de este cambio.
 
-El mismo banner se integra también en la cabecera de `academia.html` mediante
+El mismo banner se integra en el bloque de Academia de Inicio (`index.html`),
+no en la cabecera azul de `academia.html`, mediante
 una copia idéntica en `src/assets/education/nuvia-academy/`. La compilación del
 portal incluye esa copia en `dist/` para GitHub Pages. Revisión de perímetro en
 `../../docs/FICHA_REGULATORIA_HERO_ACADEMY.md`.

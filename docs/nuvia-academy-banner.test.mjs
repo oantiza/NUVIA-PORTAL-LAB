@@ -13,15 +13,37 @@ const home = await readFile(resolve(root, 'index.html'), 'utf8');
 const bytes = await readFile(resolve(root, asset));
 const header = html.match(/<section\b[^>]*id="academy"[\s\S]*?<\/section>/)?.[0];
 assert.ok(header, 'Academia debe conservar su cabecera y ancla');
-assert.ok(header.includes(`src="${asset}"`), 'La cabecera debe usar la imagen aprobada');
-assert.ok(header.includes('width="3552" height="1184"'), 'Debe reservarse la proporción 3:1');
-assert.ok(header.includes('fetchpriority="high"'), 'El banner debe cargar con prioridad');
 assert.ok(header.includes('id="academy-title"'), 'Debe conservarse el título accesible');
-assert.ok(header.includes('alt="Academy. Saber es patrimonio.'), 'La imagen necesita texto alternativo');
 assert.ok(header.includes('{{ pestanas }}') && header.includes('{{ p.abrir }}'), 'Las pestañas deben seguir conectadas');
-assert.ok(!header.includes('nv-hero--institutional'), 'El hero genérico no debe sustituir al banner');
+assert.ok(header.includes('nv-hero--institutional'), 'Academia debe conservar la cabecera azul');
+assert.ok(!html.includes(asset), 'El banner no debe estar en la cabecera ni en otras vistas de Academia');
 assert.ok(!html.includes('data-academy-intro'), 'No se debe reintroducir la entradilla');
-assert.ok(!home.includes(asset), 'La home general no debe cambiar de banner');
+const homeAcademy = home.match(/<section\b[^>]*id="academia"[\s\S]*?<\/section>/)?.[0];
+assert.ok(homeAcademy?.includes(`src="${asset}"`), 'El banner debe estar en el bloque Academia de Inicio');
+assert.equal(home.split(asset).length - 1, 1, 'El banner debe aparecer una sola vez');
+assert.ok(homeAcademy.includes('width="3552" height="1184"'), 'Debe reservarse la proporción 3:1');
+assert.ok(homeAcademy.includes('alt="Academy. Saber es patrimonio.'), 'La imagen necesita texto alternativo');
+assert.ok(homeAcademy.includes('href="academia.html"'), 'El banner debe seguir enlazando a Academia');
+const homeHero = home.match(/<section\b[^>]*id="inicio"[\s\S]*?<\/section>/)?.[0];
+assert.ok(homeHero?.includes('hero-family-finance-compact.webp'), 'El hero fotográfico principal no debe sustituirse');
+assert.ok(!homeHero.includes(asset), 'El banner no debe ocupar el hero principal');
+
+assert.ok(!home.includes('data-macro-id='), 'La franja de indicadores no debe aparecer en Inicio');
+assert.ok(home.includes('home-macro__cta') && home.includes('home-daily'), 'Se conservan el acceso a Mercados y la noticia del día');
+const markets = await readFile(resolve(root, 'mercados.html'), 'utf8');
+for (const id of ['inflation-spain', 'euribor', 'ecb-rate', 'gdp-spain', 'unemployment-spain']) {
+  assert.ok(markets.includes(`data-macro-id="${id}"`), `Mercados conserva ${id}`);
+}
+
+for (const page of ['academia', 'curso', 'fiscalidad', 'guia-ahorro', 'guia-calendario',
+  'guia-fiscal', 'guia-planificacion', 'guia-sucesiones', 'jubilacion', 'lecturas',
+  'mercados', 'temas', 'vivienda']) {
+  const pageHtml = await readFile(resolve(root, `${page}.html`), 'utf8');
+  assert.match(pageHtml, /<section[^>]*class="[^"]*nv-hero--institutional/, `${page}: cabecera institucional azul`);
+}
+const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
+assert.ok(!css.includes('.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)'),
+  'No se deben reintroducir las sobreescrituras claras de las cabeceras');
 assert.equal(createHash('sha256').update(bytes).digest('hex'), expectedHash,
   'El archivo publicado debe coincidir exactamente con la imagen aprobada');
-console.log(`OK Banner Academy: referencia, navegación, accesibilidad e imagen original en ${root}`);
+console.log(`OK Inicio y cabeceras: banner Academy, indicadores, navegación e imagen original en ${root}`);

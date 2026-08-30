@@ -70,15 +70,12 @@
 
   <main id="contenido">
     <!-- ============ CABECERA ============ -->
-    <section id="academy" data-screen-label="Cabecera Academia Nuvia" class="academy-banner" aria-labelledby="academy-title">
-      <div class="nv-container">
+    <section id="academy" data-screen-label="Cabecera Academia Nuvia" class="nv-hero nv-hero--institutional gu-hero" aria-labelledby="academy-title">
+      <div class="nv-container gu-section">
         <nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li><span aria-current="page">Academia</span></li></ol></nav>
-        <h1 id="academy-title" class="nv-visually-hidden">Academia Nuvia · Saber es patrimonio</h1>
-        <img class="academy-banner__image"
-             src="src/assets/education/nuvia-academy/nuvia-academy-banner-approved-v2.jpeg"
-             alt="Academy. Saber es patrimonio. Cursos, guías, vídeos y simuladores."
-             width="3552" height="1184" loading="eager" fetchpriority="high" decoding="async">
-        <p class="gu-lead academy-banner__lead">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
+        <span class="ac-x02"><span aria-hidden="true"></span>Academia Nuvia</span>
+        <h1 id="academy-title" class="ac-x03">Saber es patrimonio</h1>
+        <p class="gu-lead">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
         <nav aria-label="Áreas de Academia Nuvia" class="ac-x04">
           <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="2">
             <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" class="{{ p.clase }}"><span>{{ p.label }}</span><span aria-hidden="true" class="ac-x05">{{ p.sufijo }}</span></button>

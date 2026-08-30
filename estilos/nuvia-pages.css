@@ -355,11 +355,8 @@
 
 
 /* ══ LECTURAS CON CRITERIO ═════════════════════════════════════════════════
-   Única página del sitio con héroe editorial y Fraunces. Antes tenía un héroe
-   propio: una franja de proporción 5758×546 que no era ninguna de las tres
-   variantes del sistema. Ahora usa .nv-hero--editorial, así que comparte
-   contenedor, escala tipográfica, etiqueta superior y ritmo vertical con el
-   resto del sitio. La ilustración se conserva como arte de fondo.
+   Cabecera institucional azul, compartida con las demás secciones.
+   La ilustración y el filete de bronce conservan su identidad editorial.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lecturas-hero { --nv-hero-min: 380px; }
@@ -378,6 +375,10 @@
 
 .lecturas-hero h1 { margin-top: var(--nv-space-5); }
 
+.lecturas-hero .nv-breadcrumb .nuvia-site-nav__topics > summary {
+  color: var(--nv-text-on-dark-soft);
+}
+
 /* Filete de bronce: el detalle que identifica lo editorial en NUVIA. */
 .lecturas-hero__rule {
   display: block;
@@ -390,7 +391,7 @@
 .lecturas-hero__lead {
   max-width: 44ch;
   margin: 0;
-  color: var(--nv-text-soft);
+  color: var(--nv-text-on-dark-soft);
   font-family: var(--nv-font-serif);
   font-size: var(--nv-body-lg);
   line-height: 1.45;
@@ -8074,20 +8075,6 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
    huérfanos. Hecho así con .ac-tag → .nv-chip (88 usos, 0 píxeles de
    diferencia) y con el botón de descarga de la calculadora (.nv-btn). */
 
-/* Banner aprobado de Academia: imagen íntegra, sin el hero genérico encima. */
-.academy-banner { padding-block: var(--nv-space-6) 0; background: var(--nv-cloud); }
-.academy-banner .nv-breadcrumb { margin-bottom: var(--nv-space-4); }
-.academy-banner__image {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 1;
-  object-fit: contain;
-  background: var(--nv-navy-950);
-  box-shadow: var(--nv-shadow-md);
-}
-.academy-banner__lead { margin-block: var(--nv-space-6) var(--nv-space-4); color: var(--nv-text-soft); }
-
 .ac-x02 { align-items:center; color: var(--nv-green-700); display:inline-flex; font-size: var(--nv-body-sm); font-weight:400; gap:var(--nv-space-3); letter-spacing:.2em; margin-bottom:16px; text-transform:uppercase; }
 .ac-x03 { color:var(--nv-white); font-size: var(--nv-display-lg); font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 16px; max-width:16em; }
 .ac-x04 { border-top:1px solid var(--nv-line-on-dark); display:flex; flex-wrap:wrap; gap:var(--nv-space-2); padding:var(--nv-space-4) 0 var(--nv-space-5); }
@@ -8351,8 +8338,9 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
    DIRECCIÓN B · LENGUAJE DEL LABORATORIO EN EL RESTO DEL PORTAL
    ----------------------------------------------------------------------------
    Las páginas conservan su contenido y sus componentes funcionales, pero
-   comparten con el Laboratorio de cartera la portada geométrica, la jerarquía
-   editorial, las superficies blancas y una paleta de acentos más amplia.
+   comparten con el Laboratorio de cartera la jerarquía editorial, las
+   superficies blancas y una paleta de acentos más amplia en el cuerpo.
+   Las cabeceras conservan el azul institucional del portal.
 
    La portada fotográfica de Inicio y la suite de cartera quedan fuera: la
    primera es la referencia visual del portal y la segunda ya define este
@@ -8408,197 +8396,23 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   background: var(--nv-cloud);
 }
 
-/* El antiguo bloque institucional oscuro pasa a ser un banner NUVIA, como el
-   del laboratorio: una pieza contenida, luminosa y con profundidad geométrica. */
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) {
-  overflow: visible;
-  border: 0;
-  background: var(--nv-cloud);
-  color: var(--nv-text);
-  padding-block: var(--nv-space-6) var(--nv-space-8);
-}
-
-/* La decoración del diseño anterior queda sustituida por la del contenedor.
-   No debe sobresalir del banner ni generar desplazamiento horizontal. */
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)::before,
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)::after { display: none; }
-
-.nuvia-design-lab .lecturas-hero__scene { display: none; }
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container {
-  isolation: isolate;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--nv-page-accent) 18%, var(--nv-line));
-  border-radius: var(--nv-radius-md);
-  background:
-    radial-gradient(ellipse at center, color-mix(in srgb, var(--nv-white) 74%, transparent) 0%, color-mix(in srgb, var(--nv-white) 36%, transparent) 38%, transparent 68%),
-    repeating-radial-gradient(circle at 88% 10%, transparent 0 70px, color-mix(in srgb, var(--nv-page-accent) 8%, transparent) 71px 72px, transparent 73px 104px),
-    radial-gradient(circle at 10% 12%, color-mix(in srgb, var(--nv-bronze-500) 18%, transparent), transparent 38%),
-    radial-gradient(circle at 90% 92%, color-mix(in srgb, var(--nv-page-accent) 16%, transparent), transparent 45%),
-    linear-gradient(135deg, var(--nv-paper-light), var(--nv-page-accent-soft) 54%, var(--nv-mist));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--nv-white) 78%, transparent), var(--nv-shadow-md);
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container::before {
-  position: absolute;
-  z-index: 2;
-  top: 28px;
-  left: 50%;
-  color: var(--nv-navy-900);
-  content: "NUVIA";
-  font-family: var(--nv-font-serif);
-  font-size: clamp(34px, 4vw, 52px);
-  font-weight: var(--nv-weight-title);
-  letter-spacing: .24em;
-  line-height: 1;
-  transform: translateX(-50%);
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container::after {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--nv-page-accent) 4%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--nv-page-accent) 4%, transparent) 1px, transparent 1px);
-  background-size: 42px 42px;
-  content: "";
-  pointer-events: none;
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > * {
-  position: relative;
-  z-index: 1;
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > .nv-hero__inner {
-  min-height: 330px;
-  padding-block: 112px 46px;
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container:not(:has(> .nv-hero__inner)) {
-  min-height: 330px;
-  padding-block: 112px 46px !important;
-}
-
-/* La palabra NUVIA funciona como marca; el contenido de cada sección conserva
-   alineación de lectura y puede seguir usando una o dos columnas. */
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) h1,
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(.ac-x03, .tm-title, .gt-title, .gp-hero__title, .gu-hero__title) {
-  color: var(--nv-text);
-  font-family: var(--nv-font-serif);
-  font-weight: var(--nv-weight-title);
-}
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(
-  .nv-hero__lead,
-  .gu-lead,
-  .gu-text,
-  .gu-muted,
-  .gu-on-dark,
-  .gu-footnote-dark,
-  .gp-hero__note,
-  .gp-hero__label
-) { color: var(--nv-text-soft); }
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(
-  .nv-eyebrow--on-dark,
-  .ac-x02,
-  .gp-badge,
-  .gu-icon-light,
-  .gp-figure
-) { color: var(--nv-page-accent); }
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb a { color: var(--nv-text-soft); }
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb a:hover { color: var(--nv-text); }
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb li + li::before,
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-muted); }
-
-/* Paneles laterales: misma tarjeta blanca del laboratorio y el acento del área. */
-.nuvia-design-lab :is(
-  .nv-hero__aside,
-  .fiscal-selector,
-  .jub-howto,
-  .gp-hero__aside
-) {
-  border: 1px solid var(--nv-line);
-  border-top: 3px solid var(--nv-page-accent);
-  border-radius: var(--nv-radius-md);
-  background: color-mix(in srgb, var(--nv-white) 86%, transparent);
-  box-shadow: var(--nv-shadow-sm);
-  color: var(--nv-text);
-}
-
-.nuvia-design-lab .gp-hero__aside { margin-block: var(--nv-space-8); padding: var(--nv-space-8); }
-.nuvia-design-lab .fiscal-selector { padding: var(--nv-space-6); }
-.nuvia-design-lab .jub-howto { backdrop-filter: none; }
-
-.nuvia-design-lab :is(.jub-howto__label, .jub-howto__text, .gt-marco__label) { color: var(--nv-text-soft); }
-.nuvia-design-lab :is(.jub-howto__title, .gp-hero__sub, .gu-on-dark--strong) { color: var(--nv-text); }
-.nuvia-design-lab .jub-howto__num { color: var(--nv-page-accent); }
-.nuvia-design-lab .gp-hero__aside :is(.gu-strong, .gu-text, .gu-muted) { color: var(--nv-text-soft); }
-.nuvia-design-lab .gp-hero__aside :is(.gu-kicker, .gu-icon) { color: var(--nv-page-accent); }
-.nuvia-design-lab .gp-progress { background: var(--nv-line); }
-.nuvia-design-lab .gp-progress__fill { background: var(--nv-page-accent); }
-
-.nuvia-design-lab .markets-viewnav { border-color: var(--nv-line-strong); }
-.nuvia-design-lab .markets-viewnav__tab {
-  border-left-color: var(--nv-line-strong);
-  color: var(--nv-text-soft);
-}
-.nuvia-design-lab .markets-viewnav__tab:hover { background: var(--nv-page-accent-soft); }
-.nuvia-design-lab .markets-viewnav__tab.is-active {
-  background: var(--nv-page-accent);
-  color: var(--nv-white);
-}
-
-.nuvia-design-lab .ac-x04 { border-top-color: var(--nv-line); }
-
-/* Controles que antes estaban sobre azul: en el banner claro se convierten en
-   píldoras del acento de la página. Se preserva así su contraste y su función. */
-.nuvia-design-lab :is(
-  .viv-pill--dark,
-  .jub-tag-dark,
-  .gu-tag-dark,
-  .curso-ruta__actual,
-  .gt-chips li,
-  .gt-print
-) {
-  border-color: var(--nv-page-accent);
-  background: var(--nv-page-accent);
-  color: var(--nv-white);
-}
-
-.nuvia-design-lab :is(.gt-chips__accent, .gt-print:hover) {
-  border-color: var(--nv-navy-900);
-  background: var(--nv-navy-900);
-  color: var(--nv-white);
-}
-
-.nuvia-design-lab :is(.fiscal-selector__label, .fiscal-selector__regime) { color: var(--nv-text-soft); }
-.nuvia-design-lab .fiscal-selector__authority { color: var(--nv-text); }
-
-.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-btn--soft {
-  border-color: var(--nv-page-accent);
-  background: var(--nv-white);
-  color: var(--nv-page-accent);
-}
+/* Las cabeceras conservan el azul institucional y sus controles originales.
+   El lenguaje de tarjetas se limita al cuerpo, fuera de .nv-hero. */
 
 /* Algunas piezas siguen siendo deliberadamente oscuras dentro del cuerpo. El
    título conserva allí su versión clara aunque la jerarquía general sea B. */
 .nuvia-design-lab .markets-macro h2 { color: var(--nv-white); }
 
 /* Jerarquía B: títulos editoriales y contenido funcional en sans serif. */
-.nuvia-design-lab main h2,
-.nuvia-design-lab main :is(.gu-title, .gu-title-hero, .tm-legacy__heading) {
+.nuvia-design-lab main h2:not(:where(.nv-hero *)),
+.nuvia-design-lab main :is(.gu-title, .gu-title-hero, .tm-legacy__heading):not(:where(.nv-hero *)) {
   color: var(--nv-text);
   font-family: var(--nv-font-serif);
   font-weight: var(--nv-weight-title);
   letter-spacing: -.02em;
 }
 
-.nuvia-design-lab main :is(.nv-eyebrow, .gu-kicker, .markets-index-card__kicker) {
+.nuvia-design-lab main :is(.nv-eyebrow, .gu-kicker, .markets-index-card__kicker):not(:where(.nv-hero *)) {
   color: var(--nv-page-accent);
 }
 
@@ -8623,7 +8437,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-) {
+):not(:where(.nv-hero *)) {
   --nv-card-accent: var(--nv-page-accent);
   border: 1px solid var(--nv-line);
   border-top: 3px solid var(--nv-card-accent);
@@ -8648,7 +8462,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-):nth-child(6n + 2) { --nv-card-accent: var(--nv-cat-teal); }
+):not(:where(.nv-hero *)):nth-child(6n + 2) { --nv-card-accent: var(--nv-cat-teal); }
 
 .nuvia-design-lab :is(
   .nv-card,
@@ -8666,7 +8480,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-):nth-child(6n + 3) { --nv-card-accent: var(--nv-cat-purple); }
+):not(:where(.nv-hero *)):nth-child(6n + 3) { --nv-card-accent: var(--nv-cat-purple); }
 
 .nuvia-design-lab :is(
   .nv-card,
@@ -8684,7 +8498,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-):nth-child(6n + 4) { --nv-card-accent: var(--nv-cat-amber); }
+):not(:where(.nv-hero *)):nth-child(6n + 4) { --nv-card-accent: var(--nv-cat-amber); }
 
 .nuvia-design-lab :is(
   .nv-card,
@@ -8702,7 +8516,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-):nth-child(6n + 5) { --nv-card-accent: var(--nv-cat-cyan); }
+):not(:where(.nv-hero *)):nth-child(6n + 5) { --nv-card-accent: var(--nv-cat-cyan); }
 
 .nuvia-design-lab :is(
   .nv-card,
@@ -8720,22 +8534,4 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .curso-panel,
   .tm-card,
   .tm-legacy__card
-):nth-child(6n) { --nv-card-accent: var(--nv-cat-clay); }
-
-@media (max-width: 1024px) {
-  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) {
-    padding-block: var(--nv-space-4) var(--nv-space-6);
-  }
-
-  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > .nv-hero__inner {
-    min-height: 300px;
-    padding-block: 102px 38px;
-  }
-
-  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container:not(:has(> .nv-hero__inner)) {
-    min-height: 300px;
-    padding-block: 102px 38px !important;
-  }
-
-  .nuvia-design-lab .gp-hero__aside { margin-block: 0; }
-}
+):not(:where(.nv-hero *)):nth-child(6n) { --nv-card-accent: var(--nv-cat-clay); }
