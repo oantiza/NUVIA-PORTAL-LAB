@@ -8333,94 +8333,390 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 .nv-hero .gu-lead { color: var(--nv-text-on-dark-soft); }
 .nv-hero .ac-x02  { color: var(--nv-text-on-dark); }
 
-/* Academia NUVIA · apertura audiovisual de entrada */
-html.has-academy-intro,
-html.has-academy-intro body { overflow: hidden; }
+/* ============================================================================
+   DIRECCIÓN B · LENGUAJE DEL LABORATORIO EN EL RESTO DEL PORTAL
+   ----------------------------------------------------------------------------
+   Las páginas conservan su contenido y sus componentes funcionales, pero
+   comparten con el Laboratorio de cartera la portada geométrica, la jerarquía
+   editorial, las superficies blancas y una paleta de acentos más amplia.
 
-.nuvia-academy-intro {
-  align-items: stretch;
-  background:
-    radial-gradient(circle at 78% 18%, rgba(178, 138, 78, .16), transparent 36%),
-    var(--nv-navy-950);
-  display: flex;
-  inset: 0;
-  justify-content: center;
-  opacity: 1;
-  position: fixed;
-  transition: opacity .55s ease, visibility .55s ease;
-  visibility: visible;
-  z-index: 10000;
+   La portada fotográfica de Inicio y la suite de cartera quedan fuera: la
+   primera es la referencia visual del portal y la segunda ya define este
+   lenguaje. Los colores orientan por área; nunca codifican un juicio financiero.
+   ========================================================================== */
+
+.nuvia-design-lab {
+  --nv-page-accent: var(--nv-green-700);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-green-100) 76%, var(--nv-white));
+  background: var(--nv-cloud);
 }
 
-.nuvia-academy-intro.is-leaving {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
+.nuvia-design-lab.nuvia-route-mercados {
+  --nv-page-accent: var(--nv-cat-cyan);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-cyan) 8%, var(--nv-white));
 }
 
-.nuvia-academy-intro__video {
-  display: block;
-  height: 100%;
-  object-fit: contain;
-  width: 100%;
+.nuvia-design-lab:is(.nuvia-route-academia, .nuvia-route-curso) {
+  --nv-page-accent: var(--nv-cat-purple);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-purple) 8%, var(--nv-white));
 }
 
-.nuvia-academy-intro__controls {
-  align-items: center;
-  display: flex;
-  gap: 12px;
-  position: absolute;
-  right: clamp(24px, 3vw, 48px);
-  top: clamp(24px, 3vw, 42px);
+.nuvia-design-lab.nuvia-route-lecturas {
+  --nv-page-accent: var(--nv-cat-clay);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-clay) 8%, var(--nv-white));
 }
 
-.nuvia-academy-intro__status {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
+.nuvia-design-lab:is(
+  .nuvia-route-fiscalidad,
+  .nuvia-route-guia-ahorro,
+  .nuvia-route-guia-calendario,
+  .nuvia-route-guia-sucesiones
+) {
+  --nv-page-accent: var(--nv-cat-amber);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-amber) 8%, var(--nv-white));
+}
+
+.nuvia-design-lab:is(
+  .nuvia-route-jubilacion,
+  .nuvia-route-guia-fiscal,
+  .nuvia-route-guia-planificacion
+) {
+  --nv-page-accent: var(--nv-cat-purple);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-purple) 7%, var(--nv-white));
+}
+
+.nuvia-design-lab.nuvia-route-vivienda {
+  --nv-page-accent: var(--nv-cat-teal);
+  --nv-page-accent-soft: color-mix(in srgb, var(--nv-cat-teal) 8%, var(--nv-white));
+}
+
+.nuvia-design-lab main {
+  background: var(--nv-cloud);
+}
+
+/* El antiguo bloque institucional oscuro pasa a ser un banner NUVIA, como el
+   del laboratorio: una pieza contenida, luminosa y con profundidad geométrica. */
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) {
+  overflow: visible;
+  border: 0;
+  background: var(--nv-cloud);
+  color: var(--nv-text);
+  padding-block: var(--nv-space-6) var(--nv-space-8);
+}
+
+.nuvia-design-lab .nv-hero--institutional::after { display: none; }
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container {
+  isolation: isolate;
+  position: relative;
   overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--nv-page-accent) 18%, var(--nv-line));
+  border-radius: var(--nv-radius-md);
+  background:
+    radial-gradient(ellipse at center, color-mix(in srgb, var(--nv-white) 74%, transparent) 0%, color-mix(in srgb, var(--nv-white) 36%, transparent) 38%, transparent 68%),
+    repeating-radial-gradient(circle at 88% 10%, transparent 0 70px, color-mix(in srgb, var(--nv-page-accent) 8%, transparent) 71px 72px, transparent 73px 104px),
+    radial-gradient(circle at 10% 12%, color-mix(in srgb, var(--nv-bronze-500) 18%, transparent), transparent 38%),
+    radial-gradient(circle at 90% 92%, color-mix(in srgb, var(--nv-page-accent) 16%, transparent), transparent 45%),
+    linear-gradient(135deg, var(--nv-paper-light), var(--nv-page-accent-soft) 54%, var(--nv-mist));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--nv-white) 78%, transparent), var(--nv-shadow-md);
+}
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container::before {
   position: absolute;
-  white-space: nowrap;
-  width: 1px;
+  z-index: 2;
+  top: 28px;
+  left: 50%;
+  color: var(--nv-navy-900);
+  content: "NUVIA";
+  font-family: var(--nv-font-serif);
+  font-size: clamp(34px, 4vw, 52px);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .24em;
+  line-height: 1;
+  transform: translateX(-50%);
 }
 
-.nuvia-academy-intro__button {
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  background: rgba(10, 28, 55, .72);
-  border: 1px solid rgba(255, 255, 255, .5);
-  border-radius: var(--nv-radius-pill);
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container::after {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--nv-page-accent) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--nv-page-accent) 4%, transparent) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: "";
+  pointer-events: none;
+}
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > .nv-hero__inner {
+  min-height: 330px;
+  padding-block: 112px 46px;
+}
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container:not(:has(> .nv-hero__inner)) {
+  min-height: 330px;
+  padding-block: 112px 46px !important;
+}
+
+/* La palabra NUVIA funciona como marca; el contenido de cada sección conserva
+   alineación de lectura y puede seguir usando una o dos columnas. */
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) h1,
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(.ac-x03, .tm-title, .gt-title, .gp-hero__title, .gu-hero__title) {
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-weight: var(--nv-weight-title);
+}
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(
+  .nv-hero__lead,
+  .gu-lead,
+  .gu-text,
+  .gu-muted,
+  .gu-on-dark,
+  .gu-footnote-dark,
+  .gp-hero__note,
+  .gp-hero__label
+) { color: var(--nv-text-soft); }
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) :is(
+  .nv-eyebrow--on-dark,
+  .ac-x02,
+  .gp-badge,
+  .gu-icon-light,
+  .gp-figure
+) { color: var(--nv-page-accent); }
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb a { color: var(--nv-text-soft); }
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb a:hover { color: var(--nv-text); }
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb li + li::before,
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-muted); }
+
+/* Paneles laterales: misma tarjeta blanca del laboratorio y el acento del área. */
+.nuvia-design-lab :is(
+  .nv-hero__aside,
+  .fiscal-selector,
+  .jub-howto,
+  .gp-hero__aside
+) {
+  border: 1px solid var(--nv-line);
+  border-top: 3px solid var(--nv-page-accent);
+  border-radius: var(--nv-radius-md);
+  background: color-mix(in srgb, var(--nv-white) 86%, transparent);
+  box-shadow: var(--nv-shadow-sm);
+  color: var(--nv-text);
+}
+
+.nuvia-design-lab .gp-hero__aside { margin-block: var(--nv-space-8); padding: var(--nv-space-8); }
+.nuvia-design-lab .fiscal-selector { padding: var(--nv-space-6); }
+.nuvia-design-lab .jub-howto { backdrop-filter: none; }
+
+.nuvia-design-lab :is(.jub-howto__label, .jub-howto__text, .gt-marco__label) { color: var(--nv-text-soft); }
+.nuvia-design-lab :is(.jub-howto__title, .gp-hero__sub, .gu-on-dark--strong) { color: var(--nv-text); }
+.nuvia-design-lab .jub-howto__num { color: var(--nv-page-accent); }
+.nuvia-design-lab .gp-hero__aside :is(.gu-strong, .gu-text, .gu-muted) { color: var(--nv-text-soft); }
+.nuvia-design-lab .gp-hero__aside :is(.gu-kicker, .gu-icon) { color: var(--nv-page-accent); }
+.nuvia-design-lab .gp-progress { background: var(--nv-line); }
+.nuvia-design-lab .gp-progress__fill { background: var(--nv-page-accent); }
+
+.nuvia-design-lab .markets-viewnav { border-color: var(--nv-line-strong); }
+.nuvia-design-lab .markets-viewnav__tab {
+  border-left-color: var(--nv-line-strong);
+  color: var(--nv-text-soft);
+}
+.nuvia-design-lab .markets-viewnav__tab:hover { background: var(--nv-page-accent-soft); }
+.nuvia-design-lab .markets-viewnav__tab.is-active {
+  background: var(--nv-page-accent);
   color: var(--nv-white);
-  cursor: pointer;
-  font-family: var(--nv-font-sans);
-  font-size: var(--nv-body-sm);
-  font-weight: 600;
-  letter-spacing: .02em;
-  min-height: 44px;
-  padding: 10px 18px;
-  transition: background .2s ease, border-color .2s ease, transform .2s ease;
 }
 
-.nuvia-academy-intro__button:hover {
-  background: rgba(30, 57, 91, .92);
-  border-color: var(--nv-white);
-  transform: translateY(-1px);
+.nuvia-design-lab .ac-x04 { border-top-color: var(--nv-line); }
+
+/* Controles que antes estaban sobre azul: en el banner claro se convierten en
+   píldoras del acento de la página. Se preserva así su contraste y su función. */
+.nuvia-design-lab :is(
+  .viv-pill--dark,
+  .jub-tag-dark,
+  .gu-tag-dark,
+  .curso-ruta__actual,
+  .gt-chips li,
+  .gt-print
+) {
+  border-color: var(--nv-page-accent);
+  background: var(--nv-page-accent);
+  color: var(--nv-white);
 }
 
-.nuvia-academy-intro__button:focus-visible {
-  outline: 3px solid var(--nv-bronze-400);
-  outline-offset: 3px;
+.nuvia-design-lab :is(.gt-chips__accent, .gt-print:hover) {
+  border-color: var(--nv-navy-900);
+  background: var(--nv-navy-900);
+  color: var(--nv-white);
 }
 
-.nuvia-academy-intro__button[hidden] { display: none; }
+.nuvia-design-lab :is(.fiscal-selector__label, .fiscal-selector__regime) { color: var(--nv-text-soft); }
+.nuvia-design-lab .fiscal-selector__authority { color: var(--nv-text); }
+
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) .nv-btn--soft {
+  border-color: var(--nv-page-accent);
+  background: var(--nv-white);
+  color: var(--nv-page-accent);
+}
+
+/* Algunas piezas siguen siendo deliberadamente oscuras dentro del cuerpo. El
+   título conserva allí su versión clara aunque la jerarquía general sea B. */
+.nuvia-design-lab .markets-macro h2 { color: var(--nv-white); }
+
+/* Jerarquía B: títulos editoriales y contenido funcional en sans serif. */
+.nuvia-design-lab main h2,
+.nuvia-design-lab main :is(.gu-title, .gu-title-hero, .tm-legacy__heading) {
+  color: var(--nv-text);
+  font-family: var(--nv-font-serif);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: -.02em;
+}
+
+.nuvia-design-lab main :is(.nv-eyebrow, .gu-kicker, .markets-index-card__kicker) {
+  color: var(--nv-page-accent);
+}
+
+.nuvia-design-lab main .gu-dark .gu-kicker { color: var(--nv-green-300); }
+
+/* Las herramientas y piezas de contenido se apoyan en una única superficie.
+   El filete superior alterna colores por orden visual, sin añadir semántica. */
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .markets-calendar-panel,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+) {
+  --nv-card-accent: var(--nv-page-accent);
+  border: 1px solid var(--nv-line);
+  border-top: 3px solid var(--nv-card-accent);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-white);
+  box-shadow: var(--nv-shadow-sm);
+}
+
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+):nth-child(6n + 2) { --nv-card-accent: var(--nv-cat-teal); }
+
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+):nth-child(6n + 3) { --nv-card-accent: var(--nv-cat-purple); }
+
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+):nth-child(6n + 4) { --nv-card-accent: var(--nv-cat-amber); }
+
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+):nth-child(6n + 5) { --nv-card-accent: var(--nv-cat-cyan); }
+
+.nuvia-design-lab :is(
+  .nv-card,
+  .gu-card,
+  .gu-card--column,
+  .fiscal-paso,
+  .jub-card,
+  .jub-panel,
+  .jub-subpanel,
+  .viv-card,
+  .viv-panel,
+  .markets-index-card,
+  .markets-secondary-card,
+  .lecturas-card,
+  .curso-panel,
+  .tm-card,
+  .tm-legacy__card
+):nth-child(6n) { --nv-card-accent: var(--nv-cat-clay); }
 
 @media (max-width: 1024px) {
-  .nuvia-academy-intro__controls {
-    right: 24px;
-    top: 24px;
+  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) {
+    padding-block: var(--nv-space-4) var(--nv-space-6);
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .nuvia-academy-intro { transition: none; }
+  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container > .nv-hero__inner {
+    min-height: 300px;
+    padding-block: 102px 38px;
+  }
+
+  .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container:not(:has(> .nv-hero__inner)) {
+    min-height: 300px;
+    padding-block: 102px 38px !important;
+  }
+
+  .nuvia-design-lab .gp-hero__aside { margin-block: 0; }
 }

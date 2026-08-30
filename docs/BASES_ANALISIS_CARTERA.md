@@ -5,10 +5,12 @@
 (`cartera.html`), incluidas sus dos vistas: el simulador de carteras y el
 análisis fundamental y técnico de compañías.
 
-> **Este es el documento que manda.** Cualquier resumen, presentación o
-> planteamiento que se derive de él —como el HTML de notas para socios— es una
-> foto de un momento. Si algo cambia, se cambia **aquí primero**. No repetir el
-> error de la guía de OAA, que se arrastró meses sin reflejar lo construido.
+> **Este es el documento funcional que manda dentro de la sección**, subordinado
+> en todo caso a `docs/MARCO_REGULATORIO_OBLIGATORIO.md`, que es la norma
+> regulatoria transversal y superior del proyecto. Cualquier resumen,
+> presentación o planteamiento que se derive de estas bases —como el HTML de
+> notas para socios— es una foto de un momento. Si algo cambia, se cambia aquí
+> primero, sin contradecir el marco regulatorio.
 
 Los cuatro puntales —**qué es la sección** (1), **cumplimiento** (2), **modelo
 de niveles** (3) e **informes** (5)— están definidos y no se esperan cambios de
@@ -164,10 +166,11 @@ exacta del contenido personalizado, las obligaciones de información publicitari
 de productos financieros, la normativa de consumo y contratación a distancia, y
 los requisitos fiscales del nivel de pago.
 
-> **Validada (19-08-2026).** Óscar dio por validada esta revisión jurídica y
-> autorizó el arranque de la Fase 4 («sigue, está validado»). Con ello se abre
-> el registro (paso 28). La validación de los supuestos del simulador (§8)
-> sigue pendiente y es un encargo distinto.
+> **Validación interna de producto (19-08-2026).** Óscar autorizó el arranque de
+> la Fase 4. Esta decisión no equivale a una validación jurídica o de compliance.
+> Toda función debe superar además las puertas de control de
+> `docs/MARCO_REGULATORIO_OBLIGATORIO.md`. La validación de los supuestos del
+> simulador (§8) sigue pendiente y es un encargo distinto.
 
 ---
 

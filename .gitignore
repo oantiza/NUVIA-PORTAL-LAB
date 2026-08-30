@@ -35,3 +35,15 @@ docs/pdf/
 
 # Enlaces simbolicos generados por "npx skills add" (rutas absolutas, por maquina)
 .claude/skills/
+
+# Trabajo local, renders y documentos privados: no publicar en el repositorio.
+/.codex_artifacts/
+/.tmp_video_tools/
+/artifacts/
+/deliverables/
+/remotion/nuvia-academy-cierre/artifacts/
+/tmp-*.mjs
+/tmp-*.log
+/docs/ANEXO_PARTICIPACION_SOCIETARIA.md
+# Auditoría histórica con correos personales y detalles internos.
+/docs/AUDITORIA_REGULATORIA.md

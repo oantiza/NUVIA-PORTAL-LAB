@@ -2,6 +2,14 @@
 
 Laboratorio oficial de NUVIA Portal. Su código de trabajo está exclusivamente en esta carpeta y se publica oficialmente en GitHub Pages. Ningún proceso de este proyecto modifica, sincroniza ni despliega otra versión de NUVIA.
 
+## Gobernanza regulatoria
+
+El documento [Marco regulatorio obligatorio y compatibilidad profesional](docs/MARCO_REGULATORIO_OBLIGATORIO.md)
+es una norma transversal del proyecto. Debe aplicarse antes de diseñar,
+programar o publicar cualquier página, contenido, cálculo, herramienta o función
+de IA. Si entra en conflicto con otro documento funcional, prevalece el marco
+regulatorio y la función queda bloqueada hasta su corrección o validación.
+
 ## Entornos
 
 - **Local:** desarrollo y revisión en `http://127.0.0.1:4173`.

@@ -25,14 +25,32 @@
     if (currentRoute === 'cartera.html') return 'cartera';
     if (['academia.html', 'curso.html'].includes(currentRoute)) return 'academy';
     if (currentRoute === 'lecturas.html') return 'lecturas';
-    if (['temas.html', 'fiscalidad.html', 'jubilacion.html', 'vivienda.html', 'guia-fiscal.html', 'guia-planificacion.html', 'guia-impuestos.html'].includes(currentRoute)) return 'temas';
+    if ([
+      'temas.html',
+      'fiscalidad.html',
+      'jubilacion.html',
+      'vivienda.html',
+      'guia-ahorro.html',
+      'guia-calendario.html',
+      'guia-fiscal.html',
+      'guia-planificacion.html',
+      'guia-sucesiones.html',
+      'guia-impuestos.html'
+    ].includes(currentRoute)) return 'temas';
     return 'inicio';
   };
 
   const pageKindForRoute = (currentRoute) => {
     if (currentRoute === 'index.html') return 'home';
     if (currentRoute === 'lecturas.html') return 'editorial';
-    if (['guia-fiscal.html', 'guia-planificacion.html', 'guia-impuestos.html'].includes(currentRoute)) return 'guide';
+    if ([
+      'guia-ahorro.html',
+      'guia-calendario.html',
+      'guia-fiscal.html',
+      'guia-planificacion.html',
+      'guia-sucesiones.html',
+      'guia-impuestos.html'
+    ].includes(currentRoute)) return 'guide';
     if (['cartera.html', 'jubilacion.html', 'vivienda.html'].includes(currentRoute)) return 'tool';
     if (['academia.html', 'curso.html'].includes(currentRoute)) return 'academy';
     return 'institutional';

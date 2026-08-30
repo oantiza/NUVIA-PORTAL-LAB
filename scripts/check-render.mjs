@@ -217,14 +217,6 @@ for (const ancho of ANCHOS) {
     p.on('console', anotar); p.on('pageerror', anotarError);
     await p.goto(base + pag, { waitUntil: 'load', timeout: 60000 });
     await p.waitForTimeout(4200);
-    /* Las capas audiovisuales se comprueban con sus pruebas específicas. Para
-       medir la página subyacente, el auditor usa la misma salida accesible que
-       tiene el visitante y espera a que concluya la transición. */
-    const omitirIntro = await p.$('[data-academy-intro-skip]');
-    if (omitirIntro) {
-      await omitirIntro.click();
-      await p.waitForTimeout(650);
-    }
     p.off('console', anotar); p.off('pageerror', anotarError);
     const ruido = consola.filter((t) => RUIDO_CONOCIDO.test(t));
     const nuevos = consola.filter((t) => !RUIDO_CONOCIDO.test(t));
