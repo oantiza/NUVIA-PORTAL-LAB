@@ -8404,7 +8404,12 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   padding-block: var(--nv-space-6) var(--nv-space-8);
 }
 
-.nuvia-design-lab .nv-hero--institutional::after { display: none; }
+/* La decoración del diseño anterior queda sustituida por la del contenedor.
+   No debe sobresalir del banner ni generar desplazamiento horizontal. */
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)::before,
+.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)::after { display: none; }
+
+.nuvia-design-lab .lecturas-hero__scene { display: none; }
 
 .nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial) > .nv-container {
   isolation: isolate;

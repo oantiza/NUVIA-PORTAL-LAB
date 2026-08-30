@@ -46,15 +46,36 @@ no se incorporan a las páginas ni a `dist/` por este cambio.
 - `npm run build`: superado, incluida la puerta regulatoria de empresas, los
   validadores y todas las pruebas de `test:analisis`; `dist/` generado.
 - `npm run lint` en `remotion/nuvia-academy-cierre`: superado (ESLint y TypeScript).
-- Vista local de Mercados comprobada en el navegador antes de esta subida.
+- Revisión de cabeceras de las 13 páginas interiores en navegador de escritorio.
+- Comprobación DOM de las 13 páginas a 1440 y 1024 px: contenido y título
+  presentes, sin desbordamiento horizontal en las 26 combinaciones.
+- Comprobación visual adicional de Vivienda, Fiscalidad y Lecturas en tablet.
+- Navegación a «Mercados y cotizaciones» operativa: 16 filas y 9 filtros.
+- Retiradas las decoraciones heredadas del hero y la escena decorativa anterior
+  de Lecturas bajo `nuvia-design-lab`. La primera provocaba 80 px de
+  desbordamiento en Vivienda; la segunda asomaba por fuera del nuevo banner.
+  No se eliminan imágenes del disco ni se afecta a Inicio.
 - La auditoría automatizada de render se omitió porque Playwright no está
-  instalado en este entorno. No se afirma una validación visual exhaustiva ni
-  de contraste de todas las páginas. No se realizaron pruebas móviles.
+  instalado en este entorno. Se realizó la revisión acotada de navegador
+  descrita arriba; no se afirma una auditoría exhaustiva de contraste de todo el
+  portal. No se realizaron pruebas móviles.
 - Los informes privados, la auditoría histórica con datos personales, los
   renders y los temporales quedan fuera del repositorio público.
 
-Esta ficha registra la revisión del cambio, no una certificación jurídica del
-portal completo. La subida se limita a la rama de trabajo; no modifica `main`
-ni activa el despliegue de producción. Antes de publicar en producción deben
-completarse las puertas de publicación del marco, incluida la revisión visual
-pendiente y cualquier validación específica que resulte aplicable.
+## Preparación de publicación
+
+El usuario solicita publicar después de revisar la versión local. Se integra
+`origin/main` conservando su retirada de la entradilla; la misma prueba queda
+con el nombre `nuvia-academy-sin-intro.test.mjs`. Inicio, cartera, análisis de
+empresas y el flujo de GitHub Pages no presentan diferencias respecto de main.
+La publicación usa el flujo existente, que compila y valida `dist/` antes de
+desplegar. Para revertir la integración se toma como línea base su padre de
+main anterior (`9a31c33`, segundo padre del merge) y se vuelve a ejecutar ese
+mismo flujo, sin reescribir el historial.
+
+El cambio no incorpora instrumentos, personalización, colaboradores,
+monetización, tratamiento de datos ni nuevos terceros. No modifica avisos,
+consentimientos o condiciones existentes. La clasificación verde se limita a
+esta presentación y navegación; no convierte la aprobación interna en un
+dictamen jurídico ni certifica el portal completo. Las validaciones pendientes
+de funciones preexistentes no se dan por resueltas mediante esta ficha.
