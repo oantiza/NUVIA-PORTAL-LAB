@@ -97,3 +97,39 @@ con su composición, dependencias fijadas y un punto de entrada independiente.
 No cambia el contenido visual ni el perímetro verde revisado. El destino es
 la rama de trabajo `prueba/tipografia-empresas` del repositorio oficial;
 no se integra en `main`, en el portal ni se despliega a producción.
+
+## Integración en Academia y publicación · 30 de agosto de 2026
+
+Tras solicitar la publicación, el usuario señala que falta el banner aprobado
+en la portada de Academia. Se corrige la omisión integrando la segunda imagen
+en `academia.html`, no en la home general `index.html`.
+
+Se repiten los 18 puntos de la prueba anterior: misma pieza educativa, sin
+datos, instrumentos, cifras, decisiones, rankings, recomendaciones, contactos,
+patrocinio, afiliación, marcas bancarias ni IA en ejecución. El ajuste es
+proporcional y no se superponen nuevos textos o gráficos. Las barras y la
+flecha siguen siendo ilustración académica sin escala ni promesa financiera.
+Clasificación verde para esta integración visual. La solicitud de sustitución
+y publicación es la autorización de uso en el proyecto; no se afirma una
+licencia distinta ni se altera el archivo aportado.
+
+La copia publicable se guarda en
+`src/assets/education/nuvia-academy/nuvia-academy-banner-approved-v2.jpeg`.
+Se conservan las pestañas, los accesos a cursos y simuladores, el título
+semántico y el texto alternativo. La imagen se carga con prioridad, tiene
+dimensiones explícitas y se muestra íntegra en escritorio y tablet.
+No se vuelve a introducir una entradilla ni reproducción automática.
+
+Controles previos a publicación: prueba de referencia de HTML y SHA-256 de la
+imagen tanto en fuente como en `dist/`, comprobación de las pestañas, revisión
+en navegador a 1440 y 1024 px, compilación y despliegue con GitHub Actions.
+La reversión se realiza revirtiendo este cambio y volviendo a ejecutar el
+flujo de Pages. La validación se limita a la pieza, no al portal completo.
+
+Verificación de integración: compilación y pruebas superadas; la prueba nueva
+confirma el SHA-256 aprobado tanto en fuente como en `dist/`. Imagen cargada
+con dimensiones nativas 3552 × 1184, proporción renderizada 3:1 y cero desbordes
+a 1440 y 1024 px. Revisadas capturas y navegación a Cursos, Conocimientos
+esenciales y regreso a la portada. `index.html` permanece sin cambios.
+La auditoría automática general de render sigue omitida por falta de Playwright;
+la revisión de esta pieza se ha realizado mediante el navegador disponible.

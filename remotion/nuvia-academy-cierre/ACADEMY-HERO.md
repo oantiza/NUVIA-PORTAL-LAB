@@ -24,6 +24,7 @@ El punto de entrada versionado es `src/academy-hero.ts`. El estudio local que
 incluye otras composiciones puede seguir abriéndose con su entrada
 `src/index.ts`; esas composiciones no forman parte de este cambio.
 
-Esta entrega guarda el diseño en Git; no integra el banner en `academia.html`
-ni modifica el despliegue de GitHub Pages. Revisión de perímetro en
+El mismo banner se integra también en la cabecera de `academia.html` mediante
+una copia idéntica en `src/assets/education/nuvia-academy/`. La compilación del
+portal incluye esa copia en `dist/` para GitHub Pages. Revisión de perímetro en
 `../../docs/FICHA_REGULATORIA_HERO_ACADEMY.md`.

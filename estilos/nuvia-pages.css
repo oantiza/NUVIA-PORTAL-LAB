@@ -8074,6 +8074,20 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
    huérfanos. Hecho así con .ac-tag → .nv-chip (88 usos, 0 píxeles de
    diferencia) y con el botón de descarga de la calculadora (.nv-btn). */
 
+/* Banner aprobado de Academia: imagen íntegra, sin el hero genérico encima. */
+.academy-banner { padding-block: var(--nv-space-6) 0; background: var(--nv-cloud); }
+.academy-banner .nv-breadcrumb { margin-bottom: var(--nv-space-4); }
+.academy-banner__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  object-fit: contain;
+  background: var(--nv-navy-950);
+  box-shadow: var(--nv-shadow-md);
+}
+.academy-banner__lead { margin-block: var(--nv-space-6) var(--nv-space-4); color: var(--nv-text-soft); }
+
 .ac-x02 { align-items:center; color: var(--nv-green-700); display:inline-flex; font-size: var(--nv-body-sm); font-weight:400; gap:var(--nv-space-3); letter-spacing:.2em; margin-bottom:16px; text-transform:uppercase; }
 .ac-x03 { color:var(--nv-white); font-size: var(--nv-display-lg); font-weight:500; letter-spacing:-.015em; line-height:1.08; margin:0 0 16px; max-width:16em; }
 .ac-x04 { border-top:1px solid var(--nv-line-on-dark); display:flex; flex-wrap:wrap; gap:var(--nv-space-2); padding:var(--nv-space-4) 0 var(--nv-space-5); }
