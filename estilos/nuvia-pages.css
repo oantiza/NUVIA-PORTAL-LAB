@@ -1089,6 +1089,10 @@
    lleva el peso y los dos párrafos quedan como apoyo, no al revés.
    ──────────────────────────────────────────────────────────────────── */
 
+.home-intro__eyebrow {
+  color: var(--nv-text-muted);
+}
+
 .home-intro__title {
   max-width: 20ch;
   margin: var(--nv-space-3) 0 var(--nv-space-8);

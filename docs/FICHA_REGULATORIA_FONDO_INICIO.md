@@ -37,6 +37,22 @@ después de compilar, validar el alcance y comprobar el resultado.
 
 ## Verificación
 
+### Ajuste posterior del rótulo «El proyecto»
+
+Revisión previa (31 de agosto de 2026): VERDE. Se iguala únicamente el color
+del rótulo y su filete al de los rótulos de las secciones siguientes mediante
+el token existente `--nv-text-muted`. Conserva tamaño, texto y posición. Para
+los puntos 1–4, la necesidad y transformación son homogeneidad cromática de
+encabezados; los puntos 5–17 permanecen sin cambios y sin nuevos datos,
+instrumentos, recomendaciones, acciones comerciales, personalización o IA.
+Punto 18: prueba de la regla de color y comparación en navegador con Mercados
+y Patrimonio antes de publicar. No altera el perímetro regulatorio ni la
+separación profesional, y es reversible mediante Git.
+
+Validación del ajuste: compilación y pruebas superadas; el navegador confirma
+`rgb(91, 100, 114)` tanto en texto como en filete para Proyecto, Mercados,
+Patrimonio, Familia y Academia. Sin cambios de contenido ni navegación.
+
 - Compilación y pruebas completas superadas, incluido el nuevo control de
   fondos en fuente y `dist/`.
 - Navegador a 1440 y 1024 px: fondo general `rgb(244, 246, 249)` visible en

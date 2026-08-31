@@ -53,6 +53,10 @@ for (const page of ['academia', 'curso', 'fiscalidad', 'guia-ahorro', 'guia-cale
   assert.match(pageHtml, /<section[^>]*class="[^"]*nv-hero--institutional/, `${page}: cabecera institucional azul`);
 }
 const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
+assert.match(home, /class="nv-eyebrow home-intro__eyebrow">El proyecto<\/p>/,
+  'El proyecto usa el rótulo de color homogéneo');
+assert.match(css, /\.home-intro__eyebrow\s*\{\s*color:\s*var\(--nv-text-muted\);\s*\}/,
+  'El proyecto y su filete comparten el color de los siguientes rótulos');
 assert.ok(!css.includes('.nuvia-design-lab :is(.nv-hero--institutional, .nv-hero--editorial)'),
   'No se deben reintroducir las sobreescrituras claras de las cabeceras');
 assert.equal(createHash('sha256').update(bytes).digest('hex'), expectedHash,
