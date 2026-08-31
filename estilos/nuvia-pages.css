@@ -1085,8 +1085,11 @@
 .home-macro__lead { margin-bottom: var(--nv-space-8); }
 
 /* ── Qué es NUVIA ────────────────────────────────────────────────────────
-   Va justo después del héroe, así que es lo segundo que se lee: el titular
-   lleva el peso y los dos párrafos quedan como apoyo, no al revés.
+   Va justo después del héroe, así que es lo segundo que se lee. Es la única
+   sección de la portada sin fotografía, a propósito: entre los banners, la
+   definición destaca por quietud. Titular-definición, una sola columna de
+   lectura, y la fila de valores con el mismo patrón 01·02·03 del héroe
+   (home-pillars), traducido a fondo claro.
    ──────────────────────────────────────────────────────────────────── */
 
 .home-intro__eyebrow {
@@ -1094,30 +1097,70 @@
 }
 
 .home-intro__title {
-  max-width: 20ch;
+  max-width: 22ch;
   margin: var(--nv-space-3) 0 var(--nv-space-8);
   font-size: var(--nv-display-md);
   letter-spacing: -.03em;
   line-height: 1.12;
 }
 
-.home-intro__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--nv-space-12);
-  max-width: 980px;
+.home-intro__body {
+  max-width: var(--nv-reading);
 }
 
-.home-intro__grid p {
+.home-intro__body p {
   margin: 0;
   color: var(--nv-text-soft);
-  font-size: var(--nv-body);
+  font-size: var(--nv-body-lg);
   line-height: 1.7;
+}
+
+.home-intro__body p + p { margin-top: var(--nv-space-5); }
+
+/* La fila de valores: el patrón del héroe (home-pillars), sobre claro. */
+.home-intro__values {
+  max-width: var(--nv-reading);
+  margin-top: var(--nv-space-10);
+}
+
+.home-intro__rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--nv-line-strong) 48px, var(--nv-line-strong) calc(100% - 48px), transparent);
+}
+
+.home-intro__row {
+  display: flex;
+  padding-top: var(--nv-space-4);
+}
+
+.home-intro__row > div {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nv-space-2);
+}
+
+.home-intro__row > div + div { border-left: 1px solid var(--nv-line); }
+
+.home-intro__num {
+  color: var(--nv-text-link);
+  font-size: var(--nv-body-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.home-intro__name {
+  color: var(--nv-text);
+  font-size: var(--nv-label);
+  font-weight: var(--nv-weight-title);
+  letter-spacing: .22em;
+  text-transform: uppercase;
 }
 
 @media (max-width: 900px) {
   .home-intro__title { max-width: none; }
-  .home-intro__grid { grid-template-columns: minmax(0, 1fr); gap: var(--nv-space-5); }
+  .home-intro__row { flex-direction: column; gap: var(--nv-space-3); }
+  .home-intro__row > div + div { border-left: 0; }
 }
 
 .home-macro__cta { margin: var(--nv-space-6) 0 0; }
