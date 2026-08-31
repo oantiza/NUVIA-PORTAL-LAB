@@ -36,7 +36,7 @@ for (const id of ['inflation-spain', 'euribor', 'ecb-rate', 'gdp-spain', 'unempl
 }
 
 for (const page of ['academia', 'curso', 'fiscalidad', 'guia-ahorro', 'guia-calendario',
-  'guia-fiscal', 'guia-planificacion', 'guia-sucesiones', 'jubilacion', 'lecturas',
+  'guia-fiscal', 'guia-planificacion', 'guia-sucesiones', 'jubilacion',
   'mercados', 'temas', 'vivienda']) {
   const pageHtml = await readFile(resolve(root, `${page}.html`), 'utf8');
   assert.match(pageHtml, /<section[^>]*class="[^"]*nv-hero--institutional/, `${page}: cabecera institucional azul`);

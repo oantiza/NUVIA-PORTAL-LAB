@@ -119,3 +119,43 @@ sin capa HTML duplicada y sin desbordamiento en escritorio (1440 px) y tablet
 (1024 px). Capturas revisadas a ambos tamaños y enlace a `lecturas.html`
 probado con clic; cabecera institucional azul confirmada. Sigue vigente la
 limitación de la auditoría general de render indicada anteriormente.
+
+## Cabecera panorámica de Lecturas — petición posterior
+
+El usuario solicita expresamente sustituir también la cabecera azul interior
+de Lecturas por el mismo banner aprobado, a todo el ancho y fundido a blanco
+en los bordes. Esta petición sustituye la restricción visual anterior solo
+para `lecturas.html`; Inicio y las demás cabeceras no cambian.
+
+Prueba previa: (1) identificación y acceso al contenido editorial;
+(2) mismo PNG aprobado, sin entradas del visitante; (3) escala proporcional
+y velos CSS blancos periféricos, sin modificar el archivo; (4) banner completo
+con título, lema y marca Family Wealth; (5) sin instrumentos nuevos;
+(6) sin personalización; (7) sin consejo operativo; (8) sin opinión de precios;
+(9) sin ranking inversor; (10) sin recomendaciones de terceros nuevas;
+(11) colores decorativos, sin veredicto; (12) el banner enlaza a la selección
+de libros ya existente, sin contratación ni contacto nuevos; (13) sin nueva
+remuneración o afiliación; (14) sin vinculación con una entidad financiera;
+(15) sin tratamiento de datos añadido; (16) sin nueva IA ni generación de
+imágenes; (17) misma fuente Canva e integridad documentada arriba;
+(18) pruebas de imagen, título accesible, ancla, ancho y degradados, revisión
+en escritorio/tablet y compilación. Clasificación VERDE, solo visual.
+
+Se retiran del encabezado la antigua escena con Wealth Management, el fondo
+azul y el texto visible duplicado. Se conservan el h1 accesible, las migas de
+pan, las cuatro fichas y sus interacciones. El archivo antiguo se conserva
+en el repositorio, sin referenciarse en esta página; retirada y reversión
+mediante Git. No se certifican los contenidos preexistentes ni cambia el
+perímetro de privacidad, avisos, proveedores o integración de otras secciones.
+
+Verificación de la cabecera panorámica: `npm run build` superado, pruebas en
+fuente y `dist/` actualizadas a la petición expresa para Lecturas; las otras
+12 cabeceras mantienen su control de fondo institucional. Revisión visual
+en escritorio (1440 y 1920 px) y tablet (1024 px): imagen cargada, proporción
+original, ancho completo sin desbordamiento, fundido blanco en el perímetro,
+un h1 accesible y cuatro fichas conservadas. Clic en el banner confirmado:
+salta a `#seleccion-lecturas` por debajo de la navegación fija. El PNG y
+`index.html` permanecen intactos. La antigua escena deja de incluirse en
+`dist/` al no utilizarse; sigue disponible en el repositorio para reversión.
+La auditoría general de render sigue omitida por falta de Playwright; se ha
+realizado esta comprobación visual acotada con el navegador disponible.

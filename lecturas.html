@@ -74,52 +74,33 @@
 
   <main id="contenido">
 
-    <!-- ══ HÉROE EDITORIAL ═══════════════════════════════════════════════════
-         Antes: franja a medida de proporción 5758×546, con su propio sistema de
-         tipografía y espaciado. Ahora: la variante editorial del sistema, que
-         es la que corresponde a Lecturas. Comparte contenedor, escala y ritmo
-         con las demás páginas; conserva Fraunces, el papel cálido, el filete de
-         bronce y la ilustración.
-         ═══════════════════════════════════════════════════════════════════ -->
-    <section id="lecturas" data-screen-label="Cabecera Lecturas" class="nv-hero nv-hero--institutional lecturas-hero">
-      <img class="lecturas-hero__scene"
-           src="src/assets/home/lecturas-con-criterio-escena-compacta.webp"
-           alt="" aria-hidden="true" width="1400" height="560">
-
-      <div class="nv-container">
-        <div class="nv-hero__inner">
-          <div class="lecturas-hero__copy">
-
-            <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-              <ol>
-                <li><a href="index.html">Inicio</a></li>
-                <li><details class="nuvia-site-nav__topics">
-          <summary>Academia</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details></li>
-                <li><span aria-current="page">Lecturas con criterio</span></li>
-              </ol>
-            </nav>
-
-            <p class="nv-eyebrow nv-eyebrow--on-dark">Selección editorial</p>
-
-            <h1>Lecturas con criterio</h1>
-            <span class="lecturas-hero__rule" aria-hidden="true"></span>
-            <p class="lecturas-hero__lead">
-              Lecturas seleccionadas para comprender, reflexionar y decidir mejor.
-            </p>
-
-            <div class="nv-hero__actions">
-              <a class="nv-btn nv-btn--primary" href="#seleccion-lecturas">Ver la selección</a>
-            </div>
-
-          </div>
-        </div>
+    <!-- Banner aprobado a todo el ancho; la imagen conserva su proporción. -->
+    <section id="lecturas" data-screen-label="Cabecera Lecturas" class="nv-hero lecturas-hero"
+             aria-labelledby="lecturas-title">
+      <div class="nv-container lecturas-hero__navigation">
+        <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="index.html">Inicio</a></li>
+            <li><details class="nuvia-site-nav__topics">
+              <summary>Academia</summary>
+              <div class="nuvia-site-nav__menu">
+                <a href="academia.html">Academia Nuvia</a>
+                <a href="curso.html">Curso · Dinero con criterio</a>
+                <a href="lecturas.html">Lecturas con criterio</a>
+              </div>
+            </details></li>
+            <li><span aria-current="page">Lecturas con criterio</span></li>
+          </ol>
+        </nav>
       </div>
+      <h1 id="lecturas-title" class="nv-visually-hidden">Lecturas con criterio</h1>
+      <a class="lecturas-hero__banner" href="#seleccion-lecturas"
+         aria-label="Explorar Lecturas: ir a la selección de libros">
+        <img class="lecturas-hero__art"
+             src="src/assets/home/lecturas-con-criterio-canva-family-wealth.png"
+             alt="Lecturas con Criterio. Historias sencillas de interés duradero. Explorar Lecturas. NUVIA Family Wealth."
+             width="2879" height="546" fetchpriority="high" decoding="async">
+      </a>
     </section>
 
 

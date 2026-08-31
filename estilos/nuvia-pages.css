@@ -355,59 +355,70 @@
 
 
 /* ══ LECTURAS CON CRITERIO ═════════════════════════════════════════════════
-   Cabecera institucional azul, compartida con las demás secciones.
-   La ilustración y el filete de bronce conservan su identidad editorial.
+   Banner aprobado a ancho completo, fundido a blanco en sus bordes.
+   Excepción editorial solicitada: no altera las demás cabeceras azules.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.lecturas-hero { --nv-hero-min: 380px; }
-
-.lecturas-hero .nv-hero__inner {
-  grid-template-columns: minmax(0, 1fr);
-  min-height: var(--nv-hero-min);
-  align-items: center;
+.lecturas-hero {
+  width: 100%;
+  background: var(--nv-white);
+  overflow: visible;
 }
 
-.lecturas-hero__copy {
+.lecturas-hero__navigation {
   position: relative;
-  z-index: 1;
-  max-width: 56%;
+  z-index: 2;
+  padding-block: var(--nv-space-4);
 }
 
-.lecturas-hero h1 { margin-top: var(--nv-space-5); }
+.lecturas-hero .nv-breadcrumb a,
+.lecturas-hero .nv-breadcrumb .nuvia-site-nav__topics > summary {
+  color: var(--nv-text-soft);
+}
+
+.lecturas-hero .nv-breadcrumb a:hover { color: var(--nv-ink); }
 
 .lecturas-hero .nv-breadcrumb .nuvia-site-nav__topics > summary {
-  color: var(--nv-text-on-dark-soft);
+  line-height: inherit;
 }
 
-/* Filete de bronce: el detalle que identifica lo editorial en NUVIA. */
-.lecturas-hero__rule {
+.lecturas-hero .nv-breadcrumb li + li::before,
+.lecturas-hero .nv-breadcrumb [aria-current="page"] {
+  color: var(--nv-text-muted);
+}
+
+.lecturas-hero__banner {
+  position: relative;
   display: block;
-  width: clamp(28px, 2.5vw, 42px);
-  height: 2px;
-  background: var(--nv-bronze-500);
-  margin: var(--nv-space-3) 0 var(--nv-space-3);
+  width: 100%;
+  background: var(--nv-white);
 }
 
-.lecturas-hero__lead {
-  max-width: 44ch;
-  margin: 0;
-  color: var(--nv-text-on-dark-soft);
-  font-family: var(--nv-font-serif);
-  font-size: var(--nv-body-lg);
-  line-height: 1.45;
+.lecturas-hero__art {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.lecturas-hero__scene {
+/* Los velos solo afectan al perímetro: título, lema y marca siguen nítidos. */
+.lecturas-hero__banner::after {
+  content: "";
   position: absolute;
-  inset: 0 0 0 auto;
-  width: auto;
-  max-width: 46%;
-  height: 100%;
-  object-fit: contain;
-  object-position: right center;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 92%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 92%, transparent 100%);
+  inset: 0;
   pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--nv-white) 0%, transparent 5%, transparent 95%, var(--nv-white) 100%),
+    linear-gradient(180deg, var(--nv-white) 0%, transparent 8%, transparent 80%, var(--nv-white) 100%);
+}
+
+.lecturas-hero__banner:focus-visible {
+  outline: 3px solid var(--nv-navy-900);
+  outline-offset: -3px;
+  z-index: 1;
+}
+
+.lecturas-hero + #seleccion-lecturas {
+  background: linear-gradient(180deg, var(--nv-white), transparent 96px);
 }
 
 /* ── Rejilla de fichas ──────────────────────────────────────────────────── */
@@ -711,16 +722,12 @@
 /* ── Tablet ─────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1120px) {
-  .lecturas-hero__copy { max-width: 62%; }
-  .lecturas-hero__scene { max-width: 38%; }
   .lecturas-grid { grid-template-columns: minmax(0, 1fr); }
   .lecturas-dialog-shell { grid-template-columns: 220px minmax(0, 1fr); }
   .lecturas-dialog-content { padding: var(--nv-space-10) var(--nv-space-10) var(--nv-space-8); }
 }
 
 @media (max-width: 900px) {
-  .lecturas-hero__copy { max-width: 100%; }
-  .lecturas-hero__scene { display: none; }
   .lecturas-card { grid-template-columns: minmax(0, 1fr); }
   .lecturas-card__cover { height: 220px; }
   .lecturas-dialog-shell { grid-template-columns: minmax(0, 1fr); }

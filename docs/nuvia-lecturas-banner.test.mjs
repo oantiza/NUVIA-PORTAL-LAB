@@ -16,8 +16,18 @@ assert.doesNotMatch(section, /class="home-lecturas__(copy|title|subtitle|cta|rul
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
 assert.equal(home.split(asset).length - 1, 1, 'La imagen solo aparece una vez');
 const page = await readFile(resolve(root, 'lecturas.html'), 'utf8');
-assert.ok(!page.includes(asset), 'No sustituir la cabecera interior de Lecturas');
-assert.match(page, /class="nv-hero nv-hero--institutional lecturas-hero"/, 'Se conserva la cabecera azul');
+const hero = page.match(/<section\b[^>]*id="lecturas"[\s\S]*?<\/section>/)?.[0];
+assert.ok(hero?.includes(`src="${asset}"`), 'La cabecera interior usa el mismo banner aprobado');
+assert.equal(page.split(asset).length - 1, 1, 'Una sola imagen de banner en la página de Lecturas');
+assert.ok(!hero.includes('nv-hero--institutional'), 'La petición sustituye el fondo azul solo en Lecturas');
+assert.ok(!page.includes('lecturas-con-criterio-escena-compacta.webp'), 'Se retira la escena anterior con Wealth Management');
+assert.doesNotMatch(hero, /lecturas-hero__(copy|scene|rule|lead)/, 'Sin escena lateral ni textos visibles duplicados');
+assert.match(hero, /<h1 id="lecturas-title" class="nv-visually-hidden">Lecturas con criterio<\/h1>/, 'Se conserva el h1 accesible sin duplicar el título visual');
+assert.equal((page.match(/<h1\b/g) ?? []).length, 1, 'Un único título principal');
+assert.ok(hero.includes('aria-labelledby="lecturas-title"'));
+assert.ok(hero.includes('aria-label="Ruta de navegación"'), 'Se conserva la navegación de contexto');
+assert.ok(hero.includes('href="#seleccion-lecturas"') && page.includes('id="seleccion-lecturas"'), 'Explorar Lecturas enlaza a los libros');
+assert.ok(hero.includes('width="2879" height="546" fetchpriority="high"'), 'Imagen principal prioritaria y con proporción reservada');
 const bytes = await readFile(resolve(root, asset));
 assert.equal(createHash('sha256').update(bytes).digest('hex'),
   '18f5a90078e319c791d2c2e53b1f61c7917840cf1d51355d713b4508690b3496',
@@ -29,4 +39,13 @@ const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const imageRule = css.match(/\.home-lecturas__art\s*\{([^}]+)\}/)?.[1];
 assert.ok(imageRule?.includes('height: auto'), 'La imagen no debe recortarse ni deformarse');
 assert.ok(!imageRule.includes('filter:'), 'No se alteran los colores del archivo original');
-console.log(`OK Banner Lecturas: Canva FAMILY WEALTH íntegro, enlace y proporción en ${root}`);
+const heroRule = css.match(/\.lecturas-hero\s*\{([^}]+)\}/)?.[1];
+assert.ok(heroRule?.includes('background: var(--nv-white)'), 'El fundido termina en blanco');
+const heroImageRule = css.match(/\.lecturas-hero__art\s*\{([^}]+)\}/)?.[1];
+assert.ok(heroImageRule?.includes('width: 100%') && heroImageRule.includes('height: auto'), 'El banner interior ocupa todo el ancho sin recorte');
+assert.ok(!css.includes('.lecturas-hero__scene'), 'No quedan reglas que reduzcan u oculten la antigua escena en tablet');
+const fadeRule = css.match(/\.lecturas-hero__banner::after\s*\{([^}]+)\}/)?.[1];
+assert.ok(fadeRule?.includes('linear-gradient(90deg') && fadeRule.includes('linear-gradient(180deg'), 'Fundido blanco lateral y vertical');
+assert.ok(fadeRule.includes('pointer-events: none'), 'El fundido no bloquea el enlace');
+assert.ok(css.includes('.lecturas-hero__banner:focus-visible'), 'El banner conserva foco visible de teclado');
+console.log(`OK Banner Lecturas: Canva FAMILY WEALTH en Inicio y cabecera panorámica con fundido blanco en ${root}`);
