@@ -194,3 +194,35 @@ A 1024 px: imagen de 953 × 181 px y fichas a 332 px. En ambos tamaños la image
 carga sin deformación ni desbordamiento, las cuatro fichas se conservan y el
 enlace a `#seleccion-lecturas` funciona. Se mantiene la limitación de la auditoría
 general de render, sustituida para este alcance por revisión con el navegador.
+
+## Fondo a ancho completo sin botón y sin aumentar la escala
+
+Petición: retirar «Explorar Lecturas» y extender la cabecera de izquierda a
+derecha manteniendo su altura compacta y el tamaño de sus elementos. Se reutiliza
+el paisaje limpio existente `lecturas-con-criterio-fondo-compacto-family-wealth.webp`
+(2120 × 404 px, SHA-256 `1f5b0c628e45a1ded050a2ae4b840b30de8fc4d058cb0ecbf2110f70f002ccd1`).
+El título y lema pasan a HTML, con la escala tipográfica del portal. El fondo
+crema ocupa todo el ancho; paisaje y logo conservan su proporción y una altura
+limitada. No se editan ni generan bitmaps, ni se modifica el banner de Inicio.
+
+Prueba previa: (1) identificación editorial sin restar espacio a las fichas;
+(2) recurso local existente, sin datos del usuario; (3) composición HTML/CSS;
+(4) mismo título, lema y Family Wealth, sin botón ni enlace de banner;
+(5) sin instrumentos añadidos; (6) sin personalización; (7) sin consejo operativo;
+(8) sin opinión de precios; (9) sin rankings; (10) sin recomendaciones nuevas;
+(11) fondo decorativo, sin veredicto; (12) se elimina la llamada a explorar,
+manteniendo navegación y libros existentes; (13) sin monetización nueva;
+(14) sin conexión profesional o bancaria; (15) sin datos personales nuevos;
+(16) sin IA añadida; (17) recurso local e integridad citados;
+(18) pruebas de ausencia de CTA, ancho completo, altura limitada, proporción,
+título accesible, cuatro fichas y revisión en escritorio/tablet. VERDE limitada
+al cambio visual, sin certificación de contenidos preexistentes. Reversión por
+Git y recursos anteriores conservados; no cambia privacidad ni proveedores.
+
+Verificación: compilación completa y pruebas de fuente/`dist/` superadas.
+Capturas revisadas a 1920 y 1024 px: fondo de extremo a extremo, altura 235/180 px,
+título 60/44 px (escala común del portal), paisaje proporcional y sin CTA.
+Primeras fichas a 387/332 px, sin desplazarlas hacia abajo respecto a la versión
+compacta anterior. Sin desbordamiento horizontal; imagen cargada y cuatro fichas
+conservadas. Inicio permanece sin cambios. Persiste la limitación de la auditoría
+general de render; la revisión visual acotada se realiza con el navegador.
