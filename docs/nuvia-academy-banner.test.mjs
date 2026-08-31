@@ -28,6 +28,17 @@ const homeHero = home.match(/<section\b[^>]*id="inicio"[\s\S]*?<\/section>/)?.[0
 assert.ok(homeHero?.includes('hero-family-finance-compact.webp'), 'El hero fotográfico principal no debe sustituirse');
 assert.ok(!homeHero.includes(asset), 'El banner no debe ocupar el hero principal');
 
+// Inicio comparte el fondo azul grisáceo; las tarjetas mantienen sus superficies.
+for (const id of ['que-es-nuvia', 'mercados', 'noticia', 'patrimonio',
+  'familia-salud', 'academia', 'lecturas-con-criterio']) {
+  const tag = home.match(new RegExp(`<section\\b[^>]*id="${id}"[^>]*>`))?.[0];
+  assert.ok(tag?.includes('nv-section'), `${id}: sección de Inicio conservada`);
+  assert.doesNotMatch(tag, /nv-section--(?:white|paper|technical|deep)|style=/,
+    `${id}: no reintroducir fondos alternos en Inicio`);
+}
+const tokens = await readFile(resolve(root, 'estilos/nuvia-tokens.css'), 'utf8');
+assert.match(tokens, /--nv-bg:\s*var\(--nv-cloud\)/, 'Se conserva el tono de fondo elegido');
+
 assert.ok(!home.includes('data-macro-id='), 'La franja de indicadores no debe aparecer en Inicio');
 assert.ok(home.includes('home-macro__cta') && home.includes('home-daily'), 'Se conservan el acceso a Mercados y la noticia del día');
 const markets = await readFile(resolve(root, 'mercados.html'), 'utf8');
