@@ -48,7 +48,7 @@ const ESCALA = [12, 14, 16, 18, 22, 28, 36];
    arranque dejó la tabla de cotizaciones con una fila vacía, todo lo demás
    siguió dando cero y nadie se enteró. Estas cuentas son el mínimo. */
 const CONTENIDO = {
-  'index.html':            [['.home-patrimonio__link', 3]],
+  'index.html':            [['#patrimonio .home-section-banner__pill', 3], ['#familia-salud .home-section-banner__tags li', 4]],
   'mercados.html':         [['.markets-macro__item', 5], ['.markets-secondary-card', 3]],
   'mercados.html?vista=cotizaciones': [['.markets-lab__quote', 16], ['.markets-lab__chip', 5]],
   'curso.html':            [['.curso-resultado', 4], ['.curso-campo', 7]],

@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css?v=patrimonio-foto-20260831">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=banners-editorial-sans-20260831">
 
 <!-- La imagen del héroe es el LCP: se precarga y no lleva lazy. -->
 <link rel="preload" as="image" href="src/assets/home/hero-family-finance-compact.webp">
@@ -236,35 +236,25 @@
     <!-- ══ TEMAS CLAVE ═══════════════════════════════════════════════════════ -->
     <section id="patrimonio" data-screen-label="Patrimonio" class="nv-section" aria-labelledby="titulo-patrimonio">
       <div class="nv-container">
-        <div class="home-patrimonio">
-          <img class="home-patrimonio__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
-               alt="" aria-hidden="true" width="2752" height="1536" loading="lazy">
-          <div class="home-patrimonio__intro">
+        <div class="nv-section-heading">
+          <div>
             <p class="nv-eyebrow">Decisiones de fondo</p>
             <h2 id="titulo-patrimonio">Patrimonio</h2>
-            <p class="home-patrimonio__lead">Vivienda, jubilación e impuestos: las tres decisiones que más marcan el patrimonio de una familia.</p>
           </div>
-          <nav class="home-patrimonio__links" aria-label="Temas de Patrimonio">
-            <a class="home-patrimonio__link" href="vivienda.html">
-              <span class="home-patrimonio__number" aria-hidden="true">01</span>
-              <span><span class="home-patrimonio__name">Vivienda y coste de vida</span>
-                <span class="home-patrimonio__description">Compra o alquiler, financiación, presupuesto</span></span>
-              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
-            </a>
-            <a class="home-patrimonio__link" href="fiscalidad.html">
-              <span class="home-patrimonio__number" aria-hidden="true">02</span>
-              <span><span class="home-patrimonio__name">Mis impuestos</span>
-                <span class="home-patrimonio__description">Obligaciones, planificación, documentación</span></span>
-              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
-            </a>
-            <a class="home-patrimonio__link" href="jubilacion.html">
-              <span class="home-patrimonio__number" aria-hidden="true">03</span>
-              <span><span class="home-patrimonio__name">Jubilación</span>
-                <span class="home-patrimonio__description">Ingresos futuros, longevidad, legado</span></span>
-              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
-            </a>
-          </nav>
         </div>
+        <article class="home-section-banner home-section-banner--editorial" aria-labelledby="patrimonio-banner-title">
+          <img class="home-section-banner__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
+               alt="" aria-hidden="true" width="2752" height="1536" loading="lazy">
+          <div class="home-section-banner__content">
+            <h3 id="patrimonio-banner-title" class="home-section-banner__title">Comprender hoy,<br>planificar el mañana</h3>
+            <p class="home-section-banner__copy">Vivienda, coste de vida, impuestos y jubilación: información y herramientas para entender el presupuesto familiar, comprender las obligaciones fiscales y explorar los ingresos futuros con perspectiva.</p>
+            <nav class="home-section-banner__actions" aria-label="Temas de Patrimonio">
+              <a class="home-section-banner__pill" href="vivienda.html">Vivienda y coste de vida <span aria-hidden="true">→</span></a>
+              <a class="home-section-banner__pill" href="fiscalidad.html">Mis impuestos <span aria-hidden="true">→</span></a>
+              <a class="home-section-banner__pill" href="jubilacion.html">Jubilación <span aria-hidden="true">→</span></a>
+            </nav>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -280,33 +270,25 @@
             <p class="nv-eyebrow">En preparación</p>
             <h2 id="titulo-familia-salud">Familia, Salud y Bienestar</h2>
           </div>
-          <p>Lo que se hace fuera del trabajo y sostiene todo lo demás.</p>
         </div>
 
-        <div class="nv-card-grid">
-
-          <article data-screen-label="Banner Cuerpo, mente y salud" class="home-wellbeing">
-            <img class="home-wellbeing__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
-                 alt="Una familia disfruta de unas vacaciones junto al mar mientras practica yoga y pilates al aire libre"
-                 width="1600" height="900" loading="lazy">
-            <div class="home-wellbeing__veil" aria-hidden="true"></div>
-            <div class="home-wellbeing__content">
-              <h3 class="home-wellbeing__title">Claves para una vida sana y equilibrada</h3>
-              <p class="home-wellbeing__copy">Una sección sobre vida familiar, salud mental y física, bienestar y equilibrio frente al ritmo acelerado actual. Temas concretos y directrices prácticas para cuidar el cuerpo, reducir el estrés, organizar el tiempo y conciliar familia, trabajo y descanso.</p>
-              <div class="home-wellbeing__rhythms" aria-label="Pilares de una vida equilibrada">
-                <span>Familia y relaciones</span>
-                <span>Salud mental</span>
-                <span>Salud física</span>
-                <span>Equilibrio diario</span>
-              </div>
-              <div class="home-wellbeing__footer">
-                <a href="temas.html?topic=bienestar" class="home-wellbeing__cta">Ver temas y directrices <span aria-hidden="true">→</span></a>
-                <span class="home-wellbeing__note">Orientación práctica para vivir con más salud, calma y equilibrio.</span>
-              </div>
+        <article data-screen-label="Banner Cuerpo, mente y salud" class="home-section-banner home-section-banner--editorial" aria-labelledby="bienestar-banner-title">
+          <img class="home-section-banner__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
+               alt="" aria-hidden="true" width="1600" height="900" loading="lazy">
+          <div class="home-section-banner__content">
+            <h3 id="bienestar-banner-title" class="home-section-banner__title">Claves para una vida sana y equilibrada</h3>
+            <p class="home-section-banner__copy">Una sección sobre vida familiar, salud mental y física, y equilibrio cotidiano. Un espacio para comprender los hábitos, las relaciones y la conciliación entre familia, trabajo y descanso.</p>
+            <ul class="home-section-banner__tags" aria-label="Pilares de una vida equilibrada">
+              <li>Familia y relaciones</li>
+              <li>Salud mental</li>
+              <li>Salud física</li>
+              <li>Equilibrio diario</li>
+            </ul>
+            <div class="home-section-banner__actions">
+              <a href="temas.html?topic=bienestar" class="home-section-banner__pill">Ver temas y directrices <span aria-hidden="true">→</span></a>
             </div>
-          </article>
-
-        </div>
+          </div>
+        </article>
       </div>
     </section>
 

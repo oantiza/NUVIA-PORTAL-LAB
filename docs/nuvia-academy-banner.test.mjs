@@ -41,9 +41,9 @@ assert.match(tokens, /--nv-bg:\s*var\(--nv-cloud\)/, 'Se conserva el tono de fon
 
 const patrimonio = home.match(/<section\b[^>]*id="patrimonio"[\s\S]*?<\/section>/)?.[0];
 assert.ok(patrimonio?.includes('id="titulo-patrimonio"'), 'Patrimonio conserva su título accesible');
-assert.ok(patrimonio.includes('class="home-patrimonio"'), 'Patrimonio usa el banner fotográfico');
+assert.ok(patrimonio.includes('home-section-banner--editorial'), 'Patrimonio usa la variante editorial');
 assert.ok(!patrimonio.includes('class="home-topic"'), 'Las tarjetas anteriores no se duplican');
-assert.equal((patrimonio.match(/class="home-patrimonio__link"/g) ?? []).length, 3,
+assert.equal((patrimonio.match(/class="home-section-banner__pill"/g) ?? []).length, 3,
   'El banner contiene los tres accesos');
 for (const page of ['vivienda', 'fiscalidad', 'jubilacion']) {
   assert.ok(patrimonio.includes(`href="${page}.html"`), `Patrimonio conserva el acceso a ${page}`);
@@ -53,6 +53,26 @@ assert.ok(patrimonio.includes(`src="${patrimonioAsset}"`), 'Se usa la fotografí
 assert.equal(createHash('sha256').update(await readFile(resolve(root, patrimonioAsset))).digest('hex'),
   '266084da5a5427255a715ef8070df66e00054f21dc795a17bc6beba6cc82be75',
   'La fotografía se conserva sin editar');
+
+const bienestar = home.match(/<section\b[^>]*id="familia-salud"[\s\S]*?<\/section>/)?.[0];
+assert.ok(bienestar?.includes('home-section-banner--editorial'), 'Bienestar usa la variante editorial elegida');
+for (const [section, titleId, eyebrow] of [
+  [patrimonio, 'titulo-patrimonio', 'Decisiones de fondo'],
+  [bienestar, 'titulo-familia-salud', 'En preparación'],
+]) {
+  const banner = section.match(/<article\b[\s\S]*?<\/article>/)?.[0];
+  assert.ok(section.indexOf(`id="${titleId}"`) < section.indexOf('<article'), 'Título fuera y antes del banner');
+  assert.ok(section.includes(eyebrow) && !banner.includes(eyebrow), 'Rótulo fuera del banner');
+  assert.ok(!banner.includes('<h2'), 'El banner no repite el título de sección');
+  assert.ok(banner.includes('home-section-banner__copy'), 'La descripción permanece dentro');
+}
+assert.equal((bienestar.match(/<ul class="home-section-banner__tags"[\s\S]*?<\/ul>/)?.[0].match(/<li>/g) ?? []).length, 4,
+  'Bienestar conserva sus cuatro materias descriptivas');
+assert.ok(bienestar.includes('href="temas.html?topic=bienestar"'), 'Se conserva el acceso a temas de bienestar');
+const bienestarAsset = 'src/assets/home/wellbeing-life-balance-banner-v2.webp';
+assert.ok(bienestar.includes(`src="${bienestarAsset}"`), 'Se conserva la imagen de bienestar');
+assert.equal(createHash('sha256').update(await readFile(resolve(root, bienestarAsset))).digest('hex'),
+  '7af9d0ab2c2b0af67f9b7bc3665a40d3028bf8c87f6f4d88571ebd73f1ef6941', 'Imagen de bienestar intacta');
 
 assert.ok(!home.includes('data-macro-id='), 'La franja de indicadores no debe aparecer en Inicio');
 assert.ok(home.includes('home-macro__cta') && home.includes('home-daily'), 'Se conservan el acceso a Mercados y la noticia del día');
@@ -68,6 +88,8 @@ for (const page of ['academia', 'curso', 'fiscalidad', 'guia-ahorro', 'guia-cale
   assert.match(pageHtml, /<section[^>]*class="[^"]*nv-hero--institutional/, `${page}: cabecera institucional azul`);
 }
 const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
+assert.match(css, /\.home-section-banner--editorial \.home-section-banner__title\s*\{\s*font-family: var\(--nv-font-sans\);\s*font-size: clamp\(30px, 2\.6vw, 36px\);/,
+  'Títulos editoriales en sans serif, de 30 a 36 px');
 assert.match(home, /class="nv-eyebrow home-intro__eyebrow">El proyecto<\/p>/,
   'El proyecto usa el rótulo de color homogéneo');
 assert.match(css, /\.home-intro__eyebrow\s*\{\s*color:\s*var\(--nv-text-muted\);\s*\}/,
