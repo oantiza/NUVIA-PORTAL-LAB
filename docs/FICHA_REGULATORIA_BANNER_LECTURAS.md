@@ -82,3 +82,40 @@ La activación con Enter no se pudo confirmar mediante el navegador automatizado
 La cabecera
 interior y el resto de Inicio permanecen sin cambios. Se conservan los límites
 de la auditoría general indicados antes; no se realizaron pruebas móviles.
+
+## Sustitución por el diseño aprobado en Canva
+
+El usuario pide sustituir el banner web por el diseño `DAHT3mD6SGs`, cuya
+corrección «FAMILY WEALTH» ya ha aprobado. Se exporta desde Canva como PNG
+de alta calidad, 2879 × 546 píxeles, sin volver a editarlo ni recrearlo.
+
+Prueba previa de los 18 puntos: (1) acceso editorial a Lecturas; (2) diseño
+seleccionado por el usuario; (3) exportación íntegra y escala proporcional;
+(4) título, lema, acceso y marca Family Wealth del diseño aprobado;
+(5) sin instrumentos ni emisores; (6) sin circunstancias personales;
+(7) sin sugerencias operativas; (8) sin opinión sobre precios;
+(9) sin rankings; (10) sin recomendaciones de terceros;
+(11) paisaje y marca decorativos, sin veredicto financiero;
+(12) mismo enlace interno a Lecturas, sin contacto ni contratación;
+(13) sin nueva remuneración, patrocinio o afiliación;
+(14) sin vinculación bancaria o profesional añadida;
+(15) sin tratamiento nuevo de datos personales;
+(16) no se integra IA en la web ni se genera otra imagen;
+(17) fuente: exportación del diseño Canva aprobado, sin datos financieros;
+(18) integridad del PNG, dimensiones, ausencia de texto superpuesto,
+accesibilidad, cabecera azul intacta, compilación y revisión escritorio/tablet.
+
+Clasificación VERDE acotada a la sustitución visual, sin certificación jurídica
+de otras funciones. No se cambian avisos, cookies, proveedores de la web ni
+consentimientos: el PNG se sirve localmente, sin incrustar Canva. Se conserva
+el recurso anterior y la reversión es recuperable mediante Git.
+Solo cambia el banner de Inicio; no la cabecera de `lecturas.html`.
+SHA-256 del PNG exportado:
+`18f5a90078e319c791d2c2e53b1f61c7917840cf1d51355d713b4508690b3496`.
+
+Verificación de esta sustitución: compilación completa superada, incluidas
+pruebas del PNG en fuente y `dist/`. Imagen cargada con dimensiones originales,
+sin capa HTML duplicada y sin desbordamiento en escritorio (1440 px) y tablet
+(1024 px). Capturas revisadas a ambos tamaños y enlace a `lecturas.html`
+probado con clic; cabecera institucional azul confirmada. Sigue vigente la
+limitación de la auditoría general de render indicada anteriormente.
