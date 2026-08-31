@@ -16,6 +16,7 @@ assert.doesNotMatch(section, /class="home-lecturas__(copy|title|subtitle|cta|rul
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
 assert.equal(home.split(asset).length - 1, 1, 'La imagen solo aparece una vez');
 const page = await readFile(resolve(root, 'lecturas.html'), 'utf8');
+assert.ok(page.includes('estilos/nuvia-pages.css?v=lecturas-panorama-20260831'), 'La cabecera debe cargar sus estilos nuevos sin reutilizar la caché anterior');
 const hero = page.match(/<section\b[^>]*id="lecturas"[\s\S]*?<\/section>/)?.[0];
 assert.ok(hero?.includes(`src="${asset}"`), 'La cabecera interior usa el mismo banner aprobado');
 assert.equal(page.split(asset).length - 1, 1, 'Una sola imagen de banner en la página de Lecturas');

@@ -159,3 +159,8 @@ salta a `#seleccion-lecturas` por debajo de la navegación fija. El PNG y
 `dist/` al no utilizarse; sigue disponible en el repositorio para reversión.
 La auditoría general de render sigue omitida por falta de Playwright; se ha
 realizado esta comprobación visual acotada con el navegador disponible.
+
+La primera comprobación pública detectó HTML nuevo con la hoja CSS anterior
+en caché (imagen deformada y fundido ausente). Se versiona la referencia a
+`nuvia-pages.css` solo en Lecturas para forzar la carga de los estilos correctos;
+se añade el control correspondiente y se repite la compilación/publicación.
