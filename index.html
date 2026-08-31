@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css?v=banners-editorial-sans-20260831">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=banners-editorial-light-20260831">
 
 <!-- La imagen del héroe es el LCP: se precarga y no lleva lazy. -->
 <link rel="preload" as="image" href="src/assets/home/hero-family-finance-compact.webp">
@@ -104,10 +104,6 @@
               Planificación patrimonial y financiera para familias que piensan a largo plazo.
             </p>
 
-            <div class="nv-hero__actions">
-              <a class="nv-btn nv-btn--accent" href="#que-es-nuvia">Conoce el proyecto</a>
-              <a class="nv-btn nv-btn--soft" href="#mercados">Ver los mercados hoy →</a>
-            </div>
 
             <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
               <div class="home-pillars">
@@ -148,86 +144,18 @@
             <p class="nv-eyebrow">Resumen estratégico</p>
             <h2 id="titulo-mercados">Economía y mercados</h2>
           </div>
-          <p data-macro-updated>Datos oficiales revisados a diario · 3 de agosto de 2026</p>
+          <p>Inflación, tipos de interés, empleo y actividad económica. Información para entender el contexto de los mercados y su relación con la economía familiar.</p>
         </div>
-
-        <p class="nv-prose home-macro__lead">
-          Inflación, tipos, empleo, crecimiento y geopolítica afectan al poder de
-          compra, al coste de la deuda y a las inversiones. NUVIA los traduce a
-          decisiones comprensibles, sin convertir cada dato en una señal para actuar.
-        </p>
-
-
-        <p class="home-macro__cta">
-          <a class="nv-btn nv-btn--secondary" href="mercados.html">Ver mercados al detalle →</a>
-        </p>
-      </div>
-    </section>
-
-
-    <!-- ══ NOTICIA DEL DÍA ═══════════════════════════════════════════════════
-         Los atributos data-daily-news y data-daily-impact son ganchos de
-         web2-integration.js: no se renombran ni se reordenan.
-         ═══════════════════════════════════════════════════════════════════ -->
-    <section id="noticia" data-screen-label="Noticia del día" class="nv-section nv-section--tight" aria-labelledby="titulo-noticia">
-      <div class="nv-container">
-        <article class="home-daily">
-
-          <div class="home-daily__stage">
-            <img class="home-daily__art"
-                 src="src/assets/home/daily-news/daily-news-desktop.webp"
-                 alt="Fotografía editorial de un petrolero navegando con luz natural por un estrecho abierto al tráfico marítimo."
-                 data-daily-news="image" width="1600" height="900" loading="lazy">
-
-            <div class="home-daily__panel">
-              <div class="home-daily__copy">
-
-                <div class="home-daily__meta">
-                  <span class="home-daily__live">Noticia económica del día</span>
-                  <span class="home-daily__date" data-daily-news="date">3 de agosto de 2026</span>
-                </div>
-
-                <h2 id="titulo-noticia" data-daily-news="title">El petróleo cae y alivia la presión inflacionista</h2>
-
-                <p class="home-daily__summary" data-daily-news="summary">El Brent cayó alrededor de un 5%, hasta 83,87 dólares por barril, después de que Estados Unidos frenara nuevos ataques contra Irán y aumentaran las expectativas de desescalada. El movimiento puede reducir parte de la presión sobre combustibles y transporte, aunque el crudo todavía cotiza claramente por encima de su nivel previo al conflicto.</p>
-
-                <div class="home-daily__links">
-                  <a href="https://apnews.com/article/oil-prices-iran-war-trump-194ab3d3130bb44de445cf3d05954beb" target="_blank" rel="noreferrer" data-daily-news="source-link">Leer la fuente <span aria-hidden="true">→</span></a>
-                  <a href="mercados.html">Ver último informe <span aria-hidden="true">→</span></a>
-                  <a href="mercados.html?vista=archivo">Consultar archivo <span aria-hidden="true">→</span></a>
-                </div>
-
-                <div class="home-daily__reading">
-                  <p class="home-daily__reading-label">Lectura NUVIA</p>
-                  <p data-daily-news="why">Una energía menos cara puede moderar la inflación y dar margen a los bancos centrales, pero una sola sesión no garantiza un alivio duradero: la geopolítica y el tránsito por Ormuz siguen siendo fuentes de volatilidad.</p>
-                </div>
-
-              </div>
+        <article class="home-section-banner home-section-banner--editorial" aria-labelledby="mercados-banner-title">
+          <img class="home-section-banner__art" src="src/assets/markets/secondary-news/wall-street-records.jpg"
+               alt="" aria-hidden="true" width="1200" height="800" loading="lazy">
+          <div class="home-section-banner__content">
+            <h3 id="mercados-banner-title" class="home-section-banner__title">Entender la economía,<br>poner los mercados en contexto</h3>
+            <p class="home-section-banner__copy">Indicadores económicos, evolución de los mercados y análisis del entorno. Un espacio para comprender cómo los precios, los tipos de interés y el crecimiento se relacionan con el ahorro, la financiación y el poder de compra.</p>
+            <div class="home-section-banner__actions">
+              <a href="mercados.html" class="home-section-banner__pill">Ver mercados al detalle <span aria-hidden="true">→</span></a>
             </div>
           </div>
-
-          <aside class="home-daily__why" aria-label="Claves de la noticia económica del día">
-            <div class="home-daily__why-rule" aria-hidden="true"></div>
-            <div class="home-daily__why-grid">
-              <p class="home-daily__why-label">Por qué importa</p>
-              <ol class="home-daily__why-list">
-                <li>
-                  <span>01</span>
-                  <p data-daily-impact>Un petróleo más barato puede aliviar gradualmente el coste de los carburantes, el transporte y algunos alimentos.</p>
-                </li>
-                <li>
-                  <span>02</span>
-                  <p data-daily-impact>Menos presión energética concede más margen a los bancos centrales para valorar futuras decisiones sobre tipos.</p>
-                </li>
-                <li>
-                  <span>03</span>
-                  <p data-daily-impact>Una nueva escalada o más restricciones en Ormuz podrían revertir rápidamente el descenso.</p>
-                </li>
-              </ol>
-              <p class="home-daily__source" data-daily-news="source">Fuente: AP News · Publicada el 2 de agosto de 2026</p>
-            </div>
-          </aside>
-
         </article>
       </div>
     </section>
@@ -241,6 +169,7 @@
             <p class="nv-eyebrow">Decisiones de fondo</p>
             <h2 id="titulo-patrimonio">Patrimonio</h2>
           </div>
+          <p>Vivienda, presupuesto familiar, impuestos y jubilación. Conceptos y herramientas para comprender cómo se organiza el patrimonio a lo largo de la vida.</p>
         </div>
         <article class="home-section-banner home-section-banner--editorial" aria-labelledby="patrimonio-banner-title">
           <img class="home-section-banner__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
@@ -270,6 +199,7 @@
             <p class="nv-eyebrow">En preparación</p>
             <h2 id="titulo-familia-salud">Familia, Salud y Bienestar</h2>
           </div>
+          <p>Vida familiar, salud y equilibrio cotidiano. Un espacio en preparación para explorar los hábitos, las relaciones y la conciliación entre trabajo y descanso.</p>
         </div>
 
         <article data-screen-label="Banner Cuerpo, mente y salud" class="home-section-banner home-section-banner--editorial" aria-labelledby="bienestar-banner-title">
@@ -278,12 +208,6 @@
           <div class="home-section-banner__content">
             <h3 id="bienestar-banner-title" class="home-section-banner__title">Claves para una vida sana y equilibrada</h3>
             <p class="home-section-banner__copy">Una sección sobre vida familiar, salud mental y física, y equilibrio cotidiano. Un espacio para comprender los hábitos, las relaciones y la conciliación entre familia, trabajo y descanso.</p>
-            <ul class="home-section-banner__tags" aria-label="Pilares de una vida equilibrada">
-              <li>Familia y relaciones</li>
-              <li>Salud mental</li>
-              <li>Salud física</li>
-              <li>Equilibrio diario</li>
-            </ul>
             <div class="home-section-banner__actions">
               <a href="temas.html?topic=bienestar" class="home-section-banner__pill">Ver temas y directrices <span aria-hidden="true">→</span></a>
             </div>

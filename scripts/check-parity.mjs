@@ -30,7 +30,7 @@ const readingsPage = await readFile(resolve(root, 'lecturas.html'), 'utf8');
 const expectedHomeLinks = [
   'href="vivienda.html"',
   'href="fiscalidad.html"',
-  'href="mercados.html?vista=archivo"',
+  'href="mercados.html"',
   'href="lecturas.html"',
 ];
 for (const link of expectedHomeLinks) {
@@ -177,7 +177,7 @@ const marcadoresPortada = [
   'nv-hero nv-hero--photo home-hero',
   'Información clara,<br>decisiones con propósito.',
   'class="home-lecturas"',
-  'data-daily-news="title"',
+  'id="patrimonio"',
 ];
 for (const marcador of marcadoresPortada) {
   if (!web2Home.includes(marcador)) {

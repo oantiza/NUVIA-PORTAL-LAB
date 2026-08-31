@@ -1274,6 +1274,13 @@
 
 /* Composición editorial elegida; títulos compactos en la sans del portal. */
 .home-section-banner--editorial { display: flex; }
+.home-section-banner--editorial::before {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--nv-navy-950) 82%, transparent) 0%,
+    color-mix(in srgb, var(--nv-navy-900) 74%, transparent) 48%,
+    color-mix(in srgb, var(--nv-navy-950) 62%, transparent) 74%,
+    color-mix(in srgb, var(--nv-navy-950) 50%, transparent) 100%);
+}
 .home-section-banner--editorial .home-section-banner__content {
   width: 62%;
   max-width: 660px;
