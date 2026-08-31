@@ -37,6 +37,7 @@ const paginas = [
   'jubilacion.html',
   'lecturas.html',
   'mercados.html',
+  'que-es-nuvia.html',
   'temas.html',
   'vivienda.html',
   'sistema-visual.html',   // se publica con noindex: es la referencia del sistema

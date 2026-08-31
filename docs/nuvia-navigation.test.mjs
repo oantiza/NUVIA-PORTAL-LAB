@@ -86,7 +86,7 @@ for (const name of (await readdir(root)).filter((name) => name.endsWith('.html')
     ['index.html', 'Inicio'],
     ...expectedGroups.flatMap((group) => group.children),
     ['lecturas.html', 'Lecturas'],
-    ['index.html#que-es-nuvia', 'Qué es NUVIA']
+    ['que-es-nuvia.html', 'Qué es NUVIA']
   ], name + ': no quedan categorías antiguas o duplicadas');
   for (const [href] of linksIn(nav)) await access(resolve(root, href.split(/[?#]/)[0]));
   assert.doesNotMatch(nav, /vista=companies|Gestión de cartera|Temas clave|Curso ·/,
@@ -101,6 +101,11 @@ for (const name of (await readdir(root)).filter((name) => name.endsWith('.html')
 assert.ok(checked >= 15, 'Comprobar todas las páginas públicas del portal');
 const home = await read('index.html');
 assert.match(home, /<h2 id="titulo-mercados">Economía y Finanzas<\/h2>/, 'Nombre de sección igual que el menú');
+const about = await read('que-es-nuvia.html');
+assert.match(about, /<h1 id="que-nuvia-title"><span>¿Qué es<\/span> NUVIA\?<\/h1>/, 'La página institucional tiene un único título principal');
+assert.match(about, /NUVIA es un lugar donde las familias aprenden a entender su dinero\./, 'La definición principal está publicada');
+assert.match(about, /No constituye asesoramiento financiero, fiscal o jurídico personalizado\./, 'La página conserva su aviso de alcance');
+assert.match(about, /href="que-es-nuvia\.html" aria-current="page">Qué es NUVIA<\/a>/, 'La sección activa se identifica en su propia página');
 const topics = await read('temas.html');
 assert.match(topics, /'planificacion-patrimonial': \['Planificación patrimonial'/);
 assert.match(topics, /id: 'planificacion-patrimonial'[\s\S]*?tipo: 'recursos'/);

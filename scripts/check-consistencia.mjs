@@ -54,6 +54,7 @@ const PRESUPUESTO_INLINE = {
   'jubilacion.html': 0,
   'lecturas.html': 0,
   'mercados.html': 0,
+  'que-es-nuvia.html': 0,
   'temas.html': 0,
   'vivienda.html': 0,
   'sistema-visual.html': 11,     // muestra del sistema, no publicada
