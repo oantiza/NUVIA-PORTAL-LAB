@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css?v=home-rotulo-20260831">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=patrimonio-foto-20260831">
 
 <!-- La imagen del héroe es el LCP: se precarga y no lleva lazy. -->
 <link rel="preload" as="image" href="src/assets/home/hero-family-finance-compact.webp">
@@ -236,68 +236,34 @@
     <!-- ══ TEMAS CLAVE ═══════════════════════════════════════════════════════ -->
     <section id="patrimonio" data-screen-label="Patrimonio" class="nv-section" aria-labelledby="titulo-patrimonio">
       <div class="nv-container">
-
-        <div class="nv-section-heading">
-          <div>
+        <div class="home-patrimonio">
+          <img class="home-patrimonio__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
+               alt="" aria-hidden="true" width="2752" height="1536" loading="lazy">
+          <div class="home-patrimonio__intro">
             <p class="nv-eyebrow">Decisiones de fondo</p>
             <h2 id="titulo-patrimonio">Patrimonio</h2>
+            <p class="home-patrimonio__lead">Vivienda, jubilación e impuestos: las tres decisiones que más marcan el patrimonio de una familia.</p>
           </div>
-          <p>Vivienda, jubilación e impuestos: las tres decisiones que más marcan el patrimonio de una familia.</p>
-        </div>
-
-        <div class="nv-card-grid">
-
-          <article class="home-topic">
-            <div class="home-topic__media">
-              <img src="src/assets/home/card-vivienda.webp" alt="Vivienda y coste de vida"
-                   width="640" height="360" loading="lazy">
-              <span class="home-topic__badge">01</span>
-            </div>
-            <div class="home-topic__body">
-              <h3>Vivienda y coste de vida</h3>
-              <p class="home-topic__lead">Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.</p>
-              <dl class="home-topic__reading">
-                <dt>Lectura NUVIA</dt>
-                <dd>Capacidad de pago, margen de seguridad y visión patrimonial.</dd>
-              </dl>
-              <a class="home-topic__link" href="vivienda.html">Acceder <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="home-topic">
-            <div class="home-topic__media">
-              <img src="src/assets/home/card-impuestos.webp" alt="Mis impuestos"
-                   width="640" height="360" loading="lazy">
-              <span class="home-topic__badge">02</span>
-            </div>
-            <div class="home-topic__body">
-              <h3>Mis impuestos</h3>
-              <p class="home-topic__lead">Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.</p>
-              <dl class="home-topic__reading">
-                <dt>Lectura NUVIA</dt>
-                <dd>Planificación ordenada, documentación y revisión profesional cuando sea necesaria.</dd>
-              </dl>
-              <a class="home-topic__link" href="fiscalidad.html">Acceder <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
-          <article class="home-topic">
-            <div class="home-topic__media">
-              <img src="src/assets/home/card-jubilacion.webp" alt="Jubilación"
-                   width="640" height="360" loading="lazy">
-              <span class="home-topic__badge">03</span>
-            </div>
-            <div class="home-topic__body">
-              <h3>Jubilación</h3>
-              <p class="home-topic__lead">Herramientas para ordenar ingresos futuros, longevidad, apoyo a los hijos y legado familiar.</p>
-              <dl class="home-topic__reading">
-                <dt>Lectura NUVIA</dt>
-                <dd>Planificación anticipada, prudencia fiscal y diálogo entre generaciones.</dd>
-              </dl>
-              <a class="home-topic__link" href="jubilacion.html">Acceder <span aria-hidden="true">→</span></a>
-            </div>
-          </article>
-
+          <nav class="home-patrimonio__links" aria-label="Temas de Patrimonio">
+            <a class="home-patrimonio__link" href="vivienda.html">
+              <span class="home-patrimonio__number" aria-hidden="true">01</span>
+              <span><span class="home-patrimonio__name">Vivienda y coste de vida</span>
+                <span class="home-patrimonio__description">Compra o alquiler, financiación, presupuesto</span></span>
+              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="home-patrimonio__link" href="fiscalidad.html">
+              <span class="home-patrimonio__number" aria-hidden="true">02</span>
+              <span><span class="home-patrimonio__name">Mis impuestos</span>
+                <span class="home-patrimonio__description">Obligaciones, planificación, documentación</span></span>
+              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="home-patrimonio__link" href="jubilacion.html">
+              <span class="home-patrimonio__number" aria-hidden="true">03</span>
+              <span><span class="home-patrimonio__name">Jubilación</span>
+                <span class="home-patrimonio__description">Ingresos futuros, longevidad, legado</span></span>
+              <span class="home-patrimonio__arrow" aria-hidden="true">→</span>
+            </a>
+          </nav>
         </div>
       </div>
     </section>

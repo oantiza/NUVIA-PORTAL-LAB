@@ -39,6 +39,21 @@ for (const id of ['que-es-nuvia', 'mercados', 'noticia', 'patrimonio',
 const tokens = await readFile(resolve(root, 'estilos/nuvia-tokens.css'), 'utf8');
 assert.match(tokens, /--nv-bg:\s*var\(--nv-cloud\)/, 'Se conserva el tono de fondo elegido');
 
+const patrimonio = home.match(/<section\b[^>]*id="patrimonio"[\s\S]*?<\/section>/)?.[0];
+assert.ok(patrimonio?.includes('id="titulo-patrimonio"'), 'Patrimonio conserva su título accesible');
+assert.ok(patrimonio.includes('class="home-patrimonio"'), 'Patrimonio usa el banner fotográfico');
+assert.ok(!patrimonio.includes('class="home-topic"'), 'Las tarjetas anteriores no se duplican');
+assert.equal((patrimonio.match(/class="home-patrimonio__link"/g) ?? []).length, 3,
+  'El banner contiene los tres accesos');
+for (const page of ['vivienda', 'fiscalidad', 'jubilacion']) {
+  assert.ok(patrimonio.includes(`href="${page}.html"`), `Patrimonio conserva el acceso a ${page}`);
+}
+const patrimonioAsset = 'src/assets/home/patrimonio-family-home-20260831.jpeg';
+assert.ok(patrimonio.includes(`src="${patrimonioAsset}"`), 'Se usa la fotografía aportada');
+assert.equal(createHash('sha256').update(await readFile(resolve(root, patrimonioAsset))).digest('hex'),
+  '266084da5a5427255a715ef8070df66e00054f21dc795a17bc6beba6cc82be75',
+  'La fotografía se conserva sin editar');
+
 assert.ok(!home.includes('data-macro-id='), 'La franja de indicadores no debe aparecer en Inicio');
 assert.ok(home.includes('home-macro__cta') && home.includes('home-daily'), 'Se conservan el acceso a Mercados y la noticia del día');
 const markets = await readFile(resolve(root, 'mercados.html'), 'utf8');
