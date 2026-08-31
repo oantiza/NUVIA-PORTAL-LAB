@@ -164,3 +164,33 @@ La primera comprobación pública detectó HTML nuevo con la hoja CSS anterior
 en caché (imagen deformada y fundido ausente). Se versiona la referencia a
 `nuvia-pages.css` solo en Lecturas para forzar la carga de los estilos correctos;
 se añade el control correspondiente y se repite la compilación/publicación.
+
+## Cabecera compacta: prioridad a los libros
+
+El usuario considera excesiva la escala del banner y pide igualar el tamaño
+visual de su tipografía al de las otras cabeceras, dando prioridad a los libros.
+Se limita la imagen al contenedor editorial del portal (máximo 1240 px),
+con escala proporcional, en lugar de ampliarla con toda la pantalla. El fondo
+blanco sigue ocupando el ancho completo; se conservan los fundidos y se reduce
+el espacio de navegación y separación anterior a las fichas. No cambia Inicio.
+
+Prueba previa: (1) facilitar el acceso al contenido editorial; (2) mismo PNG
+aprobado, sin datos del visitante; (3) solo escala y espaciado CSS;
+(4) mismos textos e imagen con menor protagonismo; (5) sin instrumentos nuevos;
+(6) sin personalización; (7) sin consejo operativo; (8) sin opinión de precios;
+(9) sin ordenación por atractivo; (10) sin recomendaciones de terceros nuevas;
+(11) ajuste de jerarquía visual, no veredicto; (12) misma ancla a los libros;
+(13) sin nueva remuneración o afiliación; (14) sin conexión bancaria;
+(15) sin nuevo tratamiento de datos; (16) sin IA añadida ni edición del PNG;
+(17) fuente e integridad del banner conservadas; (18) control de ancho máximo,
+proporción y ancla, compilación y revisión de visibilidad de las fichas en
+escritorio y tablet. Clasificación VERDE acotada a presentación, sin validación
+jurídica de contenidos preexistentes. Reversión mediante Git, sin borrar activos.
+
+Verificación: compilación completa y pruebas de fuente/`dist/` superadas.
+Revisión en navegador a 1920 px: imagen limitada a 1240 × 235 px, cabecera
+de 274 px y primeras fichas a 387 px del inicio de la pantalla (antes, 585 px).
+A 1024 px: imagen de 953 × 181 px y fichas a 332 px. En ambos tamaños la imagen
+carga sin deformación ni desbordamiento, las cuatro fichas se conservan y el
+enlace a `#seleccion-lecturas` funciona. Se mantiene la limitación de la auditoría
+general de render, sustituida para este alcance por revisión con el navegador.
