@@ -41,7 +41,7 @@ for (const link of expectedHomeLinks) {
 if (!/<script[^>]*\ssrc="\.?\/?web2-integration\.js(?:\?[^"]+)?"[^>]*><\/script>/.test(web2Home)) {
   throw new Error('La portada no carga la integración de contenido diario y mercados');
 }
-if (!/<a href="mercados\.html"[^>]*>Mercados<\/a>/.test(web2Home)) {
+if (!/<a href="mercados\.html"[^>]*>Mercados y noticias<\/a>/.test(web2Home)) {
   throw new Error('El acceso principal de Mercados no abre la página de mercados');
 }
 if (/<a href="#noticia"[^>]*>Noticia del día<\/a>/.test(web2Home)) {

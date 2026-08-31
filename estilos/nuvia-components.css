@@ -142,6 +142,11 @@
 .nv-hero .nv-breadcrumb li + li::before,
 .nv-hero .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-on-dark-soft); }
 
+.nuvia-analysis-hero .nv-breadcrumb a,
+.nuvia-analysis-hero .nv-breadcrumb li + li::before,
+.nuvia-analysis-hero .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-on-dark-soft); }
+.nuvia-analysis-hero .nv-breadcrumb a:hover { color: var(--nv-white); }
+
 .nv-hero--editorial .nv-breadcrumb a { color: var(--nv-text-soft); }
 .nv-hero--editorial .nv-breadcrumb li + li::before,
 .nv-hero--editorial .nv-breadcrumb [aria-current="page"] { color: var(--nv-text-muted); }
@@ -826,7 +831,8 @@
 }
 
 .nuvia-site-nav__menu a:hover,
-.nuvia-site-nav__menu a:focus-visible {
+.nuvia-site-nav__menu a:focus-visible,
+.nuvia-site-nav__menu a[aria-current="page"] {
   background: color-mix(in srgb, var(--nv-green-500) 10%, var(--nv-white));
   color: var(--nv-text-link);
 }

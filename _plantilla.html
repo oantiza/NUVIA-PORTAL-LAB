@@ -67,33 +67,39 @@
       <img src="src/assets/brand/nuvia-family-wealth-exact-2026-v2/logo-rec-transp-web-04.svg"
            alt="NUVIA Family Wealth" width="278" height="68">
     </a>
-    <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
+      <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
+        <details class="nuvia-site-nav__topics" data-nav-area="economia">
+          <summary>Economía y Finanzas</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+            <a href="mercados.html">Mercados y noticias</a>
+            <a href="cartera.html">Cartera</a>
           </div>
         </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Academia</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Temas clave</summary>
+        <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
+          <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
             <a href="jubilacion.html">Jubilación</a>
+            <a href="fiscalidad.html">Impuestos</a>
+            <a href="temas.html?topic=planificacion-patrimonial">Planificación patrimonial</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics" data-nav-area="bienestar">
+          <summary>Familia, Salud y Bienestar</summary>
+          <div class="nuvia-site-nav__menu">
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
+        <details class="nuvia-site-nav__topics" data-nav-area="academy">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia NUVIA</a>
+            <a href="academia.html?tab=esenciales">Conocimientos esenciales</a>
+            <a href="academia.html?tab=cursos">Cursos</a>
+          </div>
+        </details>
+        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
   </div>
@@ -115,9 +121,9 @@
 
         <div>
           <!-- Migas: obligatorias salvo en portada y en las 5 páginas de primer nivel. -->
-          <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
+<nav class="nv-breadcrumb" aria-label="Ruta de navegación">
             <ol>
-              <li><a href="index.html">Inicio</a></li>
+              <li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li>
               <li><a href="⟨PADRE⟩.html">⟨Sección padre⟩</a></li>
               <li><span aria-current="page">⟨Esta página⟩</span></li>
             </ol>

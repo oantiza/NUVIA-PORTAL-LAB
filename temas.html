@@ -38,31 +38,37 @@
       </a>
       <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
+        <details class="nuvia-site-nav__topics" data-nav-area="economia">
+          <summary>Economía y Finanzas</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+            <a href="mercados.html">Mercados y noticias</a>
+            <a href="cartera.html">Cartera</a>
           </div>
         </details>
-        <details class="nuvia-site-nav__topics">
-          <summary>Academia</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
+        <details class="nuvia-site-nav__topics is-active" data-nav-area="patrimonio">
+          <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
             <a href="jubilacion.html">Jubilación</a>
+            <a href="fiscalidad.html">Impuestos</a>
+            <a href="temas.html?topic=planificacion-patrimonial">Planificación patrimonial</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics" data-nav-area="bienestar">
+          <summary>Familia, Salud y Bienestar</summary>
+          <div class="nuvia-site-nav__menu">
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
+        <details class="nuvia-site-nav__topics" data-nav-area="academy">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia NUVIA</a>
+            <a href="academia.html?tab=esenciales">Conocimientos esenciales</a>
+            <a href="academia.html?tab=cursos">Cursos</a>
+          </div>
+        </details>
+        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
@@ -71,7 +77,7 @@
   <main id="contenido">
     <section id="tema" data-screen-label="Cabecera Temas clave" class="nv-hero nv-hero--institutional tm-hero">
       <div class="nv-container">
-      <nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li><span aria-current="page">Temas clave</span></li></ol></nav>
+<nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Temas clave</span></li></ol></nav>
       <span class="nv-eyebrow nv-eyebrow--on-dark"><span></span>Tema NUVIA · {{ numeroDe }}</span>
       <h1 class="tm-title" id="tema-titulo">Jubilación</h1>
       <p class="nv-hero__lead" id="tema-intro">Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.</p>
@@ -255,7 +261,8 @@
     'vivienda-coste-vida': ['Vivienda y coste de vida', 'Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.'],
     'mis-impuestos':       ['Mis impuestos', 'Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.'],
     'jubilacion':          ['Jubilación', 'Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.'],
-    'bienestar':           ['Cuerpo, mente y salud', 'Hábitos para cuidar el cuerpo, mantener la mente en calma y equilibrar familia, trabajo y tiempo propio.']
+    'bienestar':           ['Cuerpo, mente y salud', 'Hábitos para cuidar el cuerpo, mantener la mente en calma y equilibrar familia, trabajo y tiempo propio.'],
+    'planificacion-patrimonial': ['Planificación patrimonial', 'Una visión de conjunto del patrimonio familiar: objetivos, activos, deudas, liquidez y transmisión.']
   };
   const ALIAS = { vivienda: 'vivienda-coste-vida', fiscalidad: 'mis-impuestos' };
   const resuelve = (id) => (id && (TEMAS[id] ? id : ALIAS[id])) || null;
@@ -269,6 +276,7 @@
     const t = TEMAS[id];
     if (!t) return;
     ultimoId = id;
+    document.body.dataset.nuviaTopic = id;
     const poner = (el, texto) => { if (el && el.textContent !== texto) el.textContent = texto; };
     poner(document.getElementById('tema-titulo'), t[0]);
     poner(document.getElementById('tema-intro'), t[1]);
@@ -315,6 +323,10 @@ class Component extends DCLogic {
         R('Movimiento, nutrición y descanso', 'Una rutina sostenible que combine ejercicio físico, alimentación equilibrada y recuperación.'),
         R('Calma y gestión del estrés', 'Respiración, pausas conscientes y técnicas de relajación para recuperar claridad mental.'),
         R('Familia, trabajo y tiempo propio', 'Límites saludables para separar responsabilidades, estar presente y proteger el equilibrio personal.') ] },
+      { id: 'planificacion-patrimonial', num: '05', nombre: 'Planificación patrimonial', intro: 'Una visión de conjunto del patrimonio familiar: objetivos, activos, deudas, liquidez y transmisión.', tipo: 'recursos', recursos: [
+        R('Balance patrimonial', 'Cómo se organizan los activos, las deudas y la liquidez en una visión conjunta del patrimonio familiar.'),
+        R('Objetivos y horizontes', 'La relación entre las necesidades familiares, los plazos y la incertidumbre a lo largo del tiempo.'),
+        R('Documentación y continuidad familiar', 'Información y conceptos para comprender la titularidad y la transmisión del patrimonio.') ] },
     ];
   }
   /* La cabecera vive fuera de la plantilla (ver el bloque de arriba). Se le
@@ -333,7 +345,13 @@ class Component extends DCLogic {
     if (id && id !== 'mis-impuestos' && id !== 'vivienda-coste-vida' && this.temas().some(t => t.id === id)) this.setState({ topic: id });
     this.sincronizaCabecera();
   }
-  ir(id) { this.setState({ topic: id }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  ir(id) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('topic', id);
+    window.history.replaceState({}, '', url);
+    this.setState({ topic: id });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   renderVals() {
     const temas = this.temas();
     const activo = this.state.topic ?? this.props.temaInicial ?? 'jubilacion';
@@ -345,7 +363,7 @@ class Component extends DCLogic {
       cerrarTemas: () => this.setState({ temasOpen: false }),
       titulo: t.nombre,
       intro: t.intro,
-      numeroDe: t.num + ' de 04',
+      numeroDe: t.num + ' de ' + String(temas.length).padStart(2, '0'),
       pildoras: temas.map(p => ({
         num: p.num, nombre: p.nombre,
         sufijo: p.link ? '↗' : '',

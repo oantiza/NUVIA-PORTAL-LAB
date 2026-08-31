@@ -38,31 +38,37 @@
       </a>
       <nav class="nuvia-site-nav" data-nuvia-unified="true" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
-        <a href="mercados.html">Mercados</a>
-        <details class="nuvia-site-nav__topics">
-          <summary>Cartera</summary>
+        <details class="nuvia-site-nav__topics" data-nav-area="economia">
+          <summary>Economía y Finanzas</summary>
           <div class="nuvia-site-nav__menu">
-            <a href="cartera.html">Visión de cartera</a>
-            <a href="cartera.html?vista=companies">Análisis y valoración de empresas</a>
+            <a href="mercados.html">Mercados y noticias</a>
+            <a href="cartera.html">Cartera</a>
           </div>
         </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Academia</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details>
-        <details class="nuvia-site-nav__topics is-active">
-          <summary aria-current="page">Temas clave</summary>
+        <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
+          <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
             <a href="vivienda.html">Vivienda y coste de vida</a>
-            <a href="fiscalidad.html">Mis impuestos</a>
             <a href="jubilacion.html">Jubilación</a>
+            <a href="fiscalidad.html">Impuestos</a>
+            <a href="temas.html?topic=planificacion-patrimonial">Planificación patrimonial</a>
+          </div>
+        </details>
+        <details class="nuvia-site-nav__topics" data-nav-area="bienestar">
+          <summary>Familia, Salud y Bienestar</summary>
+          <div class="nuvia-site-nav__menu">
             <a href="temas.html?topic=bienestar">Cuerpo, mente y salud</a>
           </div>
         </details>
+        <details class="nuvia-site-nav__topics is-active" data-nav-area="academy">
+          <summary>Academia</summary>
+          <div class="nuvia-site-nav__menu">
+            <a href="academia.html">Academia NUVIA</a>
+            <a href="academia.html?tab=esenciales">Conocimientos esenciales</a>
+            <a href="academia.html?tab=cursos">Cursos</a>
+          </div>
+        </details>
+        <a href="lecturas.html">Lecturas</a>
         <a class="nuvia-site-nav__secondary" href="index.html#que-es-nuvia">Qué es NUVIA</a>
       </nav>
     </div>
@@ -72,7 +78,7 @@
     <!-- ============ CABECERA ============ -->
     <section id="academy" data-screen-label="Cabecera Academia Nuvia" class="nv-hero nv-hero--institutional gu-hero" aria-labelledby="academy-title">
       <div class="nv-container gu-section">
-        <nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html">Inicio</a></li><li><span aria-current="page">Academia</span></li></ol></nav>
+<nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Academia</span></li></ol></nav>
         <span class="ac-x02"><span aria-hidden="true"></span>Academia Nuvia</span>
         <h1 id="academy-title" class="ac-x03">Saber es patrimonio</h1>
         <p class="gu-lead">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
