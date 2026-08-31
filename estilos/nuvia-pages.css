@@ -1376,7 +1376,7 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 2879 / 546;
+  aspect-ratio: 4724 / 896;
   overflow: hidden;
   border-radius: var(--nv-radius-md);
   background: var(--nv-white);
@@ -1390,63 +1390,9 @@
 }
 
 .home-lecturas__art {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: brightness(1.03) contrast(1.02) saturate(.97);
-}
-
-.home-lecturas__copy {
-  position: absolute;
-  inset: 0 auto 0 5.85%;
-  display: flex;
-  width: 55%;
-  flex-direction: column;
-  justify-content: center;
-  color: var(--nv-ink);
-  pointer-events: none;
-}
-
-.home-lecturas__title {
-  margin: 0;
-  font-family: var(--nv-font-serif);
-  font-size: var(--nv-display-lg);
-  font-weight: var(--nv-weight-body);
-  letter-spacing: -.025em;
-  line-height: .92;
-  white-space: nowrap;
-}
-
-.home-lecturas__rule {
-  width: 30px;
-  height: 2px;
-  margin: var(--nv-space-2) 0 7px;
-  background: var(--nv-bronze-500);
-}
-
-.home-lecturas__subtitle {
-  margin: 0 0 var(--nv-space-3);
-  color: var(--nv-copy);
-  font-family: var(--nv-font-serif);
-  font-size: var(--nv-body);
-  line-height: 1.25;
-  white-space: nowrap;
-}
-
-.home-lecturas__cta {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  gap: var(--nv-space-3);
-  border: 1px solid var(--nv-bronze-200);
-  color: var(--nv-ink);
-  font-size: var(--nv-label);
-  font-weight: var(--nv-weight-title);
-  letter-spacing: .13em;
-  padding: var(--nv-space-3) var(--nv-space-4);
+  height: auto;
 }
 
 /* ── Qué es NUVIA ────────────────────────────────────────────────────────── */
