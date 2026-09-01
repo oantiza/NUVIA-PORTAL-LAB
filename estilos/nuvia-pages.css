@@ -1316,14 +1316,14 @@
 .home-section-banner__pill {
   display: inline-flex;
   align-items: center;
-  gap: var(--nv-space-3);
-  min-height: 54px;
-  padding: 12px var(--nv-space-6);
+  gap: var(--nv-space-2);
+  min-height: 48px;
+  padding: 9px 18px;
   border: 1px solid var(--nv-green-300);
   border-radius: var(--nv-radius-pill);
   background: color-mix(in srgb, var(--nv-navy-950) 40%, transparent);
   color: var(--nv-white);
-  font-size: var(--nv-body);
+  font-size: var(--nv-body-sm);
   font-weight: var(--nv-weight-action);
   text-decoration: none;
   transition: background .2s ease, color .2s ease;

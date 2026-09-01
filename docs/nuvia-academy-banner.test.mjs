@@ -133,8 +133,8 @@ assert.match(editorialVeil, /var\(--nv-navy-950\) 26%/, 'La zona de lectura cons
 assert.match(editorialVeil, /--nv-navy-950\) 84%, transparent\) 42%/, 'La transición comienza de forma progresiva');
 assert.match(editorialVeil, /--nv-navy-950\) 42%, transparent\) 70%/, 'El degradado libera la zona fotográfica');
 assert.match(editorialVeil, /--nv-navy-950\) 8%, transparent\) 100%/, 'El extremo derecho deja la fotografía casi limpia');
-assert.match(css, /\.home-section-banner__pill\s*\{[\s\S]*?min-height:\s*54px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
-  'Los tres accesos comparten el formato amplio de la referencia');
+assert.match(css, /\.home-section-banner__pill\s*\{[\s\S]*?gap:\s*var\(--nv-space-2\);[\s\S]*?min-height:\s*48px;[\s\S]*?padding:\s*9px 18px;[\s\S]*?font-size:\s*var\(--nv-body-sm\);/,
+  'Los tres accesos usan la escala ligeramente reducida solicitada');
 assert.match(css, /\.home-section-banner--editorial \.home-section-banner__title\s*\{\s*font-family: var\(--nv-font-sans\);\s*font-size: clamp\(30px, 2\.6vw, 36px\);/,
   'Títulos editoriales en sans serif, de 30 a 36 px');
 assert.match(home, /class="nv-eyebrow home-intro__eyebrow">El proyecto<\/p>/,

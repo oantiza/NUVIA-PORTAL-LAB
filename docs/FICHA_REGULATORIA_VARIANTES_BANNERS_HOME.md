@@ -349,3 +349,15 @@ instrumentos, cálculos, datos, personalización, recomendación, contratación,
 contacto, publicidad, IA ni derivación profesional. Controles: tamaño compartido,
 contraste específico de Academia, foco visible, pruebas estáticas, compilación y
 revisión en escritorio y tablet.
+
+## Reducción ligera de los tres accesos principales · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Los botones de Economía y Finanzas, Patrimonio y Familia,
+Salud y Bienestar reducen ligeramente su altura, relleno, separación interna y
+tipografía. Conservan forma, contraste, foco visible, texto y destino. Los accesos
+editoriales «Entrar» de Academia y Lecturas no se modifican.
+
+El ajuste es exclusivamente visual: no incorpora instrumentos, cálculos, datos,
+personalización, recomendación, contratación, contacto, publicidad, IA ni
+derivación profesional. Controles: escala compartida en los tres botones,
+permanencia de un único acceso por banner, pruebas estáticas y compilación completa.
