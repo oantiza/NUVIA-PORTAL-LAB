@@ -45,11 +45,10 @@ const patrimonio = home.match(/<section\b[^>]*id="patrimonio"[\s\S]*?<\/section>
 assert.ok(patrimonio?.includes('id="titulo-patrimonio"'), 'Patrimonio conserva su título accesible');
 assert.ok(patrimonio.includes('home-section-banner--editorial'), 'Patrimonio usa la variante editorial');
 assert.ok(!patrimonio.includes('class="home-topic"'), 'Las tarjetas anteriores no se duplican');
-assert.equal((patrimonio.match(/class="home-section-banner__pill"/g) ?? []).length, 3,
-  'El banner contiene los tres accesos');
-for (const page of ['vivienda', 'fiscalidad', 'jubilacion']) {
-  assert.ok(patrimonio.includes(`href="${page}.html"`), `Patrimonio conserva el acceso a ${page}`);
-}
+assert.equal((patrimonio.match(/class="home-section-banner__pill"/g) ?? []).length, 1,
+  'Patrimonio contiene un único acceso de sección');
+assert.match(patrimonio, /href="temas\.html\?topic=planificacion-patrimonial"[^>]*>Accede a Patrimonio/,
+  'Patrimonio conduce a su espacio general con el texto unificado');
 const patrimonioAsset = 'src/assets/home/patrimonio-family-home-20260831.jpeg';
 assert.ok(patrimonio.includes(`src="${patrimonioAsset}"`), 'Se usa la fotografía aportada');
 assert.equal(createHash('sha256').update(await readFile(resolve(root, patrimonioAsset))).digest('hex'),
@@ -62,6 +61,8 @@ const economia = home.match(/<section\b[^>]*id="mercados"[\s\S]*?<\/section>/)?.
 assert.ok(economia?.includes('home-section-banner--editorial'), 'Economía comparte el banner editorial');
 assert.equal((economia.match(/<a\b/g) ?? []).length, 1, 'Economía tiene un único acceso');
 assert.ok(economia.includes('href="mercados.html"'), 'Economía conserva su destino');
+assert.match(economia, /class="home-section-banner__pill">Accede a Economía y Finanzas/,
+  'Economía usa el texto de acceso unificado');
 const economiaAsset = 'src/assets/markets/secondary-news/wall-street-records.jpg';
 assert.ok(economia.includes(`src="${economiaAsset}"`), 'Economía usa la fotografía local elegida');
 assert.equal(createHash('sha256').update(await readFile(resolve(root, economiaAsset))).digest('hex'),
@@ -90,7 +91,8 @@ for (const [section, titleId, eyebrow] of [
 }
 assert.ok(!bienestar.includes('home-section-banner__tags'), 'Bienestar no muestra las etiquetas retiradas');
 assert.equal((bienestar.match(/<a\b/g) ?? []).length, 1, 'Bienestar conserva solo un enlace');
-assert.match(bienestar, /class="home-section-banner__pill">Ver temas y directrices/, 'Se conserva el botón de temas y directrices');
+assert.match(bienestar, /class="home-section-banner__pill">Accede a Familia, Salud y Bienestar/,
+  'Bienestar usa el texto de acceso unificado');
 assert.ok(bienestar.includes('href="temas.html?topic=bienestar"'), 'Se conserva el acceso a temas de bienestar');
 const bienestarAsset = 'src/assets/home/wellbeing-life-balance-banner-v2.webp';
 assert.ok(bienestar.includes(`src="${bienestarAsset}"`), 'Se conserva la imagen de bienestar');
@@ -116,8 +118,11 @@ const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const editorialVeil = css.match(/\.home-section-banner--editorial::before\s*\{([^}]+)\}/)?.[1];
 assert.ok(editorialVeil, 'El aclarado se limita a los banners editoriales');
 assert.match(editorialVeil, /--nv-navy-950\) 82%, transparent\) 0%/, 'Se conserva el contraste izquierdo');
-assert.match(editorialVeil, /--nv-navy-900\) 74%, transparent\) 48%/, 'La transición comienza en la mitad');
-assert.match(editorialVeil, /--nv-navy-950\) 50%, transparent\) 100%/, 'El extremo derecho deja ver más fotografía');
+assert.match(editorialVeil, /--nv-navy-900\) 72%, transparent\) 40%/, 'La transición comienza antes de la mitad');
+assert.match(editorialVeil, /--nv-navy-950\) 38%, transparent\) 68%/, 'El degradado libera la zona fotográfica');
+assert.match(editorialVeil, /--nv-navy-950\) 16%, transparent\) 100%/, 'El extremo derecho deja ver claramente la fotografía');
+assert.match(css, /\.home-section-banner__pill\s*\{[\s\S]*?min-height:\s*54px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
+  'Los tres accesos comparten el formato amplio de la referencia');
 assert.match(css, /\.home-section-banner--editorial \.home-section-banner__title\s*\{\s*font-family: var\(--nv-font-sans\);\s*font-size: clamp\(30px, 2\.6vw, 36px\);/,
   'Títulos editoriales en sans serif, de 30 a 36 px');
 assert.match(home, /class="nv-eyebrow home-intro__eyebrow">El proyecto<\/p>/,

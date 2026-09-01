@@ -263,3 +263,34 @@ sus resultados, sin nuevas funciones financieras, datos, personalización o
 derivación profesional. Las páginas interiores, el archivo y la actualización
 dinámica de Mercados permanecen intactos. Canal: GitHub Pages oficial mediante
 Actions y compilación de dist. Reversión disponible mediante el historial Git.
+
+## Accesos unificados y fotografía más visible · 1 de septiembre de 2026
+
+Revisión previa: VERDE.
+
+1. Necesidad: simplificar la entrada a los tres ámbitos de Inicio y dar más
+   presencia visual a sus fotografías.
+2. Entradas: títulos, destinos e imágenes editoriales ya existentes.
+3. Transformación: cada banner pasa a un único botón «Accede a [sección]» y el
+   velo azul conserva su intensidad a la izquierda, pero se desvanece con mayor
+   claridad hacia la derecha.
+4. Resultado: tres accesos educativos homogéneos a Economía y Finanzas,
+   Patrimonio y Familia, Salud y Bienestar.
+5. Instrumentos, emisores, circunstancias personales, precios, rankings o
+   recomendaciones: ninguno.
+6. Datos personales, cálculos, IA, proveedores, publicidad o monetización: sin
+   cambios y no aplicables a esta presentación estática.
+7. Acción: navegación interna exclusivamente informativa; no existe contacto,
+   contratación, derivación ni ejecución.
+8. Diseño: el botón no expresa preferencia financiera y el degradado mantiene
+   contraste suficiente detrás de título, explicación y acceso.
+9. Separación profesional: sin marcas, actividad bancaria ni captación.
+10. Controles: una sola llamada a la acción por banner, texto y destino exactos,
+    comprobación del degradado compartido, compilación completa y revisión en
+    escritorio y tablet.
+
+Patrimonio conduce a `temas.html?topic=planificacion-patrimonial`, que reúne el
+ámbito patrimonial sin convertir vivienda, fiscalidad o jubilación en opciones
+preferentes; esos destinos permanecen disponibles en la navegación principal.
+El cambio se publicará por el canal oficial de GitHub Pages tras superar las
+puertas automáticas y la revisión de la página resultante.

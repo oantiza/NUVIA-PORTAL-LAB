@@ -1295,13 +1295,13 @@
   display: inline-flex;
   align-items: center;
   gap: var(--nv-space-3);
-  min-height: 44px;
-  padding: 10px var(--nv-space-4);
+  min-height: 54px;
+  padding: 12px var(--nv-space-6);
   border: 1px solid var(--nv-green-300);
   border-radius: var(--nv-radius-pill);
   background: color-mix(in srgb, var(--nv-navy-950) 40%, transparent);
   color: var(--nv-white);
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-body);
   font-weight: var(--nv-weight-action);
   text-decoration: none;
   transition: background .2s ease, color .2s ease;
@@ -1320,9 +1320,9 @@
 .home-section-banner--editorial::before {
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--nv-navy-950) 82%, transparent) 0%,
-    color-mix(in srgb, var(--nv-navy-900) 74%, transparent) 48%,
-    color-mix(in srgb, var(--nv-navy-950) 62%, transparent) 74%,
-    color-mix(in srgb, var(--nv-navy-950) 50%, transparent) 100%);
+    color-mix(in srgb, var(--nv-navy-900) 72%, transparent) 40%,
+    color-mix(in srgb, var(--nv-navy-950) 38%, transparent) 68%,
+    color-mix(in srgb, var(--nv-navy-950) 16%, transparent) 100%);
 }
 .home-section-banner--editorial .home-section-banner__content {
   width: 62%;
