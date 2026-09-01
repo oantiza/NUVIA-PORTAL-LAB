@@ -1662,17 +1662,23 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 2120 / 404;
+  aspect-ratio: 2879 / 546;
   overflow: hidden;
   border-radius: var(--nv-radius-md);
   background: var(--nv-white);
   box-shadow: var(--nv-shadow-sm);
+  text-decoration: none;
   transition: transform .32s ease, box-shadow .32s ease;
 }
 
 .home-lecturas:hover {
   box-shadow: var(--nv-shadow-md);
   transform: translateY(-3px);
+}
+
+.home-lecturas:focus-visible {
+  outline: 2px solid var(--nv-green-500);
+  outline-offset: 3px;
 }
 
 .home-lecturas__art {

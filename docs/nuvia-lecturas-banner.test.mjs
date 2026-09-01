@@ -4,25 +4,31 @@ import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 
 const root = resolve(process.argv[2] ?? resolve(import.meta.dirname, '..'));
-const asset = 'src/assets/home/lecturas-con-criterio-fondo-compacto-family-wealth.webp';
+const homeAsset = 'src/assets/home/lecturas-con-criterio-banner-2026.png';
+const heroAsset = 'src/assets/home/lecturas-con-criterio-fondo-compacto-family-wealth.webp';
 const retiredAsset = 'src/assets/home/lecturas-con-criterio-canva-family-wealth.png';
 const home = await readFile(resolve(root, 'index.html'), 'utf8');
 const section = home.match(/<section\b[^>]*id="lecturas-con-criterio"[\s\S]*?<\/section>/)?.[0];
-assert.ok(section?.includes(`src="${asset}"`), 'Inicio usa el paisaje limpio sin el botón rasterizado');
+assert.ok(section?.includes(`src="${homeAsset}"`), 'Inicio usa el banner aportado por el usuario');
 assert.ok(section.includes('href="lecturas.html"'), 'El banner conserva el acceso a Lecturas');
-assert.match(section, /<h2 id="titulo-lecturas">LECTURAS CON CRITERIO<\/h2>/, 'El título exterior usa el nombre solicitado');
-assert.match(section, /class="home-feature-access home-lecturas__cta"[^>]*>Entrar<\/a>/,
-  'Lecturas usa el acceso editorial discreto');
+assert.doesNotMatch(section, /nv-section-heading|titulo-lecturas|<h2\b/,
+  'El banner sustituye la cabecera exterior y elimina su espacio');
+assert.match(section, /<a class="home-lecturas" href="lecturas\.html" aria-label="Entrar">/,
+  'El banner completo es el acceso editorial con nombre accesible Entrar');
 assert.equal((section.match(/<a\b/g) ?? []).length, 1, 'Lecturas tiene un único enlace');
-assert.doesNotMatch(section, /home-section-banner__pill|Explorar Lecturas|Abrir Lecturas|Accede a Lecturas/,
-  'Se retiran los formatos de acceso anteriores');
-assert.ok(section.includes('alt="" aria-hidden="true"'), 'El paisaje decorativo no duplica el título accesible');
-assert.ok(section.includes('width="2120" height="404"'), 'Se reserva la proporción del paisaje limpio');
+assert.doesNotMatch(section, /home-feature-access|home-lecturas__cta|Abrir Lecturas|Accede a Lecturas/,
+  'Se retira el acceso HTML superpuesto anterior');
+assert.ok(section.includes('alt="Lecturas con Criterio. Historias sencillas de interés duradero."'),
+  'La imagen enlazada tiene alternativa informativa');
+assert.ok(section.includes('width="2879" height="546"'), 'Se reserva la proporción exacta del banner aportado');
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
 assert.ok(!section.includes(retiredAsset), 'No reintroducir el PNG con el antiguo botón dibujado');
-assert.equal(home.split(asset).length - 1, 1, 'La imagen solo aparece una vez');
+assert.equal(home.split(homeAsset).length - 1, 1, 'La imagen solo aparece una vez');
+const homeBannerBytes = await readFile(resolve(root, homeAsset));
+assert.equal(createHash('sha256').update(homeBannerBytes).digest('hex'),
+  'd6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003',
+  'El banner aportado debe conservarse sin editar');
 const page = await readFile(resolve(root, 'lecturas.html'), 'utf8');
-const heroAsset = asset;
 assert.ok(page.includes('estilos/nuvia-pages.css?v=lecturas-sin-cta-20260831'), 'La cabecera debe cargar los estilos nuevos sin reutilizar la caché anterior');
 const hero = page.match(/<section\b[^>]*id="lecturas"[\s\S]*?<\/section>/)?.[0];
 assert.ok(hero?.includes(`src="${heroAsset}"`), 'La cabecera interior usa el paisaje limpio sin botón');
@@ -49,6 +55,9 @@ const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const imageRule = css.match(/\.home-lecturas__art\s*\{([^}]+)\}/)?.[1];
 assert.ok(imageRule?.includes('height: auto'), 'La imagen no debe recortarse ni deformarse');
 assert.ok(!imageRule.includes('filter:'), 'No se alteran los colores del archivo original');
+const homeBannerRule = css.match(/\.home-lecturas\s*\{([^}]+)\}/)?.[1];
+assert.ok(homeBannerRule?.includes('aspect-ratio: 2879 / 546'), 'La caja conserva la proporción exacta del banner');
+assert.match(css, /\.home-lecturas:focus-visible\s*\{[\s\S]*?outline:/, 'El banner enlazado tiene foco visible');
 const heroRule = css.match(/\.lecturas-hero\s*\{([^}]+)\}/)?.[1];
 assert.ok(heroRule?.includes('background: var(--nv-white)'), 'El fundido termina en blanco');
 const heroImageRule = css.match(/\.lecturas-hero__art\s*\{([^}]+)\}/)?.[1];

@@ -34,9 +34,10 @@ navegación, sin nuevas funciones financieras.
     resultado. Contraste comprobado sobre las tres superficies.
 12. Llamadas a la acción: un solo acceso por ámbito, todos internos e
     informativos — `mercados.html`, `temas.html?topic=planificacion-patrimonial`,
-    `temas.html?topic=bienestar`, `academia.html`, `lecturas.html`. Academia y
-    Lecturas conservan el acceso editorial discreto «Entrar» a 16 px con área
-    de interacción de 44 px. No hay contacto, contratación, derivación ni
+    `temas.html?topic=bienestar`, `academia.html`, `lecturas.html`. Academia
+    conserva el acceso editorial discreto «Entrar» a 16 px con área de
+    interacción de 44 px. En Lecturas, el banner completo es el único enlace y
+    mantiene «Entrar» como nombre accesible. No hay contacto, contratación, derivación ni
     ejecución. El sumario enlaza a páginas existentes sin crear destinos nuevos.
 13. Remuneración, publicidad, patrocinio o afiliación: sin cambios.
 14. Separación profesional: no se incorpora actividad, marca ni identidad
@@ -89,11 +90,56 @@ página resultante.
       del punto 12, comprobado automáticamente en fuente y `dist/`.
 - [x] Ausencia de cifras, fechas o indicadores dinámicos en Inicio; Mercados
       conserva sus cinco indicadores en su página interior.
-- [x] Hashes SHA-256 de las seis fotografías comprobados sin cambios; ningún
-      activo se ha editado ni borrado.
+- [x] Hashes SHA-256 de las fotografías existentes comprobados sin cambios; el
+      nuevo banner aportado se conserva exactamente con hash
+      `d6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003`.
 - [x] Foco visible en los cinco accesos. Los tres botones principales conservan
       contraste blanco/azul oscuro y un área mínima de 44 px; «Entrar» mantiene
-      16 px y el contraste aprobado sobre las imágenes de Academia y Lecturas.
+      16 px sobre Academia y el banner completo de Lecturas muestra un contorno
+      de foco visible.
 
 Comprobación adicional solicitada: las tres láminas están separadas por 20 px
 (aproximadamente 0,5 cm) y no queda ningún pie «imagen decorativa» visible.
+
+## Sustitución del banner de Lecturas · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Se incorpora el banner aportado por el usuario para
+Lecturas con Criterio, sin editar ni recortar el archivo. Como la propia imagen
+ya contiene el rótulo y el botón editorial «Explorar Lecturas», el banner
+completo pasa a ser el único enlace funcional del bloque. Su nombre accesible
+permanece como «Entrar» y se añade foco visible al contorno completo.
+
+Se eliminan también las cabeceras exteriores visibles de Academia y Lecturas,
+porque ambos banners ya integran su propia identidad y texto. Las secciones
+conservan sus nombres accesibles mediante `aria-label` y desaparece el espacio
+que ocupaban esas cabeceras, sin alterar el resto del ritmo de la portada.
+
+El cambio es exclusivamente editorial y de navegación interna. No incorpora
+instrumentos, datos, cálculos, recomendaciones, personalización, contacto,
+contratación, publicidad, IA ni derivación profesional. Controles: un solo
+enlace a `lecturas.html`, ausencia del acceso superpuesto anterior, proporción
+2879 × 546, hash SHA-256 del PNG aportado, foco visible, compilación completa y
+verificación de fuente y `dist/`.
+
+Resultado verificado:
+
+- [x] Banner aportado conservado sin edición y con el hash previsto.
+- [x] Un único enlace a `lecturas.html`, con nombre accesible «Entrar» y foco visible.
+- [x] Cabeceras exteriores de Academia y Lecturas ausentes, sin dejar su hueco.
+- [x] Anchos de banner iguales a sus contenedores: 1240 px a 1440 y 952,67 px a 1024.
+- [x] Sin desbordamiento horizontal a 1440 ni a 1024 px.
+- [x] Compilación y pruebas completas superadas en fuente y en `dist/`.
+
+## Sustitución del banner de Academia · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Se sustituye únicamente la imagen de Academia en la
+portada por el archivo aportado por el usuario, sin editarlo ni recortarlo. La
+pieza mantiene el carácter educativo de la sección y no añade datos,
+instrumentos, recomendaciones, personalización, contacto, contratación,
+publicidad, IA ni derivación profesional. El acceso HTML «Entrar» y su destino
+`academia.html` permanecen intactos.
+
+Controles: dimensiones 3552 × 1184, hash SHA-256
+`b3a1f474a2cdf4fa2e082b051d2da1721c9507b3a4a57c137adfaa2b440c2912`,
+un único acceso, texto alternativo, foco visible, visualización íntegra en
+escritorio y tablet, compilación completa y verificación en fuente y `dist/`.
