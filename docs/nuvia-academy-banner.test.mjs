@@ -73,7 +73,7 @@ for (const href of [
 const academy = section('academia');
 assert.doesNotMatch(academy, /nv-section-heading|titulo-academia|<h2\b/,
   'Academia elimina la cabecera exterior y su espacio');
-assert.match(academy, /class="nv-eyebrow home26-showcase__label">Formación<\/p>/,
+assert.match(academy, /class="nv-eyebrow home26-showcase__label">Academia<\/p>/,
   'Academia recupera únicamente su rótulo compacto');
 const academyBanner = academy.match(/<div class="home-academia">[\s\S]*?<\/div>/)?.[0];
 assert.ok(academyBanner, 'Academia conserva su banner');
@@ -84,7 +84,7 @@ assert.match(academyBanner, /class="home-feature-access home-academia__cta"[^>]*
 const readings = section('lecturas-con-criterio');
 assert.doesNotMatch(readings, /nv-section-heading|titulo-lecturas|<h2\b/,
   'Lecturas elimina la cabecera exterior y su espacio');
-assert.match(readings, /class="nv-eyebrow home26-showcase__label">Sección editorial<\/p>/,
+assert.match(readings, /class="nv-eyebrow home26-showcase__label">Lecturas con Criterio<\/p>/,
   'Lecturas recupera únicamente su rótulo compacto');
 const readingsBanner = readings.match(/<a class="home-lecturas"[\s\S]*?<\/a>/)?.[0];
 assert.ok(readingsBanner, 'Lecturas conserva su banner');
@@ -117,6 +117,12 @@ for (const id of ['mercados', 'patrimonio', 'familia-salud']) {
 }
 assert.equal((home.match(/class="nv-container nv-eyebrow home26-plate-label"/g) || []).length, 3,
   'Los tres rótulos se sitúan fuera y encima de sus respectivas láminas');
+for (const label of ['Economía y Finanzas', 'Patrimonio', 'Familia, Salud y Bienestar', 'Academia', 'Lecturas con Criterio']) {
+  assert.match(home, new RegExp(`class="[^"]*(?:home26-plate-label|home26-showcase__label)[^"]*">${label}<`),
+    `El encabezado editorial muestra ${label}`);
+}
+assert.doesNotMatch(home, /home26-(?:plate-label|showcase__label)[^>]*>[^<]*·\s*0[1-5]</,
+  'Los cinco encabezados editoriales no muestran numeración');
 assert.match(homeCss, /\.home26-plate-label\s*\{[\s\S]*?margin-top:\s*var\(--nv-space-12\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
   'Los tres bloques conservan una separación amplia y homogénea');
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
