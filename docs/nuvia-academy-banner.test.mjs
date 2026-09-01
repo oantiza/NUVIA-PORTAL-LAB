@@ -158,7 +158,7 @@ for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {
 const assets = new Map([
   ['src/assets/home/hero-family-finance-compact.webp', 'f143b8f10ec4326b462a481599a8ea26fd3fe5738f535f11cab7aa4ef7c33aa7'],
   ['src/assets/markets/secondary-news/wall-street-records.jpg', '4b0a025883086aab03b5f2c105b79f38dbacd1a23a7ae518260f6c83032f5cce'],
-  ['src/assets/home/patrimonio-family-home-young-family-20260901.png', '494b50fcadb83be96368f2fff2b3d87d0aa44335d81969e514282b3500a1dbf0'],
+  ['src/assets/home/patrimonio-family-home-young-family-natural-20260901.png', '05af952813c6f00ce8f8afa416d24060b8a1a7571f721f3391b7307f65577103'],
   ['src/assets/home/wellbeing-life-balance-banner-v2.webp', '7af9d0ab2c2b0af67f9b7bc3665a40d3028bf8c87f6f4d88571ebd73f1ef6941'],
   ['src/assets/education/nuvia-academy/nuvia-academy-banner-2026.jpeg', 'b3a1f474a2cdf4fa2e082b051d2da1721c9507b3a4a57c137adfaa2b440c2912'],
   ['src/assets/home/lecturas-con-criterio-banner-2026.png', 'd6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003'],
