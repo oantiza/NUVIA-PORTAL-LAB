@@ -99,7 +99,7 @@ Se adopta en todo el sitio un **registro educativo, independiente y no prescript
 
 > **NUVIA reúne información, formación y herramientas para comprender la economía familiar y pensar a largo plazo.**
 
-Esta frase sustituirá, en la Fase 2, a:
+Esta frase sustituirá, en la Entrega 1, a:
 
 > «Acompañamos a familias a preservar, hacer crecer y transferir su patrimonio con visión de largo plazo.»
 
@@ -192,7 +192,7 @@ Una idea no queda autorizada por figurar en los informes, prototipos o conversac
 
 ## 2. Ratificaciones del fundador
 
-Con la instrucción «contrasta y seguimos» del 1 de septiembre de 2026, tras recibir el contraste independiente de Claude Fable 5.1, quedan ratificadas:
+Tras recibir y contrastar la revisión independiente de Claude Fable 5.1, **D3 y D4 fueron ratificadas por el fundador el 1 de septiembre de 2026**:
 
 - **D3:** subtítulo educativo del hero de la portada.
 - **D4:** registro institucional educativo, nuevo texto del pie y aplicación del mismo criterio a los lemas visuales del hero.

@@ -74,7 +74,7 @@ const linksIn = (html) => [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+
   .map(([, href, label]) => [href, label]);
 const expectedFooterLinks = [
   ['mercados.html', 'Economía y Finanzas'],
-  ['temas.html?topic=planificacion-patrimonial', 'Patrimonio'],
+  ['temas.html', 'Patrimonio'],
   ['temas.html?topic=bienestar', 'Familia, Salud y Bienestar'],
   ['academia.html', 'Academia NUVIA'],
   ['lecturas.html', 'Lecturas con Criterio'],
@@ -128,11 +128,15 @@ for (const pillar of ['Comprender', 'Cuidar', 'Transmitir']) {
 }
 assert.match(home, /href="que-es-nuvia\.html">Descubre qué es NUVIA/,
   'La portada enlaza de forma visible con la presentación institucional');
+assert.match(home, /id="espacios"/,
+  'La portada ofrece un ancla estable para el comienzo de los cinco espacios');
 const about = await read('que-es-nuvia.html');
 assert.match(about, /<h1 id="que-nuvia-title"><span>¿Qué es<\/span> NUVIA\?<\/h1>/, 'La página institucional tiene un único título principal');
 assert.match(about, /NUVIA es un lugar donde las familias aprenden a entender su dinero\./, 'La definición principal está publicada');
 assert.match(about, /No constituye asesoramiento financiero, fiscal o jurídico personalizado\./, 'La página conserva su aviso de alcance');
 assert.match(about, /href="que-es-nuvia\.html" aria-current="page">Qué es NUVIA<\/a>/, 'La sección activa se identifica en su propia página');
+assert.match(about, /href="index\.html#espacios">Explorar los cinco espacios/,
+  'La llamada institucional utiliza el ancla semántica de los cinco espacios');
 const topics = await read('temas.html');
 assert.match(topics, /'planificacion-patrimonial': \['Planificación patrimonial'/);
 assert.match(topics, /id: 'planificacion-patrimonial'[\s\S]*?tipo: 'recursos'/);

@@ -83,6 +83,7 @@ const CONTENIDO = {
    de estilo: la sintaxis del runtime obliga a poner la interpolación en el
    atributo. */
 const RUIDO_CONOCIDO = /<(polyline|polygon|path|circle|rect|line)>\s+attribute\s+(points|d|cx|cy|r|x|y)\b/i;
+const RUIDO_EXTERNO = /ERR_TUNNEL|ERR_BLOCKED|ERR_NAME|Failed to load resource|tradingview|fonts\.googleapis|identitytoolkit|Permissions policy violation: compute-pressure is not allowed in this document/i;
 const ERRORES_ESPERADOS = {
   'academia.html': 10,
   'jubilacion.html': 4,
@@ -240,7 +241,7 @@ for (const ancho of ANCHOS) {
   const p = await ctx.newPage();
   for (const pag of PAGINAS) {
     const consola = [];
-    const anotar = (m) => { if (m.type() === 'error' && !/ERR_TUNNEL|ERR_BLOCKED|ERR_NAME|Failed to load resource|tradingview|fonts\.googleapis|identitytoolkit/i.test(m.text())) consola.push(m.text().slice(0, 90)); };
+    const anotar = (m) => { if (m.type() === 'error' && !RUIDO_EXTERNO.test(m.text())) consola.push(m.text().slice(0, 90)); };
     const anotarError = (e) => consola.push('pageerror: ' + e.message.slice(0, 90));
     p.on('console', anotar); p.on('pageerror', anotarError);
     await p.goto(base + pag, { waitUntil: 'load', timeout: 60000 });
