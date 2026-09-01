@@ -5,6 +5,7 @@ import sharp from 'sharp';
 const root = resolve(process.cwd());
 const dataPath = resolve(root, 'data/daily-content.json');
 const imageDirectory = resolve(root, 'src/assets/home/daily-news');
+const secondaryImageDirectory = resolve(root, 'src/assets/markets/secondary-news');
 
 const feeds = [
   {
@@ -160,25 +161,37 @@ async function fetchCandidateImage(item) {
   return { bytes, extension };
 }
 
-async function persistDailyImage(image, checkedAt) {
-  await mkdir(imageDirectory, { recursive: true });
+async function persistEditorialImage(image, checkedAt, directory, basename) {
+  await mkdir(directory, { recursive: true });
   await Promise.all(['jpg', 'png', 'webp'].map((extension) => (
-    rm(resolve(imageDirectory, `daily-news-current.${extension}`), { force: true })
+    rm(resolve(directory, `${basename}.${extension}`), { force: true })
   )));
 
   /* Se normaliza siempre a WebP, sea cual sea el formato que sirva el medio.
      Antes se guardaba tal cual y un JPG de agencia pesaba 1,2 MB: mas que
      el resto de la portada junta, y se republicaba cada dia. Ademas se
      limita el ancho a 1600 px, el doble del hueco que ocupa en pantalla. */
-  const filename = 'daily-news-current.webp';
+  const filename = `${basename}.webp`;
   const optimizada = await sharp(image.bytes)
     .resize({ width: 1600, withoutEnlargement: true })
     .webp({ quality: 82, effort: 6 })
     .toBuffer();
 
-  await writeFile(resolve(imageDirectory, filename), optimizada);
+  await writeFile(resolve(directory, filename), optimizada);
   const version = checkedAt.toISOString().replace(/\D/g, '').slice(0, 14);
-  return `src/assets/home/daily-news/${filename}?v=${version}`;
+  const publicDirectory = directory === imageDirectory
+    ? 'src/assets/home/daily-news'
+    : 'src/assets/markets/secondary-news';
+  return `${publicDirectory}/${filename}?v=${version}`;
+}
+
+function formatShortDate(date) {
+  return new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'Europe/Madrid',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date).replace(/\./g, '');
 }
 
 function editorialFor(title) {
@@ -221,7 +234,7 @@ function editorialFor(title) {
       impactPoints: [
         'Puede modificar cuotas, nuevas financiaciones y rentabilidad del ahorro conservador.',
         'Afecta de forma diferente a bonos, bolsa, divisas y activos inmobiliarios.',
-        'Recomienda revisar plazos y riesgos sin reaccionar a una sola sesión de mercado.',
+        'Ayuda a revisar plazos y riesgos sin reaccionar a una sola sesión de mercado.',
       ],
     };
   }
@@ -309,13 +322,67 @@ if (!selected || !selectedImage) {
 }
 
 const editorial = editorialFor(selected.title);
-const localImageUrl = await persistDailyImage(selectedImage, checkedAt);
+const preparedSecondaryNews = [];
+const secondaryCandidates = candidates.filter((candidate) => (
+  candidate.url !== selected.url
+  && titleSimilarity(candidate.title, selected.title) < 0.45
+));
+
+for (const candidate of secondaryCandidates) {
+  if (preparedSecondaryNews.length === 3) break;
+  if (preparedSecondaryNews.some((item) => titleSimilarity(item.candidate.title, candidate.title) >= 0.45)) continue;
+
+  try {
+    const image = await fetchCandidateImage(candidate);
+    preparedSecondaryNews.push({ candidate, image, editorial: editorialFor(candidate.title) });
+  } catch (error) {
+    imageFailures.push(`${candidate.sourceName}: ${error.message}`);
+  }
+}
+
+if (preparedSecondaryNews.length < 3) {
+  throw new Error(`Solo se pudieron preparar ${preparedSecondaryNews.length} noticias breves actuales. ${imageFailures.join(' · ')}`);
+}
+
+const localImageUrl = await persistEditorialImage(
+  selectedImage,
+  checkedAt,
+  imageDirectory,
+  'daily-news-current',
+);
+
+const secondaryNews = await Promise.all(preparedSecondaryNews.map(async ({ candidate, image, editorial: itemEditorial }, index) => {
+  const slot = index + 1;
+  const imageUrl = await persistEditorialImage(
+    image,
+    checkedAt,
+    secondaryImageDirectory,
+    `secondary-news-current-${slot}`,
+  );
+  return {
+    id: `market-brief-${slot}`,
+    category: itemEditorial.category,
+    title: candidate.title,
+    summary: `La actualidad pone el foco en ${itemEditorial.focus}.`,
+    imageUrl,
+    imageAlt: `Imagen editorial asociada a la noticia «${candidate.title}».`,
+    body: [
+      `La información publicada por ${candidate.sourceName} aborda ${itemEditorial.focus}.`,
+      itemEditorial.context,
+    ],
+    whyItMatters: itemEditorial.whyItMatters,
+    publishedAt: formatShortDate(candidate.publishedAt),
+    sourceName: candidate.sourceName,
+    sourceUrl: candidate.url,
+  };
+}));
 
 existing.synchronizedAt = checkedAt.toISOString();
 existing.sourceRepository = 'NUVIA-PORTAL-LAB';
 existing.dailyEconomicNewsCheckedAt = checkedAt.toISOString();
 existing.dailyEconomicNews = {
-  selectionDate: formatDate(checkedAt),
+  selectionDate: formatDate(selected.publishedAt),
+  freshnessStatus: madridDateKey(selected.publishedAt) === todayKey ? 'today' : 'recent',
   sourcePublishedAt: formatDate(selected.publishedAt),
   sourceName: selected.sourceName,
   sourceUrl: selected.url,
@@ -328,6 +395,7 @@ existing.dailyEconomicNews = {
   whyItMatters: editorial.whyItMatters,
   impactPoints: editorial.impactPoints,
 };
+existing.secondaryEconomicNews = secondaryNews;
 
 await writeFile(dataPath, `${JSON.stringify(existing, null, 2)}\n`, 'utf8');
 console.log(`Noticia diaria actualizada con ${selected.sourceName}: ${selected.title}`);

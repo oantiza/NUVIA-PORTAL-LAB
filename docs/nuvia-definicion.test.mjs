@@ -40,5 +40,18 @@ assert.match(pageRaw, /<link rel="canonical" href="https:\/\/oantiza\.github\.io
   'La página pública mantiene la URL canónica oficial');
 assert.match(pageRaw, /NUVIA informa, explica y calcula\.[\s\S]*Tú comprendes y decides\./,
   'El principio central canónico ocupa un bloque visible');
+for (const space of [
+  'Economía y Finanzas',
+  'Patrimonio',
+  'Familia, Salud y Bienestar',
+  'Academia NUVIA',
+  'Lecturas con Criterio',
+]) {
+  assert.match(pageRaw, new RegExp(`<h3>${space}</h3>`), `Puerta canónica publicada: ${space}`);
+}
+assert.equal((pageRaw.match(/class="about-world__item"/g) || []).length, 5,
+  'La presentación conserva exactamente cinco espacios');
+assert.doesNotMatch(pageRaw, /<h3>Analítica de cartera<\/h3>|<h3>Economía y mercados<\/h3>/,
+  'Analítica está integrada y no quedan nombres anteriores como puertas');
 
 console.log(`Definición NUVIA: ${publicSentences.length} enunciados canónicos presentes en ${root}.`);

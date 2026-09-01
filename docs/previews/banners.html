@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <base href="/">
+  <title>Comparación de banners · NUVIA · Solo local</title>
+  <link rel="stylesheet" href="/estilos/nuvia-tokens.css">
+  <link rel="stylesheet" href="/estilos/nuvia-components.css">
+  <link rel="stylesheet" href="/estilos/nuvia-pages.css?v=banners-editorial-light-20260831">
+  <style>
+    .preview-bar { padding-block: 24px; border-bottom: 1px solid var(--nv-line); }
+    .preview-bar__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .preview-bar h1 { margin: 0 0 8px; font-size: 26px; }
+    .preview-bar p { margin: 0; color: var(--nv-text-muted); font-size: 14px; }
+    .preview-options { display: flex; gap: 10px; flex-shrink: 0; }
+    .preview-options a { padding: 12px 18px; border: 1px solid var(--nv-line); border-radius: 8px; color: var(--nv-navy-900); text-decoration: none; font-weight: 600; }
+    .preview-options a[aria-current="page"] { color: var(--nv-white); background: var(--nv-navy-900); border-color: var(--nv-navy-900); }
+    .preview-main > .nv-section { padding-block: 36px; }
+    .preview-main .nv-section-heading { margin-bottom: 24px; }
+    .preview-main .nv-section-heading .nv-eyebrow { margin: 0 0 18px; }
+    .preview-main .nv-section-heading h2 { margin: 0; }
+    .preview-index-link { grid-template-columns: 24px minmax(0, 1fr) 20px; align-items: center; color: var(--nv-white); text-decoration: none; padding-block: 24px; }
+    .preview-index-link:hover { background: color-mix(in srgb, var(--nv-navy-950) 50%, transparent); }
+    .preview-index-link:focus-visible { outline: 2px solid var(--nv-green-300); outline-offset: 3px; }
+    .preview-index-link > :last-child { color: var(--nv-green-300); }
+    .preview-error { padding: 40px; }
+  </style>
+</head>
+<body>
+  <header class="preview-bar">
+    <div class="nv-container preview-bar__inner">
+      <div><h1 id="preview-title">Comparación de banners</h1><p>Economía, Patrimonio y Bienestar · Títulos fuera · Vista local sin publicar</p></div>
+      <nav class="preview-options" aria-label="Elegir versión">
+        <a href="/docs/previews/banners.html?version=editorial" data-version="editorial">A · Editorial</a>
+        <a href="/docs/previews/banners.html?version=listado" data-version="listado">B · Listado</a>
+      </nav>
+    </div>
+  </header>
+  <main id="preview-content" class="preview-main" aria-busy="true"></main>
+  <script type="module">
+    const version = new URLSearchParams(location.search).get('version') === 'listado' ? 'listado' : 'editorial';
+    const label = version === 'editorial' ? 'A · Composición editorial' : 'B · Descripción y listado de temas';
+    document.title = `${label} · NUVIA · Solo local`;
+    document.getElementById('preview-title').textContent = label;
+    document.querySelector(`[data-version="${version}"]`).setAttribute('aria-current', 'page');
+    const main = document.getElementById('preview-content');
+    try {
+      const response = await fetch('index.html', {cache: 'no-store'});
+      if (!response.ok) throw new Error('No se pudo leer la home local');
+      const source = new DOMParser().parseFromString(await response.text(), 'text/html');
+      for (const id of ['mercados', 'patrimonio', 'familia-salud']) {
+        const section = source.getElementById(id)?.cloneNode(true);
+        if (!section) throw new Error(`Falta la sección ${id}`);
+        const banner = section.querySelector('.home-section-banner');
+        banner.className = `home-section-banner home-section-banner--${version === 'editorial' || id === 'mercados' ? 'editorial' : 'index'}`;
+        if (version === 'listado' && id === 'familia-salud') {
+          banner.querySelector('.home-section-banner__tags')?.remove();
+          const index = document.createElement('ol');
+          index.className = 'home-section-banner__index';
+          index.setAttribute('aria-label', 'Pilares de una vida equilibrada');
+          const topics = [
+            ['Familia y relaciones', 'Vínculos, convivencia y tiempo compartido'],
+            ['Salud mental', 'Bienestar emocional y ritmo de vida'],
+            ['Salud física', 'Movimiento, descanso y hábitos cotidianos'],
+            ['Equilibrio diario', 'Organización del tiempo y conciliación'],
+          ];
+          for (const [i, [title, detail]] of topics.entries()) {
+            const row = document.createElement('li');
+            row.className = 'home-section-banner__row';
+            row.innerHTML = `<span class="home-section-banner__number" aria-hidden="true">0${i + 1}</span><div><h4>${title}</h4><p>${detail}</p></div>`;
+            index.append(row);
+          }
+          banner.append(index);
+        }
+        if (version === 'listado' && id === 'patrimonio') {
+          banner.querySelector('.home-section-banner__actions').remove();
+          const nav = document.createElement('nav');
+          nav.className = 'home-section-banner__index';
+          nav.setAttribute('aria-label', 'Temas de Patrimonio');
+          const topics = [
+            ['vivienda.html', 'Vivienda y coste de vida', 'Compra o alquiler, financiación, presupuesto'],
+            ['fiscalidad.html', 'Mis impuestos', 'Obligaciones, planificación, documentación'],
+            ['jubilacion.html', 'Jubilación', 'Ingresos futuros, longevidad, legado'],
+          ];
+          for (const [i, [href, title, detail]] of topics.entries()) {
+            const link = document.createElement('a');
+            link.className = 'home-section-banner__row preview-index-link';
+            link.href = href;
+            link.innerHTML = `<span class="home-section-banner__number" aria-hidden="true">0${i + 1}</span><div><h4>${title}</h4><p>${detail}</p></div><span aria-hidden="true">→</span>`;
+            nav.append(link);
+          }
+          banner.append(nav);
+        }
+        for (const img of section.querySelectorAll('img')) img.loading = 'eager';
+        main.append(section);
+      }
+    } catch (error) {
+      main.textContent = `No se ha podido abrir la comparación: ${error.message}`;
+      main.classList.add('preview-error');
+    } finally {
+      main.setAttribute('aria-busy', 'false');
+    }
+  </script>
+</body>
+</html>

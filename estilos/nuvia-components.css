@@ -940,6 +940,38 @@
   }
 }
 
+/* Entre 768 y 1.319 px la marca y las seis entradas ya no compiten por una
+   sola fila. La cabecera adopta dos niveles y la navegación puede envolver
+   sin solapar el logotipo. Se conserva el menú nativo details/summary. */
+@media (max-width: 1319px) {
+  .nuvia-site-header__inner {
+    width: calc(100% - 56px);
+    min-height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding-top: var(--nv-space-2);
+  }
+
+  .nuvia-site-header__brand { align-self: center; }
+  .nuvia-site-header__brand img { height: 52px; }
+
+  .nuvia-site-nav {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 var(--nv-space-5);
+    border-top: 1px solid var(--nv-line);
+    margin-left: 0;
+  }
+
+  .nuvia-site-nav > a,
+  .nuvia-site-nav__topics > summary {
+    font-size: var(--nv-label);
+    line-height: 44px;
+  }
+}
+
 @media (max-width: 900px) {
   .nuvia-site-footer__legal { flex-direction: column; gap: var(--nv-space-3); }
 }

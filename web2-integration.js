@@ -104,6 +104,12 @@
       const news = payload.dailyEconomicNews;
 
       if (news) {
+        const checkedAt = new Date(payload.dailyEconomicNewsCheckedAt || payload.synchronizedAt || 0);
+        const ageHours = Number.isNaN(checkedAt.valueOf()) ? Infinity : (Date.now() - checkedAt.valueOf()) / 3_600_000;
+        const status = ageHours > 36
+          ? 'Última noticia económica disponible'
+          : (news.freshnessStatus === 'today' ? 'Noticia económica del día' : 'Noticia económica reciente');
+        setText('[data-daily-news="status"]', status);
         setText('[data-daily-news="date"]', news.selectionDate);
         setText('[data-daily-news="category"]', news.category);
         setText('[data-daily-news="title"]', news.title);

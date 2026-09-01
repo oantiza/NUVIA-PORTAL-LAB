@@ -10,6 +10,8 @@
     "build:company-analysis": "npm ci --prefix company-analysis && npm run build --prefix company-analysis",
     "validate": "node scripts/check-parity.mjs . && node scripts/check-static-site.mjs . && node scripts/check-consistencia.mjs . && node scripts/check-lenguaje.mjs . && node docs/nuvia-academy-banner.test.mjs . && node docs/nuvia-lecturas-banner.test.mjs . && node docs/nuvia-navigation.test.mjs . && node docs/nuvia-definicion.test.mjs . && npm run test:analisis && npm run auditar",
     "auditar": "node scripts/check-render.mjs .",
+    "auditar:completo": "node scripts/check-render.mjs . 1440,1280,1180,1024,900,820,768",
+    "auditar:urgente": "node scripts/check-render.mjs . 1440,1280,1180,1024,900,820,768 index.html,mercados.html,que-es-nuvia.html",
     "build": "npm run build:company-analysis && npm run validate && node scripts/build-site.mjs && node scripts/check-static-site.mjs dist && node docs/nuvia-academy-banner.test.mjs dist && node docs/nuvia-lecturas-banner.test.mjs dist && node docs/nuvia-navigation.test.mjs dist && node docs/nuvia-definicion.test.mjs dist",
     "serve": "npm run build && node scripts/serve-local.mjs dist",
     "firebase:preview": "npm run build && firebase hosting:channel:deploy revision --project nuvia-family-wealth --expires 7d",
@@ -18,6 +20,7 @@
     "test:analisis": "node docs/nuvia-cartera.test.mjs && node docs/nuvia-solapamiento.test.mjs && node docs/nuvia-concentracion.test.mjs && node docs/nuvia-datos.test.mjs && node docs/nuvia-constructor.test.mjs && node docs/ecb-risk-free.test.mjs && node docs/nuvia-cuenta.test.mjs && node docs/nuvia-analisis.test.mjs && node docs/nuvia-informe.test.mjs && node docs/nuvia-modelos.test.mjs && node docs/nuvia-mapa.test.mjs && node docs/nuvia-etiquetas.test.mjs && node docs/nuvia-academy-sin-intro.test.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.62.1",
     "sharp": "^0.35.3"
   }
 }

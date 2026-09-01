@@ -35,6 +35,12 @@ jobs:
         with:
           node-version: 24
 
+      - name: Instalar dependencias del portal
+        run: npm ci
+
+      - name: Preparar Chromium para la auditoría visual
+        run: npx playwright install --with-deps chromium
+
       - name: Preparar GitHub Pages
         uses: actions/configure-pages@v5
 
@@ -43,6 +49,12 @@ jobs:
         # Si el portal del BCE tiene una incidencia puntual, se publica la
         # última copia verificada incluida en el repositorio y la fecha visible
         # deja claro hasta qué observación llega.
+        continue-on-error: true
+
+      - name: Actualizar noticias económicas
+        run: node scripts/update-daily-news.mjs
+        # Si los medios o una imagen no responden, se conserva la última
+        # selección editorial verificada incluida en el repositorio.
         continue-on-error: true
 
       - name: Construir y validar la web

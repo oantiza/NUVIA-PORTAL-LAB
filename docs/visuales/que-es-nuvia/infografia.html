@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1080, initial-scale=1">
+  <title>Infografía · ¿Qué es NUVIA?</title>
+  <style>
+    @font-face { font-family: Inter; src: url('/estilos/fuentes/inter-latin.woff2') format('woff2'); font-display: swap; }
+    @font-face { font-family: Fraunces; src: url('/estilos/fuentes/fraunces-latin.woff2') format('woff2'); font-display: swap; }
+    :root {
+      --navy: #06172f;
+      --navy-2: #0b2347;
+      --navy-3: #15365f;
+      --green: #4a5d23;
+      --green-soft: #eef3df;
+      --bronze: #b69152;
+      --bronze-soft: #dcc59c;
+      --paper: #faf7ee;
+      --paper-2: #f3eedf;
+      --ink: #152338;
+      --muted: #5f6a73;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body { width: 1080px; height: 1920px; margin: 0; overflow: hidden; }
+    body { background: var(--paper); color: var(--ink); font-family: Inter, Arial, sans-serif; }
+    .canvas { display: grid; grid-template-rows: 500px 300px 400px 380px 340px; width: 1080px; height: 1920px; background: var(--paper); }
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 54px 74px 48px; color: var(--white); background: var(--navy); }
+    .hero__art { position: absolute; z-index: -3; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% 48%; }
+    .hero::before { content: ""; position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, var(--navy) 0 40%, rgba(6,23,47,.92) 55%, rgba(6,23,47,.18) 100%); }
+    .hero::after { content: ""; position: absolute; z-index: -1; inset: auto 0 0; height: 120px; background: linear-gradient(transparent, rgba(6,23,47,.68)); }
+    .hero__top { display: flex; align-items: center; justify-content: space-between; }
+    .hero__logo { width: 210px; height: auto; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; color: var(--bronze-soft); font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 44px; height: 1px; background: currentColor; }
+    .hero__copy { width: 650px; margin-top: 78px; }
+    .hero h1 { margin: 12px 0 16px; font-family: Fraunces, Georgia, serif; font-size: 74px; font-weight: 600; line-height: .96; letter-spacing: -.045em; }
+    .hero h1 span { color: var(--bronze-soft); }
+    .hero__lead { width: 610px; margin: 0; font-size: 25px; font-weight: 650; line-height: 1.32; }
+    .section { padding: 42px 74px; }
+    .purpose { display: grid; grid-template-columns: 330px 1fr; gap: 58px; align-items: center; background: var(--paper); }
+    .section-title { margin: 6px 0 0; font-family: Fraunces, Georgia, serif; font-size: 54px; font-weight: 560; line-height: .96; letter-spacing: -.035em; }
+    .purpose__signature { margin: 12px 0 0; color: var(--green); font-family: Fraunces, Georgia, serif; font-size: 34px; font-style: italic; }
+    .purpose__text { margin: 0 0 22px; font-size: 19px; line-height: 1.48; }
+    .purpose__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .purpose__step { padding: 14px 12px; border-top: 2px solid var(--bronze); color: var(--navy-2); font-size: 15px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; }
+    .world { background: var(--paper-2); }
+    .world__head { display: flex; align-items: end; justify-content: space-between; margin-bottom: 28px; }
+    .world__head p { width: 320px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.45; }
+    .world__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .door { min-height: 220px; padding: 20px 17px; border: 1px solid rgba(11,35,71,.14); border-radius: 18px; background: var(--paper); }
+    .door span { display: block; color: var(--bronze); font-family: Fraunces, Georgia, serif; font-size: 29px; }
+    .door h3 { min-height: 54px; margin: 22px 0 10px; color: var(--navy-2); font-family: Fraunces, Georgia, serif; font-size: 20px; line-height: 1.15; }
+    .door p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+    .values { padding-top: 36px; background: var(--navy); color: var(--white); }
+    .values .section-title { color: var(--white); }
+    .values__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
+    .value { min-height: 220px; padding: 21px; border-radius: 18px; }
+    .value:nth-child(1) { background: var(--paper); color: var(--ink); }
+    .value:nth-child(2) { background: var(--green); }
+    .value:nth-child(3) { background: #7a5c27; }
+    .value:nth-child(4) { border: 1px solid rgba(255,255,255,.2); background: var(--navy-3); }
+    .value__mark { opacity: .45; font-family: Fraunces, Georgia, serif; font-size: 32px; }
+    .value h3 { margin: 30px 0 9px; font-family: Fraunces, Georgia, serif; font-size: 21px; line-height: 1.1; }
+    .value p { margin: 0; opacity: .86; font-size: 12.5px; line-height: 1.45; }
+    .finale { position: relative; display: grid; place-items: center; overflow: hidden; padding: 46px 72px 34px; text-align: center; background: var(--paper); }
+    .finale::before { content: ""; position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(185,204,139,.48), rgba(185,204,139,0) 70%); }
+    .finale__content { position: relative; }
+    .principle { margin: 0; font-family: Fraunces, Georgia, serif; font-size: 43px; line-height: 1.12; letter-spacing: -.025em; }
+    .principle span { display: block; color: var(--green); }
+    .finale__rule { width: 90px; height: 2px; margin: 22px auto; background: var(--bronze); }
+    .finale__note { max-width: 700px; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.5; }
+    .finale__disclaimer { margin: 22px 0 0; color: #667078; font-size: 11px; font-style: italic; }
+    @media (min-width: 1500px) {
+      html, body { width: 1620px; height: 2880px; }
+      .canvas { transform: scale(1.5); transform-origin: 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="canvas" aria-label="Infografía sobre qué es NUVIA">
+    <section class="hero">
+      <img class="hero__art" src="/src/assets/home/patrimonio-family-home-young-family-20260901.png" alt="">
+      <div class="hero__top">
+        <img class="hero__logo" src="/src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-reversed.png" alt="NUVIA Family Wealth">
+        <p class="eyebrow">El manifiesto</p>
+      </div>
+      <div class="hero__copy">
+        <h1><span>¿Qué es</span><br>NUVIA?</h1>
+        <p class="hero__lead">Un lugar donde las familias aprenden a entender su dinero.</p>
+      </div>
+    </section>
+
+    <section class="section purpose">
+      <div>
+        <p class="eyebrow" style="color:var(--green)">El propósito</p>
+        <h2 class="section-title">Para qué<br>existe</h2>
+        <p class="purpose__signature">Criterio propio</p>
+      </div>
+      <div>
+        <p class="purpose__text">Para comprender el patrimonio familiar, valorar las opciones disponibles y afrontar las decisiones sin dejarse llevar por modas, mensajes comerciales o respuestas prefabricadas.</p>
+        <div class="purpose__steps">
+          <div class="purpose__step">Comprender</div>
+          <div class="purpose__step">Valorar</div>
+          <div class="purpose__step">Decidir</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section world">
+      <div class="world__head">
+        <div>
+          <p class="eyebrow" style="color:var(--green)">El universo NUVIA</p>
+          <h2 class="section-title">Cinco puertas</h2>
+        </div>
+        <p>Información, formación y herramientas para comprender mejor la economía familiar y el patrimonio.</p>
+      </div>
+      <div class="world__grid">
+        <article class="door"><span>01</span><h3>Economía y mercados</h3><p>El contexto económico explicado en lenguaje claro.</p></article>
+        <article class="door"><span>02</span><h3>Patrimonio</h3><p>Vivienda, impuestos, jubilación y coste de vida.</p></article>
+        <article class="door"><span>03</span><h3>Academia NUVIA</h3><p>Conceptos, cursos y materiales a tu ritmo.</p></article>
+        <article class="door"><span>04</span><h3>Analítica de cartera</h3><p>Composición, riesgo y escenarios explicados con datos.</p></article>
+        <article class="door"><span>05</span><h3>Lecturas con criterio</h3><p>Historias e ideas de interés duradero.</p></article>
+      </div>
+    </section>
+
+    <section class="section values">
+      <p class="eyebrow">La manera de hacer</p>
+      <h2 class="section-title">Nuestro espíritu</h2>
+      <div class="values__grid">
+        <article class="value"><span class="value__mark">Cl</span><h3>Claridad.</h3><p>Lo que no se entiende todavía no está listo.</p></article>
+        <article class="value"><span class="value__mark">Ho</span><h3>Honestidad.</h3><p>Supuestos, límites e incertidumbre siempre visibles.</p></article>
+        <article class="value"><span class="value__mark">In</span><h3>Independencia.</h3><p>Sin venta de productos, órdenes ni derivación comercial.</p></article>
+        <article class="value"><span class="value__mark">Rp</span><h3>Respeto profesional.</h3><p>Aprender no sustituye el asesoramiento personalizado.</p></article>
+      </div>
+    </section>
+
+    <section class="finale">
+      <div class="finale__content">
+        <p class="principle">NUVIA informa, explica y calcula.<span>Tú comprendes y decides.</span></p>
+        <div class="finale__rule"></div>
+        <p class="finale__note">No hace falta saber de finanzas para empezar. Basta con una pregunta cercana y la voluntad de entenderla mejor.</p>
+        <p class="finale__disclaimer">Contenido educativo e informativo. No constituye asesoramiento financiero, fiscal o jurídico personalizado.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

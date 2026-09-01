@@ -18,15 +18,15 @@ Pensamos a largo plazo, como piensan las familias: comprender lo que se tiene, c
 
 ## Qué vas a encontrar
 
-**Economía y mercados**, explicados en lenguaje claro: qué significan la inflación, los tipos de interés o las cotizaciones, y cómo afectan a tu día a día.
+**Economía y Finanzas**: economía, mercados y noticias explicados en lenguaje claro; qué significan la inflación, los tipos de interés o las cotizaciones, y cómo afectan a tu día a día. También incluye cartera y analítica descriptiva para comprender la composición, el riesgo y los escenarios, sin convertir el resultado en una recomendación.
 
-**Patrimonio**: guías y simuladores sobre vivienda y coste de vida, impuestos y jubilación, con datos de tu territorio y con los supuestos siempre a la vista.
+**Patrimonio**: guías y simuladores sobre vivienda y coste de vida, impuestos, jubilación y planificación patrimonial educativa, con los datos y los supuestos siempre a la vista.
 
-**Academia NUVIA**: cursos, conceptos esenciales y materiales para aprender a tu ritmo, empieces desde donde empieces. Saber es patrimonio.
+**Familia, Salud y Bienestar**: contenidos generales y basados en fuentes solventes sobre familia, cuerpo, hábitos, mente y bienestar, sin diagnóstico ni consejo sanitario individual.
 
-**Analítica de cartera**: un laboratorio para mirar una cartera de inversión con datos —composición, riesgo, escenarios— y entender lo que se tiene.
+**Academia NUVIA**: conocimientos esenciales, guías, vídeos, herramientas de aprendizaje y cursos para avanzar a tu ritmo, empieces desde donde empieces. Saber es patrimonio.
 
-**Lecturas con criterio**: un rincón para leer con calma historias e ideas de interés duradero.
+**Lecturas con Criterio**: libros, informes y ensayos relacionados con la economía, el patrimonio, el comportamiento, el bienestar, el aprendizaje y las decisiones de largo plazo, seleccionados para leer con calma y desarrollar criterio propio.
 
 ## Nuestro espíritu
 

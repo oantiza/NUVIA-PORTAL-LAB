@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>De página a vídeo · Storyboard de ¿Qué es NUVIA?</title>
+  <style>
+    @font-face { font-family: Inter; src: url('/estilos/fuentes/inter-latin.woff2') format('woff2'); font-display: swap; }
+    @font-face { font-family: Fraunces; src: url('/estilos/fuentes/fraunces-latin.woff2') format('woff2'); font-display: swap; }
+    :root { --navy:#06172f; --green:#4a5d23; --bronze:#b69152; --bronze-soft:#dcc59c; --paper:#faf7ee; --muted:#667078; }
+    * { box-sizing: border-box; }
+    html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; }
+    body { background: var(--paper); color: var(--navy); font-family: Inter, Arial, sans-serif; }
+    .board { display: grid; grid-template-rows: 142px 1fr 86px; width: 1920px; height: 1080px; padding: 0 55px; background: linear-gradient(145deg, #faf7ee 0%, #f3eedf 72%, #eef3df 100%); }
+    .head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(11,35,71,.17); }
+    .head__title { display: flex; align-items: baseline; gap: 30px; }
+    .head h1 { margin: 0; font-family: Fraunces, Georgia, serif; font-size: 52px; font-weight: 580; letter-spacing: -.035em; }
+    .head p { margin: 0; color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+    .head img { width: 230px; height: auto; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 16px; padding: 25px 0; }
+    .shot { overflow: hidden; border-radius: 18px; background: var(--navy); color: #fff; box-shadow: 0 14px 30px rgba(6,23,47,.11); }
+    .shot__frame { position: relative; height: 278px; overflow: hidden; background: #fff; border-bottom: 2px solid var(--bronze); }
+    .shot__frame img { position: absolute; left: 0; top: calc(var(--y) * -1px); width: 100%; height: auto; }
+    .shot__copy { position: relative; min-height: 118px; padding: 13px 18px 12px 67px; }
+    .shot__num { position: absolute; left: 17px; top: 15px; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.65); border-radius: 50%; font-family: Fraunces, Georgia, serif; font-size: 20px; }
+    .shot time { display: block; color: var(--bronze-soft); font-size: 11px; font-weight: 800; letter-spacing: .06em; }
+    .shot h2 { margin: 2px 0 8px; font-family: Fraunces, Georgia, serif; font-size: 24px; font-weight: 580; line-height: 1; }
+    .shot small { display: block; margin-bottom: 3px; color: #9eafc2; font-size: 8px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .shot p { margin: 0; color: rgba(255,255,255,.88); font-size: 11px; line-height: 1.32; }
+    .foot { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid rgba(11,35,71,.17); color: var(--muted); font-size: 12px; }
+    .foot strong { display: block; margin-bottom: 4px; color: var(--green); font-size: 13px; }
+    .foot em { color: var(--navy); font-family: Fraunces, Georgia, serif; font-size: 18px; font-weight: 650; }
+    @media (min-width: 2500px) {
+      html, body { width: 2880px; height: 1620px; }
+      .board { transform: scale(1.5); transform-origin: 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <main class="board" aria-label="Storyboard audiovisual de la página Qué es NUVIA">
+    <header class="head">
+      <div class="head__title">
+        <h1>¿Qué es NUVIA?</h1>
+        <p>De página a vídeo · Storyboard de realización</p>
+      </div>
+      <img src="/src/assets/brand/nuvia-family-wealth-exact-2026-v2/nuvia-family-wealth-horizontal-transparent.png" alt="NUVIA Family Wealth">
+    </header>
+
+    <section class="grid">
+      <article class="shot"><div class="shot__frame"><img style="--y:0" src="./pagina-completa-que-es-nuvia.png" alt="Hero real de la página"></div><div class="shot__copy"><span class="shot__num">01</span><time>00:00–00:05</time><h2>Apertura</h2><small>Movimiento / transición</small><p>Fundido desde azul NUVIA. Entrada lenta sobre el hero.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:267" src="./pagina-completa-que-es-nuvia.png" alt="Manifiesto real de la página"></div><div class="shot__copy"><span class="shot__num">02</span><time>00:05–00:11</time><h2>Una convicción</h2><small>Movimiento / transición</small><p>Desplazamiento vertical suave. La frase aparece por bloques.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:574" src="./pagina-completa-que-es-nuvia.png" alt="Propósito real de la página"></div><div class="shot__copy"><span class="shot__num">03</span><time>00:11–00:17</time><h2>El propósito</h2><small>Movimiento / transición</small><p>La cámara se detiene en «criterio propio».</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:807" src="./pagina-completa-que-es-nuvia.png" alt="Horizonte real de la página"></div><div class="shot__copy"><span class="shot__num">04</span><time>00:17–00:23</time><h2>Mirada de largo plazo</h2><small>Movimiento / transición</small><p>Zoom lento sobre la escena familiar y la cita.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:1057" src="./pagina-completa-que-es-nuvia.png" alt="Cinco puertas reales de la página"></div><div class="shot__copy"><span class="shot__num">05</span><time>00:23–00:31</time><h2>Cinco puertas</h2><small>Movimiento / transición</small><p>Barrido vertical. Cada puerta entra de forma secuencial.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:1510" src="./pagina-completa-que-es-nuvia.png" alt="Valores reales de la página"></div><div class="shot__copy"><span class="shot__num">06</span><time>00:31–00:39</time><h2>Nuestro espíritu</h2><small>Movimiento / transición</small><p>Las cuatro tarjetas aparecen una a una.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:1950" src="./pagina-completa-que-es-nuvia.png" alt="Principio real de la página"></div><div class="shot__copy"><span class="shot__num">07</span><time>00:39–00:44</time><h2>El principio</h2><small>Movimiento / transición</small><p>Pausa visual. El lema ocupa toda la pantalla.</p></div></article>
+      <article class="shot"><div class="shot__frame"><img style="--y:2165" src="./pagina-completa-que-es-nuvia.png" alt="Cierre real de la página"></div><div class="shot__copy"><span class="shot__num">08</span><time>00:44–00:52</time><h2>Cierre</h2><small>Movimiento / transición</small><p>Logo, «NUVIA crece contigo» y fundido a azul.</p></div></article>
+    </section>
+
+    <footer class="foot">
+      <span><strong>Fotogramas construidos con la captura exacta de que-es-nuvia.html · Duración estimada: 52 s</strong>Contenido educativo e informativo. No constituye asesoramiento financiero, fiscal o jurídico personalizado.</span>
+      <em>La página, convertida en relato audiovisual.</em>
+    </footer>
+  </main>
+</body>
+</html>

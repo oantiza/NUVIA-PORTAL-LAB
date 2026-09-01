@@ -12,8 +12,8 @@
    Necesita Playwright y un Chromium. Si no están, no falla: lo dice y se salta,
    para que la publicación no dependa de que el entorno tenga navegador.
 
-       npm run auditar                 · las 16 páginas a 1440 px
-       npm run auditar -- 1440,1180    · a los anchos que se le pidan
+       npm run auditar                 · las páginas canónicas a 1440 px
+       npm run auditar:completo        · matriz completa de escritorio y tablet
 
    Cinco cosas que este auditor aprendió a no contar como fallo, todas nacidas
    de falsos positivos reales:
@@ -60,11 +60,14 @@ const CONTENIDO = {
   'cartera.html?vista=models': [['.nv-modelos__tarjeta', 4], ['.nuvia-analysis-tabs a', 3]],
   'academia.html':         [['.ac-strong', 1], ['.viv-pill', 2], ['.ac-x10', 1]],
   'temas.html':            [['.tm-card__title', 3]],
+  'temas.html?topic=bienestar': [['#tema-titulo', 1], ['.tm-wellbeing', 1], ['.tm-pillar', 5]],
+  'temas.html?topic=planificacion-patrimonial': [['#tema-titulo', 1], ['.tm-pills .viv-pill', 4], ['.tm-card__title', 3]],
   'guia-calendario.html':  [['.gt-title', 1]],
   'guia-ahorro.html':      [['.gt-title', 1]],
   'guia-sucesiones.html':  [['.gt-title', 1]],
   'guia-planificacion.html': [['.gp-progress', 1]],
   'guia-fiscal.html':      [['.gu-hero__title', 1]],
+  'que-es-nuvia.html':     [['#que-nuvia-title', 1], ['.about-world__item', 5], ['.about-value', 4]],
 };
 
 /* Errores de consola conocidos, con su recuento exacto.
@@ -86,20 +89,26 @@ const ERRORES_ESPERADOS = {
   'fiscalidad.html': 1,
 };
 
-const PAGINAS = [
+const PAGINAS_BASE = [
   'index.html', 'mercados.html', 'cartera.html', 'academia.html', 'curso.html',
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
-  'temas.html', 'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
+  'temas.html', 'temas.html?topic=bienestar', 'temas.html?topic=planificacion-patrimonial',
+  'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
   'guia-planificacion.html', 'guia-fiscal.html', 'sistema-visual.html',
-  'mercados.html?vista=cotizaciones', 'cartera.html?vista=models',
+  'que-es-nuvia.html', 'mercados.html?vista=cotizaciones', 'cartera.html?vista=models',
 ];
+const filtroPaginas = (process.argv[4] || '').split(',').map((item) => item.trim()).filter(Boolean);
+const PAGINAS = filtroPaginas.length ? PAGINAS_BASE.filter((pagina) => filtroPaginas.includes(pagina)) : PAGINAS_BASE;
+if (filtroPaginas.length && PAGINAS.length !== filtroPaginas.length) {
+  const desconocidas = filtroPaginas.filter((pagina) => !PAGINAS_BASE.includes(pagina));
+  throw new Error(`Páginas de auditoría desconocidas: ${desconocidas.join(', ')}`);
+}
 
 let chromium;
 try {
   ({ chromium } = await import('playwright'));
 } catch {
-  console.log('Auditoría de render omitida: Playwright no está instalado en este entorno.');
-  process.exit(0);
+  throw new Error('Playwright no está instalado. Ejecuta «npm ci» antes de auditar el render.');
 }
 
 /* ── servidor estático mínimo, para no depender de uno externo ─────────────── */
@@ -147,7 +156,7 @@ const MEDIR = (ESC) => {
     }
     return acc;
   }
-  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {} };
+  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [] };
   let n = 0;
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el);
@@ -188,6 +197,25 @@ const MEDIR = (ESC) => {
     const k = `${ruta} › <${pa.tagName.toLowerCase()}>  ${dif.map((d) => `${d}: ${b[d]} → ${a[d]}`).join(' · ')}`;
     salida.fugas[k] = (salida.fugas[k] || 0) + 1;
   });
+
+  /* La cabecera puede envolver en tablet, pero ninguno de sus elementos
+     visibles puede invadir a otro. Se miden cajas reales, no anchos teóricos. */
+  const cabecera = [...document.querySelectorAll(
+    '.nuvia-site-header__brand, .nuvia-site-nav > a, .nuvia-site-nav > details'
+  )].filter((el) => {
+    const r = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden' && r.width > 0 && r.height > 0;
+  });
+  for (let i = 0; i < cabecera.length; i++) {
+    const a = cabecera[i].getBoundingClientRect();
+    for (let j = i + 1; j < cabecera.length; j++) {
+      const b = cabecera[j].getBoundingClientRect();
+      const solapa = Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1
+        && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1;
+      if (solapa) salida.colisiones.push(`${cabecera[i].className || cabecera[i].tagName} ↔ ${cabecera[j].className || cabecera[j].tagName}`);
+    }
+  }
   return salida;
 };
 
@@ -202,8 +230,8 @@ try { ({ default: sharp } = await import('sharp')); } catch {}
 const binario = process.env.NUVIA_CHROMIUM;
 const navegador = await chromium.launch(binario ? { executablePath: binario } : {}).catch(() => null);
 if (!navegador) {
-  console.log('Auditoría de render omitida: no hay un Chromium disponible («npx playwright install chromium»).');
-  servidor.close(); process.exit(0);
+  servidor.close();
+  throw new Error('No hay un Chromium disponible. Ejecuta «npx playwright install chromium».');
 }
 
 const problemas = [];
@@ -259,8 +287,8 @@ for (const ancho of ANCHOS) {
     }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + faltan.length + nuevos.length + desvio.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
     for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
@@ -268,6 +296,7 @@ for (const ancho of ANCHOS) {
     for (const x of r.pequenos) problemas.push(`${pag} @${ancho} · bajo el suelo ${x}`);
     for (const [k, v] of escala) problemas.push(`${pag} @${ancho} · fuera de escala ×${v} ${k}`);
     for (const x of r.desbordes) problemas.push(`${pag} @${ancho} · desborde ${x}`);
+    for (const x of r.colisiones) problemas.push(`${pag} @${ancho} · colisión de cabecera ${x}`);
     for (const [k, v] of fugas) problemas.push(`${pag} @${ancho} · fuga del envoltorio ×${v} ${k}`);
   }
   await ctx.close();

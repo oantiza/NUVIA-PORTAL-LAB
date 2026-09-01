@@ -52,11 +52,11 @@ const expectedGroups = [
   },
   {
     "id": "academy",
-    "label": "Academia",
+    "label": "Academia NUVIA",
     "children": [
       [
         "academia.html",
-        "Academia NUVIA"
+        "Portada de Academia"
       ],
       [
         "academia.html?tab=esenciales",
@@ -72,6 +72,19 @@ const expectedGroups = [
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const linksIn = (html) => [...html.matchAll(/<a\b[^>]*href="([^"]+)"[^>]*>([^<]+)<\/a>/g)]
   .map(([, href, label]) => [href, label]);
+const expectedFooterLinks = [
+  ['mercados.html', 'Economía y Finanzas'],
+  ['temas.html?topic=planificacion-patrimonial', 'Patrimonio'],
+  ['temas.html?topic=bienestar', 'Familia, Salud y Bienestar'],
+  ['academia.html', 'Academia NUVIA'],
+  ['lecturas.html', 'Lecturas con Criterio'],
+  ['cartera.html', 'Cartera y analítica'],
+  ['cartera.html?vista=companies', 'Análisis y valoración de empresas'],
+  ['vivienda.html', 'Vivienda y coste de vida'],
+  ['fiscalidad.html', 'Impuestos'],
+  ['jubilacion.html', 'Jubilación'],
+  ['que-es-nuvia.html', 'Qué es NUVIA'],
+];
 let checked = 0;
 for (const name of (await readdir(root)).filter((name) => name.endsWith('.html'))) {
   const html = await read(name);
@@ -97,10 +110,24 @@ for (const name of (await readdir(root)).filter((name) => name.endsWith('.html')
     assert.match(html, /<nav class="nv-breadcrumb"[^>]*>[\s\S]*?<a href="index.html" data-main-menu-return>Volver al menú principal<\/a>/,
       name + ': regreso en la ruta de navegación');
   }
+  const footer = html.match(/<footer data-screen-label="Footer"[\s\S]*?<\/footer>/)?.[0];
+  assert.ok(footer, name + ': pie común presente');
+  assert.deepEqual(linksIn(footer), expectedFooterLinks, name + ': cinco espacios, herramientas e información en el pie');
+  assert.match(footer, /NUVIA reúne información, formación y herramientas para comprender la economía familiar y pensar a largo plazo\./,
+    name + ': registro institucional aprobado en el pie');
+  assert.doesNotMatch(footer, /Sistema visual|Acompañamos a familias a preservar|Academia Nuvia|Lecturas con criterio/,
+    name + ': no quedan taxonomías, documentación interna o promesas retiradas');
 }
 assert.ok(checked >= 15, 'Comprobar todas las páginas públicas del portal');
 const home = await read('index.html');
 assert.match(home, /<h2 id="titulo-mercados"[^>]*>Economía y Finanzas<\/h2>/, 'Nombre de sección igual que el menú');
+assert.match(home, /Información, formación y herramientas para familias que quieren comprender su dinero y pensar a largo plazo\./,
+  'Subtítulo institucional aprobado en la portada');
+for (const pillar of ['Comprender', 'Cuidar', 'Transmitir']) {
+  assert.match(home, new RegExp(`home-pillars__name">${pillar}</span>`), `Pilar educativo publicado: ${pillar}`);
+}
+assert.match(home, /href="que-es-nuvia\.html">Descubre qué es NUVIA/,
+  'La portada enlaza de forma visible con la presentación institucional');
 const about = await read('que-es-nuvia.html');
 assert.match(about, /<h1 id="que-nuvia-title"><span>¿Qué es<\/span> NUVIA\?<\/h1>/, 'La página institucional tiene un único título principal');
 assert.match(about, /NUVIA es un lugar donde las familias aprenden a entender su dinero\./, 'La definición principal está publicada');
@@ -112,7 +139,14 @@ assert.match(topics, /id: 'planificacion-patrimonial'[\s\S]*?tipo: 'recursos'/);
 for (const concept of ['Balance patrimonial', 'Objetivos y horizontes', 'Documentación y continuidad familiar']) {
   assert.ok(topics.includes(concept), 'Categoría informativa: ' + concept);
 }
-assert.ok(topics.includes("String(temas.length).padStart(2, '0')"), 'Conteo de temas no fijado a cuatro');
+assert.ok(topics.includes("String(temasPatrimonio.length).padStart(2, '0')"), 'Patrimonio declara sus cuatro ámbitos');
+assert.match(topics, /const temasPatrimonio = temas\.filter\(\(tema\) => tema\.id !== 'bienestar'\)/,
+  'Familia, Salud y Bienestar no aparece como tema interno de Patrimonio');
+assert.match(topics, /mostrarSelector: !esBienestar/,
+  'El selector de Patrimonio se oculta dentro del espacio de Bienestar');
+assert.match(topics, /'bienestar':\s+\['Familia, Salud y Bienestar'/,
+  'Bienestar utiliza el nombre canónico de su espacio');
+assert.match(topics, /En preparación/, 'Los ámbitos introductorios declaran su estado editorial');
 const academy = await read('academia.html');
 assert.ok(academy.includes("'esenciales'") && academy.includes("'cursos'"), 'Pestañas de Academia conservadas');
 const portfolio = await read('cartera.html');

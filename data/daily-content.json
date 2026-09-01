@@ -1,72 +1,73 @@
 {
-  "synchronizedAt": "2026-08-17T22:02:26.377Z",
+  "synchronizedAt": "2026-09-01T19:19:08.666Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
-    "selectionDate": "18 de agosto de 2026",
-    "sourcePublishedAt": "17 de agosto de 2026",
+    "selectionDate": "1 de septiembre de 2026",
+    "freshnessStatus": "today",
+    "sourcePublishedAt": "1 de septiembre de 2026",
     "sourceName": "EL PAÍS Economía",
-    "sourceUrl": "https://elpais.com/economia/2026-08-17/el-gobierno-prepara-medidas-contra-el-abuso-de-temporalidad-en-el-empleo-publico-y-acota-el-problema-a-200000-interinos.html",
-    "imageUrl": "src/assets/home/daily-news/daily-news-current.webp?v=20260817220226",
-    "imageAlt": "Imagen editorial asociada a la noticia «El Gobierno prepara medidas contra el abuso de temporalidad en el empleo público y acota el problema a 200.000 interinos».",
-    "title": "El Gobierno prepara medidas contra el abuso de temporalidad en el empleo público y acota el problema a 200.000 interinos",
-    "summary": "La información económica destacada de hoy pone el foco en los ingresos familiares, el consumo y la capacidad de ahorro a largo plazo. NUVIA selecciona esta noticia de EL PAÍS Economía como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
-    "category": "Empleo e ingresos",
-    "context": "El empleo y los salarios sostienen el consumo y determinan cuánto margen tienen las familias para ahorrar, reducir deuda y financiar sus objetivos.",
-    "whyItMatters": "El patrimonio se construye sobre un flujo de ingresos sostenible. Los datos laborales ayudan a calibrar el colchón de seguridad y la velocidad razonable de ahorro e inversión.",
+    "sourceUrl": "https://elpais.com/economia/2026-09-01/la-inflacion-en-la-eurozona-se-eleva-al-33-en-agosto-impulsada-por-la-energia.html",
+    "imageUrl": "src/assets/home/daily-news/daily-news-current.webp?v=20260901191908",
+    "imageAlt": "Imagen editorial asociada a la noticia «La inflación en la eurozona se eleva al 3,3% en agosto impulsada por la energía».",
+    "title": "La inflación en la eurozona se eleva al 3,3% en agosto impulsada por la energía",
+    "summary": "La información económica destacada de hoy pone el foco en los precios, el poder adquisitivo y las expectativas sobre los tipos de interés. NUVIA selecciona esta noticia de EL PAÍS Economía como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
+    "category": "Inflación y coste de vida",
+    "context": "La inflación afecta al presupuesto cotidiano y a la rentabilidad real del ahorro. También condiciona la respuesta de los bancos centrales y el coste de la financiación.",
+    "whyItMatters": "Para construir patrimonio importa lo que el dinero permite comprar después de la inflación. Por eso conviene distinguir entre rentabilidad nominal, rentabilidad real y necesidades de liquidez.",
     "impactPoints": [
-      "Orienta sobre la fortaleza de los ingresos y del consumo de los hogares.",
-      "Puede influir en inflación, tipos de interés y expectativas de crecimiento.",
-      "Ayuda a ajustar colchón, deuda y aportaciones periódicas a un escenario realista."
+      "Puede alterar el poder de compra y la capacidad mensual de ahorro.",
+      "Influye en las expectativas sobre tipos, depósitos, bonos e hipotecas.",
+      "Refuerza la necesidad de medir objetivos y rentabilidades en términos reales."
     ]
   },
   "secondaryEconomicNews": [
     {
-      "id": "spanish-treasury-bills",
-      "category": "Deuda española",
-      "title": "Las letras a tres meses alcanzan el 2,4 %",
-      "summary": "La incertidumbre sobre los tipos eleva su rentabilidad al máximo desde febrero de 2025.",
-      "imageUrl": "src/assets/markets/secondary-news/spanish-treasury-bills.jpg",
-      "imageAlt": "Analista revisando documentación de una subasta de letras del Tesoro español.",
+      "id": "market-brief-1",
+      "category": "Tipos de interés y deuda",
+      "title": "El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos",
+      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-1.webp?v=20260901191908",
+      "imageAlt": "Imagen editorial asociada a la noticia «El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos».",
       "body": [
-        "La rentabilidad de las letras del Tesoro a tres meses avanzó hasta el entorno del 2,4 %, su nivel más alto desde febrero de 2025. El movimiento recoge el reajuste de las expectativas sobre los tipos de interés y el coste de la financiación a muy corto plazo.",
-        "Para el Tesoro supone pagar más por captar fondos; para el ahorrador, una remuneración nominal más atractiva. Aun así, la comparación debe incorporar inflación, fiscalidad, liquidez y las alternativas disponibles con un riesgo equivalente."
+        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+        "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
-      "whyItMatters": "El repunte mejora el atractivo del ahorro conservador, pero no convierte las letras en un sustituto automático de una cartera diversificada.",
-      "publishedAt": "11 ago 2026",
-      "sourceName": "Cinco Días",
-      "sourceUrl": "https://cincodias.elpais.com/mercados-financieros/2026-08-11/la-incertidumbre-sobre-los-tipos-impulsa-al-24-la-rentabilidad-de-las-letras-a-tres-meses-maximo-desde-febrero-de-2025.html"
+      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+      "publishedAt": "1 sept 2026",
+      "sourceName": "Expansión",
+      "sourceUrl": "https://www.expansion.com/mercados/cronica-bolsa/2026/09/01/6a966735468aeb3f2f8b457f.html"
     },
     {
-      "id": "nvidia-ai-financing",
-      "category": "Inteligencia artificial",
-      "title": "Nvidia moviliza 500.000 millones para infraestructura de IA",
-      "summary": "Se alía con seis gigantes financieros para acelerar centros de datos y capacidad de cómputo.",
-      "imageUrl": "src/assets/markets/secondary-news/nvidia-ai-infrastructure.jpg",
-      "imageAlt": "Técnico recorriendo un centro de datos de gran escala para inteligencia artificial.",
+      "id": "market-brief-2",
+      "category": "Tipos de interés y deuda",
+      "title": "Los intereses de la deuda amenazan la Bolsa con nuevos máximos",
+      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-2.webp?v=20260901191908",
+      "imageAlt": "Imagen editorial asociada a la noticia «Los intereses de la deuda amenazan la Bolsa con nuevos máximos».",
       "body": [
-        "Nvidia trabaja con Apollo, BlackRock, Blackstone, Brookfield, Goldman Sachs y KKR para articular más de 500.000 millones de dólares de financiación destinada a infraestructura de inteligencia artificial.",
-        "El esquema busca facilitar a sus clientes el acceso a centros de datos, energía y capacidad de cómputo. También devuelve al primer plano el debate sobre la intensidad de capital del sector, el apalancamiento y los posibles vínculos circulares entre proveedores y compradores."
+        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+        "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
-      "whyItMatters": "La financiación puede acelerar el despliegue de la IA, pero desplaza parte del análisis desde la demanda de chips hacia la calidad y la estructura del capital que sostiene el crecimiento.",
-      "publishedAt": "10 ago 2026",
-      "sourceName": "Axios",
-      "sourceUrl": "https://www.axios.com/2026/08/10/nvidia-financing-ai-goldman-sachs-blackrock"
+      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+      "publishedAt": "1 sept 2026",
+      "sourceName": "Expansión",
+      "sourceUrl": "https://www.expansion.com/mercados/2026/09/01/6a96a2b2e5fdea156a8b4579.html"
     },
     {
-      "id": "wall-street-records",
-      "category": "Mercados globales",
-      "title": "Wall Street aguanta cerca de sus máximos históricos",
-      "summary": "Las bolsas se mantienen firmes pese a las oscilaciones del crudo y la cautela sobre los tipos.",
-      "imageUrl": "src/assets/markets/secondary-news/wall-street-records.jpg",
-      "imageAlt": "Profesionales caminando por el distrito financiero de Wall Street en Nueva York.",
+      "id": "market-brief-3",
+      "category": "Tipos de interés y deuda",
+      "title": "Los mercados afrontan una nueva ola de subidas de tipos",
+      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-3.webp?v=20260901191908",
+      "imageAlt": "Imagen editorial asociada a la noticia «Los mercados afrontan una nueva ola de subidas de tipos».",
       "body": [
-        "Los índices estadounidenses se alejaron ligeramente de sus máximos mientras el petróleo oscilaba al ritmo de la incertidumbre geopolítica. El mercado también revisa sus expectativas sobre la próxima decisión de la Reserva Federal.",
-        "La fortaleza de los beneficios empresariales continúa sosteniendo las valoraciones, pero el repunte de las rentabilidades de la deuda y de los costes hipotecarios mantiene la presión sobre los activos sensibles a los tipos."
+        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+        "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
-      "whyItMatters": "Los beneficios aportan resistencia al mercado, aunque un petróleo más caro y unas expectativas de tipos más exigentes aumentan la sensibilidad de las cotizaciones a cualquier sorpresa macroeconómica.",
-      "publishedAt": "11 ago 2026",
-      "sourceName": "AP News",
-      "sourceUrl": "https://apnews.com/article/3f3f2f2d49e4aa8744d21ecd0ce55a9c"
+      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+      "publishedAt": "31 ago 2026",
+      "sourceName": "Expansión",
+      "sourceUrl": "https://www.expansion.com/mercados/2026/08/31/6a953606e5fdea35598b4595.html"
     }
   ],
   "macroIndicatorsUpdatedAt": "14 de agosto de 2026",
@@ -132,5 +133,5 @@
       "referenceDate": "28 jul 2026"
     }
   ],
-  "dailyEconomicNewsCheckedAt": "2026-08-17T22:02:26.377Z"
+  "dailyEconomicNewsCheckedAt": "2026-09-01T19:19:08.666Z"
 }
