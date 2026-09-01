@@ -404,8 +404,6 @@
   max-width: none;
   height: 100%;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%);
-  mask-image: linear-gradient(90deg, transparent, #000 22%);
 }
 
 .lecturas-hero__content {
@@ -422,7 +420,7 @@
   margin: 0;
   color: var(--nv-ink);
   font-family: var(--nv-font-serif);
-  font-size: var(--nv-display-lg);
+  font-size: var(--nv-display-md);
   font-weight: var(--nv-weight-body);
   letter-spacing: -.035em;
   line-height: 1.05;
@@ -442,17 +440,6 @@
   font-family: var(--nv-font-serif);
   font-size: var(--nv-body-lg);
   line-height: 1.4;
-}
-
-/* Los velos solo afectan al perímetro: título, lema y marca siguen nítidos. */
-.lecturas-hero__banner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, var(--nv-white) 0%, transparent 5%, transparent 95%, var(--nv-white) 100%),
-    linear-gradient(180deg, var(--nv-white) 0%, transparent 8%, transparent 80%, var(--nv-white) 100%);
 }
 
 .lecturas-hero + #seleccion-lecturas {
@@ -8980,6 +8967,57 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 .ac-x31 { align-items:center; background:var(--nv-paper); border-radius:var(--nv-radius-pill); color:var(--nv-warning); display:inline-flex; font-size: var(--nv-body-lg); font-weight:600; height:48px; justify-content:center; width:48px; }
 .ac-x32 { align-items:center; background:var(--nv-tint-11); border-radius:var(--nv-radius-pill); color:var(--nv-cat-cyan); display:inline-flex; font-size: var(--nv-body-lg); font-weight:600; height:48px; justify-content:center; width:48px; }
 .ac-x33 { align-items:center; background:var(--nv-tint-19); border-radius:var(--nv-radius-pill); color:var(--nv-tint-04); display:inline-flex; font-size: var(--nv-body-lg); font-weight:600; height:48px; justify-content:center; width:48px; }
+
+/* Guía del inversor: cuatro accesos editoriales, con profundidad y gesto
+   gráfico propios de NUVIA sin alterar el contenido ni la navegación. */
+.ac-essentials-grid { gap: var(--nv-space-6); }
+
+.ac-essential-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 154px;
+  border: 1px solid var(--nv-line);
+  border-radius: var(--nv-radius-md);
+  background: var(--nv-surface);
+  padding: var(--nv-space-7);
+  box-shadow: var(--nv-shadow-sm);
+  text-align: left;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.ac-essential-card::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--nv-green-600), var(--nv-bronze-500));
+  content: "";
+}
+
+.ac-essential-card:hover {
+  border-color: var(--nv-green-500);
+  box-shadow: var(--nv-shadow-md);
+  transform: translateY(-3px);
+}
+
+.ac-essential-card:focus-visible {
+  outline: 2px solid var(--nv-green-600);
+  outline-offset: 3px;
+}
+
+.ac-essential-card > :first-child {
+  border: 1px solid var(--nv-green-300);
+  background: var(--nv-green-100);
+  color: var(--nv-green-700);
+}
+
+.ac-essential-card .gu-accent {
+  font-size: var(--nv-title-md);
+  transition: transform .2s ease;
+}
+
+.ac-essential-card:hover .gu-accent { transform: translateX(4px); }
 .ac-x34 { align-items:end; display:grid; gap:40px; grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr); padding:48px 48px 40px; }
 .ac-x35 { background:var(--nv-green-500); height:3px; margin-top:32px; width:80px; }
 .ac-x36 { background:color-mix(in srgb, var(--nv-bg) 55%, var(--nv-surface)); border-radius:var(--nv-radius-md); padding:var(--nv-space-4) var(--nv-space-5); }

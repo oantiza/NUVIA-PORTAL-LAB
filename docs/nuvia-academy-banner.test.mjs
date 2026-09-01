@@ -182,6 +182,12 @@ for (const [asset, expected] of assets) {
 }
 
 const academyPage = await readFile(resolve(root, 'academia.html'), 'utf8');
+assert.equal((academyPage.match(/class="ac-def ac-def--wide ac-essential-card"/g) || []).length, 4,
+  'Conocimientos esenciales presenta cuatro tarjetas editoriales homogéneas');
+assert.match(css, /\.ac-essential-card\s*\{[\s\S]*?border-radius:\s*var\(--nv-radius-md\);[\s\S]*?box-shadow:\s*var\(--nv-shadow-sm\);/,
+  'Las tarjetas esenciales usan forma, profundidad y tokens del sistema');
+assert.match(css, /\.ac-essential-card:focus-visible\s*\{[\s\S]*?outline:/,
+  'Las tarjetas esenciales conservan foco visible');
 const academyHero = academyPage.match(/<section\b[^>]*id="academy"[\s\S]*?<\/section>/)?.[0];
 assert.ok(academyHero?.includes('nv-hero--institutional'), 'Academia interior conserva su cabecera');
 assert.ok(academyHero.includes('{{ pestanas }}') && academyHero.includes('{{ p.abrir }}'), 'Las pestañas de Academia siguen conectadas');
