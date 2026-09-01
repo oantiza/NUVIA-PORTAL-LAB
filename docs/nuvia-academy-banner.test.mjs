@@ -123,10 +123,11 @@ for (const page of ['academia', 'curso', 'fiscalidad', 'guia-ahorro', 'guia-cale
 const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const editorialVeil = css.match(/\.home-section-banner--editorial::before\s*\{([^}]+)\}/)?.[1];
 assert.ok(editorialVeil, 'El aclarado se limita a los banners editoriales');
-assert.match(editorialVeil, /--nv-navy-950\) 82%, transparent\) 0%/, 'Se conserva el contraste izquierdo');
-assert.match(editorialVeil, /--nv-navy-900\) 72%, transparent\) 40%/, 'La transición comienza antes de la mitad');
-assert.match(editorialVeil, /--nv-navy-950\) 38%, transparent\) 68%/, 'El degradado libera la zona fotográfica');
-assert.match(editorialVeil, /--nv-navy-950\) 16%, transparent\) 100%/, 'El extremo derecho deja ver claramente la fotografía');
+assert.match(editorialVeil, /var\(--nv-navy-950\) 0%/, 'El azul es completamente opaco en el extremo izquierdo');
+assert.match(editorialVeil, /var\(--nv-navy-950\) 26%/, 'La zona de lectura conserva un tramo azul uniforme');
+assert.match(editorialVeil, /--nv-navy-950\) 84%, transparent\) 42%/, 'La transición comienza de forma progresiva');
+assert.match(editorialVeil, /--nv-navy-950\) 42%, transparent\) 70%/, 'El degradado libera la zona fotográfica');
+assert.match(editorialVeil, /--nv-navy-950\) 8%, transparent\) 100%/, 'El extremo derecho deja la fotografía casi limpia');
 assert.match(css, /\.home-section-banner__pill\s*\{[\s\S]*?min-height:\s*54px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
   'Los tres accesos comparten el formato amplio de la referencia');
 assert.match(css, /\.home-section-banner--editorial \.home-section-banner__title\s*\{\s*font-family: var\(--nv-font-sans\);\s*font-size: clamp\(30px, 2\.6vw, 36px\);/,

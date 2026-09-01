@@ -1,5 +1,15 @@
 # Criterios del proyecto NUVIA Portal Lab
 
+## Definición canónica de NUVIA
+
+- `docs/DEFINICION_NUVIA.md` es el documento vivo que define qué es NUVIA,
+  para qué existe y cuál es su espíritu. Debe tratarse como contexto esencial
+  en las tareas de producto, contenido, diseño y comunicación.
+- La definición está sujeta a retoques finales. Si cambia, debe actualizarse
+  primero ese documento para conservar una única versión canónica.
+- Si alguna formulación entra en conflicto con el marco regulatorio obligatorio,
+  prevalece siempre el marco regulatorio.
+
 ## Cumplimiento regulatorio obligatorio
 
 - Antes de diseñar, programar, modificar, revisar o publicar cualquier elemento

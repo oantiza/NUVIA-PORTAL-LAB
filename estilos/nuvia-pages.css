@@ -1337,14 +1337,15 @@
   outline-offset: 3px;
 }
 
-/* Composición editorial elegida; títulos compactos en la sans del portal. */
+/* Composición editorial elegida; los tres banners comparten la misma máscara. */
 .home-section-banner--editorial { display: flex; }
 .home-section-banner--editorial::before {
   background: linear-gradient(90deg,
-    color-mix(in srgb, var(--nv-navy-950) 82%, transparent) 0%,
-    color-mix(in srgb, var(--nv-navy-900) 72%, transparent) 40%,
-    color-mix(in srgb, var(--nv-navy-950) 38%, transparent) 68%,
-    color-mix(in srgb, var(--nv-navy-950) 16%, transparent) 100%);
+    var(--nv-navy-950) 0%,
+    var(--nv-navy-950) 26%,
+    color-mix(in srgb, var(--nv-navy-950) 84%, transparent) 42%,
+    color-mix(in srgb, var(--nv-navy-950) 42%, transparent) 70%,
+    color-mix(in srgb, var(--nv-navy-950) 8%, transparent) 100%);
 }
 .home-section-banner--editorial .home-section-banner__content {
   width: 62%;
