@@ -9619,9 +9619,9 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   inset: 0;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--nv-navy-950) 20%, transparent) 0%,
-    color-mix(in srgb, var(--nv-navy-950) 52%, transparent) 54%,
-    color-mix(in srgb, var(--nv-navy-950) 93%, transparent) 100%
+    color-mix(in srgb, var(--nv-navy-950) 16%, transparent) 0%,
+    color-mix(in srgb, var(--nv-navy-950) 45%, transparent) 54%,
+    color-mix(in srgb, var(--nv-navy-950) 86%, transparent) 100%
   );
 }
 
