@@ -77,3 +77,11 @@ datos. Se modifica solo el rol semántico `--nv-bg`; las tarjetas, banners,
 cabeceras oscuras y superficies con función propia conservan sus colores y
 contrastes. Controles: asignación exacta del token, compilación completa,
 ausencia de fondos blancos de página y revisión de escritorio/tablet.
+
+### Continuidad del hero con el nuevo fondo
+
+Revisión previa: VERDE. El fundido inferior del hero deja de terminar en
+`--nv-cloud` y pasa a terminar en el rol general `--nv-bg`, ahora vinculado a
+la bruma azul. Así se elimina el corte blanquecino señalado por el usuario sin
+modificar la imagen, su encuadre, altura, texto ni navegación. El ajuste es
+exclusivamente cromático y conserva el resto de controles de esta ficha.

@@ -39,6 +39,11 @@ assert.ok(hero.includes('Información clara,<br>decisiones con propósito.'), 'E
 assert.ok(hero.includes('{{ barraPilares }}') && hero.includes('home-pillars'), 'El hero conserva la franja configurable');
 assert.match(css.slice(css.indexOf('HOME 2026')), /\.home-hero__art\s*\{\s*object-position:\s*78% 50%;\s*\}/,
   'El único ajuste del hero es su encuadre');
+const heroVeilRule = css.match(/\.home-hero__veil\s*\{\s*background:([\s\S]*?)\n\}/)?.[1];
+assert.ok(heroVeilRule?.includes('linear-gradient(0deg, var(--nv-bg) 0%'),
+  'El degradado inferior del hero termina en el fondo azul general');
+assert.ok(!heroVeilRule.includes('linear-gradient(0deg, var(--nv-cloud)'),
+  'El hero no conserva una franja blanquecina en su base');
 
 const project = section('que-es-nuvia');
 assert.ok(project?.includes('class="home26-project"'), 'El proyecto usa la composición a dos columnas');

@@ -808,7 +808,7 @@
 .home-hero__veil {
   background:
     linear-gradient(95deg, rgba(28, 58, 94, .94) 0%, rgba(28, 58, 94, .85) 32%, rgba(28, 58, 94, .48) 56%, rgba(28, 58, 94, .14) 78%),
-    linear-gradient(0deg, var(--nv-cloud) 0%, color-mix(in srgb, var(--nv-cloud) 60%, transparent) 5%, transparent 12%),
+    linear-gradient(0deg, var(--nv-bg) 0%, color-mix(in srgb, var(--nv-bg) 60%, transparent) 5%, transparent 12%),
     linear-gradient(0deg, rgba(28, 58, 94, .55) 0%, transparent 42%);
 }
 
