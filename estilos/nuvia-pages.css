@@ -9502,12 +9502,14 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 
 .home26-plate--light { background: var(--nv-cloud); }
 
-.home26-plate-label {
+.home26-plate-label-wrap {
   margin-top: calc(var(--nv-space-12) + var(--nv-space-1));
   margin-bottom: var(--nv-space-5);
 }
 
-.home26-project-section + .home26-plate-label {
+.home26-plate-label { margin-block: 0; }
+
+.home26-project-section + .home26-plate-label-wrap {
   margin-top: var(--nv-space-12);
 }
 

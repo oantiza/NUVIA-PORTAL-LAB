@@ -115,15 +115,15 @@ for (const id of ['mercados', 'patrimonio', 'familia-salud']) {
   assert.match(section(id), /class="[^"]*nv-container[^"]*home26-plate/,
     `${id}: comparte el contenedor fijo y centrado de Academia y Lecturas`);
 }
-assert.equal((home.match(/class="nv-container nv-eyebrow home26-plate-label"/g) || []).length, 3,
+assert.equal((home.match(/class="nv-container home26-plate-label-wrap"/g) || []).length, 3,
   'Los tres rótulos se sitúan fuera y encima de sus respectivas láminas');
 for (const label of ['Resumen estratégico', 'Decisiones de fondo', 'Vida y equilibrio']) {
-  assert.match(home, new RegExp(`class="[^"]*home26-plate-label[^"]*">${label}<`),
+  assert.match(home, new RegExp(`class="nv-container home26-plate-label-wrap">\\s*<p class="nv-eyebrow home26-plate-label">${label}<`),
     `El rótulo exterior muestra ${label}`);
 }
 assert.doesNotMatch(home, /home26-(?:plate-label|showcase__label)[^>]*>[^<]*·\s*0[1-5]</,
   'Los cinco encabezados editoriales no muestran numeración');
-assert.match(homeCss, /\.home26-plate-label\s*\{[\s\S]*?margin-top:\s*calc\(var\(--nv-space-12\) \+ var\(--nv-space-1\)\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
+assert.match(homeCss, /\.home26-plate-label-wrap\s*\{[\s\S]*?margin-top:\s*calc\(var\(--nv-space-12\) \+ var\(--nv-space-1\)\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
   'Los tres bloques conservan una separación ligeramente más amplia y homogénea');
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
