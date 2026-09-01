@@ -1878,8 +1878,7 @@
 
 .about-purpose h2,
 .about-world h2,
-.about-values h2,
-.about-finale h2 {
+.about-values h2 {
   margin: var(--nv-space-10) 0 0;
   font-family: var(--nv-font-serif);
   font-weight: 500;
@@ -2119,6 +2118,39 @@
 .about-value--navy { border: 1px solid var(--nv-line-on-dark); background: var(--nv-navy-800); color: var(--nv-white); }
 .about-value--navy p { color: var(--nv-text-on-dark-soft); }
 
+/* Síntesis canónica: la frontera entre lo que hace NUVIA y lo que decide la familia. */
+.about-principle {
+  display: grid;
+  min-height: 620px;
+  background: var(--nv-paper-light);
+  place-items: center;
+  text-align: center;
+}
+
+.about-principle p {
+  max-width: 1050px;
+  margin: 0 auto;
+  font-family: var(--nv-font-serif);
+  font-size: clamp(52px, 6vw, 92px);
+  font-weight: 450;
+  letter-spacing: -.05em;
+  line-height: 1.02;
+}
+
+.about-principle p > span,
+.about-principle p > strong {
+  display: block;
+}
+
+.about-principle p > span { color: var(--nv-text); }
+
+.about-principle p > strong {
+  margin-top: var(--nv-space-4);
+  color: var(--nv-green-700);
+  font-style: italic;
+  font-weight: 500;
+}
+
 /* Final de presentación: la marca ocupa el escenario. */
 .about-finale {
   position: relative;
@@ -2157,12 +2189,25 @@
 
 .about-finale .about-kicker { justify-content: center; }
 
-.about-finale h2 {
-  color: var(--nv-white);
-  font-size: clamp(72px, 8vw, 126px);
+.about-finale__welcome {
+  display: flex;
+  max-width: 900px;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
-.about-finale__welcome {
+.about-finale__welcome > strong {
+  order: -1;
+  margin-top: var(--nv-space-10);
+  color: var(--nv-white);
+  font-family: var(--nv-font-serif);
+  font-size: clamp(72px, 8vw, 126px);
+  font-weight: 500;
+  letter-spacing: -.05em;
+  line-height: .94;
+}
+
+.about-finale__welcome > span {
   max-width: 660px;
   margin: var(--nv-space-10) auto 0;
   color: var(--nv-text-on-dark);
@@ -2254,6 +2299,7 @@
   .about-values__heading { display: grid; }
   .about-values__grid { grid-template-columns: minmax(0, 1fr); }
   .about-value { min-height: 330px; }
+  .about-principle { min-height: 540px; }
   .about-finale { min-height: 760px; }
   .about-finale__content { width: calc(100% - 72px); }
 }

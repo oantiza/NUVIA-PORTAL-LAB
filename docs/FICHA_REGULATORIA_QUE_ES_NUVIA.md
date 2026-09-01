@@ -90,3 +90,33 @@ informativo descrito en los apartados 1, 5, 8, 12 y 17 del marco obligatorio.
   aprobada `nuvia-family-wealth-exact-2026-v2`.
 - La composición dispone de reglas específicas para escritorio y tablet, cero
   estilos en línea y movimiento desactivable mediante `prefers-reduced-motion`.
+
+## Alineación con la definición canónica
+
+Fecha: 1 de septiembre de 2026. Fuente: `docs/DEFINICION_NUVIA.md`, actualización
+canónica de 1 de septiembre de 2026. Clasificación: VERDE.
+
+1. Necesidad: mantener una única formulación pública de qué es NUVIA, para qué
+   existe, qué contiene y cuál es su espíritu.
+2. Entrada: exclusivamente el texto canónico local; no se incorporan fuentes,
+   datos o afirmaciones externas.
+3. Transformación: sustituir en la presentación las formulaciones anteriores y
+   conservar el diseño narrativo, sin resumir ni ampliar el sentido canónico.
+4. Resultado: la página pública reproduce la definición vigente, incluida la
+   frase «NUVIA informa, explica y calcula. Tú comprendes y decides.».
+5. Instrumentos, emisores, circunstancias personales, precios, rankings o
+   recomendaciones: ninguno.
+6. Diseño y navegación: la numeración conserva una función narrativa y no expresa
+   preferencia financiera; no se añaden acciones comerciales u operativas.
+7. Datos personales, IA, publicidad, patrocinio o derivación: sin cambios y no
+   aplicables a esta página estática.
+8. Separación profesional: la formulación canónica refuerza que NUVIA no es una
+   entidad financiera ni una plataforma de comercialización y que respeta el
+   asesoramiento de profesionales habilitados.
+9. Control previsto: prueba automática que normaliza la definición Markdown y el
+   HTML para comprobar que todos sus párrafos públicos aparecen en la presentación,
+   además de la compilación y las puertas regulatorias existentes.
+
+La actualización no cambia la clasificación previa ni requiere validación ámbar:
+precisa el perímetro educativo, elimina formulaciones potencialmente más amplias y
+mantiene visibles los límites y la independencia de NUVIA.
