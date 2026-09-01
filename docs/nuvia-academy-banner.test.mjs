@@ -52,6 +52,7 @@ for (const [id, variant] of [
 ]) assert.ok(section(id)?.includes(variant), `${id}: variante editorial asignada`);
 assert.ok(section('familia-salud').includes('home26-plate__badge">En preparación'), 'Bienestar declara su estado');
 assert.doesNotMatch(home, /home26-plate__caption|imagen decorativa/i, 'Se retiran los pies de lámina repetidos');
+assert.doesNotMatch(section('mercados'), /Lámina 01/i, 'Economía elimina la referencia de lámina');
 
 const summary = section('sumario');
 assert.ok(summary?.includes('nv-section--technical'), 'El sumario usa la superficie técnica');
@@ -109,6 +110,10 @@ assert.match(css, /\.home-feature-access\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?
   'Entrar de Academia conserva 16 px y área de 44 px');
 assert.match(css, /\.home-lecturas:focus-visible\s*\{[\s\S]*?outline:/,
   'El banner completo de Lecturas tiene foco visible');
+assert.match(css, /\.home-academia\s*\{[\s\S]*?border-radius:\s*0;/,
+  'Academia usa esquinas cuadradas');
+assert.match(css, /\.home-lecturas\s*\{[\s\S]*?border-radius:\s*0;/,
+  'Lecturas usa esquinas cuadradas');
 
 const definedTokens = new Set([...tokens.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => `--${match[1]}`));
 for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {

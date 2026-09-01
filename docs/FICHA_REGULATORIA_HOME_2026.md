@@ -143,3 +143,10 @@ Controles: dimensiones 3552 × 1184, hash SHA-256
 `b3a1f474a2cdf4fa2e082b051d2da1721c9507b3a4a57c137adfaa2b440c2912`,
 un único acceso, texto alternativo, foco visible, visualización íntegra en
 escritorio y tablet, compilación completa y verificación en fuente y `dist/`.
+
+## Ajustes editoriales finales · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Los banners de Academia y Lecturas pasan a tener
+esquinas cuadradas y se elimina la referencia «Lámina 01» del rótulo de
+Economía y Finanzas, que queda como «Resumen estratégico». Son cambios de
+presentación sin impacto funcional, financiero ni regulatorio.

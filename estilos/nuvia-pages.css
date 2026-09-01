@@ -1179,7 +1179,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: var(--nv-radius-md);
+  border-radius: 0;
   background: var(--nv-navy-900);
   box-shadow: var(--nv-shadow-md);
   transition: box-shadow .3s ease, transform .3s ease;
@@ -1664,7 +1664,7 @@
   width: 100%;
   aspect-ratio: 2879 / 546;
   overflow: hidden;
-  border-radius: var(--nv-radius-md);
+  border-radius: 0;
   background: var(--nv-white);
   box-shadow: var(--nv-shadow-sm);
   text-decoration: none;
