@@ -48,6 +48,54 @@
     main.dataset.nuviaHeadings = 'true';
   };
 
+  let fieldSequence = 0;
+  const controlId = (control) => {
+    if (control.id) return control.id;
+    const stem = String(control.getAttribute('name') || control.getAttribute('type') || 'control')
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'control';
+    let candidate = `nuvia-field-${stem}`;
+    while (document.getElementById(candidate) && document.getElementById(candidate) !== control) {
+      fieldSequence += 1;
+      candidate = `nuvia-field-${stem}-${fieldSequence}`;
+    }
+    control.id = candidate;
+    return candidate;
+  };
+
+  const normalizeFormAccessibility = (root) => {
+    if (!root) return;
+    root.querySelectorAll('.nv-field').forEach((field) => {
+      const control = field.querySelector('input:not([type="hidden"]), select, textarea');
+      if (!control) return;
+      const id = controlId(control);
+      const label = [...field.children].find((child) => child.tagName === 'LABEL');
+      if (label && !label.contains(control)) label.htmlFor = id;
+
+      const descriptions = [...field.querySelectorAll('.nv-field__note, .nv-field__help, [data-field-help]')];
+      if (!descriptions.length) return;
+      const describedBy = new Set((control.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      descriptions.forEach((description) => {
+        if (!description.id) description.id = `${id}-ayuda-${describedBy.size + 1}`;
+        describedBy.add(description.id);
+      });
+      control.setAttribute('aria-describedby', [...describedBy].join(' '));
+    });
+
+    root.querySelectorAll('.nv-field__note, .nv-field__help, [data-field-help]').forEach((description) => {
+      if (description.id && root.querySelector(`[aria-describedby~="${CSS.escape(description.id)}"]`)) return;
+      const container = description.parentElement;
+      const control = container?.querySelector('input:not([type="hidden"]), select, textarea');
+      if (!control) return;
+      const id = controlId(control);
+      if (!description.id) description.id = `${id}-ayuda`;
+      const describedBy = new Set((control.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      describedBy.add(description.id);
+      control.setAttribute('aria-describedby', [...describedBy].join(' '));
+    });
+  };
+
   const synchronizeNavigation = (nav, currentRoute, activeArea) => {
     nav.querySelectorAll('[data-nav-area]').forEach((group) => {
       group.classList.toggle('is-active', group.dataset.navArea === activeArea);
@@ -87,6 +135,7 @@
 
     document.querySelectorAll('footer').forEach((footer) => footer.classList.add('nuvia-global-footer'));
     normalizeHeadingFlow(document.querySelector('main'));
+    normalizeFormAccessibility(document.querySelector('main'));
   };
 
   // Native details/summary keeps keyboard support without replacing React nodes.

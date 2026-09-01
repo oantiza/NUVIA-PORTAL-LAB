@@ -48,6 +48,8 @@ const ficherosRaiz = [
   'web2-integration.js',
   'nuvia-site-unified.js',        // sigue haciendo falta: rutas y desplegables
   'favicon.svg',
+  'robots.txt',
+  'sitemap.xml',
 ];
 
 /* Directorios que se copian enteros. src/assets ya NO está aquí: se resuelve

@@ -8,11 +8,11 @@
   },
   "scripts": {
     "build:company-analysis": "npm ci --prefix company-analysis && npm run build --prefix company-analysis",
-    "validate": "node scripts/check-parity.mjs . && node scripts/check-static-site.mjs . && node scripts/check-consistencia.mjs . && node scripts/check-lenguaje.mjs . && node docs/nuvia-academy-banner.test.mjs . && node docs/nuvia-lecturas-banner.test.mjs . && node docs/nuvia-navigation.test.mjs . && node docs/nuvia-definicion.test.mjs . && npm run test:analisis && npm run auditar",
+    "validate": "node scripts/check-parity.mjs . && node scripts/check-static-site.mjs . && node scripts/check-consistencia.mjs . && node scripts/check-lenguaje.mjs . && node docs/nuvia-academy-banner.test.mjs . && node docs/nuvia-lecturas-banner.test.mjs . && node docs/nuvia-navigation.test.mjs . && node docs/nuvia-definicion.test.mjs . && node docs/nuvia-metadata.test.mjs . && npm run test:analisis && npm run auditar",
     "auditar": "node scripts/check-render.mjs .",
     "auditar:completo": "node scripts/check-render.mjs . 1440,1280,1180,1024,900,820,768",
     "auditar:urgente": "node scripts/check-render.mjs . 1440,1280,1180,1024,900,820,768 index.html,mercados.html,que-es-nuvia.html",
-    "build": "npm run build:company-analysis && npm run validate && node scripts/build-site.mjs && node scripts/check-static-site.mjs dist && node docs/nuvia-academy-banner.test.mjs dist && node docs/nuvia-lecturas-banner.test.mjs dist && node docs/nuvia-navigation.test.mjs dist && node docs/nuvia-definicion.test.mjs dist",
+    "build": "npm run build:company-analysis && npm run validate && node scripts/build-site.mjs && node scripts/check-static-site.mjs dist && node docs/nuvia-academy-banner.test.mjs dist && node docs/nuvia-lecturas-banner.test.mjs dist && node docs/nuvia-navigation.test.mjs dist && node docs/nuvia-definicion.test.mjs dist && node docs/nuvia-metadata.test.mjs dist",
     "serve": "npm run build && node scripts/serve-local.mjs dist",
     "firebase:preview": "npm run build && firebase hosting:channel:deploy revision --project nuvia-family-wealth --expires 7d",
     "firebase:deploy": "npm run build && firebase deploy --only hosting --project nuvia-family-wealth",

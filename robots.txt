@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oantiza.github.io/NUVIA-PORTAL-LAB/sitemap.xml

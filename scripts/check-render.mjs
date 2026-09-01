@@ -157,7 +157,7 @@ const MEDIR = (ESC) => {
     }
     return acc;
   }
-  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [] };
+  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [] };
   let n = 0;
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el);
@@ -217,6 +217,29 @@ const MEDIR = (ESC) => {
       if (solapa) salida.colisiones.push(`${cabecera[i].className || cabecera[i].tagName} ↔ ${cabecera[j].className || cabecera[j].tagName}`);
     }
   }
+
+  const visible = (el) => {
+    const box = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden' && box.width > 0 && box.height > 0
+      && !el.closest('[aria-hidden="true"], details:not([open])');
+  };
+  document.querySelectorAll('input:not([type="hidden"]), select, textarea, button').forEach((control) => {
+    if (!visible(control)) return;
+    const labelledBy = (control.getAttribute('aria-labelledby') || '').split(/\s+/).filter(Boolean)
+      .some((id) => document.getElementById(id)?.textContent.trim());
+    const nativeLabels = control.labels ? [...control.labels].some((label) => label.textContent.trim()) : false;
+    const ownText = control.tagName === 'BUTTON' && control.textContent.trim();
+    if (!control.getAttribute('aria-label') && !labelledBy && !nativeLabels && !ownText) {
+      salida.sinNombre.push(`${control.tagName.toLowerCase()} ${control.getAttribute('name') || control.id || control.className || 'sin identificador'}`.slice(0, 80));
+    }
+  });
+  document.querySelectorAll('.nv-field__note, .nv-field__help, [data-field-help]').forEach((note) => {
+    if (!visible(note)) return;
+    if (!note.id || !document.querySelector(`[aria-describedby~="${CSS.escape(note.id)}"]`)) {
+      salida.ayudasSueltas.push(note.textContent.trim().slice(0, 70));
+    }
+  });
   return salida;
 };
 
@@ -288,8 +311,8 @@ for (const ancho of ANCHOS) {
     }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + faltan.length + nuevos.length + desvio.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
     for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
@@ -298,6 +321,8 @@ for (const ancho of ANCHOS) {
     for (const [k, v] of escala) problemas.push(`${pag} @${ancho} · fuera de escala ×${v} ${k}`);
     for (const x of r.desbordes) problemas.push(`${pag} @${ancho} · desborde ${x}`);
     for (const x of r.colisiones) problemas.push(`${pag} @${ancho} · colisión de cabecera ${x}`);
+    for (const x of r.sinNombre) problemas.push(`${pag} @${ancho} · control sin nombre accesible ${x}`);
+    for (const x of r.ayudasSueltas) problemas.push(`${pag} @${ancho} · ayuda no asociada a su control: ${x}`);
     for (const [k, v] of fugas) problemas.push(`${pag} @${ancho} · fuga del envoltorio ×${v} ${k}`);
   }
   await ctx.close();
