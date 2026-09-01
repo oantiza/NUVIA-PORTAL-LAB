@@ -136,7 +136,7 @@ Hasta resolverlos, NUVIA puede avanzar en accesibilidad técnica y metadatos, pe
 
 1. Completar etiquetas, ayudas, errores y navegación por teclado de los formularios.
 2. Revisar foco visible y estados que dependan solo del color.
-3. Añadir Open Graph, Twitter Card y una imagen social propia de NUVIA.
+3. Mantener Open Graph, Twitter Card y la imagen social propia de NUVIA mediante la prueba automática incorporada.
 4. Confirmar el inventario con la configuración real del backend y de los proveedores.
 5. Preparar borradores de páginas de confianza claramente marcados como pendientes.
 6. Solicitar validación jurídica antes de publicarlos como textos definitivos.
