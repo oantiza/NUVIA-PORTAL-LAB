@@ -120,3 +120,21 @@ canónica de 1 de septiembre de 2026. Clasificación: VERDE.
 La actualización no cambia la clasificación previa ni requiere validación ámbar:
 precisa el perímetro educativo, elimina formulaciones potencialmente más amplias y
 mantiene visibles los límites y la independencia de NUVIA.
+
+## Actualización de la imagen de apertura
+
+Fecha: 1 de septiembre de 2026. Clasificación: VERDE.
+
+- Se sustituye únicamente la imagen editorial de apertura por una escena familiar
+  equivalente: una pareja adulta de aproximadamente 40–45 años y un niño jugando
+  detrás, sobre el mismo entorno doméstico y paisajístico.
+- La imagen es decorativa (`alt=""` y `aria-hidden="true"`), no representa personas
+  reales identificadas y no contiene datos, cifras, instrumentos, productos,
+  recomendaciones ni llamadas a operar.
+- Se preservan la zona oscura destinada al título, la legibilidad, el encuadre
+  panorámico y la composición para escritorio y tablet.
+- La imagen se conserva como un activo nuevo y versionado; el original no se
+  sobrescribe y permanece recuperable en el repositorio.
+
+El cambio es exclusivamente visual y no modifica la definición canónica, la
+navegación, los cálculos ni el perímetro educativo de NUVIA.
