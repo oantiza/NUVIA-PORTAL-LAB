@@ -294,3 +294,30 @@ Patrimonio conduce a `temas.html?topic=planificacion-patrimonial`, que reúne el
 preferentes; esos destinos permanecen disponibles en la navegación principal.
 El cambio se publicará por el canal oficial de GitHub Pages tras superar las
 puertas automáticas y la revisión de la página resultante.
+
+## Academia y Lecturas con el mismo acceso · 1 de septiembre de 2026
+
+Revisión previa: VERDE.
+
+1. Necesidad: completar la homogeneidad de Inicio aplicando a Academia y
+   Lecturas con criterio el único formato de acceso aprobado para las secciones.
+2. Entradas: nombres, destinos e imágenes locales existentes.
+3. Transformación: los títulos exteriores pasan a «ACADEMIA» y «LECTURAS CON
+   CRITERIO»; cada bloque muestra un solo botón «Accede a [sección]» con el
+   componente visual compartido.
+4. Resultado: cinco ámbitos de Inicio con una llamada a la navegación coherente.
+5. Instrumentos, emisores, datos personales, cálculos, personalización,
+   recomendaciones, rankings, precios o contenido de terceros: ninguno añadido.
+6. Acción: enlaces internos a `academia.html` y `lecturas.html`, sin contacto,
+   contratación, ejecución ni derivación comercial.
+7. Diseño: identidad editorial, sin señales, preferencias o promesas financieras.
+8. IA, publicidad, proveedores y separación profesional: sin cambios.
+9. Imagen de Lecturas: se sustituye en Inicio el PNG con el antiguo botón
+   rasterizado por el paisaje limpio local ya aprobado, evitando duplicidades;
+   la página interior de Lecturas no cambia.
+10. Controles: títulos y textos exactos, un solo enlace por bloque, ausencia de
+    los botones anteriores, integridad de las imágenes, compilación completa y
+    revisión de escritorio y tablet.
+
+La modificación es de navegación y presentación, mantiene clasificación VERDE y
+se publicará mediante el canal oficial de GitHub Pages tras las puertas de control.

@@ -4,24 +4,29 @@ import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 
 const root = resolve(process.argv[2] ?? resolve(import.meta.dirname, '..'));
-const asset = 'src/assets/home/lecturas-con-criterio-canva-family-wealth.png';
+const asset = 'src/assets/home/lecturas-con-criterio-fondo-compacto-family-wealth.webp';
+const retiredAsset = 'src/assets/home/lecturas-con-criterio-canva-family-wealth.png';
 const home = await readFile(resolve(root, 'index.html'), 'utf8');
 const section = home.match(/<section\b[^>]*id="lecturas-con-criterio"[\s\S]*?<\/section>/)?.[0];
-assert.ok(section?.includes(`src="${asset}"`), 'El banner debe usar la exportación aprobada de Canva');
+assert.ok(section?.includes(`src="${asset}"`), 'Inicio usa el paisaje limpio sin el botón rasterizado');
 assert.ok(section.includes('href="lecturas.html"'), 'El banner conserva el acceso a Lecturas');
-assert.ok(section.includes('alt="Lecturas con Criterio. Historias sencillas de interés duradero. Explorar Lecturas. NUVIA Family Wealth."'), 'El texto de la imagen debe tener alternativa accesible');
-assert.ok(section.includes('aria-label="Abrir Lecturas con Criterio:'), 'El enlace debe tener un nombre accesible');
-assert.ok(section.includes('width="2879" height="546"'), 'Se reserva la proporción del PNG original');
-assert.doesNotMatch(section, /class="home-lecturas__(copy|title|subtitle|cta|rule)"/, 'No duplicar el texto que ya incluye Canva');
+assert.match(section, /<h2 id="titulo-lecturas">LECTURAS CON CRITERIO<\/h2>/, 'El título exterior usa el nombre solicitado');
+assert.match(section, /class="home-section-banner__pill home-lecturas__cta"[^>]*>Accede a Lecturas con criterio/,
+  'Lecturas usa el acceso unificado');
+assert.equal((section.match(/<a\b/g) ?? []).length, 1, 'Lecturas tiene un único enlace');
+assert.doesNotMatch(section, /Explorar Lecturas|Abrir Lecturas/, 'Se retiran los formatos de acceso anteriores');
+assert.ok(section.includes('alt="" aria-hidden="true"'), 'El paisaje decorativo no duplica el título accesible');
+assert.ok(section.includes('width="2120" height="404"'), 'Se reserva la proporción del paisaje limpio');
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
+assert.ok(!section.includes(retiredAsset), 'No reintroducir el PNG con el antiguo botón dibujado');
 assert.equal(home.split(asset).length - 1, 1, 'La imagen solo aparece una vez');
 const page = await readFile(resolve(root, 'lecturas.html'), 'utf8');
-const heroAsset = 'src/assets/home/lecturas-con-criterio-fondo-compacto-family-wealth.webp';
+const heroAsset = asset;
 assert.ok(page.includes('estilos/nuvia-pages.css?v=lecturas-sin-cta-20260831'), 'La cabecera debe cargar los estilos nuevos sin reutilizar la caché anterior');
 const hero = page.match(/<section\b[^>]*id="lecturas"[\s\S]*?<\/section>/)?.[0];
 assert.ok(hero?.includes(`src="${heroAsset}"`), 'La cabecera interior usa el paisaje limpio sin botón');
 assert.equal(page.split(heroAsset).length - 1, 1, 'Una sola imagen de paisaje en la página de Lecturas');
-assert.ok(!hero.includes(asset), 'No reintroducir el botón integrado en la imagen de Inicio');
+assert.ok(!hero.includes(retiredAsset), 'No reintroducir el botón integrado del PNG anterior');
 assert.doesNotMatch(hero, /Explorar Lecturas|href="#seleccion-lecturas"|<button\b/i, 'No hay CTA ni enlace de banner en la cabecera');
 assert.ok(hero.includes('class="lecturas-hero__banner"'), 'El fondo ocupa el ancho de la página, fuera del contenedor');
 assert.ok(!hero.includes('nv-hero--institutional'), 'La petición sustituye el fondo azul solo en Lecturas');
@@ -39,13 +44,6 @@ const heroBytes = await readFile(resolve(root, heroAsset));
 assert.equal(createHash('sha256').update(heroBytes).digest('hex'),
   '1f5b0c628e45a1ded050a2ae4b840b30de8fc4d058cb0ecbf2110f70f002ccd1',
   'El paisaje Family Wealth debe estar limpio, sin el CTA rasterizado');
-const bytes = await readFile(resolve(root, asset));
-assert.equal(createHash('sha256').update(bytes).digest('hex'),
-  '18f5a90078e319c791d2c2e53b1f61c7917840cf1d51355d713b4508690b3496',
-  'Debe usarse el PNG íntegro aprobado con FAMILY WEALTH');
-assert.equal(bytes.subarray(1, 4).toString('ascii'), 'PNG');
-assert.equal(bytes.readUInt32BE(16), 2879, 'No sustituir el export por una miniatura');
-assert.equal(bytes.readUInt32BE(20), 546);
 const css = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const imageRule = css.match(/\.home-lecturas__art\s*\{([^}]+)\}/)?.[1];
 assert.ok(imageRule?.includes('height: auto'), 'La imagen no debe recortarse ni deformarse');
@@ -65,4 +63,4 @@ assert.ok(!css.includes('.lecturas-hero__scene'), 'No quedan reglas que reduzcan
 const fadeRule = css.match(/\.lecturas-hero__banner::after\s*\{([^}]+)\}/)?.[1];
 assert.ok(fadeRule?.includes('linear-gradient(90deg') && fadeRule.includes('linear-gradient(180deg'), 'Fundido blanco lateral y vertical');
 assert.ok(fadeRule.includes('pointer-events: none'), 'El fundido no interfiere con la página');
-console.log(`OK Lecturas: Inicio intacto, cabecera sin CTA a ancho completo y altura contenida en ${root}`);
+console.log(`OK Lecturas: acceso unificado en Inicio y cabecera interior compacta en ${root}`);
