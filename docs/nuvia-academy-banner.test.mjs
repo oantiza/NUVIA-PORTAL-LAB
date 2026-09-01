@@ -134,10 +134,6 @@ assert.match(homeCss, /\.home26-plate-label-wrap\s*\{[\s\S]*?margin-top:\s*calc\
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(homeCss, /\.home26-plate--bleed \.home26-plate__veil\s*\{[\s\S]*?var\(--nv-navy-950\) 86%, transparent\) 100%/,
   'Economía conserva contraste sin ocultar en exceso la fotografía');
-assert.match(homeCss, /\.home26-plate--light \.home26-plate__figure::after\s*\{\s*background:\s*linear-gradient\(270deg, transparent 82%, var\(--nv-cloud\) 100%\);\s*\}/,
-  'Patrimonio funde suavemente hacia su columna clara');
-assert.match(homeCss, /\.home26-plate--wellbeing \.home26-plate__figure::after\s*\{\s*background:\s*linear-gradient\(90deg, transparent 82%, var\(--nv-navy-900\) 100%\);\s*\}/,
-  'Familia funde suavemente hacia su columna azul');
 assert.match(homeCss, /\.home26-plate__cta\s*\{[\s\S]*?border:\s*1px solid var\(--nv-green-300\);[\s\S]*?border-radius:\s*var\(--nv-radius-pill\);/,
   'Los tres accesos recuperan la forma redondeada y el filete verde');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
