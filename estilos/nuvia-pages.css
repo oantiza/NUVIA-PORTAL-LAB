@@ -9435,6 +9435,8 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 
 
 /* ── El proyecto · texto a dos columnas con carril de valores ───────────── */
+.home26-project-section { padding-top: 0; }
+
 .home26-project {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);

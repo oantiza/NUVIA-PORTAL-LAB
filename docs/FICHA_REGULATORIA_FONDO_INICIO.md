@@ -85,3 +85,9 @@ Revisión previa: VERDE. El fundido inferior del hero deja de terminar en
 la bruma azul. Así se elimina el corte blanquecino señalado por el usuario sin
 modificar la imagen, su encuadre, altura, texto ni navegación. El ajuste es
 exclusivamente cromático y conserva el resto de controles de esta ficha.
+
+La comprobación posterior confirma que la franja residual no pertenece al
+fundido: corresponde al relleno superior de la sección «El proyecto». Se retira
+solo ese relleno mediante una clase específica de Inicio para que el contenido
+comience al terminar el hero. Clasificación: VERDE; no cambian la imagen, el
+contenido, los accesos, los datos ni el resto de secciones.
