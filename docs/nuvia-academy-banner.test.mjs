@@ -125,7 +125,7 @@ for (const label of ['Resumen estratégico', 'Decisiones de fondo', 'Vida y equi
 }
 assert.doesNotMatch(home, /home26-(?:plate-label|showcase__label)[^>]*>[^<]*·\s*0[1-5]</,
   'Los cinco encabezados editoriales no muestran numeración');
-assert.match(homeCss, /\.home26-plate-label-wrap\s*\{[\s\S]*?margin-top:\s*calc\(var\(--nv-space-12\) \+ var\(--nv-space-1\)\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
+assert.match(homeCss, /\.home26-plate-label-wrap\s*\{[\s\S]*?margin-top:\s*calc\(var\(--nv-space-12\) \+ var\(--nv-space-1\)\);[\s\S]*?margin-bottom:\s*var\(--nv-space-6\);/,
   'Los tres bloques conservan una separación ligeramente más amplia y homogénea');
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
@@ -139,8 +139,14 @@ assert.match(css, /\.home-lecturas\s*\{[\s\S]*?border-radius:\s*0;/,
   'Lecturas usa esquinas cuadradas');
 assert.match(homeCss, /\.home26-showcase__label\s*\{[\s\S]*?color:\s*var\(--nv-text-link\);/,
   'Los dos rótulos usan el verde accesible del sistema');
+assert.match(homeCss, /\.home26-showcase__label\s*\{\s*margin:\s*0 0 var\(--nv-space-5\);/,
+  'Los dos rótulos conservan un poco más de aire respecto a sus banners');
 assert.match(homeCss, /\.home26-showcase\s*\{\s*padding-top:\s*var\(--nv-space-12\);\s*\}/,
   'Los rótulos aprovechan el espacio superior de los banners');
+assert.match(home, /class="home26-band home26-band--compact"[\s\S]*?id="lecturas-con-criterio"/,
+  'El espacio entre Academia y Lecturas usa la franja compacta');
+assert.match(homeCss, /\.home26-band--compact\s*\{\s*height:\s*var\(--nv-space-6\);\s*\}/,
+  'La distancia entre Academia y Lecturas se reduce unos cuarenta píxeles');
 
 const definedTokens = new Set([...tokens.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => `--${match[1]}`));
 for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {

@@ -9503,7 +9503,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 
 .home26-plate-label-wrap {
   margin-top: calc(var(--nv-space-12) + var(--nv-space-1));
-  margin-bottom: var(--nv-space-5);
+  margin-bottom: var(--nv-space-6);
 }
 
 .home26-plate-label { margin-block: 0; }
@@ -9703,7 +9703,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 .home26-showcase { padding-top: var(--nv-space-12); }
 
 .home26-showcase__label {
-  margin: 0 0 var(--nv-space-4);
+  margin: 0 0 var(--nv-space-5);
   color: var(--nv-text-link);
 }
 
@@ -9711,6 +9711,8 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   height: 64px;
   background: var(--nv-mist);
 }
+
+.home26-band--compact { height: var(--nv-space-6); }
 
 
 /* ── Tablet 1024 px ──────────────────────────────────────────────────────
