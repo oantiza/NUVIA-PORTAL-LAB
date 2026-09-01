@@ -30,7 +30,7 @@ for (const [id, href, label] of exactAccess) {
 const readingsAccess = section('lecturas-con-criterio');
 assert.ok(readingsAccess, 'lecturas-con-criterio: la sección existe');
 assert.equal((readingsAccess.match(/<a\b/g) ?? []).length, 1, 'lecturas-con-criterio: un único acceso');
-assert.match(readingsAccess, /<a class="home-lecturas" href="lecturas\.html" aria-label="Entrar">/,
+assert.match(readingsAccess, /<a class="home-lecturas" href="lecturas\.html" aria-label="Entrar en Lecturas con Criterio">/,
   'lecturas-con-criterio: texto accesible y destino exactos');
 
 const hero = section('inicio');
@@ -51,6 +51,8 @@ const project = section('que-es-nuvia');
 assert.ok(project?.includes('class="nv-section home26-project-section"'),
   'El proyecto elimina la franja vacía posterior al hero');
 assert.ok(project?.includes('class="home26-project"'), 'El proyecto usa la composición a dos columnas');
+assert.match(css, /\.home26-project > div > \.nv-eyebrow\s*\{\s*margin:\s*0;\s*\}/,
+  'El proyecto y Valores comparten la misma alineación superior');
 assert.equal((project.match(/class="home26-project__body"/g) ?? []).length, 1, 'Una sola zona de lectura');
 assert.equal((project.match(/class="home26-project__item"/g) ?? []).length, 3, 'Los tres valores permanecen');
 
@@ -91,10 +93,10 @@ assert.match(readings, /class="nv-eyebrow home26-showcase__label">Sección edito
 const readingsBanner = readings.match(/<a class="home-lecturas"[\s\S]*?<\/a>/)?.[0];
 assert.ok(readingsBanner, 'Lecturas conserva su banner');
 assert.doesNotMatch(readingsBanner, /<h[1-6]\b|<p\b/, 'Lecturas no superpone título ni descripción');
-assert.match(readingsBanner, /href="lecturas\.html" aria-label="Entrar"/,
+assert.match(readingsBanner, /href="lecturas\.html" aria-label="Entrar en Lecturas con Criterio"/,
   'Lecturas conserva Entrar como nombre accesible del banner');
-assert.doesNotMatch(readingsBanner, /home-feature-access|home-lecturas__cta/,
-  'Lecturas no duplica el acceso integrado visualmente en el banner');
+assert.match(readingsBanner, /class="home-feature-access home-lecturas__cta">Entrar<\/span>/,
+  'Lecturas usa el mismo acceso visible que Academia');
 
 assert.doesNotMatch(home, /\sstyle=/i, 'Inicio no contiene estilos en línea');
 assert.doesNotMatch(home, /data-macro-id=|data-daily-news|data-daily-impact|id="noticia"/,
@@ -132,11 +134,17 @@ assert.match(homeCss, /\.home26-plate-label-wrap\s*\{[\s\S]*?margin-top:\s*calc\
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(homeCss, /\.home26-plate--bleed \.home26-plate__veil\s*\{[\s\S]*?var\(--nv-navy-950\) 86%, transparent\) 100%/,
   'Economía conserva contraste sin ocultar en exceso la fotografía');
+assert.match(homeCss, /\.home26-plate--light \.home26-plate__figure::after\s*\{\s*background:\s*linear-gradient\(270deg, transparent 82%, var\(--nv-cloud\) 100%\);\s*\}/,
+  'Patrimonio funde suavemente hacia su columna clara');
+assert.match(homeCss, /\.home26-plate--wellbeing \.home26-plate__figure::after\s*\{\s*background:\s*linear-gradient\(90deg, transparent 82%, var\(--nv-navy-900\) 100%\);\s*\}/,
+  'Familia funde suavemente hacia su columna azul');
 assert.match(homeCss, /\.home26-plate__cta\s*\{[\s\S]*?border:\s*1px solid var\(--nv-green-300\);[\s\S]*?border-radius:\s*var\(--nv-radius-pill\);/,
   'Los tres accesos recuperan la forma redondeada y el filete verde');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
 assert.match(css, /\.home-feature-access\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
   'Entrar de Academia conserva 16 px y área de 44 px');
+assert.match(css, /\.home-feature-access\s*\{[\s\S]*?border-radius:\s*var\(--nv-radius-pill\);[\s\S]*?padding-inline:\s*var\(--nv-space-5\);/,
+  'Academia y Lecturas comparten una píldora mediana');
 assert.match(css, /\.home-lecturas:focus-visible\s*\{[\s\S]*?outline:/,
   'El banner completo de Lecturas tiene foco visible');
 assert.match(css, /\.home-academia\s*\{[\s\S]*?border-radius:\s*0;/,
@@ -151,8 +159,12 @@ assert.match(homeCss, /\.home26-showcase\s*\{\s*padding-top:\s*var\(--nv-space-1
   'Los rótulos aprovechan el espacio superior de los banners');
 assert.match(home, /class="home26-band home26-band--compact"[\s\S]*?id="lecturas-con-criterio"/,
   'El espacio entre Academia y Lecturas usa la franja compacta');
-assert.match(homeCss, /\.home26-band--compact\s*\{\s*height:\s*var\(--nv-space-6\);\s*\}/,
-  'La distancia entre Academia y Lecturas se reduce unos cuarenta píxeles');
+assert.match(homeCss, /\.home26-band--compact\s*\{\s*height:\s*var\(--nv-space-3\);\s*\}/,
+  'La franja entre Academia y Lecturas queda reducida');
+assert.match(homeCss, /\.home26-showcase--academy\s*\{\s*padding-bottom:\s*var\(--nv-space-10\);\s*\}/,
+  'Academia reduce su espacio inferior');
+assert.match(homeCss, /\.home26-showcase--readings\s*\{\s*padding-top:\s*var\(--nv-space-6\);\s*\}/,
+  'Lecturas reduce su espacio superior');
 
 const definedTokens = new Set([...tokens.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => `--${match[1]}`));
 for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {
@@ -165,7 +177,7 @@ const assets = new Map([
   ['src/assets/home/patrimonio-family-home-young-family-natural-20260901.png', '05af952813c6f00ce8f8afa416d24060b8a1a7571f721f3391b7307f65577103'],
   ['src/assets/home/wellbeing-life-balance-banner-v2.webp', '7af9d0ab2c2b0af67f9b7bc3665a40d3028bf8c87f6f4d88571ebd73f1ef6941'],
   ['src/assets/education/nuvia-academy/nuvia-academy-banner-2026.jpeg', 'b3a1f474a2cdf4fa2e082b051d2da1721c9507b3a4a57c137adfaa2b440c2912'],
-  ['src/assets/home/lecturas-con-criterio-banner-2026.png', 'd6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003'],
+  ['src/assets/home/lecturas-con-criterio-banner-sin-boton.webp', '59768e8b2f5a5ac19001c4a3d6cf9cd7b4e2568c7b5758f03eb0015a81dda02a'],
 ]);
 for (const [asset, expected] of assets) {
   assert.ok(home.includes(`src="${asset}"`), `Inicio conserva ${asset}`);

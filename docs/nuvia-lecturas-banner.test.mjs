@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 
 const root = resolve(process.argv[2] ?? resolve(import.meta.dirname, '..'));
-const homeAsset = 'src/assets/home/lecturas-con-criterio-banner-2026.png';
+const homeAsset = 'src/assets/home/lecturas-con-criterio-banner-sin-boton.webp';
 const heroAsset = 'src/assets/home/lecturas-con-criterio-fondo-compacto-family-wealth.webp';
 const retiredAsset = 'src/assets/home/lecturas-con-criterio-canva-family-wealth.png';
 const home = await readFile(resolve(root, 'index.html'), 'utf8');
@@ -13,20 +13,20 @@ assert.ok(section?.includes(`src="${homeAsset}"`), 'Inicio usa el banner aportad
 assert.ok(section.includes('href="lecturas.html"'), 'El banner conserva el acceso a Lecturas');
 assert.doesNotMatch(section, /nv-section-heading|titulo-lecturas|<h2\b/,
   'El banner sustituye la cabecera exterior y elimina su espacio');
-assert.match(section, /<a class="home-lecturas" href="lecturas\.html" aria-label="Entrar">/,
+assert.match(section, /<a class="home-lecturas" href="lecturas\.html" aria-label="Entrar en Lecturas con Criterio">/,
   'El banner completo es el acceso editorial con nombre accesible Entrar');
 assert.equal((section.match(/<a\b/g) ?? []).length, 1, 'Lecturas tiene un único enlace');
-assert.doesNotMatch(section, /home-feature-access|home-lecturas__cta|Abrir Lecturas|Accede a Lecturas/,
-  'Se retira el acceso HTML superpuesto anterior');
+assert.match(section, /class="home-feature-access home-lecturas__cta">Entrar<\/span>/,
+  'Lecturas comparte el acceso HTML de Academia');
 assert.ok(section.includes('alt="Lecturas con Criterio. Historias sencillas de interés duradero."'),
   'La imagen enlazada tiene alternativa informativa');
-assert.ok(section.includes('width="2879" height="546"'), 'Se reserva la proporción exacta del banner aportado');
+assert.ok(section.includes('width="2120" height="404"'), 'Se reserva la proporción exacta del banner sin botón');
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
 assert.ok(!section.includes(retiredAsset), 'No reintroducir el PNG con el antiguo botón dibujado');
 assert.equal(home.split(homeAsset).length - 1, 1, 'La imagen solo aparece una vez');
 const homeBannerBytes = await readFile(resolve(root, homeAsset));
 assert.equal(createHash('sha256').update(homeBannerBytes).digest('hex'),
-  'd6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003',
+  '59768e8b2f5a5ac19001c4a3d6cf9cd7b4e2568c7b5758f03eb0015a81dda02a',
   'El banner aportado debe conservarse sin editar');
 const page = await readFile(resolve(root, 'lecturas.html'), 'utf8');
 assert.ok(page.includes('estilos/nuvia-pages.css?v=lecturas-sin-cta-20260831'), 'La cabecera debe cargar los estilos nuevos sin reutilizar la caché anterior');
