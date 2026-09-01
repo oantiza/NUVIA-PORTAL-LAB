@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="NUVIA ofrece información financiera clara, herramientas patrimoniales y formación para ayudar a las familias a decidir con perspectiva.">
 
-<!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/ -->
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/">
 
 <title>NUVIA Family Wealth</title>
@@ -16,15 +15,12 @@
 
 <link rel="stylesheet" href="estilos/nuvia-tokens.css">
 <link rel="stylesheet" href="estilos/nuvia-components.css">
-<link rel="stylesheet" href="estilos/nuvia-pages.css?v=que-es-nuvia-20260831">
+<link rel="stylesheet" href="estilos/nuvia-pages.css?v=home-2026-0901-r2">
 
 <!-- La imagen del héroe es el LCP: se precarga y no lleva lazy. -->
 <link rel="preload" as="image" href="src/assets/home/hero-family-finance-compact.webp">
 
 <script defer src="web2-integration.js"></script>
-<!-- React y ReactDOM, servidos por el sitio. Van antes que support.js: su
-     loadReactUmd() empieza comprobando si ya están en window y, si lo
-     están, no toca el CDN. Ver js/vendor/DESCARGAR.md. -->
 <script defer src="js/vendor/react.production.min.js"></script>
 <script defer src="js/vendor/react-dom.production.min.js"></script>
 <script defer src="support.js"></script>
@@ -85,9 +81,11 @@
   <main id="contenido">
 
     <!-- ══ HÉROE FOTOGRÁFICO ═════════════════════════════════════════════════
-         La variante fotográfica está reservada a la portada. Es la referencia
-         visual del sitio, así que aquí la migración no mueve nada de sitio:
-         solo traslada los estilos a clases.
+         Sin cambios de estructura respecto a la versión publicada: mismo
+         componente, mismos textos y misma franja de pilares. El único ajuste
+         es el encuadre de la fotografía (.home-hero__art en el CSS nuevo),
+         para que la familia quede visible: el panorama es de 4,6:1 y con el
+         recorte centrado quedaba fuera del marco.
          ═══════════════════════════════════════════════════════════════════ -->
     <section id="inicio" data-screen-label="Hero" class="nv-hero nv-hero--photo home-hero">
       <img class="home-hero__art" src="src/assets/home/hero-family-finance-compact.webp"
@@ -105,7 +103,6 @@
               Planificación patrimonial y financiera para familias que piensan a largo plazo.
             </p>
 
-
             <sc-if value="{{ barraPilares }}" hint-placeholder-val="{{ true }}">
               <div class="home-pillars">
                 <div class="home-pillars__rule" aria-hidden="true"></div>
@@ -122,118 +119,132 @@
     </section>
 
 
-    <!-- La única sección puramente tipográfica de la portada, a propósito:
-         entre los banners fotográficos, la definición destaca por quietud.
-         Es un manifiesto, no un anuncio. Sin fondo alterno: Inicio comparte
-         el fondo nube por decisión (nuvia-academy-banner.test.mjs). -->
+    <!-- ══ EL PROYECTO ═══════════════════════════════════════════════════════
+         La única sección puramente tipográfica de la portada, a propósito.
+         Mismos textos que la versión publicada, reorganizados a dos columnas
+         de lectura con los valores en un carril lateral, para que el bloque
+         no ocupe una pantalla entera de prosa. Fondo nube, sin excepción
+         blanca (ficha del fondo unificado de Inicio).
+         ═══════════════════════════════════════════════════════════════════ -->
     <section id="que-es-nuvia" data-screen-label="Qué es NUVIA" class="nv-section" aria-labelledby="titulo-proyecto">
       <div class="nv-container">
-        <p class="nv-eyebrow home-intro__eyebrow">El proyecto</p>
-        <h2 id="titulo-proyecto" class="home-intro__title">Detrás de cada decisión patrimonial hay una forma de vivir.</h2>
-        <div class="home-intro__body">
-          <p>La vivienda, el ahorro, los impuestos o la jubilación no son asuntos aislados: están relacionados con nuestros proyectos, nuestras responsabilidades y el futuro de quienes nos importan.</p>
-          <p>NUVIA nace para ayudar a las familias a comprender esas conexiones. Reunimos información, formación y herramientas que permiten entender la economía, explorar escenarios y mirar el patrimonio con perspectiva.</p>
-          <p>Creemos que el conocimiento también forma parte del patrimonio de una familia. Por eso impulsamos un aprendizaje que tiene en cuenta tanto las cifras como la vida que hay detrás: el tiempo, el bienestar y lo que queremos transmitir a las siguientes generaciones.</p>
-        </div>
-        <div class="home-intro__values" aria-label="Valores de NUVIA">
-          <div class="home-intro__rule" aria-hidden="true"></div>
-          <div class="home-intro__row">
-            <div><span class="home-intro__num">01</span><span class="home-intro__name">Claridad</span></div>
-            <div><span class="home-intro__num">02</span><span class="home-intro__name">Honestidad</span></div>
-            <div><span class="home-intro__num">03</span><span class="home-intro__name">Independencia</span></div>
+        <div class="home26-project">
+          <div>
+            <p class="nv-eyebrow">El proyecto</p>
+            <h2 id="titulo-proyecto" class="home-intro__title">Detrás de cada decisión patrimonial hay una forma de vivir.</h2>
+            <div class="home26-project__body">
+              <p>La vivienda, el ahorro, los impuestos o la jubilación no son asuntos aislados: están relacionados con nuestros proyectos, nuestras responsabilidades y el futuro de quienes nos importan.</p>
+              <p>NUVIA reúne información, formación y herramientas para entender la economía, explorar escenarios y mirar el patrimonio con perspectiva. El conocimiento también forma parte del patrimonio de una familia: un aprendizaje que tiene en cuenta tanto las cifras como la vida que hay detrás.</p>
+            </div>
+          </div>
+          <div class="home26-project__aside" aria-label="Valores de NUVIA">
+            <p class="nv-eyebrow nv-eyebrow--editorial">Valores</p>
+            <div class="home26-project__list">
+              <div class="home26-project__item"><span class="home26-project__num">01</span><span class="home26-project__name">Claridad</span></div>
+              <div class="home26-project__item"><span class="home26-project__num">02</span><span class="home26-project__name">Honestidad</span></div>
+              <div class="home26-project__item"><span class="home26-project__num">03</span><span class="home26-project__name">Independencia</span></div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
 
-    <!-- ══ ECONOMÍA Y MERCADOS ═══════════════════════════════════════════════
-         Acceso a Mercados. Los indicadores se consultan en esa sección;
-         no se duplica su franja de datos en Inicio.
+    <!-- ══ LÁMINA 01 · ECONOMÍA Y FINANZAS ═══════════════════════════════════
+         Sustituye el banner editorial por una lámina a sangre. Mismo texto
+         educativo y mismo destino único (mercados.html). Los indicadores y el
+         archivo siguen viviendo en Mercados; aquí no se duplica ningún dato.
          ═══════════════════════════════════════════════════════════════════ -->
-    <section id="mercados" data-screen-label="Resumen macro" class="nv-section" aria-labelledby="titulo-mercados">
-      <div class="nv-container">
-        <div class="nv-section-heading">
-          <div>
-            <p class="nv-eyebrow">Resumen estratégico</p>
-            <h2 id="titulo-mercados">Economía y Finanzas</h2>
-          </div>
-          <p>Inflación, tipos de interés, empleo y actividad económica. Información para entender el contexto de los mercados y su relación con la economía familiar.</p>
+    <section id="mercados" data-screen-label="Economía y Finanzas" class="nv-container home26-plate home26-plate--bleed" aria-labelledby="titulo-mercados">
+      <img class="home26-plate__art" src="src/assets/markets/secondary-news/wall-street-records.jpg"
+           alt="" aria-hidden="true" width="1200" height="800" loading="lazy">
+      <div class="home26-plate__veil" aria-hidden="true"></div>
+      <div class="home26-plate__body">
+        <p class="nv-eyebrow nv-eyebrow--on-dark">Resumen estratégico · Lámina 01</p>
+        <h2 id="titulo-mercados" class="home26-plate__title">Economía y Finanzas</h2>
+        <div class="home26-plate__row">
+          <p class="home26-plate__copy">Inflación, tipos de interés, empleo y actividad económica. Cómo los precios, los tipos y el crecimiento se relacionan con el ahorro, la financiación y el poder de compra.</p>
+          <a class="home26-plate__cta" href="mercados.html">Accede a Economía y Finanzas <span aria-hidden="true">→</span></a>
         </div>
-        <article class="home-section-banner home-section-banner--editorial" aria-labelledby="mercados-banner-title">
-          <img class="home-section-banner__art" src="src/assets/markets/secondary-news/wall-street-records.jpg"
-               alt="" aria-hidden="true" width="1200" height="800" loading="lazy">
-          <div class="home-section-banner__content">
-            <h3 id="mercados-banner-title" class="home-section-banner__title">Entender la economía,<br>poner los mercados en contexto</h3>
-            <p class="home-section-banner__copy">Indicadores económicos, evolución de los mercados y análisis del entorno. Un espacio para comprender cómo los precios, los tipos de interés y el crecimiento se relacionan con el ahorro, la financiación y el poder de compra.</p>
-            <div class="home-section-banner__actions">
-              <a href="mercados.html" class="home-section-banner__pill">Accede a Economía y Finanzas <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-        </article>
       </div>
     </section>
 
 
-    <!-- ══ TEMAS CLAVE ═══════════════════════════════════════════════════════ -->
-    <section id="patrimonio" data-screen-label="Patrimonio" class="nv-section" aria-labelledby="titulo-patrimonio">
-      <div class="nv-container">
-        <div class="nv-section-heading">
-          <div>
-            <p class="nv-eyebrow">Decisiones de fondo</p>
-            <h2 id="titulo-patrimonio">Patrimonio</h2>
-          </div>
-          <p>Vivienda, presupuesto familiar, impuestos y jubilación. Conceptos y herramientas para comprender cómo se organiza el patrimonio a lo largo de la vida.</p>
-        </div>
-        <article class="home-section-banner home-section-banner--editorial" aria-labelledby="patrimonio-banner-title">
-          <img class="home-section-banner__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
-               alt="" aria-hidden="true" width="2752" height="1536" loading="lazy">
-          <div class="home-section-banner__content">
-            <h3 id="patrimonio-banner-title" class="home-section-banner__title">Comprender hoy,<br>planificar el mañana</h3>
-            <p class="home-section-banner__copy">Vivienda, coste de vida, impuestos y jubilación: información y herramientas para entender el presupuesto familiar, comprender las obligaciones fiscales y explorar los ingresos futuros con perspectiva.</p>
-            <div class="home-section-banner__actions">
-              <a class="home-section-banner__pill" href="temas.html?topic=planificacion-patrimonial">Accede a Patrimonio <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-        </article>
+    <!-- ══ LÁMINA 02 · PATRIMONIO ════════════════════════════════════════════
+         Composición partida, espejada respecto a Bienestar. Destino único a
+         temas.html?topic=planificacion-patrimonial: reúne el ámbito sin
+         convertir vivienda, fiscalidad o jubilación en opciones preferentes;
+         esos destinos siguen en la navegación principal.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="patrimonio" data-screen-label="Patrimonio" class="nv-container home26-plate home26-plate--light home26-plate--reverse" aria-labelledby="titulo-patrimonio">
+      <div class="home26-plate__figure">
+        <img class="home26-plate__art" src="src/assets/home/patrimonio-family-home-20260831.jpeg"
+             alt="" aria-hidden="true" width="2752" height="1536" loading="lazy">
+      </div>
+      <div class="home26-plate__body">
+        <p class="nv-eyebrow">Decisiones de fondo · 02</p>
+        <h2 id="titulo-patrimonio" class="home26-plate__title">Patrimonio</h2>
+        <p class="home26-plate__copy">Vivienda, coste de vida, impuestos y jubilación: información y herramientas para entender el presupuesto familiar, comprender las obligaciones fiscales y explorar los ingresos futuros con perspectiva.</p>
+        <a class="home26-plate__cta" href="temas.html?topic=planificacion-patrimonial">Accede a Patrimonio <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
 
-    <!-- Familia, Salud y Bienestar. Sección nueva, todavía por construir: de
-         momento solo existe el banner. Se marca como tal en vez de aparentar
-         que está terminada. -->
-    <section id="familia-salud" data-screen-label="Familia, Salud y Bienestar" class="nv-section" aria-labelledby="titulo-familia-salud">
-      <div class="nv-container">
-
-        <div class="nv-section-heading">
-          <div>
-            <p class="nv-eyebrow">En preparación</p>
-            <h2 id="titulo-familia-salud">Familia, Salud y Bienestar</h2>
-          </div>
-          <p>Vida familiar, salud y equilibrio cotidiano. Un espacio en preparación para explorar los hábitos, las relaciones y la conciliación entre trabajo y descanso.</p>
-        </div>
-
-        <article data-screen-label="Banner Cuerpo, mente y salud" class="home-section-banner home-section-banner--editorial" aria-labelledby="bienestar-banner-title">
-          <img class="home-section-banner__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
-               alt="" aria-hidden="true" width="1600" height="900" loading="lazy">
-          <div class="home-section-banner__content">
-            <h3 id="bienestar-banner-title" class="home-section-banner__title">Claves para una vida sana y equilibrada</h3>
-            <p class="home-section-banner__copy">Una sección sobre vida familiar, salud mental y física, y equilibrio cotidiano. Un espacio para comprender los hábitos, las relaciones y la conciliación entre familia, trabajo y descanso.</p>
-            <div class="home-section-banner__actions">
-              <a href="temas.html?topic=bienestar" class="home-section-banner__pill">Accede a Familia, Salud y Bienestar <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-        </article>
+    <!-- ══ LÁMINA 03 · FAMILIA, SALUD Y BIENESTAR ════════════════════════════
+         Sección en preparación: el estado se declara con una etiqueta visible
+         sobre la fotografía, sin aparentar que está terminada. Sin etiquetas
+         de materias y con un único enlace educativo, como fija la ficha.
+         Los textos describen temáticas: ningún consejo médico ni terapéutico.
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="familia-salud" data-screen-label="Familia, Salud y Bienestar" class="nv-container home26-plate" aria-labelledby="titulo-familia-salud">
+      <div class="home26-plate__figure">
+        <img class="home26-plate__art" src="src/assets/home/wellbeing-life-balance-banner-v2.webp"
+             alt="" aria-hidden="true" width="1600" height="900" loading="lazy">
+        <span class="home26-plate__badge">En preparación</span>
+      </div>
+      <div class="home26-plate__body">
+        <p class="nv-eyebrow nv-eyebrow--on-dark">Vida y equilibrio · 03</p>
+        <h2 id="titulo-familia-salud" class="home26-plate__title">Familia, Salud y Bienestar</h2>
+        <p class="home26-plate__copy">Vida familiar, salud mental y física y equilibrio cotidiano: un espacio para comprender los hábitos, las relaciones y la conciliación entre familia, trabajo y descanso.</p>
+        <a class="home26-plate__cta" href="temas.html?topic=bienestar">Accede a Familia, Salud y Bienestar <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
 
-    <!-- Academia. Es uno de los tres pilares y hasta ahora no tenía ninguna
-         presencia en la portada. -->
+    <!-- ══ SUMARIO ═══════════════════════════════════════════════════════════
+         Bloque nuevo. Es un índice de navegación a páginas que ya existen:
+         no añade datos, cifras, instrumentos ni recomendaciones, y la
+         numeración solo identifica materias (no ordena por atractivo).
+         ═══════════════════════════════════════════════════════════════════ -->
+    <section id="sumario" data-screen-label="Sumario" class="nv-section nv-section--technical" aria-labelledby="titulo-sumario">
+      <div class="nv-container">
+        <div class="home26-index">
+          <div>
+            <p class="nv-eyebrow" id="titulo-sumario">Sumario</p>
+            <p class="home26-index__note">Dónde se explica cada cosa.</p>
+          </div>
+          <div class="home26-index__list">
+            <a class="home26-index__item" href="vivienda.html"><span>Vivienda y coste de vida</span><span>01</span></a>
+            <a class="home26-index__item" href="mercados.html"><span>Mercados y noticias</span><span>05</span></a>
+            <a class="home26-index__item" href="jubilacion.html"><span>Jubilación</span><span>02</span></a>
+            <a class="home26-index__item" href="cartera.html"><span>Cartera</span><span>06</span></a>
+            <a class="home26-index__item" href="fiscalidad.html"><span>Impuestos</span><span>03</span></a>
+            <a class="home26-index__item" href="temas.html?topic=bienestar"><span>Cuerpo, mente y salud</span><span>07</span></a>
+            <a class="home26-index__item" href="temas.html?topic=planificacion-patrimonial"><span>Planificación patrimonial</span><span>04</span></a>
+            <a class="home26-index__item" href="academia.html?tab=esenciales"><span>Conocimientos esenciales</span><span>08</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ══ ACADEMIA ══════════════════════════════════════════════════════════
+         Sin cambios: la imagen aprobada ya lleva su propia tipografía, así
+         que el bloque es solo la imagen más el acceso discreto «Entrar»
+         (16 px, área de 44 px, blanco sobre imagen oscura).
+         ═══════════════════════════════════════════════════════════════════ -->
     <section id="academia" data-screen-label="Academia" class="nv-section" aria-labelledby="titulo-academia">
       <div class="nv-container">
-
         <div class="nv-section-heading">
           <div>
             <p class="nv-eyebrow">Formación</p>
@@ -245,13 +256,15 @@
         <div class="home-academia">
           <img class="home-academia__art"
                src="src/assets/education/nuvia-academy/nuvia-academy-banner-approved-v2.jpeg"
-               alt="Academy. Saber es patrimonio. Cursos, guías, vídeos y simuladores."
+               alt="Academia. Saber es patrimonio. Cursos, guías, vídeos y simuladores."
                width="3552" height="1184" loading="lazy" decoding="async">
           <a class="home-feature-access home-academia__cta" href="academia.html">Entrar</a>
         </div>
-
       </div>
     </section>
+
+
+    <div class="home26-band" aria-hidden="true"></div>
 
 
     <!-- ══ LECTURAS CON CRITERIO ═════════════════════════════════════════════ -->
@@ -272,6 +285,9 @@
         </div>
       </div>
     </section>
+
+
+    <div class="home26-band" aria-hidden="true"></div>
 
   </main>
 

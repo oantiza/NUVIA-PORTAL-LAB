@@ -9410,3 +9410,320 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
   .tm-card,
   .tm-legacy__card
 ):not(:where(.nv-hero *)):nth-child(6n) { --nv-card-accent: var(--nv-cat-clay); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HOME 2026 · bloques nuevos de la portada
+   Añadir al final de estilos/nuvia-pages.css.
+
+   Prefijo `home26-` para los bloques nuevos: garantiza que no colisiona con
+   ninguna regla existente de nuvia-pages.css / nuvia-components.css.
+   Cabecera, pie, hero, .nv-container, .nv-section y .nv-eyebrow se reutilizan
+   tal cual; aquí no se redefine ninguno.
+   Solo tokens existentes de nuvia-tokens.css. Escritorio y tablet 1024 px.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Hero · encuadre ─────────────────────────────────────────────────────
+   La fotografía es un panorama de 4,6:1. Con el encuadre centrado la familia
+   quedaba fuera; se ancla el recorte a la derecha para que se vea. */
+.home-hero__art { object-position: 78% 50%; }
+
+
+/* ── El proyecto · texto a dos columnas con carril de valores ───────────── */
+.home26-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
+  gap: var(--nv-space-16);
+  align-items: start;
+}
+
+.home26-project__body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--nv-space-10);
+  margin-top: var(--nv-space-10);
+}
+
+.home26-project__body p {
+  margin: 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-body);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.home26-project__aside {
+  border-left: 1px solid color-mix(in srgb, var(--nv-bronze-600) 32%, transparent);
+  padding-left: calc(var(--nv-space-6) + var(--nv-space-1));
+}
+
+.home26-project__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-5);
+  margin-top: var(--nv-space-5);
+}
+
+.home26-project__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--nv-space-3);
+}
+
+.home26-project__num {
+  color: var(--nv-bronze-600);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.home26-project__name {
+  color: var(--nv-text);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+
+/* ── Láminas de ámbito ───────────────────────────────────────────────────
+   Un solo componente con dos composiciones: partida (foto + columna de
+   texto) y a sangre (foto de ancho completo con el texto abajo). Rompe la
+   repetición de los tres banners idénticos sin cambiar contenido ni destinos. */
+.home26-plate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  background: var(--nv-navy-900);
+}
+
+.home26-plate--light { background: var(--nv-cloud); }
+
+.home26-plate + .home26-plate { margin-top: var(--nv-space-5); }
+
+/* Espejo: el texto a la izquierda y la fotografía a la derecha. */
+.home26-plate--reverse { grid-template-columns: 480px minmax(0, 1fr); }
+.home26-plate--reverse .home26-plate__figure { order: 2; }
+.home26-plate--reverse .home26-plate__body { order: 1; }
+
+.home26-plate__figure {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+}
+
+.home26-plate__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home26-plate__badge {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: var(--nv-navy-900);
+  padding: 8px 14px;
+  color: var(--nv-white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.home26-plate__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--nv-space-16) var(--nv-space-12);
+}
+
+.home26-plate__title {
+  margin: 0;
+  color: var(--nv-white);
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -.028em;
+}
+
+.home26-plate--light .home26-plate__title { color: var(--nv-text); }
+
+.home26-plate__copy {
+  max-width: 52ch;
+  margin: var(--nv-space-6) 0 0;
+  color: var(--nv-text-on-dark-soft);
+  font-size: var(--nv-body);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.home26-plate--light .home26-plate__copy { color: var(--nv-text-soft); }
+
+/* Un único acceso por lámina, sin promesa ni preferencia financiera. */
+.home26-plate__cta {
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: var(--nv-space-8);
+  background: var(--nv-white);
+  padding: 14px 26px;
+  color: var(--nv-navy-900);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home26-plate__cta:hover { background: var(--nv-green-100); }
+
+.home26-plate--light .home26-plate__cta {
+  background: var(--nv-navy-900);
+  color: var(--nv-white);
+}
+
+.home26-plate--light .home26-plate__cta:hover { background: var(--nv-navy-800); }
+
+.home26-plate__cta:focus-visible {
+  outline: 2px solid var(--nv-green-500);
+  outline-offset: 3px;
+}
+
+/* Composición a sangre: la fotografía ocupa el ancho y el texto va debajo. */
+.home26-plate--bleed {
+  display: block;
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+}
+
+.home26-plate--bleed .home26-plate__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--nv-navy-950) 20%, transparent) 0%,
+    color-mix(in srgb, var(--nv-navy-950) 52%, transparent) 54%,
+    color-mix(in srgb, var(--nv-navy-950) 93%, transparent) 100%
+  );
+}
+
+.home26-plate--bleed .home26-plate__body {
+  position: absolute;
+  right: calc(var(--nv-space-12) + var(--nv-space-2));
+  bottom: var(--nv-space-10);
+  left: calc(var(--nv-space-12) + var(--nv-space-2));
+  padding: 0;
+}
+
+.home26-plate--bleed .home26-plate__title {
+  max-width: 24ch;
+  font-size: 44px;
+}
+
+.home26-plate__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(var(--nv-space-12) + var(--nv-space-2));
+  margin-top: var(--nv-space-6);
+}
+
+.home26-plate--bleed .home26-plate__copy {
+  max-width: 58ch;
+  margin: 0;
+}
+
+.home26-plate--bleed .home26-plate__cta {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+
+/* ── Sumario ─────────────────────────────────────────────────────────────
+   Índice de navegación a páginas existentes. No añade datos, cifras ni
+   ordenación por atractivo: la numeración solo identifica materias. */
+.home26-index {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: calc(var(--nv-space-12) + var(--nv-space-2));
+}
+
+.home26-index__note {
+  margin: var(--nv-space-3) 0 0;
+  color: var(--nv-text-muted);
+  font-size: var(--nv-body-sm);
+  line-height: 1.6;
+}
+
+.home26-index__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 calc(var(--nv-space-12) + var(--nv-space-2));
+}
+
+.home26-index__item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--nv-line);
+  padding: var(--nv-space-5) 0;
+  color: var(--nv-text);
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.home26-index__item:hover { border-bottom-color: var(--nv-navy-900); }
+
+.home26-index__item:focus-visible {
+  outline: 2px solid var(--nv-green-500);
+  outline-offset: 3px;
+}
+
+.home26-index__item > span:last-child {
+  color: var(--nv-bronze-600);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+
+/* ── Franja de respiro entre bloques editoriales ───────────────────────── */
+.home26-band {
+  height: 64px;
+  background: var(--nv-mist);
+}
+
+
+/* ── Tablet 1024 px ──────────────────────────────────────────────────────
+   El producto se revisa en escritorio y tablet: aquí las rejillas fijas
+   pasan a una columna y no debe aparecer desplazamiento horizontal. */
+@media (max-width: 1024px) {
+  .home26-project,
+  .home26-index { grid-template-columns: minmax(0, 1fr); gap: var(--nv-space-10); }
+
+  .home26-project__body,
+  .home26-index__list { grid-template-columns: minmax(0, 1fr); }
+
+  .home26-project__aside {
+    border-top: 1px solid color-mix(in srgb, var(--nv-bronze-600) 32%, transparent);
+    border-left: 0;
+    padding-top: var(--nv-space-6);
+    padding-left: 0;
+  }
+
+  .home26-plate,
+  .home26-plate--reverse { grid-template-columns: minmax(0, 1fr); }
+
+  .home26-plate--reverse .home26-plate__figure,
+  .home26-plate--reverse .home26-plate__body { order: initial; }
+
+  .home26-plate__figure { min-height: 340px; }
+  .home26-plate__body { padding: var(--nv-space-10) var(--nv-space-8); }
+  .home26-plate__title,
+  .home26-plate--bleed .home26-plate__title { font-size: 30px; }
+
+  .home26-plate--bleed { height: 460px; }
+
+  .home26-plate--bleed .home26-plate__body {
+    right: var(--nv-space-8);
+    left: var(--nv-space-8);
+  }
+
+  .home26-plate__row { flex-direction: column; align-items: flex-start; gap: var(--nv-space-6); }
+}

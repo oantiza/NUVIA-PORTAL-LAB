@@ -100,7 +100,7 @@ for (const name of (await readdir(root)).filter((name) => name.endsWith('.html')
 }
 assert.ok(checked >= 15, 'Comprobar todas las páginas públicas del portal');
 const home = await read('index.html');
-assert.match(home, /<h2 id="titulo-mercados">Economía y Finanzas<\/h2>/, 'Nombre de sección igual que el menú');
+assert.match(home, /<h2 id="titulo-mercados"[^>]*>Economía y Finanzas<\/h2>/, 'Nombre de sección igual que el menú');
 const about = await read('que-es-nuvia.html');
 assert.match(about, /<h1 id="que-nuvia-title"><span>¿Qué es<\/span> NUVIA\?<\/h1>/, 'La página institucional tiene un único título principal');
 assert.match(about, /NUVIA es un lugar donde las familias aprenden a entender su dinero\./, 'La definición principal está publicada');
