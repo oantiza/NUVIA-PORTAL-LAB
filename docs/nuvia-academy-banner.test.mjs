@@ -115,8 +115,10 @@ for (const id of ['mercados', 'patrimonio', 'familia-salud']) {
   assert.match(section(id), /class="[^"]*nv-container[^"]*home26-plate/,
     `${id}: comparte el contenedor fijo y centrado de Academia y Lecturas`);
 }
-assert.match(homeCss, /\.home26-plate \+ \.home26-plate\s*\{\s*margin-top:\s*var\(--nv-space-5\);\s*\}/,
-  'Las tres láminas quedan separadas por aproximadamente medio centímetro');
+assert.equal((home.match(/class="nv-container nv-eyebrow home26-plate-label"/g) || []).length, 3,
+  'Los tres rótulos se sitúan fuera y encima de sus respectivas láminas');
+assert.match(homeCss, /\.home26-plate-label\s*\{[\s\S]*?margin-top:\s*var\(--nv-space-12\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
+  'Los tres bloques conservan una separación amplia y homogénea');
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
 assert.match(css, /\.home-feature-access\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
