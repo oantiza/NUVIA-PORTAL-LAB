@@ -335,3 +335,17 @@ publicidad, datos personales, IA y conflicto profesional. La jerarquía más dis
 reduce la presión visual y no crea una preferencia financiera. Controles: texto
 exacto, una sola llamada por bloque, ausencia de la clase de botón principal,
 foco visible, contraste sobre ambas imágenes, compilación y publicación oficial.
+
+## Legibilidad de los accesos editoriales · 1 de septiembre de 2026
+
+Revisión previa: VERDE. A petición del usuario se aumenta «Entrar» de 14 a 16 px
+y se garantiza un área de interacción mínima de 44 px en Academia y Lecturas.
+Academia recupera explícitamente el blanco sobre su imagen oscura; Lecturas
+mantiene el azul sobre su superficie clara. No cambian el texto, los destinos,
+el número de enlaces ni su naturaleza informativa.
+
+La modificación es exclusivamente visual y de accesibilidad. No incorpora
+instrumentos, cálculos, datos, personalización, recomendación, contratación,
+contacto, publicidad, IA ni derivación profesional. Controles: tamaño compartido,
+contraste específico de Academia, foco visible, pruebas estáticas, compilación y
+revisión en escritorio y tablet.

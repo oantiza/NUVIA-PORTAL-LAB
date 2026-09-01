@@ -1198,17 +1198,8 @@
   height: auto;
 }
 
-.home-academia__cta {
-  color: var(--nv-white);
-}
-
-@media (max-width: 900px) {
-  .home-academia__cta {
-    left: var(--nv-space-4);
-  }
-}
-
-/* Acceso editorial secundario: deliberadamente más silencioso que las píldoras. */
+/* Acceso editorial secundario: sobrio, pero con tamaño y área de interacción
+   suficientes para que se reconozca con claridad en escritorio y tablet. */
 .home-feature-access {
   position: absolute;
   z-index: 1;
@@ -1217,13 +1208,22 @@
   display: inline-flex;
   align-items: center;
   gap: var(--nv-space-3);
+  min-height: 44px;
+  padding-inline: var(--nv-space-1);
   color: inherit;
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-body);
   font-weight: var(--nv-weight-action);
   letter-spacing: .04em;
   line-height: 1;
   text-decoration: none;
   transition: color .2s ease, gap .2s ease;
+}
+
+/* Esta regla debe ir después del color compartido: el fondo de Academia es
+   oscuro y el acceso necesita conservar siempre el contraste blanco. */
+.home-academia__cta {
+  color: var(--nv-white);
+  text-shadow: 0 1px 8px rgb(0 0 0 / 55%);
 }
 
 .home-feature-access::before {

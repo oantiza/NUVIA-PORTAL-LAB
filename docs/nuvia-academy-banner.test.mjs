@@ -10,6 +10,7 @@ const asset = 'src/assets/education/nuvia-academy/nuvia-academy-banner-approved-
 const expectedHash = '58405702998e4e388432c83f75d55ff6ecbeaf920bf40b51075c863e9018200b';
 const html = await readFile(resolve(root, 'academia.html'), 'utf8');
 const home = await readFile(resolve(root, 'index.html'), 'utf8');
+const homeStyles = await readFile(resolve(root, 'estilos/nuvia-pages.css'), 'utf8');
 const bytes = await readFile(resolve(root, asset));
 const header = html.match(/<section\b[^>]*id="academy"[\s\S]*?<\/section>/)?.[0];
 assert.ok(header, 'Academia debe conservar su cabecera y ancla');
@@ -27,6 +28,10 @@ assert.ok(homeAcademy.includes('href="academia.html"'), 'El banner debe seguir e
 assert.match(homeAcademy, /<h2 id="titulo-academia">ACADEMIA<\/h2>/, 'El título exterior usa el nombre solicitado');
 assert.match(homeAcademy, /class="home-feature-access home-academia__cta"[^>]*>Entrar<\/a>/,
   'Academia usa el acceso editorial discreto');
+assert.match(homeStyles, /\.home-feature-access\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
+  'El acceso compartido conserva tamaño legible y un área de interacción suficiente');
+assert.match(homeStyles, /\.home-academia__cta\s*\{[\s\S]*?color:\s*var\(--nv-white\);/,
+  'El acceso de Academia mantiene contraste blanco sobre el banner oscuro');
 assert.equal((homeAcademy.match(/<a\b/g) ?? []).length, 1, 'Academia tiene un único enlace');
 assert.doesNotMatch(homeAcademy, /home-section-banner__pill|Entrar en la Academia|Accede a Academia/,
   'Se retiran los formatos de acceso anteriores');
