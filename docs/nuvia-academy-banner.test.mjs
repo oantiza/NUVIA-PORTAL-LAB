@@ -34,6 +34,8 @@ assert.match(readingsAccess, /<a class="home-lecturas" href="lecturas\.html" ari
   'lecturas-con-criterio: texto accesible y destino exactos');
 
 const hero = section('inicio');
+assert.match(home, /estilos\/nuvia-pages\.css\?v=home-2026-0901-r3/,
+  'Inicio fuerza la descarga de los estilos visuales corregidos');
 assert.ok(hero?.includes('class="nv-hero nv-hero--photo home-hero"'), 'El hero conserva su componente');
 assert.ok(hero.includes('Información clara,<br>decisiones con propósito.'), 'El hero conserva el titular');
 assert.ok(hero.includes('{{ barraPilares }}') && hero.includes('home-pillars'), 'El hero conserva la franja configurable');
