@@ -808,7 +808,6 @@
 .home-hero__veil {
   background:
     linear-gradient(95deg, rgba(28, 58, 94, .94) 0%, rgba(28, 58, 94, .85) 32%, rgba(28, 58, 94, .48) 56%, rgba(28, 58, 94, .14) 78%),
-    linear-gradient(0deg, var(--nv-bg) 0%, color-mix(in srgb, var(--nv-bg) 60%, transparent) 5%, transparent 12%),
     linear-gradient(0deg, rgba(28, 58, 94, .55) 0%, transparent 42%);
 }
 
@@ -9435,7 +9434,7 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 
 
 /* ── El proyecto · texto a dos columnas con carril de valores ───────────── */
-.home26-project-section { padding-top: 0; }
+.home26-project-section { padding-top: var(--nv-space-12); }
 
 .home26-project {
   display: grid;

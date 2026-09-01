@@ -40,10 +40,10 @@ assert.ok(hero.includes('{{ barraPilares }}') && hero.includes('home-pillars'), 
 assert.match(css.slice(css.indexOf('HOME 2026')), /\.home-hero__art\s*\{\s*object-position:\s*78% 50%;\s*\}/,
   'El único ajuste del hero es su encuadre');
 const heroVeilRule = css.match(/\.home-hero__veil\s*\{\s*background:([\s\S]*?)\n\}/)?.[1];
-assert.ok(heroVeilRule?.includes('linear-gradient(0deg, var(--nv-bg) 0%'),
-  'El degradado inferior del hero termina en el fondo azul general');
-assert.ok(!heroVeilRule.includes('linear-gradient(0deg, var(--nv-cloud)'),
-  'El hero no conserva una franja blanquecina en su base');
+assert.ok(heroVeilRule?.includes('linear-gradient(0deg, rgba(28, 58, 94, .55) 0%'),
+  'El degradado inferior del hero termina en azul oscuro');
+assert.ok(!/linear-gradient\(0deg,\s*var\(--nv-(?:bg|cloud)\)/.test(heroVeilRule),
+  'El hero no conserva una franja clara en su base');
 
 const project = section('que-es-nuvia');
 assert.ok(project?.includes('class="nv-section home26-project-section"'),
@@ -106,8 +106,10 @@ assert.match(tokens, /--nv-bg:\s*var\(--nv-mist\)/, 'El fondo global usa la brum
 
 const homeCss = css.slice(css.indexOf('HOME 2026'));
 assert.ok(homeCss.length > 0, 'El bloque HOME 2026 está al final de la hoja');
-assert.match(homeCss, /\.home26-project-section\s*\{\s*padding-top:\s*0;\s*\}/,
-  'No queda relleno superior entre el hero y El proyecto');
+assert.match(homeCss, /\.home26-project-section\s*\{\s*padding-top:\s*var\(--nv-space-12\);\s*\}/,
+  'El proyecto conserva un espacio moderado respecto al hero');
+assert.doesNotMatch(css, /linear-gradient\(0deg,\s*var\(--nv-bg\)/,
+  'El hero no crea una franja clara en su fundido inferior');
 assert.doesNotMatch(homeCss, /#[0-9a-f]{3,8}\b|rgba?\(/i, 'HOME 2026 solo usa colores mediante tokens');
 assert.match(homeCss, /@media\s*\(max-width:\s*1024px\)/, 'Existe el ajuste de tablet a 1024 px');
 assert.doesNotMatch(homeCss, /@media\s*\(max-width:\s*(?:[0-9]{1,3})px\)/, 'No se crea una versión móvil');
