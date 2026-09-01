@@ -83,11 +83,11 @@ for (const name of (await readdir(root)).filter((name) => name.endsWith('.html')
     id, label, children: linksIn(content)
   })), expectedGroups, name + ': estructura común del menú');
   assert.deepEqual(linksIn(nav), [
-    ['index.html', 'Inicio'],
     ...expectedGroups.flatMap((group) => group.children),
-    ['lecturas.html', 'Lecturas'],
+    ['lecturas.html', 'Lecturas con Criterio'],
     ['que-es-nuvia.html', 'Qué es NUVIA']
   ], name + ': no quedan categorías antiguas o duplicadas');
+  assert.doesNotMatch(nav, />Inicio<\/a>/, name + ': Inicio no aparece como sección del menú');
   for (const [href] of linksIn(nav)) await access(resolve(root, href.split(/[?#]/)[0]));
   assert.doesNotMatch(nav, /vista=companies|Gestión de cartera|Temas clave|Curso ·/,
     name + ': el menú superior no expone opciones retiradas');

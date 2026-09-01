@@ -73,7 +73,7 @@ for (const href of [
 const academy = section('academia');
 assert.doesNotMatch(academy, /nv-section-heading|titulo-academia|<h2\b/,
   'Academia elimina la cabecera exterior y su espacio');
-assert.match(academy, /class="nv-eyebrow home26-showcase__label">Academia<\/p>/,
+assert.match(academy, /class="nv-eyebrow home26-showcase__label">Formación<\/p>/,
   'Academia recupera únicamente su rótulo compacto');
 const academyBanner = academy.match(/<div class="home-academia">[\s\S]*?<\/div>/)?.[0];
 assert.ok(academyBanner, 'Academia conserva su banner');
@@ -84,7 +84,7 @@ assert.match(academyBanner, /class="home-feature-access home-academia__cta"[^>]*
 const readings = section('lecturas-con-criterio');
 assert.doesNotMatch(readings, /nv-section-heading|titulo-lecturas|<h2\b/,
   'Lecturas elimina la cabecera exterior y su espacio');
-assert.match(readings, /class="nv-eyebrow home26-showcase__label">Lecturas con Criterio<\/p>/,
+assert.match(readings, /class="nv-eyebrow home26-showcase__label">Sección editorial<\/p>/,
   'Lecturas recupera únicamente su rótulo compacto');
 const readingsBanner = readings.match(/<a class="home-lecturas"[\s\S]*?<\/a>/)?.[0];
 assert.ok(readingsBanner, 'Lecturas conserva su banner');
@@ -117,14 +117,14 @@ for (const id of ['mercados', 'patrimonio', 'familia-salud']) {
 }
 assert.equal((home.match(/class="nv-container nv-eyebrow home26-plate-label"/g) || []).length, 3,
   'Los tres rótulos se sitúan fuera y encima de sus respectivas láminas');
-for (const label of ['Economía y Finanzas', 'Patrimonio', 'Familia, Salud y Bienestar', 'Academia', 'Lecturas con Criterio']) {
-  assert.match(home, new RegExp(`class="[^"]*(?:home26-plate-label|home26-showcase__label)[^"]*">${label}<`),
-    `El encabezado editorial muestra ${label}`);
+for (const label of ['Resumen estratégico', 'Decisiones de fondo', 'Vida y equilibrio']) {
+  assert.match(home, new RegExp(`class="[^"]*home26-plate-label[^"]*">${label}<`),
+    `El rótulo exterior muestra ${label}`);
 }
 assert.doesNotMatch(home, /home26-(?:plate-label|showcase__label)[^>]*>[^<]*·\s*0[1-5]</,
   'Los cinco encabezados editoriales no muestran numeración');
-assert.match(homeCss, /\.home26-plate-label\s*\{[\s\S]*?margin-top:\s*var\(--nv-space-12\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
-  'Los tres bloques conservan una separación amplia y homogénea');
+assert.match(homeCss, /\.home26-plate-label\s*\{[\s\S]*?margin-top:\s*calc\(var\(--nv-space-12\) \+ var\(--nv-space-1\)\);[\s\S]*?margin-bottom:\s*var\(--nv-space-5\);/,
+  'Los tres bloques conservan una separación ligeramente más amplia y homogénea');
 assert.match(homeCss, /\.home26-plate__cta:focus-visible\s*\{[\s\S]*?outline:/, 'Las tres láminas tienen foco visible');
 assert.match(css, /\.home-feature-access:focus-visible\s*\{[\s\S]*?outline:/, 'Academia y Lecturas tienen foco visible');
 assert.match(css, /\.home-feature-access\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?font-size:\s*var\(--nv-body\);/,
@@ -148,7 +148,7 @@ for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {
 const assets = new Map([
   ['src/assets/home/hero-family-finance-compact.webp', 'f143b8f10ec4326b462a481599a8ea26fd3fe5738f535f11cab7aa4ef7c33aa7'],
   ['src/assets/markets/secondary-news/wall-street-records.jpg', '4b0a025883086aab03b5f2c105b79f38dbacd1a23a7ae518260f6c83032f5cce'],
-  ['src/assets/home/patrimonio-family-home-20260831.jpeg', '266084da5a5427255a715ef8070df66e00054f21dc795a17bc6beba6cc82be75'],
+  ['src/assets/home/patrimonio-family-home-young-family-20260901.png', '494b50fcadb83be96368f2fff2b3d87d0aa44335d81969e514282b3500a1dbf0'],
   ['src/assets/home/wellbeing-life-balance-banner-v2.webp', '7af9d0ab2c2b0af67f9b7bc3665a40d3028bf8c87f6f4d88571ebd73f1ef6941'],
   ['src/assets/education/nuvia-academy/nuvia-academy-banner-2026.jpeg', 'b3a1f474a2cdf4fa2e082b051d2da1721c9507b3a4a57c137adfaa2b440c2912'],
   ['src/assets/home/lecturas-con-criterio-banner-2026.png', 'd6b51984f6cdf724f7e7351dde748c5cd16af4ee57d3e55bc3e39371bde85003'],
