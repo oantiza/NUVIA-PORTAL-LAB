@@ -25,10 +25,11 @@ assert.ok(homeAcademy.includes('width="3552" height="1184"'), 'Debe reservarse l
 assert.ok(homeAcademy.includes('alt="Academy. Saber es patrimonio.'), 'La imagen necesita texto alternativo');
 assert.ok(homeAcademy.includes('href="academia.html"'), 'El banner debe seguir enlazando a Academia');
 assert.match(homeAcademy, /<h2 id="titulo-academia">ACADEMIA<\/h2>/, 'El título exterior usa el nombre solicitado');
-assert.match(homeAcademy, /class="home-section-banner__pill home-academia__cta"[^>]*>Accede a Academia/,
-  'Academia usa el acceso unificado');
+assert.match(homeAcademy, /class="home-feature-access home-academia__cta"[^>]*>Entrar<\/a>/,
+  'Academia usa el acceso editorial discreto');
 assert.equal((homeAcademy.match(/<a\b/g) ?? []).length, 1, 'Academia tiene un único enlace');
-assert.doesNotMatch(homeAcademy, /Entrar en la Academia/, 'Se retira el formato de acceso anterior');
+assert.doesNotMatch(homeAcademy, /home-section-banner__pill|Entrar en la Academia|Accede a Academia/,
+  'Se retiran los formatos de acceso anteriores');
 const homeHero = home.match(/<section\b[^>]*id="inicio"[\s\S]*?<\/section>/)?.[0];
 assert.ok(homeHero?.includes('hero-family-finance-compact.webp'), 'El hero fotográfico principal no debe sustituirse');
 assert.ok(!homeHero.includes(asset), 'El banner no debe ocupar el hero principal');

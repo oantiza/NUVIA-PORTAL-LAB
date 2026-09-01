@@ -1199,16 +1199,56 @@
 }
 
 .home-academia__cta {
-  position: absolute;
-  z-index: 1;
-  right: var(--nv-space-8);
-  bottom: var(--nv-space-8);
-  backdrop-filter: blur(6px);
+  color: var(--nv-white);
 }
 
 @media (max-width: 900px) {
   .home-academia__cta {
-    right: var(--nv-space-4);
+    left: var(--nv-space-4);
+  }
+}
+
+/* Acceso editorial secundario: deliberadamente más silencioso que las píldoras. */
+.home-feature-access {
+  position: absolute;
+  z-index: 1;
+  left: var(--nv-space-8);
+  bottom: var(--nv-space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-space-3);
+  color: inherit;
+  font-size: var(--nv-body-sm);
+  font-weight: var(--nv-weight-action);
+  letter-spacing: .04em;
+  line-height: 1;
+  text-decoration: none;
+  transition: color .2s ease, gap .2s ease;
+}
+
+.home-feature-access::before {
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transition: width .2s ease;
+}
+
+.home-feature-access:hover {
+  gap: var(--nv-space-4);
+  color: var(--nv-green-300);
+}
+
+.home-feature-access:hover::before { width: 32px; }
+
+.home-feature-access:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+
+@media (max-width: 900px) {
+  .home-feature-access {
+    left: var(--nv-space-4);
     bottom: var(--nv-space-4);
   }
 }
@@ -1641,18 +1681,7 @@
 }
 
 .home-lecturas__cta {
-  position: absolute;
-  z-index: 1;
-  left: var(--nv-space-8);
-  bottom: var(--nv-space-8);
-  background: color-mix(in srgb, var(--nv-navy-950) 90%, transparent);
-}
-
-@media (max-width: 900px) {
-  .home-lecturas__cta {
-    left: var(--nv-space-4);
-    bottom: var(--nv-space-4);
-  }
+  color: var(--nv-navy-950);
 }
 
 /* ── Qué es NUVIA ────────────────────────────────────────────────────────── */

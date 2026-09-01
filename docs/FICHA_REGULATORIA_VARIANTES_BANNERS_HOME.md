@@ -321,3 +321,17 @@ Revisión previa: VERDE.
 
 La modificación es de navegación y presentación, mantiene clasificación VERDE y
 se publicará mediante el canal oficial de GitHub Pages tras las puertas de control.
+
+## Accesos editoriales discretos · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Por petición posterior, Academia y Lecturas se separan
+visualmente del patrón de botones de los tres ámbitos anteriores. Ambos mantienen
+un único enlace interno, alineado abajo a la izquierda, sin fondo de cápsula y con
+la única palabra «Entrar». Los destinos no cambian.
+
+La prueba regulatoria conserva respuestas negativas para instrumentos, emisores,
+personalización, recomendación, valoración, ranking, contratación, contacto,
+publicidad, datos personales, IA y conflicto profesional. La jerarquía más discreta
+reduce la presión visual y no crea una preferencia financiera. Controles: texto
+exacto, una sola llamada por bloque, ausencia de la clase de botón principal,
+foco visible, contraste sobre ambas imágenes, compilación y publicación oficial.

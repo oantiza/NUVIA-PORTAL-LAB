@@ -11,10 +11,11 @@ const section = home.match(/<section\b[^>]*id="lecturas-con-criterio"[\s\S]*?<\/
 assert.ok(section?.includes(`src="${asset}"`), 'Inicio usa el paisaje limpio sin el botón rasterizado');
 assert.ok(section.includes('href="lecturas.html"'), 'El banner conserva el acceso a Lecturas');
 assert.match(section, /<h2 id="titulo-lecturas">LECTURAS CON CRITERIO<\/h2>/, 'El título exterior usa el nombre solicitado');
-assert.match(section, /class="home-section-banner__pill home-lecturas__cta"[^>]*>Accede a Lecturas con criterio/,
-  'Lecturas usa el acceso unificado');
+assert.match(section, /class="home-feature-access home-lecturas__cta"[^>]*>Entrar<\/a>/,
+  'Lecturas usa el acceso editorial discreto');
 assert.equal((section.match(/<a\b/g) ?? []).length, 1, 'Lecturas tiene un único enlace');
-assert.doesNotMatch(section, /Explorar Lecturas|Abrir Lecturas/, 'Se retiran los formatos de acceso anteriores');
+assert.doesNotMatch(section, /home-section-banner__pill|Explorar Lecturas|Abrir Lecturas|Accede a Lecturas/,
+  'Se retiran los formatos de acceso anteriores');
 assert.ok(section.includes('alt="" aria-hidden="true"'), 'El paisaje decorativo no duplica el título accesible');
 assert.ok(section.includes('width="2120" height="404"'), 'Se reserva la proporción del paisaje limpio');
 assert.ok(!section.includes('lecturas-con-criterio-banner-approved.jpeg'), 'No reintroducir la imagen con letras deformadas');
