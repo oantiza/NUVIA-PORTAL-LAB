@@ -191,11 +191,11 @@
   --nv-bronze-200: #dcc59c;
 
   /* Superficies */
-  --nv-cloud: #f4f6f9;        /* fondo general */
+  --nv-cloud: #f4f6f9;        /* superficie clara secundaria */
   --nv-white: #ffffff;        /* tarjetas y superficies */
   --nv-paper: #f3eedf;        /* papel cálido editorial */
   --nv-paper-light: #faf7ee;
-  --nv-mist: #e8edf3;         /* superficie técnica fría */
+  --nv-mist: #e8edf3;         /* fondo general azul frío */
 
   /* Tinta y filetes */
   --nv-ink: #0b2347;
@@ -362,7 +362,7 @@
   --nv-surface-technical: var(--nv-mist);
   --nv-surface-editorial: var(--nv-paper-light);
   --nv-surface-deep: var(--nv-navy-900);
-  --nv-bg: var(--nv-cloud);
+  --nv-bg: var(--nv-mist);
 
   /* Acción */
   --nv-action-primary-bg: var(--nv-navy-900);

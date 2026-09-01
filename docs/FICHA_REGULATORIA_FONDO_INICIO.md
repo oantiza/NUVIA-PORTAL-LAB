@@ -62,3 +62,18 @@ Patrimonio, Familia y Academia. Sin cambios de contenido ni navegación.
 - No se han cambiado estilos globales ni páginas interiores. La auditoría
   general de render sigue omitida por falta de Playwright; se ha realizado
   la comprobación visual acotada con el navegador disponible.
+
+## Sustitución global por el fondo azul claro · 1 de septiembre de 2026
+
+La petición posterior del usuario amplía expresamente el alcance a toda la web
+y sustituye el fondo general casi blanco por la superficie técnica azul claro
+ya existente `--nv-mist` (`#e8edf3`). Esta decisión reemplaza, desde esta fecha,
+la asignación anterior de `--nv-cloud` como fondo general.
+
+Clasificación previa: VERDE. Es un cambio cromático neutral y homogéneo; no
+añade datos, instrumentos, cálculos, recomendaciones, jerarquías de atractivo,
+personalización, contactos, contratación, publicidad, IA ni tratamiento de
+datos. Se modifica solo el rol semántico `--nv-bg`; las tarjetas, banners,
+cabeceras oscuras y superficies con función propia conservan sus colores y
+contrastes. Controles: asignación exacta del token, compilación completa,
+ausencia de fondos blancos de página y revisión de escritorio/tablet.

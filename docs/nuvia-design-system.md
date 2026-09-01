@@ -23,7 +23,8 @@ Estado: propuesta de fase 1. No aplicada todavía a las páginas públicas.
 - Verde criterio `#7C9A44`: acciones, estados y progreso.
 - Papel cálido `#F3EEDF`: contenido editorial.
 - Bronce sereno `#B69152`: detalles editoriales y filetes.
-- Nube `#F4F6F9`: fondo general.
+- Bruma `#E8EDF3`: fondo general azul frío.
+- Nube `#F4F6F9`: superficie clara secundaria.
 - Blanco `#FFFFFF`: superficies y tarjetas.
 - Texto secundario `#40506A`: lectura y descripciones.
 

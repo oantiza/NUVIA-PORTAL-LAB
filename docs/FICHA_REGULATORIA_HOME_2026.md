@@ -150,3 +150,16 @@ Revisión previa: VERDE. Los banners de Academia y Lecturas pasan a tener
 esquinas cuadradas y se elimina la referencia «Lámina 01» del rótulo de
 Economía y Finanzas, que queda como «Resumen estratégico». Son cambios de
 presentación sin impacto funcional, financiero ni regulatorio.
+
+## Rótulos compactos de Academia y Lecturas · 1 de septiembre de 2026
+
+Revisión previa: VERDE. Se incorporan los rótulos editoriales «Formación» y
+«Sección editorial» sobre sus respectivos banners, reutilizando el componente
+visual existente de línea y texto verde. No se recuperan títulos, descripciones
+ni accesos adicionales y se aprovecha el espacio superior ya reservado por las
+secciones. El cambio no incorpora datos, instrumentos, recomendaciones,
+personalización, contacto, contratación, publicidad ni IA.
+
+La ampliación solicitada a continuación para el fondo general se documenta en
+`FICHA_REGULATORIA_FONDO_INICIO.md`: el rol global pasa de nube a bruma azul
+mediante un token ya existente, sin alterar el contenido de estas secciones.

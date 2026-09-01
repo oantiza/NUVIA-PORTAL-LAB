@@ -9690,6 +9690,13 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
 
 
 /* ── Franja de respiro entre bloques editoriales ───────────────────────── */
+.home26-showcase { padding-top: var(--nv-space-12); }
+
+.home26-showcase__label {
+  margin: 0 0 var(--nv-space-4);
+  color: var(--nv-text-link);
+}
+
 .home26-band {
   height: 64px;
   background: var(--nv-mist);
@@ -9700,6 +9707,8 @@ h3.gu-strong { font-size: var(--nv-body-lg); }
    El producto se revisa en escritorio y tablet: aquí las rejillas fijas
    pasan a una columna y no debe aparecer desplazamiento horizontal. */
 @media (max-width: 1024px) {
+  .home26-showcase { padding-top: var(--nv-space-8); }
+
   .home26-project,
   .home26-index { grid-template-columns: minmax(0, 1fr); gap: var(--nv-space-10); }
 

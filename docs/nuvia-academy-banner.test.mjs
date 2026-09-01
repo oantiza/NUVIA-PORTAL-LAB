@@ -66,6 +66,8 @@ for (const href of [
 const academy = section('academia');
 assert.doesNotMatch(academy, /nv-section-heading|titulo-academia|<h2\b/,
   'Academia elimina la cabecera exterior y su espacio');
+assert.match(academy, /class="nv-eyebrow home26-showcase__label">Formación<\/p>/,
+  'Academia recupera únicamente su rótulo compacto');
 const academyBanner = academy.match(/<div class="home-academia">[\s\S]*?<\/div>/)?.[0];
 assert.ok(academyBanner, 'Academia conserva su banner');
 assert.doesNotMatch(academyBanner, /<h[1-6]\b|<p\b/, 'Academia no superpone título ni descripción');
@@ -75,6 +77,8 @@ assert.match(academyBanner, /class="home-feature-access home-academia__cta"[^>]*
 const readings = section('lecturas-con-criterio');
 assert.doesNotMatch(readings, /nv-section-heading|titulo-lecturas|<h2\b/,
   'Lecturas elimina la cabecera exterior y su espacio');
+assert.match(readings, /class="nv-eyebrow home26-showcase__label">Sección editorial<\/p>/,
+  'Lecturas recupera únicamente su rótulo compacto');
 const readingsBanner = readings.match(/<a class="home-lecturas"[\s\S]*?<\/a>/)?.[0];
 assert.ok(readingsBanner, 'Lecturas conserva su banner');
 assert.doesNotMatch(readingsBanner, /<h[1-6]\b|<p\b/, 'Lecturas no superpone título ni descripción');
@@ -91,7 +95,7 @@ assert.match(css, /\.home26-plate--light\s*\{\s*background:\s*var\(--nv-cloud\);
   'La lámina clara conserva el fondo nube');
 assert.match(css, /\.home26-band\s*\{[\s\S]*?background:\s*var\(--nv-mist\);/,
   'Las franjas usan el fondo técnico');
-assert.match(tokens, /--nv-bg:\s*var\(--nv-cloud\)/, 'El fondo global sigue siendo nube');
+assert.match(tokens, /--nv-bg:\s*var\(--nv-mist\)/, 'El fondo global usa la bruma azul solicitada');
 
 const homeCss = css.slice(css.indexOf('HOME 2026'));
 assert.ok(homeCss.length > 0, 'El bloque HOME 2026 está al final de la hoja');
@@ -114,6 +118,10 @@ assert.match(css, /\.home-academia\s*\{[\s\S]*?border-radius:\s*0;/,
   'Academia usa esquinas cuadradas');
 assert.match(css, /\.home-lecturas\s*\{[\s\S]*?border-radius:\s*0;/,
   'Lecturas usa esquinas cuadradas');
+assert.match(homeCss, /\.home26-showcase__label\s*\{[\s\S]*?color:\s*var\(--nv-text-link\);/,
+  'Los dos rótulos usan el verde accesible del sistema');
+assert.match(homeCss, /\.home26-showcase\s*\{\s*padding-top:\s*var\(--nv-space-12\);\s*\}/,
+  'Los rótulos aprovechan el espacio superior de los banners');
 
 const definedTokens = new Set([...tokens.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => `--${match[1]}`));
 for (const match of homeCss.matchAll(/var\((--[a-z0-9-]+)/gi)) {
