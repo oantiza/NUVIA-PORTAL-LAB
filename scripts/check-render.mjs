@@ -59,6 +59,8 @@ const CONTENIDO = {
   'cartera.html':          [['.nuvia-analysis-tabs a', 3]],
   'cartera.html?vista=models': [['.nv-modelos__tarjeta', 4], ['.nuvia-analysis-tabs a', 3]],
   'academia.html':         [['.ac-strong', 1], ['.viv-pill', 2], ['.ac-x10', 1]],
+  'academia.html?tab=activos': [['.ac-subtab', 3], ['[role="tabpanel"]', 1]],
+  'academia.html?tab=glosario': [['.ac-tab', 2], ['[role="tabpanel"]', 1]],
   'temas.html':            [['.tm-card__title', 3]],
   'temas.html?topic=bienestar': [['#tema-titulo', 1], ['.tm-wellbeing', 1], ['.tm-pillar', 5]],
   'temas.html?topic=planificacion-patrimonial': [['#tema-titulo', 1], ['.tm-pills .viv-pill', 4], ['.tm-card__title', 3]],
@@ -86,12 +88,15 @@ const RUIDO_CONOCIDO = /<(polyline|polygon|path|circle|rect|line)>\s+attribute\s
 const RUIDO_EXTERNO = /ERR_TUNNEL|ERR_BLOCKED|ERR_NAME|Failed to load resource|tradingview|fonts\.googleapis|identitytoolkit|Permissions policy violation: compute-pressure is not allowed in this document/i;
 const ERRORES_ESPERADOS = {
   'academia.html': 10,
+  'academia.html?tab=activos': 10,
+  'academia.html?tab=glosario': 10,
   'jubilacion.html': 4,
   'fiscalidad.html': 1,
 };
 
 const PAGINAS_BASE = [
   'index.html', 'mercados.html', 'cartera.html', 'academia.html', 'curso.html',
+  'academia.html?tab=activos', 'academia.html?tab=glosario',
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
   'temas.html', 'temas.html?topic=bienestar', 'temas.html?topic=planificacion-patrimonial',
   'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
@@ -157,7 +162,7 @@ const MEDIR = (ESC) => {
     }
     return acc;
   }
-  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [] };
+  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [], sinFoco: [], estadosSinSemantica: [], tablists: [] };
   let n = 0;
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el);
@@ -240,6 +245,73 @@ const MEDIR = (ESC) => {
       salida.ayudasSueltas.push(note.textContent.trim().slice(0, 70));
     }
   });
+
+  const focusables = [...document.querySelectorAll([
+    'a[href]', 'button:not([disabled])', 'input:not([disabled]):not([type="hidden"])',
+    'select:not([disabled])', 'textarea:not([disabled])', 'summary',
+    '[contenteditable="true"]', '[tabindex]:not([tabindex="-1"])'
+  ].join(','))].filter(visible);
+  const focusSignature = (element) => {
+    const nodes = [];
+    let node = element;
+    for (let depth = 0; node && depth < 4; depth += 1, node = node.parentElement) {
+      const style = getComputedStyle(node);
+      nodes.push([
+        style.outlineStyle, style.outlineWidth, style.outlineColor,
+        style.boxShadow, style.borderTopColor, style.borderRightColor,
+        style.borderBottomColor, style.borderLeftColor, style.backgroundColor,
+      ].join('|'));
+    }
+    return nodes.join('||');
+  };
+  focusables.forEach((element) => {
+    const explicitTabIndex = element.getAttribute('tabindex');
+    if (explicitTabIndex && Number(explicitTabIndex) > 0) {
+      salida.sinFoco.push(`tabindex positivo en ${element.tagName.toLowerCase()} ${element.className || element.id || ''}`.trim());
+      return;
+    }
+    element.blur();
+    const before = focusSignature(element);
+    element.focus({ preventScroll: true });
+    const after = focusSignature(element);
+    if (document.activeElement !== element) {
+      salida.sinFoco.push(`no recibe foco ${element.tagName.toLowerCase()} ${element.className || element.id || ''}`.trim());
+    } else if (before === after) {
+      salida.sinFoco.push(`sin indicador visible ${element.tagName.toLowerCase()} ${element.className || element.id || ''}`.trim());
+    }
+  });
+
+  document.querySelectorAll('button.is-active, button.is-selected').forEach((button) => {
+    if (!visible(button)) return;
+    if (!['aria-pressed', 'aria-selected', 'aria-current', 'aria-checked'].some((name) => button.hasAttribute(name))) {
+      salida.estadosSinSemantica.push(`${button.className || button.textContent.trim().slice(0, 35)}`);
+    }
+  });
+  document.querySelectorAll('[data-nuvia-toggle-group="true"]').forEach((group) => {
+    if (!visible(group)) return;
+    const buttons = [...group.querySelectorAll(':scope > button')].filter(visible);
+    const pressed = buttons.filter((button) => button.getAttribute('aria-pressed') === 'true');
+    if (pressed.length > 1) {
+      salida.estadosSinSemantica.push(`${group.getAttribute('aria-label') || group.className || 'grupo'}: ${pressed.length} opciones activas`);
+    }
+  });
+  document.querySelectorAll('[role="button"]').forEach((element) => {
+    if (!visible(element) || element.matches('button, input, select, textarea, a[href]')) return;
+    if (element.tabIndex < 0) salida.estadosSinSemantica.push(`role=button no enfocable ${element.className || element.id || ''}`.trim());
+  });
+  document.querySelectorAll('[role="tablist"]').forEach((tabList) => {
+    if (!visible(tabList)) return;
+    const tabs = [...tabList.querySelectorAll(':scope > [role="tab"]')].filter(visible);
+    const selected = tabs.filter((tab) => tab.getAttribute('aria-selected') === 'true');
+    const inOrder = tabs.filter((tab) => tab.tabIndex === 0);
+    if (selected.length !== 1 || inOrder.length !== 1 || selected[0] !== inOrder[0]) {
+      salida.tablists.push(`${tabList.getAttribute('aria-label') || tabList.id || 'sin nombre'}: selección ${selected.length}, orden ${inOrder.length}`);
+    }
+    tabs.forEach((tab) => {
+      const target = tab.getAttribute('aria-controls');
+      if (!target || !document.getElementById(target)) salida.tablists.push(`${tab.textContent.trim().slice(0, 35)} sin panel asociado`);
+    });
+  });
   return salida;
 };
 
@@ -276,6 +348,8 @@ for (const ancho of ANCHOS) {
     const desvio = ruido.length !== esperados
       ? [`el ruido conocido de plantilla pasó de ${esperados} a ${ruido.length} errores`]
       : [];
+    await p.keyboard.press('Tab');
+    await p.keyboard.press('Shift+Tab');
     const r = await p.evaluate(MEDIR, ESCALA);
     const fallos = [];
     for (const it of r.textos) {
@@ -311,8 +385,62 @@ for (const ancho of ANCHOS) {
     }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + faltan.length + nuevos.length + desvio.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    const keyboardTabProblems = await p.evaluate(async () => {
+      const visible = (element) => {
+        const box = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return style.display !== 'none' && style.visibility !== 'hidden' && box.width > 0 && box.height > 0;
+      };
+      const tabList = [...document.querySelectorAll('[role="tablist"]')].find(visible);
+      if (!tabList) return [];
+      const tabs = [...tabList.querySelectorAll(':scope > [role="tab"]')].filter(visible);
+      if (tabs.length < 2) return [];
+      const current = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
+      const expectedIndex = (tabs.indexOf(current) + 1) % tabs.length;
+      const expectedLabel = tabs[expectedIndex].textContent.trim();
+      current.focus({ preventScroll: true });
+      current.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      await new Promise((resolveFrame) => requestAnimationFrame(() => requestAnimationFrame(resolveFrame)));
+      const active = document.activeElement;
+      if (!active?.matches('[role="tab"]') || active.textContent.trim() !== expectedLabel) {
+        return ['la flecha derecha no mueve el foco a la pestaña siguiente'];
+      }
+      if (active.getAttribute('aria-selected') !== 'true') return ['la flecha derecha no activa la pestaña siguiente'];
+      return [];
+    });
+    r.tablists.push(...keyboardTabProblems);
+    const toggleTransitionProblems = await p.evaluate(async () => {
+      const visible = (element) => {
+        const box = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return style.display !== 'none' && style.visibility !== 'hidden' && box.width > 0 && box.height > 0;
+      };
+      const problems = [];
+      const groupCount = [...document.querySelectorAll('[data-nuvia-toggle-group="true"]')].filter(visible).length;
+      for (let groupIndex = 0; groupIndex < groupCount; groupIndex += 1) {
+        const groups = [...document.querySelectorAll('[data-nuvia-toggle-group="true"]')].filter(visible);
+        const group = groups[groupIndex];
+        if (!group) continue;
+        const buttons = [...group.querySelectorAll(':scope > button')].filter((button) => visible(button) && !button.disabled);
+        if (buttons.length < 2) continue;
+        const currentIndex = buttons.findIndex((button) => button.getAttribute('aria-pressed') === 'true');
+        const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % buttons.length : 0;
+        buttons[nextIndex].click();
+        await new Promise((resolveFrame) => requestAnimationFrame(() => requestAnimationFrame(resolveFrame)));
+        const updatedGroups = [...document.querySelectorAll('[data-nuvia-toggle-group="true"]')].filter(visible);
+        const updatedButtons = [...(updatedGroups[groupIndex]?.querySelectorAll(':scope > button') || [])].filter(visible);
+        const pressed = updatedButtons.filter((button) => button.getAttribute('aria-pressed') === 'true');
+        if (pressed.length !== 1) {
+          problems.push(`${group.getAttribute('aria-label') || group.className || 'grupo'}: transición deja ${pressed.length} opciones activas`);
+        } else if (updatedButtons.indexOf(pressed[0]) !== nextIndex) {
+          problems.push(`${group.getAttribute('aria-label') || group.className || 'grupo'}: no activa la opción pulsada`);
+        }
+      }
+      return problems;
+    });
+    r.estadosSinSemantica.push(...toggleTransitionProblems);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + r.sinFoco.length + r.estadosSinSemantica.length + r.tablists.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  foco:${r.sinFoco.length}  estados:${r.estadosSinSemantica.length}  tabs:${r.tablists.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
     for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
@@ -323,6 +451,9 @@ for (const ancho of ANCHOS) {
     for (const x of r.colisiones) problemas.push(`${pag} @${ancho} · colisión de cabecera ${x}`);
     for (const x of r.sinNombre) problemas.push(`${pag} @${ancho} · control sin nombre accesible ${x}`);
     for (const x of r.ayudasSueltas) problemas.push(`${pag} @${ancho} · ayuda no asociada a su control: ${x}`);
+    for (const x of r.sinFoco) problemas.push(`${pag} @${ancho} · foco: ${x}`);
+    for (const x of r.estadosSinSemantica) problemas.push(`${pag} @${ancho} · estado interactivo sin semántica: ${x}`);
+    for (const x of r.tablists) problemas.push(`${pag} @${ancho} · pestañas: ${x}`);
     for (const [k, v] of fugas) problemas.push(`${pag} @${ancho} · fuga del envoltorio ×${v} ${k}`);
   }
   await ctx.close();

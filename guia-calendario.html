@@ -182,8 +182,8 @@
         <div class="gt-filtros">
           <div class="gt-filtros__cabecera">
             <div class="gt-selector" role="group" aria-label="Vista">
-              <button type="button" class="{{ claseAnual }}" onClick="{{ verAnual }}">Vista anual</button>
-              <button type="button" class="{{ claseMes }}" onClick="{{ verMes }}">Qué revisar en {{ mesActual }}</button>
+              <button type="button" class="{{ claseAnual }}" aria-pressed="{{ anualActiva }}" onClick="{{ verAnual }}">Vista anual</button>
+              <button type="button" class="{{ claseMes }}" aria-pressed="{{ mesActiva }}" onClick="{{ verMes }}">Qué revisar en {{ mesActual }}</button>
             </div>
             <button type="button" class="gt-reset" onClick="{{ restablecer }}">Restablecer filtros</button>
           </div>
@@ -472,6 +472,8 @@ class Component extends DCLogic {
 
       claseAnual: 'gt-selector__opcion' + (this.state.vista === 'annual' ? ' is-active' : ''),
       claseMes: 'gt-selector__opcion' + (this.state.vista === 'month' ? ' is-active' : ''),
+      anualActiva: this.state.vista === 'annual',
+      mesActiva: this.state.vista === 'month',
       verAnual: () => this.setState({ vista: 'annual' }),
       verMes: () => this.setState({ vista: 'month' }),
       /* Como en la versión anterior: restablecer limpia situación y categoría,

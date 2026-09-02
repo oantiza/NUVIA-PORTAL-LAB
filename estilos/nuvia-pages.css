@@ -4575,7 +4575,7 @@
 
 .markets-lab__search input:focus {
   border-color: var(--nv-green-600);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nv-green-500) 16%, transparent);
+  box-shadow: var(--nv-focus-ring);
 }
 
 .markets-lab__chips { justify-content: flex-end; }

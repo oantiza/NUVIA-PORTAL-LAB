@@ -96,6 +96,85 @@
     });
   };
 
+  let tabListSequence = 0;
+  const setAttributeIfChanged = (element, name, value) => {
+    if (element.getAttribute(name) !== value) element.setAttribute(name, value);
+  };
+
+  const normalizeToggleGroups = (root) => {
+    if (!root) return;
+    const selector = [
+      '.markets-viewnav',
+      '.markets-tools-nav',
+      '.ac-x04',
+      '.curso-programa',
+      '.tm-pills',
+    ].join(', ');
+    root.querySelectorAll(selector).forEach((group) => {
+      setAttributeIfChanged(group, 'role', 'group');
+      group.dataset.nuviaToggleGroup = 'true';
+      group.querySelectorAll(':scope > button').forEach((button) => {
+        const active = button.classList.contains('is-active')
+          || button.getAttribute('aria-current') === 'page';
+        setAttributeIfChanged(button, 'aria-pressed', String(active));
+        button.removeAttribute('aria-current');
+      });
+    });
+  };
+
+  const tabPanelFor = (tabList) => {
+    const direct = tabList.nextElementSibling;
+    if (direct) return direct;
+    return tabList.parentElement?.nextElementSibling || null;
+  };
+
+  const normalizeTabAccessibility = (root) => {
+    if (!root) return;
+    root.querySelectorAll('[role="tablist"]').forEach((tabList) => {
+      const tabs = [...tabList.querySelectorAll(':scope > [role="tab"]')];
+      if (!tabs.length) return;
+      if (!tabList.id) {
+        tabListSequence += 1;
+        tabList.id = `nuvia-tablist-${tabListSequence}`;
+      }
+      let selected = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
+      tabs.forEach((tab, index) => {
+        if (!tab.id) tab.id = `${tabList.id}-tab-${index + 1}`;
+        const isSelected = tab === selected;
+        setAttributeIfChanged(tab, 'aria-selected', String(isSelected));
+        setAttributeIfChanged(tab, 'tabindex', isSelected ? '0' : '-1');
+      });
+
+      const panel = tabPanelFor(tabList);
+      if (panel) {
+        if (!panel.id) panel.id = `${tabList.id}-panel`;
+        setAttributeIfChanged(panel, 'role', 'tabpanel');
+        setAttributeIfChanged(panel, 'aria-labelledby', selected.id);
+        setAttributeIfChanged(panel, 'aria-live', 'polite');
+        tabs.forEach((tab) => setAttributeIfChanged(tab, 'aria-controls', panel.id));
+      }
+
+      if (tabList.dataset.nuviaKeyboardTabs === 'true') return;
+      tabList.dataset.nuviaKeyboardTabs = 'true';
+      tabList.addEventListener('keydown', (event) => {
+        const currentTabs = [...tabList.querySelectorAll(':scope > [role="tab"]')];
+        const currentIndex = currentTabs.indexOf(event.target.closest('[role="tab"]'));
+        if (currentIndex < 0) return;
+        let nextIndex = currentIndex;
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (currentIndex + 1) % currentTabs.length;
+        else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (currentIndex - 1 + currentTabs.length) % currentTabs.length;
+        else if (event.key === 'Home') nextIndex = 0;
+        else if (event.key === 'End') nextIndex = currentTabs.length - 1;
+        else return;
+        event.preventDefault();
+        currentTabs[nextIndex].tabIndex = 0;
+        currentTabs[currentIndex].tabIndex = -1;
+        currentTabs[nextIndex].focus();
+        currentTabs[nextIndex].click();
+      });
+    });
+  };
+
   const synchronizeNavigation = (nav, currentRoute, activeArea) => {
     nav.querySelectorAll('[data-nav-area]').forEach((group) => {
       group.classList.toggle('is-active', group.dataset.navArea === activeArea);
@@ -135,7 +214,10 @@
 
     document.querySelectorAll('footer').forEach((footer) => footer.classList.add('nuvia-global-footer'));
     normalizeHeadingFlow(document.querySelector('main'));
-    normalizeFormAccessibility(document.querySelector('main'));
+    const main = document.querySelector('main');
+    normalizeFormAccessibility(main);
+    normalizeToggleGroups(main);
+    normalizeTabAccessibility(main);
   };
 
   // Native details/summary keeps keyboard support without replacing React nodes.

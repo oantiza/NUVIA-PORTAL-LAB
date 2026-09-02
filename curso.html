@@ -406,10 +406,10 @@
           </article>
 
           <div class="curso-panel">
-            <span class="curso-label">Elige la primera acción más razonable</span>
-            <div class="curso-opciones">
+            <span class="curso-label" id="curso-caso-label">Elige la primera acción más razonable</span>
+            <div class="curso-opciones" role="group" aria-labelledby="curso-caso-label">
               <sc-for list="{{ opcionesCaso }}" as="opcion" hint-placeholder-count="4">
-                <button type="button" onClick="{{ opcion.elegir }}" class="{{ opcion.clase }}">
+                <button type="button" onClick="{{ opcion.elegir }}" aria-pressed="{{ opcion.seleccionada }}" class="{{ opcion.clase }}">
                   <span class="{{ opcion.claseLetra }}">{{ opcion.letra }}</span>
                   <span class="curso-opcion__texto">{{ opcion.texto }}</span>
                 </button>
@@ -729,6 +729,7 @@ class Component extends DCLogic {
         const correctaVisible = casoSel !== null && i === 2;
         return {
           letra: String.fromCharCode(65 + i), texto,
+          seleccionada: sel,
           elegir: () => { this.setState({ casoSel: i }); marcar('case'); },
           clase: 'curso-opcion' + (correctaVisible ? ' is-correct' : sel ? ' is-selected' : ''),
           claseLetra: 'curso-opcion__letra' + (correctaVisible ? ' is-correct' : ''),

@@ -537,9 +537,13 @@ select option {
 
 /* Foco visible y coherente en todo el sitio. */
 :focus-visible {
-  outline: none;
+  /* La banda blanca se distingue sobre fondos oscuros; el aro verde exterior,
+     sobre superficies claras. !important evita que la sombra decorativa de
+     una tarjeta o pestaña oculte el foco de teclado. */
+  outline: 2px solid var(--nv-white);
+  outline-offset: 2px;
   border-radius: var(--nv-radius-sm);
-  box-shadow: var(--nv-focus-ring);
+  box-shadow: var(--nv-focus-ring) !important;
 }
 
 ::selection {

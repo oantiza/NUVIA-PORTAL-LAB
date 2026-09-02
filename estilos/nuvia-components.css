@@ -1029,7 +1029,10 @@
   padding: var(--nv-space-2) 0;
 }
 
-.nv-field__box input:focus-visible { box-shadow: none; }
+.nv-field__box input:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+}
 
 .nv-field__unit {
   color: var(--nv-text-muted);

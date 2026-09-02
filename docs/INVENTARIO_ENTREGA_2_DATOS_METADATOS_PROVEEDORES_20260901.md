@@ -134,8 +134,8 @@ Hasta resolverlos, NUVIA puede avanzar en accesibilidad técnica y metadatos, pe
 
 ## 8. Próximos pasos de la Entrega 2
 
-1. Completar etiquetas, ayudas, errores y navegación por teclado de los formularios.
-2. Revisar foco visible y estados que dependan solo del color.
+1. Mantener etiquetas, ayudas y nombres accesibles mediante la auditoría renderizada incorporada.
+2. Mantener foco visible, estados semánticos y navegación de pestañas mediante la nueva prueba de teclado.
 3. Mantener Open Graph, Twitter Card y la imagen social propia de NUVIA mediante la prueba automática incorporada.
 4. Confirmar el inventario con la configuración real del backend y de los proveedores.
 5. Preparar borradores de páginas de confianza claramente marcados como pendientes.
