@@ -1363,7 +1363,7 @@ export function montaConstructor(raiz, {
           : 'No se ha podido cruzar el historial de la cartera con la serie diaria del €STR del BCE.'),
     );
     tabla.append(thead, tbody);
-    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': 'Métricas históricas de la combinación elegida' });
     envoltorio.append(tabla);
     cajaRiesgo.append(envoltorio);
 

@@ -57,35 +57,35 @@
         </div>
 
         <div class="nv-swatch-grid" aria-label="Paleta principal de NUVIA">
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--navy">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Azul NUVIA</strong><span>#0B2347 · Identidad</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--green">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Verde criterio</strong><span>#7C9A44 · Acción</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--paper">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Papel cálido</strong><span>#F3EEDF · Editorial</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--bronze">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Bronce sereno</strong><span>#B69152 · Detalle</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--cloud">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Nube</strong><span>#F4F6F9 · Fondo</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--white">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Blanco</strong><span>#FFFFFF · Superficie</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--copy">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Texto secundario</strong><span>#40506A · Lectura</span></div>
           </article>
-          <article class="nv-swatch">
+          <article class="nv-swatch nv-swatch--deep">
             <div class="nv-swatch__color"></div>
             <div class="nv-swatch__caption"><strong>Azul profundo</strong><span>#06172F · Contraste</span></div>
           </article>
@@ -135,11 +135,84 @@
           <p>Los botones y tarjetas mantienen jerarquía, proporciones y estados constantes en toda la experiencia.</p>
         </div>
 
-        <div class="nv-button-row" aria-label="Botones de referencia">
+        <div class="nv-btn-row" aria-label="Botones de referencia">
           <a class="nv-btn nv-btn--primary" href="#componentes">Acción principal <span aria-hidden="true">→</span></a>
           <a class="nv-btn nv-btn--secondary" href="#componentes">Acción secundaria</a>
           <a class="nv-btn nv-btn--soft" href="#componentes">Opción neutra</a>
           <a class="nv-btn nv-btn--text" href="#componentes">Enlace de apoyo <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="nv-control-samples" aria-labelledby="titulo-controles">
+          <h3 id="titulo-controles">Campos y estados de referencia</h3>
+          <p>Muestras de presentación sin envío ni guardado. Los errores se explican con texto; el color no sustituye al mensaje.</p>
+          <div class="nv-fields">
+            <div class="nv-field">
+              <label for="sample-amount">Campo editable</label>
+              <div class="nv-field__box"><input id="sample-amount" type="number" value="100" aria-describedby="sample-amount-note"><span class="nv-field__unit">€</span></div>
+              <p id="sample-amount-note" class="nv-field__note">Importe ficticio para comprobar la presentación.</p>
+            </div>
+            <div class="nv-field">
+              <label for="sample-select">Desplegable dentro de una caja</label>
+              <div class="nv-field__box"><select id="sample-select" class="nv-select"><option>Mensual</option><option>Anual</option></select></div>
+            </div>
+            <div class="nv-field">
+              <label for="sample-readonly">Solo lectura</label>
+              <div class="nv-field__box"><input id="sample-readonly" value="Ejemplo no editable" readonly></div>
+            </div>
+            <div class="nv-field">
+              <label for="sample-disabled">Campo desactivado</label>
+              <div class="nv-field__box"><input id="sample-disabled" value="No disponible en esta muestra" disabled></div>
+            </div>
+            <div class="nv-field">
+              <label for="sample-invalid">Ejemplo de error declarado</label>
+              <div class="nv-field__box"><input id="sample-invalid" value="Dato de ejemplo" aria-invalid="true" aria-describedby="sample-error"></div>
+              <p id="sample-error" class="nv-field__note nv-field__error">Ejemplo: revisa el formato del dato introducido.</p>
+            </div>
+            <div class="nv-field">
+              <label for="sample-disabled-select">Desplegable desactivado</label>
+              <select id="sample-disabled-select" class="nv-select" disabled><option>No disponible</option></select>
+            </div>
+          </div>
+          <div class="nv-btn-row" aria-label="Muestras de botones desactivados">
+            <button type="button" class="nv-btn nv-btn--primary" disabled>Principal no disponible</button>
+            <button type="button" class="nv-btn nv-btn--secondary" disabled>Secundaria no disponible</button>
+            <button type="button" class="nv-btn nv-btn--soft" disabled>Neutra no disponible</button>
+            <button type="button" class="nv-btn nv-btn--accent" disabled>Acento no disponible</button>
+            <button type="button" class="curso-btn-quiz is-disabled" disabled>Comprobación no disponible</button>
+          </div>
+        </div>
+
+        <div class="nv-control-samples" aria-labelledby="titulo-tabla-referencia">
+          <h3 id="titulo-tabla-referencia">Datos y explicaciones</h3>
+          <p>Ejemplos ficticios de formato: un cero es un dato; «No disponible» expresa ausencia. Se conservan unidades, signos y decimales.</p>
+          <p id="tabla-reference-help" class="nv-table-scroll__hint">Si no cabe completa, desplaza la tabla; con teclado, enfócala y usa las flechas.</p>
+          <div class="nv-table-scroll" role="region" tabindex="0" aria-labelledby="titulo-tabla-referencia" aria-describedby="tabla-reference-help">
+            <table class="nv-table nv-sim-tabla nv-table-reference">
+              <caption class="nv-visually-hidden">Muestras ficticias de importes, porcentajes y ausencia de datos</caption>
+              <thead><tr><th scope="col">Medida</th><th scope="col">Valor</th><th scope="col">Cómo leerla</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Importe de ejemplo</th><td>1.234,56 €</td><td>Separador de miles, decimales y unidad explícita.</td></tr>
+                <tr><th scope="row">Variación de ejemplo</th><td>−0,75 %</td><td>El signo forma parte del dato; no se sustituye por un color.</td></tr>
+                <tr><th scope="row">Importe nulo</th><td>0,00 €</td><td>Cero registrado; no significa que falte información.</td></tr>
+                <tr><th scope="row">Sin observación</th><td>No disponible</td><td>No se inventa un valor ni se convierte la ausencia en cero.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="nv-control-samples" aria-labelledby="titulo-estados-referencia">
+          <h3 id="titulo-estados-referencia">Avisos y estados de interfaz</h3>
+          <p>Muestras de diseño, no estados reales del servicio. El mensaje explica qué sucede y qué se puede hacer. Un error no equivale a un resultado vacío ni a una sección en preparación.</p>
+          <div class="nv-notice-samples">
+            <div class="nv-notice" data-notice-state="loading"><strong>Comprobando la actualización</strong><p>La consulta está en curso. El contenido anterior conserva su fecha y fuente.</p></div>
+            <div class="nv-notice" data-notice-state="unavailable"><strong>Sin datos disponibles</strong><p>No hay una observación para esta medida. No se sustituye por cero.</p></div>
+            <div class="nv-notice" data-notice-state="empty"><strong>Sin coincidencias</strong><p>Ningún elemento coincide con los filtros. Puedes cambiar la búsqueda.</p></div>
+            <div class="nv-notice" data-notice-state="pending"><strong>En preparación</strong><p>Este contenido aún no está publicado. No es un error ni una descarga en curso.</p></div>
+            <div class="nv-notice" data-notice-state="partial"><strong>Actualización parcial</strong><p>Parte de la información no se ha renovado. Consulta las fechas de cada dato.</p></div>
+            <div class="nv-notice" data-notice-state="error"><strong>No se ha podido comprobar la actualización</strong><p>Se conserva el contenido disponible, sin presentarlo como actual.</p></div>
+            <div class="nv-notice" data-notice-state="available"><strong>Contenido disponible</strong><p>La fecha de selección y la fecha de publicación se muestran por separado.</p></div>
+            <div class="nv-notice" data-notice-state="unverified"><strong>Actualización sin comprobar</strong><p>No hay un estado completo que permita confirmar una nueva selección.</p></div>
+          </div>
         </div>
 
         <div class="nv-card-grid">
@@ -210,7 +283,7 @@
           <article class="nv-rule"><span class="nv-rule__icon">2</span><div><strong>Una acción principal por bloque</strong><p>Las acciones secundarias nunca compiten visualmente con el siguiente paso.</p></div></article>
           <article class="nv-rule"><span class="nv-rule__icon">3</span><div><strong>Inter como norma</strong><p>Fraunces se reserva para contenido editorial, no para formularios ni navegación.</p></div></article>
           <article class="nv-rule"><span class="nv-rule__icon">4</span><div><strong>Tablet sin desplazamiento</strong><p>Los componentes se reorganizan dentro de 1024 px y nunca fuerzan un ancho mínimo.</p></div></article>
-          <article class="nv-rule"><span class="nv-rule__icon">5</span><div><strong>Máximo tres superficies</strong><p>Nube, blanco y papel cálido cubren las necesidades sin fragmentar la identidad.</p></div></article>
+          <article class="nv-rule"><span class="nv-rule__icon">5</span><div><strong>Superficies con función</strong><p>Nube para el fondo, blanco para el contenido, papel para lectura y azul para apertura o contraste. Las herramientas conservan su área técnica.</p></div></article>
           <article class="nv-rule"><span class="nv-rule__icon">6</span><div><strong>Verde para orientar</strong><p>El color de acento identifica estado, progreso y acción; no se utiliza como decoración masiva.</p></div></article>
         </div>
       </div>

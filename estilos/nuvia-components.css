@@ -16,7 +16,7 @@
 /* ── ESTRUCTURA ─────────────────────────────────────────────────────────── */
 
 .nv-container {
-  width: min(var(--nv-container), calc(100% - 96px));
+  width: min(var(--nv-container), calc(100% - 2 * var(--nv-page-gutter)));
   margin-inline: auto;
 }
 
@@ -25,10 +25,10 @@
 }
 
 .nv-section {
-  padding-block: var(--nv-space-20);
+  padding-block: var(--nv-section-space);
 }
 
-.nv-section--tight { padding-block: var(--nv-space-12); }
+.nv-section--tight { padding-block: var(--nv-section-space-compact); }
 .nv-section--white { background: var(--nv-surface); }
 .nv-section--paper { background: var(--nv-surface-editorial); }
 .nv-section--technical { background: var(--nv-surface-technical); }
@@ -238,9 +238,7 @@
 
 /* Variante 2 · institucional azul */
 .nv-hero--institutional {
-  background:
-    radial-gradient(circle at 88% 8%, rgba(124, 154, 68, .18), transparent 28rem),
-    linear-gradient(135deg, var(--nv-navy-950), var(--nv-navy-800));
+  background: var(--nv-surface-institutional);
   color: var(--nv-text-on-dark);
 }
 
@@ -253,7 +251,7 @@
   bottom: -310px;
   width: 740px;
   height: 520px;
-  border: 1px solid rgba(220, 197, 156, .18);
+  border: 1px solid var(--nv-line-institutional);
   border-radius: 50%;
   content: "";
   transform: rotate(-12deg);
@@ -286,31 +284,41 @@
    ocurre después: si el botón dice «Calcular», el resultado dice «Calculado».
    ─────────────────────────────────────────────────────────────────────────── */
 
-.nv-btn {
+.nv-btn,
+.curso-btn-outline,
+.curso-btn-calcular,
+.curso-btn-marcar,
+.curso-btn-quiz,
+.curso-btn-reset {
   display: inline-flex;
-  min-height: 44px;
+  min-height: var(--nv-control-height);
+  max-width: 100%;
   align-items: center;
   justify-content: center;
   gap: var(--nv-space-2);
   border: 1px solid transparent;
-  border-radius: var(--nv-radius-sm);
+  border-radius: var(--nv-button-radius);
   cursor: pointer;
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-control-font);
   font-weight: var(--nv-weight-action);
-  line-height: 1;
-  padding-inline: var(--nv-space-5);
+  line-height: var(--nv-control-line-height);
+  padding: var(--nv-space-2) var(--nv-space-5);
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
   text-decoration: none;
   transition: transform .2s ease, background .2s ease, border-color .2s ease;
 }
 
-.nv-btn:hover { transform: translateY(-1px); }
+:is(.nv-btn, .curso-btn-outline, .curso-btn-calcular, .curso-btn-marcar, .curso-btn-quiz, .curso-btn-reset):not(:disabled):hover { transform: translateY(-1px); }
+:is(.nv-btn, .curso-btn-outline, .curso-btn-calcular, .curso-btn-marcar, .curso-btn-quiz, .curso-btn-reset):not(:disabled):active { transform: translateY(0); }
 
 .nv-btn--primary {
   background: var(--nv-action-primary-bg);
   color: var(--nv-action-primary-text);
 }
 
-.nv-btn--primary:hover {
+.nv-btn--primary:not(:disabled):hover {
   background: var(--nv-action-primary-bg-hover);
   color: var(--nv-action-primary-text);
 }
@@ -320,7 +328,7 @@
   color: var(--nv-action-accent-text);
 }
 
-.nv-btn--accent:hover {
+.nv-btn--accent:not(:disabled):hover {
   background: var(--nv-green-700);
   color: var(--nv-action-accent-text);
 }
@@ -331,7 +339,7 @@
   color: var(--nv-action-secondary-text);
 }
 
-.nv-btn--secondary:hover {
+.nv-btn--secondary:not(:disabled):hover {
   background: var(--nv-action-secondary-bg-hover);
   color: var(--nv-action-secondary-text);
 }
@@ -342,10 +350,10 @@
   color: var(--nv-text);
 }
 
-.nv-btn--soft:hover { border-color: var(--nv-line-strong); color: var(--nv-text); }
+.nv-btn--soft:not(:disabled):hover { border-color: var(--nv-line-strong); color: var(--nv-text); }
 
 .nv-btn--text {
-  min-height: 38px;
+  min-height: var(--nv-control-height);
   border: 0;
   background: transparent;
   color: var(--nv-text);
@@ -538,19 +546,36 @@
 /* En fila: cuando la nota lleva icono —el simulador de jubilación pone un «!»
    delante— sin esto el signo caía solo en una línea, encima del texto, con
    pinta de fallo de renderizado. */
+.nv-note,
+.nv-notice {
+  min-width: 0;
+  border-left: 3px solid var(--nv-notice-border);
+  background: var(--nv-notice-bg);
+  border-radius: 0 var(--nv-radius-sm) var(--nv-radius-sm) 0;
+  color: var(--nv-text-soft);
+  font-size: var(--nv-notice-text);
+  line-height: var(--nv-notice-line-height);
+  padding: var(--nv-space-4) var(--nv-space-5);
+  overflow-wrap: anywhere;
+}
+
 .nv-note {
   display: flex;
   align-items: flex-start;
   gap: var(--nv-space-3);
-  border-left: 3px solid var(--nv-green-600);
-  background: var(--nv-green-100);
-  border-radius: 0 var(--nv-radius-sm) var(--nv-radius-sm) 0;
-  color: var(--nv-text-soft);
-  font-size: var(--nv-body-sm);
-  padding: var(--nv-space-5) var(--nv-space-6);
 }
 
 .nv-note > p { margin: 0; }
+.nv-note > * { min-width: 0; }
+.nv-notice { display: grid; gap: var(--nv-space-2); }
+.nv-notice > :is(p, h3, h4) { margin: 0; }
+.nv-notice > :is(strong, h3, h4) { color: var(--nv-text); font-size: var(--nv-body); }
+.nv-notice > .nv-btn { justify-self: start; margin-top: var(--nv-space-2); }
+.nv-notice:is([data-notice-state="partial"], [data-notice-state="pending"]) {
+  border-left-color: var(--nv-notice-warning-border);
+  background: var(--nv-notice-warning-bg);
+}
+.nv-notice[data-notice-state="error"] { border-left-color: var(--nv-notice-error-border); }
 
 .nv-disclaimer {
   color: var(--nv-text-muted);
@@ -561,22 +586,29 @@
 /* ── DATOS ──────────────────────────────────────────────────────────────── */
 
 
-.nv-table {
+.nv-table,
+.gt-tabla,
+.markets-lab table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-table-text);
+  line-height: var(--nv-table-line-height);
+  font-variant-numeric: tabular-nums;
 }
 
 .nv-table th,
-.nv-table td {
+.nv-table td,
+.gt-tabla th,
+.gt-tabla td {
   border-bottom: 1px solid var(--nv-line);
-  padding: var(--nv-space-3) var(--nv-space-4);
+  padding: var(--nv-table-cell-y) var(--nv-table-cell-x);
   text-align: left;
+  vertical-align: top;
 }
 
-.nv-table th {
+.nv-table thead th {
   color: var(--nv-text-muted);
-  font-size: var(--nv-label);
+  font-size: var(--nv-table-label);
   font-weight: var(--nv-weight-label);
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -588,6 +620,27 @@
   text-align: right;
 }
 
+
+.nv-table tbody th { font-size: var(--nv-table-text); font-weight: var(--nv-weight-title); }
+/* Métrica / Valor / Cómo leerla: la explicación no es una cifra. */
+.nv-table.nv-sim-tabla :is(th, td):nth-child(2) { white-space: nowrap; }
+.nv-table.nv-sim-tabla :is(th, td):nth-child(3) { text-align: left; white-space: normal; }
+
+.nv-table-scroll,
+.gt-tabla-envoltorio,
+.markets-lab__table-scroll,
+.nv-sim-tabla-scroll {
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior-inline: contain;
+}
+.nv-table-scroll__hint {
+  margin: var(--nv-space-2) 0 var(--nv-space-3);
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  line-height: 1.5;
+}
 
 /* ── UTILIDADES ─────────────────────────────────────────────────────────── */
 
@@ -631,10 +684,6 @@
    ─────────────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 1120px) {
-  .nv-container { width: calc(100% - 56px); }
-
-  .nv-section { padding-block: var(--nv-space-16); }
-
   .nv-section-heading {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--nv-space-5);
@@ -692,7 +741,7 @@
 
 .nuvia-site-header__inner {
   display: flex;
-  width: min(var(--nv-container), calc(100% - 96px));
+  width: min(var(--nv-container), calc(100% - 2 * var(--nv-header-gutter)));
   min-height: var(--nv-header-height);
   align-items: center;
   justify-content: space-between;
@@ -854,7 +903,7 @@
 .nuvia-site-footer a:hover { color: var(--nv-white); }
 
 .nuvia-site-footer__inner {
-  width: min(var(--nv-container), calc(100% - 96px));
+  width: min(var(--nv-container), calc(100% - 2 * var(--nv-page-gutter)));
   margin-inline: auto;
   padding: var(--nv-space-12) 0 var(--nv-space-6);
 }
@@ -922,9 +971,6 @@
 /* ── Cáscara en tablet ──────────────────────────────────────────────────── */
 
 @media (max-width: 1120px) {
-  .nuvia-site-header__inner,
-  .nuvia-site-footer__inner { width: calc(100% - 56px); }
-
   .nuvia-site-header__inner { gap: var(--nv-space-5); }
   /* En tablet el logotipo se reduce: a 52 px el descriptor deja de leerse,
      pero con 5 entradas de menú no hay ancho para mantener los 68. */
@@ -944,8 +990,13 @@
    sola fila. La cabecera adopta dos niveles y la navegación puede envolver
    sin solapar el logotipo. Se conserva el menú nativo details/summary. */
 @media (max-width: 1319px) {
+  /* El primer desplegable no puede centrarse sobre una etiqueta pegada al
+     borde: a 768 px se salía por la izquierda. */
+  .nuvia-site-nav > .nuvia-site-nav__topics:first-child .nuvia-site-nav__menu {
+    left: 0;
+    transform: none;
+  }
   .nuvia-site-header__inner {
-    width: calc(100% - 56px);
     min-height: auto;
     flex-direction: column;
     align-items: stretch;
@@ -993,11 +1044,13 @@
 
 .nv-field__box {
   display: flex;
+  min-width: 0;
+  min-height: var(--nv-control-height);
   align-items: center;
   gap: var(--nv-space-2);
-  border: 1px solid var(--nv-line);
-  border-radius: var(--nv-radius-md);
-  background: var(--nv-bg);
+  border: 1px solid var(--nv-control-border);
+  border-radius: var(--nv-control-radius);
+  background: var(--nv-control-bg);
   padding: 0 var(--nv-space-3);
   transition: border-color .2s ease;
 }
@@ -1018,18 +1071,22 @@
 
 .nv-field__box input,
 .nv-field__box select {
+  min-width: 0;
+  min-height: calc(var(--nv-control-height) - 2px);
   width: 100%;
   border: 0;
   background: none;
   caret-color: var(--nv-green-600);
   color: var(--nv-text);
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-control-font);
+  line-height: var(--nv-control-line-height);
   font-variant-numeric: tabular-nums;
   font-weight: var(--nv-weight-title);
   padding: var(--nv-space-2) 0;
 }
 
-.nv-field__box input:focus-visible {
+.nv-field__box input:focus-visible,
+.nv-field__box select:focus-visible {
   outline: none;
   box-shadow: none !important;
 }
@@ -1087,7 +1144,7 @@
   color: var(--nv-white);
 }
 
-.nv-external-content__placeholder--dark .nv-btn--secondary:hover {
+.nv-external-content__placeholder--dark .nv-btn--secondary:not(:disabled):hover {
   background: rgba(255, 255, 255, .14);
   color: var(--nv-white);
 }
@@ -1145,21 +1202,63 @@
 
 /* Desplegable suelto, fuera de .nv-field__box. Sin esta regla el select se
    dimensiona según su opción más larga y desborda a 1024 px. */
-.nv-select {
+.nv-select,
+.curso-campo__input input,
+.gt-campo select,
+.gt-campo input {
+  min-width: 0;
+  min-height: var(--nv-control-height);
   width: 100%;
   max-width: 100%;
-  border: 1px solid var(--nv-line);
-  border-radius: var(--nv-radius-md);
-  background: var(--nv-bg);
+  border: 1px solid var(--nv-control-border);
+  border-radius: var(--nv-control-radius);
+  background: var(--nv-control-bg);
   color: var(--nv-text);
-  cursor: pointer;
-  font-size: var(--nv-body-sm);
+  font-size: var(--nv-control-font);
+  line-height: var(--nv-control-line-height);
   padding: var(--nv-space-2) var(--nv-space-3);
   transition: border-color .2s ease;
 }
 
-.nv-select:hover { border-color: var(--nv-line-strong); }
-.nv-select:focus { border-color: var(--nv-green-600); }
+.nv-select { cursor: pointer; }
+.curso-campo__input input {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--nv-weight-title);
+  padding-right: var(--nv-space-7);
+}
+:is(.nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input):not(:disabled):not([readonly]):not([aria-invalid="true"]):hover,
+.nv-field__box:not(:has([aria-invalid="true"])):has(:enabled:not([readonly])):hover { border-color: var(--nv-control-border-hover); }
+:is(.nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input):focus,
+.nv-field__box:focus-within { border-color: var(--nv-green-600); }
+
+/* Un solo borde y aro en campos compuestos, incluso para select. */
+.nv-field__box :is(input, select) { border: 0; border-radius: 0; background: none; }
+.nv-field__box :is(input, select):hover,
+.nv-field__box :is(input, select):focus { border-color: transparent; }
+
+/* No activan validación: representan únicamente estados declarados por HTML.
+   Los mensajes de error deben existir y asociarse con aria-describedby. */
+:is(.nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input)[aria-invalid="true"],
+.nv-field__box:has([aria-invalid="true"]) { border-color: var(--nv-control-error); }
+.nv-field__error { color: var(--nv-control-error); }
+:is(.nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input)[readonly],
+.nv-field__box:has([readonly]) { background: var(--nv-control-disabled-bg); }
+:is(.nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input):disabled,
+.nv-field__box:has(:disabled) {
+  background: var(--nv-control-disabled-bg);
+  color: var(--nv-control-disabled-text);
+  cursor: not-allowed;
+  opacity: 1;
+}
+.nv-field__box :is(input, select):disabled { background: none; color: var(--nv-control-disabled-text); cursor: not-allowed; }
+:is(.nv-btn, .curso-btn-outline, .curso-btn-calcular, .curso-btn-marcar, .curso-btn-quiz, .curso-btn-reset):disabled {
+  border-color: var(--nv-control-border);
+  background: var(--nv-control-disabled-bg);
+  color: var(--nv-control-disabled-text);
+  cursor: not-allowed;
+  opacity: 1;
+  transform: none;
+}
 
 /* ── Plantillas de sc-for sin resolver ──────────────────────────────────────
    sc-for es un elemento de plantilla que React reemplaza al montar. Hasta

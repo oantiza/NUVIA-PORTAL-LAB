@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Curso Dinero con criterio de Academia Nuvia para ordenar las finanzas personales y construir decisiones sostenibles.">
+<meta name="description" content="Curso Dinero con criterio de Academia NUVIA para ordenar las finanzas personales y construir decisiones sostenibles.">
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/curso.html">
 
 <!-- NUVIA SOCIAL META: START -->
@@ -11,7 +11,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:site_name" content="NUVIA">
 <meta property="og:title" content="NUVIA · Dinero con criterio">
-<meta property="og:description" content="Curso Dinero con criterio de Academia Nuvia para ordenar las finanzas personales y construir decisiones sostenibles.">
+<meta property="og:description" content="Curso Dinero con criterio de Academia NUVIA para ordenar las finanzas personales y construir decisiones sostenibles.">
 <meta property="og:url" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/curso.html">
 <meta property="og:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta property="og:image:type" content="image/webp">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NUVIA · Dinero con criterio">
-<meta name="twitter:description" content="Curso Dinero con criterio de Academia Nuvia para ordenar las finanzas personales y construir decisiones sostenibles.">
+<meta name="twitter:description" content="Curso Dinero con criterio de Academia NUVIA para ordenar las finanzas personales y construir decisiones sostenibles.">
 <meta name="twitter:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta name="twitter:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <!-- NUVIA SOCIAL META: END -->
@@ -68,6 +68,7 @@
         <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -108,14 +109,7 @@
 <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
               <ol>
                 <li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li>
-                <li><details class="nuvia-site-nav__topics">
-          <summary>Academia NUVIA</summary>
-          <div class="nuvia-site-nav__menu">
-            <a href="academia.html">Academia Nuvia</a>
-            <a href="curso.html">Curso · Dinero con criterio</a>
-            <a href="lecturas.html">Lecturas con criterio</a>
-          </div>
-        </details></li>
+                <li><a href="academia.html">Academia NUVIA</a></li>
                 <li><span aria-current="page">Dinero con criterio</span></li>
               </ol>
             </nav>
@@ -170,20 +164,22 @@
 
             <div class="curso-cap__actions">
               <a class="nv-btn nv-btn--secondary" href="#leccion-video">Empezar la clase →</a>
-              <span class="curso-cap__note">Tu progreso se guarda en este dispositivo.</span>
+              <span class="curso-cap__note">{{ notaSeguimiento }}</span>
             </div>
 
+            <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
             <div class="curso-progreso">
-              <span class="curso-progreso__label">Progreso</span>
+              <span class="curso-progreso__label">Actividades de este capítulo</span>
               <div class="curso-progreso__track">
                 <span class="curso-progreso__fill" style="width:{{ progresoAncho }}"></span>
               </div>
               <strong>{{ progresoTexto }}</strong>
             </div>
+            </sc-if>
           </div>
         </div>
 
-        <nav class="curso-pasos" aria-label="Progreso del capítulo">
+        <nav class="curso-pasos" aria-label="Contenido del capítulo">
           <sc-for list="{{ pasos }}" as="paso" hint-placeholder-count="5">
             <a class="curso-paso" href="{{ paso.destino }}">
               <span class="{{ paso.claseCheck }}">{{ paso.marca }}</span>
@@ -236,7 +232,9 @@
           </div>
         </div>
 
-        <button type="button" onClick="{{ marcarVideo }}" class="{{ claseBotonVideo }}">{{ textoBotonVideo }}</button>
+        <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ marcarVideo }}" class="{{ claseBotonVideo }}">{{ textoBotonVideo }}</button>
+        </sc-if>
       </div>
     </section>
 
@@ -261,6 +259,7 @@
           </div>
         </div>
 
+        <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
         <div class="curso-notas">
           <sc-for list="{{ apuntes }}" as="nota" hint-placeholder-count="4">
             <details class="curso-nota" open="{{ nota.abierta }}">
@@ -307,8 +306,15 @@
           </ol>
         </div>
 
+        </sc-if>
+        <sc-if value="{{ noEsCapituloUno }}" hint-placeholder-val="{{ false }}">
+          <p class="curso-apuntes-disponibles">Los apuntes de este capítulo están disponibles en su PDF descargable. No hay un desarrollo de estos apuntes en la página.</p>
+        </sc-if>
+
         <div class="curso-acciones">
-          <button type="button" onClick="{{ marcarApuntes }}" class="{{ claseBotonApuntes }}">{{ textoBotonApuntes }}</button>
+          <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{ marcarApuntes }}" class="{{ claseBotonApuntes }}">{{ textoBotonApuntes }}</button>
+          </sc-if>
           <a class="curso-btn-outline" href="{{ descargaHref }}" download>⤓ {{ descargaTexto }}</a>
         </div>
 
@@ -515,13 +521,15 @@
             </div>
           </div>
           <div class="curso-cierre__actions">
-            <sc-if value="{{ capituloCompleto }}" hint-placeholder-val="{{ false }}">
-              <button type="button" class="curso-btn-quiz">Imprimir mi resumen ⎙</button>
+            <sc-if value="{{ esCapituloUno }}" hint-placeholder-val="{{ true }}">
+              <button type="button" onClick="{{ reiniciar }}" class="curso-btn-reset">↺ Reiniciar capítulo</button>
             </sc-if>
-            <button type="button" onClick="{{ reiniciar }}" class="curso-btn-reset">↺ Reiniciar capítulo</button>
           </div>
         </div>
 
+        <nav class="ac-learning-back" aria-label="Seguir aprendiendo en Academia">
+          <a href="academia.html#ruta-aprendizaje">Volver a la ruta de aprendizaje →</a>
+        </nav>
         <p class="nv-disclaimer nv-disclaimer--center">Contenido educativo general. No constituye asesoramiento financiero, fiscal o jurídico personalizado. Las cifras introducidas permanecen en este dispositivo.</p>
       </div>
     </section>
@@ -575,7 +583,7 @@
 </div>
 </x-dc>
 
-<script type="text/x-dc" data-dc-script data-props="{&quot;capituloInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;1&quot;, &quot;options&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}, &quot;estadoProgreso&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;a-medias&quot;, &quot;options&quot;: [&quot;nuevo&quot;, &quot;a-medias&quot;, &quot;completado&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;capituloInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;1&quot;, &quot;options&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}, &quot;estadoProgreso&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;nuevo&quot;, &quot;options&quot;: [&quot;nuevo&quot;, &quot;a-medias&quot;, &quot;completado&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Curso&quot;}}">
 class Component extends DCLogic {
   state = {};
   capitulosData() {
@@ -631,7 +639,7 @@ class Component extends DCLogic {
   renderVals() {
     const euro = (v) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
     const caps = this.capitulosData();
-    const seed = this.props.estadoProgreso ?? 'a-medias';
+    const seed = this.props.estadoProgreso ?? 'nuevo';
     const capIdx = this.state.capitulo ?? (Number(this.props.capituloInicial ?? '1') - 1);
     const cap = caps[capIdx] || caps[0];
     const esC1 = capIdx === 0;
@@ -687,8 +695,9 @@ class Component extends DCLogic {
       videoSrc: 'https://www.youtube-nocookie.com/embed/' + cap.video + '?autoplay=1&rel=0',
       videoHref: 'https://www.youtube.com/watch?v=' + cap.video,
       progresoTexto: progreso + ' %',
+      notaSeguimiento: esC1 ? 'Las marcas de actividad son temporales: se reinician al recargar o cambiar de capítulo. No se guarda el progreso.' : 'Este capítulo ofrece vídeo y apuntes, sin seguimiento de actividades.',
       progresoAncho: progreso + '%',
-      pasos: idsPaso.map((id, i) => ({
+      pasos: (esC1 ? idsPaso : idsPaso.slice(0, 2)).map((id, i) => ({
         etiqueta: etiquetasPaso[i], destino: destinos[i],
         marca: (esC1 && completadas.includes(id)) ? '✓' : '',
         claseCheck: 'curso-check' + ((esC1 && completadas.includes(id)) ? ' is-done' : ''),
@@ -764,7 +773,7 @@ class Component extends DCLogic {
       iconoCierre: esC1 && progreso === 100 ? '✓' : '◎',
       kickerCierre: esC1 ? (progreso === 100 ? 'Capítulo completado' : 'Tu siguiente paso') : 'Contenido disponible',
       tituloCierre: esC1 ? (progreso === 100 ? 'Ya tienes tu punto de partida' : 'Te falta completar ' + (5 - completadas.length) + (5 - completadas.length === 1 ? ' parte' : ' partes')) : 'Continúa con la clase y los apuntes',
-      textoCierre: esC1 && progreso === 100 ? 'Has revisado tu flujo de caja, tus deseos, tu patrimonio y tu fondo de emergencia. Ya tienes un diagnóstico para ordenar tus siguientes decisiones.' : 'Continúa la clase para guardar el capítulo como completado.',
+      textoCierre: esC1 ? (progreso === 100 ? 'Has recorrido las cinco actividades de este capítulo. Estas marcas no se guardan ni acreditan un nivel de conocimiento.' : 'Puedes recorrer las cinco actividades a tu ritmo. Las marcas son temporales y no se guarda el progreso.') : 'Consulta el vídeo y los apuntes o elige otro capítulo en el programa. No hay actividades marcables en este capítulo.',
       claseCierre: 'curso-cierre' + (esC1 && progreso === 100 ? ' is-complete' : ''),
       reiniciar: () => this.setState({ completadas: [], calculado: false, casoSel: null, quizSel: {}, quizComprobado: false, dinero: undefined }),
     };

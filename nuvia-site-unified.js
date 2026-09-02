@@ -312,6 +312,16 @@
   window.addEventListener('hashchange', scheduleSync);
   window.addEventListener('popstate', scheduleSync);
 
-  const observer = new MutationObserver(scheduleSync);
-  observer.observe(document, { childList: true, subtree: true });
+  const observer = new MutationObserver((records) => {
+    // React puede cambiar de capítulo sin añadir nodos. También sincronizar
+    // sus botones cuando cambia la clase activa o aria-current; no observar
+    // aria-pressed, que escribe esta misma capa, ni clases ajenas al grupo.
+    if (records.some((record) => record.type === 'childList'
+      || (record.target instanceof Element
+        && record.target.matches('[data-nuvia-toggle-group="true"] > button')))) scheduleSync();
+  });
+  observer.observe(document, {
+    childList: true, subtree: true, attributes: true,
+    attributeFilter: ['class', 'aria-current'],
+  });
 })();

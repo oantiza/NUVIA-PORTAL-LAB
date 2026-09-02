@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Temas clave de NUVIA: jubilación, vivienda, impuestos y bienestar, con herramientas y guías para decidir con criterio.">
+<meta name="description" content="Patrimonio en NUVIA: vivienda y coste de vida, impuestos, jubilación y planificación patrimonial. Accede a las guías y simuladores disponibles.">
 
 <!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/temas.html -->
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/temas.html">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:site_name" content="NUVIA">
 <meta property="og:title" content="NUVIA · Patrimonio">
-<meta property="og:description" content="Temas clave de NUVIA: jubilación, vivienda, impuestos y bienestar, con herramientas y guías para decidir con criterio.">
+<meta property="og:description" content="Patrimonio en NUVIA: vivienda y coste de vida, impuestos, jubilación y planificación patrimonial. Accede a las guías y simuladores disponibles.">
 <meta property="og:url" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/temas.html">
 <meta property="og:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta property="og:image:type" content="image/webp">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NUVIA · Patrimonio">
-<meta name="twitter:description" content="Temas clave de NUVIA: jubilación, vivienda, impuestos y bienestar, con herramientas y guías para decidir con criterio.">
+<meta name="twitter:description" content="Patrimonio en NUVIA: vivienda y coste de vida, impuestos, jubilación y planificación patrimonial. Accede a las guías y simuladores disponibles.">
 <meta name="twitter:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta name="twitter:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <!-- NUVIA SOCIAL META: END -->
@@ -66,6 +66,7 @@
         <details class="nuvia-site-nav__topics is-active" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -96,10 +97,20 @@
     <section id="tema" data-screen-label="Cabecera de espacio" class="nv-hero nv-hero--institutional tm-hero">
       <div class="nv-container">
 <nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span id="tema-ruta" aria-current="page">Patrimonio</span></li></ol></nav>
-      <span class="nv-eyebrow nv-eyebrow--on-dark"><span></span><span id="tema-eyebrow">Patrimonio · {{ numeroDe }}</span></span>
-      <h1 class="tm-title" id="tema-titulo">Jubilación</h1>
-      <p class="nv-hero__lead" id="tema-intro">Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.</p>
-      <sc-if value="{{ mostrarSelector }}" hint-placeholder-val="{{ true }}">
+      <span class="nv-eyebrow nv-eyebrow--on-dark"><span></span><span id="tema-eyebrow">Espacio NUVIA · Cuatro ámbitos</span></span>
+      <h1 class="tm-title" id="tema-titulo">Patrimonio</h1>
+      <p class="nv-hero__lead" id="tema-intro">Vivienda y coste de vida, impuestos, jubilación y planificación patrimonial: guías y simuladores para comprender la economía familiar, con sus datos, supuestos y límites a la vista.</p>
+      <sc-if value="{{ esBienestar }}" hint-placeholder-val="{{ false }}">
+        <nav class="tm-wellbeing-nav" aria-label="En esta página de Familia, Salud y Bienestar">
+          <a href="#bienestar-ambitos">Temas del espacio</a>
+          <a href="#bienestar-guias">Guías en preparación</a>
+          <a href="#bienestar-fuentes">Fuentes y límites</a>
+        </nav>
+      </sc-if>
+      <sc-if value="{{ mostrarRegresoPatrimonio }}" hint-placeholder-val="{{ false }}">
+        <a class="tm-back" href="temas.html">← Volver a Patrimonio</a>
+      </sc-if>
+      <sc-if value="{{ mostrarSelector }}" hint-placeholder-val="{{ false }}">
         <nav aria-label="Ámbitos de Patrimonio" data-screen-label="Selector de Patrimonio" class="tm-pills">
           <sc-for list="{{ pildoras }}" as="p" hint-placeholder-count="4">
             <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" class="{{ p.clase }}">
@@ -113,6 +124,47 @@
       <div class="viv-hero__rule"></div>
     </div>
     </section>
+
+    <sc-if value="{{ esPortada }}" hint-placeholder-val="{{ true }}">
+      <section id="patrimonio-ambitos" data-screen-label="Ámbitos de Patrimonio" class="nv-container nv-section nv-section--tight" aria-labelledby="patrimonio-ambitos-title">
+        <div class="tm-block-head">
+          <p class="nv-eyebrow">Explora el espacio</p>
+          <h2 class="tm-legacy__heading" id="patrimonio-ambitos-title">Cuatro ámbitos para entender tu patrimonio</h2>
+          <p class="tm-card__text">Entra en el tema que quieras comprender. Aquí distinguimos las herramientas que ya puedes usar de los contenidos que estamos preparando.</p>
+        </div>
+        <div class="nv-card-grid nv-card-grid--2 tm-overview">
+          <article class="nv-card tm-card" data-patrimonio-area="vivienda">
+            <p class="nv-eyebrow">01 · Vivienda y presupuesto</p>
+            <h3 class="tm-card__title">Vivienda y coste de vida</h3>
+            <span class="nv-tag tm-overview__state">Simulador disponible</span>
+            <p class="tm-card__text">Explora cómo cambian la cuota y el coste de una hipoteca al variar el importe, el plazo o el tipo de interés, y su relación con el presupuesto familiar.</p>
+            <a href="vivienda.html" class="nv-btn nv-btn--secondary tm-card__cta">Explorar vivienda y coste de vida →</a>
+          </article>
+          <article class="nv-card tm-card" data-patrimonio-area="impuestos">
+            <p class="nv-eyebrow">02 · Obligaciones fiscales</p>
+            <h3 class="tm-card__title">Impuestos</h3>
+            <span class="nv-tag tm-overview__state">Guías y herramientas disponibles</span>
+            <p class="tm-card__text">Consulta las herramientas y guías sobre calendario fiscal, ahorro, sucesiones y donaciones. Cada contenido indica su ámbito y sus límites.</p>
+            <a href="fiscalidad.html" class="nv-btn nv-btn--secondary tm-card__cta">Explorar impuestos →</a>
+          </article>
+          <article class="nv-card tm-card" data-patrimonio-area="jubilacion">
+            <p class="nv-eyebrow">03 · Ingresos futuros</p>
+            <h3 class="tm-card__title">Jubilación</h3>
+            <span class="nv-tag tm-overview__state">Simulador disponible</span>
+            <p class="tm-card__text">Compara escenarios de ingresos, gastos y patrimonio a lo largo de la jubilación con los supuestos que tú elijas. Son simulaciones, no previsiones garantizadas.</p>
+            <a href="jubilacion.html" class="nv-btn nv-btn--secondary tm-card__cta">Explorar jubilación →</a>
+          </article>
+          <article class="nv-card tm-card" data-patrimonio-area="planificacion">
+            <p class="nv-eyebrow">04 · Visión de conjunto</p>
+            <h3 class="tm-card__title">Planificación patrimonial</h3>
+            <span class="nv-tag nv-tag--pending tm-overview__state">En preparación</span>
+            <p class="tm-card__text">Prepararemos contenidos educativos sobre balance patrimonial, objetivos y documentación familiar. Todavía no hay un cuestionario ni una herramienta que elabore un plan personal.</p>
+            <a href="temas.html?topic=planificacion-patrimonial" class="nv-btn nv-btn--secondary tm-card__cta">Ver qué estamos preparando →</a>
+          </article>
+        </div>
+        <p class="nv-note tm-overview__note">NUVIA informa, explica y calcula. Tú comprendes y decides. Estas herramientas no constituyen asesoramiento financiero, fiscal o jurídico personalizado; revisa el ámbito, los supuestos y las limitaciones de cada una.</p>
+      </section>
+    </sc-if>
 
     <sc-if value="{{ esJubilacion }}" hint-placeholder-val="{{ false }}">
       <section id="herramientas" data-screen-label="Herramientas de jubilación" class="nv-container">
@@ -167,7 +219,11 @@
     </sc-if>
 
     <sc-if value="{{ esBienestar }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Bienestar integral" class="nv-container">
+      <section id="bienestar-ambitos" data-screen-label="Bienestar integral" class="nv-container tm-wellbeing-section" aria-labelledby="bienestar-ambitos-title">
+        <div class="nv-notice tm-wellbeing-availability">
+          <h2>Qué puedes encontrar hoy</h2>
+          <p>Esta página presenta el enfoque y los temas del espacio. Las tres guías anunciadas más abajo todavía no están publicadas. No hay cuestionarios de salud ni orientación individual.</p>
+        </div>
         <article class="tm-wellbeing">
           <div class="tm-wellbeing__media">
             <img src="src/assets/home/card-wellness.webp" alt="Una familia practicando ejercicio y relajación en casa" loading="lazy" class="tm-wellbeing__img" width="1600" height="1067">
@@ -178,15 +234,15 @@
             </div>
           </div>
           <div class="tm-wellbeing__body">
-            <p class="nv-eyebrow">Vida sana · Equilibrio consciente</p>
-            <h2 class="tm-wellbeing__title">Una vida en equilibrio se construye cada día</h2>
-            <p class="tm-card__text">Ordenar la vida no consiste en llegar a todo, sino en cuidar la energía, reducir el estrés y reservar un espacio real para la familia, el trabajo y uno mismo.</p>
-            <div class="tm-pillars">
-              <div class="tm-pillar"><span class="tm-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v16M18 4v16M3 9h6M15 9h6M3 15h6M15 15h6M9 12h6"></path></svg></span><span class="tm-pillar__name">Movimiento consciente</span></div>
-              <div class="tm-pillar"><span class="tm-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-3 7-7 7-12-5 0-9 2-12 6-1 2-1 4 0 6"></path><path d="M8 18c2-3 5-5 9-7"></path></svg></span><span class="tm-pillar__name">Nutrición equilibrada</span></div>
-              <div class="tm-pillar"><span class="tm-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M7 8c1.5-2 3.2-3 5-3s3.5 1 5 3M7 16c1.5 2 3.2 3 5 3s3.5-1 5-3"></path></svg></span><span class="tm-pillar__name">Respiración y relajación</span></div>
-              <div class="tm-pillar"><span class="tm-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-7h6v7"></path></svg></span><span class="tm-pillar__name">Familia y trabajo</span></div>
-              <div class="tm-pillar tm-pillar--wide"><span class="tm-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span class="tm-pillar__name">Descanso, límites y tiempo propio</span></div>
+            <p class="nv-eyebrow">Cuerpo, mente y vida familiar</p>
+            <h2 class="tm-wellbeing__title" id="bienestar-ambitos-title">Cinco temas para comprender el bienestar cotidiano</h2>
+            <p class="tm-card__text">La vida familiar también tiene una dimensión que no se mide en dinero: el cuerpo, los hábitos, la mente y el tiempo compartido. Estos son los temas de partida para los futuros contenidos generales del espacio.</p>
+            <div class="tm-pillars" role="list" aria-label="Cinco temas de Familia, Salud y Bienestar">
+              <div class="tm-pillar" role="listitem"><span class="tm-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v16M18 4v16M3 9h6M15 9h6M3 15h6M15 15h6M9 12h6"></path></svg></span><span class="tm-pillar__name">Movimiento consciente</span></div>
+              <div class="tm-pillar" role="listitem"><span class="tm-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-3 7-7 7-12-5 0-9 2-12 6-1 2-1 4 0 6"></path><path d="M8 18c2-3 5-5 9-7"></path></svg></span><span class="tm-pillar__name">Nutrición equilibrada</span></div>
+              <div class="tm-pillar" role="listitem"><span class="tm-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M7 8c1.5-2 3.2-3 5-3s3.5 1 5 3M7 16c1.5 2 3.2 3 5 3s3.5-1 5-3"></path></svg></span><span class="tm-pillar__name">Respiración y relajación</span></div>
+              <div class="tm-pillar" role="listitem"><span class="tm-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-7h6v7"></path></svg></span><span class="tm-pillar__name">Familia y trabajo</span></div>
+              <div class="tm-pillar tm-pillar--wide" role="listitem"><span class="tm-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span><span class="tm-pillar__name">Descanso, límites y tiempo propio</span></div>
             </div>
           </div>
         </article>
@@ -195,21 +251,58 @@
 
     <sc-if value="{{ esRecursos }}" hint-placeholder-val="{{ false }}">
       <section data-screen-label="Recursos del tema" class="nv-container">
+        <sc-if value="{{ esPlanificacion }}" hint-placeholder-val="{{ false }}">
+          <div class="nv-notice tm-overview__notice">
+            <h2 class="tm-legacy__heading">Planificación patrimonial en preparación</h2>
+            <p>Estos son los contenidos previstos. Todavía no puedes completar un cuestionario ni obtener un plan personal. Mientras tanto, puedes consultar las guías y los simuladores disponibles desde la <a href="temas.html">portada de Patrimonio</a>.</p>
+          </div>
+        </sc-if>
         <sc-if value="{{ esBienestar }}" hint-placeholder-val="{{ false }}">
-          <div class="tm-block-head">
-            <p class="nv-eyebrow">Lecturas con criterio</p>
-            <h2 class="tm-legacy__heading">Hábitos para vivir con más calma y energía</h2>
+          <div class="tm-block-head tm-wellbeing-anchor" id="bienestar-guias">
+            <p class="nv-eyebrow">Próximos contenidos</p>
+            <h2 class="tm-legacy__heading">Tres guías en preparación</h2>
+            <p class="tm-card__text">Son líneas editoriales previstas, no artículos disponibles. Cada guía deberá contar con fuentes identificadas, autoría, fecha de revisión y revisión profesional de su contenido sanitario antes de publicarse.</p>
           </div>
         </sc-if>
         <div class="nv-card-grid">
           <sc-for list="{{ recursos }}" as="r" hint-placeholder-count="3">
             <article class="nv-card tm-card">
               <span class="nv-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
-              <h2 class="tm-card__title">{{ r.titulo }}</h2>
+              <h3 class="tm-card__title">{{ r.titulo }}</h3>
               <p class="tm-card__text">{{ r.descripcion }}</p>
-              <span class="nv-tag tm-card__tag">En preparación</span>
+              <span class="nv-tag nv-tag--pending tm-card__tag">En preparación</span>
             </article>
           </sc-for>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{ esBienestar }}" hint-placeholder-val="{{ false }}">
+      <section id="bienestar-fuentes" class="nv-container tm-wellbeing-section" aria-labelledby="bienestar-fuentes-title">
+        <div class="tm-block-head">
+          <p class="nv-eyebrow">Información y alcance</p>
+          <h2 class="tm-legacy__heading" id="bienestar-fuentes-title">Fuentes de consulta y límites</h2>
+          <p class="tm-card__text">Estos índices públicos permiten consultar información general. No son las fuentes de guías que todavía no se han publicado ni implican un aval de estas instituciones a NUVIA.</p>
+        </div>
+        <div class="nv-card-grid nv-card-grid--2">
+          <article class="nv-card tm-card tm-wellbeing-source">
+            <h3 class="tm-card__title">Organización Mundial de la Salud</h3>
+            <p class="tm-card__text">Índice de temas de salud de la OMS en español.</p>
+            <a href="https://www.who.int/es/health-topics" target="_blank" rel="noopener noreferrer" class="tm-wellbeing-source__link">Consultar temas de la OMS <span class="nv-visually-hidden">(se abre en otra pestaña)</span> ↗</a>
+          </article>
+          <article class="nv-card tm-card tm-wellbeing-source">
+            <h3 class="tm-card__title">MedlinePlus en español</h3>
+            <p class="tm-card__text">Índice de temas de salud de la Biblioteca Nacional de Medicina de Estados Unidos.</p>
+            <a href="https://medlineplus.gov/spanish/healthtopics.html" target="_blank" rel="noopener noreferrer" class="tm-wellbeing-source__link">Consultar temas de MedlinePlus <span class="nv-visually-hidden">(se abre en otra pestaña)</span> ↗</a>
+          </article>
+        </div>
+        <div class="nv-notice tm-wellbeing-limits">
+          <h3>Información general, no atención sanitaria</h3>
+          <p>Este espacio no ofrece diagnóstico, tratamiento ni consejo sanitario individual. No sustituye la atención de un profesional sanitario ni solicita datos sobre tu salud.</p>
+        </div>
+        <div class="tm-wellbeing-reading">
+          <h3 class="tm-card__title">También puedes explorar Lecturas con Criterio</h3>
+          <p class="tm-card__text">El catálogo general de NUVIA ya se puede consultar. Es un espacio distinto de estas guías en preparación.</p>
+          <a href="lecturas.html" class="nv-btn nv-btn--secondary">Consultar el catálogo de lecturas →</a>
         </div>
       </section>
     </sc-if>
@@ -278,6 +371,7 @@
    porque llegaron a publicarse enlaces con ellas. */
 (function () {
   const TEMAS = {
+    'patrimonio': ['Patrimonio', 'Vivienda y coste de vida, impuestos, jubilación y planificación patrimonial: guías y simuladores para comprender la economía familiar, con sus datos, supuestos y límites a la vista.'],
     'vivienda-coste-vida': ['Vivienda y coste de vida', 'Criterios para comparar compra y alquiler, entender la financiación y proteger el presupuesto familiar.'],
     'mis-impuestos':       ['Mis impuestos', 'Conceptos fiscales para anticipar obligaciones y comprender su efecto sobre el ahorro y el patrimonio.'],
     'jubilacion':          ['Jubilación', 'Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.'],
@@ -292,7 +386,7 @@
   let ultimoId = null;
 
   function sincronizar(idActivo) {
-    const id = resuelve(idActivo) || ultimoId || resuelve(new URLSearchParams(location.search).get('topic'));
+    const id = resuelve(idActivo) || ultimoId || resuelve(new URLSearchParams(location.search).get('topic')) || 'patrimonio';
     const t = TEMAS[id];
     if (!t) return;
     ultimoId = id;
@@ -310,7 +404,7 @@
     poner(document.getElementById('tema-ruta'), esBienestar ? 'Familia, Salud y Bienestar' : 'Patrimonio');
     poner(document.getElementById('tema-eyebrow'), esBienestar
       ? 'Espacio NUVIA · En preparación'
-      : `Patrimonio · ${ordenPatrimonio[id] || '01'} de 04`);
+      : id === 'patrimonio' ? 'Espacio NUVIA · Cuatro ámbitos' : `Patrimonio · ${ordenPatrimonio[id] || '01'} de 04`);
     document.querySelectorAll('[data-nav-area]').forEach((area) => {
       const activa = area.dataset.navArea === (esBienestar ? 'bienestar' : 'patrimonio');
       area.classList.toggle('is-active', activa);
@@ -320,7 +414,7 @@
         else summary.removeAttribute('aria-current');
       }
     });
-    const titulo = t[0] + ' | Temas clave · NUVIA';
+    const titulo = 'NUVIA · ' + t[0];
     if (document.title !== titulo) document.title = titulo;
   }
 
@@ -347,7 +441,7 @@
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;jubilacion&quot;, &quot;options&quot;: [&quot;vivienda-coste-vida&quot;, &quot;jubilacion&quot;, &quot;bienestar&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tema&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;temaInicial&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;patrimonio&quot;, &quot;options&quot;: [&quot;patrimonio&quot;, &quot;vivienda-coste-vida&quot;, &quot;mis-impuestos&quot;, &quot;jubilacion&quot;, &quot;planificacion-patrimonial&quot;, &quot;bienestar&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tema&quot;}}">
 class Component extends DCLogic {
   state = { topic: null, temasOpen: false };
   temas() {
@@ -360,9 +454,9 @@ class Component extends DCLogic {
       { id: 'mis-impuestos', num: '02', nombre: 'Mis impuestos', link: 'fiscalidad.html' },
       { id: 'jubilacion', num: '03', nombre: 'Jubilación', intro: 'Planificación de ingresos, longevidad, apoyo a los hijos y transmisión responsable del patrimonio familiar.', tipo: 'herramientas' },
       { id: 'bienestar', num: '01', nombre: 'Familia, Salud y Bienestar', intro: 'Contenidos generales sobre familia, cuerpo, hábitos, mente y bienestar, basados en fuentes solventes y sin consejo sanitario individual.', tipo: 'recursos', recursos: [
-        R('Movimiento, nutrición y descanso', 'Una rutina sostenible que combine ejercicio físico, alimentación equilibrada y recuperación.'),
-        R('Calma y gestión del estrés', 'Respiración, pausas conscientes y técnicas de relajación para recuperar claridad mental.'),
-        R('Familia, trabajo y tiempo propio', 'Límites saludables para separar responsabilidades, estar presente y proteger el equilibrio personal.') ] },
+        R('Movimiento, nutrición y descanso', 'Contenidos previstos sobre actividad física, alimentación y descanso en la vida cotidiana.'),
+        R('Calma y gestión del estrés', 'Conceptos generales sobre estrés, respiración y relajación, con sus fuentes y límites.'),
+        R('Familia, trabajo y tiempo propio', 'Contenidos previstos sobre convivencia, responsabilidades, límites y tiempo compartido.') ] },
       { id: 'planificacion-patrimonial', num: '04', nombre: 'Planificación patrimonial', intro: 'Una visión de conjunto del patrimonio familiar: objetivos, activos, deudas, liquidez y transmisión.', tipo: 'recursos', recursos: [
         R('Balance patrimonial', 'Cómo se organizan los activos, las deudas y la liquidez en una visión conjunta del patrimonio familiar.'),
         R('Objetivos y horizontes', 'La relación entre las necesidades familiares, los plazos y la incertidumbre a lo largo del tiempo.'),
@@ -372,17 +466,21 @@ class Component extends DCLogic {
   /* La cabecera vive fuera de la plantilla (ver el bloque de arriba). Se le
      pasa el tema activo en cada render, antes de pintar. El título de la
      pestaña lo pone ella: aquí se fijaba a «Temas clave» y borraba el del tema. */
+  temaActivo() {
+    const pedido = this.state.topic ?? new URLSearchParams(window.location.search).get('topic') ?? this.props.temaInicial ?? 'patrimonio';
+    const alias = { vivienda: 'vivienda-coste-vida', fiscalidad: 'mis-impuestos' };
+    const id = alias[pedido] || pedido;
+    return this.temas().some(t => t.id === id) ? id : 'patrimonio';
+  }
   sincronizaCabecera() {
     if (typeof window.__nuviaSincronizarTema === 'function') {
-      window.__nuviaSincronizarTema(this.state.topic ?? this.props.temaInicial ?? 'jubilacion');
+      window.__nuviaSincronizarTema(this.temaActivo());
     }
   }
   componentDidUpdate() { this.sincronizaCabecera(); }
   componentDidMount() {
-    const p = new URLSearchParams(window.location.search).get('topic');
-    const alias = { vivienda: 'vivienda-coste-vida', fiscalidad: 'mis-impuestos' };
-    const id = (p && alias[p]) || p;
-    if (id && id !== 'mis-impuestos' && id !== 'vivienda-coste-vida' && this.temas().some(t => t.id === id)) this.setState({ topic: id });
+    const t = this.temas().find(tema => tema.id === this.temaActivo());
+    if (t?.link) { window.location.replace(t.link); return; }
     this.sincronizaCabecera();
   }
   ir(id) {
@@ -394,8 +492,9 @@ class Component extends DCLogic {
   }
   renderVals() {
     const temas = this.temas();
-    const activo = this.state.topic ?? this.props.temaInicial ?? 'jubilacion';
-    const t = temas.find(x => x.id === activo) || temas[0];
+    const activo = this.temaActivo();
+    const t = temas.find(x => x.id === activo) || { id: 'patrimonio', nombre: 'Patrimonio', tipo: 'portada' };
+    const esPortada = t.tipo === 'portada';
     const esBienestar = t.id === 'bienestar';
     const temasPatrimonio = temas.filter((tema) => tema.id !== 'bienestar');
     const base = 'display:inline-flex; align-items:center; gap:9px; border-radius:999px; cursor:pointer; white-space:nowrap; font-family:var(--font-body); font-size:13.5px; font-weight:500; padding:8px 17px; transition:background .2s ease, color .2s ease, border-color .2s ease; ';
@@ -406,7 +505,10 @@ class Component extends DCLogic {
       titulo: t.nombre,
       intro: t.intro,
       numeroDe: t.num + ' de ' + String(temasPatrimonio.length).padStart(2, '0'),
-      mostrarSelector: !esBienestar,
+      mostrarSelector: !esBienestar && !esPortada,
+      mostrarRegresoPatrimonio: !esBienestar && !esPortada,
+      esPortada,
+      esPlanificacion: t.id === 'planificacion-patrimonial',
       pildoras: temasPatrimonio.map(p => ({
         num: p.num, nombre: p.nombre,
         sufijo: p.link ? '↗' : '',

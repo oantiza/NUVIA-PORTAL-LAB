@@ -23,6 +23,10 @@ const expectedGroups = [
     "label": "Patrimonio",
     "children": [
       [
+        "temas.html",
+        "Portada de Patrimonio"
+      ],
+      [
         "vivienda.html",
         "Vivienda y coste de vida"
       ],

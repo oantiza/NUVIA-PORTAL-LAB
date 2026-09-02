@@ -43,11 +43,19 @@
   };
 
   const readableAttempt = (value) => {
-    const date = new Date(value || 0);
+    if (!value) return '';
+    const date = new Date(value);
     if (Number.isNaN(date.valueOf())) return '';
     return new Intl.DateTimeFormat('es-ES', {
-      timeZone: 'Europe/Madrid', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+      timeZone: 'Europe/Madrid', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
     }).format(date).replace(/\./g, '');
+  };
+
+  const setNewsUpdateStatus = (state, message) => {
+    const element = document.querySelector('[data-news-update-status]');
+    if (!element) return;
+    element.dataset.noticeState = state;
+    element.textContent = message;
   };
 
   const mountSecondaryNewsDialog = (newsItems) => {
@@ -116,6 +124,7 @@
   };
 
   const hydrateDailyContent = async () => {
+    setNewsUpdateStatus('loading', 'Comprobando la actualización de la selección. El contenido disponible conserva su fecha y fuente.');
     try {
       const response = await fetch('./data/daily-content.json', { cache: 'no-cache' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -156,11 +165,17 @@
         const newsDate = document.querySelector('[data-daily-news="date"]');
         if (newsDate) newsDate.dateTime = news.sourcePublishedAtIso || '';
 
-        const attemptedAt = readableAttempt(update.lastAttemptAt);
-        const updateStatus = update.status === 'failed'
-          ? 'Actualización automática pendiente. Se conserva la última selección con su fecha y fuente.'
-          : `Selección automática actualizada${attemptedAt ? ` el ${attemptedAt}` : ''}.`;
-        setText('[data-news-update-status]', updateStatus);
+        const succeededAt = readableAttempt(update.lastSuccessAt);
+        const lastSuccess = succeededAt ? ` Última selección registrada: ${succeededAt} (Madrid).` : '';
+        if (update.status === 'ok' && succeededAt) {
+          setNewsUpdateStatus('available', `Selección automática del ${succeededAt} (Madrid). Consulta la fecha de publicación y la fuente de cada noticia.`);
+        } else if (update.status === 'degraded') {
+          setNewsUpdateStatus('partial', `Actualización parcial. Consulta la fecha y la fuente de cada noticia disponible.${lastSuccess}`);
+        } else if (update.status === 'failed') {
+          setNewsUpdateStatus('error', `No se ha podido actualizar la selección. Se conserva el contenido disponible con su fecha y fuente.${lastSuccess}`);
+        } else {
+          setNewsUpdateStatus('unverified', 'Estado de actualización no disponible o incompleto. Consulta la fecha y la fuente de cada noticia; no se confirma una nueva selección.');
+        }
 
         const sourceLink = document.querySelector('[data-daily-news="source-link"]');
         if (sourceLink && news.sourceUrl) sourceLink.href = news.sourceUrl;
@@ -172,6 +187,8 @@
         document.querySelectorAll('[data-daily-impact]').forEach((element, index) => {
           if (news.impactPoints?.[index]) element.textContent = news.impactPoints[index];
         });
+      } else {
+        setNewsUpdateStatus('partial', 'La respuesta no incluye una noticia principal. Se conserva el contenido disponible; consulta su fecha y su fuente.');
       }
 
       setText('[data-macro-updated]', `Última comprobación de datos oficiales · ${payload.macroIndicatorsUpdatedAt}`);
@@ -227,7 +244,7 @@
       });
       mountSecondaryNewsDialog(secondaryNews);
     } catch (error) {
-      setText('[data-news-update-status]', 'No se ha podido comprobar la actualización. Consulta la fecha y la fuente de cada noticia.');
+      setNewsUpdateStatus('error', 'No se ha podido comprobar la actualización. Consulta la fecha y la fuente de cada noticia disponible.');
       console.warn('NUVIA Portal Lab mantiene el último contenido editorial disponible.', error);
     }
   };

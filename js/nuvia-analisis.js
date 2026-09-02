@@ -1098,7 +1098,7 @@ function grupoProyeccion(metricas) {
     tbody.append(tr);
   }
   tabla.append(thead, tbody);
-  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
   envoltorio.append(tabla);
   bloque.append(envoltorio);
   bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_PROYECCION));
@@ -1290,7 +1290,7 @@ function grupoCorrelaciones(series, pesos, nombreDe) {
       tbody.append(tr);
     }
     tabla.append(thead, tbody);
-    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
     envoltorio.append(tabla);
     pliegue.append(envoltorio);
     bloque.append(pliegue);
@@ -1483,7 +1483,7 @@ export async function montaAnalisis(raiz, {
           tbody.append(tr);
         });
         tabla.append(thead, tbody);
-        const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+        const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
         envoltorio.append(tabla);
         const listaFondos = el('ol', { class: 'nv-mriesgo__lista' });
         conDatos.forEach((id, i) => {
