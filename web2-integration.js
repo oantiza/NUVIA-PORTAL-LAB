@@ -33,6 +33,23 @@
     if (element && typeof value === 'string') element.textContent = value;
   };
 
+  const madridDateKey = (date) => {
+    if (!(date instanceof Date) || Number.isNaN(date.valueOf())) return '';
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Madrid', year: 'numeric', month: '2-digit', day: '2-digit',
+    }).formatToParts(date);
+    const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+    return `${values.year}-${values.month}-${values.day}`;
+  };
+
+  const readableAttempt = (value) => {
+    const date = new Date(value || 0);
+    if (Number.isNaN(date.valueOf())) return '';
+    return new Intl.DateTimeFormat('es-ES', {
+      timeZone: 'Europe/Madrid', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    }).format(date).replace(/\./g, '');
+  };
+
   const mountSecondaryNewsDialog = (newsItems) => {
     const dialog = document.getElementById('market-news-dialog');
     if (!dialog || dialog.dataset.mounted === 'true') return;
@@ -59,6 +76,8 @@
         const element = dialogField(field);
         if (element) element.textContent = valueByField[field] || '';
       });
+      const dialogDate = dialogField('date');
+      if (dialogDate) dialogDate.dateTime = newsItem.publishedAtIso || '';
 
       const body = dialogField('body');
       if (body) {
@@ -104,11 +123,25 @@
       const news = payload.dailyEconomicNews;
 
       if (news) {
-        const checkedAt = new Date(payload.dailyEconomicNewsCheckedAt || payload.synchronizedAt || 0);
-        const ageHours = Number.isNaN(checkedAt.valueOf()) ? Infinity : (Date.now() - checkedAt.valueOf()) / 3_600_000;
-        const status = ageHours > 36
-          ? 'Última noticia económica disponible'
-          : (news.freshnessStatus === 'today' ? 'Noticia económica del día' : 'Noticia económica reciente');
+        const update = payload.editorialUpdate || {};
+        const publishedAt = new Date(news.sourcePublishedAtIso || 0);
+        const ageHours = Number.isNaN(publishedAt.valueOf()) ? Infinity : Math.max(0, (Date.now() - publishedAt.valueOf()) / 3_600_000);
+        const publishedToday = madridDateKey(publishedAt) === madridDateKey(new Date());
+        let freshness = 'archive';
+        let status = 'Archivo económico';
+        if (update.status === 'failed') {
+          freshness = ageHours <= 72 ? 'available' : 'archive';
+          status = ageHours <= 72 ? 'Última noticia económica disponible' : 'Archivo económico';
+        } else if (publishedToday) {
+          freshness = 'today';
+          status = 'Noticia económica del día';
+        } else if (ageHours <= 36) {
+          freshness = 'recent';
+          status = 'Noticia económica reciente';
+        } else if (ageHours <= 72) {
+          freshness = 'available';
+          status = 'Última noticia económica disponible';
+        }
         setText('[data-daily-news="status"]', status);
         setText('[data-daily-news="date"]', news.selectionDate);
         setText('[data-daily-news="category"]', news.category);
@@ -117,6 +150,17 @@
         setText('[data-daily-news="why"]', news.whyItMatters);
         setText('[data-daily-news="source"]', `Fuente: ${news.sourceName} · Publicada el ${news.sourcePublishedAt}`);
         setText('[data-daily-news="source-name"]', news.sourceName);
+
+        const lead = document.querySelector('.markets-lead-news');
+        if (lead) lead.dataset.newsFreshness = freshness;
+        const newsDate = document.querySelector('[data-daily-news="date"]');
+        if (newsDate) newsDate.dateTime = news.sourcePublishedAtIso || '';
+
+        const attemptedAt = readableAttempt(update.lastAttemptAt);
+        const updateStatus = update.status === 'failed'
+          ? 'Actualización automática pendiente. Se conserva la última selección con su fecha y fuente.'
+          : `Selección automática actualizada${attemptedAt ? ` el ${attemptedAt}` : ''}.`;
+        setText('[data-news-update-status]', updateStatus);
 
         const sourceLink = document.querySelector('[data-daily-news="source-link"]');
         if (sourceLink && news.sourceUrl) sourceLink.href = news.sourceUrl;
@@ -130,7 +174,7 @@
         });
       }
 
-      setText('[data-macro-updated]', `Datos oficiales revisados a diario · ${payload.macroIndicatorsUpdatedAt}`);
+      setText('[data-macro-updated]', `Última comprobación de datos oficiales · ${payload.macroIndicatorsUpdatedAt}`);
       const indicators = Array.isArray(payload.dailyMacroIndicators) ? payload.dailyMacroIndicators : [];
       indicators.forEach((indicator) => {
         const card = document.querySelector(`[data-macro-id="${indicator.id}"]`);
@@ -172,7 +216,10 @@
         if (label) label.textContent = newsItem.category;
         if (headline) headline.textContent = newsItem.title;
         if (context) context.textContent = newsItem.summary;
-        if (change) change.textContent = newsItem.publishedAt;
+        if (change) {
+          change.textContent = newsItem.publishedAt;
+          change.dateTime = newsItem.publishedAtIso || '';
+        }
         if (image && newsItem.imageUrl) image.src = newsItem.imageUrl;
         if (image && newsItem.imageAlt) image.alt = newsItem.imageAlt;
         if (sourceName) sourceName.textContent = newsItem.sourceName;
@@ -180,6 +227,7 @@
       });
       mountSecondaryNewsDialog(secondaryNews);
     } catch (error) {
+      setText('[data-news-update-status]', 'No se ha podido comprobar la actualización. Consulta la fecha y la fuente de cada noticia.');
       console.warn('NUVIA Portal Lab mantiene el último contenido editorial disponible.', error);
     }
   };

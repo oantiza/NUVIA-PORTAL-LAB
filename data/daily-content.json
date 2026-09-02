@@ -1,23 +1,26 @@
 {
-  "synchronizedAt": "2026-09-01T19:19:08.666Z",
+  "synchronizedAt": "2026-09-02T03:58:17.282Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
-    "selectionDate": "1 de septiembre de 2026",
+    "selectionDate": "2 de septiembre de 2026",
     "freshnessStatus": "today",
-    "sourcePublishedAt": "1 de septiembre de 2026",
-    "sourceName": "EL PAÍS Economía",
-    "sourceUrl": "https://elpais.com/economia/2026-09-01/la-inflacion-en-la-eurozona-se-eleva-al-33-en-agosto-impulsada-por-la-energia.html",
-    "imageUrl": "src/assets/home/daily-news/daily-news-current.webp?v=20260901191908",
-    "imageAlt": "Imagen editorial asociada a la noticia «La inflación en la eurozona se eleva al 3,3% en agosto impulsada por la energía».",
-    "title": "La inflación en la eurozona se eleva al 3,3% en agosto impulsada por la energía",
-    "summary": "La información económica destacada de hoy pone el foco en los precios, el poder adquisitivo y las expectativas sobre los tipos de interés. NUVIA selecciona esta noticia de EL PAÍS Economía como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
-    "category": "Inflación y coste de vida",
-    "context": "La inflación afecta al presupuesto cotidiano y a la rentabilidad real del ahorro. También condiciona la respuesta de los bancos centrales y el coste de la financiación.",
-    "whyItMatters": "Para construir patrimonio importa lo que el dinero permite comprar después de la inflación. Por eso conviene distinguir entre rentabilidad nominal, rentabilidad real y necesidades de liquidez.",
+    "sourcePublishedAt": "2 de septiembre de 2026",
+    "sourcePublishedAtIso": "2026-09-02T00:02:30.000Z",
+    "selectedAt": "2026-09-02T03:58:17.282Z",
+    "sourceName": "Expansión",
+    "sourceUrl": "https://www.expansion.com/economia/financial-times/2026/09/02/6a971422e5fdea64518b4580.html",
+    "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
+    "imageAlt": "",
+    "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
+    "title": "Cómo entender la actual paradoja de los bonos y las acciones",
+    "summary": "La información económica seleccionada pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos. NUVIA incorpora esta noticia de Expansión como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
+    "category": "Tipos de interés y deuda",
+    "context": "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía.",
+    "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
     "impactPoints": [
-      "Puede alterar el poder de compra y la capacidad mensual de ahorro.",
-      "Influye en las expectativas sobre tipos, depósitos, bonos e hipotecas.",
-      "Refuerza la necesidad de medir objetivos y rentabilidades en términos reales."
+      "Puede modificar cuotas, nuevas financiaciones y rentabilidad del ahorro conservador.",
+      "Afecta de forma diferente a bonos, bolsa, divisas y activos inmobiliarios.",
+      "Ayuda a revisar plazos y riesgos sin reaccionar a una sola sesión de mercado."
     ]
   },
   "secondaryEconomicNews": [
@@ -26,14 +29,17 @@
       "category": "Tipos de interés y deuda",
       "title": "El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos",
       "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
-      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-1.webp?v=20260901191908",
-      "imageAlt": "Imagen editorial asociada a la noticia «El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos».",
+      "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
+      "imageAlt": "",
+      "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
         "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
         "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
       "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
       "publishedAt": "1 sept 2026",
+      "publishedAtIso": "2026-09-01T20:08:26.000Z",
+      "selectedAt": "2026-09-02T03:58:17.282Z",
       "sourceName": "Expansión",
       "sourceUrl": "https://www.expansion.com/mercados/cronica-bolsa/2026/09/01/6a966735468aeb3f2f8b457f.html"
     },
@@ -42,14 +48,17 @@
       "category": "Tipos de interés y deuda",
       "title": "Los intereses de la deuda amenazan la Bolsa con nuevos máximos",
       "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
-      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-2.webp?v=20260901191908",
-      "imageAlt": "Imagen editorial asociada a la noticia «Los intereses de la deuda amenazan la Bolsa con nuevos máximos».",
+      "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
+      "imageAlt": "",
+      "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
         "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
         "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
       "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
       "publishedAt": "1 sept 2026",
+      "publishedAtIso": "2026-09-01T10:46:02.000Z",
+      "selectedAt": "2026-09-02T03:58:17.282Z",
       "sourceName": "Expansión",
       "sourceUrl": "https://www.expansion.com/mercados/2026/09/01/6a96a2b2e5fdea156a8b4579.html"
     },
@@ -58,14 +67,17 @@
       "category": "Tipos de interés y deuda",
       "title": "Los mercados afrontan una nueva ola de subidas de tipos",
       "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
-      "imageUrl": "src/assets/markets/secondary-news/secondary-news-current-3.webp?v=20260901191908",
-      "imageAlt": "Imagen editorial asociada a la noticia «Los mercados afrontan una nueva ola de subidas de tipos».",
+      "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
+      "imageAlt": "",
+      "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
         "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
         "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
       "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
       "publishedAt": "31 ago 2026",
+      "publishedAtIso": "2026-08-31T12:47:36.000Z",
+      "selectedAt": "2026-09-02T03:58:17.282Z",
       "sourceName": "Expansión",
       "sourceUrl": "https://www.expansion.com/mercados/2026/08/31/6a953606e5fdea35598b4595.html"
     }
@@ -133,5 +145,18 @@
       "referenceDate": "28 jul 2026"
     }
   ],
-  "dailyEconomicNewsCheckedAt": "2026-09-01T19:19:08.666Z"
+  "dailyEconomicNewsCheckedAt": "2026-09-02T03:58:17.282Z",
+  "editorialUpdate": {
+    "lastAttemptAt": "2026-09-02T03:58:17.282Z",
+    "lastSuccessAt": "2026-09-02T03:58:17.282Z",
+    "status": "ok",
+    "selectionMode": "automatic",
+    "successfulFeeds": [
+      "EL PAÍS Economía",
+      "Expansión"
+    ],
+    "failedFeeds": [],
+    "candidateCount": 19,
+    "maximumSourceAgeHours": 72
+  }
 }

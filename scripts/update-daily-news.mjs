@@ -1,11 +1,9 @@
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import sharp from 'sharp';
 
 const root = resolve(process.cwd());
 const dataPath = resolve(root, 'data/daily-content.json');
-const imageDirectory = resolve(root, 'src/assets/home/daily-news');
-const secondaryImageDirectory = resolve(root, 'src/assets/markets/secondary-news');
+const editorialImageUrl = 'src/assets/social/nuvia-social-source-generated-v1.png';
 
 const feeds = [
   {
@@ -19,7 +17,7 @@ const feeds = [
 ];
 
 const excludedPattern = /\b(f[uú]tbol|tenis|motor|moda|viajes|televisi[oó]n|cine)\b/i;
-const excludedUrlPattern = /\/(?:opinion|firmas|blogs?)\//i;
+const excludedUrlPattern = /\/(?:opinion|firmas|blogs?|consultorio)\//i;
 
 function relevanceScore(title) {
   const normalized = title.toLocaleLowerCase('es-ES');
@@ -86,21 +84,6 @@ function field(item, tag) {
   return decodeXml(match?.[1]);
 }
 
-function attribute(tag, name) {
-  return decodeXml(tag.match(new RegExp(`\\b${name}=["']([^"']+)["']`, 'i'))?.[1]);
-}
-
-function imageFromItem(item) {
-  const mediaTags = item.match(/<media:(?:content|thumbnail)\b[^>]*>/gi) || [];
-  for (const tag of mediaTags) {
-    const url = attribute(tag, 'url');
-    const medium = attribute(tag, 'medium');
-    const type = attribute(tag, 'type');
-    if (/^https?:\/\//i.test(url) && (medium === 'image' || type.startsWith('image/') || !type)) return url;
-  }
-  return '';
-}
-
 async function fetchText(url) {
   const response = await fetch(url, {
     headers: { 'user-agent': 'NUVIA-Portal-Lab/1.0 (daily economic-news updater)' },
@@ -118,71 +101,8 @@ async function readFeed(feed) {
       url: field(item, 'link'),
       publishedAt: new Date(field(item, 'pubDate')),
       sourceName: feed.name,
-      imageUrl: imageFromItem(item),
     }))
     .filter((item) => item.title && /^https?:\/\//.test(item.url) && !Number.isNaN(item.publishedAt.valueOf()));
-}
-
-function imageFromArticle(html) {
-  for (const [tag] of html.matchAll(/<meta\b[^>]*>/gi)) {
-    const property = attribute(tag, 'property') || attribute(tag, 'name');
-    const content = attribute(tag, 'content');
-    if (/^(?:og:image|twitter:image(?::src)?)$/i.test(property) && /^https?:\/\//i.test(content)) return content;
-  }
-  return '';
-}
-
-async function fetchCandidateImage(item) {
-  let remoteUrl = item.imageUrl;
-  if (!remoteUrl) remoteUrl = imageFromArticle(await fetchText(item.url));
-  if (!remoteUrl) throw new Error(`La noticia no incluye imagen: ${item.url}`);
-
-  const response = await fetch(remoteUrl, {
-    headers: {
-      'user-agent': 'NUVIA-Portal-Lab/1.0 (daily economic-news updater)',
-      referer: item.url,
-    },
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (!response.ok) throw new Error(`${response.status} al descargar la imagen de ${item.sourceName}`);
-
-  const contentType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
-  const extension = new Map([
-    ['image/jpeg', 'jpg'],
-    ['image/png', 'png'],
-    ['image/webp', 'webp'],
-  ]).get(contentType);
-  if (!extension) throw new Error(`Formato de imagen no admitido: ${contentType || 'desconocido'}`);
-
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (bytes.length < 10_000 || bytes.length > 10_000_000) {
-    throw new Error(`Tamaño de imagen no válido: ${bytes.length} bytes`);
-  }
-  return { bytes, extension };
-}
-
-async function persistEditorialImage(image, checkedAt, directory, basename) {
-  await mkdir(directory, { recursive: true });
-  await Promise.all(['jpg', 'png', 'webp'].map((extension) => (
-    rm(resolve(directory, `${basename}.${extension}`), { force: true })
-  )));
-
-  /* Se normaliza siempre a WebP, sea cual sea el formato que sirva el medio.
-     Antes se guardaba tal cual y un JPG de agencia pesaba 1,2 MB: mas que
-     el resto de la portada junta, y se republicaba cada dia. Ademas se
-     limita el ancho a 1600 px, el doble del hueco que ocupa en pantalla. */
-  const filename = `${basename}.webp`;
-  const optimizada = await sharp(image.bytes)
-    .resize({ width: 1600, withoutEnlargement: true })
-    .webp({ quality: 82, effort: 6 })
-    .toBuffer();
-
-  await writeFile(resolve(directory, filename), optimizada);
-  const version = checkedAt.toISOString().replace(/\D/g, '').slice(0, 14);
-  const publicDirectory = directory === imageDirectory
-    ? 'src/assets/home/daily-news'
-    : 'src/assets/markets/secondary-news';
-  return `${publicDirectory}/${filename}?v=${version}`;
 }
 
 function formatShortDate(date) {
@@ -267,10 +187,17 @@ function editorialFor(title) {
 }
 
 const checkedAt = new Date();
-const maximumAge = 72 * 60 * 60 * 1000;
 const existing = JSON.parse(await readFile(dataPath, 'utf8'));
-const results = await Promise.allSettled(feeds.map(readFeed));
-const candidates = results
+let feedReport = [];
+
+try {
+  const maximumAge = 72 * 60 * 60 * 1000;
+  const results = await Promise.allSettled(feeds.map(readFeed));
+  feedReport = results.map((result, index) => ({
+    name: feeds[index].name,
+    status: result.status === 'fulfilled' ? 'ok' : 'failed',
+  }));
+  const candidates = results
   .filter((result) => result.status === 'fulfilled')
   .flatMap((result) => result.value)
   .map((item) => ({
@@ -303,23 +230,7 @@ const newCandidates = timelyCandidates.filter((item) => (
   item.url !== previousNews?.sourceUrl
   && titleSimilarity(item.title, previousNews?.title || '') < 0.45
 ));
-const imageCandidates = newCandidates.length ? newCandidates : timelyCandidates;
-
-let selected;
-let selectedImage;
-const imageFailures = [];
-for (const candidate of imageCandidates.slice(0, 15)) {
-  try {
-    selectedImage = await fetchCandidateImage(candidate);
-    selected = candidate;
-    break;
-  } catch (error) {
-    imageFailures.push(`${candidate.sourceName}: ${error.message}`);
-  }
-}
-if (!selected || !selectedImage) {
-  throw new Error(`No se pudo obtener una imagen editorial para la noticia diaria. ${imageFailures.join(' · ')}`);
-}
+const selected = (newCandidates.length ? newCandidates : timelyCandidates)[0];
 
 const editorial = editorialFor(selected.title);
 const preparedSecondaryNews = [];
@@ -331,65 +242,62 @@ const secondaryCandidates = candidates.filter((candidate) => (
 for (const candidate of secondaryCandidates) {
   if (preparedSecondaryNews.length === 3) break;
   if (preparedSecondaryNews.some((item) => titleSimilarity(item.candidate.title, candidate.title) >= 0.45)) continue;
-
-  try {
-    const image = await fetchCandidateImage(candidate);
-    preparedSecondaryNews.push({ candidate, image, editorial: editorialFor(candidate.title) });
-  } catch (error) {
-    imageFailures.push(`${candidate.sourceName}: ${error.message}`);
-  }
+  preparedSecondaryNews.push({ candidate, editorial: editorialFor(candidate.title) });
 }
 
 if (preparedSecondaryNews.length < 3) {
-  throw new Error(`Solo se pudieron preparar ${preparedSecondaryNews.length} noticias breves actuales. ${imageFailures.join(' · ')}`);
+  throw new Error(`Solo se pudieron preparar ${preparedSecondaryNews.length} noticias breves actuales.`);
 }
 
-const localImageUrl = await persistEditorialImage(
-  selectedImage,
-  checkedAt,
-  imageDirectory,
-  'daily-news-current',
-);
-
-const secondaryNews = await Promise.all(preparedSecondaryNews.map(async ({ candidate, image, editorial: itemEditorial }, index) => {
+const secondaryNews = preparedSecondaryNews.map(({ candidate, editorial: itemEditorial }, index) => {
   const slot = index + 1;
-  const imageUrl = await persistEditorialImage(
-    image,
-    checkedAt,
-    secondaryImageDirectory,
-    `secondary-news-current-${slot}`,
-  );
   return {
     id: `market-brief-${slot}`,
     category: itemEditorial.category,
     title: candidate.title,
     summary: `La actualidad pone el foco en ${itemEditorial.focus}.`,
-    imageUrl,
-    imageAlt: `Imagen editorial asociada a la noticia «${candidate.title}».`,
+    imageUrl: editorialImageUrl,
+    imageAlt: '',
+    imageProvenance: 'Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.',
     body: [
       `La información publicada por ${candidate.sourceName} aborda ${itemEditorial.focus}.`,
       itemEditorial.context,
     ],
     whyItMatters: itemEditorial.whyItMatters,
     publishedAt: formatShortDate(candidate.publishedAt),
+    publishedAtIso: candidate.publishedAt.toISOString(),
+    selectedAt: checkedAt.toISOString(),
     sourceName: candidate.sourceName,
     sourceUrl: candidate.url,
   };
-}));
+});
 
 existing.synchronizedAt = checkedAt.toISOString();
 existing.sourceRepository = 'NUVIA-PORTAL-LAB';
 existing.dailyEconomicNewsCheckedAt = checkedAt.toISOString();
+existing.editorialUpdate = {
+  lastAttemptAt: checkedAt.toISOString(),
+  lastSuccessAt: checkedAt.toISOString(),
+  status: feedReport.some((feed) => feed.status === 'failed') ? 'degraded' : 'ok',
+  selectionMode: 'automatic',
+  successfulFeeds: feedReport.filter((feed) => feed.status === 'ok').map((feed) => feed.name),
+  failedFeeds: feedReport.filter((feed) => feed.status === 'failed').map((feed) => feed.name),
+  candidateCount: candidates.length,
+  maximumSourceAgeHours: 72,
+};
 existing.dailyEconomicNews = {
   selectionDate: formatDate(selected.publishedAt),
   freshnessStatus: madridDateKey(selected.publishedAt) === todayKey ? 'today' : 'recent',
   sourcePublishedAt: formatDate(selected.publishedAt),
+  sourcePublishedAtIso: selected.publishedAt.toISOString(),
+  selectedAt: checkedAt.toISOString(),
   sourceName: selected.sourceName,
   sourceUrl: selected.url,
-  imageUrl: localImageUrl,
-  imageAlt: `Imagen editorial asociada a la noticia «${selected.title}».`,
+  imageUrl: editorialImageUrl,
+  imageAlt: '',
+  imageProvenance: 'Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.',
   title: selected.title,
-  summary: `La información económica destacada de hoy pone el foco en ${editorial.focus}. NUVIA selecciona esta noticia de ${selected.sourceName} como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.`,
+  summary: `La información económica seleccionada pone el foco en ${editorial.focus}. NUVIA incorpora esta noticia de ${selected.sourceName} como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.`,
   category: editorial.category,
   context: editorial.context,
   whyItMatters: editorial.whyItMatters,
@@ -399,3 +307,17 @@ existing.secondaryEconomicNews = secondaryNews;
 
 await writeFile(dataPath, `${JSON.stringify(existing, null, 2)}\n`, 'utf8');
 console.log(`Noticia diaria actualizada con ${selected.sourceName}: ${selected.title}`);
+} catch (error) {
+  existing.editorialUpdate = {
+    ...(existing.editorialUpdate || {}),
+    lastAttemptAt: checkedAt.toISOString(),
+    status: 'failed',
+    selectionMode: 'automatic',
+    successfulFeeds: feedReport.filter((feed) => feed.status === 'ok').map((feed) => feed.name),
+    failedFeeds: feedReport.filter((feed) => feed.status === 'failed').map((feed) => feed.name),
+    publicMessage: 'No se pudo completar la actualización automática. Se conserva la última selección con su fecha y su fuente.',
+  };
+  await writeFile(dataPath, `${JSON.stringify(existing, null, 2)}\n`, 'utf8');
+  console.error(`Actualización editorial incompleta: ${error.message}`);
+  process.exitCode = 1;
+}
