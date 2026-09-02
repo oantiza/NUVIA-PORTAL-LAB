@@ -15,7 +15,7 @@ import { leeCsv, validaUniverso, claveOrden, REFERENCIA_OBLIGATORIA } from '../s
 import {
   puntosValidos, fusionaEod, seriesPorAnio, metricas, volatilidad, caidaMaxima, historialYCalidad,
   exposicionesEtf, holdingsEtf, divisaConfirmada, proyectaActivo, exposicionesPorClase, catalogo,
-  clavesProhibidasEn, restaAnios, diasLaborables, normClave, SCHEMA_VERSION, gastosCorrientes,
+  clavesProhibidasEn, restaAnios, diasLaborables, normClave, SCHEMA_VERSION, gastosCorrientes, claveCanonica, regionDePais,
 } from '../scripts/mercado-alfa/proyecta.mjs';
 import { aFirestore, deFirestore, escrituraUpsert, commitLotes, tokenGcloud, URL_BASE, PROYECTO_ALFA } from '../scripts/mercado-alfa/firestore-rest.mjs';
 import { creaClienteEodhd, candidatoEnEuros } from '../scripts/mercado-alfa/eodhd.mjs';
@@ -139,8 +139,10 @@ const updatedAt = '2026-09-02T10:05:00.000Z';
   const etfData = fixture('muestra-etf.json').ETF_Data;
   const ex = exposicionesEtf(etfData);
   comprueba('ETF: asset_mix desde Asset_Allocation (equity ≈ 0,99)', ex && cerca(ex.asset_mix.equity, 0.9947, 1e-3) && cerca(ex.asset_mix.fixed_income, 0, 1e-9), JSON.stringify(ex?.asset_mix));
-  comprueba('ETF: regiones normalizadas con Equity_%', ex && cerca(ex.regions.north_america, 75.543, 1e-3) && ex.regions.europe_developed > 10);
+  comprueba('ETF: regiones normalizadas con Equity_%', ex && cerca(ex.regions.north_america, 75.543, 1e-3) && ex.regions.developed_europe > 10);
   comprueba('ETF: sectores normalizados', ex && ex.sectors.financial_services > 16 && ex.sectors.technology > 0 && !('relative_to_category' in ex.sectors));
+  comprueba('ETF: claves canónicas del portal (consumer_cyclical, developed_europe, oceania)', ex.sectors.consumer_cyclical > 0 && !('consumer_cyclicals' in ex.sectors) && ex.regions.developed_europe > 10 && !('europe_developed' in ex.regions));
+  comprueba('claveCanonica y regionDePais', claveCanonica('Consumer Cyclicals') === 'consumer_cyclical' && claveCanonica('Australasia') === 'oceania' && regionDePais('Germany') === 'eurozone' && regionDePais('Spain') === 'spain' && regionDePais('Sweden') === 'nordics' && regionDePais('Brazil') === 'brazil');
   const h = holdingsEtf(etfData, hoy);
   comprueba('ETF: 10 mayores posiciones, ordenadas, con top10_weight', h && h.holdings.length === 10 && h.holdings[0].ticker === 'NVDA' && h.holdings[0].weight_pct >= h.holdings[9].weight_pct && h.top10_weight > 15 && h.as_of_date === hoy);
   comprueba('ETF: posiciones con país y sector, sin ISIN (EODHD no lo da)', h.holdings[0].country === 'United States' && h.holdings[0].sector === 'Technology' && h.holdings[0].isin === null);

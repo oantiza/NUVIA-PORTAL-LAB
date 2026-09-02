@@ -216,6 +216,34 @@ export function normClave(texto) {
   return sinAcentos(texto).replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
 }
 
+/** Claves de EODHD que el portal ya conoce con otro nombre (js/nuvia-etiquetas.js, js/nuvia-mapa.js). */
+export const CLAVES_CANONICAS = {
+  consumer_cyclicals: 'consumer_cyclical',
+  consumer_defensives: 'consumer_defensive',
+  europe_developed: 'developed_europe',
+  australasia: 'oceania',
+};
+
+export function claveCanonica(texto) {
+  const k = normClave(texto);
+  return CLAVES_CANONICAS[k] || k;
+}
+
+/** País de una acción (General.CountryName) → región del vocabulario del portal. */
+export function regionDePais(pais) {
+  const k = normClave(pais);
+  const directas = {
+    spain: 'spain', portugal: 'portugal', switzerland: 'switzerland', united_kingdom: 'united_kingdom',
+    united_states: 'united_states', canada: 'canada', japan: 'japan', china: 'china', india: 'india',
+    australia: 'australia', sweden: 'nordics', denmark: 'nordics', norway: 'nordics', finland: 'nordics',
+  };
+  if (directas[k]) return directas[k];
+  const eurozona = ['germany', 'france', 'netherlands', 'italy', 'belgium', 'ireland', 'austria', 'luxembourg',
+    'greece', 'slovakia', 'slovenia', 'estonia', 'latvia', 'lithuania', 'malta', 'cyprus', 'croatia'];
+  if (eurozona.includes(k)) return 'eurozone';
+  return k || null;
+}
+
 function numero(x) {
   const n = Number(x);
   return Number.isFinite(n) ? n : null;
@@ -227,7 +255,7 @@ function pesosDe(bloque, campo = 'Equity_%') {
   const salida = {};
   for (const [nombre, valores] of Object.entries(bloque)) {
     const n = numero(valores?.[campo]);
-    if (n != null && n > 0) salida[normClave(nombre)] = redondea(n, 3);
+    if (n != null && n > 0) salida[claveCanonica(nombre)] = redondea(n, 3);
   }
   return Object.keys(salida).length ? salida : null;
 }
@@ -399,8 +427,8 @@ export function proyectaActivo({ fila, eod, fundamentales = null, busqueda = nul
     exposures = {
       source: 'eodhd-general',
       asset_mix: { equity: 1, fixed_income: 0, cash: 0, other: 0 },
-      regions: region ? { [normClave(region)]: 100 } : null,
-      sectors: sector ? { [normClave(sector)]: 100 } : null,
+      regions: region ? { [regionDePais(region)]: 100 } : null,
+      sectors: sector ? { [claveCanonica(sector)]: 100 } : null,
     };
     if (!general) warnings.push('sin ficha de EODHD; nombre del CSV');
   }
