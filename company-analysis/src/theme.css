@@ -1,6 +1,6 @@
 /* ============================================================
    NUVIA — Análisis de Empresas · Sistema de diseño de pantalla
-   Adaptación visual NUVIA en claro y oscuro (Fraunces + Roboto Flex,
+   Adaptación visual NUVIA en claro y oscuro (Fraunces + Inter,
    filetes bronce y acento granate) a interfaz web.
    ============================================================ */
 :root {
@@ -96,7 +96,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Roboto Flex', system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;

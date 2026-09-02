@@ -26,7 +26,7 @@ La política definitiva debe distinguir entre:
 | `nuvia-vivienda-maqueta-v1` | escenario y ofertas | recuperar ejercicio | al guardar | hasta borrado local |
 | `nuvia-tax-preference` | preferencia territorial | adaptar guías | al elegir | hasta borrado local |
 | claves del calendario | perfiles y revisiones | conservar progreso | al usar la guía | hasta borrado local |
-| `nuvia-company-description-es:*` | traducciones | evitar traducciones repetidas | al traducir | **[PENDIENTE C08]** |
+| `nuvia-company-description-es:*` | traducciones antiguas | clave heredada; ya no se escribe desde el 2-09-2026 | no se crea de nuevo | permanece hasta borrado local |
 | `nuvia-company-analysis-theme` | preferencia visual | conservar tema | al elegir | hasta borrado local |
 
 La política definitiva debe incluir instrucciones claras para borrar o revisar estas preferencias desde la propia web, no solo desde el navegador.
@@ -37,8 +37,8 @@ La política definitiva debe incluir instrucciones claras para borrar o revisar 
 |---|---|---|---|
 | TradingView | voluntaria mediante «Cargar panel de índices» | panel de índices | mantener la barrera y documentar el tratamiento posterior |
 | YouTube `youtube-nocookie.com` | voluntaria mediante «Reproducir vídeo» | vídeo educativo | mantener la barrera y documentar el tratamiento posterior |
-| Google Fonts en `company-analysis/` | automática al abrir el módulo | tipografía | autoalojar |
-| Google Translate no documentado | cuando el módulo traduce | descripción en castellano | retirar o sustituir por servicio y contrato adecuados |
+| Tipografías de `company-analysis/` | local | Inter y Fraunces compartidas | mantener la prueba que impide regresar a Google Fonts |
+| Descripción de empresas | texto original del proveedor | informar aunque pueda estar en inglés | no se envía a un traductor externo |
 | Firebase/Google Identity | perezosa al consultar o iniciar sesión | servicio solicitado | documentar como infraestructura necesaria y confirmar contrato/transferencias |
 
 ## 4. Diseño del mecanismo de elección

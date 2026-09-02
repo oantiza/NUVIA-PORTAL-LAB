@@ -65,7 +65,6 @@ Inventario técnico pendiente de confirmación contractual:
 - Proveedor de datos de mercado utilizado por la API, sujeto a confirmación de licencia y contrato.
 - TradingView, cuando se carga el panel de índices.
 - YouTube en modo de privacidad mejorada, cuando se carga o reproduce vídeo.
-- Google Translate, actualmente invocado por el módulo de empresas.
 
 Para cada proveedor deben confirmarse función, contrato, ubicación, subencargados, transferencias y garantías: **[PENDIENTE C09–C10 y C15]**.
 

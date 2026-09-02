@@ -88,7 +88,8 @@ No se ha identificado analítica de uso activa ni lectura publicitaria de estas 
 - Es una copia local de NUVIA que se compila y publica embebida dentro de Cartera.
 - Utiliza Firebase Authentication, Firestore y una API propia en Cloud Functions.
 - La API exige token y mantiene una caché temporal en memoria.
-- Incluye traducción mediante `translate.googleapis.com` y carga tipografías de Google en el módulo.
+- Desde el 2 de septiembre de 2026 utiliza Inter y Fraunces autoalojadas, sin Google Fonts.
+- La traducción directa mediante `translate.googleapis.com` se ha retirado. La ficha muestra la descripción original del proveedor, avisa de que puede estar en inglés y no la envía a otro servicio.
 - El código contiene una lista de correos autorizados; esta exposición debe revisarse dentro del análisis de minimización y seguridad.
 
 ### Vídeo

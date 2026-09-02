@@ -4,13 +4,10 @@ import { KpiGrid, Kpi, Section } from '../../components/Kpi.jsx';
 import { Sparkline, Range52 } from '../../components/SvgCharts.jsx';
 import IndicatorInfo from '../../components/IndicatorInfo.jsx';
 import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtPrice, clsPN, fmtDate, pct100, difPct } from '../../lib/format.js';
-import { translateCompanyDescription } from '../../lib/translate.js';
 
 export default function ResumenTab({ symbol, fund, quote }) {
   const [eod, setEod] = useState(null);
   const [tech, setTech] = useState(null);
-  const [descriptionEs, setDescriptionEs] = useState('');
-  const [translationState, setTranslationState] = useState('idle');
 
   useEffect(() => {
     let alive = true;
@@ -26,28 +23,6 @@ export default function ResumenTab({ symbol, fund, quote }) {
   const currency = g.CurrencyCode;
   const price = quote?.price ?? null;
   const description = String(g.Description || '').trim();
-
-  useEffect(() => {
-    let alive = true;
-    if (!description) {
-      setDescriptionEs('');
-      setTranslationState('idle');
-      return () => { alive = false; };
-    }
-    setDescriptionEs('');
-    setTranslationState('loading');
-    translateCompanyDescription(description)
-      .then((translated) => {
-        if (!alive) return;
-        setDescriptionEs(translated);
-        setTranslationState('ready');
-      })
-      .catch(() => {
-        if (!alive) return;
-        setTranslationState('error');
-      });
-    return () => { alive = false; };
-  }, [description]);
 
   return (
     <>
@@ -118,13 +93,10 @@ export default function ResumenTab({ symbol, fund, quote }) {
 
       {description && (
         <Section eyebrow="La compañía" title={null}>
-          {translationState === 'loading' && <p className="lead muted">Traduciendo descripción al español…</p>}
-          {translationState === 'ready' && (
-            <p className="lead">{descriptionEs.slice(0, 900)}{descriptionEs.length > 900 ? '…' : ''}</p>
-          )}
-          {translationState === 'error' && (
-            <p className="lead muted">La descripción en español no está disponible temporalmente.</p>
-          )}
+          <p className="lead">{description.slice(0, 900)}{description.length > 900 ? '…' : ''}</p>
+          <p className="tiny muted" style={{ marginTop: 10 }}>
+            Descripción original facilitada por el proveedor; puede estar en inglés. NUVIA no la traduce automáticamente.
+          </p>
           <div className="tiny" style={{ marginTop: 10 }}>
             {g.FullTimeEmployees ? `${fmtNum(g.FullTimeEmployees, 0)} empleados · ` : ''}
             {g.WebURL && <a href={g.WebURL} target="_blank" rel="noreferrer">{g.WebURL}</a>}

@@ -14,7 +14,7 @@ function baseOptions(el) {
     layout: {
       background: { type: ColorType.Solid, color: 'transparent' },
       textColor: cssColor(styles, '--chart-text', '#6e7b8b'),
-      fontFamily: "'Roboto Flex', system-ui, sans-serif",
+      fontFamily: "Inter, system-ui, sans-serif",
       fontSize: 11
     },
     grid: { vertLines: { color: grid }, horzLines: { color: grid } },
