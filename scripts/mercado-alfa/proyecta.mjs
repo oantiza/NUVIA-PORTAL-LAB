@@ -25,6 +25,8 @@ export const CLAVES_PROHIBIDAS = ['MorningStar', 'Performance', 'Valuations_Grow
   'rating', 'stars', 'rank', 'ranking', 'score', 'recommendation', 'Description'];
 
 const DIAS_TOLERANCIA = 10;
+/** Días sin dato nuevo a partir de los cuales un instrumento no se publica. */
+export const DIAS_SIN_COTIZACION = 30;
 const TAMANO_TROZO_CATALOGO = 200;
 
 /* ───────────────────────── utilidades de fecha ───────────────────────── */
@@ -282,6 +284,20 @@ export function holdingsEtf(etfData, asOfDate) {
   };
 }
 
+/**
+ * Gastos corrientes en % (0.20 = 0,20 %). EODHD mezcla unidades en
+ * Ongoing_Charge: unos ETF vienen en porcentaje ("0.2000") y otros en
+ * fracción ("0.0011" = 0,11 %). Por debajo de 0,02 se interpreta como
+ * fracción y se pasa a porcentaje (ningún ETF cobra menos del 0,02 %).
+ */
+export function gastosCorrientes(bruto) {
+  if (bruto == null || bruto === '') return {};
+  const oc = numero(bruto);
+  if (oc == null || oc < 0) return {};
+  const pct = oc < 0.02 ? oc * 100 : oc;
+  return { ongoing_charge: redondea(pct, 4) };
+}
+
 /** Región principal de un ETF (la de mayor peso en World_Regions) o null. */
 function regionPrincipal(regions) {
   if (!regions) return null;
@@ -332,6 +348,15 @@ export function proyectaActivo({ fila, eod, fundamentales = null, busqueda = nul
   else if (divisa.value !== DIVISA_ALFA) errores.push(`divisa en EODHD ${divisa.value}, distinta de ${DIVISA_ALFA}`);
   if (fila.divisa !== DIVISA_ALFA) errores.push(`divisa declarada ${fila.divisa}, distinta de ${DIVISA_ALFA}`);
 
+  // Serie sin cotización reciente (instrumento retirado, fusionado o sin
+  // valor liquidativo): no se publica, aunque tenga historial.
+  if (puntos.length) {
+    const ultimo = puntos[puntos.length - 1].date;
+    const hoy = String(updatedAt || '').slice(0, 10);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(hoy) && diasEntre(ultimo, hoy) > DIAS_SIN_COTIZACION) {
+      errores.push(`sin cotización reciente en EODHD (último dato ${ultimo})`);
+    }
+  }
   if (errores.length) return { asset: null, series: [], holdings: null, errores };
 
   const general = fundamentales?.General && typeof fundamentales.General === 'object' ? fundamentales.General : null;
@@ -357,8 +382,7 @@ export function proyectaActivo({ fila, eod, fundamentales = null, busqueda = nul
     display_name = general?.Name || fila.nombre;
     ticker = general?.Code || fila.eodhd_symbol.split('.')[0];
     category = etfData?.Index_Name || null;
-    const oc = numero(etfData?.Ongoing_Charge);
-    costs = oc != null ? { ongoing_charge: redondea(oc, 4) } : {};
+    costs = gastosCorrientes(etfData?.Ongoing_Charge);
     exposures = exposicionesEtf(etfData);
     if (!economic_asset_class) economic_asset_class = claseDesdeMix(exposures?.asset_mix);
     region = regionPrincipal(exposures?.regions);

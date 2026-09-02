@@ -15,7 +15,7 @@ import { leeCsv, validaUniverso, claveOrden, REFERENCIA_OBLIGATORIA } from '../s
 import {
   puntosValidos, fusionaEod, seriesPorAnio, metricas, volatilidad, caidaMaxima, historialYCalidad,
   exposicionesEtf, holdingsEtf, divisaConfirmada, proyectaActivo, exposicionesPorClase, catalogo,
-  clavesProhibidasEn, restaAnios, diasLaborables, normClave, SCHEMA_VERSION,
+  clavesProhibidasEn, restaAnios, diasLaborables, normClave, SCHEMA_VERSION, gastosCorrientes,
 } from '../scripts/mercado-alfa/proyecta.mjs';
 import { aFirestore, deFirestore, escrituraUpsert, commitLotes, tokenGcloud, URL_BASE, PROYECTO_ALFA } from '../scripts/mercado-alfa/firestore-rest.mjs';
 import { creaClienteEodhd, candidatoEnEuros } from '../scripts/mercado-alfa/eodhd.mjs';
@@ -179,8 +179,13 @@ const updatedAt = '2026-09-02T10:05:00.000Z';
   comprueba('divisa USD en EODHD → no se publica', rUsd.asset === null && rUsd.errores.some((e) => e.includes('USD')));
   const rSinPrecios = proyectaActivo({ fila: filaAccion, eod: [], fundamentales: fixture('muestra-accion.json'), fetchedAt, updatedAt });
   comprueba('sin precios → no se publica', rSinPrecios.asset === null);
+  const rVieja = proyectaActivo({ fila: filaAccion, eod: serieGeometrica({ desde: '2021-01-01', hasta: '2023-02-08' }), fundamentales: fixture('muestra-accion.json'), fetchedAt, updatedAt });
+  comprueba('serie sin cotización reciente (retirada en 2023) → no se publica', rVieja.asset === null && rVieja.errores.some((e) => e.includes('sin cotización reciente')));
+  const rReciente = proyectaActivo({ fila: filaAccion, eod: serieGeometrica({ desde: '2021-01-01', hasta: '2026-08-20' }), fundamentales: fixture('muestra-accion.json'), fetchedAt, updatedAt });
+  comprueba('serie con último dato hace 13 días → se publica', rReciente.asset !== null);
   comprueba('divisaConfirmada: búsqueda que no coincide → null', divisaConfirmada({ fila: filaFondoLu, busqueda: [{ Code: 'OTRO', Exchange: 'EUFUND', Currency: 'EUR' }] }) === null);
   comprueba('normClave', normClave('Europe Developed') === 'europe_developed' && normClave('Consumer Cyclicals') === 'consumer_cyclicals');
+  comprueba('gastosCorrientes: EODHD mezcla % y fracción → siempre en %', gastosCorrientes('0.2000').ongoing_charge === 0.2 && gastosCorrientes('0.0011').ongoing_charge === 0.11 && gastosCorrientes('0.0046').ongoing_charge === 0.46 && JSON.stringify(gastosCorrientes(null)) === '{}');
 
   const { chunks, manifest } = catalogo([rF.asset, rAcc.asset, rEtf.asset, rLu.asset], updatedAt);
   comprueba('catálogo: un trozo, orden referencia → etf → acciones', chunks.length === 1 && chunks[0].id === '000' && chunks[0].items[0].asset_id === 'IE00B03HD191' && chunks[0].items[3].asset_id === 'ES0178430E18');

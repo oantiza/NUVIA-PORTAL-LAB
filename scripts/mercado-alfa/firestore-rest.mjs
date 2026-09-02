@@ -70,9 +70,13 @@ export function escrituraUpsert(ruta, objeto) {
 
 /* ───────────────────────── credenciales ───────────────────────── */
 
-export function tokenGcloud({ exec = execFileSync, plataforma = process.platform } = {}) {
+export function tokenGcloud({ exec = execFileSync, plataforma = process.platform, entorno = process.env } = {}) {
+  // Vía de escape para entornos sin gcloud (p. ej. un token obtenido a mano
+  // en la misma sesión): nunca se escribe en fichero ni se imprime.
+  if (entorno.NUVIA_ALFA_TOKEN) return String(entorno.NUVIA_ALFA_TOKEN).trim();
   const orden = plataforma === 'win32' ? 'gcloud.cmd' : 'gcloud';
-  const salida = exec(orden, ['auth', 'print-access-token'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  // En Windows, Node ≥ 20.12 exige shell para lanzar .cmd; los argumentos son fijos.
+  const salida = exec(orden, ['auth', 'print-access-token'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], shell: plataforma === 'win32' });
   const token = String(salida).trim();
   if (!token) throw new Error('gcloud no ha devuelto un token. Ejecuta antes: gcloud auth login');
   return token;
