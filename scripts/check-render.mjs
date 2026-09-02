@@ -162,7 +162,7 @@ const MEDIR = (ESC) => {
     }
     return acc;
   }
-  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [], sinFoco: [], estadosSinSemantica: [], tablists: [] };
+  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [], sinFoco: [], estadosSinSemantica: [], tablists: [], externos: [] };
   let n = 0;
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el);
@@ -443,8 +443,38 @@ for (const ancho of ANCHOS) {
       return problems;
     });
     r.estadosSinSemantica.push(...toggleTransitionProblems);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + r.sinFoco.length + r.estadosSinSemantica.length + r.tablists.length + faltan.length + nuevos.length + desvio.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  foco:${r.sinFoco.length}  estados:${r.estadosSinSemantica.length}  tabs:${r.tablists.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    const externalContentProblems = await p.evaluate(async () => {
+      const visible = (element) => {
+        const box = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return style.display !== 'none' && style.visibility !== 'hidden' && box.width > 0 && box.height > 0;
+      };
+      const problems = [];
+      if (document.querySelector('script[src*="widgets.tradingview-widget.com"]')) {
+        problems.push('TradingView se descarga antes de la elección');
+      }
+      document.querySelectorAll('[data-nuvia-external-widget]').forEach((host) => {
+        if (host.querySelector(':scope > tv-market-overview')) problems.push('el widget externo aparece fuera de su plantilla inerte');
+      });
+      for (const host of [...document.querySelectorAll('[data-nuvia-external-frame]')].filter(visible)) {
+        if (host.querySelector(':scope > iframe')) {
+          problems.push('un vídeo externo se descarga antes de la elección');
+          continue;
+        }
+        const button = host.querySelector('[data-nuvia-external-load]');
+        if (!button) {
+          problems.push('un vídeo externo no ofrece control de carga');
+          continue;
+        }
+        button.click();
+        await new Promise((resolveFrame) => requestAnimationFrame(() => requestAnimationFrame(resolveFrame)));
+        if (!host.querySelector(':scope > iframe')) problems.push('la elección de reproducir no crea el vídeo');
+      }
+      return problems;
+    });
+    r.externos.push(...externalContentProblems);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + r.sinFoco.length + r.estadosSinSemantica.length + r.tablists.length + r.externos.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  foco:${r.sinFoco.length}  estados:${r.estadosSinSemantica.length}  tabs:${r.tablists.length}  externos:${r.externos.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
     for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
@@ -458,6 +488,7 @@ for (const ancho of ANCHOS) {
     for (const x of r.sinFoco) problemas.push(`${pag} @${ancho} · foco: ${x}`);
     for (const x of r.estadosSinSemantica) problemas.push(`${pag} @${ancho} · estado interactivo sin semántica: ${x}`);
     for (const x of r.tablists) problemas.push(`${pag} @${ancho} · pestañas: ${x}`);
+    for (const x of r.externos) problemas.push(`${pag} @${ancho} · contenido externo: ${x}`);
     for (const [k, v] of fugas) problemas.push(`${pag} @${ancho} · fuga del envoltorio ×${v} ${k}`);
   }
   await ctx.close();

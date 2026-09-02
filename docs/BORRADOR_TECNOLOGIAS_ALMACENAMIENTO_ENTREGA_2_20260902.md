@@ -6,7 +6,7 @@
 
 ## 1. Resumen comprensible
 
-NUVIA no ha incorporado analítica publicitaria ni píxeles de seguimiento. Sí utiliza almacenamiento local para que determinadas herramientas recuerden sesiones, carteras, preferencias y progreso. Algunas páginas cargan actualmente contenido de terceros que puede establecer sus propias tecnologías o recibir datos técnicos de conexión.
+NUVIA no ha incorporado analítica publicitaria ni píxeles de seguimiento. Sí utiliza almacenamiento local para que determinadas herramientas recuerden sesiones, carteras, preferencias y progreso. TradingView y los vídeos de YouTube permanecen cerrados hasta que la persona solicita cargarlos. El módulo de empresas conserva conexiones técnicas de Google que todavía deben retirarse o regularizarse.
 
 La política definitiva debe distinguir entre:
 
@@ -35,8 +35,8 @@ La política definitiva debe incluir instrucciones claras para borrar o revisar 
 
 | Servicio | Carga actual | Finalidad | Medida necesaria |
 |---|---|---|---|
-| TradingView | automática al visitar Mercados | panel de índices | bloquear hasta elección informada o sustituir por datos propios autorizados |
-| YouTube `youtube-nocookie.com` | automática en varios vídeos; por clic en otro | vídeo educativo | convertir todos a activación voluntaria y ofrecer enlace alternativo |
+| TradingView | voluntaria mediante «Cargar panel de índices» | panel de índices | mantener la barrera y documentar el tratamiento posterior |
+| YouTube `youtube-nocookie.com` | voluntaria mediante «Reproducir vídeo» | vídeo educativo | mantener la barrera y documentar el tratamiento posterior |
 | Google Fonts en `company-analysis/` | automática al abrir el módulo | tipografía | autoalojar |
 | Google Translate no documentado | cuando el módulo traduce | descripción en castellano | retirar o sustituir por servicio y contrato adecuados |
 | Firebase/Google Identity | perezosa al consultar o iniciar sesión | servicio solicitado | documentar como infraestructura necesaria y confirmar contrato/transferencias |

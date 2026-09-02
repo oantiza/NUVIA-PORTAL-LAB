@@ -94,7 +94,15 @@ No se ha identificado analítica de uso activa ni lectura publicitaria de estas 
 ### Vídeo
 
 - Academia y Curso incorporan vídeos mediante `youtube-nocookie.com`.
-- El modo sin cookies reduce almacenamiento previo, pero no elimina la necesidad de informar sobre la conexión, IP, cabeceras y posibles tratamientos al reproducir o cargar contenido externo.
+- Desde el 2 de septiembre de 2026, los iframes no existen al abrir la página: se crean únicamente después de que la persona pulse «Reproducir vídeo».
+- La barrera contextual explica el proveedor, ofrece un enlace alternativo y declara que no existe conexión mientras el vídeo permanece cerrado.
+- El modo sin cookies y la carga voluntaria reducen el tratamiento previo, pero no eliminan la necesidad de informar sobre la conexión, IP, cabeceras y posibles tratamientos cuando se reproduce o abre el contenido externo.
+
+### Panel de mercado externo
+
+- El panel de índices utiliza el componente de TradingView.
+- Desde el 2 de septiembre de 2026, el script externo permanece fuera del documento inicial y solo se añade después de pulsar «Cargar panel de índices».
+- La persona puede mantenerlo cerrado o abrir TradingView directamente; no se recuerda la elección en el dispositivo.
 
 ### Publicación
 

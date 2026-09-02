@@ -44,12 +44,18 @@ La estructura se ha contrastado con:
 
 ## 3. Correcciones técnicas previas a una publicación jurídica definitiva
 
+### Mitigación completada el 2 de septiembre de 2026
+
+- TradingView ya no se descarga al visitar Mercados.
+- Los vídeos de YouTube de Academia y Curso ya no crean un iframe al abrir la página.
+- Cada bloque explica el proveedor, mantiene el contenido cerrado y solo inicia la conexión tras una acción expresa.
+- La auditoría renderizada prueba tanto la ausencia inicial de la conexión como la creación del vídeo después de pulsar el control.
+
 ### Prioridad crítica
 
 1. Retirar del cliente las listas de correos autorizados de `js/nuvia-datos.js` y `company-analysis/src/firebase.js`; la autorización real debe depender del servidor.
 2. Verificar y documentar las reglas de Firestore y las comprobaciones de autorización de cada Cloud Function.
-3. No cargar TradingView ni vídeos de YouTube antes de la elección o acción informada del usuario.
-4. Autoalojar las tipografías del módulo de empresas y retirar la traducción directa mediante `translate.googleapis.com`, o documentar y contratar un mecanismo adecuado.
+3. Autoalojar las tipografías del módulo de empresas y retirar la traducción directa mediante `translate.googleapis.com`, o documentar y contratar un mecanismo adecuado.
 
 ### Prioridad alta
 

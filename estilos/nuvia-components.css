@@ -1034,6 +1034,92 @@
   box-shadow: none !important;
 }
 
+/* Contenido externo: ningún iframe ni script de terceros se descarga hasta
+   que la persona solicita expresamente abrirlo. */
+.nv-external-content {
+  align-items: center;
+  background: var(--nv-surface);
+  display: flex;
+  justify-content: center;
+}
+
+.nv-external-content.nv-external-content--dark {
+  background: var(--nv-navy-950);
+}
+
+.nv-external-content__placeholder {
+  align-items: center;
+  color: var(--nv-text);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-space-3);
+  justify-content: center;
+  max-width: 680px;
+  min-height: 100%;
+  padding: var(--nv-space-8);
+  text-align: center;
+  width: 100%;
+}
+
+.nv-external-content__placeholder p {
+  font-size: var(--nv-body);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.nv-external-content__placeholder small {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-label);
+  line-height: 1.5;
+}
+
+.nv-external-content__placeholder--dark {
+  color: var(--nv-white);
+}
+
+.nv-external-content__placeholder--dark small {
+  color: var(--nv-text-on-dark-soft);
+}
+
+.nv-external-content__placeholder--dark .nv-btn--secondary {
+  border-color: var(--nv-line-on-dark);
+  background: rgba(255, 255, 255, .08);
+  color: var(--nv-white);
+}
+
+.nv-external-content__placeholder--dark .nv-btn--secondary:hover {
+  background: rgba(255, 255, 255, .14);
+  color: var(--nv-white);
+}
+
+.nv-external-content__eyebrow {
+  color: var(--nv-green-700);
+  font-size: var(--nv-label);
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.nv-external-content__placeholder--dark .nv-external-content__eyebrow {
+  color: var(--nv-green-300);
+}
+
+.nv-external-content__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-space-3);
+  justify-content: center;
+}
+
+.nv-external-content > iframe,
+.nv-external-content > tv-market-overview {
+  border: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .nv-field__unit {
   color: var(--nv-text-muted);
   font-size: var(--nv-label);

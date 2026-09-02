@@ -175,6 +175,60 @@
     });
   };
 
+  let tradingViewLoader;
+  const loadExternalFrame = (host) => {
+    const iframe = document.createElement('iframe');
+    iframe.src = host.dataset.src;
+    iframe.title = host.dataset.title || 'Contenido externo';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    host.replaceChildren(iframe);
+    host.dataset.nuviaExternalLoaded = 'true';
+  };
+
+  const loadTradingView = async (host) => {
+    const template = host.querySelector('template');
+    if (!template) throw new Error('No se encontró la plantilla del panel de mercado.');
+    if (!tradingViewLoader) {
+      tradingViewLoader = new Promise((resolveLoad, rejectLoad) => {
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = host.dataset.script;
+        script.addEventListener('load', resolveLoad, { once: true });
+        script.addEventListener('error', () => rejectLoad(new Error('No se pudo cargar TradingView.')), { once: true });
+        document.head.appendChild(script);
+      });
+    }
+    await tradingViewLoader;
+    await customElements.whenDefined('tv-market-overview');
+    host.replaceChildren(template.content.cloneNode(true));
+    host.dataset.nuviaExternalLoaded = 'true';
+  };
+
+  document.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-nuvia-external-load]');
+    if (!button) return;
+    const host = button.closest('[data-nuvia-external-frame], [data-nuvia-external-widget]');
+    if (!host || host.dataset.nuviaExternalLoaded === 'true' || host.getAttribute('aria-busy') === 'true') return;
+    host.setAttribute('aria-busy', 'true');
+    button.disabled = true;
+    const originalLabel = button.textContent;
+    button.textContent = 'Cargando…';
+    try {
+      if (host.hasAttribute('data-nuvia-external-frame')) loadExternalFrame(host);
+      else await loadTradingView(host);
+    } catch (error) {
+      button.disabled = false;
+      button.textContent = originalLabel;
+      const status = host.querySelector('[data-nuvia-external-status]');
+      if (status) status.textContent = error.message || 'No se pudo cargar el contenido externo.';
+    } finally {
+      host.removeAttribute('aria-busy');
+    }
+  });
+
   const synchronizeNavigation = (nav, currentRoute, activeArea) => {
     nav.querySelectorAll('[data-nav-area]').forEach((group) => {
       group.classList.toggle('is-active', group.dataset.navArea === activeArea);

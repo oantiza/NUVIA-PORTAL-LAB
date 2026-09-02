@@ -223,11 +223,17 @@
         <h2 id="titulo-video">{{ videoTitulo }}</h2>
         <p class="curso-leccion__lead">{{ videoDescripcion }}</p>
 
-        <div class="curso-video">
-          <iframe src="{{ videoSrc }}" title="{{ videoTitulo }}" loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen="{{ true }}"></iframe>
+        <div class="curso-video nv-external-content nv-external-content--dark" data-nuvia-external-frame
+             data-src="{{ videoSrc }}" data-title="{{ videoTitulo }}">
+          <div class="nv-external-content__placeholder nv-external-content__placeholder--dark">
+            <span class="nv-external-content__eyebrow">Vídeo externo · YouTube</span>
+            <p>El vídeo se conecta con YouTube solo cuando eliges reproducirlo.</p>
+            <div class="nv-external-content__actions">
+              <button type="button" class="nv-btn nv-btn--primary" data-nuvia-external-load>Reproducir vídeo</button>
+              <a class="nv-btn nv-btn--secondary" href="{{ videoHref }}" target="_blank" rel="noopener noreferrer">Abrir en YouTube ↗</a>
+            </div>
+            <small data-nuvia-external-status aria-live="polite">No se establece conexión mientras el vídeo permanece cerrado.</small>
+          </div>
         </div>
 
         <button type="button" onClick="{{ marcarVideo }}" class="{{ claseBotonVideo }}">{{ textoBotonVideo }}</button>
@@ -678,7 +684,8 @@ class Component extends DCLogic {
       descargaHref: cap.pdf,
       videoTitulo: cap.videoTitulo,
       videoDescripcion: cap.videoDesc,
-      videoSrc: 'https://www.youtube-nocookie.com/embed/' + cap.video + '?rel=0',
+      videoSrc: 'https://www.youtube-nocookie.com/embed/' + cap.video + '?autoplay=1&rel=0',
+      videoHref: 'https://www.youtube.com/watch?v=' + cap.video,
       progresoTexto: progreso + ' %',
       progresoAncho: progreso + '%',
       pasos: idsPaso.map((id, i) => ({

@@ -43,7 +43,6 @@
 <script defer src="js/vendor/react-dom.production.min.js"></script>
 <script defer src="support.js"></script>
 <script defer src="nuvia-site-unified.js"></script>
-<script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-market-overview.js"></script>
 </head>
 
 <body class="nuvia-design-lab">
@@ -239,8 +238,20 @@
               </div>
               <span class="markets-index-card__live">Datos de mercado</span>
             </div>
-            <div class="markets-index-widget">
-              <tv-market-overview symbol-sectors='[{"sectionName":"Índices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:SX5E","XETR:DAX","BME:IBC"]},{"sectionName":"Divisas","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY"]},{"sectionName":"Materias primas","symbols":["TVC:GOLD","TVC:UKOIL","TVC:USOIL"]}]'></tv-market-overview>
+            <div class="markets-index-widget nv-external-content" data-nuvia-external-widget="tradingview"
+                 data-script="https://widgets.tradingview-widget.com/w/en/tv-market-overview.js">
+              <div class="nv-external-content__placeholder">
+                <span class="nv-external-content__eyebrow">Contenido externo · TradingView</span>
+                <p>El panel se conecta con TradingView únicamente si decides cargarlo.</p>
+                <div class="nv-external-content__actions">
+                  <button type="button" class="nv-btn nv-btn--primary" data-nuvia-external-load>Cargar panel de índices</button>
+                  <a class="nv-btn nv-btn--secondary" href="https://www.tradingview.com/markets/indices/quotes-all/" target="_blank" rel="noopener noreferrer">Abrir TradingView ↗</a>
+                </div>
+                <small data-nuvia-external-status aria-live="polite">No se envían datos a TradingView mientras el panel permanece cerrado.</small>
+              </div>
+              <template>
+                <tv-market-overview symbol-sectors='[{"sectionName":"Índices","symbols":["FOREXCOM:SPXUSD","FOREXCOM:NSXUSD","FOREXCOM:DJI","INDEX:SX5E","XETR:DAX","BME:IBC"]},{"sectionName":"Divisas","symbols":["FX:EURUSD","FX:GBPUSD","FX:USDJPY"]},{"sectionName":"Materias primas","symbols":["TVC:GOLD","TVC:UKOIL","TVC:USOIL"]}]'></tv-market-overview>
+              </template>
             </div>
             <p class="markets-index-card__note">Tiempo real, diferido o último cierre según el mercado · Información facilitada por TradingView.</p>
           </article>
