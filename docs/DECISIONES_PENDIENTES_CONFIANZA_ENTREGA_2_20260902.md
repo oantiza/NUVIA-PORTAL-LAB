@@ -38,7 +38,7 @@ La estructura se ha contrastado con:
 | C11 | Canal y procedimiento de derechos fuera del autoservicio | El autoservicio no cubre todas las incidencias | Procedimiento, plazo y responsables |
 | C12 | Política de menores | La web trata economía familiar y permite cuentas | Edad mínima y procedimiento validado |
 | C13 | Política de incidentes y seguridad | Gobernanza del tratamiento | Responsable, registro y protocolo |
-| C14 | Reglas reales de Firestore y Cloud Functions | El control del cliente no acredita seguridad | Revisión de reglas y prueba de autorización |
+| C14 | Backend definitivo, reglas de Firestore y Cloud Functions | El control del cliente no acredita seguridad y la base actual no es la definitiva | Aplazado hasta seleccionar la infraestructura definitiva; después, revisión de reglas y prueba de autorización |
 | C15 | Licencias de EODHD, TradingView y traducción | Puede afectar a redistribución y uso público | Condiciones y plan contratado archivados |
 | C16 | Ley aplicable y resolución de controversias | Condiciones de uso | Texto validado según identidad y actividad |
 
@@ -55,8 +55,21 @@ La estructura se ha contrastado con:
 
 ### Prioridad crítica
 
-1. Retirar del cliente las listas de correos autorizados de `js/nuvia-datos.js` y `company-analysis/src/firebase.js`; la autorización real debe depender del servidor.
-2. Verificar y documentar las reglas de Firestore y las comprobaciones de autorización de cada Cloud Function.
+1. Seleccionar primero la base de datos y el backend definitivos.
+2. Una vez elegidos, trasladar la autorización al servidor y retirar del cliente las listas de correos de `js/nuvia-datos.js` y `company-analysis/src/firebase.js`.
+3. Verificar y documentar entonces las reglas definitivas y las comprobaciones de autorización de cada Cloud Function.
+
+### Decisión del fundador · 2 de septiembre de 2026
+
+Firebase y la base Firestore actualmente conectada **no constituyen todavía la infraestructura definitiva ni desarrollada de NUVIA**. Hasta que el fundador confirme expresamente la arquitectura final:
+
+- queda aplazada cualquier decisión o cambio que afecte a Firebase, incluidas base de datos, reglas, Authentication, Cloud Functions, usuarios, Storage y configuración del proyecto;
+- no se modificarán, publicarán ni sustituirán reglas de Firestore;
+- no se utilizará la configuración actual como evidencia de la arquitectura definitiva;
+- no se alterarán las listas de acceso del cliente si el cambio pudiera ampliar, reducir o romper el acceso provisional;
+- C14 permanece aplazada y no bloquea el trabajo puramente editorial, visual o local que no trate datos en la nube.
+
+La revisión realizada antes de esta decisión fue exclusivamente de lectura. No se modificó ningún dato, regla, usuario, función, sistema de autenticación, almacenamiento o configuración del proyecto Firebase.
 
 ### Prioridad alta
 

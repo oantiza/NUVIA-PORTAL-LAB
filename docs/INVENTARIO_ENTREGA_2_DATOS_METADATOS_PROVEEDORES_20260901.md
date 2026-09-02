@@ -64,7 +64,6 @@ Claves identificadas en `localStorage`:
 | `nuvia-vivienda-maqueta-v1` | escenario de vivienda y ofertas | guardar y recuperar el ejercicio local |
 | `nuvia-tax-preference` | preferencia territorial/fiscal | adaptar guías fiscales en el dispositivo |
 | claves del calendario | perfiles y revisiones marcadas | recuperar el progreso local |
-| `nuvia-company-description-es:*` | traducciones de descripciones de empresas | evitar traducciones repetidas |
 | `nuvia-company-analysis-theme` | preferencia visual | conservar el tema del módulo embebido |
 
 No se ha identificado analítica de uso activa ni lectura publicitaria de estas claves. Los consentimientos opcionales de comunicaciones y análisis de uso existen como controles preparatorios, pero el propio código declara que hoy no activan esos tratamientos.
@@ -72,6 +71,8 @@ No se ha identificado analítica de uso activa ni lectura publicitaria de estas 
 ## 5. Datos y servicios en la nube
 
 ### Cuenta y base maestra
+
+> **Estado provisional confirmado el 2 de septiembre de 2026.** Firebase y la base Firestore actualmente conectada no constituyen todavía la infraestructura definitiva ni desarrollada de NUVIA. Se documentan aquí únicamente para describir el funcionamiento presente. Queda aplazada cualquier decisión o modificación sobre base de datos, reglas, Authentication, Cloud Functions, usuarios, Storage o configuración hasta que el fundador confirme expresamente la arquitectura final.
 
 - Proveedor técnico: Firebase/Google Identity Toolkit y Secure Token.
 - Proyecto: `bbdd-activos-financieros`.
@@ -90,7 +91,7 @@ No se ha identificado analítica de uso activa ni lectura publicitaria de estas 
 - La API exige token y mantiene una caché temporal en memoria.
 - Desde el 2 de septiembre de 2026 utiliza Inter y Fraunces autoalojadas, sin Google Fonts.
 - La traducción directa mediante `translate.googleapis.com` se ha retirado. La ficha muestra la descripción original del proveedor, avisa de que puede estar en inglés y no la envía a otro servicio.
-- El código contiene una lista de correos autorizados; esta exposición debe revisarse dentro del análisis de minimización y seguridad.
+- El código contiene una lista de correos autorizados. Su retirada queda aplazada hasta elegir el backend definitivo, para no ampliar ni romper el acceso de una infraestructura provisional; la autorización final deberá residir en el servidor.
 
 ### Vídeo
 
@@ -134,10 +135,10 @@ Antes de publicar páginas legales definitivas faltan decisiones o evidencias so
 6. procedimiento de atención de derechos fuera del autoservicio;
 7. política de menores;
 8. seguridad, gestión de incidentes y registro de accesos;
-9. alcance real de Firestore y de cada Cloud Function;
+9. selección del backend definitivo y, después, alcance real de sus reglas y funciones;
 10. licencias y condiciones de los proveedores de datos y traducción;
 11. necesidad de evaluación de impacto;
-12. revisión de la lista pública de correos autorizados del módulo de empresas.
+12. sustitución de las listas públicas de correos por autorización del servidor cuando exista backend definitivo.
 
 Hasta resolverlos, NUVIA puede avanzar en accesibilidad técnica y metadatos, pero no debe presentar una política jurídica como validada.
 
@@ -146,7 +147,7 @@ Hasta resolverlos, NUVIA puede avanzar en accesibilidad técnica y metadatos, pe
 1. Mantener etiquetas, ayudas y nombres accesibles mediante la auditoría renderizada incorporada.
 2. Mantener foco visible, estados semánticos y navegación de pestañas mediante la nueva prueba de teclado.
 3. Mantener Open Graph, Twitter Card y la imagen social propia de NUVIA mediante la prueba automática incorporada.
-4. Confirmar el inventario con la configuración real del backend y de los proveedores.
+4. Mantener aplazada la revisión del backend hasta que el fundador confirme la infraestructura definitiva; no modificar el Firestore provisional.
 5. Mantener los borradores de páginas de confianza preparados el 2 de septiembre de 2026 claramente marcados como internos y pendientes.
 6. Solicitar validación jurídica antes de publicarlos como textos definitivos.
 
