@@ -73,7 +73,7 @@ function serieGeometrica({ desde, hasta, anual = 0.10, base = 100 }) {
   try {
     const real = validaUniverso(leeCsv(readFileSync(join(AQUI, '..', 'universo', 'universo-alfa.csv'), 'utf8')));
     comprueba('CSV real: sin errores', real.errores.length === 0, real.errores.slice(0, 3).join(' | '));
-    comprueba('CSV real: entre 50 y 200 incluidos', real.incluidas.length >= 50 && real.incluidas.length <= 200, String(real.incluidas.length));
+    comprueba('CSV real: entre 50 y 1000 incluidos (universo completo desde el 02-09-2026)', real.incluidas.length >= 50 && real.incluidas.length <= 1000, String(real.incluidas.length));
   } catch { console.log('     (sin CSV real en este árbol; se omite)'); }
 }
 
