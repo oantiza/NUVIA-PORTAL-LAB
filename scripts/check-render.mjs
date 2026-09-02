@@ -421,6 +421,10 @@ for (const ancho of ANCHOS) {
         const groups = [...document.querySelectorAll('[data-nuvia-toggle-group="true"]')].filter(visible);
         const group = groups[groupIndex];
         if (!group) continue;
+        // Patrimonio mezcla selectores internos con accesos a páginas distintas.
+        // Su semántica se audita arriba, pero aquí no se pulsa para no abandonar
+        // la página a mitad de la evaluación del navegador.
+        if (group.matches('.tm-pills')) continue;
         const buttons = [...group.querySelectorAll(':scope > button')].filter((button) => visible(button) && !button.disabled);
         if (buttons.length < 2) continue;
         const currentIndex = buttons.findIndex((button) => button.getAttribute('aria-pressed') === 'true');
