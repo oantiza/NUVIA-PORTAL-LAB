@@ -138,5 +138,17 @@ Hasta resolverlos, NUVIA puede avanzar en accesibilidad técnica y metadatos, pe
 2. Mantener foco visible, estados semánticos y navegación de pestañas mediante la nueva prueba de teclado.
 3. Mantener Open Graph, Twitter Card y la imagen social propia de NUVIA mediante la prueba automática incorporada.
 4. Confirmar el inventario con la configuración real del backend y de los proveedores.
-5. Preparar borradores de páginas de confianza claramente marcados como pendientes.
+5. Mantener los borradores de páginas de confianza preparados el 2 de septiembre de 2026 claramente marcados como internos y pendientes.
 6. Solicitar validación jurídica antes de publicarlos como textos definitivos.
+
+## 9. Borradores internos preparados
+
+Se han creado borradores separados de aviso legal, privacidad, tecnologías de almacenamiento, condiciones de uso y declaración de accesibilidad. Los acompaña una matriz de decisiones que identifica los datos y evidencias que no pueden deducirse del código.
+
+Los borradores:
+
+- describen únicamente funciones verificadas en el portal;
+- distinguen hechos, decisiones y propuestas sujetas a revisión;
+- no se han convertido en HTML ni enlazado desde el pie público;
+- no se consideran políticas vigentes;
+- no deben publicarse hasta completar la identidad del titular, bases jurídicas, conservación, proveedores, transferencias, derechos, menores, seguridad y licencias.
