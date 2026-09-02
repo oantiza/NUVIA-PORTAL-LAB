@@ -51,9 +51,16 @@ for (const excluded of ['guia-impuestos.html', 'sistema-visual.html', '_plantill
   assert.ok(!urls.some((url) => url.endsWith('/' + excluded)), `${excluded}: excluida del sitemap`);
 }
 
-const company = await readFile(resolve(root, 'company-analysis/index.html'), 'utf8');
-assert.match(company, /<meta name="robots" content="noindex, nofollow">/,
-  'El módulo embebido de empresas no compite como página pública independiente');
+/* Alfa (Entrega 2b): en dist/ el módulo de empresas no existe salvo con
+   NUVIA_EMPRESAS=1; en el árbol de trabajo sí, y se comprueba igual. */
+try {
+  const company = await readFile(resolve(root, 'company-analysis/index.html'), 'utf8');
+  assert.match(company, /<meta name="robots" content="noindex, nofollow">/,
+    'El módulo embebido de empresas no compite como página pública independiente');
+} catch (e) {
+  if (e?.code !== 'ENOENT') throw e;
+  console.log('Metadatos: company-analysis/ no está en este árbol (alfa: fuera de la publicación); se omite su comprobación.');
+}
 
 const robots = await readFile(resolve(root, 'robots.txt'), 'utf8');
 assert.ok(robots.includes(`Sitemap: ${base}sitemap.xml`), 'robots.txt declara el sitemap oficial');

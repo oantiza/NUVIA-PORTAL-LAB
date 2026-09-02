@@ -1,50 +1,58 @@
 /**
- * NUVIA — acceso de solo lectura a la base maestra (bases §6).
+ * NUVIA — acceso de solo lectura a la base de datos propia de la alfa.
  *
- * El visitante obtiene una sesión anónima de Firebase (invisible para él) y
- * consulta las Cloud Functions de solo lectura de `bbdd-activos-financieros`:
- * search_assets, get_asset_detail, get_asset_holdings, get_price_series.
- * Nunca Firestore directo, nunca EODHD.
+ * Entrega 2b (02-09-2026): el laboratorio deja de consultar la base
+ * profesional del fundador por funciones en la nube y pasa a leer Firestore
+ * del proyecto propio `nuvia-family-wealth` por su API REST, **sin sesión**:
+ * la alfa está en abierto, no hay cuentas ni datos de usuarios, y las
+ * carteras se guardan solo en el navegador (nuvia-constructor.js).
+ * Documentación: docs/PENDIENTE_ALFA_NUVIA_20260902.md §5 y
+ * docs/INFORME_PARA_CODEX_BASE_DATOS_ALFA_20260902.md §8.
  *
- * Sin SDK: el protocolo de las funciones callable y de Identity Toolkit es
- * HTTP simple, y así la página estática no arrastra dependencias.
+ * Qué se conserva a propósito: el nombre `creaClienteMaestra`, su firma de
+ * inyección (fetchFn, almacén, reloj) y TODOS los métodos que consumen los
+ * módulos, para que nuvia-constructor.js, nuvia-analisis.js, nuvia-modelos.js
+ * y nuvia-buscador.js no cambien. `llama()` queda como fachada: traduce los
+ * nombres de las antiguas funciones a lecturas de Firestore y devuelve la
+ * misma forma que devolvían.
  *
- * `creaClienteMaestra` acepta inyección de fetch/almacén/reloj para poder
- * probar la lógica de sesión y caché sin red (docs/nuvia-datos.test.mjs).
- *
- * Paso 28 (registro con datos mínimos): la misma sesión puede pasar de
- * anónima a registrada enlazando correo y contraseña — y nada más — con
- * `accounts:signUp` + idToken, que conserva el mismo usuario. Identity
- * Toolkit rechaza aquí la vía `accounts:update` («verify the new email»),
- * comprobado contra el proyecto real el 19-08-2026.
+ * Nunca EODHD desde el navegador; nunca la base profesional; nunca Auth.
  */
 
-export const PROYECTO = {
-  apiKey: 'AIzaSyBTidBD5AIs_7RMkV8qhsQNbnhwD_U3NCg',
-  region: 'europe-west1',
-  id: 'bbdd-activos-financieros',
-};
+export const PROYECTO = { id: 'nuvia-family-wealth' };
 
-const CLAVE_SESION = 'nuvia.maestra-sesion.v1';
-const MARGEN_CADUCIDAD_MS = 5 * 60_000; // renovar 5 min antes de caducar
+export const URL_DOCUMENTOS = `https://firestore.googleapis.com/v1/projects/${PROYECTO.id}/databases/(default)/documents`;
+
+/** Clave antigua de sesión (proyecto anterior). Se borra al arrancar: un
+ *  navegador que entró antes no debe conservar tokens de otro proyecto. */
+export const CLAVE_SESION_ANTIGUA = 'nuvia.maestra-sesion.v1';
+export const CLAVE_CATALOGO = 'nuvia.catalogo.v1';
+export const PREFIJO_SERIES = 'nuvia.series.v1.';
+
+/** Nivel único de la alfa: análisis completo para cualquiera; los escenarios
+ *  del suscriptor siguen «no abiertos», como hasta ahora. */
+export const NIVEL_ALFA = 'registrada';
+export const ANIOS_VENTANA = 3;
+/** Días de margen entre el inicio de la ventana y el primer dato de un
+ *  activo para considerarlo con historial suficiente. */
+export const TOLERANCIA_INICIO_DIAS = 20;
 const TTL_BUSQUEDA_MS = 10 * 60_000;
 
-/** Marcador de suscripción por cuenta. Lo escribirá la pasarela de pago
- *  (guía, paso 35); hasta entonces nadie lo tiene y el nivel suscriptor
- *  queda descrito pero cerrado. */
+function diasEntre(isoA, isoB) {
+  return Math.round((Date.parse(`${isoB}T00:00:00Z`) - Date.parse(`${isoA}T00:00:00Z`)) / 86_400_000);
+}
+
+/** Marcador de suscripción por cuenta. Sin cuentas en la alfa no lo tiene
+ *  nadie; se conserva para no tocar nuvia-cuenta.js. */
 export const CLAVE_SUSCRIPCION = 'nuvia.suscripcion.v1';
 
-/** Cuentas del administrador del portal: con la sesión iniciada reciben el
- *  nivel administrativo explícito, con todos los módulos de la interfaz y
- *  sin límites comerciales. La base maestra permanece en solo lectura. */
+/** Cuentas del administrador del portal (sin efecto en la alfa: no hay sesión). */
 export const CORREOS_ADMIN = ['oantiza@gmail.com'];
 
-/** ¿Es este correo una cuenta del administrador? Pura y probada. */
 export function esAdmin(correo) {
   return CORREOS_ADMIN.includes(String(correo || '').trim().toLowerCase());
 }
 
-/** ¿Tiene suscripción activa esta cuenta? Pura y probada: silencio = no. */
 export function leeSuscripcion(almacen, correo) {
   if (!almacen || !correo) return false;
   try {
@@ -55,16 +63,159 @@ export function leeSuscripcion(almacen, correo) {
   }
 }
 
-/** Etiqueta en castellano para los tipos de instrumento de la maestra. */
+/** Etiqueta en castellano para los tipos de instrumento. */
 export function etiquetaTipo(tipo) {
-  const mapa = {
-    STOCK: 'Acción',
-    FUND: 'Fondo',
-    ETF: 'ETF',
-    INDEX: 'Índice',
-  };
+  const mapa = { STOCK: 'Acción', FUND: 'Fondo', ETF: 'ETF', INDEX: 'Índice' };
   return mapa[String(tipo || '').toUpperCase()] || String(tipo || '—');
 }
+
+/* ───────────────────────── helpers puros (probados) ───────────────────────── */
+
+/** Texto sin acentos ni mayúsculas, para buscar. */
+export function normaliza(texto) {
+  return String(texto || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+}
+
+/** Valor tipado de Firestore → JavaScript. */
+export function deFirestore(valor) {
+  if (!valor || typeof valor !== 'object') return null;
+  if ('nullValue' in valor) return null;
+  if ('booleanValue' in valor) return valor.booleanValue;
+  if ('integerValue' in valor) return Number(valor.integerValue);
+  if ('doubleValue' in valor) return valor.doubleValue;
+  if ('stringValue' in valor) return valor.stringValue;
+  if ('timestampValue' in valor) return valor.timestampValue;
+  if ('arrayValue' in valor) return (valor.arrayValue.values || []).map(deFirestore);
+  if ('mapValue' in valor) return camposDe(valor.mapValue.fields);
+  return null;
+}
+
+export function camposDe(fields) {
+  const salida = {};
+  for (const [k, v] of Object.entries(fields || {})) salida[k] = deFirestore(v);
+  return salida;
+}
+
+/** Documento REST → objeto plano (o null si no hay documento). */
+export function documentoAObjeto(doc) {
+  if (!doc?.name || !doc.fields) return null;
+  return camposDe(doc.fields);
+}
+
+/**
+ * Búsqueda en memoria sobre el catálogo: por nombre, ISIN o ticker, sin
+ * acentos ni mayúsculas. Devuelve la misma forma que devolvía search_assets.
+ */
+export function buscaEnCatalogo(items, consulta, { tipos = null, limite = 12 } = {}) {
+  const q = normaliza(consulta);
+  if (!q) return { activos: [], total: 0 };
+  const palabras = q.split(/\s+/).filter(Boolean);
+  const tiposOk = tipos ? new Set(tipos.map((t) => String(t).toUpperCase())) : null;
+  const coincidencias = (items || []).filter((a) => {
+    if (tiposOk && !tiposOk.has(String(a.instrument_type || '').toUpperCase())) return false;
+    const texto = normaliza([a.display_name, a.isin, a.ticker, a.asset_id].filter(Boolean).join(' '));
+    return palabras.every((p) => texto.includes(p));
+  });
+  // Coincidencia exacta de ISIN o ticker primero; después el orden del catálogo.
+  const exacto = (a) => (normaliza(a.isin) === q || normaliza(a.ticker) === q ? 0 : 1);
+  coincidencias.sort((a, b) => exacto(a) - exacto(b));
+  return { activos: coincidencias.slice(0, limite), total: coincidencias.length };
+}
+
+/**
+ * Ficha de Firestore → la forma que los módulos esperan de get_asset_detail.
+ * `null` significa «sin datos» y así llega: el análisis no debe estimarlo.
+ */
+export function fichaParaModulos(doc) {
+  if (!doc) return null;
+  const ex = doc.exposures || null;
+  return {
+    asset_id: doc.asset_id,
+    identity: {
+      display_name: doc.display_name,
+      currency: doc.currency,
+      region: doc.region ?? null,
+      isin: doc.isin,
+      ticker: doc.ticker ?? null,
+    },
+    instrument_type: doc.instrument_type,
+    economic_asset_class: doc.economic_asset_class,
+    category: doc.category ?? null,
+    sector: doc.sector ?? null,
+    region: doc.region ?? null,
+    currency: doc.currency,
+    costs: doc.costs || {},
+    metrics: doc.metrics || null,
+    history: doc.history || null,
+    quality: doc.quality || null,
+    pms_exposure: ex?.asset_mix ? { equity: ex.asset_mix.equity ?? 0 } : null,
+    exposure_detail: ex && (ex.sectors || ex.regions) ? { sectors: ex.sectors || null, equity_regions: ex.regions || null } : null,
+    fundamentals_summary: null,
+    performance_preview: null,
+  };
+}
+
+/**
+ * Alinea varias series diarias por fechas comunes (intersección) y las rebasa
+ * a 100 en la primera fecha común. Devuelve exactamente la forma de
+ * get_price_series: {dates, series:[{asset_id, values}]}. Un activo sin
+ * puntos en la ventana queda fuera de `series` (el constructor lo interpreta
+ * como «sin historial suficiente»).
+ *
+ * @param {Object<string, Array<{date:string, value:number}>>} porActivo
+ * @param {{desde?:string, hasta?:string}} ventana  fechas ISO inclusivas
+ */
+export function alineaYRebasa(porActivo, { desde = null, hasta = null } = {}) {
+  const ids = Object.keys(porActivo || {});
+  const mapas = new Map();
+  for (const id of ids) {
+    const m = new Map();
+    for (const p of porActivo[id] || []) {
+      if (!p?.date || !Number.isFinite(p.value) || p.value <= 0) continue;
+      if (desde && p.date < desde) continue;
+      if (hasta && p.date > hasta) continue;
+      m.set(p.date, p.value);
+    }
+    if (!m.size) continue;
+    // Un activo que empieza mucho después del inicio de la ventana no
+    // acorta la ventana de los demás: queda fuera, como «sin historial suficiente».
+    if (desde) {
+      const primera = [...m.keys()].sort()[0];
+      if (diasEntre(desde, primera) > TOLERANCIA_INICIO_DIAS) continue;
+    }
+    mapas.set(id, m);
+  }
+  if (!mapas.size) return { dates: [], series: [] };
+  let comunes = null;
+  for (const m of mapas.values()) {
+    const fechas = new Set(m.keys());
+    comunes = comunes ? new Set([...comunes].filter((d) => fechas.has(d))) : fechas;
+  }
+  const dates = [...comunes].sort();
+  if (!dates.length) return { dates: [], series: [] };
+  const series = [];
+  for (const [id, m] of mapas) {
+    const base = m.get(dates[0]);
+    series.push({ asset_id: id, values: dates.map((d) => Number((100 * m.get(d) / base).toFixed(6))) });
+  }
+  return { dates, series };
+}
+
+/** Años naturales que cubre la ventana de N años hasta hoy. */
+export function aniosDeVentana(hoyIso, anios = ANIOS_VENTANA) {
+  const fin = Number(String(hoyIso).slice(0, 4));
+  const salida = [];
+  for (let y = fin - anios; y <= fin; y += 1) salida.push(y);
+  return salida;
+}
+
+function errorNoDisponible(nombre) {
+  const e = new Error(`Función no disponible en la alfa: ${nombre}`);
+  e.codigo = 'NO_DISPONIBLE_ALFA';
+  return e;
+}
+
+/* ───────────────────────── cliente ───────────────────────── */
 
 export function creaClienteMaestra({
   fetchFn = (...args) => fetch(...args),
@@ -72,294 +223,230 @@ export function creaClienteMaestra({
   ahora = () => Date.now(),
   proyecto = PROYECTO,
 } = {}) {
-  const urlFuncion = (nombre) =>
-    `https://${proyecto.region}-${proyecto.id}.cloudfunctions.net/${nombre}`;
+  const urlDocs = `https://firestore.googleapis.com/v1/projects/${proyecto.id}/databases/(default)/documents`;
 
-  function leeSesion() {
-    if (!almacen) return null;
-    try {
-      const s = JSON.parse(almacen.getItem(CLAVE_SESION) || 'null');
-      if (s && s.idToken && s.refreshToken && s.caducaEn) return s;
-    } catch { /* sesión ilegible: se crea una nueva */ }
-    return null;
-  }
+  // Limpieza: tokens del proyecto anterior no deben quedarse en el navegador.
+  if (almacen) { try { almacen.removeItem(CLAVE_SESION_ANTIGUA); } catch { /* sin persistencia */ } }
 
-  function guardaSesion(sesion) {
-    if (!almacen) return;
-    try { almacen.setItem(CLAVE_SESION, JSON.stringify(sesion)); } catch { /* sin persistencia */ }
-  }
+  function hoyIso() { return new Date(ahora()).toISOString().slice(0, 10); }
 
-  async function pideJson(url, cuerpo, cabeceras = {}) {
-    const res = await fetchFn(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...cabeceras },
-      body: typeof cuerpo === 'string' ? cuerpo : JSON.stringify(cuerpo),
-    });
+  async function pide(url, opciones = {}) {
+    const res = await fetchFn(url, { headers: { 'Content-Type': 'application/json' }, ...opciones });
     let json = null;
     try { json = await res.json(); } catch { /* cuerpo no JSON */ }
     return { ok: res.ok, status: res.status, json };
   }
 
-  const urlCuentas = (accion) =>
-    `https://identitytoolkit.googleapis.com/v1/accounts:${accion}?key=${proyecto.apiKey}`;
-
-  async function sesionNueva() {
-    const { ok, json } = await pideJson(urlCuentas('signUp'), '{}');
-    if (!ok || !json?.idToken) throw new Error('No se ha podido abrir la sesión de lectura.');
-    return {
-      tipo: 'anonima',
-      idToken: json.idToken,
-      refreshToken: json.refreshToken,
-      caducaEn: ahora() + Number(json.expiresIn || 3600) * 1000,
-    };
-  }
-
-  async function sesionRenovada(guardada) {
-    const { ok, json } = await pideJson(
-      `https://securetoken.googleapis.com/v1/token?key=${proyecto.apiKey}`,
-      `grant_type=refresh_token&refresh_token=${encodeURIComponent(guardada.refreshToken)}`,
-      { 'Content-Type': 'application/x-www-form-urlencoded' });
-    if (!ok || !json?.id_token) return null; // la sesión caducada se sustituye por una nueva
-    return {
-      tipo: guardada.tipo || 'anonima',
-      ...(guardada.correo ? { correo: guardada.correo } : {}),
-      idToken: json.id_token,
-      refreshToken: json.refresh_token || guardada.refreshToken,
-      caducaEn: ahora() + Number(json.expires_in || 3600) * 1000,
-    };
-  }
-
-  let sesionEnCurso = null;
-
-  async function sesion() {
-    const guardada = leeSesion();
-    if (guardada && guardada.caducaEn - MARGEN_CADUCIDAD_MS > ahora()) return guardada;
-    if (!sesionEnCurso) {
-      sesionEnCurso = (async () => {
-        let s = guardada ? await sesionRenovada(guardada) : null;
-        if (!s) s = await sesionNueva();
-        guardaSesion(s);
-        return s;
-      })();
-      sesionEnCurso.finally(() => { sesionEnCurso = null; });
-    }
-    return sesionEnCurso;
-  }
-
-  /** Invoca una función callable y devuelve su `result`. Los errores llegan
-   *  como excepción con el mensaje del servidor; nunca se inventa un dato. */
-  async function llama(nombre, datos = {}) {
-    const s = await sesion();
-    const { ok, status, json } = await pideJson(urlFuncion(nombre), { data: datos }, {
-      Authorization: `Bearer ${s.idToken}`,
-    });
-    if (!ok || json?.error) {
-      const mensaje = json?.error?.message || `Error ${status} al consultar la base de datos.`;
-      const error = new Error(mensaje);
+  /** Lee un documento; null si no existe. */
+  async function lee(ruta) {
+    const { ok, status, json } = await pide(`${urlDocs}/${ruta}`);
+    if (status === 404) return null;
+    if (!ok) {
+      const error = new Error(json?.error?.message || `Error ${status} al consultar la base de datos.`);
       error.codigo = json?.error?.status || status;
       throw error;
     }
-    return json?.result;
+    return documentoAObjeto(json);
   }
 
-  const cacheBusquedas = new Map(); // clave -> { promesa, caducaEn }
+  /** Lee varios documentos de una vez (batchGet). Devuelve {ruta: objeto|null}. */
+  async function lote(rutas) {
+    if (!rutas.length) return {};
+    const prefijo = `projects/${proyecto.id}/databases/(default)/documents/`;
+    const { ok, status, json } = await pide(`${urlDocs}:batchGet`, {
+      method: 'POST', body: JSON.stringify({ documents: rutas.map((r) => prefijo + r) }),
+    });
+    if (!ok) {
+      const error = new Error(json?.error?.message || `Error ${status} al consultar la base de datos.`);
+      error.codigo = json?.error?.status || status;
+      throw error;
+    }
+    const salida = {};
+    for (const r of rutas) salida[r] = null;
+    for (const item of Array.isArray(json) ? json : []) {
+      if (item.found) salida[item.found.name.slice(prefijo.length)] = documentoAObjeto(item.found);
+    }
+    return salida;
+  }
 
-  /** Búsqueda en el catálogo por nombre, ticker o ISIN (search_assets). */
+  /* ── Catálogo: manifiesto + trozos, una vez; caché por updated_at ── */
+
+  let catalogoEnCurso = null;
+  let catalogoMemoria = null;
+
+  function leeCatalogoCache() {
+    if (!almacen) return null;
+    try {
+      const c = JSON.parse(almacen.getItem(CLAVE_CATALOGO) || 'null');
+      if (c && c.updated_at && Array.isArray(c.items)) return c;
+    } catch { /* ilegible */ }
+    return null;
+  }
+
+  async function catalogo() {
+    if (catalogoMemoria) return catalogoMemoria;
+    if (!catalogoEnCurso) {
+      catalogoEnCurso = (async () => {
+        const manifiesto = await lee('catalog_manifest/public');
+        if (!manifiesto) throw Object.assign(new Error('El catálogo de la alfa aún no está publicado.'), { codigo: 'SIN_CATALOGO' });
+        const cache = leeCatalogoCache();
+        if (cache && cache.updated_at === manifiesto.updated_at) {
+          catalogoMemoria = { manifiesto, items: cache.items };
+          return catalogoMemoria;
+        }
+        const n = Number(manifiesto.chunks) || 0;
+        const rutas = Array.from({ length: n }, (_, i) => `catalog_chunks/${String(i).padStart(3, '0')}`);
+        const trozos = await lote(rutas);
+        const items = rutas.flatMap((r) => trozos[r]?.items || []);
+        if (almacen) { try { almacen.setItem(CLAVE_CATALOGO, JSON.stringify({ updated_at: manifiesto.updated_at, items })); } catch { /* sin espacio */ } }
+        catalogoMemoria = { manifiesto, items };
+        return catalogoMemoria;
+      })();
+      catalogoEnCurso.catch(() => { catalogoEnCurso = null; });
+    }
+    return catalogoEnCurso;
+  }
+
+  /** Manifiesto del catálogo (fecha de datos, total). */
+  async function manifiesto() { return (await catalogo()).manifiesto; }
+
+  /** ¿Están estos identificadores en el catálogo de la alfa? {id: boolean}. */
+  async function enCatalogo(ids) {
+    const { items } = await catalogo();
+    const presentes = new Set(items.map((a) => a.asset_id));
+    const salida = {};
+    for (const id of ids || []) salida[id] = presentes.has(id);
+    return salida;
+  }
+
+  const cacheBusquedas = new Map();
+
   function buscaActivos(consulta, { tipos = null, limite = 12 } = {}) {
-    const clave = JSON.stringify([String(consulta || '').trim().toLowerCase(), tipos, limite]);
+    const clave = JSON.stringify([normaliza(consulta), tipos, limite]);
     const acierto = cacheBusquedas.get(clave);
     if (acierto && acierto.caducaEn > ahora()) return acierto.promesa;
-    const promesa = llama('search_assets', {
-      query: String(consulta || '').trim(),
-      ...(tipos ? { types: tipos } : {}),
-      limit: limite,
-    }).then((r) => ({ activos: r?.assets || [], total: r?.total_matches ?? null }));
+    const promesa = catalogo().then(({ items }) => buscaEnCatalogo(items, consulta, { tipos, limite }));
     cacheBusquedas.set(clave, { promesa, caducaEn: ahora() + TTL_BUSQUEDA_MS });
-    promesa.catch(() => cacheBusquedas.delete(clave)); // los errores no se cachean
+    promesa.catch(() => cacheBusquedas.delete(clave));
     return promesa;
   }
 
-  /* ── Cuenta con datos mínimos: correo y contraseña, nada más (paso 28) ── */
+  /* ── Fichas ── */
 
-  /** Mensajes en llano para los códigos de Identity Toolkit. */
-  function errorDeCuenta(json, status) {
-    const codigo = String(json?.error?.message || '');
-    let texto;
-    if (codigo.startsWith('EMAIL_EXISTS')) {
-      texto = 'Ya existe una cuenta con ese correo. Puedes iniciar sesión con él.';
-    } else if (/^(INVALID_LOGIN_CREDENTIALS|EMAIL_NOT_FOUND|INVALID_PASSWORD)/.test(codigo)) {
-      texto = 'El correo o la contraseña no coinciden con ninguna cuenta.';
-    } else if (codigo.startsWith('WEAK_PASSWORD')) {
-      texto = 'La contraseña necesita al menos 6 caracteres.';
-    } else if (/^(INVALID_EMAIL|MISSING_EMAIL)/.test(codigo)) {
-      texto = 'Ese correo no parece una dirección válida.';
-    } else if (codigo.startsWith('TOO_MANY_ATTEMPTS')) {
-      texto = 'Demasiados intentos seguidos. Espera unos minutos antes de repetirlo.';
-    } else if (codigo.startsWith('CREDENTIAL_TOO_OLD_LOGIN_AGAIN')) {
-      texto = 'Por seguridad, esta operación pide una sesión reciente: cierra sesión, vuelve a entrar y repítela.';
-    } else if (codigo.startsWith('OPERATION_NOT_ALLOWED')) {
-      texto = 'El proveedor de cuentas no permite esa operación tal cual; si era un cambio de correo, llega por el enlace de verificación.';
-    } else {
-      texto = `No se ha podido completar la operación (${codigo || `error ${status}`}).`;
-    }
-    const error = new Error(texto);
-    error.codigo = codigo || status;
-    return error;
-  }
+  const cacheFichas = new Map();
 
-  function guardaSesionRegistrada(json) {
-    const s = {
-      tipo: 'registrada',
-      correo: json.email || '',
-      idToken: json.idToken,
-      refreshToken: json.refreshToken,
-      caducaEn: ahora() + Number(json.expiresIn || 3600) * 1000,
-    };
-    guardaSesion(s);
-    return { tipo: s.tipo, correo: s.correo };
-  }
-
-  /** Estado de la sesión tal y como debe contarse: tipo y, si la hay, correo. */
-  function sesionActual() {
-    const s = leeSesion();
-    if (s?.tipo === 'registrada') return { tipo: 'registrada', correo: s.correo || '' };
-    return { tipo: 'anonima' };
-  }
-
-  /** Nivel de la sesión para la interfaz: visitante, registrada, suscriptor
-   *  o administrador. El administrador se reconoce antes que cualquier
-   *  marcador comercial. */
-  function nivelSesion() {
-    const s = sesionActual();
-    if (s.tipo !== 'registrada') return 'visitante';
-    if (esAdmin(s.correo)) return 'admin';
-    return leeSuscripcion(almacen, s.correo) ? 'suscriptor' : 'registrada';
-  }
-
-  /** Crea la cuenta enlazando correo y contraseña a la sesión de lectura ya
-   *  abierta (mismo usuario antes y después; `accounts:signUp` con idToken). */
-  async function creaCuenta(correo, contrasena) {
-    const s = await sesion();
-    const { ok, status, json } = await pideJson(urlCuentas('signUp'), {
-      idToken: s.idToken,
-      email: String(correo || '').trim(),
-      password: String(contrasena || ''),
-      returnSecureToken: true,
-    });
-    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
-    return guardaSesionRegistrada(json);
-  }
-
-  /** Inicia sesión con una cuenta ya creada. */
-  async function iniciaSesion(correo, contrasena) {
-    const { ok, status, json } = await pideJson(urlCuentas('signInWithPassword'), {
-      email: String(correo || '').trim(),
-      password: String(contrasena || ''),
-      returnSecureToken: true,
-    });
-    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
-    return guardaSesionRegistrada(json);
-  }
-
-  /** Cierra la sesión: se olvida aquí mismo; la siguiente consulta abre una
-   *  sesión de lectura anónima nueva. */
-  function cierraSesion() {
-    if (almacen) { try { almacen.removeItem(CLAVE_SESION); } catch { /* sin persistencia */ } }
-    return { tipo: 'anonima' };
-  }
-
-  /** Pide a Firebase el correo de restablecimiento de contraseña. */
-  async function recuperaContrasena(correo) {
-    const { ok, status, json } = await pideJson(urlCuentas('sendOobCode'), {
-      requestType: 'PASSWORD_RESET',
-      email: String(correo || '').trim(),
-    });
-    if (!ok) throw errorDeCuenta(json, status);
-    return { enviado: true };
-  }
-
-  /* ── Derechos sobre la cuenta (paso 34, RGPD) ── */
-
-  /** Rectificación inmediata de la contraseña de la sesión iniciada. */
-  async function cambiaContrasena(nueva) {
-    const s = await sesion();
-    const { ok, status, json } = await pideJson(urlCuentas('update'), {
-      idToken: s.idToken,
-      password: String(nueva || ''),
-      returnSecureToken: true,
-    });
-    if (!ok || !json?.idToken) throw errorDeCuenta(json, status);
-    return guardaSesionRegistrada(json);
-  }
-
-  /** Rectificación del correo: Firebase exige verificar el correo nuevo, así
-   *  que se pide el enlace de verificación (VERIFY_AND_CHANGE_EMAIL) y el
-   *  cambio se completa cuando el titular lo confirma. Autoservicio íntegro. */
-  async function pideCambioCorreo(nuevoCorreo) {
-    const s = await sesion();
-    const { ok, status, json } = await pideJson(urlCuentas('sendOobCode'), {
-      requestType: 'VERIFY_AND_CHANGE_EMAIL',
-      idToken: s.idToken,
-      newEmail: String(nuevoCorreo || '').trim(),
-    });
-    if (!ok) throw errorDeCuenta(json, status);
-    return { enviado: true };
-  }
-
-  /** Supresión de la cuenta en el proveedor. Las carteras se borran antes,
-   *  una a una, desde la capa de arriba; aquí solo cae la cuenta y se olvida
-   *  la sesión local. */
-  async function borraCuenta() {
-    const s = await sesion();
-    const { ok, status, json } = await pideJson(urlCuentas('delete'), { idToken: s.idToken });
-    if (!ok) throw errorDeCuenta(json, status);
-    cierraSesion();
-    return { borrada: true };
-  }
-
-  /* ── Carteras en la nube (paso 30) ──
-   *  Las funciones callable son app-owned y aisladas por UID: cada cuenta ve
-   *  solo las suyas. Se guarda lo mínimo —qué activos y con qué peso—; el
-   *  cálculo no se persiste, se rehace al abrir. */
-
-  /** Guarda (o reemplaza, si trae portfolio_id) una cartera. Devuelve el
-   *  resultado con el portfolio_id asignado. */
-  function guardaCarteraNube(cartera) {
-    return llama('save_portfolio', cartera);
-  }
-
-  /** Lista las carteras de la cuenta, ya ordenadas por fecha (más reciente
-   *  primero). */
-  async function listaCarterasNube() {
-    const r = await llama('list_portfolios', {});
-    return r?.portfolios || [];
-  }
-
-  /** Lee una cartera concreta (identificadores y pesos). */
-  function leeCarteraNube(portfolioId) {
-    return llama('get_portfolio', { portfolio_id: portfolioId });
-  }
-
-  /** Borra una cartera de la cuenta. Devuelve { ok }. */
-  function borraCarteraNube(portfolioId) {
-    return llama('delete_portfolio', { portfolio_id: portfolioId });
-  }
-
-  /** Ficha de un activo para reconstruir nombre, tipo y clase al abrir una
-   *  cartera guardada (get_asset_detail). */
   function detalleActivo(assetId) {
-    return llama('get_asset_detail', { asset_id: assetId });
+    const id = String(assetId || '');
+    if (!cacheFichas.has(id)) {
+      const promesa = lee(`assets/${id}`).then((doc) => {
+        if (!doc) { const e = new Error('Ese activo no está en la alfa.'); e.codigo = 'NOT_FOUND'; throw e; }
+        return fichaParaModulos(doc);
+      });
+      promesa.catch(() => cacheFichas.delete(id));
+      cacheFichas.set(id, promesa);
+    }
+    return cacheFichas.get(id);
   }
+
+  /* ── Series: documentos por año; los años cerrados se cachean en el navegador ── */
+
+  function leeSerieCache(id, anio) {
+    if (!almacen) return null;
+    try {
+      const s = JSON.parse(almacen.getItem(`${PREFIJO_SERIES}${id}.${anio}`) || 'null');
+      if (s && Array.isArray(s.points)) return s;
+    } catch { /* ilegible */ }
+    return null;
+  }
+
+  function guardaSerieCache(id, anio, serie) {
+    if (!almacen) return;
+    try { almacen.setItem(`${PREFIJO_SERIES}${id}.${anio}`, JSON.stringify(serie)); } catch { /* sin espacio */ }
+  }
+
+  async function seriesRebasadas(ids) {
+    const hoy = hoyIso();
+    const anioActual = Number(hoy.slice(0, 4));
+    const anios = aniosDeVentana(hoy);
+    const pendientes = [];
+    const porActivo = {};
+    for (const id of ids) {
+      porActivo[id] = [];
+      for (const anio of anios) {
+        const cache = anio < anioActual ? leeSerieCache(id, anio) : null;
+        if (cache) porActivo[id].push(...cache.points);
+        else pendientes.push({ id, anio, ruta: `assets/${id}/series/${anio}` });
+      }
+    }
+    if (pendientes.length) {
+      const docs = await lote(pendientes.map((p) => p.ruta));
+      for (const p of pendientes) {
+        const serie = docs[p.ruta];
+        if (!serie?.points) continue;
+        porActivo[p.id].push(...serie.points);
+        if (p.anio < anioActual) guardaSerieCache(p.id, p.anio, { points: serie.points });
+      }
+    }
+    const desde = `${anioActual - ANIOS_VENTANA}${hoy.slice(4)}`;
+    return alineaYRebasa(porActivo, { desde, hasta: hoy });
+  }
+
+  /* ── Desgloses ── */
+
+  async function desgloseDe(id) {
+    return lee(`assets/${id}/holdings/latest`);
+  }
+
+  async function desglosesDe(ids) {
+    const rutas = ids.map((id) => `assets/${id}/holdings/latest`);
+    const docs = await lote(rutas);
+    const holdings = {};
+    ids.forEach((id, i) => { holdings[id] = docs[rutas[i]] || null; });
+    return { holdings };
+  }
+
+  /* ── Fachada con los nombres de las antiguas funciones ── */
+
+  async function llama(nombre, datos = {}) {
+    switch (nombre) {
+      case 'search_assets': {
+        const r = await buscaActivos(datos.query, { tipos: datos.types || null, limite: datos.limit || 12 });
+        return { assets: r.activos, total_matches: r.total };
+      }
+      case 'get_asset_detail': return detalleActivo(datos.asset_id);
+      case 'get_price_series': return seriesRebasadas(datos.asset_ids || []);
+      case 'get_asset_holdings': return desgloseDe(datos.asset_id);
+      case 'get_asset_holdings_batch': return desglosesDe(datos.asset_ids || []);
+      default: throw errorNoDisponible(nombre);
+    }
+  }
+
+  /* ── Sesión: no la hay. Los módulos preguntan; se les contesta lo mismo siempre. ── */
+
+  async function sesion() { return { tipo: 'alfa' }; }
+  function sesionActual() { return { tipo: 'alfa' }; }
+  function nivelSesion() { return NIVEL_ALFA; }
+  function cierraSesion() { return { tipo: 'alfa' }; }
+
+  const noDisponible = (nombre) => async () => { throw errorNoDisponible(nombre); };
 
   return {
-    llama, buscaActivos, sesion,
-    sesionActual, nivelSesion, creaCuenta, iniciaSesion, cierraSesion, recuperaContrasena,
-    cambiaContrasena, pideCambioCorreo, borraCuenta,
-    guardaCarteraNube, listaCarterasNube, leeCarteraNube, borraCarteraNube, detalleActivo,
+    llama, buscaActivos, sesion, sesionActual, nivelSesion, cierraSesion,
+    creaCuenta: noDisponible('creaCuenta'),
+    iniciaSesion: noDisponible('iniciaSesion'),
+    recuperaContrasena: noDisponible('recuperaContrasena'),
+    cambiaContrasena: noDisponible('cambiaContrasena'),
+    pideCambioCorreo: noDisponible('pideCambioCorreo'),
+    borraCuenta: noDisponible('borraCuenta'),
+    guardaCarteraNube: noDisponible('guardaCarteraNube'),
+    listaCarterasNube: noDisponible('listaCarterasNube'),
+    leeCarteraNube: noDisponible('leeCarteraNube'),
+    borraCarteraNube: noDisponible('borraCarteraNube'),
+    detalleActivo, manifiesto, enCatalogo, seriesRebasadas,
   };
 }
 
-/** Cliente único del navegador (con persistencia de sesión en localStorage). */
+/** Cliente único del navegador (con caché de catálogo y series en localStorage). */
 let clienteNavegador = null;
 export function maestra() {
   if (!clienteNavegador) {

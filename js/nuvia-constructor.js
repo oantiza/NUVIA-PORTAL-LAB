@@ -41,13 +41,12 @@ export function textoContador(n, limite = MAX_POSICIONES) {
  * Nota de nivel, mostrada al llegar al tope. Describe qué añade cada nivel;
  * no aconseja. El registro ya está abierto (paso 28) y se dice dónde.
  */
-export const NOTA_NIVEL = 'Este nivel de la página trabaja con hasta '
+export const NOTA_NIVEL = 'Esta versión alfa trabaja con hasta '
   + `${MAX_POSICIONES} posiciones: bastan para ver el efecto de combinar `
-  + 'activos y la tabla se lee con claridad. Una cuenta gratuita —el registro '
-  + 'está abierto en el bloque «Tu cuenta» de esta página— guarda las carteras '
-  + 'en la nube, sin tope de carteras, y añade el análisis ampliado; la '
-  + 'suscripción, cuando se abra, sumará el análisis completo y hasta '
-  + `${MAX_POSICIONES_SUSCRIPTOR} posiciones.`;
+  + 'activos y la tabla se lee con claridad. Las carteras se guardan en este '
+  + 'navegador; no hay cuentas ni registro en la alfa. Los niveles con más '
+  + `posiciones —hasta ${MAX_POSICIONES_SUSCRIPTOR}— llegarán en fases posteriores, `
+  + 'cuando se abran.';
 
 /** Nota del tope del suscriptor: el límite de 20 se explica, no se esconde. */
 export const NOTA_NIVEL_SUSCRIPTOR = 'Este es el tope de la herramienta: '

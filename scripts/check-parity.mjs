@@ -101,9 +101,15 @@ if (/eodhd/i.test(portfolioPage)) {
 if (!portfolioPage.includes('js/nuvia-constructor.js') || !portfolioPage.includes('id="constructor"')) {
   throw new Error('La página de cartera no monta el constructor de cartera del visitante');
 }
-/* Paso 28: registro con datos mínimos (correo y contraseña, nada más). */
-if (!portfolioPage.includes('js/nuvia-cuenta.js') || !portfolioPage.includes('id="cuenta"')) {
-  throw new Error('La página de cartera no monta el bloque de cuenta con datos mínimos');
+/* Alfa (02-09-2026): sin cuentas ni datos de usuarios. La página no monta la
+   cuenta ni su ventana; el módulo nuvia-cuenta.js se conserva sin importar
+   para la fase de cuentas. Se exige el aviso de versión alfa y la fecha de
+   los datos. */
+if (portfolioPage.includes('js/nuvia-cuenta.js') || portfolioPage.includes('id="cuenta"') || portfolioPage.includes('id="dialogo-cuenta"')) {
+  throw new Error('La alfa no tiene cuentas: cartera.html no debe montar nuvia-cuenta.js ni la ventana de cuenta');
+}
+if (!portfolioPage.includes('id="aviso-alfa"') || !portfolioPage.includes('Versión alfa de NUVIA') || !portfolioPage.includes('id="datos-a-fecha"')) {
+  throw new Error('La página de cartera no declara la versión alfa ni la fecha de los datos');
 }
 /* El informe genérico se retiró del laboratorio: la función completa vive en
    la copia local de Análisis y valoración de empresas. */
@@ -121,8 +127,13 @@ if (!portfolioPage.includes('id="vista-models"') || !portfolioPage.includes('vis
 if (!portfolioPage.includes("nivelAnalisis: 'registrada'")) {
   throw new Error('El análisis completo de las carteras modelo sigue oculto para quien no ha iniciado sesión');
 }
-if (!/data-src=["']company-analysis\/index\.html(?:\?[^"']*)?["']/.test(portfolioPage)) {
-  throw new Error('La vista Análisis y valoración de empresas no integra la copia independiente de NUVIA');
+/* Alfa: la vista de empresas está «En preparación»; no se carga ningún iframe
+   ni se referencia company-analysis/ desde la página. */
+if (/company-analysis\//.test(portfolioPage) || /<iframe/i.test(portfolioPage)) {
+  throw new Error('La alfa no publica Análisis y valoración de empresas: cartera.html no debe cargar company-analysis/');
+}
+if (!portfolioPage.includes('id="empresas-en-preparacion"') || !portfolioPage.includes('En preparación')) {
+  throw new Error('La vista de empresas debe mostrarse como «En preparación» en la alfa');
 }
 /* Antes esto se comprobaba en temas.html, pero vivía dentro de un
    <sc-if value="{{ false }}"> que nunca se renderizaba: el contrato validaba

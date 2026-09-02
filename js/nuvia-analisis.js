@@ -30,9 +30,9 @@ import {
   etiquetaSector, etiquetaRegion, nombreCorto, marcasEje, separaVerticalmente,
 } from './nuvia-etiquetas.js';
 
-export const NOTA_ANALISIS_CERRADO = 'Con la sesión iniciada, esta misma '
-  + 'cartera se analiza también por concentración, solapamiento entre fondos '
-  + 'y ahorro por diversificar. Es el análisis ampliado de la cuenta gratuita.';
+export const NOTA_ANALISIS_CERRADO = 'En esta versión alfa el análisis ampliado '
+  + '—concentración, solapamiento entre fondos y ahorro por diversificar— está '
+  + 'abierto para cualquiera; si no aparece, la base de datos no ha respondido.';
 
 export const FUENTE_ANALISIS = 'Fichas y desgloses de la base de datos NUVIA '
   + 'a su último cierre; el ahorro por diversificar sale del mismo historial '
@@ -168,14 +168,20 @@ export function carteraDesdeHoldings(doc) {
 
 /** Frase que declara la calidad del dato de concentración (bases §2). */
 export function textoCalidad(resultado) {
-  if (!resultado || resultado.calidad === 'none') return null;
+  if (!resultado) return null;
+  const sinDatos = Number(resultado.pesoSinDatos) || 0;
+  /* Alfa: lo que no tiene desglose se declara, nunca se estima ni se omite. */
+  const notaSinDatos = sinDatos > 0.05
+    ? ` El ${pct(sinDatos / 100, 0)} de la cartera está en instrumentos sin datos de desglose en la alfa; lo mostrado corresponde solo al resto.`
+    : '';
+  if (resultado.calidad === 'none') return notaSinDatos.trim() || null;
   if (resultado.calidad === 'lookthrough') {
-    return 'Con desglose real de la base de datos NUVIA.';
+    return `Con desglose real de la base de datos NUVIA.${notaSinDatos}`;
   }
   if (resultado.calidad === 'estimated') {
-    return 'Todo el reparto es una estimación por heurística, no un desglose real; se dice tal cual.';
+    return `Todo el reparto es una estimación por heurística, no un desglose real; se dice tal cual.${notaSinDatos}`;
   }
-  return `Desglose real en su mayor parte; un ${pct((resultado.pesoEstimado || 0) / 100, 0)} del peso está estimado por heurística.`;
+  return `Desglose real en su mayor parte; un ${pct((resultado.pesoEstimado || 0) / 100, 0)} del peso está estimado por heurística.${notaSinDatos}`;
 }
 
 /**
@@ -1301,7 +1307,12 @@ function grupoCorrelaciones(series, pesos, nombreDe) {
 function tablaReparto(titulo, lectura, resultado, etiqueta = etiquetaClave, maxFilas = 6) {
   const bloque = grupo(titulo, lectura);
   if (!resultado || resultado.calidad === 'none' || !resultado.filas.length) {
-    bloque.append(el('p', { class: 'nv-cons__nota' }, 'Sin renta variable que desglosar en esta cartera.'));
+    const sinDatos = Number(resultado?.pesoSinDatos) || 0;
+    bloque.append(el('p', { class: 'nv-cons__nota' }, sinDatos > 99.9
+      ? 'Sin datos de desglose para esta cartera en la alfa: los instrumentos que la componen no publican reparto por sectores ni regiones.'
+      : 'Sin renta variable que desglosar en esta cartera.'));
+    const calidad = textoCalidad(resultado);
+    if (calidad && sinDatos > 0.05 && sinDatos <= 99.9) bloque.append(el('p', { class: 'nv-analisis__calidad' }, calidad));
     return bloque;
   }
   const visibles = resultado.filas.slice(0, maxFilas);
@@ -1344,11 +1355,11 @@ export async function montaAnalisis(raiz, {
   if (nivelEfectivo === 'visitante') {
     objetivo.riesgo.append(el('p', { class: 'nv-analisis__cerrado' }, NOTA_ANALISIS_CERRADO));
     objetivo.sectores.append(el('p', { class: 'nv-analisis__cerrado' },
-      'El desglose por sectores se abre al iniciar sesión con una cuenta gratuita.'));
+      'El desglose por sectores no está disponible ahora mismo.'));
     objetivo.geografia.append(el('p', { class: 'nv-analisis__cerrado' },
-      'El mapa geográfico se abre al iniciar sesión con una cuenta gratuita.'));
+      'El mapa geográfico no está disponible ahora mismo.'));
     objetivo.solapes.append(el('p', { class: 'nv-analisis__cerrado' },
-      'La comparación de subyacentes entre fondos se abre al iniciar sesión.'));
+      'La comparación de subyacentes entre fondos no está disponible ahora mismo.'));
     objetivo.escenarios.append(el('p', { class: 'nv-analisis__cerrado' },
       'Los escenarios simulados pertenecen al nivel suscriptor, todavía no abierto a contratación.'));
     return;

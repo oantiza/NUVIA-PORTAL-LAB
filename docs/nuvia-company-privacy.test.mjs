@@ -4,6 +4,12 @@ import { resolve } from 'node:path';
 
 const root = resolve(process.argv[2] || '.');
 const read = (file) => readFileSync(resolve(root, file), 'utf8');
+/* Alfa (Entrega 2b): dist/ no lleva company-analysis/ salvo NUVIA_EMPRESAS=1.
+   Sin el módulo no hay nada que comprobar; el árbol de trabajo sí lo tiene. */
+if (!existsSync(resolve(root, 'company-analysis/index.html'))) {
+  console.log('Privacidad del módulo de empresas: company-analysis/ no está en este árbol (alfa: fuera de la publicación); se omite.');
+  process.exit(0);
+}
 const companyIndex = read('company-analysis/index.html');
 const hasSource = existsSync(resolve(root, 'company-analysis/src/theme.css'));
 const builtAssets = hasSource ? [] : readdirSync(resolve(root, 'company-analysis/assets'));

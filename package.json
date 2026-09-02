@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build:company-analysis": "npm ci --prefix company-analysis && npm run build --prefix company-analysis",
+    "build:company-analysis": "node scripts/build-company-analysis.mjs",
     "validate": "node scripts/check-parity.mjs . && node scripts/check-static-site.mjs . && node scripts/check-consistencia.mjs . && node scripts/check-lenguaje.mjs . && node docs/nuvia-academy-banner.test.mjs . && node docs/nuvia-lecturas-banner.test.mjs . && node docs/nuvia-navigation.test.mjs . && node docs/nuvia-definicion.test.mjs . && node docs/nuvia-metadata.test.mjs . && node docs/nuvia-external-content.test.mjs . && node docs/nuvia-company-privacy.test.mjs . && node docs/nuvia-news-editorial.test.mjs . && npm run test:analisis && npm run auditar",
     "auditar": "node scripts/check-render.mjs .",
     "auditar:completo": "node scripts/check-render.mjs . 1440,1280,1180,1024,900,820,768",

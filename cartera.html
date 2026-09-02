@@ -134,11 +134,15 @@
               <a class="nv-atajos__enlace" href="#fase-03">Cuánto se mueve</a>
               <a class="nv-atajos__enlace" href="#fase-04">Apuestas repetidas</a>
               <a class="nv-atajos__enlace" href="#fase-05">Escenarios</a>
-              <button type="button" class="nv-atajos__enlace" id="boton-cuenta">Tu cuenta</button>
             </nav>
           </div>
 
           <p class="nv-lab-tesis">Primero vemos qué contiene la cartera. Después, cuánto se movió, dónde repite apuestas y qué escenarios ayudan a entenderla. Cada gráfico responde a una sola pregunta y muestra su fuente.</p>
+
+          <div id="aviso-alfa" class="nv-note nv-aviso-alfa" role="note">
+            <p><strong>Versión alfa de NUVIA.</strong> Los datos de mercado cubren un universo limitado de instrumentos en euros. Las carteras se guardan solo en este navegador. Nada de lo que ves es una recomendación.</p>
+            <p id="datos-a-fecha" class="nv-aviso-alfa__fecha">Datos a fecha: consultando la base de datos NUVIA…</p>
+          </div>
 
           <section id="fase-01" class="nv-lab-fase" aria-labelledby="fase-01-title">
             <header class="nv-lab-fase__cabecera">
@@ -152,7 +156,7 @@
               </div>
               <div class="nv-lab-herramientas">
                 <h4 id="buscador-title">Añadir posiciones desde el catálogo</h4>
-                <p>Busca por nombre, ticker o ISIN. Los datos proceden de la base NUVIA, de solo lectura.</p>
+                <p>Busca por nombre, ticker o ISIN entre los instrumentos disponibles en la alfa. Los datos proceden de la base NUVIA, de solo lectura.</p>
                 <div id="buscador" class="nv-buscador" aria-labelledby="buscador-title">
                   <div class="nv-note"><p>El buscador necesita JavaScript y conexión.</p></div>
                 </div>
@@ -165,18 +169,8 @@
 
           <div id="analisis-dinamico" class="nv-lab-analisis-dinamico" aria-label="Análisis de la cartera elegida"></div>
 
-          <dialog id="dialogo-cuenta" class="nv-dialogo" aria-labelledby="cuenta-title">
-            <div class="nv-dialogo__cabecera">
-              <h2 id="cuenta-title">Tu cuenta</h2>
-              <button type="button" class="nv-dialogo__cerrar" aria-label="Cerrar la ventana de la cuenta">✕</button>
-            </div>
-            <p class="nv-dialogo__intro">Registrarse es opcional: todo lo que ves en esta página seguirá abierto sin cuenta. Al crearla, la sesión de lectura que ya usa el laboratorio pasa a ser tu cuenta, así que nada se pierde por el camino. Lo imprescindible del servicio va sin casilla; lo opcional —comunicaciones y análisis de uso— arranca apagado y se enciende o apaga cuando quieras.</p>
-            <div id="cuenta" class="nv-cuenta" aria-labelledby="cuenta-title">
-              <div class="nv-note">
-                <p>La cuenta necesita JavaScript y conexión. El resto de la página se lee igualmente sin ella.</p>
-              </div>
-            </div>
-          </dialog>
+          <!-- Alfa (02-09-2026): sin cuentas ni datos de usuarios. La ventana «Tu cuenta»
+               vuelve en la fase de cuentas con su propia ficha regulatoria. -->
 
           <section class="nv-lab-fase" aria-label="Herramientas y fuentes del laboratorio">
             <details class="nv-lab-caja nv-lab-despliegue">
@@ -189,7 +183,7 @@
 
             <article class="nv-lab-caja">
               <h3 id="fuentes-title">Fuentes y límites</h3>
-              <p>El banco de pruebas usa supuestos internos de largo plazo: son estimaciones, no previsiones, y están pendientes de validación profesional. El buscador y la cartera consultan la base de datos NUVIA, de solo lectura, y declaran la fecha del último cierre.</p>
+              <p>El banco de pruebas usa supuestos internos de largo plazo: son estimaciones, no previsiones, y están pendientes de validación profesional. El buscador y la cartera consultan la base de datos NUVIA, de solo lectura, y declaran la fecha del último cierre. En esta versión alfa los fondos no traen desglose por sectores ni regiones y los ETF muestran sus diez mayores posiciones: cuando falta el dato, se dice.</p>
               <p>Los cálculos se ejecutan en tu navegador. Cuando falta un dato aparece «—»: nunca se inventa. Todo describe la cartera actual y su historial; no es una previsión. Este contenido no constituye asesoramiento financiero personalizado.</p>
             </article>
           </section>
@@ -234,7 +228,11 @@
         </section>
 
         <section id="suite-nuvia" class="nuvia-suite-shell nuvia-suite-shell--companies" aria-label="Análisis y valoración de empresas" hidden>
-          <iframe id="nuvia-company-suite" data-src="company-analysis/index.html?embedded=web2" title="Análisis y valoración de empresas NUVIA" loading="lazy"></iframe>
+          <article class="nv-lab-caja nv-en-preparacion" id="empresas-en-preparacion">
+            <p class="nv-lab-fase__pregunta">Análisis y valoración de empresas</p>
+            <h2>En preparación</h2>
+            <p>Esta vista no forma parte de la versión alfa: se reconstruirá sobre la base de datos propia de NUVIA antes de volver a publicarse. Mientras tanto, el laboratorio de cartera y las carteras modelo funcionan con normalidad.</p>
+          </article>
         </section>
 
       </div>
@@ -305,8 +303,7 @@ class Component extends DCLogic {
     const lab = document.getElementById('laboratorio');
     const modelosVista = document.getElementById('carteras-modelo');
     const shell = document.getElementById('suite-nuvia');
-    const companyFrame = document.getElementById('nuvia-company-suite');
-    if (!lab || !modelosVista || !shell || !companyFrame) return;
+    if (!lab || !modelosVista || !shell) return;
 
     const activaVista = (vista, actualizaUrl = false) => {
       const elegida = SUITE_TABS.includes(vista) ? vista : 'portfolio';
@@ -314,7 +311,6 @@ class Component extends DCLogic {
       lab.hidden = elegida !== 'portfolio';
       modelosVista.hidden = elegida !== 'models';
       shell.hidden = elegida !== 'companies';
-      if (elegida === 'companies' && !companyFrame.getAttribute('src')) companyFrame.setAttribute('src', companyFrame.dataset.src);
       SUITE_TABS.forEach((tab) => {
         const boton = document.getElementById('vista-' + tab);
         if (boton) boton.setAttribute('aria-current', tab === elegida ? 'page' : 'false');
@@ -382,41 +378,26 @@ class Component extends DCLogic {
         }
       })
       .catch((error) => { console.error('No se ha podido iniciar el análisis de carteras.', error); });
-    import('./js/nuvia-cuenta.js')
-      .then((m) => { const nodo = document.getElementById('cuenta'); if (nodo) m.montaCuenta(nodo); })
+    /* Alfa: sin cuenta ni ventana de cuenta (docs/PENDIENTE_ALFA_NUVIA_20260902.md §5.2).
+       La fecha de los datos sale del manifiesto del catálogo de la base propia. */
+    import('./js/nuvia-datos.js')
+      .then(async (m) => {
+        const nodo = document.getElementById('datos-a-fecha');
+        if (!nodo) return;
+        try {
+          const manifiesto = await m.maestra().manifiesto();
+          const fecha = manifiesto?.prices_last_date;
+          nodo.textContent = fecha
+            ? `Datos a fecha ${fecha} · universo de la alfa: ${manifiesto.total} instrumentos en euros.`
+            : 'Datos de la alfa sin fecha declarada.';
+        } catch {
+          nodo.textContent = 'La base de datos de la alfa no responde ahora mismo; el laboratorio no puede consultar el catálogo.';
+        }
+      })
       .catch(() => {});
-    /* La cuenta vive en una ventana (encargo 21-08): el botón de la barra de
-       atajos la abre; se cierra con su aspa, con Escape o pulsando fuera. */
-    const dialogoCuenta = document.getElementById('dialogo-cuenta');
-    const botonCuenta = document.getElementById('boton-cuenta');
-    if (dialogoCuenta && botonCuenta && typeof dialogoCuenta.showModal === 'function'
-      && !dialogoCuenta.dataset.conectado) {
-      dialogoCuenta.dataset.conectado = '1';
-      botonCuenta.addEventListener('click', () => dialogoCuenta.showModal());
-      dialogoCuenta.querySelector('.nv-dialogo__cerrar')
-        ?.addEventListener('click', () => dialogoCuenta.close());
-      dialogoCuenta.addEventListener('click', (e) => { if (e.target === dialogoCuenta) dialogoCuenta.close(); });
-    }
-    const applyCompanyHeight = (height) => {
-      const safeHeight = Math.max(720, Math.min(Number(height) || 0, 12000));
-      if (safeHeight) companyFrame.style.height = safeHeight + 'px';
-    };
-    this._onMsg = (event) => {
-      if (event.origin !== window.location.origin || !event.data) return;
-      if (event.source === companyFrame.contentWindow && event.data.source === 'nuvia-company-analysis') {
-        if (event.data.type === 'resize') applyCompanyHeight(event.data.height);
-      }
-    };
-    window.addEventListener('message', this._onMsg);
-    this._onCompanyFrameLoad = () => {
-      try { applyCompanyHeight(companyFrame.contentDocument?.documentElement?.scrollHeight); } catch (e) { applyCompanyHeight(720); }
-    };
-    companyFrame.addEventListener('load', this._onCompanyFrameLoad);
   }
   componentWillUnmount() {
     if (this._onPop) window.removeEventListener('popstate', this._onPop);
-    if (this._onMsg) window.removeEventListener('message', this._onMsg);
-    if (this._onCompanyFrameLoad) document.getElementById('nuvia-company-suite')?.removeEventListener('load', this._onCompanyFrameLoad);
   }
   renderVals() { return {}; }
 }

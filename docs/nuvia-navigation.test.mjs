@@ -156,5 +156,8 @@ assert.ok(academy.includes("'esenciales'") && academy.includes("'cursos'"), 'Pes
 const portfolio = await read('cartera.html');
 assert.match(portfolio, /id="vista-companies" href="cartera.html\?vista=companies#suite-nuvia"/,
   'Análisis de empresas sigue dentro de Cartera');
-assert.ok(portfolio.includes('data-src="company-analysis/index.html?embedded=web2"'), 'Suite local preservada');
+/* Alfa (Entrega 2b): la vista de empresas está «En preparación» y no carga
+   la suite local; vuelve con la base propia. */
+assert.ok(portfolio.includes('id="empresas-en-preparacion"') && !portfolio.includes('company-analysis/'),
+  'La vista de empresas se muestra «En preparación» sin cargar la suite local (alfa)');
 console.log('Navegación: ' + checked + ' cabeceras, destinos y enlaces de regreso correctos.');

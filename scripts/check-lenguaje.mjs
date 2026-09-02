@@ -74,7 +74,8 @@ for (const fichero of FICHEROS) {
    En esta página nunca se cita EODHD: esa atribución es de la vista de
    análisis de empresas (lo vigila check-parity). */
 const EXIGIDO = [
-  ['cartera.html', ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento', 'base de datos NUVIA']],
+  ['cartera.html', ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento', 'base de datos NUVIA',
+    'Versión alfa de NUVIA', 'Nada de lo que ves es una recomendación']],
   ['js/nuvia-simulador.js', ['supuestos propios de NUVIA']],
   ['js/nuvia-constructor.js', ['Datos de cierre', 'base de datos NUVIA']],
   /* Paso 28: el registro pide lo mínimo y lo declara; nada de teléfono,
@@ -104,8 +105,55 @@ for (const [fichero, declaraciones] of EXIGIDO) {
   }
 }
 
+/* ══ Regresión «sin maestra» (Entrega 2b, alfa con base propia) ══════════════
+   La alfa no puede hablar con la base profesional del fundador, con las
+   funciones en la nube antiguas, con Firebase Auth ni llevar una clave de
+   EODHD pegada. Si alguna de estas cadenas vuelve a aparecer en el código
+   que se publica, la build falla. Excluidos: docs/, universo/ y
+   company-analysis/ (fuera de la publicación en la alfa), y nuvia-cuenta.js
+   mientras no se importe desde ninguna página. */
+import { readdir, stat } from 'node:fs/promises';
+import { CADENAS_SIN_MAESTRA, PATRON_CLAVE_EODHD, FICHEROS_DE_LA_LISTA } from './sin-maestra.mjs';
+
+const SIN_MAESTRA = [...CADENAS_SIN_MAESTRA, [PATRON_CLAVE_EODHD, 'clave de EODHD pegada; solo por variable de entorno en scripts/']];
+const RAICES_SIN_MAESTRA = ['js', 'scripts', '.github/workflows'];
+const FICHEROS_SIN_MAESTRA = ['cartera.html', 'web2-integration.js', 'nuvia-site-unified.js'];
+const EXCLUIDOS_SIN_MAESTRA = ['js/nuvia-cuenta.js'];
+
+async function listaFicheros(dir) {
+  const salida = [];
+  let entradas;
+  try { entradas = await readdir(resolve(root, dir)); } catch { return salida; }
+  for (const nombre of entradas) {
+    const rel = `${dir}/${nombre}`;
+    const info = await stat(resolve(root, rel));
+    if (info.isDirectory()) salida.push(...await listaFicheros(rel));
+    else if (/\.(?:m?js|html|yml|yaml|json)$/.test(nombre)) salida.push(rel);
+  }
+  return salida;
+}
+
+const candidatos = [...FICHEROS_SIN_MAESTRA];
+for (const dir of RAICES_SIN_MAESTRA) candidatos.push(...await listaFicheros(dir));
+for (const fichero of candidatos) {
+  if (EXCLUIDOS_SIN_MAESTRA.includes(fichero)) continue;
+  let texto;
+  try { texto = await readFile(resolve(root, fichero), 'utf8'); } catch { continue; }
+  if (FICHEROS_DE_LA_LISTA.includes(fichero)) continue; // el fichero que lista las cadenas
+  for (const [patron, porque] of SIN_MAESTRA) {
+    const re = patron instanceof RegExp ? patron : new RegExp(patron.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    const lineas = texto.split('\n');
+    lineas.forEach((linea, i) => {
+      if (re.test(linea)) {
+        console.error(`EN   ${fichero}:${i + 1} — regresión «sin maestra»: ${porque}\n     ${linea.trim().slice(0, 120)}`);
+        errores += 1;
+      }
+    });
+  }
+}
+
 if (errores) {
-  console.error(`\ncheck-lenguaje: ${errores} problema(s). La pantalla no debe permitir deducir qué hacer con el dinero.`);
+  console.error(`\ncheck-lenguaje: ${errores} problema(s). La pantalla no debe permitir deducir qué hacer con el dinero, ni el código hablar con la base profesional.`);
   process.exit(1);
 }
-console.log('✓ Lenguaje del laboratorio: describe sin prescribir (paso 25).');
+console.log('✓ Lenguaje del laboratorio: describe sin prescribir (paso 25). Sin rastro de la base profesional ni de Auth (Entrega 2b).');

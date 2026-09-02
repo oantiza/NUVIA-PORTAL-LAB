@@ -91,11 +91,9 @@ console.log('\n— Enlace con las métricas del visitante —');
 console.log('\n— Límite comunicado (paso 21) —');
 comprueba('El contador dice cuántas posiciones hay y cuál es el tope', textoContador(3) === 'Posiciones: 3 de 5');
 comprueba('La nota de nivel explica el porqué del tope', NOTA_NIVEL.includes('se lee con claridad'));
-comprueba('…y qué añade la cuenta gratuita', NOTA_NIVEL.includes('cuenta gratuita')
-  && NOTA_NIVEL.includes('en la nube') && NOTA_NIVEL.includes('sin tope de carteras'));
-comprueba('…y hasta dónde llega la suscripción', NOTA_NIVEL.includes('20 posiciones'));
-comprueba('Dice que el registro está abierto y dónde (paso 28)',
-  NOTA_NIVEL.includes('está abierto') && NOTA_NIVEL.includes('«Tu cuenta»'));
+comprueba('…y dice que en la alfa no hay cuentas y que las carteras van en el navegador (Entrega 2b)',
+  NOTA_NIVEL.includes('versión alfa') && NOTA_NIVEL.includes('en este navegador') && NOTA_NIVEL.includes('no hay cuentas'));
+comprueba('…y hasta dónde llegarán los niveles posteriores', NOTA_NIVEL.includes('hasta 20') && !NOTA_NIVEL.includes('«Tu cuenta»'));
 comprueba('La nota describe sin aconsejar (sin «mejor/recomendado/óptimo/conviene/deberías/ideal»)',
   !/mejor|recomendad|óptim|conviene|deberías|ideal/i.test(NOTA_NIVEL));
 

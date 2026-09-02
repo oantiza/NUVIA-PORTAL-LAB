@@ -195,5 +195,22 @@ export function montaModelos(raiz, { cliente = null, alSeleccionar = null } = {}
     lista.append(tarjeta);
   }
 
+  /* Alfa (base propia): una cartera modelo solo se analiza si todos sus
+     activos están en el universo de la alfa. Si falta alguno, se dice cuál
+     y el botón se apaga; no se sustituye ningún activo en silencio. */
+  if (typeof datos.enCatalogo === 'function') {
+    const ids = [...new Set(CARTERAS_MODELO.flatMap((m) => m.posiciones.map((p) => p.asset_id)))];
+    datos.enCatalogo(ids).then((presentes) => {
+      for (const modelo of CARTERAS_MODELO) {
+        const faltan = modelo.posiciones.filter((p) => !presentes[p.asset_id]);
+        if (!faltan.length) continue;
+        const boton = botones.get(modelo.clave);
+        if (boton) { boton.disabled = true; boton.textContent = 'No disponible en la alfa'; }
+        tarjetas.get(modelo.clave)?.append(el('p', { class: 'nv-modelos__nota nv-modelos__no-disponible' },
+          `No disponible en la alfa: ${faltan.map((p) => p.nombre).join(', ')} no ${faltan.length === 1 ? 'está' : 'están'} en el universo de instrumentos de esta versión.`));
+      }
+    }).catch(() => { /* sin catálogo: cada botón informará al pulsarlo */ });
+  }
+
   return { cuantas: () => CARTERAS_MODELO.length };
 }

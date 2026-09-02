@@ -74,84 +74,104 @@ function fetchFalso({ errores = {} } = {}) {
   return { fn, llamadas };
 }
 
-console.log('— Crear cuenta = enlazar a la sesión anónima (mismo usuario) —');
+/* ── Alfa (Entrega 2b, 02-09-2026): sin cuentas ni sesión. Las secciones
+   «crear cuenta», «iniciar sesión» y «errores en llano» dependen del cliente
+   con Identity Toolkit del proyecto anterior, que ya no existe. Se conservan
+   aquí dentro de una función sin ejecutar, para la fase de cuentas, y se
+   comprueba que el cliente de la alfa las rechaza con NO_DISPONIBLE_ALFA. */
+console.log('— Alfa: sin cuentas; el cliente rechaza las operaciones de cuenta —');
 {
-  let reloj = 1_000_000;
-  const { fn, llamadas } = fetchFalso();
-  const almacen = almacenFalso();
-  const cliente = creaClienteMaestra({ fetchFn: fn, almacen, ahora: () => reloj });
-
-  comprueba('Sin sesión guardada, la cuenta se cuenta como anónima', cliente.sesionActual().tipo === 'anonima');
-
-  await cliente.llama('search_assets', { query: 'a' }); // el visitante ya usó el buscador
-  const s = await cliente.creaCuenta('prueba@nuvia.example', 'secreta9');
-  comprueba('Devuelve tipo registrada y el correo', s.tipo === 'registrada' && s.correo === 'prueba@nuvia.example');
-  const enlace = llamadas.cuerpos.find((c) => c.cuerpo?.idToken);
-  comprueba('El alta viaja con el idToken de la sesión anónima (conserva el usuario)',
-    llamadas.altas === 1 && llamadas.enlaces === 1 && enlace.cuerpo.idToken === 'token-anon-1');
-  comprueba('sesionActual refleja la cuenta', cliente.sesionActual().correo === 'prueba@nuvia.example');
-
-  await cliente.llama('search_assets', { query: 'b' });
-  const ultima = llamadas.cuerpos.at(-1);
-  comprueba('Las consultas siguientes usan el token registrado, sin alta nueva',
-    llamadas.altas === 1 && llamadas.funciones === 2 && ultima.url.includes('cloudfunctions'));
-
-  reloj += 3_600_000; // caduca el token
-  await cliente.llama('search_assets', { query: 'c' });
-  comprueba('La renovación de token conserva tipo y correo',
-    llamadas.renovaciones === 1 && cliente.sesionActual().tipo === 'registrada'
-    && cliente.sesionActual().correo === 'prueba@nuvia.example');
-
-  const fuera = cliente.cierraSesion();
-  comprueba('Cerrar sesión la olvida de verdad', fuera.tipo === 'anonima'
-    && cliente.sesionActual().tipo === 'anonima' && almacen.tamano() === 0);
-  await cliente.llama('search_assets', { query: 'd' });
-  comprueba('Tras cerrar, la siguiente consulta abre una sesión anónima nueva', llamadas.altas === 2);
-}
-
-console.log('\n— Iniciar sesión y recuperar contraseña —');
-{
-  const { fn, llamadas } = fetchFalso();
-  const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
-  const s = await cliente.iniciaSesion('  prueba@nuvia.example  ', 'secreta9');
-  comprueba('Inicia sesión con signInWithPassword y recorta el correo',
-    llamadas.logins === 1 && s.tipo === 'registrada' && s.correo === 'prueba@nuvia.example');
-
-  await cliente.recuperaContrasena('prueba@nuvia.example');
-  const oob = llamadas.cuerpos.find((c) => c.url.includes('sendOobCode'));
-  comprueba('La recuperación pide el correo de restablecimiento (PASSWORD_RESET)',
-    llamadas.oob === 1 && oob.cuerpo.requestType === 'PASSWORD_RESET');
-}
-
-console.log('\n— Errores en llano, nunca códigos a secas —');
-{
-  const casos = [
-    ['enlace', 'EMAIL_EXISTS', 'Ya existe una cuenta'],
-    ['enlace', 'WEAK_PASSWORD : Password should be at least 6 characters', 'al menos 6 caracteres'],
-    ['enlace', 'INVALID_EMAIL', 'no parece una dirección válida'],
-    ['login', 'INVALID_LOGIN_CREDENTIALS', 'no coinciden con ninguna cuenta'],
-    ['login', 'EMAIL_NOT_FOUND', 'no coinciden con ninguna cuenta'],
-    ['login', 'TOO_MANY_ATTEMPTS_TRY_LATER', 'Demasiados intentos'],
-    ['oob', 'CODIGO_DESCONOCIDO', 'No se ha podido completar la operación'],
-  ];
-  for (const [donde, codigo, esperado] of casos) {
-    const { fn } = fetchFalso({ errores: { [donde]: codigo } });
-    const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
-    let mensaje = '';
-    try {
-      if (donde === 'enlace') await cliente.creaCuenta('a@b.c', 'x');
-      else if (donde === 'login') await cliente.iniciaSesion('a@b.c', 'x');
-      else await cliente.recuperaContrasena('a@b.c');
-    } catch (e) { mensaje = e.message; }
-    comprueba(`${codigo} → «${esperado}…»`, mensaje.includes(esperado), mensaje);
+  const cliente = creaClienteMaestra({ fetchFn: async () => { throw new Error('no debe llamar a la red'); }, almacen: almacenFalso(), ahora: () => 1 });
+  const codigos = [];
+  for (const [nombre, args] of [['creaCuenta', ['a@b.c', 'x']], ['iniciaSesion', ['a@b.c', 'x']], ['recuperaContrasena', ['a@b.c']], ['cambiaContrasena', ['y']], ['pideCambioCorreo', ['c@d.e']], ['borraCuenta', []]]) {
+    try { await cliente[nombre](...args); codigos.push('sin error'); } catch (e) { codigos.push(e.codigo); }
   }
+  comprueba('Las seis operaciones de cuenta devuelven NO_DISPONIBLE_ALFA sin tocar la red', codigos.every((c) => c === 'NO_DISPONIBLE_ALFA'), codigos.join(','));
+  comprueba('Sin sesión: tipo «alfa», nunca «anonima» ni «registrada»', cliente.sesionActual().tipo === 'alfa');
+}
+
+// eslint-disable-next-line no-unused-vars
+async function pruebasDeCuentaAplazadas() {
+  console.log('— Crear cuenta = enlazar a la sesión anónima (mismo usuario) —');
   {
-    const { fn } = fetchFalso({ errores: { login: 'INVALID_LOGIN_CREDENTIALS' } });
-    const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
-    let seguia = null;
-    try { await cliente.iniciaSesion('a@b.c', 'x'); } catch { seguia = cliente.sesionActual(); }
-    comprueba('Un login fallido no toca la sesión de lectura', seguia?.tipo === 'anonima');
+    let reloj = 1_000_000;
+    const { fn, llamadas } = fetchFalso();
+    const almacen = almacenFalso();
+    const cliente = creaClienteMaestra({ fetchFn: fn, almacen, ahora: () => reloj });
+  
+    comprueba('Sin sesión guardada, la cuenta se cuenta como anónima', cliente.sesionActual().tipo === 'anonima');
+  
+    await cliente.llama('search_assets', { query: 'a' }); // el visitante ya usó el buscador
+    const s = await cliente.creaCuenta('prueba@nuvia.example', 'secreta9');
+    comprueba('Devuelve tipo registrada y el correo', s.tipo === 'registrada' && s.correo === 'prueba@nuvia.example');
+    const enlace = llamadas.cuerpos.find((c) => c.cuerpo?.idToken);
+    comprueba('El alta viaja con el idToken de la sesión anónima (conserva el usuario)',
+      llamadas.altas === 1 && llamadas.enlaces === 1 && enlace.cuerpo.idToken === 'token-anon-1');
+    comprueba('sesionActual refleja la cuenta', cliente.sesionActual().correo === 'prueba@nuvia.example');
+  
+    await cliente.llama('search_assets', { query: 'b' });
+    const ultima = llamadas.cuerpos.at(-1);
+    comprueba('Las consultas siguientes usan el token registrado, sin alta nueva',
+      llamadas.altas === 1 && llamadas.funciones === 2 && ultima.url.includes('cloudfunctions'));
+  
+    reloj += 3_600_000; // caduca el token
+    await cliente.llama('search_assets', { query: 'c' });
+    comprueba('La renovación de token conserva tipo y correo',
+      llamadas.renovaciones === 1 && cliente.sesionActual().tipo === 'registrada'
+      && cliente.sesionActual().correo === 'prueba@nuvia.example');
+  
+    const fuera = cliente.cierraSesion();
+    comprueba('Cerrar sesión la olvida de verdad', fuera.tipo === 'anonima'
+      && cliente.sesionActual().tipo === 'anonima' && almacen.tamano() === 0);
+    await cliente.llama('search_assets', { query: 'd' });
+    comprueba('Tras cerrar, la siguiente consulta abre una sesión anónima nueva', llamadas.altas === 2);
   }
+  
+  console.log('\n— Iniciar sesión y recuperar contraseña —');
+  {
+    const { fn, llamadas } = fetchFalso();
+    const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
+    const s = await cliente.iniciaSesion('  prueba@nuvia.example  ', 'secreta9');
+    comprueba('Inicia sesión con signInWithPassword y recorta el correo',
+      llamadas.logins === 1 && s.tipo === 'registrada' && s.correo === 'prueba@nuvia.example');
+  
+    await cliente.recuperaContrasena('prueba@nuvia.example');
+    const oob = llamadas.cuerpos.find((c) => c.url.includes('sendOobCode'));
+    comprueba('La recuperación pide el correo de restablecimiento (PASSWORD_RESET)',
+      llamadas.oob === 1 && oob.cuerpo.requestType === 'PASSWORD_RESET');
+  }
+  
+  console.log('\n— Errores en llano, nunca códigos a secas —');
+  {
+    const casos = [
+      ['enlace', 'EMAIL_EXISTS', 'Ya existe una cuenta'],
+      ['enlace', 'WEAK_PASSWORD : Password should be at least 6 characters', 'al menos 6 caracteres'],
+      ['enlace', 'INVALID_EMAIL', 'no parece una dirección válida'],
+      ['login', 'INVALID_LOGIN_CREDENTIALS', 'no coinciden con ninguna cuenta'],
+      ['login', 'EMAIL_NOT_FOUND', 'no coinciden con ninguna cuenta'],
+      ['login', 'TOO_MANY_ATTEMPTS_TRY_LATER', 'Demasiados intentos'],
+      ['oob', 'CODIGO_DESCONOCIDO', 'No se ha podido completar la operación'],
+    ];
+    for (const [donde, codigo, esperado] of casos) {
+      const { fn } = fetchFalso({ errores: { [donde]: codigo } });
+      const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
+      let mensaje = '';
+      try {
+        if (donde === 'enlace') await cliente.creaCuenta('a@b.c', 'x');
+        else if (donde === 'login') await cliente.iniciaSesion('a@b.c', 'x');
+        else await cliente.recuperaContrasena('a@b.c');
+      } catch (e) { mensaje = e.message; }
+      comprueba(`${codigo} → «${esperado}…»`, mensaje.includes(esperado), mensaje);
+    }
+    {
+      const { fn } = fetchFalso({ errores: { login: 'INVALID_LOGIN_CREDENTIALS' } });
+      const cliente = creaClienteMaestra({ fetchFn: fn, almacen: almacenFalso(), ahora: () => 1 });
+      let seguia = null;
+      try { await cliente.iniciaSesion('a@b.c', 'x'); } catch { seguia = cliente.sesionActual(); }
+      comprueba('Un login fallido no toca la sesión de lectura', seguia?.tipo === 'anonima');
+    }
+  }
+  
 }
 
 console.log('\n— Los textos del bloque dicen lo mínimo y lo dicen claro —');
@@ -270,4 +290,4 @@ if (fallos) {
   console.error(`\n${fallos} comprobación(es) en rojo.`);
   process.exit(1);
 }
-console.log('\nTodo en verde: registro (28), consentimiento (29) y derechos RGPD (34).');
+console.log('\nTodo en verde: consentimiento (29) y derechos RGPD (34) como helpers puros; cuentas aplazadas (alfa, Entrega 2b).');

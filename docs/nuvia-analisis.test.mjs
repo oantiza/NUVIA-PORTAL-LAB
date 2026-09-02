@@ -153,7 +153,7 @@ console.log('\n— Frontera y proyección (paso 33) —');
 
 console.log('\n— Textos del bloque —');
 comprueba('El aviso sin sesión describe qué se abre, sin empujar a nadie',
-  NOTA_ANALISIS_CERRADO.includes('sesión iniciada') && NOTA_ANALISIS_CERRADO.includes('análisis ampliado')
+  NOTA_ANALISIS_CERRADO.includes('versión alfa') && NOTA_ANALISIS_CERRADO.includes('análisis ampliado')
   && !/regístrate|hazte|no te pierdas|aprovecha/i.test(NOTA_ANALISIS_CERRADO));
 comprueba('La fuente cita la base de datos NUVIA y la ventana del historial',
   FUENTE_ANALISIS.includes('base de datos NUVIA') && FUENTE_ANALISIS.includes('3 años'));

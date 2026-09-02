@@ -23,6 +23,11 @@
  * pms_exposure, exposure_detail…) para que las respuestas de las Cloud
  * Functions pasen directas, sin capa de traducción.
  *
+ * Alfa (02-09-2026, base propia): cuando el activo trae `exposure_detail`
+ * o `pms_exposure` como `null` EXPLÍCITO, significa «sin datos» y NO se
+ * estima nada: su peso va a `pesoSinDatos` y se declara. Con `undefined` o
+ * `{}` se conserva el comportamiento anterior (estimación declarada).
+ *
  * Todo son funciones puras: sin red, sin backend, sin estado.
  */
 
@@ -111,11 +116,19 @@ function agregaConcentracion(posiciones, activos, eligeDistribucion, eligeEstima
   let pesoTotal = 0;
   let pesoLookthrough = 0;
   let pesoEstimado = 0;
+  let pesoSinDatos = 0;
+  let pesoCartera = 0;
 
   for (const posicion of posiciones || []) {
     const peso = posicion.weight_percent || 0;
     const activo = porId.get(posicion.asset_id);
     if (peso <= 0 || !activo) continue;
+    pesoCartera += peso;
+    /* null explícito = «sin datos» (alfa): ni se estima ni cuenta como 0 % RV. */
+    if (activo.pms_exposure === null || activo.exposure_detail === null) {
+      pesoSinDatos += peso;
+      continue;
+    }
     const pesoRV = peso * (activo.pms_exposure?.equity || 0);
     if (pesoRV <= 0) continue;
     const distribucion = eligeDistribucion(activo);
@@ -133,7 +146,8 @@ function agregaConcentracion(posiciones, activos, eligeDistribucion, eligeEstima
     }
   }
 
-  if (pesoTotal <= 0) return { filas: [], calidad: 'none', pesoEstimado: 0 };
+  const sinDatos = pesoCartera > 0 ? (pesoSinDatos / pesoCartera) * 100 : 0;
+  if (pesoTotal <= 0) return { filas: [], calidad: 'none', pesoEstimado: 0, pesoSinDatos: sinDatos };
   const filas = Array.from(acumulador.entries())
     .map(([clave, valor]) => ({ clave, peso: (valor / pesoTotal) * 100 }))
     .filter((fila) => fila.peso > 0.05)
@@ -141,7 +155,7 @@ function agregaConcentracion(posiciones, activos, eligeDistribucion, eligeEstima
   const calidad = filas.length === 0 ? 'none'
     : pesoEstimado <= 0 ? 'lookthrough'
       : pesoLookthrough <= 0 ? 'estimated' : 'mixed';
-  return { filas, calidad, pesoEstimado: (pesoEstimado / pesoTotal) * 100 };
+  return { filas, calidad, pesoEstimado: (pesoEstimado / pesoTotal) * 100, pesoSinDatos: sinDatos };
 }
 
 /**

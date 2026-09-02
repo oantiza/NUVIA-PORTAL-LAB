@@ -109,11 +109,20 @@ for (const d of directorios) {
    ─────────────────────────────────────────────────────────────────────────── */
 
 const companyBuild = resolve(root, 'company-analysis', 'build');
-if (existsSync(companyBuild)) {
-  await cp(companyBuild, resolve(output, 'company-analysis'), { recursive: true });
+/* Alfa (02-09-2026): «Análisis y valoración de empresas» queda «En
+   preparación» y FUERA de dist/ salvo que se pida expresamente con
+   NUVIA_EMPRESAS=1 (el módulo depende de un proxy de datos que la alfa no
+   usa). Que exista una compilación antigua en company-analysis/build no
+   basta para publicarla. */
+if (process.env.NUVIA_EMPRESAS === '1') {
+  if (existsSync(companyBuild)) {
+    await cp(companyBuild, resolve(output, 'company-analysis'), { recursive: true });
+  } else {
+    console.warn('  aviso: NUVIA_EMPRESAS=1 pero company-analysis/build no existe. Ejecuta antes');
+    console.warn('         npm run build:company-analysis');
+  }
 } else {
-  console.warn('  aviso: company-analysis/build no existe. Ejecuta antes');
-  console.warn('         npm run build:company-analysis');
+  console.log('  company-analysis: fuera de la publicación (alfa; NUVIA_EMPRESAS no definida).');
 }
 
 /* ── 4 · Assets: solo lo referenciado ───────────────────────────────────────

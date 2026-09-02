@@ -1,5 +1,6 @@
 import { access, readFile, readdir, stat } from 'node:fs/promises';
 import { basename, dirname, extname, resolve, sep } from 'node:path';
+import { CADENAS_SIN_MAESTRA, PATRON_CLAVE_EODHD } from './sin-maestra.mjs';
 
 const root = resolve(process.argv[2] || '.');
 const requiredPages = [
@@ -198,4 +199,43 @@ if (!Array.isArray(daily.dailyMacroIndicators) || daily.dailyMacroIndicators.len
   throw new Error('Deben existir exactamente cinco indicadores macroeconómicos.');
 }
 
-console.log(`Sitio estático verificado: ${htmlFiles.length} páginas y todas sus referencias locales.`);
+/* ══ Alfa con base propia (Entrega 2b) ═══════════════════════════════════════
+   Lo que NO puede haber en el árbol publicado:
+   - el universo de la alfa (universo/universo-alfa.*): es contenido editorial
+     del repositorio, no de la web; el catálogo se sirve desde Firestore;
+   - company-analysis/: «En preparación», fuera de la publicación salvo
+     NUVIA_EMPRESAS=1 (y en ese caso solo en dist/, nunca desde cartera.html);
+   - ninguna cadena de la base profesional, de funciones en la nube, de Auth
+     ni una clave de EODHD en el código publicado (js/ y páginas). */
+const problemasAlfa = [];
+const todos = await listFiles(root);
+const esDist = basename(root) === 'dist';
+for (const f of todos) {
+  const nombre = basename(f);
+  if (!/^universo-alfa\./.test(nombre)) continue;
+  const enCarpetaUniverso = basename(dirname(f)) === 'universo' && dirname(dirname(f)) === root;
+  if (esDist || !enCarpetaUniverso) problemasAlfa.push(`${f}: el universo de la alfa vive solo en universo/ y no se publica`);
+}
+if (esDist && process.env.NUVIA_EMPRESAS !== '1') {
+  try {
+    await access(resolve(root, 'company-analysis'));
+    problemasAlfa.push('dist/company-analysis/ existe sin NUVIA_EMPRESAS=1: la alfa no publica el módulo de empresas');
+  } catch { /* correcto: no existe */ }
+}
+const CADENAS_MAESTRA = CADENAS_SIN_MAESTRA.map(([cadena]) => cadena);
+for (const f of todos) {
+  const rel = f.slice(root.length + 1).replace(/\\/g, '/');
+  if (!/^(?:js\/|[^/]+\.html$|web2-integration\.js$|nuvia-site-unified\.js$)/.test(rel)) continue;
+  if (rel.startsWith('js/nuvia-cuenta.js') || rel.startsWith('company-analysis/')) continue;
+  if (!/\.(?:m?js|html)$/.test(rel)) continue;
+  const texto = await readFile(f, 'utf8');
+  for (const cadena of CADENAS_MAESTRA) {
+    if (texto.includes(cadena)) problemasAlfa.push(`${rel}: contiene «${cadena}» (regresión «sin maestra»)`);
+  }
+  if (PATRON_CLAVE_EODHD.test(texto)) problemasAlfa.push(`${rel}: clave de EODHD pegada`);
+}
+if (problemasAlfa.length) {
+  throw new Error(`Alfa con base propia:\n${problemasAlfa.join('\n')}`);
+}
+
+console.log(`Sitio estático verificado: ${htmlFiles.length} páginas y todas sus referencias locales. Sin universo, sin módulo de empresas y sin rastro de la base profesional (alfa).`);

@@ -138,5 +138,34 @@ comprueba('Cartera vacía → «none»',
 
 /* ───────────────────────────────────────────────────────────────────────── */
 
+/* ── Alfa (base propia) · null explícito = sin datos, nunca estimado ─────── */
+{
+  const fondoSinDatos = { asset_id: 'F1', display_name: 'Fondo Global EUR', currency: 'EUR', region: null,
+    economic_asset_class: 'EQUITY', pms_exposure: { equity: 1 }, exposure_detail: null };
+  const mixtoSinDatos = { asset_id: 'F2', display_name: 'Fondo Mixto', currency: 'EUR',
+    economic_asset_class: 'MIXED', pms_exposure: null, exposure_detail: null };
+  const etf = { asset_id: 'E1', display_name: 'ETF Mundo', pms_exposure: { equity: 0.99 },
+    exposure_detail: { sectors: { technology: 60, financial_services: 40 }, equity_regions: { north_america: 70, europe_developed: 30 } } };
+  const pos = [
+    { asset_id: 'F1', weight_percent: 40 }, { asset_id: 'F2', weight_percent: 20 }, { asset_id: 'E1', weight_percent: 40 },
+  ];
+  const sec = concentracionSectorial(pos, [fondoSinDatos, mixtoSinDatos, etf]);
+  comprueba('Alfa: un fondo con exposure_detail null no se estima por el nombre (ni «global» ni «multi_sector»)',
+    !sec.filas.some((f) => f.clave === 'multi_sector') && sec.calidad === 'lookthrough');
+  comprueba('Alfa: pesoSinDatos declara el 60 % de la cartera (40 + 20)', Math.abs(sec.pesoSinDatos - 60) < 1e-9, String(sec.pesoSinDatos));
+  comprueba('Alfa: lo mostrado corresponde solo al ETF (tecnología 60 %)',
+    Math.abs(sec.filas.find((f) => f.clave === 'technology').peso - 60) < 1e-9);
+  const geo = concentracionGeografica(pos, [fondoSinDatos, mixtoSinDatos, etf]);
+  comprueba('Alfa: un fondo en euros sin datos NO sale como «eurozona 100 %»',
+    !geo.filas.some((f) => f.clave === 'eurozone') && Math.abs(geo.pesoSinDatos - 60) < 1e-9);
+  const soloFondos = concentracionSectorial(pos.slice(0, 2), [fondoSinDatos, mixtoSinDatos]);
+  comprueba('Alfa: cartera solo de fondos sin datos → «none» con pesoSinDatos 100',
+    soloFondos.calidad === 'none' && soloFondos.filas.length === 0 && Math.abs(soloFondos.pesoSinDatos - 100) < 1e-9);
+  const heredado = concentracionSectorial([{ asset_id: 'X', weight_percent: 100 }],
+    [{ asset_id: 'X', display_name: 'Tech Fund', pms_exposure: { equity: 1 } }]);
+  comprueba('Sin cambios: exposure_detail undefined sigue estimándose (comportamiento anterior)',
+    heredado.calidad === 'estimated' && heredado.filas[0]?.clave === 'technology' && heredado.pesoSinDatos === 0);
+}
+
 console.log(fallos === 0 ? '\nBatería completa: todo en orden.' : `\n${fallos} fallo(s).`);
 process.exit(fallos === 0 ? 0 : 1);

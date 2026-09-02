@@ -4981,6 +4981,35 @@
   text-align: center;
 }
 
+/* Alfa (02-09-2026): aviso de versión y fecha de los datos, bajo la tesis. */
+.nv-aviso-alfa {
+  width: min(100%, 850px);
+  margin: 0 auto;
+  flex-direction: column;
+  gap: var(--nv-space-2);
+}
+
+.nv-aviso-alfa__fecha {
+  color: var(--nv-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.nv-en-preparacion {
+  width: min(100%, 850px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nv-en-preparacion h2 {
+  margin: var(--nv-space-2) 0 var(--nv-space-4);
+  font-size: var(--nv-title-md);
+}
+
+.nv-modelos__no-disponible {
+  color: var(--nv-text-muted);
+  font-size: var(--nv-body-sm);
+}
+
 .nv-lab-fase,
 .nv-lab-analisis-dinamico {
   display: grid;
