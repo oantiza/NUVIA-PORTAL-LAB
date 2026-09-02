@@ -1,0 +1,133 @@
+{
+  "General": {
+    "Code": "TEF",
+    "Type": "Common Stock",
+    "Name": "Telefonica",
+    "Exchange": "MC",
+    "CurrencyCode": "EUR",
+    "CurrencyName": "Euro",
+    "CurrencySymbol": "€",
+    "CountryName": "Spain",
+    "CountryISO": "ES",
+    "OpenFigi": null,
+    "ISIN": "ES0178430E18",
+    "LEI": "549300EEJH4FEPDBBR25",
+    "PrimaryTicker": "TEF.MC",
+    "CIK": null,
+    "EmployerIdNumber": "",
+    "FiscalYearEnd": "December",
+    "IPODate": "1987-06-11",
+    "InternationalDomestic": "International/Domestic",
+    "Sector": "Communication Services",
+    "Industry": "Telecom Services",
+    "GicSector": "Communication Services",
+    "GicGroup": "Telecommunication Services",
+    "GicIndustry": "Diversified Telecommunication Services",
+    "GicSubIndustry": "Integrated Telecommunication Services",
+    "Description": "Telefónica, S.A., together with its subsidiaries, provides telecommunications services in Spain, Brazil, Germany, and the United Kingdom. The company offers digital services for residential customers, such as entertainment, home connectivity and security; and advanced solutions for businesses and public administrations, including cloud, cybersecurity, IoT, artificial intelligence, and professional services. It also provides wholesale services to other operators; fixed and wireless telephony services. It is also involved in the wholesale commercialization of a fiber-to-the-home network; and manages borrowing activities. In addition, the company offers ecosystem services, such as devices, health, insurance, video content, solar energy, alarm systems, advertising, financial services and education, etc.; traffic, connection fees, regular network usage fees, interconnection, network and equipment leasing, and handset sales; and other digital services comprising Pay TV and value-added services. Telefónica, S.A. was incorporated in 1924 and is based in Madrid, Spain.",
+    "Address": "Distrito TelefOnica, Madrid, Spain, 28050",
+    "AddressData": {
+      "Street": "Distrito TelefOnica",
+      "City": "Madrid",
+      "Country": "Spain",
+      "ZIP": "28050"
+    },
+    "Listings": {},
+    "Officers": {
+      "0": {
+        "Name": "Mr. Marc Thomas Murtra Millar",
+        "Title": "Executive Chairman & CEO",
+        "YearBorn": "1972"
+      },
+      "1": {
+        "Name": "Mr. Emilio Gayo Rodríguez",
+        "Title": "COO & Executive Director",
+        "YearBorn": "1965"
+      },
+      "2": {
+        "Name": "Mr. Juan  Azcue Vich",
+        "Title": "Chief Financial & Corporate Development Officer",
+        "YearBorn": "1976"
+      },
+      "3": {
+        "Name": "Mr. Adrian Zunzunegui Ruano",
+        "Title": "Head of Investor Relations",
+        "YearBorn": "NA"
+      },
+      "4": {
+        "Name": "Mr. Pablo  de Carvajal González",
+        "Title": "General Counsel, Global Director of Regulatory Affairs & Head of Security Area",
+        "YearBorn": "1963"
+      },
+      "5": {
+        "Name": "Mr. Salvador  Garcia-Ruiz",
+        "Title": "Chief Communications & Brand Officer",
+        "YearBorn": "1976"
+      },
+      "6": {
+        "Name": "Ms. Marta  Machicot",
+        "Title": "Chief People Officer",
+        "YearBorn": "NA"
+      },
+      "7": {
+        "Name": "Mr. Francisco Javier de Paz Mancho Ph.D.",
+        "Title": "Deputy to Chairman",
+        "YearBorn": "1958"
+      },
+      "8": {
+        "Name": "Daniel  Domenjó",
+        "Title": "CEO of Movistar+",
+        "YearBorn": "NA"
+      },
+      "9": {
+        "Name": "Mr. Alvaro Echevarria Arevalo",
+        "Title": "Chief of Staff of Chairman's Office & Corporate Affairs",
+        "YearBorn": "NA"
+      }
+    },
+    "Phone": "34 914 82 87 00",
+    "WebURL": "https://www.telefonica.com",
+    "LogoURL": "/img/logos/MC/TEF.png",
+    "FullTimeEmployees": 74427,
+    "UpdatedAt": "2026-09-01"
+  },
+  "Highlights": {
+    "MarketCapitalization": 20453076992,
+    "MarketCapitalizationMln": 20453.077,
+    "EBITDA": 6830000128,
+    "PERatio": null,
+    "PEGRatio": 0.3783,
+    "WallStreetTargetPrice": 3.9591,
+    "BookValue": 2.607,
+    "DividendShare": 0.15,
+    "DividendYield": 0.0411,
+    "EarningsShare": -0.47,
+    "EPSEstimateCurrentYear": 0.34,
+    "EPSEstimateNextYear": 0.3919,
+    "EPSEstimateNextQuarter": 0.12,
+    "EPSEstimateCurrentQuarter": 0.11,
+    "MostRecentQuarter": "2026-06-30",
+    "ProfitMargin": -0.0911,
+    "OperatingMarginTTM": 0.0985,
+    "ReturnOnAssetsTTM": 0.0098,
+    "ReturnOnEquityTTM": -0.1034,
+    "RevenueTTM": 36238999552,
+    "RevenuePerShareTTM": 7.383,
+    "QuarterlyRevenueGrowthYOY": -0.124,
+    "GrossProfitTTM": 16241000448,
+    "DilutedEpsTTM": -0.47,
+    "QuarterlyEarningsGrowthYOY": 26.6
+  },
+  "Technicals": {
+    "Beta": 0.288,
+    "52WeekHigh": 4.2702,
+    "52WeekLow": 3.1117,
+    "50DayMA": 3.6171,
+    "200DayMA": 3.6662,
+    "SharesShort": 0,
+    "SharesShortPriorMonth": 0,
+    "ShortRatio": 0,
+    "ShortPercent": null
+  },
+  "_nota": "Muestra recortada el 02-09-2026: la respuesta completa (3 MB, con Financials, Earnings, Holders, ESG...) no se necesita en la alfa; el pipeline solo usa General (nombre, ISIN, sector, industria, país, divisa) y, opcionalmente, Highlights.MarketCapitalization."
+}

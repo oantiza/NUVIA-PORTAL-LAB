@@ -1,0 +1,65 @@
+{
+    "General":  {
+                    "Code":  "IE00B03HD191",
+                    "Type":  "FUND",
+                    "Name":  "Vanguard Global Stock Index Fund EUR Acc",
+                    "Exchange":  "EUFUND",
+                    "CurrencyCode":  "EUR",
+                    "CurrencyName":  "Euro",
+                    "CurrencySymbol":  "€",
+                    "CountryName":  "Unknown",
+                    "CountryISO":  "NA",
+                    "OpenFigi":  null,
+                    "ISIN":  null,
+                    "CUSIP":  null,
+                    "Fund_Summary":  null,
+                    "Fund_Family":  null,
+                    "Fund_Category":  null,
+                    "Fund_Style":  null,
+                    "Fiscal_Year_End":  null,
+                    "MarketCapitalization":  null
+                },
+    "MutualFund_Data":  {
+                            "Fund_Category":  null,
+                            "Fund_Style":  null,
+                            "Nav":  null,
+                            "Prev_Close_Price":  null,
+                            "Update_Date":  null,
+                            "Portfolio_Net_Assets":  null,
+                            "Share_Class_Net_Assets":  null,
+                            "Morning_Star_Rating":  null,
+                            "Morning_Star_Risk_Rating":  null,
+                            "Morning_Star_Category":  null,
+                            "Inception_Date":  null,
+                            "Currency":  null,
+                            "Domicile":  null,
+                            "Yield":  null,
+                            "Yield_YTD":  null,
+                            "Yield_1Year_YTD":  null,
+                            "Yield_3Year_YTD":  null,
+                            "Yield_5Year_YTD":  null,
+                            "Expense_Ratio":  null,
+                            "Expense_Ratio_Date":  null,
+                            "Asset_Allocation":  {
+
+                                                 },
+                            "Value_Growth":  {
+
+                                             },
+                            "Top_Holdings":  {
+
+                                             },
+                            "Market_Capitalization":  {
+
+                                                      },
+                            "Sector_Weights":  {
+
+                                               },
+                            "World_Regions":  {
+
+                                              },
+                            "Top_Countries":  {
+
+                                              }
+                        }
+}

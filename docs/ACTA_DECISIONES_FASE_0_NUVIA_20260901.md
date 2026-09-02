@@ -211,3 +211,20 @@ Quedan fijados:
 - una frontera clara entre producto actual e ideas futuras.
 
 La siguiente actuación autorizada por esta acta es la **Entrega 1 del plan final: definición y arquitectura canónica**. El orden será: definición canónica y página institucional en el mismo cambio verificable, ficha regulatoria, portada y coherencia transversal de navegación y pie.
+
+---
+
+## 4. Adenda · 2 de septiembre de 2026 · Base de datos propia de la alfa (D7)
+
+Decisión del fundador, tomada tras el análisis `docs/ANALISIS_BASE_DATOS_PROPIA_NUVIA_20260902.md` y la estructura `docs/ESTRUCTURA_MINIMA_ALFA_NUVIA_20260902.md`; plan de ejecución en `docs/PLAN_ALFA_BASE_PROPIA_NUVIA_20260902.md` (versión 2, «desde cero»).
+
+- NUVIA está en **versión alfa**; la estructura definitiva de datos y backend sigue **sin definir** y no se decide con esta adenda.
+- La alfa se construye **desde cero** sobre el proyecto Firebase propio **`nuvia-family-wealth`**, en plan gratuito (Spark), **sin Cloud Functions ni facturación**: Firestore en `europe-west1` y Authentication con correo y contraseña, registro cerrado, cuentas creadas por invitación (máximo 100 personas; primera ronda de 10–20 durante un mes aproximado).
+- Los datos de mercado se descargan **directamente de EODHD con la clave propia del fundador** mediante un script local, sobre un **universo pequeño y curado en euros** (`universo/universo-alfa.csv`, 50–150 instrumentos; los cuatro fondos de referencia del laboratorio son obligatorios). Sin rating ni puntuaciones de terceros.
+- **Ninguna relación con `bbdd-activos-financieros`** (base de otros programas del fundador): ni lectura, ni escritura, ni credenciales, ni permisos, ni llamadas desde NUVIA-PORTAL-LAB, sus scripts o su integración continua. Tampoco se copia ni se lee `nuvia-market-data`; su sincronización diaria se pausa mientras dure la alfa.
+- No se migran cuentas ni carteras existentes: la alfa empieza vacía. «Análisis y valoración de empresas» queda «En preparación» en la alfa.
+- La restricción registrada en `docs/DECISIONES_PENDIENTES_CONFIANZA_ENTREGA_2_20260902.md` («no modificar el Firestore provisional») **se mantiene íntegra** respecto de la base provisional conectada hoy; esta adenda la completa: el trabajo de la alfa se realiza únicamente en `nuvia-family-wealth`, cuyas reglas viven en `firestore.rules` del repositorio.
+- Licencia de datos: el fundador da por resuelto el trámite con EODHD (02-09-2026, tarde). Los datos se sirven sin rating ni categorías de mérito y con «Datos a fecha» visible.
+- **Alcance recortado (02-09-2026, tarde):** la alfa **no tiene cuentas de usuario ni recoge datos personales**; registro, consentimientos y carteras en la nube se aplazan a una fase posterior con su propio expediente. Las carteras se guardan solo en el navegador de cada persona.
+- **La alfa queda en abierto:** los datos de mercado se leen de Firestore sin sesión; no hay puerta de invitación. «Cerrada» significa que no se anuncia ni se comercializa, no que el acceso esté restringido. Documento vigente: `docs/PENDIENTE_ALFA_NUVIA_20260902.md`.
+- Esta adenda no autoriza comercialización ni ninguna función de las registradas como no activas en `docs/IDEAS_FUTURAS_NO_ACTIVAS_NUVIA_20260901.md`.

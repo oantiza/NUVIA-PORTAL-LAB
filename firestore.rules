@@ -1,0 +1,17 @@
+// NUVIA · reglas de Firestore de la alfa (proyecto nuvia-family-wealth, plan gratuito).
+// Versión 2 · 02-09-2026 (tarde): alfa en abierto, sin cuentas ni datos de usuarios.
+// Origen: docs/PLAN_ALFA_BASE_PROPIA_NUVIA_20260902.md (paso 1) y docs/PENDIENTE_ALFA_NUVIA_20260902.md.
+// Datos de mercado: lectura pública; escritura solo desde el script de carga (Admin, no pasa por reglas).
+// No hay colección de usuarios ni de carteras: las carteras viven en el navegador de cada persona.
+// No se publican en ningún otro proyecto.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    match /assets/{id}            { allow read: if true; allow write: if false; }
+    match /assets/{id}/{sub=**}   { allow read: if true; allow write: if false; }
+    match /catalog_chunks/{id}    { allow read: if true; allow write: if false; }
+    match /catalog_manifest/{id}  { allow read: if true; allow write: if false; }
+    match /sync_runs/{id}         { allow read: if true; allow write: if false; }
+    match /{document=**}          { allow read, write: if false; }
+  }
+}
