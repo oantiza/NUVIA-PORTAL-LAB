@@ -6,7 +6,9 @@
 
 **Redacta:** Claude Fable 5.1, a propuesta. **Clasifica y firma:** el fundador.
 
-**Clasificación propuesta:** **ÁMBAR.** La función muestra instrumentos financieros identificables (fondos, ETF y acciones con ISIN y nombre comercial), permite compararlos y calcular sobre ellos, y el universo lo ha elegido el fundador, que es agente financiero vinculado. Ninguno de esos tres hechos es una recomendación, pero los tres están en la lista de supuestos ámbar del marco §12 («instrumento concreto», «comparación sensible», «posible conflicto»). No hay datos personales, IA, llamada a la acción ni remuneración, así que no hay ningún supuesto rojo. Es la misma lógica con la que se clasificó ámbar el análisis de empresas (`FICHA_REGULATORIA_ANALISIS_EMPRESAS.md`).
+**Clasificación:** **ÁMBAR**, confirmada por el fundador el 2 de septiembre de 2026 (tarde), con las tres decisiones registradas al final de esta ficha (§ Decisiones del fundador).
+
+**Clasificación propuesta (texto original):** **ÁMBAR.** La función muestra instrumentos financieros identificables (fondos, ETF y acciones con ISIN y nombre comercial), permite compararlos y calcular sobre ellos, y el universo lo ha elegido el fundador, que es agente financiero vinculado. Ninguno de esos tres hechos es una recomendación, pero los tres están en la lista de supuestos ámbar del marco §12 («instrumento concreto», «comparación sensible», «posible conflicto»). No hay datos personales, IA, llamada a la acción ni remuneración, así que no hay ningún supuesto rojo. Es la misma lógica con la que se clasificó ámbar el análisis de empresas (`FICHA_REGULATORIA_ANALISIS_EMPRESAS.md`).
 
 ---
 
@@ -85,6 +87,14 @@ Consecuencias que el marco impone al ámbar y cómo se cubren:
 - Lectura pública y escritura denegada probadas contra las reglas publicadas.
 - Revisión manual del fundador y verificación independiente antes de publicar.
 
+## Decisiones del fundador (2 de septiembre de 2026, tarde)
+
+1. **Clasificación: ámbar.** Confirmada tal como se propone.
+2. **Pregunta 14.** El fundador confirma que en el universo de la alfa **hay instrumentos que distribuye la entidad que representa**. Se mantienen. Queda constancia escrita de que **su presencia responde exactamente al mismo criterio de cobertura que el resto** (instrumentos en euros con histórico en el proveedor, repartidos por clase), que la lista no lleva ninguna columna de mérito, que en pantalla no se distingue entre unos y otros y que el catálogo se ordena por clase y nombre. Ningún instrumento se destaca, puntúa ni recomienda; los cálculos son los mismos para todos.
+3. **Validación jurídica: opción (b).** La alfa se publica con la validación funcional y regulatoria interna registrada (batería en verde, prueba manual del fundador, verificación independiente de Claude) y **la validación jurídica o de compliance queda expresamente pendiente**, por decisión consciente del fundador y con estos motivos escritos: fase alfa, sin datos personales ni cuentas, sin comercialización, sin recomendación ni señal, datos de mercado bajo la suscripción del fundador, y mecanismo de retirada inmediata (vaciar el proyecto `nuvia-family-wealth` y devolver el laboratorio a «En preparación», menos de una hora). Antes de cualquier apertura comercial, de recogida de datos personales o de ampliación del alcance, la validación jurídica pasa a ser obligatoria.
+
+**Una aprobación interna de producto no equivale a validación jurídica** (marco §13): ambas quedan diferenciadas aquí.
+
 ## Resultado
 
-**Apta para desarrollar** con clasificación ámbar una vez el fundador (1) firme la clasificación, (2) responda a la pregunta abierta del punto 14 y (3) elija la salida para la validación jurídica antes de publicar. Nada de lo anterior bloquea la Entrega A (script de datos), que no publica nada al usuario; sí condiciona la integración de la Entrega B en `main`.
+**Apta para desarrollar y para publicar como alfa** con clasificación ámbar y validación jurídica pendiente por decisión expresa del fundador. La verificación independiente de Claude (paso 7) se registra en `docs/` tras la publicación.
