@@ -8,6 +8,8 @@
 
 **Clasificación:** **ÁMBAR**, confirmada por el fundador el 2 de septiembre de 2026 (tarde), con las tres decisiones registradas al final de esta ficha (§ Decisiones del fundador).
 
+**Estado vigente (03-09-2026): VALIDACIÓN JURÍDICA FUERA DEL ALCANCE DE LA ALFA.** Nueva orden expresa del fundador, incorporada al [marco obligatorio v1.1, §0](MARCO_REGULATORIO_OBLIGATORIO.md). La ausencia de dictamen externo no bloquea el avance ni la publicación de la alfa. Se mantienen la clasificación ámbar, los controles internos, la calidad del dato y las autorizaciones operativas. No significa que la validación se haya obtenido ni que esta actualización publique o cambie la base. Sustituye el bloqueo documental de la fase 0, conservado como historial al final.
+
 **Clasificación propuesta (texto original):** **ÁMBAR.** La función muestra instrumentos financieros identificables (fondos, ETF y acciones con ISIN y nombre comercial), permite compararlos y calcular sobre ellos, y el universo lo ha elegido el fundador, que es agente financiero vinculado. Ninguno de esos tres hechos es una recomendación, pero los tres están en la lista de supuestos ámbar del marco §12 («instrumento concreto», «comparación sensible», «posible conflicto»). No hay datos personales, IA, llamada a la acción ni remuneración, así que no hay ningún supuesto rojo. Es la misma lógica con la que se clasificó ámbar el análisis de empresas (`FICHA_REGULATORIA_ANALISIS_EMPRESAS.md`).
 
 ---
@@ -71,11 +73,11 @@ Consecuencias que el marco impone al ámbar y cómo se cubren:
 | Antes del diseño: ficha, clasificación, datos, fuentes, terceros, impacto sobre el agente | Esta ficha; fuentes y terceros en 13, 17; impacto en 14 |
 | Antes de programar: resultados y lenguaje permitidos, estados prohibidos, arquitectura revisada, controles previstos | Resultados en 4; lenguaje: el del laboratorio actual más los textos de `docs/PENDIENTE_ALFA_NUVIA_20260902.md` §5.2; estados prohibidos: campos de mérito, estimaciones de lo desconocido, cualquier vínculo con la base profesional; arquitectura en el informe v2 §6–§8; controles en 18 |
 | Antes de integrar: revisión de código y contenido, pruebas, verificación de fuentes y fórmulas, sin derivación ni reutilización de datos | Batería completa en verde y prueba manual del fundador; las fórmulas se prueban con serie sintética; sin derivación por diseño |
-| Antes de publicar: validación funcional y regulatoria registrada; **validación jurídica o de compliance por ser ámbar**; avisos legales; retirada inmediata | Funcional y regulatoria: verificación de Claude (paso 7) registrada en `docs/`. **Jurídica: pendiente de decisión del fundador** (ver abajo). Avisos: textos de la Entrega 2 en borrador, el de almacenamiento debe estar publicado con la alfa. Retirada: vaciar el proyecto `nuvia-family-wealth` y restaurar la portada «En preparación» del laboratorio; menos de una hora |
+| Antes de publicar la alfa: validación funcional e interna registrada; avisos; retirada reversible; autorización operativa | Funcional: las comprobaciones históricas no sustituyen las de cambios posteriores. **Validación jurídica externa: fuera de alcance, no bloqueante en alfa**, conforme al marco v1.1 §0. Avisos: verificar la versión efectivamente publicada. Retirada: procedimiento específico, reversible y autorizado; esta ficha no autoriza vaciar ninguna base ni acredita un tiempo de recuperación |
 
-**Sobre la validación jurídica.** El marco la exige antes de publicar una función ámbar. La alfa se publica en abierto en la web, así que formalmente aplica. El fundador tiene tres salidas, todas defendibles si quedan escritas: (a) obtener una revisión de compliance breve sobre esta ficha antes de integrar en `main`; (b) publicar la alfa con la validación funcional y regulatoria interna registrada y **anotar en el acta que la validación jurídica queda pendiente y por qué** (fase alfa sin datos personales, sin comercialización, sin recomendación, con retirada inmediata), aceptando el riesgo de forma expresa; (c) reclasificar a verde argumentando que la selección es de cobertura y que no hay comparación distinta de la que el laboratorio ya hacía con la base anterior; esta redactora no lo recomienda porque el marco lista «instrumento concreto» como ámbar sin excepción y porque el análisis de empresas se clasificó ámbar por los mismos motivos.
+**Sobre la validación jurídica: criterio vigente de 03-09-2026.** La nueva orden cambia el alcance del propio marco: ya no se exige ese dictamen externo durante la alfa. No es una reclasificación a verde ni una validación obtenida. El criterio de fase 0 que la exigía incluso para la alfa abierta queda sustituido en este punto; no se vuelve a usar como bloqueo.
 
-**Una aprobación interna de producto no equivale a validación jurídica** (marco §13); la opción elegida se anota en el acta con fecha.
+**Una aprobación interna de producto no equivale a validación jurídica** (marco §13). En la alfa el estado es «fuera de alcance», no «puerta cumplida» ni «dictamen pendiente que impide avanzar».
 
 ---
 
@@ -84,10 +86,12 @@ Consecuencias que el marco impone al ámbar y cómo se cubren:
 - Regresión «sin maestra» en `check-lenguaje.mjs` y `check-static-site.mjs` (cadenas: `bbdd-activos-financieros`, `nuvia-market-data`, `cloudfunctions.net`, `identitytoolkit.googleapis.com`, `securetoken.googleapis.com`, `apiKey` antigua, `api_token=` sin variable).
 - Batería del script: divisa confirmada en EUR para todo lo publicado; `exposures` en `null` cuando no hay dato; ausencia de `MorningStar`, `Performance`, `Valuations_Growth`, `Highlights`, `WallStreetTargetPrice`, `rating`, `stars`, `rank`; métricas sobre serie sintética; recuentos por año.
 - Batería del portal: sin cabecera de autorización ni llamadas a Auth; catálogo sin orden de mérito; «sin datos de desglose» declarado; carteras solo en el navegador.
-- Lectura pública y escritura denegada probadas contra las reglas publicadas.
+- Contrato estático y protecciones del transporte en `npm run test:reglas`, sin red; permisos efectivos sobre las reglas locales en `npm run test:reglas:emulador`, exclusivamente con documentos sintéticos en un emulador local. Nunca se intenta escribir ni borrar datos reales para probar una denegación. Los resultados locales no certifican reglas desplegadas.
 - Revisión manual del fundador y verificación independiente antes de publicar.
 
 ## Decisiones del fundador (2 de septiembre de 2026, tarde)
+
+Registro histórico conservado íntegramente. La decisión 3 y su mecanismo de retirada no constituyen autorización operativa vigente. El alcance de la validación jurídica se rige ahora por la orden de 03-09-2026 y el marco v1.1, indicados al inicio de esta ficha.
 
 1. **Clasificación: ámbar.** Confirmada tal como se propone.
 2. **Pregunta 14.** El fundador confirma que en el universo de la alfa **hay instrumentos que distribuye la entidad que representa**. Se mantienen. Queda constancia escrita de que **su presencia responde exactamente al mismo criterio de cobertura que el resto** (instrumentos en euros con histórico en el proveedor, repartidos por clase), que la lista no lleva ninguna columna de mérito, que en pantalla no se distingue entre unos y otros y que el catálogo se ordena por clase y nombre. Ningún instrumento se destaca, puntúa ni recomienda; los cálculos son los mismos para todos.
@@ -95,6 +99,18 @@ Consecuencias que el marco impone al ámbar y cómo se cubren:
 
 **Una aprobación interna de producto no equivale a validación jurídica** (marco §13): ambas quedan diferenciadas aquí.
 
-## Resultado
+## Resultado registrado el 02-09-2026 (decisión del fundador; vigente en cuanto al fondo)
 
 **Apta para desarrollar y para publicar como alfa** con clasificación ámbar y validación jurídica pendiente por decisión expresa del fundador. La verificación independiente de Claude (paso 7) se registra en `docs/` tras la publicación.
+
+## Resultado tras la fase 0 (histórico, sustituido el 03-09-2026)
+
+**Preparación técnica local autorizada; publicación pendiente de validación jurídica o de compliance y de las restantes comprobaciones aplicables.** Se conserva la clasificación ámbar. La fase 0 solo protege las pruebas y aclara el expediente: no publica, no revierte lo publicado, no modifica Firebase y no activa el módulo de empresas. El registro técnico de esta intervención consta en `FASE_0_PROTECCION_ALFA_20260902.md`.
+
+## Resultado vigente · Nueva orden del fundador · 03-09-2026
+
+**Validación jurídica externa fuera de alcance y no bloqueante en la alfa.**
+Se mantienen clasificación ámbar, pruebas internas y controles de producto, datos,
+seguridad y privacidad. La orden no acredita datos pendientes ni autoriza por sí
+sola modificar Firebase, publicar o activar funciones. Las entregas técnicas pueden
+continuar sin solicitar un dictamen jurídico para la alfa.

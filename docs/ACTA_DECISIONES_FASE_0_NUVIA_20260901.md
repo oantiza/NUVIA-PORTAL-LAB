@@ -229,3 +229,42 @@ Decisión del fundador, tomada tras el análisis `docs/ANALISIS_BASE_DATOS_PROPI
 - **La alfa queda en abierto:** los datos de mercado se leen de Firestore sin sesión; no hay puerta de invitación. «Cerrada» significa que no se anuncia ni se comercializa, no que el acceso esté restringido. Documento vigente: `docs/PENDIENTE_ALFA_NUVIA_20260902.md`.
 - **Ficha regulatoria de la alfa (02-09-2026, tarde):** clasificación **ámbar** confirmada por el fundador (`docs/FICHA_REGULATORIA_ALFA_BASE_PROPIA.md`). El universo incluye instrumentos que distribuye la entidad que el fundador representa; se mantienen y queda constancia de que están por el mismo criterio de cobertura que el resto, sin distinción ni mérito en pantalla. La alfa se publica con la validación funcional y regulatoria interna registrada y **la validación jurídica expresamente pendiente**, por decisión del fundador (fase alfa sin datos personales, sin comercialización, sin recomendación, con retirada inmediata); pasa a ser obligatoria antes de cualquier apertura comercial, recogida de datos personales o ampliación del alcance.
 - Esta adenda no autoriza comercialización ni ninguna función de las registradas como no activas en `docs/IDEAS_FUTURAS_NO_ACTIVAS_NUVIA_20260901.md`.
+
+## 5. Aclaración técnica y documental · Fase 0 · 02-09-2026 (histórico; alcance jurídico sustituido por §6)
+
+No fue una decisión del fundador, sino una **observación del ejecutor** sobre el texto del marco §13 entonces vigente: sostenía que la aceptación interna del riesgo no cumplía la puerta de validación jurídica y propuso el estado «publicación pendiente de validación». **Esa observación quedó sustituida por la orden del fundador de 03-09-2026** (§6 de esta acta y marco v1.1 §0) y no describe el estado del expediente. Se conserva como antecedente. La clasificación sigue siendo ámbar y el antecedente D7 se mantiene íntegro.
+
+La fase 0 autorizada protege el trabajo ya existente, sustituye las pruebas contra datos reales por controles locales y emulación con datos ficticios, y aclara el expediente. No modifica lo desplegado, no autoriza borrar bases, no activa empresas y no incluye commits, fusiones ni publicaciones. Las referencias de conservación y los resultados se registran en [FASE_0_PROTECCION_ALFA_20260902.md](FASE_0_PROTECCION_ALFA_20260902.md). El estado vigente de la ficha prevalece sobre su conclusión histórica sustituida.
+
+## 6. Nueva orden · Validación jurídica fuera de la alfa · 03-09-2026
+
+El fundador ordena expresamente: **«la validación jurídica queda fuera en la alfa»**.
+La decisión se incorpora primero al marco obligatorio v1.1 §0 y prevalece sobre
+el criterio jurídico anterior de esta acta y de los informes de la alfa.
+
+La ausencia de dictamen externo no será un bloqueo de desarrollo, pruebas,
+integración o publicación de la alfa. Se registra «fuera de alcance», no aprobado.
+Se mantienen controles internos, límites no prescriptivos, calidad de datos,
+seguridad, privacidad y separación profesional. No se autoriza automáticamente
+ninguna publicación, cambio de Firebase/backend, comercialización o ampliación
+de datos personales. Esta entrega solo actualiza el criterio documental vigente.
+
+## 7. Nueva orden · Autoridad del fundador y consulta previa en la alfa · 03-09-2026
+
+Por orden directa del fundador, se incorpora al contexto del proyecto y al marco
+obligatorio v1.2 §0 el siguiente procedimiento de obligado cumplimiento en la alfa:
+
+- No se bloquea nada sin consulta previa al fundador; él decide y autoriza.
+- No se guardan datos personales de nadie en la base de datos sin su autorización
+  previa y expresa. Las órdenes generales de continuación no la sustituyen.
+- Se continúa el desarrollo completo bajo sus órdenes. Toda duda regulatoria o
+  conflicto con lo decidido antes se le pregunta antes de actuar sobre ese punto.
+- Ningún ejecutor ni informe sustituye su decisión. Se registra su respuesta y
+  se continúa lo autorizado que no dependa de la consulta.
+
+Esta orden sustituye el procedimiento interno de bloqueo unilateral en la alfa;
+no convierte errores en pruebas superadas ni datos desconocidos en acreditados.
+La validación jurídica externa permanece fuera del alcance de la alfa.
+Se registra la orden recibida, sin una firma atribuida al fundador por el ejecutor
+ni exigencia de nueva ratificación. Esta entrega es solo documental: no retira
+bloqueos existentes, no activa funciones, no publica ni modifica Firebase o datos.

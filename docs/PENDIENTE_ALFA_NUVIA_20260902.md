@@ -1,7 +1,89 @@
 # NUVIA · Lo que queda pendiente para la alfa (base propia, en abierto)
 
+> **Revisión de entrega local, 03-09-2026:**
+> [Aviso de procedencia y reconstrucción limpia verificados](REVISION_ENTREGA_LOCAL_20260903.md).
+> Cartera explica base propia y respaldo identificado; 164 archivos idénticos
+> al ensayo limpio, controles generales y escritorio/tablet superados.
+> Sin nuevas escrituras de base ni publicación. Saldo operativo en el cierre consolidado.
+
+> **P6 resuelto localmente, 03-09-2026:**
+> [Resumen y frontera: métodos contrastados y diferenciados](COHERENCIA_METODOS_CARTERA_20260903.md).
+> Tabla de comparación, supuestos explícitos y rótulos separados; sin cambiar
+> fórmulas, precios, pesos ni base de datos. Las notas de incidencia inferiores
+> son históricas; sigue sin publicarse esta entrega.
+
+> **Carga posterior autorizada, 03-09-2026, 16:30 UTC:**
+> [IWDA y VUSA incorporados](CARGA_ETF_MODELOS_AUTORIZADA_20260903.md), cinco años
+> de precios y catálogo de 700 instrumentos. Cuatro carteras completas y abiertas
+> en la revisión real, sin cambiar sus pesos ni otros activos. La discrepancia
+> entre resumen y frontera de la cartera mixta queda en P6 del cierre consolidado.
+> Las notas sin escritura de abajo son históricas. Sin publicación.
+
+> **Saldo vigente tras la orden «termina todo lo pendiente», 03-09-2026:**
+> [Cierre consolidado y secuencia de entrega](CIERRE_PENDIENTES_CONSOLIDADO_20260903.md).
+> Sustituye las listas históricas siguientes: periodos de BPA, impresión, nombre
+> de TSK, noticias y errores SVG corregidos localmente; cobertura institucional y
+> dos ETF comprobados. Los resultados finales y dependencias se registran allí.
+> Sin nuevas escrituras ni publicación en esta tanda.
+
+> **Última integración local, 03-09-2026:** [fechas visibles en el módulo](INTEGRACION_FECHAS_DIVIDENDOS_20260903.md).
+> Bloque independiente en Resumen, Fundamentales e Informe, también al imprimir.
+> Reintento y errores sin retirar las cuentas. 63 pruebas del módulo, cinco anchos
+> de escritorio/tablet y compilación general superados. Sin nuevas escrituras en
+> la base ni publicación. Pendientes: metadatos acreditados, cobertura institucional,
+> decisión sobre dos ETF, contenido editorial y entrega autorizada; vídeo al final.
+
+> **Última carga autorizada, 03-09-2026:** [fechas de dividendos](CARGA_FECHAS_DIVIDENDOS_20260903.md).
+> 73 complementos nuevos, 71 fechas de exdividendo, una fecha de pago antigua de
+> BMW y dos empresas sin fechas informadas. Los 151 documentos previos comprobados
+> siguen intactos; 73 lecturas públicas válidas. Sin datos personales, estimaciones
+> ni cambios de permisos. Su integración visual posterior consta arriba.
+> Sin publicación; vídeo al final.
+
+> **Contraste posterior:** [paridad de fechas y accionariado](PARIDAD_COMPLEMENTARIA_FUNDAMENTALES_20260903.md)
+> revisada sobre las 73 fichas y 53 archivos locales coincidentes. No hay fechas
+> de pago ni filas institucionales en esa caché; sí 52 fechas de exdividendo.
+> La autorización, carga e integración local posteriores constan arriba.
+> La cobertura institucional sigue pendiente de comprobación separada.
+
+> **Auditoría posterior:** [monedas, escalas y comparabilidad](AUDITORIA_METADATOS_FUNDAMENTALES_20260903.md)
+> revisadas en las 73 empresas. Avisos y rótulos precisados localmente sin tocar
+> cifras ni base. Queda acreditar metadatos; el siguiente bloque independiente
+> es la paridad complementaria de dividendos y campos institucionales.
+
+> **Última mejora local:** [carga ligera de fundamentales](CARGA_LIGERA_FUNDAMENTALES_20260903.md).
+> Índice inicial de 13.450 bytes, 73 empresas, 52 respaldos individuales. Ya no
+> se descarga la colección completa de copias al abrir. Sin cambios de base ni
+> publicación. Próximos bloques: metadatos acreditados, paridad complementaria,
+> decisiones sobre los dos ETF, contenido editorial y entrega autorizada; vídeo al final.
+
+> **Última ejecución, 03-09-2026, 09:29 UTC:** [Aena y Ferrovial corregidas y cargadas](EJECUCION_IDENTIDADES_AENA_FERROVIAL_20260903.md)
+> con autorización expresa. Hay **73/73 fundamentales verificados**, 16 documentos
+> nuevos, manifiesto actualizado y cero borrados. Los 2.900 precios copiados
+> coinciden exactamente con los originales conservados. La copia local reconoce
+> ambos códigos; el catálogo bruto mantiene las referencias antiguas para no
+> romper la web publicada. Publicación y activación coordinada aún pendientes.
+
+> **Hito anterior de carga, 03-09-2026:** se crearon 71 fundamentales y quedaron
+> verificados en Firestore. Ferrovial y Aena requerían corregir su identidad.
+> La conexión local a esa carga ya está implementada: 71 fichas verificadas por
+> lectura anónima; el índice local mantiene 73 empresas y el respaldo 52. Véase
+> [conexión y pruebas](CONEXION_FUNDAMENTALES_BASE_PROPIA_20260903.md).
+> Precios: 661/698 cubren cinco años; para los
+> 37 restantes EODHD no aporta datos anteriores adicionales. Véanse
+> [carga](CARGA_FUNDAMENTALES_AUTORIZADA_20260903.md) y
+> [cobertura](COBERTURA_CINCO_ANIOS_PRECIOS_20260903.md).
+
+> **Estado vigente, 03-09-2026:** consultar [Consolidación local y pendientes de cierre](CIERRE_LOCAL_ALFA_20260903.md), [Ejecución del cierre](EJECUCION_CIERRE_ALFA_20260903.md) y la [corrección posterior de identidades](EJECUCION_IDENTIDADES_AENA_FERROVIAL_20260903.md). Este documento conserva la propuesta histórica. Ya no son situación actual «base vacía», «base en preparación», ocho instrumentos ausentes ni empresas fuera de la compilación. La lectura actual confirma 698 instrumentos y dos ETF ausentes en las composiciones. Fundamentales consulta la base propia al elegir una empresa (73/73 con cifras); conserva respaldo local explícito donde existe y no sustituye identidades. El marco vigente es v1.2 y la validación jurídica externa no bloquea la alfa. Las instrucciones históricas de carga, publicación o cambio de reglas que siguen abajo no se reactivan por esta nota. El vídeo queda para el final.
+
 **Autor:** Claude Fable 5.1 · **Fecha:** 2 de septiembre de 2026 (tarde) · **Para:** Óscar y Codex.
 **Sustituye, en lo que toca a cuentas y acceso, a** `docs/INFORME_PARA_CODEX_BASE_DATOS_ALFA_20260902.md` (v2) y al plan v2. Todo lo demás de esos documentos (universo, EODHD, esquema, pipeline, contratos del portal, baterías) sigue vigente y aquí se referencia, no se repite.
+
+**Nota de seguimiento, actualizada el 03-09-2026:** este documento conserva el plan y la fotografía iniciales; los apartados sobre base vacía o tareas pendientes no son una auditoría actual. Las órdenes de carga, publicación y vaciado no se ejecutan por esta nota. Las pruebas seguras de fase 0 siguen documentadas en [FASE_0_PROTECCION_ALFA_20260902.md](FASE_0_PROTECCION_ALFA_20260902.md). Por nueva orden del fundador y [marco v1.1 §0](MARCO_REGULATORIO_OBLIGATORIO.md), la validación jurídica externa queda **fuera del alcance de la alfa, sin efecto bloqueante**. La clasificación ámbar y los controles técnicos e internos se mantienen; no se declara obtenida una validación externa.
+
+**Seguimiento local posterior:** la [fase 1 de fiabilidad](FASE_1_FIABILIDAD_DATOS_ALFA_20260902.md) y la [fase 2 de disponibilidad de modelos](FASE_2_DISPONIBILIDAD_MODELOS_20260902.md) registran las correcciones y sus pruebas. En fase 2 se mantienen las cuatro composiciones y el universo; quedan ocho instrumentos distintos ausentes en la fotografía local revisada. Su incorporación requiere decisión del fundador. No se ha cambiado Firebase ni publicado por estas fases.
+
+**Base en preparación por el fundador:** se aplazan las comprobaciones dependientes de sus datos hasta su aviso. Se ha completado, de forma independiente y sin acceso a Firebase, la [protección del guardado local de carteras](PASO_LOCAL_GUARDADO_CARTERAS_20260902.md): errores visibles, conservación de datos ilegibles y control de cambios entre pestañas. Resultado local, no desplegado.
 
 ---
 
@@ -102,7 +184,9 @@ Principio: los módulos de análisis no cambian, salvo la excepción de §8.3 bi
 
 ### 5.4 Baterías
 
-`docs/nuvia-datos.test.mjs` (conversor, catálogo, `alineaYRebasa`, `fichaParaModulos`, `NO_DISPONIBLE_ALFA`, borrado de la clave antigua, y con `fetchFn` espía: **ninguna petición a `cloudfunctions.net`, `identitytoolkit` ni `securetoken`, ninguna cabecera `Authorization`**); `docs/nuvia-concentracion.test.mjs` (null = sin datos); `docs/nuvia-mercado-alfa.test.mjs` (paso 3); `docs/nuvia-reglas.test.mjs` queda **reducido a tres casos** (lectura pública de `assets` y catálogo; escritura denegada; cualquier otra colección denegada), con el emulador si está y a mano si no.
+`docs/nuvia-datos.test.mjs` (conversor, catálogo, `alineaYRebasa`, `fichaParaModulos`, `NO_DISPONIBLE_ALFA`, borrado de la clave antigua, y con `fetchFn` espía: **ninguna petición a `cloudfunctions.net`, `identitytoolkit` ni `securetoken`, ninguna cabecera `Authorization`**); `docs/nuvia-concentracion.test.mjs` (null = sin datos); `docs/nuvia-mercado-alfa.test.mjs` (paso 3).
+
+**Reglas, criterio actualizado en fase 0:** `npm run test:reglas` verifica sin red el contrato local y las protecciones de la prueba, y forma parte de `validate`. No afirma que se hayan ejecutado los permisos. `npm run test:reglas:emulador` prueba lecturas públicas, lecturas privadas denegadas, escrituras y borrados denegados e integridad de documentos sintéticos; solo acepta `FIRESTORE_EMULATOR_HOST=127.0.0.1:PUERTO` y el proyecto ficticio fijo `demo-nuvia-reglas`. Si falta el emulador, la prueba efectiva queda pendiente y el modo explícito falla: nunca se sustituye por intentos de escritura o borrado en producción. El antiguo modo `NUVIA_REGLAS_EN_VIVO=1` está retirado y falla antes de la red.
 
 ### 5.5 Prueba manual (Óscar, `npm run serve`)
 
@@ -136,7 +220,7 @@ Sin ninguna sesión: buscar «Vanguard», añadir un fondo, un ETF y una acción
 
 ## 8. Pendiente · Claude, verificación independiente (paso 7)
 
-Árbol confirmado; batería y auditoría de render reejecutadas; recuentos en Firestore frente a `sync_runs`; reglas probadas sin sesión (lectura de `assets` y catálogo OK, escritura denegada, cualquier otra ruta denegada); `grep` de `dist/` sin `bbdd-activos-financieros`, `nuvia-market-data`, `cloudfunctions.net`, `identitytoolkit`, `securetoken`, claves ni `universo-alfa.*`; captura de la pestaña Red durante un análisis completo; comprobación de que el fondo sin desglose se declara como tal; informe en `docs/` y en el proyecto.
+Árbol confirmado; batería y auditoría de render reejecutadas; recuentos en Firestore frente a `sync_runs` cuando se autorice esa revisión de solo lectura; reglas locales probadas sin sesión en emulador (lectura de `assets` y catálogo OK, escritura denegada, cualquier otra ruta denegada), sin intentos de escritura ni borrado contra datos reales; `grep` de `dist/` sin `bbdd-activos-financieros`, `nuvia-market-data`, `cloudfunctions.net`, `identitytoolkit`, `securetoken`, claves ni `universo-alfa.*`; captura de la pestaña Red durante un análisis completo; comprobación de que el fondo sin desglose se declara como tal; informe en `docs/` y en el proyecto. Distinguir siempre resultados locales de evidencias sobre el despliegue.
 
 ---
 

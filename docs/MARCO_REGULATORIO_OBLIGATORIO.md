@@ -1,7 +1,9 @@
 # NUVIA — Marco regulatorio obligatorio y compatibilidad profesional
 
-**Versión:** 1.0  
-**Fecha:** 23 de agosto de 2026  
+**Versión:** 1.2
+
+**Fecha:** 3 de septiembre de 2026 (original: 23 de agosto de 2026)
+
 **Estado:** norma interna obligatoria y transversal  
 **Ámbito:** todo NUVIA Portal Lab, incluida la copia local de `company-analysis/`
 
@@ -40,18 +42,89 @@ Se aplica, sin excepción, a:
 Si cualquier documento, diseño o implementación contradice este marco,
 **prevalece este marco**. La contradicción no se resuelve mediante un descargo de
 responsabilidad: la función debe corregirse, desactivarse o quedar bloqueada.
+Durante la alfa, cualquier decisión de este tipo requiere consulta previa al
+fundador conforme a la orden de autoridad y consulta del §0; no la toma el ejecutor.
+
+### Alcance alfa · decisión expresa del fundador de 03-09-2026
+
+Orden vigente: **«la validación jurídica queda fuera en la alfa»**.
+
+La validación jurídica externa queda **fuera del alcance de la fase alfa**.
+Su ausencia no constituye una puerta pendiente ni un bloqueo de desarrollo,
+pruebas, integración o publicación de la alfa. No debe volver a exigirse ese
+dictamen con la etiqueta equivalente «validación jurídica o de compliance».
+Se registra como **fuera de alcance en alfa**, no como obtenida o aprobada.
+
+Esta decisión sustituye, exclusivamente en ese punto, las exigencias de dictamen
+externo de este marco y las conclusiones anteriores de fichas, actas, informes
+y planes de la alfa. La clasificación ámbar y las revisiones internas de producto
+y de código permanecen: no se reclasifica automáticamente ninguna función a verde.
+
+Se conservan los controles de calidad de datos, pruebas funcionales, seguridad,
+privacidad, fuentes y derechos de uso, separación de la actividad profesional y
+prohibiciones de recomendaciones, señales, idoneidad, ejecución y derivación.
+Los datos ausentes o no acreditados no se completan ni se dan por válidos.
+
+Es una decisión sobre el alcance del trabajo, no una declaración de exención
+legal ni una sustitución de obligaciones o autorizaciones contractuales específicas.
+No autoriza por sí misma un despliegue, modificar Firebase/backend, comercializar
+ni ampliar tratamientos de datos personales. Esas actuaciones conservan sus
+autorizaciones y controles propios. Fuera de la alfa se aplica el régimen general
+de este marco; la excepción no se extiende automáticamente a fases posteriores.
+
+### Autoridad, consulta previa y datos personales en la alfa · nueva orden de 03-09-2026
+
+Por orden directa del fundador, de obligado cumplimiento durante la alfa:
+
+1. **No se bloquea nada en la alfa sin consulta previa al fundador.** Ningún
+   ejecutor, colaborador o informe puede decidir por su cuenta desactivar,
+   ocultar, retirar, restringir o añadir una puerta de bloqueo a una función,
+   dato, módulo o paso del desarrollo. Se presenta la incidencia, su evidencia,
+   alcance y alternativas; el fundador decide y autoriza la actuación.
+2. **No se guardan datos personales de ninguna persona en la base de datos sin
+   autorización previa y expresa del fundador.** Incluye altas, importaciones,
+   migraciones y escrituras automáticas que incorporen esos datos. Una orden
+   general de continuar, una prueba o un informe no son esa autorización.
+3. **Se continúa el desarrollo completo bajo las órdenes expresas del fundador.**
+   Solo él decide y autoriza los cambios de alcance y las actuaciones sometidas
+   a autorización. Los ejecutores aplican sus decisiones, no las sustituyen por
+   su propio criterio ni por el de otro colaborador.
+4. **Toda duda regulatoria o conflicto con decisiones anteriores se consulta al
+   fundador antes de actuar sobre el punto afectado.** No se resuelve imponiendo
+   un bloqueo unilateral, reinterpretando su orden ni ampliando permisos por
+   cuenta propia. Mientras se consulta, se conserva el estado existente y se
+   continúa el trabajo autorizado que no depende de esa decisión.
+5. La consulta y la respuesta se documentan con fecha, alcance y decisión. No se
+   firma ni se ratifica en nombre del fundador. Esta orden ya es su autorización
+   para actualizar el contexto; no requiere una ratificación adicional para registrarla.
+
+Este procedimiento prevalece en la alfa sobre las instrucciones internas anteriores
+de bloqueo automático o preventivo, incluidas fichas, planes, informes y los §§12–17
+de este marco. La validación jurídica externa sigue fuera del alcance de la alfa.
+
+Las pruebas, revisiones y avisos siguen informando de los errores y limitaciones
+reales: no se falsean resultados, no se inventan datos ni se presentan controles
+pendientes como superados. Si implican proponer una restricción, se consulta antes
+de introducirla. Esta actualización documental no retira bloqueos existentes ni
+activa funciones, no publica y no modifica Firebase/backend ni datos personales.
+Esas actuaciones se ejecutan únicamente con la autorización correspondiente del fundador.
 
 ### Regla de prudencia
 
-Cuando exista una duda razonable sobre la calificación regulatoria de una
+En la alfa, cualquier duda se comunica al fundador y se aplica el procedimiento
+de consulta previa anterior, sin bloqueo unilateral.
+
+Fuera de la alfa, cuando exista una duda razonable sobre la calificación regulatoria de una
 función, no se presumirá que está permitida. Se clasificará como pendiente y no
 se publicará hasta disponer de una conclusión documentada y, cuando proceda, de
-validación jurídica o de compliance.
+validación jurídica o de compliance, con la excepción de alcance de la alfa
+establecida arriba. En la alfa se conserva la revisión interna de la función;
+la ausencia del dictamen externo no es por sí sola motivo de bloqueo.
 
 Este documento no sustituye el asesoramiento jurídico externo ni puede prometer
 por sí solo una compatibilidad absoluta ante cualquier cambio normativo. Su
-finalidad es imponer **cumplimiento por diseño**, revisión continua y bloqueo
-preventivo de las zonas dudosas.
+finalidad es imponer **cumplimiento por diseño** y revisión continua. En la alfa,
+las zonas dudosas se elevan al fundador; fuera de ella se mantiene el bloqueo preventivo.
 
 ---
 
@@ -409,6 +482,10 @@ diseño y contratación.
 Los datos patrimoniales, familiares, fiscales y de comportamiento requieren una
 protección reforzada.
 
+**Alfa · autorización del fundador:** no se guarda ningún dato personal de nadie
+en la base de datos sin su autorización previa y expresa, conforme al §0.
+Los requisitos siguientes no sustituyen esa autorización ni permiten inferirla.
+
 ### Requisitos
 
 - inventario de datos y flujos;
@@ -484,6 +561,11 @@ verde. Se revisa el efecto global.
 
 Ningún módulo se considerará terminado si no supera estas puertas:
 
+**Procedimiento alfa:** los resultados de estas comprobaciones se registran y
+comunican con exactitud. Cualquier propuesta de bloqueo o conflicto con una orden
+previa se consulta al fundador antes de actuar, conforme al §0; estas puertas no
+autorizan al ejecutor a bloquear unilateralmente el desarrollo.
+
 ### Antes del diseño
 
 - ficha regulatoria completada;
@@ -509,7 +591,8 @@ Ningún módulo se considerará terminado si no supera estas puertas:
 ### Antes de publicar
 
 - validación funcional y regulatoria registrada;
-- validación jurídica o de compliance cuando la clasificación sea ámbar;
+- validación jurídica o de compliance cuando la clasificación sea ámbar, excepto
+  durante la alfa conforme a la decisión de alcance del §0;
 - aprobación escrita del banco cuando resulte exigible;
 - revisión de avisos legales, privacidad, cookies y consumo;
 - mecanismo de retirada inmediata.
@@ -547,8 +630,10 @@ completo de la experiencia.
 - Un cambio de texto, orden, color, monetización o enlace puede ser material
   aunque el algoritmo no cambie.
 - Las nuevas normas, guías y criterios de autoridades se revisarán periódicamente.
-- Si se detecta una salida potencialmente incompatible, se desactivará o aislará
-  primero y se investigará después.
+- Si se detecta una salida potencialmente incompatible durante la alfa, se
+  comunica al fundador con la evidencia y se consulta antes de desactivar,
+  aislar o bloquear. Fuera de la alfa, se desactivará o aislará primero y se
+  investigará después.
 - El incidente, alcance, causa, corrección y medidas preventivas quedarán registrados.
 - Este documento se actualizará con versión, fecha y motivo del cambio.
 
@@ -589,5 +674,21 @@ forma clara y documentada que:
    obligaciones frente a la entidad representada;
 9. dispone de controles que evitan que una modificación futura rompa el perímetro.
 
-Si cualquiera de estos puntos no puede acreditarse, la función no se publicará.
+Si cualquiera de estos puntos no puede acreditarse, fuera de la alfa la función
+no se publicará. En la alfa, se registra la carencia y se consulta al fundador
+antes de decidir una restricción o una publicación; no se presume su autorización.
 
+La acreditación interna de estos controles no se confunde con un dictamen externo:
+durante la alfa, su ausencia no añade un bloqueo jurídico, conforme al §0.
+
+## Historial de versiones
+
+- **1.0 · 23-08-2026:** marco transversal inicial.
+- **1.1 · 03-09-2026:** por nueva orden expresa del fundador, validación jurídica
+  externa fuera del alcance de la alfa y sin efecto bloqueante en esa fase.
+  Se mantienen límites de producto, controles técnicos y autorizaciones operativas.
+- **1.2 · 03-09-2026:** por nueva orden directa del fundador, consulta previa antes
+  de cualquier bloqueo en la alfa, autorización expresa suya antes de guardar
+  datos personales en la base y consulta de toda duda regulatoria o conflicto
+  con decisiones anteriores. Autoridad de decisión reservada al fundador;
+  actualización de contexto sin cambios funcionales ni de base de datos.

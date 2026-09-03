@@ -1,0 +1,56 @@
+{
+  "version": "nuvia-local-issuer-evidence.v1",
+  "reviewedOn": "2026-09-03",
+  "purpose": "Contraste local por campo; no corrige ni completa la base o la interfaz.",
+  "sources": {
+    "logista-fy25": {
+      "url": "https://www.logista.com/content/dam/documents/logista-corporate/economic-financial-information/financial-reports/en/3.%20Consolidated%20Report%20-%20Logista%20%20FY25.pdf",
+      "localFile": "output/metadatos-fuentes/logista-fy25.pdf",
+      "sha256": "058a7060f8946de98b6d3c6071639e35ba9656df039c3abbf30173cfc793ac2c",
+      "currency": "EUR",
+      "sourceUnitMultiplier": 1000,
+      "note": "Traducción inglesa de cuentas consolidadas; prevalece el original español. Importes monetarios de las tablas, no BPA."
+    },
+    "pernod-fy26": {
+      "url": "https://www.pernod-ricard.com/system/files/2026-08/Pernod%20Ricard%20FY26%20Financial%20Communication.pdf",
+      "localFile": "output/metadatos-fuentes/pernod-fy26.pdf",
+      "sha256": "4ab71521253e0279c8ad3f05e41a85784bad406297ffce162cfe6010c474239e",
+      "currency": "EUR",
+      "sourceUnitMultiplier": 1000000,
+      "publishedOn": "2026-08-27",
+      "note": "Presentación de resultados; no se identifica como informe de auditoría final. Importes redondeados en millones."
+    }
+  },
+  "cases": [
+    {
+      "symbol": "LOG.MC", "isin": "ES0105027009", "statement": "Income_Statement", "period": "2025-09-30", "source": "logista-fy25",
+      "fields": [
+        { "field": "totalRevenue", "page": 12, "sourceValue": 13536241, "relation": "direct", "note": "Ingresos consolidados." },
+        { "field": "grossProfit", "page": 12, "sourceValue": 1808711, "relation": "definition-unresolved", "note": "Beneficio bruto del emisor; definición del proveedor pendiente." },
+        { "field": "operatingIncome", "page": 12, "sourceValue": 318401, "relation": "direct", "note": "Resultado de explotación." },
+        { "field": "netIncome", "page": 12, "sourceValue": 281072, "relation": "direct", "note": "Resultado atribuible a la dominante, no resultado consolidado total." },
+        { "field": "ebitda", "page": 12, "sourceValue": null, "relation": "not-reconciled", "note": "Sin correspondencia acreditada en la tabla seleccionada; no se deriva por aproximación." }
+      ]
+    },
+    {
+      "symbol": "LOG.MC", "isin": "ES0105027009", "statement": "Cash_Flow", "period": "2025-09-30", "source": "logista-fy25",
+      "fields": [
+        { "field": "totalCashFromOperatingActivities", "page": 15, "sourceValue": 601178, "relation": "direct", "note": "Flujo de explotación." },
+        { "field": "capitalExpenditures", "page": 15, "sourceValue": -44838, "relation": "outflow-magnitude", "note": "Solo inversión material. Se invierte el signo exclusivamente para este contraste; no incluye intangibles." },
+        { "field": "freeCashFlow", "page": 15, "sourceValue": 556340, "relation": "derived", "note": "Cálculo local 601178 - 44838, no una línea de FCF publicada por el emisor. Excluye intangibles." },
+        { "field": "dividendsPaid", "page": 15, "sourceValue": -275943, "relation": "outflow-magnitude", "note": "Desembolso de dividendos; el proveedor almacena la magnitud positiva." }
+      ]
+    },
+    {
+      "symbol": "RI.PA", "isin": "FR0000120693", "statement": "Balance_Sheet", "period": "2026-06-30", "source": "pernod-fy26",
+      "fields": [
+        { "field": "totalAssets", "page": 60, "sourceValue": 37297, "relation": "direct", "note": "Activo total." },
+        { "field": "totalLiab", "page": 61, "sourceValue": 20757, "relation": "derived", "note": "Suma local de pasivos no corrientes 15744 y corrientes 5013; pasivos mantenidos para venta 0." },
+        { "field": "totalStockholderEquity", "page": 61, "sourceValue": 15500, "relation": "direct", "note": "Patrimonio atribuible al grupo, excluye participaciones no dominantes." },
+        { "field": "cash", "page": 60, "sourceValue": 1999, "relation": "definition-unresolved", "note": "La línea del emisor incluye derivados corrientes; no acredita equivalencia con cash." },
+        { "field": "netDebt", "page": 19, "sourceValue": 10662, "relation": "definition-unresolved", "note": "Deuda neta presentada por el emisor; alcance frente al proveedor pendiente." },
+        { "field": "shortLongTermDebtTotal", "page": 61, "sourceValue": null, "relation": "not-reconciled", "note": "No se equipara a una suma de partidas que incluyen derivados sin acreditar el perímetro." }
+      ]
+    }
+  ]
+}

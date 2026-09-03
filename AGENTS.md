@@ -1,5 +1,27 @@
 # Criterios del proyecto NUVIA Portal Lab
 
+## Orden vigente del fundador · alfa · 03-09-2026
+
+- **No se bloquea nada en la alfa sin consulta previa al fundador.** No decidir
+  unilateralmente desactivar, ocultar, retirar, restringir ni añadir bloqueos a
+  funciones, datos, módulos o pasos del desarrollo. Presentar evidencia y opciones;
+  el fundador decide y autoriza.
+- **No guardar datos personales de nadie en la base de datos sin autorización
+  previa y expresa del fundador**, tampoco mediante importaciones, pruebas,
+  migraciones o escrituras automáticas. Una orden general de continuar no la concede.
+- Continuar el desarrollo completo bajo sus órdenes expresas. **Solo el fundador
+  decide y autoriza** cambios de alcance y actuaciones que requieran autorización;
+  los informes y las opiniones de colaboradores no sustituyen su decisión.
+- Toda duda regulatoria o conflicto con lo decidido anteriormente **se consulta
+  al fundador antes de actuar**. Conservar el estado existente mientras responde
+  y continuar las tareas autorizadas que no dependan de esa decisión.
+- Registrar la consulta y su respuesta sin firmar ni ratificar por él. No falsear
+  pruebas ni datos. Esta orden no implica retirar bloqueos existentes, publicar,
+  activar funciones ni modificar Firebase/backend automáticamente.
+- Esta orden de procedimiento prevalece, durante la alfa, sobre instrucciones
+  internas anteriores de bloqueo unilateral. Su referencia canónica es
+  `docs/MARCO_REGULATORIO_OBLIGATORIO.md`, v1.2, §0; debe leerse antes de actuar.
+
 ## Definición canónica de NUVIA
 
 - `docs/DEFINICION_NUVIA.md` es el documento vivo que define qué es NUVIA,
@@ -20,12 +42,17 @@
   `company-analysis/`.
 - Es una norma superior del proyecto. Si otro documento, petición funcional o
   implementación entra en conflicto con ella, prevalece el marco regulatorio.
+- Orden del fundador de 03-09-2026: la validación jurídica externa queda fuera
+  del alcance de la alfa y no se utiliza como bloqueo. Aplicar la excepción del
+  §0 del marco; mantener controles internos, límites del producto y calidad de datos.
 - NUVIA puede calcular y explicar métodos financieros académicos, incluidos
   máximo Sharpe, mínima volatilidad y frontera eficiente, pero no puede convertir
   el resultado en una recomendación, juicio de idoneidad o llamada a operar.
-- Cada nueva función o cambio material debe superar la prueba regulatoria y las
-  puertas de control definidas en el marco. Una función dudosa se bloquea hasta
-  que exista validación documentada; un descargo no corrige una función incompatible.
+- Cada nueva función o cambio material debe someterse a la prueba regulatoria y
+  las puertas de control definidas en el marco. En la alfa, cualquier duda o
+  propuesta de bloqueo se consulta previamente al fundador; no se bloquea por
+  iniciativa del ejecutor. Fuera de la alfa se aplica la regla general del marco.
+  Un descargo no corrige una función incompatible.
 - Debe preservarse la separación estricta entre NUVIA, la actividad profesional
   del agente financiero vinculado y la entidad a la que representa.
 

@@ -1,5 +1,13 @@
 # NUVIA · Decisiones pendientes para cerrar las páginas de confianza
 
+> **Documento histórico, contexto posterior de alfa:** la descripción técnica
+> actual está en [Información de funcionamiento](INFORMACION_TECNICA_ALFA_20260903.md)
+> y el saldo de trabajo en [Cierre consolidado](CIERRE_PENDIENTES_CONSOLIDADO_20260903.md).
+> Las referencias siguientes a cuentas, base provisional y validación externa
+> corresponden al estado de 02-09-2026. No se aplican como condiciones nuevas a
+> la alfa: prevalecen las órdenes posteriores del fundador y el marco vigente.
+> Se conservan las propuestas originales como historial, sin ratificarlas.
+
 **Fecha:** 2 de septiembre de 2026
 
 **Estado:** documento interno de trabajo
