@@ -324,10 +324,10 @@ class Component extends DCLogic {
         if (boton) boton.setAttribute('aria-current', tab === elegida ? 'page' : 'false');
       });
       document.title = elegida === 'models'
-        ? 'Carteras modelo | NUVIA Family Wealth'
+        ? 'Carteras modelo | NUVIA'
         : elegida === 'companies'
-          ? 'Análisis y valoración de empresas | NUVIA Family Wealth'
-          : 'Mi cartera | NUVIA Family Wealth';
+          ? 'Análisis y valoración de empresas | NUVIA'
+          : 'Mi cartera | NUVIA';
       if (actualizaUrl) {
         const url = new URL(window.location.href);
         url.searchParams.set('vista', elegida);

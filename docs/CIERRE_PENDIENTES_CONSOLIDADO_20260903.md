@@ -3,12 +3,13 @@
 Fecha: 03-09-2026. Orden: «termina todo lo pendiente». Documento operativo;
 no sustituye las decisiones del fundador ni autoriza escrituras o publicación.
 
-> **Última revisión local:** aviso de procedencia de Cartera actualizado;
-> reconstrucción limpia ampliada superada y 164 archivos idénticos a `dist`.
-> [Pruebas y alcance de la entrega local](REVISION_ENTREGA_LOCAL_20260903.md).
-> No se ha confirmado ni publicado; P2 queda aparcado por el fundador, P3 cerrado
-> para el alcance alfa, P4 queda «Pendiente de indicar» por decisión del fundador
-> y la entrega de P5 sigue pendiente.
+> **Última revisión:** P5 confirmada, integrada en `main` y publicada en GitHub
+> Pages. La reconstrucción limpia ampliada superó todas las puertas y produjo 164
+> archivos idénticos a `dist`; la comprobación remota confirmó portada, noticias,
+> cartera y análisis fundamental en escritorio y tableta.
+> [Acta de publicación](CIERRE_P5_PUBLICACION_20260903.md).
+> P2 queda aparcado por el fundador, P3 cerrado para el alcance alfa y P4 queda
+> «Pendiente de indicar» por decisión del fundador.
 
 > **Actualización posterior a autorización concreta:** IWDA y VUSA cargados y
 > verificados a las 16:30 UTC; catálogo de 700 instrumentos y cuatro composiciones
@@ -16,7 +17,7 @@ no sustituye las decisiones del fundador ni autoriza escrituras o publicación.
 > P6 resuelto después: [métodos contrastados y diferenciados](COHERENCIA_METODOS_CARTERA_20260903.md),
 > sin alterar precios, pesos ni fórmulas. Las menciones a
 > «sin escrituras» de la ejecución inicial de cierre se conservan como historial
-> y no describen esta carga posterior. Continúa sin publicarse la web.
+> y no describen esta carga posterior. La web está publicada por el canal oficial.
 
 ## Alcance de esta ejecución
 
@@ -339,20 +340,22 @@ puerta de la alfa y no se bloquea ninguna función por este pendiente.
 
 ### P5 · Confirmación, integración y publicación
 
-Trabajo local aún no confirmado. Hay cambios acumulados de ejecuciones anteriores;
-no deben atribuirse todos a esta tanda. La rama observada es
-`codex/entrega-2b-base-alfa`. Se observó `.git/index.lock` de tamaño cero y no se
-eliminó: antes de intervenir hay que descartar un escritor Git activo y coordinar
-con el otro ejecutor. No confirmar a ciegas todo el árbol.
+**Cerrado.** La tanda se revisó por archivo, se descartó un escritor Git activo y
+se retiró el cierre residual de tamaño cero. Los cambios se confirmaron por unidades
+coherentes, se integró `origin/main` con revisión semántica del universo y se
+publicó sin fuerza en el canal oficial.
 
-Requiere orden de publicación y revisión del conjunto. Plan exacto en el apartado 6.
+La integración conserva los 725 instrumentos recibidos y las dos incorporaciones
+autorizadas posteriores: CSV y XLSX contienen 727 instrumentos; el catálogo remoto
+publicado ofrece 700 después de 27 exclusiones automáticas trazadas. La instalación
+limpia, la batería completa y la comparación final de los 164 archivos quedaron en
+verde. GitHub Actions publicó correctamente el commit de integración y la revisión
+en producción confirmó portada, noticia económica del día, cartera, copia local del
+módulo y fichas de TSK, Aena y Ferrovial, sin desbordes ni errores de consola.
 
-Preparación técnica actualizada: instalación limpia con la batería de análisis
-completa y comparación de los 164 archivos superadas; acta en
-[Revisión de entrega local](REVISION_ENTREGA_LOCAL_20260903.md). El aviso de
-procedencia ya no afirma que los fundamentales dependan de una instantánea local.
-Esta evidencia corresponde al paquete actual; tras cambios posteriores debe
-volver a comprobarse y no equivale a una autorización de publicación.
+Acta, commits, ejecución y límites en
+[Cierre P5](CIERRE_P5_PUBLICACION_20260903.md). No se utilizó Firebase Hosting ni
+se escribieron datos personales o datos de mercado en la base durante este cierre.
 
 ### P6 · Resuelto localmente: métodos del resumen y de la frontera
 
@@ -380,7 +383,7 @@ Además se conserva un fallo inicial de preparación de Bolsa mundial que no vol
 a reproducirse tras recargar. Las fichas y el recorrido posterior respondieron:
 no se atribuye una causa ni una reparación demostrada a ese incidente aislado.
 
-## 6. Secuencia de entrega, sin ejecutarla por inferencia
+## 6. Secuencia de entrega ejecutada
 
 1. Congelar la tanda acordada y coordinar los escritores. Revisar estado/diferencias
    por archivo, incluidos los nuevos no seguidos; conservar ajenos e históricos.
@@ -403,8 +406,10 @@ no se atribuye una causa ni una reparación demostrada a ese incidente aislado.
 8. Si hay regresión, conservar evidencia y revertir únicamente el cambio de entrega
    aprobado; no borrar el árbol ni restaurar carpetas completas del usuario.
 
-No se ejecuta ninguno de los pasos de escritura o publicación por figurar en este
-plan. La verificación remota de producción queda pendiente de esa entrega.
+La secuencia quedó ejecutada por orden expresa de continuación del fundador. El
+resultado y las verificaciones remotas se documentan en el acta de P5. Esta
+ejecución no concede autorización general para futuras publicaciones, Firebase,
+backend o cargas de datos.
 
 ## 7. Vídeo y producto futuro
 

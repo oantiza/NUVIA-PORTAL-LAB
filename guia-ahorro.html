@@ -692,7 +692,7 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
-    document.title = 'Fiscalidad del ahorro | NUVIA Family Wealth';
+    document.title = 'Fiscalidad del ahorro | NUVIA';
     const guardado = this.territorioGuardado();
     if (guardado && guardado !== this.state.territorio) this.setState({ territorio: guardado });
   }

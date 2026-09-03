@@ -705,7 +705,7 @@ class Component extends DCLogic {
     this._eng = { calculatePlan, validate, lifeExpectancyYears };
     return this._eng;
   }
-  componentDidMount() { document.title = 'Simulador de jubilación | NUVIA Family Wealth'; }
+  componentDidMount() { document.title = 'Simulador de jubilación | NUVIA'; }
   s() { return this.state.s || this.defaults(); }
   upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }), errores: [], plan: null }); }
   scrollA(id) { setTimeout(() => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); }, 60); }
