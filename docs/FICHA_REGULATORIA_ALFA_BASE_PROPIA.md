@@ -16,7 +16,7 @@
 
 ## Cambio
 
-El laboratorio de cartera deja de leer la base de datos profesional del fundador (`bbdd-activos-financieros`, a través de funciones en la nube) y pasa a leer una base **propia, nueva y aislada** en el proyecto Firebase `nuvia-family-wealth`, plan gratuito, región `europe-west1`. Esa base contiene, para un universo cerrado de 161 instrumentos en euros elegido por el fundador: identificación (ISIN, nombre, tipo, clase económica), precios diarios ajustados desde 2021, métricas históricas calculadas por NUVIA con fórmulas publicadas, y, solo para ETF y acciones, la ficha descriptiva que publica el proveedor (domicilio, gastos corrientes, distribución por clase de activo, regiones, sectores y las diez mayores posiciones). Los fondos entran con nombre, clase y precios; el proveedor no publica su desglose.
+El laboratorio de cartera deja de leer la base de datos profesional del fundador (`bbdd-activos-financieros`, a través de funciones en la nube) y pasa a leer una base **propia, nueva y aislada** en el proyecto Firebase `nuvia-family-wealth`, plan gratuito, región `europe-west1`. Esa base contiene, para un universo cerrado de instrumentos en euros elegido por el fundador (725 en la lista, 698 publicados; véase la decisión 4): identificación (ISIN, nombre, tipo, clase económica), precios diarios ajustados desde 2021, métricas históricas calculadas por NUVIA con fórmulas publicadas, y, solo para ETF y acciones, la ficha descriptiva que publica el proveedor (domicilio, gastos corrientes, distribución por clase de activo, regiones, sectores y las diez mayores posiciones). Los fondos entran con nombre, clase y precios; el proveedor no publica su desglose.
 
 Los datos se descargan de EODHD con la clave personal del fundador mediante un script que corre en su ordenador y escribe en Firestore; la clave nunca entra en el repositorio ni en la web. **La base se lee en abierto**, sin sesión ni cuenta: cualquiera que abra el laboratorio puede usarla. No hay registro, consentimientos, datos personales ni carteras en la nube: las carteras que el usuario compone se guardan solo en su navegador. «Análisis y valoración de empresas» queda «En preparación» y fuera de la publicación.
 
@@ -32,7 +32,7 @@ Los datos se descargan de EODHD con la clave personal del fundador mediante un s
 
 4. **Resultado exacto que muestra.** El catálogo («instrumentos disponibles en la alfa», ordenado por clase y nombre, sin orden de mérito); la ficha de cada instrumento (nombre, tipo, clase, divisa, y para ETF y acciones sector, región, gastos corrientes y desglose del proveedor); las métricas históricas con su fecha y su método; las series rebasadas; y los resultados del laboratorio sobre la cartera que el usuario ha compuesto. Siempre con «Datos a fecha …» del último refresco.
 
-5. **Instrumentos o emisores identificables.** Sí: 161 instrumentos con ISIN y nombre comercial, y las diez mayores posiciones de cada ETF con nombre y país. Es el supuesto ámbar por definición. Mitigación: ningún instrumento se destaca, puntúa ni ordena por atractivo; la ficha muestra hechos del proveedor y cálculos históricos; el lenguaje del laboratorio ya pasa la regresión de expresiones prescriptivas (`check-lenguaje.mjs`).
+5. **Instrumentos o emisores identificables.** Sí: 698 instrumentos con ISIN y nombre comercial, y las diez mayores posiciones de cada ETF con nombre y país. Es el supuesto ámbar por definición. Mitigación: ningún instrumento se destaca, puntúa ni ordena por atractivo; la ficha muestra hechos del proveedor y cálculos históricos; el lenguaje del laboratorio ya pasa la regresión de expresiones prescriptivas (`check-lenguaje.mjs`).
 
 6. **Circunstancias personales del usuario.** No se piden ni se tratan. No hay perfil, edad, patrimonio, horizonte ni tolerancia al riesgo. La cartera hipotética que compone el usuario se guarda en su navegador y no llega a NUVIA.
 
@@ -98,6 +98,20 @@ Registro histórico conservado íntegramente. La decisión 3 y su mecanismo de r
 3. **Validación jurídica: opción (b).** La alfa se publica con la validación funcional y regulatoria interna registrada (batería en verde, prueba manual del fundador, verificación independiente de Claude) y **la validación jurídica o de compliance queda expresamente pendiente**, por decisión consciente del fundador y con estos motivos escritos: fase alfa, sin datos personales ni cuentas, sin comercialización, sin recomendación ni señal, datos de mercado bajo la suscripción del fundador, y mecanismo de retirada inmediata (vaciar el proyecto `nuvia-family-wealth` y devolver el laboratorio a «En preparación», menos de una hora). Antes de cualquier apertura comercial, de recogida de datos personales o de ampliación del alcance, la validación jurídica pasa a ser obligatoria.
 
 **Una aprobación interna de producto no equivale a validación jurídica** (marco §13): ambas quedan diferenciadas aquí.
+
+## Ampliación del universo · decisiones del fundador
+
+4. **Universo completo (02-09-2026, noche).** Por decisión del fundador, el
+   universo pasa de los 161 instrumentos marcados a **toda la lista de 725**
+   (643 fondos, 8 ETF, 74 acciones, todos en euros). Se publican **698**: 9 no
+   existen en EODHD, 4 no tienen precios válidos y 14 no tienen cotización
+   reciente, todos excluidos por la regla automática y anotados en `sync_runs`.
+   El criterio sigue siendo de cobertura y no de mérito. Nada de lo anterior
+   cambia la clasificación ni las decisiones 1–3.
+5. **Dos ETF de los modelos (03-09-2026).** La incorporación autorizada de IWDA
+   y VUSA eleva el catálogo a **727 instrumentos**, de los que **700** quedan
+   marcados para publicación. La carga y su comprobación constan en
+   `CARGA_ETF_MODELOS_AUTORIZADA_20260903.md`.
 
 ## Resultado registrado el 02-09-2026 (decisión del fundador; vigente en cuanto al fondo)
 

@@ -109,10 +109,12 @@ muestran las dos carteras afectadas corresponden a 762/746 cierres, no a datos p
   visual usa red simulada; el recorrido de carteras descrito arriba usa datos reales.
 - Paquete final idéntico por ruta, longitud y SHA-256 al ensayo limpio previo:
   **164 archivos y 14.333.649 bytes**. La carga cambia datos remotos, no código de interfaz.
-- CSV: añadidas solo dos filas, 727 filas y 163 inclusiones. Sigue siendo un
-  universo local parcial frente a los 700 instrumentos remotos: no usarlo para
-  reconstruir o reemplazar todo el catálogo. Los seis componentes previamente
-  cargados con `no` en CSV siguen sin modificar; su reconciliación es otra tarea.
+- En el momento de esta carga, el CSV quedó con 727 filas y 163 inclusiones. Ese
+  estado histórico fue sustituido al integrar la decisión posterior de universo
+  completo: el CSV y el Excel contienen ahora las 727 filas marcadas con `si`.
+  La base conserva 700 instrumentos publicados porque 27 fueron excluidos por
+  los controles automáticos documentados; la integración Git no reejecuta ni
+  modifica esa base.
 - No se ejecutaron commit, fusión, push, GitHub Pages ni Firebase Hosting.
 
 La carga autorizada queda cerrada. Permanece abierta la revisión numérica indicada,
