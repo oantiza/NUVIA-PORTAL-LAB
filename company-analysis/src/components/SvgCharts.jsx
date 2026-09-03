@@ -28,7 +28,7 @@ export function Sparkline({ candles, width = 560, height = 150, stroke = 'var(--
 }
 
 /** Barras anuales dobles (p. ej. ingresos vs beneficio neto), estilo NUVIA. */
-export function DualBars({ rows, aLabel, bLabel, currency, height = 210 }) {
+export function DualBars({ rows, aLabel, bLabel, currency, height = 210, compactLabels = false }) {
   // rows: [{ label, a, b }]
   if (!rows?.length) return null;
   const width = 620;
@@ -42,6 +42,7 @@ export function DualBars({ rows, aLabel, bLabel, currency, height = 210 }) {
 
   const groupW = innerW / rows.length;
   const barW = Math.min(26, groupW * 0.28);
+  const tickStep = Math.max(1, Math.ceil((rows.length - 1) / 5));
 
   return (
     <div>
@@ -54,22 +55,25 @@ export function DualBars({ rows, aLabel, bLabel, currency, height = 210 }) {
         {rows.map((r, i) => {
           const cx = padL + groupW * i + groupW / 2;
           const bars = [
-            { v: r.a || 0, color: 'var(--sma50)', off: -barW - 2 },
-            { v: r.b || 0, color: (r.b || 0) >= 0 ? 'var(--pos)' : 'var(--neg)', off: 2 }
+            { v: r.a, color: 'var(--sma50)', off: -barW - 2 },
+            { v: r.b, color: (r.b || 0) >= 0 ? 'var(--pos)' : 'var(--neg)', off: 2 }
           ];
           return (
             <g key={r.label}>
               {bars.map((b, j) => {
+                if (!Number.isFinite(b.v)) return null;
                 const h = Math.abs(b.v) * scale;
                 const yTop = b.v >= 0 ? zeroY - h : zeroY;
                 return <rect key={j} x={cx + b.off} y={yTop} width={barW} height={Math.max(h, 0.5)} fill={b.color} rx="1" />;
               })}
-              <text x={cx} y={height - 8} fontSize="10.5" fill="var(--ink3)" textAnchor="middle">{r.label}</text>
+              {(!compactLabels || i % tickStep === 0 || i === rows.length - 1 && i % tickStep >= tickStep / 2) &&
+                <text x={cx} y={height - 8} fontSize={compactLabels ? 18 : 10.5} fill="var(--ink3)" textAnchor="middle">{compactLabels ? String(r.label).slice(0, 4) : r.label}</text>}
             </g>
           );
         })}
       </svg>
       <div className="tiny" style={{ marginTop: 4 }}>
+        Barras ausentes: dato no disponible. {' '}
         Último ejercicio: {aLabel} {fmtBig(rows[rows.length - 1]?.a, currency)} · {bLabel} {fmtBig(rows[rows.length - 1]?.b, currency)}
       </div>
     </div>

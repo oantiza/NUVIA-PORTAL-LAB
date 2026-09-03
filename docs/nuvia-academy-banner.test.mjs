@@ -11,7 +11,7 @@ const tokens = await readFile(resolve(root, 'estilos/nuvia-tokens.css'), 'utf8')
 const section = (id) => home.match(new RegExp(`<section\\b[^>]*id="${id}"[\\s\\S]*?<\\/section>`))?.[0];
 const exactAccess = [
   ['mercados', 'mercados.html', 'Accede a Economía y Finanzas'],
-  ['patrimonio', 'temas.html?topic=planificacion-patrimonial', 'Accede a Patrimonio'],
+  ['patrimonio', 'temas.html', 'Accede a Patrimonio'],
   ['familia-salud', 'temas.html?topic=bienestar', 'Accede a Familia, Salud y Bienestar'],
   ['academia', 'academia.html', 'Entrar'],
 ];

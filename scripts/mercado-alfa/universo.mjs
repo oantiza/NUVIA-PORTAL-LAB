@@ -6,6 +6,7 @@
  */
 
 export const COLUMNAS = ['asset_id', 'eodhd_symbol', 'instrument_type', 'clase', 'grupo', 'nombre', 'divisa', 'incluir'];
+import { filaActual } from '../../js/nuvia-identidades.js';
 export const TIPOS = ['FUND', 'ETF', 'STOCK'];
 export const CLASES = ['EQUITY', 'FIXED_INCOME', 'MIXED', 'MONEY_MARKET', 'OTHER'];
 export const DIVISA_ALFA = 'EUR';
@@ -70,7 +71,9 @@ export function validaUniverso({ cabecera, filas }) {
 
   const vistos = new Map();
   const incluidas = [];
-  for (const f of filas) {
+  for (const original of filas) {
+    const f = filaActual(original);
+    if (f !== original) avisos.push(`Identidad autorizada: ${original.asset_id} → ${f.asset_id}; no se modifica el CSV ni sus inclusiones.`);
     const id = f.asset_id;
     if (!id) { errores.push(`Línea ${f._linea}: sin asset_id.`); continue; }
     if (vistos.has(id)) errores.push(`Línea ${f._linea}: asset_id repetido (${id}, ya en la línea ${vistos.get(id)}).`);

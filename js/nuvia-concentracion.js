@@ -25,7 +25,9 @@
  *
  * Alfa (02-09-2026, base propia): cuando el activo trae `exposure_detail`
  * o `pms_exposure` como `null` EXPLÍCITO, significa «sin datos» y NO se
- * estima nada: su peso va a `pesoSinDatos` y se declara. Con `undefined` o
+ * estima nada: su peso va a `pesoSinDatos` y se declara. Esto incluye el null
+ * de cada dimensión (sectors / equity_regions), independientemente de la otra.
+ * Con `undefined` o
  * `{}` se conserva el comportamiento anterior (estimación declarada).
  *
  * Todo son funciones puras: sin red, sin backend, sin estado.
@@ -124,14 +126,16 @@ function agregaConcentracion(posiciones, activos, eligeDistribucion, eligeEstima
     const activo = porId.get(posicion.asset_id);
     if (peso <= 0 || !activo) continue;
     pesoCartera += peso;
-    /* null explícito = «sin datos» (alfa): ni se estima ni cuenta como 0 % RV. */
-    if (activo.pms_exposure === null || activo.exposure_detail === null) {
+    // Exposición conocida de 0 % RV: no necesita desglose de renta variable.
+    if (activo.pms_exposure?.equity === 0) continue;
+    const distribucion = eligeDistribucion(activo);
+    /* null explícito, también por dimensión: ni se estima ni cuenta como 0 % RV. */
+    if (activo.pms_exposure === null || activo.exposure_detail === null || distribucion === null) {
       pesoSinDatos += peso;
       continue;
     }
     const pesoRV = peso * (activo.pms_exposure?.equity || 0);
     if (pesoRV <= 0) continue;
-    const distribucion = eligeDistribucion(activo);
     const suma = distribucion ? Object.values(distribucion).reduce((x, y) => x + (y || 0), 0) : 0;
     pesoTotal += pesoRV;
     if (distribucion && suma > 0) {

@@ -21,9 +21,12 @@ export const NOTA_MODELOS = 'Cada cartera modelo es una composición fija: '
   + 'la misma para cualquiera que la mire, con su criterio y su fecha '
   + 'declarados, y con los pesos a partes iguales. No es una propuesta ni '
   + 'dice nada de ningún lector: por eso no hay botón que la copie a tu '
-  + 'cartera ni enlace para contratarla. Al seleccionarla se abre el mismo '
+  + 'cartera ni enlace para contratarla. Se conservan las composiciones originales; '
+  + 'las referencias al catálogo en sus criterios corresponden a la fecha de fijación. '
+  + 'La disponibilidad actual en la alfa se comprueba por separado. '
+  + 'Al seleccionarla se abre el mismo '
   + 'análisis que en «Mi cartera», con el historial real de 3 años de la '
-  + 'base de datos NUVIA.';
+  + 'base de datos NUVIA. Si a alguna posición le falta historial, se dice cuál y queda fuera del cálculo.';
 
 /**
  * Las carteras modelo. Composición fijada por criterio propio del portal
@@ -135,82 +138,146 @@ function el(tag, attrs = {}, texto) {
   return nodo;
 }
 
+export function disponibilidadModelo(modelo, presentes) {
+  const posiciones = modelo.posiciones;
+  const faltan = posiciones.filter((p) => presentes?.[p.asset_id] === false);
+  const conocidas = posiciones.filter((p) => typeof presentes?.[p.asset_id] === 'boolean').length;
+  return {
+    completa: posiciones.length > 0 && conocidas === posiciones.length && faltan.length === 0,
+    verificada: conocidas === posiciones.length,
+    disponibles: posiciones.filter((p) => presentes?.[p.asset_id] === true).length,
+    total: posiciones.length, faltan,
+  };
+}
+
 export function montaModelos(raiz, { cliente = null, alSeleccionar = null } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
   raiz.textContent = '';
-
   raiz.append(el('p', { class: 'nv-modelos__nota' }, NOTA_MODELOS));
   const lista = el('div', { class: 'nv-modelos__lista' });
   const estado = el('p', { class: 'nv-modelos__estado', role: 'status' });
-  raiz.append(lista, estado);
+  const reintentar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-modelos__reintentar' }, 'Volver a comprobar disponibilidad');
+  raiz.append(lista, estado, reintentar);
 
   let seleccionada = null;
+  let seleccionando = null;
+  let comprobando = false;
+  let tarea = null;
   const botones = new Map();
   const tarjetas = new Map();
+  const notas = new Map();
+  const disponibilidad = new Map();
+  const ids = [...new Set(CARTERAS_MODELO.flatMap((m) => m.posiciones.map((p) => p.asset_id)))];
+
+  function pintaBotones() {
+    for (const [clave, boton] of botones) {
+      const d = disponibilidad.get(clave);
+      // 03-09-2026, orden del fundador: no se bloquea nada sin consultarle. Solo se
+      // apaga el boton cuando CONSTA que faltan instrumentos del universo (decision
+      // suya del 02-09). Mientras se comprueba, o si la comprobacion falla, el
+      // analisis sigue disponible.
+      const faltanInstrumentos = d?.verificada === true && d.completa === false;
+      boton.disabled = seleccionando !== null || faltanInstrumentos;
+      boton.textContent = seleccionando === clave ? 'Preparando el análisis…'
+        : faltanInstrumentos ? 'No disponible en la alfa'
+          : seleccionada === clave ? 'Cartera seleccionada' : 'Analizar esta cartera';
+      tarjetas.get(clave).classList.toggle('nv-modelos__tarjeta--activa', seleccionada === clave && !faltanInstrumentos);
+    }
+    reintentar.disabled = comprobando || seleccionando !== null;
+  }
+
+  function actualizaDisponibilidad() {
+    if (tarea) return tarea;
+    comprobando = true;
+    pintaBotones();
+    estado.textContent = 'Comprobando la disponibilidad de las cuatro composiciones…';
+    tarea = (async () => {
+      try {
+        if (typeof datos.enCatalogo !== 'function') throw new Error('Sin comprobador de catálogo');
+        const presentes = await datos.enCatalogo(ids, { refrescar: true });
+        for (const modelo of CARTERAS_MODELO) {
+          const d = disponibilidadModelo(modelo, presentes);
+          disponibilidad.set(modelo.clave, d);
+          notas.get(modelo.clave).textContent = !d.verificada
+            ? 'No se han podido comprobar todos los instrumentos de esta composición. Puedes abrir el análisis igualmente; lo que falte se dirá.'
+            : d.disponibles + ' de ' + d.total + ' instrumentos disponibles en el catálogo. '
+              + (d.completa ? 'El historial se comprobará al abrir el análisis.'
+                : 'Faltan: ' + d.faltan.map((p) => p.nombre + ' (' + p.asset_id + ')').join('; ') + '. No se sustituyen instrumentos.');
+        }
+        const verificadas = [...disponibilidad.values()].every((d) => d.verificada);
+        const completas = [...disponibilidad.values()].filter((d) => d.completa).length;
+        estado.textContent = verificadas
+          ? completas + ' de ' + CARTERAS_MODELO.length + ' composiciones con todos sus instrumentos en el catálogo. Se conservan los pesos originales.'
+          : 'No se ha podido comprobar el catálogo completo. El análisis sigue disponible; puedes volver a comprobarlo.';
+        const dSel = seleccionada ? disponibilidad.get(seleccionada) : null;
+        if (dSel && dSel.verificada === true && dSel.completa === false) {
+          seleccionada = null;
+          estado.textContent += ' La disponibilidad ha cambiado; el análisis que ya estaba abierto no se ha actualizado.';
+        }
+      } catch {
+        for (const modelo of CARTERAS_MODELO) {
+          disponibilidad.set(modelo.clave, disponibilidadModelo(modelo, null));
+          notas.get(modelo.clave).textContent = 'Disponibilidad sin verificar. El análisis sigue disponible; lo que falte se dirá al abrirlo.';
+        }
+        estado.textContent = 'No se ha podido comprobar el catálogo. El análisis sigue disponible; puedes volver a comprobarlo.';
+      } finally {
+        comprobando = false;
+        pintaBotones();
+      }
+    })();
+    tarea.then(() => { tarea = null; }, () => { tarea = null; });
+    return tarea;
+  }
 
   for (const modelo of CARTERAS_MODELO) {
     const tarjeta = el('article', { class: 'nv-card nv-modelos__tarjeta' });
     tarjeta.append(el('h3', { class: 'nv-modelos__nombre' }, modelo.nombre));
     tarjeta.append(el('p', { class: 'nv-modelos__tema' }, modelo.tema));
     tarjeta.append(el('p', { class: 'nv-modelos__criterio' }, modelo.criterio));
-
     const composicion = el('ul', { class: 'nv-modelos__composicion' });
-    for (const p of modelo.posiciones) composicion.append(el('li', {}, `${p.nombre} — ${p.peso} %`));
+    for (const p of modelo.posiciones) composicion.append(el('li', {}, p.nombre + ' — ' + p.peso + ' %'));
     tarjeta.append(composicion);
-
-    const boton = el('button', { type: 'button', class: 'nv-btn nv-btn--soft' }, 'Analizar esta cartera');
+    const notaId = 'disponibilidad-' + modelo.clave;
+    const nota = el('p', { id: notaId, class: 'nv-modelos__nota nv-modelos__no-disponible' }, 'Comprobando disponibilidad…');
+    const boton = el('button', { type: 'button', class: 'nv-btn nv-btn--soft', 'aria-describedby': notaId }, 'Analizar esta cartera');
     botones.set(modelo.clave, boton);
     tarjetas.set(modelo.clave, tarjeta);
+    notas.set(modelo.clave, nota);
     boton.addEventListener('click', async () => {
-      boton.disabled = true;
-      boton.textContent = 'Preparando el análisis…';
-      estado.textContent = '';
+      const previa = disponibilidad.get(modelo.clave);
+      if (seleccionando !== null || (previa?.verificada === true && previa.completa === false)) return;
+      seleccionando = modelo.clave;
+      pintaBotones();
       try {
-        const fichas = await Promise.all(modelo.posiciones
-          .map((p) => datos.detalleActivo(p.asset_id).catch(() => null)));
+        await actualizaDisponibilidad();
+        const ahora = disponibilidad.get(modelo.clave);
+        if (ahora?.verificada === true && ahora.completa === false) return;
+        const fichas = await Promise.all(modelo.posiciones.map((p) => datos.detalleActivo(p.asset_id)));
         const detalles = {};
         fichas.forEach((f, i) => {
-          if (!f) return;
-          detalles[modelo.posiciones[i].asset_id] = {
-            display_name: f.identity?.display_name,
-            instrument_type: f.instrument_type,
-            economic_asset_class: f.economic_asset_class,
-          };
+          const id = modelo.posiciones[i].asset_id;
+          if (!f || f.asset_id !== id || ![f.identity?.display_name, f.instrument_type, f.economic_asset_class]
+            .every((campo) => typeof campo === 'string' && campo.trim())) {
+            throw new Error('Ficha ausente, incompleta o de otro instrumento');
+          }
+          detalles[id] = { display_name: f.identity?.display_name, instrument_type: f.instrument_type, economic_asset_class: f.economic_asset_class };
         });
         const detalle = { modelo, posiciones: posicionesDeModelo(modelo, detalles) };
         if (typeof alSeleccionar === 'function') await alSeleccionar(detalle);
         else raiz.dispatchEvent(new CustomEvent('nuvia:modelo-elegido', { detail: detalle, bubbles: true }));
         seleccionada = modelo.clave;
-        for (const [clave, b] of botones) b.textContent = clave === seleccionada ? 'Cartera seleccionada' : 'Analizar esta cartera';
-        for (const [clave, t] of tarjetas) t.classList.toggle('nv-modelos__tarjeta--activa', clave === seleccionada);
       } catch {
-        estado.textContent = 'No se ha podido preparar esta cartera. Prueba de nuevo en unos segundos.';
+        estado.textContent = 'No se ha podido preparar esta cartera con todas sus fichas. No se abre un análisis parcial. Prueba de nuevo en unos segundos.';
       } finally {
-        boton.disabled = false;
-        if (seleccionada !== modelo.clave) boton.textContent = 'Analizar esta cartera';
+        seleccionando = null;
+        pintaBotones();
       }
     });
-    tarjeta.append(boton);
+    tarjeta.append(nota, boton);
     lista.append(tarjeta);
   }
-
-  /* Alfa (base propia): una cartera modelo solo se analiza si todos sus
-     activos están en el universo de la alfa. Si falta alguno, se dice cuál
-     y el botón se apaga; no se sustituye ningún activo en silencio. */
-  if (typeof datos.enCatalogo === 'function') {
-    const ids = [...new Set(CARTERAS_MODELO.flatMap((m) => m.posiciones.map((p) => p.asset_id)))];
-    datos.enCatalogo(ids).then((presentes) => {
-      for (const modelo of CARTERAS_MODELO) {
-        const faltan = modelo.posiciones.filter((p) => !presentes[p.asset_id]);
-        if (!faltan.length) continue;
-        const boton = botones.get(modelo.clave);
-        if (boton) { boton.disabled = true; boton.textContent = 'No disponible en la alfa'; }
-        tarjetas.get(modelo.clave)?.append(el('p', { class: 'nv-modelos__nota nv-modelos__no-disponible' },
-          `No disponible en la alfa: ${faltan.map((p) => p.nombre).join(', ')} no ${faltan.length === 1 ? 'está' : 'están'} en el universo de instrumentos de esta versión.`));
-      }
-    }).catch(() => { /* sin catálogo: cada botón informará al pulsarlo */ });
-  }
-
-  return { cuantas: () => CARTERAS_MODELO.length };
+  reintentar.addEventListener('click', actualizaDisponibilidad);
+  const listo = actualizaDisponibilidad();
+  return { cuantas: () => CARTERAS_MODELO.length, actualizar: actualizaDisponibilidad, listo };
 }

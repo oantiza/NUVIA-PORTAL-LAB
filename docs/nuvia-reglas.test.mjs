@@ -1,68 +1,98 @@
 /**
- * Reglas de Firestore de la alfa (firestore.rules), probadas contra el
- * proyecto real nuvia-family-wealth SIN credenciales, tal y como las ve el
- * navegador de cualquier visitante:
- *
- *   1. lectura pública de los datos de mercado (assets, catálogo, sync_runs);
- *   2. escritura denegada en todas partes;
- *   3. cualquier otra colección (users, lo que sea) denegada también en lectura.
- *
- * Necesita red, así que solo se ejecuta cuando se pide:
- *   NUVIA_REGLAS_EN_VIVO=1 node docs/nuvia-reglas.test.mjs
- * Sin la variable, se omite con aviso (no forma parte de `validate`).
- *
- * Nunca escribe nada de verdad: la escritura de prueba tiene que ser
- * rechazada por las reglas; si alguna vez no lo fuera, la batería falla y el
- * documento de prueba queda en `_prueba_reglas/{fecha}` para borrarlo a mano.
+ * Reglas de la alfa: contrato y protecciones sin red por defecto.
+ * Permisos efectivos: npm run test:reglas:emulador, solo en 127.0.0.1
+ * y en el proyecto ficticio demo-nuvia-reglas. Nunca contra producción.
  */
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import {
+  compruebaContratoReglas, origenEmulador, creaTransporteEmulador,
+  pruebaReglasEnEmulador, PROYECTO_PRUEBA,
+} from '../scripts/reglas-alfa-local.mjs';
 
-const BASE = 'https://firestore.googleapis.com/v1/projects/nuvia-family-wealth/databases/(default)/documents';
+if (process.env.NUVIA_REGLAS_EN_VIVO === '1') {
+  console.error('Modo en vivo retirado: no se prueban escrituras ni borrados contra datos reales. Usa --emulador.');
+  process.exit(2);
+}
+const args = process.argv.slice(2);
+assert.ok(args.length === 0 || (args.length === 1 && args[0] === '--emulador'), 'Solo se admite --emulador.');
+const reglas = readFileSync(new URL('../firestore.rules', import.meta.url), 'utf8');
+compruebaContratoReglas(reglas);
+console.log('OK · Contrato estático de las reglas locales (no equivale a ejecutar sus permisos).');
 
-let fallos = 0;
-function comprueba(nombre, condicion, detalle = '') {
-  const ok = Boolean(condicion);
-  console.log(`${ok ? 'OK  ' : 'FALLO'} ${nombre}${detalle ? '  · ' + detalle : ''}`);
-  if (!ok) fallos += 1;
+for (const mutacion of [
+  reglas.replace('allow write: if false', 'allow write: if true'),
+  reglas.replace('allow read, write: if false', 'allow read, write: if true'),
+  reglas.replace('allow read: if true', 'allow read: if false'),
+  reglas.replace('match /assets/{id}', 'match /users/{id}'),
+]) {
+  assert.notEqual(mutacion, reglas, 'La prueba adversarial debe cambiar las reglas.');
+  assert.throws(() => compruebaContratoReglas(mutacion));
+}
+compruebaContratoReglas('// Comentario de prueba\n' + reglas + '\n/* comentario */');
+assert.equal(origenEmulador('127.0.0.1:8080'), 'http://127.0.0.1:8080');
+for (const host of [undefined, '', 'localhost:8080', '0.0.0.0:8080', '192.168.1.2:8080',
+  'firestore.googleapis.com:443', 'https://127.0.0.1:8080', '127.0.0.1:8080@ejemplo.test',
+  '127.0.0.1:8080/ruta', '127.0.0.1:8080?x=1', '127.0.0.1:80', '127.0.0.1:65536',
+  '127.0.0.1:08080', '127.0.0.1:8080\n']) {
+  assert.throws(() => origenEmulador(host));
 }
 
-if (process.env.NUVIA_REGLAS_EN_VIVO !== '1') {
-  console.log('Reglas de Firestore: prueba en vivo omitida (define NUVIA_REGLAS_EN_VIVO=1 para ejecutarla).');
-  process.exit(0);
+const llamadas = [];
+const transporte = creaTransporteEmulador({
+  host: '127.0.0.1:8080',
+  fetchFn: async (url, opciones) => {
+    llamadas.push({ url, opciones });
+    return { status: 200, json: async () => ({}) };
+  },
+});
+await transporte.cargaReglas(reglas);
+await transporte.documento('assets/prueba', { method: 'PATCH', admin: true, objeto: { fields: {} } });
+await transporte.documento('assets/prueba');
+await transporte.documento('assets/prueba', { method: 'DELETE' });
+assert.equal(llamadas.length, 4);
+for (const { url, opciones } of llamadas) {
+  assert.equal(new URL(url).origin, 'http://127.0.0.1:8080');
+  assert.ok(new URL(url).pathname.includes('/projects/' + PROYECTO_PRUEBA));
+  assert.equal(opciones.redirect, 'error');
+  assert.ok(opciones.signal instanceof AbortSignal);
 }
-
-async function estado(ruta, opciones = {}) {
-  const res = await fetch(`${BASE}/${ruta}`, opciones);
-  let json = null;
-  try { json = await res.json(); } catch { /* sin cuerpo */ }
-  return { status: res.status, codigo: json?.error?.status || null };
+assert.equal(llamadas[0].opciones.method, 'PUT');
+assert.deepEqual(JSON.parse(llamadas[0].opciones.body), {
+  rules: { files: [{ name: 'firestore.rules', content: reglas }] },
+});
+assert.equal(llamadas[0].opciones.headers.Authorization, 'Bearer owner');
+assert.equal(llamadas[1].opciones.headers.Authorization, 'Bearer owner');
+assert.equal(llamadas[2].opciones.headers.Authorization, undefined);
+assert.equal(llamadas[3].opciones.headers.Authorization, undefined);
+for (const ruta of ['https://ejemplo.test/assets/x', 'assets/../users/x', 'assets/%2e%2e',
+  '/assets/x', 'assets/x?updateMask=x', 'assets/x/series', 'assets/x#fragmento', 'assets/x\n']) {
+  await assert.rejects(() => transporte.documento(ruta));
 }
+await assert.rejects(() => transporte.documento('assets/prueba', { method: 'PUT' }));
+assert.equal(llamadas.length, 4, 'Las rutas u operaciones inválidas no deben generar peticiones.');
+const redireccion = creaTransporteEmulador({
+  host: '127.0.0.1:8080',
+  fetchFn: async () => ({ status: 302, json: async () => ({}) }),
+});
+await assert.rejects(() => redireccion.documento('assets/prueba'), /redirigir/);
+const reglasInvalidas = creaTransporteEmulador({
+  host: '127.0.0.1:8080',
+  fetchFn: async () => ({ status: 200, json: async () => ({ issues: [{ severity: 'ERROR' }] }) }),
+});
+await assert.rejects(() => reglasInvalidas.cargaReglas(reglas), /rechazado/);
 
-const lecturaPermitida = (r) => r.status === 200 || r.status === 404; // 404 = permitido pero no existe
-const denegado = (r) => r.status === 403 && r.codigo === 'PERMISSION_DENIED';
+const antiguo = spawnSync(process.execPath, [fileURLToPath(import.meta.url)], {
+  env: { ...process.env, NUVIA_REGLAS_EN_VIVO: '1' }, encoding: 'utf8', timeout: 5_000,
+});
+assert.equal(antiguo.status, 2, 'El modo en vivo antiguo debe fallar antes de intentar la red.');
+assert.match(antiguo.stderr, /Modo en vivo retirado/);
+console.log('OK · Protecciones del destino, proyecto fijo, rutas, autenticación de prueba, redirecciones y modo antiguo. Sin red.');
 
-const manif = await estado('catalog_manifest/public');
-comprueba('Lectura pública del manifiesto del catálogo (200 o 404, nunca 403)', lecturaPermitida(manif), `HTTP ${manif.status}`);
-const asset = await estado('assets/IE00B03HD191');
-comprueba('Lectura pública de una ficha', lecturaPermitida(asset), `HTTP ${asset.status}`);
-const serie = await estado('assets/IE00B03HD191/series/2025');
-comprueba('Lectura pública de una serie (subcolección)', lecturaPermitida(serie), `HTTP ${serie.status}`);
-const run = await estado('sync_runs/2026-09-02');
-comprueba('Lectura pública de sync_runs', lecturaPermitida(run), `HTTP ${run.status}`);
-
-const users = await estado('users/cualquiera');
-comprueba('users/{uid} denegado en lectura (no existe la colección en la alfa)', denegado(users), `HTTP ${users.status}`);
-const otra = await estado('_prueba_reglas/x');
-comprueba('Cualquier otra colección denegada en lectura', denegado(otra), `HTTP ${otra.status}`);
-
-const cuerpo = { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { prueba: { stringValue: 'reglas' } } }) };
-const escAsset = await estado('assets/_prueba_reglas', cuerpo);
-comprueba('Escritura en assets denegada', denegado(escAsset), `HTTP ${escAsset.status}`);
-const escManif = await estado('catalog_manifest/public', cuerpo);
-comprueba('Escritura en el manifiesto denegada', denegado(escManif), `HTTP ${escManif.status}`);
-const escOtra = await estado(`_prueba_reglas/${new Date().toISOString().slice(0, 10)}`, cuerpo);
-comprueba('Escritura en cualquier otra colección denegada', denegado(escOtra), `HTTP ${escOtra.status}`);
-const borrado = await estado('assets/IE00B03HD191', { method: 'DELETE' });
-comprueba('Borrado denegado', denegado(borrado), `HTTP ${borrado.status}`);
-
-console.log(fallos ? `\n${fallos} fallo(s)` : '\nReglas de la alfa en vivo: lectura pública, escritura y otras colecciones denegadas.');
-process.exit(fallos ? 1 : 0);
+if (args[0] === '--emulador') {
+  await pruebaReglasEnEmulador({ reglas, host: process.env.FIRESTORE_EMULATOR_HOST });
+} else {
+  console.log('Permisos efectivos: NO EJECUTADOS aquí. Usa --emulador con un emulador local; no hay alternativa contra producción.');
+}

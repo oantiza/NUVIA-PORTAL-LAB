@@ -1,6 +1,26 @@
 import React, { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
 const INDICATOR_HELP = {
+  'BPA diluido (ttm)': {
+    what: 'Beneficio diluido por acción de los últimos doce meses, según el proveedor.',
+    why: 'Su definición y periodo pueden diferir de los comunicados individuales del historial.'
+  },
+  'Valor contable por acción (MRQ)': {
+    what: 'Valor contable por acción del último trimestre disponible.',
+    why: 'No es un precio de mercado ni una previsión.'
+  },
+  'Dividendo por acción (ttm)': {
+    what: 'Dividendo pagado por acción en los últimos doce meses.',
+    why: 'Describe pagos históricos, no pagos futuros.'
+  },
+  'Rent. por dividendo (ttm)': {
+    what: 'Dividendo por acción TTM dividido por el precio de la instantánea.',
+    why: 'No se recalcula con una cotización en tiempo real.'
+  },
+  'Pay-out (ttm)': {
+    what: 'Relación entre dividendos y beneficio de los últimos doce meses.',
+    why: 'No garantiza la continuidad del pago.'
+  },
   Capitalización: {
     what: 'El valor de mercado de todas las acciones de la compañía: precio por acción multiplicado por las acciones en circulación.',
     why: 'Sitúa el tamaño de la empresa y ayuda a comparar su escala, liquidez y perfil de riesgo con otras compañías.'

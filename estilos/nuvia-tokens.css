@@ -277,10 +277,12 @@
   --nv-font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --nv-font-serif: "Fraunces", Georgia, "Times New Roman", serif;
 
-  /* Escala. clamp() cubre el tramo 1024–1920 px sin media queries. */
+  /* Aperturas grandes: se conserva la identidad de la portada.
+     Aperturas compactas y secciones: peldaños comunes (ver ajustes abajo). */
   --nv-display-xl: clamp(52px, 5vw, 72px);
   --nv-display-lg: clamp(44px, 4vw, 60px);
-  --nv-display-md: clamp(36px, 3vw, 48px);
+  --nv-display-md: 44px;
+  --nv-section-title: var(--nv-title-lg);
   --nv-title-lg: 36px;
   --nv-title-md: 28px;
   --nv-title-sm: 22px;
@@ -302,6 +304,7 @@
   --nv-space-4: 16px;
   --nv-space-5: 20px;
   --nv-space-6: 24px;
+  --nv-space-7: 28px;
   --nv-space-8: 32px;
   --nv-space-10: 40px;
   --nv-space-12: 48px;
@@ -314,6 +317,24 @@
   --nv-radius-lg: 20px;
   --nv-radius-pill: 999px;
 
+  /* Controles de formulario y acciones: mínimo común, no altura fija. */
+  --nv-control-height: 44px;
+  --nv-control-font: var(--nv-body-sm);
+  --nv-control-line-height: 1.5;
+  --nv-control-radius: var(--nv-radius-md);
+  --nv-button-radius: var(--nv-radius-sm);
+
+  /* Datos: columnas comparables y cifras de resultados por densidad. */
+  --nv-table-text: var(--nv-body-sm);
+  --nv-table-label: var(--nv-label);
+  --nv-table-line-height: 1.5;
+  --nv-table-cell-y: var(--nv-space-3);
+  --nv-table-cell-x: var(--nv-space-4);
+  --nv-table-reading-width: 720px;
+  --nv-result-value: var(--nv-title-md);
+  --nv-result-value-compact: var(--nv-title-sm);
+  --nv-result-line-height: 1.2;
+
   --nv-shadow-sm: 0 1px 2px rgba(6, 23, 47, .06), 0 0 0 1px rgba(11, 35, 71, .06);
   --nv-shadow-md: 0 18px 48px -30px rgba(6, 23, 47, .38), 0 0 0 1px rgba(11, 35, 71, .07);
   --nv-shadow-lg: 0 34px 84px -42px rgba(6, 23, 47, .52), 0 0 0 1px rgba(11, 35, 71, .08);
@@ -321,10 +342,32 @@
   /* Medida */
   --nv-container: 1240px;
   --nv-reading: 760px;
+  --nv-page-gutter: var(--nv-space-12);
+  --nv-header-gutter: var(--nv-page-gutter);
+  --nv-section-space: var(--nv-space-20);
+  --nv-section-space-compact: var(--nv-space-12);
   --nv-header-height: 88px;
   --nv-logo-height: 68px;
 }
 
+
+/* La cabecera pasa a disposición compacta a 1319 px. Las aperturas interiores
+   siguen ese mismo umbral; no generan tamaños intermedios fuera de escala. */
+@media (max-width: 1319px) {
+  :root {
+    --nv-display-md: var(--nv-title-lg);
+    --nv-header-gutter: var(--nv-space-7);
+  }
+}
+
+/* El sistema de componentes se reorganiza a 1120 px. */
+@media (max-width: 1120px) {
+  :root {
+    --nv-section-title: var(--nv-title-md);
+    --nv-page-gutter: var(--nv-space-7);
+    --nv-section-space: var(--nv-space-16);
+  }
+}
 
 /* ============================================================================
    3 · ROLES SEMÁNTICOS
@@ -357,11 +400,20 @@
      activo es --nv-white, y este es el de en medio. */
   --nv-line-on-dark-hover: rgba(255, 255, 255, .55);
 
-  /* Superficies */
+  /* Superficies por función: no codifican mérito financiero.
+     Página: lienzo; surface: contenido; technical: área de herramientas;
+     editorial: lectura; editorial-strong: énfasis cálido; deep: contraste.
+     Las cubiertas fotográficas y el manifiesto conservan sus composiciones. */
+  --nv-surface-page: var(--nv-cloud);
   --nv-surface: var(--nv-white);
   --nv-surface-technical: var(--nv-mist);
   --nv-surface-editorial: var(--nv-paper-light);
+  --nv-surface-editorial-strong: var(--nv-paper);
   --nv-surface-deep: var(--nv-navy-900);
+  --nv-surface-institutional:
+    radial-gradient(circle at 88% 8%, rgba(124, 154, 68, .18), transparent 28rem),
+    linear-gradient(135deg, var(--nv-navy-950), var(--nv-navy-800));
+  --nv-line-institutional: rgba(220, 197, 156, .18);
   --nv-bg: var(--nv-mist);
 
   /* Acción */
@@ -373,6 +425,23 @@
   --nv-action-secondary-bg-hover: var(--nv-green-100);
   --nv-action-accent-bg: var(--nv-green-600);  /* 4,9:1 con blanco · era 3,2:1 ❌ */
   --nv-action-accent-text: #ffffff;
+
+  /* Estados de interfaz, nunca juicios sobre resultados financieros. */
+  --nv-control-bg: var(--nv-surface);
+  --nv-control-border: var(--nv-text-muted);
+  --nv-control-border-hover: var(--nv-text-soft);
+  --nv-control-error: var(--nv-negative);
+  --nv-control-disabled-bg: var(--nv-mist);
+  --nv-control-disabled-text: var(--nv-text-muted);
+
+  /* Avisos: el texto nombra el estado; el filete solo lo acompaña. */
+  --nv-notice-bg: var(--nv-surface-technical);
+  --nv-notice-border: var(--nv-navy-700);
+  --nv-notice-warning-bg: var(--nv-surface-editorial);
+  --nv-notice-warning-border: var(--nv-warning);
+  --nv-notice-error-border: var(--nv-negative);
+  --nv-notice-text: var(--nv-body-sm);
+  --nv-notice-line-height: 1.6;
 
   /* Foco — un solo anillo en todo el sitio */
   --nv-focus-ring: 0 0 0 3px var(--nv-white), 0 0 0 5px var(--nv-green-700);

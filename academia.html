@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Academia Nuvia: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
+<meta name="description" content="Academia NUVIA: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
 
 <!-- CORREGIDA: apuntaba a https://oantiza.github.io/NUVIA-WEB-/academia.html -->
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/academia.html">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:site_name" content="NUVIA">
 <meta property="og:title" content="NUVIA · Academia NUVIA">
-<meta property="og:description" content="Academia Nuvia: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
+<meta property="og:description" content="Academia NUVIA: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
 <meta property="og:url" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/academia.html">
 <meta property="og:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta property="og:image:type" content="image/webp">
@@ -22,7 +22,7 @@
 <meta property="og:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NUVIA · Academia NUVIA">
-<meta name="twitter:description" content="Academia Nuvia: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
+<meta name="twitter:description" content="Academia NUVIA: cursos, conceptos esenciales, activos financieros, interés compuesto y glosario para entender el dinero con criterio.">
 <meta name="twitter:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta name="twitter:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <!-- NUVIA SOCIAL META: END -->
@@ -66,6 +66,7 @@
         <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -94,13 +95,13 @@
 
   <main id="contenido">
     <!-- ============ CABECERA ============ -->
-    <section id="academy" data-screen-label="Cabecera Academia Nuvia" class="nv-hero nv-hero--institutional gu-hero" aria-labelledby="academy-title">
+    <section id="academy" data-screen-label="Cabecera Academia NUVIA" class="nv-hero nv-hero--institutional gu-hero" aria-labelledby="academy-title">
       <div class="nv-container gu-section">
-<nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Academia</span></li></ol></nav>
-        <span class="ac-x02"><span aria-hidden="true"></span>Academia Nuvia</span>
+<nav class="nv-breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Academia NUVIA</span></li></ol></nav>
+        <span class="ac-x02"><span aria-hidden="true"></span>Academia NUVIA</span>
         <h1 id="academy-title" class="ac-x03">Saber es patrimonio</h1>
-        <p class="gu-lead">Una fuente de conocimiento para entender el dinero con calma: guías visuales, un simulador de interés compuesto y un glosario en lenguaje claro.</p>
-        <nav aria-label="Áreas de Academia Nuvia" class="ac-x04">
+        <p class="gu-lead">El espacio de conocimiento de NUVIA para entender el dinero con calma. Consulta un concepto o aprende paso a paso con guías, vídeos y herramientas.</p>
+        <nav aria-label="Áreas de Academia NUVIA" class="ac-x04">
           <sc-for list="{{ pestanas }}" as="p" hint-placeholder-count="2">
             <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" class="{{ p.clase }}"><span>{{ p.label }}</span><span aria-hidden="true" class="ac-x05">{{ p.sufijo }}</span></button>
           </sc-for>
@@ -108,13 +109,19 @@
       </div>
     </section>
 
+    <sc-if value="{{ mostrarRegreso }}" hint-placeholder-val="{{ false }}">
+      <nav class="nv-container ac-learning-back" aria-label="Volver a Academia">
+        <a href="academia.html#ruta-aprendizaje">← Volver a la ruta de aprendizaje</a>
+      </nav>
+    </sc-if>
+
     <!-- ============ PORTADA ACADEMY ============ -->
     <sc-if value="{{ esInicio }}" hint-placeholder-val="{{ true }}">
-      <section data-screen-label="Áreas de Academia Nuvia" class="nv-container gu-section">
+      <section data-screen-label="Áreas de Academia NUVIA" class="nv-container gu-section">
         <div class="gu-lead">
           <p class="gu-kicker">Elige cómo quieres aprender</p>
           <h2 class="ac-strong">Dos formas de avanzar con criterio</h2>
-          <p class="gu-text">Consulta directamente los conocimientos esenciales que necesitas para entender las inversiones financieras o sigue un curso completo paso a paso.</p>
+          <p class="gu-text">Consulta un tema concreto en Conocimientos esenciales o sigue las cinco clases de Dinero con criterio en Cursos. Puedes entrar directamente donde te interese.</p>
         </div>
         <div class="gu-grid-2">
           <button type="button" onClick="{{ irEsenciales }}" class="ac-x06">
@@ -131,22 +138,52 @@
             <span class="ac-x08">
               <span class="ac-x15">Aprende paso a paso</span>
               <strong class="ac-x16">Cursos</strong>
-              <span class="ac-x17">Itinerarios formativos para avanzar capítulo a capítulo, con vídeos, materiales y seguimiento del progreso.</span>
+              <span class="ac-x17">Dinero con criterio: un curso de nivel inicial con cinco capítulos, vídeos y apuntes para aprender a tu ritmo.</span>
               <span class="ac-x18">Ver cursos <span aria-hidden="true">→</span></span>
             </span>
           </button>
         </div>
+        <section id="ruta-aprendizaje" class="ac-learning-route" aria-labelledby="ruta-aprendizaje-titulo">
+          <p class="gu-kicker">Si no sabes por dónde empezar</p>
+          <h2 id="ruta-aprendizaje-titulo">Un recorrido por los conocimientos esenciales</h2>
+          <p class="gu-text">Tres pasos de lectura y práctica, sin orden obligatorio ni prueba de nivel. Elige un tema o recórrelos en esta secuencia.</p>
+          <ol class="ac-learning-steps">
+            <li class="ac-learning-step">
+              <p class="gu-kicker">01 · Comprender</p>
+              <h3>Los fundamentos</h3>
+              <p>Empieza por el tiempo, la inflación y el riesgo con explicaciones, gráficos y un vídeo de apoyo.</p>
+              <a href="academia.html?tab=fundamentos">Abrir fundamentos <span aria-hidden="true">→</span></a>
+            </li>
+            <li class="ac-learning-step">
+              <p class="gu-kicker">02 · Explorar</p>
+              <h3>Los activos financieros</h3>
+              <p>Conoce sus características en las fichas y vídeos de cada grupo, sin seleccionar inversiones para ti.</p>
+              <a href="academia.html?tab=activos">Explorar activos <span aria-hidden="true">→</span></a>
+            </li>
+            <li class="ac-learning-step">
+              <p class="gu-kicker">03 · Practicar</p>
+              <h3>El interés compuesto</h3>
+              <p>Cambia los supuestos del simulador y observa cómo varía un ejemplo de acumulación a lo largo del tiempo.</p>
+              <a href="academia.html?tab=calculadora">Abrir el simulador <span aria-hidden="true">→</span></a>
+            </li>
+          </ol>
+          <div class="ac-learning-reference">
+            <p><strong>El glosario, siempre a mano.</strong> Si un término te frena, consulta su significado y vuelve al recorrido cuando quieras.</p>
+            <a href="academia.html?tab=glosario">Consultar el glosario <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="ac-learning-availability">Las guías, los vídeos y las herramientas son formatos de aprendizaje dentro de estos contenidos. Los vídeos se abren al elegir reproducirlos y su disponibilidad depende del servicio externo.</p>
+        </section>
       </section>
     </sc-if>
 
     <!-- ============ CURSOS ============ -->
     <sc-if value="{{ esCursos }}" hint-placeholder-val="{{ false }}">
-      <section data-screen-label="Cursos de Academia Nuvia" class="nv-container gu-section">
+      <section data-screen-label="Cursos de Academia NUVIA" class="nv-container gu-section">
         <div class="ac-x19">
           <div>
-            <p class="gu-kicker">Academia Nuvia</p>
+            <p class="gu-kicker">Academia NUVIA</p>
             <h2 class="ac-strong">Cursos</h2>
-            <p class="gu-text">Itinerarios estructurados para aprender a tu ritmo y avanzar de forma ordenada.</p>
+            <p class="gu-text">Por ahora tienes un curso de nivel inicial: Dinero con criterio. Cinco capítulos con vídeos y apuntes, abiertos para consultar a tu ritmo.</p>
           </div>
           <button type="button" onClick="{{ irInicio }}" class="ac-x20">← Volver a la portada</button>
         </div>
@@ -173,6 +210,7 @@
             </div>
           </div>
         </article>
+        <p class="ac-learning-availability">El capítulo 1 incluye actividades interactivas; los capítulos 2 a 5 ofrecen vídeos y apuntes. Las marcas de actividad son temporales: se reinician al recargar o cambiar de capítulo. No hay guardado de progreso ni certificados.</p>
       </section>
     </sc-if>
 
@@ -229,7 +267,7 @@
               <div class="ac-def"><span class="ac-icon">03</span><span class="ac-text ac-text--md">Cuánto sube y baja cada uno, década a década</span></div>
               <div class="ac-def"><span class="ac-icon">04</span><span class="ac-text ac-text--md">Qué impuestos se pagan en España (2026)</span></div>
               <div class="ac-def"><span class="ac-icon">05</span><span class="ac-text ac-text--md">Bolsa: fondos, acciones o ETFs</span></div>
-              <div class="ac-x37"><span class="ac-icon">06</span><span class="ac-text ac-text--md">Qué elegir: recomendación final</span></div>
+              <div class="ac-x37"><span class="ac-icon">06</span><span class="ac-text ac-text--md">Cómo interpretar esta comparación</span></div>
             </div>
           </div>
 
@@ -286,23 +324,25 @@
                   </div>
                 </div>
                 <div class="ac-tint">
-                  <svg viewBox="0 0 720 350" class="ac-x56" role="img" aria-label="Evolución histórica de los activos desde 1928">
+                  <p id="ac-history-help" class="nv-table-scroll__hint">Gráfico histórico en dólares, con escala logarítmica. Si no cabe, desplázalo; con teclado, enfoca el gráfico y usa las flechas.</p>
+                  <div class="nv-chart-scroll" role="region" tabindex="0" aria-label="Gráfico histórico de activos" aria-describedby="ac-history-help">
+                  <svg viewBox="-16 0 736 350" class="ac-x56 ac-history-chart" role="img" aria-label="Evolución histórica de los activos desde 1928">
                     <rect x="8" y="24" width="16" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="8" y="16" fill="#C2453A" font-size="9" font-weight="700">Gran Depresión</text>
                     <rect x="315" y="24" width="10" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="290" y="16" fill="#C2453A" font-size="9" font-weight="700">Crisis petróleo</text>
                     <rect x="520" y="24" width="18" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="482" y="16" fill="#C2453A" font-size="9" font-weight="700">Crisis financiera</text>
                     <rect x="620" y="24" width="18" height="270" fill="rgba(194,69,58,.10)" opacity=".45"></rect><text x="600" y="16" fill="#C2453A" font-size="9" font-weight="700">COVID + tipos</text>
-                    <line x1="62" x2="682" y1="294" y2="294" stroke="#cbd5e1"></line><text x="8" y="298" fill="#6b7686" font-size="11">$100</text>
-                    <line x1="62" x2="682" y1="226.5" y2="226.5" stroke="#cbd5e1"></line><text x="8" y="230" fill="#6b7686" font-size="11">$1.000</text>
-                    <line x1="62" x2="682" y1="159" y2="159" stroke="#cbd5e1"></line><text x="8" y="163" fill="#6b7686" font-size="11">$10.000</text>
-                    <line x1="62" x2="682" y1="91.5" y2="91.5" stroke="#cbd5e1"></line><text x="8" y="95" fill="#6b7686" font-size="11">$100.000</text>
-                    <line x1="62" x2="682" y1="24" y2="24" stroke="#cbd5e1"></line><text x="8" y="28" fill="#6b7686" font-size="11">$1.000.000</text>
+                    <line x1="62" x2="682" y1="294" y2="294" stroke="#cbd5e1"></line><text x="-8" y="298" fill="#6b7686" font-size="11">$100</text>
+                    <line x1="62" x2="682" y1="226.5" y2="226.5" stroke="#cbd5e1"></line><text x="-8" y="230" fill="#6b7686" font-size="11">$1.000</text>
+                    <line x1="62" x2="682" y1="159" y2="159" stroke="#cbd5e1"></line><text x="-8" y="163" fill="#6b7686" font-size="11">$10.000</text>
+                    <line x1="62" x2="682" y1="91.5" y2="91.5" stroke="#cbd5e1"></line><text x="-8" y="95" fill="#6b7686" font-size="11">$100.000</text>
+                    <line x1="62" x2="682" y1="24" y2="24" stroke="#cbd5e1"></line><text x="-8" y="28" fill="#6b7686" font-size="11">$1.000.000</text>
                     <text x="50" y="330" fill="#6b7686" font-size="11">1928</text><text x="330" y="330" fill="#6b7686" font-size="11">1975</text><text x="650" y="330" fill="#6b7686" font-size="11">2025</text>
-                    <polyline points="{{ lineaDinero }}" fill="none" stroke="#6b7686" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="{{ lineaVivienda }}" fill="none" stroke="#C05621" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="{{ lineaDeuda }}" fill="none" stroke="#3C9A69" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="{{ lineaOro }}" fill="none" stroke="#946E29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="{{ lineaBonos }}" fill="none" stroke="#2568A9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
-                    <polyline points="{{ lineaBolsa }}" fill="none" stroke="#3B5BC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaDinero }}" fill="none" stroke="#6b7686" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaVivienda }}" fill="none" stroke="#C05621" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaDeuda }}" fill="none" stroke="#3C9A69" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaOro }}" fill="none" stroke="#946E29" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaBonos }}" fill="none" stroke="#2568A9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                    <polyline sc-camel-points="{{ lineaBolsa }}" fill="none" stroke="#3B5BC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></polyline>
                     <g transform="translate(72 44)">
                       <line x1="0" x2="18" y1="0" y2="0" stroke="#3B5BC4" stroke-width="3"></line><text x="24" y="4" fill="#0B2347" font-size="11">Bolsa</text>
                       <line x1="0" x2="18" y1="18" y2="18" stroke="#2568A9" stroke-width="3"></line><text x="24" y="22" fill="#0B2347" font-size="11">Bonos empresa</text>
@@ -312,6 +352,7 @@
                       <line x1="0" x2="18" y1="90" y2="90" stroke="#6b7686" stroke-width="3"></line><text x="24" y="94" fill="#0B2347" font-size="11">Dinero banco</text>
                     </g>
                   </svg>
+                  </div>
                   <p class="gu-muted">Escala especial: cada marca vertical multiplica por diez. Las franjas rosadas señalan las grandes crisis.</p>
                 </div>
               </div>
@@ -353,7 +394,8 @@
                 <span class="gu-kicker">Nadie gana siempre</span>
               </div>
               <p class="gu-text">Las líneas de antes, vistas de lejos, parecen subir tranquilas. Pero el camino real está lleno de baches. Década a década se ve la verdadera cara de cada activo: cuánto sube en sus buenos tiempos y cuánto sufre en los malos. En rojo, las décadas en las que se perdió dinero.</p>
-              <div class="ac-x71">
+              <p id="ac-decades-help" class="nv-table-scroll__hint">Si no caben todas las décadas, desplaza la tabla; con teclado, enfócala y usa las flechas.</p>
+              <div class="ac-x71" role="region" tabindex="0" aria-label="Comparación histórica por décadas" aria-describedby="ac-decades-help">
                 <div class="ac-x72"><span>Activo</span><span class="ac-cell--plain">30s</span><span class="ac-cell--plain">40s</span><span class="ac-cell--plain">50s</span><span class="ac-cell--plain">60s</span><span class="ac-cell--plain">70s</span><span class="ac-cell--plain">80s</span><span class="ac-cell--plain">90s</span><span class="ac-cell--plain">00s</span><span class="ac-cell--plain">10s</span><span class="ac-cell--plain">20s</span></div>
                 <div class="ac-x73"><span class="ac-strong">Renta variable</span><span class="ac-cell--neg">−0,9</span><span class="ac-cell">+8,5</span><span class="ac-cell">+19,5</span><span class="ac-cell">+7,7</span><span class="ac-cell">+5,9</span><span class="ac-cell">+17,3</span><span class="ac-cell">+18,0</span><span class="ac-cell--neg">−1,0</span><span class="ac-cell">+13,4</span><span class="ac-cell">+14,9</span></div>
                 <div class="ac-x74"><span class="ac-strong">Bonos corp. Baa</span><span class="ac-cell">+7,2</span><span class="ac-cell">+5,2</span><span class="ac-cell">+2,3</span><span class="ac-cell">+3,2</span><span class="ac-cell">+7,1</span><span class="ac-cell">+14,1</span><span class="ac-cell">+9,5</span><span class="ac-cell">+8,3</span><span class="ac-cell">+7,0</span><span class="ac-cell">+1,9</span></div>
@@ -395,9 +437,9 @@
 
             <!-- 06 -->
             <section class="ac-x90">
-              <p class="gu-kicker">Qué elegir: recomendación final</p>
-              <p class="ac-strong">Para la mayoría: acumular con fondos de inversión, aplazar impuestos todo lo posible y retirar poco a poco cuando llegue el momento.</p>
-              <p class="gu-text">Juntando las dos mitades del informe — qué rinde más y qué te deja quedarte con más tras los impuestos — la respuesta para alguien que invierte pensando a largo plazo es bastante clara.</p>
+              <p class="gu-kicker">Cómo interpretar esta comparación</p>
+              <p class="ac-strong">La evolución histórica y la fiscalidad describen aspectos distintos; no determinan qué activo debe elegir una persona.</p>
+              <p class="gu-text">Lee cada comparación con su periodo, sus supuestos y sus límites. Los resultados pasados no garantizan resultados futuros. NUVIA informa y explica; la decisión no la toma esta tabla.</p>
             </section>
           </div>
         </div>
@@ -646,22 +688,22 @@
           <div class="gu-card">
             <p class="ac-x210">Parámetros básicos</p>
             <div class="gu-stack">
-              <div><label class="ac-label">Capital inicial</label><div class="ac-search"><input name="initialCapital" type="number" step="1000" defaultValue="{{ v.initialCapital }}" onChange="{{ setNum }}"><span class="gu-muted">€</span></div></div>
+              <div><label class="ac-label" for="ac-initialCapital">Capital inicial</label><div class="nv-field__box"><input id="ac-initialCapital" name="initialCapital" type="number" step="1000" defaultValue="{{ v.initialCapital }}" onChange="{{ setNum }}"><span class="gu-muted">€</span></div></div>
               <div class="ac-x211">
-                <div><label class="ac-label">Aportación</label><div class="ac-search"><input name="periodicContribution" type="number" step="50" defaultValue="{{ v.periodicContribution }}" onChange="{{ setNum }}"><span class="gu-muted">€</span></div></div>
-                <div><label class="ac-label">Frecuencia</label><select class="nv-select ac-x212" name="contributionFrequency" value="{{ v.contributionFrequency }}" onChange="{{ setStr }}"><option value="monthly">Mensual</option><option value="yearly">Anual</option></select></div>
+                <div><label class="ac-label" for="ac-periodicContribution">Aportación</label><div class="nv-field__box"><input id="ac-periodicContribution" name="periodicContribution" type="number" step="50" defaultValue="{{ v.periodicContribution }}" onChange="{{ setNum }}"><span class="gu-muted">€</span></div></div>
+                <div><label class="ac-label" for="ac-contributionFrequency">Frecuencia</label><select class="nv-select ac-x212" id="ac-contributionFrequency" name="contributionFrequency" value="{{ v.contributionFrequency }}" onChange="{{ setStr }}"><option value="monthly">Mensual</option><option value="yearly">Anual</option></select></div>
               </div>
               <div>
-                <div class="ac-x213"><label class="gu-text">Horizonte temporal</label><span class="gu-accent">{{ v.years }} años</span></div>
-                <input name="years" type="range" min="1" max="50" defaultValue="{{ v.years }}" onChange="{{ setNum }}" class="ac-x214">
+                <div class="ac-x213"><label class="gu-text" for="ac-years">Horizonte temporal</label><span class="gu-accent">{{ v.years }} años</span></div>
+                <input id="ac-years" name="years" type="range" min="1" max="50" defaultValue="{{ v.years }}" onChange="{{ setNum }}" class="ac-x214">
               </div>
-              <div><label class="ac-label">Tasa de retorno anual esperada</label><div class="ac-search"><input name="expectedReturn" type="number" step="0.1" defaultValue="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
+              <div><label class="ac-label" for="ac-expectedReturn">Tasa de retorno anual esperada</label><div class="nv-field__box"><input id="ac-expectedReturn" name="expectedReturn" type="number" step="0.1" defaultValue="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
             </div>
             <p class="ac-x215">Ajustes avanzados</p>
             <div class="gu-stack">
-              <div><label class="ac-label">Inflación anual estimada</label><div class="ac-search"><input name="inflationRate" type="number" step="0.1" defaultValue="{{ v.inflationRate }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
-              <div><label class="ac-label">Impuestos sobre beneficios</label><div class="ac-search"><input name="taxRate" type="number" step="0.1" defaultValue="{{ v.taxRate }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
-              <div><label class="ac-label">Incremento anual de aportaciones</label><div class="ac-search"><input name="annualIncrease" type="number" step="0.1" defaultValue="{{ v.annualIncrease }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
+              <div><label class="ac-label" for="ac-inflationRate">Inflación anual estimada</label><div class="nv-field__box"><input id="ac-inflationRate" name="inflationRate" type="number" step="0.1" defaultValue="{{ v.inflationRate }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
+              <div><label class="ac-label" for="ac-taxRate">Impuestos sobre beneficios</label><div class="nv-field__box"><input id="ac-taxRate" name="taxRate" type="number" step="0.1" defaultValue="{{ v.taxRate }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
+              <div><label class="ac-label" for="ac-annualIncrease">Incremento anual de aportaciones</label><div class="nv-field__box"><input id="ac-annualIncrease" name="annualIncrease" type="number" step="0.1" defaultValue="{{ v.annualIncrease }}" onChange="{{ setNum }}"><span class="gu-muted">%</span></div></div>
             </div>
           </div>
           <div class="gu-stack">
@@ -673,21 +715,26 @@
             <div class="gu-card">
               <h3 class="ac-strong">Evolución del patrimonio</h3>
               <p class="gu-muted">El gráfico muestra la diferencia entre lo que tú aportas y lo que se genera por el efecto acumulado de la rentabilidad.</p>
-              <svg viewBox="0 0 640 240" class="ac-x56" role="img" aria-label="Evolución de aportaciones e intereses">
+              <div class="ac-compound-chart">
+                <div class="ac-compound-chart__plot">
+                  <span class="ac-compound-chart__y ac-compound-chart__y--max">{{ chartMax }}</span>
+                  <span class="ac-compound-chart__y ac-compound-chart__y--mid">{{ chartMid }}</span>
+                  <span class="ac-compound-chart__y ac-compound-chart__y--zero">0 €</span>
+                  <span class="ac-compound-chart__x ac-compound-chart__x--start">Año 1</span>
+                  <span class="ac-compound-chart__x ac-compound-chart__x--end">{{ chartFin }}</span>
+              <svg viewBox="0 0 640 240" class="ac-x56" role="img" aria-label="Evolución de aportaciones e intereses" aria-describedby="ac-compound-help">
                 <line x1="52" y1="10" x2="52" y2="204" stroke="#cbd5e1"></line>
                 <line x1="52" y1="204" x2="632" y2="204" stroke="#cbd5e1"></line>
                 <line x1="52" y1="107" x2="632" y2="107" stroke="#edf1f6"></line>
                 <line x1="52" y1="10" x2="632" y2="10" stroke="#edf1f6"></line>
-                <text x="46" y="14" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMax }}</text>
-                <text x="46" y="111" text-anchor="end" font-size="10" fill="#6b7686">{{ chartMid }}</text>
-                <text x="46" y="208" text-anchor="end" font-size="10" fill="#6b7686">0</text>
-                <text x="52" y="224" font-size="10" fill="#6b7686">Año 1</text>
-                <text x="632" y="224" text-anchor="end" font-size="10" fill="#6b7686">{{ chartFin }}</text>
-                <polygon points="{{ areaBruto }}" fill="rgba(124,154,68,.28)"></polygon>
-                <polygon points="{{ areaAportado }}" fill="rgba(100,116,139,.22)"></polygon>
-                <polyline points="{{ lineaBruto }}" fill="none" stroke="#7C9A44" stroke-width="2.4" stroke-linecap="round"></polyline>
-                <polyline points="{{ lineaAportado }}" fill="none" stroke="#6b7686" stroke-width="2" stroke-linecap="round"></polyline>
+                <polygon sc-camel-points="{{ areaBruto }}" fill="rgba(124,154,68,.28)"></polygon>
+                <polygon sc-camel-points="{{ areaAportado }}" fill="rgba(100,116,139,.22)"></polygon>
+                <polyline sc-camel-points="{{ lineaBruto }}" fill="none" stroke="#7C9A44" stroke-width="2.4" stroke-linecap="round"></polyline>
+                <polyline sc-camel-points="{{ lineaAportado }}" fill="none" stroke="#6b7686" stroke-width="2" stroke-linecap="round"></polyline>
               </svg>
+                </div>
+              </div>
+              <p id="ac-compound-help" class="nv-table-scroll__hint">Importes en euros y plazo en años. La línea discontinua muestra las aportaciones; la continua incluye los intereses del supuesto elegido.</p>
               <div class="ac-x219">
                 <span class="ac-x220"><span class="ac-x221"></span>Aportaciones</span>
                 <span class="ac-x220"><span class="ac-x222"></span>Aportaciones + intereses</span>
@@ -801,12 +848,17 @@ class Component extends DCLogic {
   state = { tab: 'inicio', activosSub: 'seguridad', sub: 'conceptos', abiertos: {}, c: null };
   cDefaults() { return { initialCapital: 10000, periodicContribution: 300, contributionFrequency: 'monthly', years: 20, expectedReturn: 6.5, inflationRate: 2, taxRate: 21, annualIncrease: 0 }; }
   componentDidMount() {
-    document.title = 'Academia Nuvia | NUVIA Family Wealth';
+    document.title = 'NUVIA · Academia NUVIA';
     const raw = new URLSearchParams(window.location.search).get('tab');
     const p = raw === 'interes' ? 'calculadora' : raw;
     const hash = window.location.hash.replace('#', '');
     if (p && ['inicio', 'cursos', 'esenciales', 'fundamentos', 'activos', 'calculadora', 'glosario'].includes(p)) this.setState({ tab: p });
     else if (hash === 'glosario') this.setState({ tab: 'glosario' });
+    // El montaje del componente reemplaza el ancla inicial del HTML.
+    // Recuperar el destino después del render, sin mover el interior del hero.
+    if (hash === 'ruta-aprendizaje' && (!p || p === 'inicio')) {
+      requestAnimationFrame(() => document.getElementById('ruta-aprendizaje')?.scrollIntoView({ block: 'start' }));
+    }
   }
   abrirTab(tab) {
     const url = new URL(window.location.href);
@@ -925,7 +977,7 @@ class Component extends DCLogic {
         abrir: () => this.abrirTab(id),
         clase: pill(id === tab || (id === 'esenciales' && ['fundamentos', 'activos', 'calculadora', 'glosario'].includes(tab))),
       })),
-      esInicio: tab === 'inicio', esCursos: tab === 'cursos', esEsenciales: tab === 'esenciales',
+      esInicio: tab === 'inicio', esCursos: tab === 'cursos', esEsenciales: tab === 'esenciales', mostrarRegreso: tab !== 'inicio',
       esFundamentos: tab === 'fundamentos', esActivos: tab === 'activos', esCalculadora: tab === 'calculadora', esGlosario: tab === 'glosario',
       irInicio: () => this.abrirTab('inicio'),
       irCursos: () => this.abrirTab('cursos'),

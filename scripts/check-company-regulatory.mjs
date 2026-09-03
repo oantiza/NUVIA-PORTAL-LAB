@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, '..');
 const root = path.join(projectRoot, 'company-analysis', 'src');
-const folders = ['views', 'components'];
+const folders = ['views', 'components', 'local', 'alfa'];
 const files = [];
 
 function collect(folder) {

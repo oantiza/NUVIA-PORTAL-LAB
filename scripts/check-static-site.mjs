@@ -203,8 +203,7 @@ if (!Array.isArray(daily.dailyMacroIndicators) || daily.dailyMacroIndicators.len
    Lo que NO puede haber en el árbol publicado:
    - el universo de la alfa (universo/universo-alfa.*): es contenido editorial
      del repositorio, no de la web; el catálogo se sirve desde Firestore;
-   - company-analysis/: «En preparación», fuera de la publicación salvo
-     NUVIA_EMPRESAS=1 (y en ese caso solo en dist/, nunca desde cartera.html);
+   - company-analysis/: entrada alfa sin dependencias de la base profesional;
    - ninguna cadena de la base profesional, de funciones en la nube, de Auth
      ni una clave de EODHD en el código publicado (js/ y páginas). */
 const problemasAlfa = [];
@@ -216,17 +215,13 @@ for (const f of todos) {
   const enCarpetaUniverso = basename(dirname(f)) === 'universo' && dirname(dirname(f)) === root;
   if (esDist || !enCarpetaUniverso) problemasAlfa.push(`${f}: el universo de la alfa vive solo en universo/ y no se publica`);
 }
-if (esDist && process.env.NUVIA_EMPRESAS !== '1') {
-  try {
-    await access(resolve(root, 'company-analysis'));
-    problemasAlfa.push('dist/company-analysis/ existe sin NUVIA_EMPRESAS=1: la alfa no publica el módulo de empresas');
-  } catch { /* correcto: no existe */ }
-}
+if (esDist) await access(resolve(root, 'company-analysis/index.html'));
 const CADENAS_MAESTRA = CADENAS_SIN_MAESTRA.map(([cadena]) => cadena);
 for (const f of todos) {
   const rel = f.slice(root.length + 1).replace(/\\/g, '/');
-  if (!/^(?:js\/|[^/]+\.html$|web2-integration\.js$|nuvia-site-unified\.js$)/.test(rel)) continue;
-  if (rel.startsWith('js/nuvia-cuenta.js') || rel.startsWith('company-analysis/')) continue;
+  const companyAlpha = esDist && rel.startsWith('company-analysis/');
+  if (!companyAlpha && !/^(?:js\/|[^/]+\.html$|web2-integration\.js$|nuvia-site-unified\.js$)/.test(rel)) continue;
+  if (rel.startsWith('js/nuvia-cuenta.js')) continue;
   if (!/\.(?:m?js|html)$/.test(rel)) continue;
   const texto = await readFile(f, 'utf8');
   for (const cadena of CADENAS_MAESTRA) {
@@ -238,4 +233,4 @@ if (problemasAlfa.length) {
   throw new Error(`Alfa con base propia:\n${problemasAlfa.join('\n')}`);
 }
 
-console.log(`Sitio estático verificado: ${htmlFiles.length} páginas y todas sus referencias locales. Sin universo, sin módulo de empresas y sin rastro de la base profesional (alfa).`);
+console.log(`Sitio estático verificado: ${htmlFiles.length} páginas y todas sus referencias locales. Sin universo privado ni rastro de la base profesional; módulo alfa independiente.`);

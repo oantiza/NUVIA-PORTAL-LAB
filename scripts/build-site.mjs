@@ -18,6 +18,7 @@
 import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve, join, relative, dirname } from 'node:path';
+import { referencedAsset } from './site-assets.mjs';
 
 const root = resolve(process.cwd());
 const output = resolve(root, 'dist');
@@ -55,7 +56,7 @@ const ficherosRaiz = [
 /* Directorios que se copian enteros. src/assets ya NO está aquí: se resuelve
    por referencias más abajo. _archivo tampoco: son originales que no se
    publican. */
-const directorios = ['estilos', 'js', '_ds', 'core', 'data'];
+const directorios = ['estilos', 'js', '_ds', 'core/downloads', 'data'];
 
 async function pesoDe(dir) {
   let total = 0;
@@ -100,6 +101,7 @@ for (const f of [...paginas, ...ficherosRaiz]) {
 for (const d of directorios) {
   const origen = resolve(root, d);
   if (!existsSync(origen)) continue;
+  await mkdir(dirname(resolve(output, d)), { recursive: true });
   await cp(origen, resolve(output, d), { recursive: true });
 }
 
@@ -109,21 +111,8 @@ for (const d of directorios) {
    ─────────────────────────────────────────────────────────────────────────── */
 
 const companyBuild = resolve(root, 'company-analysis', 'build');
-/* Alfa (02-09-2026): «Análisis y valoración de empresas» queda «En
-   preparación» y FUERA de dist/ salvo que se pida expresamente con
-   NUVIA_EMPRESAS=1 (el módulo depende de un proxy de datos que la alfa no
-   usa). Que exista una compilación antigua en company-analysis/build no
-   basta para publicarla. */
-if (process.env.NUVIA_EMPRESAS === '1') {
-  if (existsSync(companyBuild)) {
-    await cp(companyBuild, resolve(output, 'company-analysis'), { recursive: true });
-  } else {
-    console.warn('  aviso: NUVIA_EMPRESAS=1 pero company-analysis/build no existe. Ejecuta antes');
-    console.warn('         npm run build:company-analysis');
-  }
-} else {
-  console.log('  company-analysis: fuera de la publicación (alfa; NUVIA_EMPRESAS no definida).');
-}
+// La entrada alfa compilada no utiliza el proxy ni la autenticación antiguos.
+await cp(companyBuild, resolve(output, 'company-analysis'), { recursive: true });
 
 /* ── 4 · Assets: solo lo referenciado ───────────────────────────────────────
    Se lee todo el texto publicable y se copia únicamente lo que aparece en él.
@@ -147,8 +136,7 @@ const noUsados = [];
 
 for (const p of todos) {
   const rel = relative(root, p).split('\\').join('/');
-  const nombre = rel.split('/').pop();
-  (texto.includes(rel) || texto.includes(nombre) ? usados : noUsados).push(p);
+  (referencedAsset(texto, rel) ? usados : noUsados).push(p);
 }
 
 for (const p of usados) {
@@ -161,8 +149,10 @@ for (const p of usados) {
 let pesoFuera = 0;
 for (const p of noUsados) pesoFuera += (await stat(p)).size;
 
+const informes = resolve(root, 'output/build');
+await mkdir(informes, { recursive: true });
 await writeFile(
-  resolve(output, 'assets-excluidos.txt'),
+  resolve(informes, 'assets-excluidos.txt'),
   [
     '# Assets presentes en el repositorio pero NO publicados,',
     '# porque ninguna página, hoja de estilos o fichero de datos los referencia.',
@@ -180,6 +170,6 @@ const pesoFinal = await pesoDe(output);
 console.log('');
 console.log(`  Páginas publicadas   ${paginas.length}`);
 console.log(`  Assets incluidos     ${usados.length}`);
-console.log(`  Assets excluidos     ${noUsados.length} (${mb(pesoFuera)}) → dist/assets-excluidos.txt`);
+console.log(`  Assets excluidos     ${noUsados.length} (${mb(pesoFuera)}) → output/build/assets-excluidos.txt (no publicable)`);
 console.log(`  Peso de dist/        ${mb(pesoFinal)}`);
 console.log('');

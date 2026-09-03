@@ -1,4 +1,14 @@
 (() => {
+  let formularios;
+  let estados;
+  const scriptBase = document.currentScript.src;
+  Promise.all([
+    import(new URL('js/nuvia-formularios.js', scriptBase)),
+    import(new URL('js/nuvia-estados.js', scriptBase)),
+  ]).then(([f, e]) => {
+    formularios = f.instalaFormularios(); estados = e;
+    scheduleSync();
+  }).catch((error) => console.error('No se pudieron cargar los controles locales de NUVIA.', error));
   const route = () => location.pathname.split('/').pop() || 'index.html';
   const currentTopic = () => document.body?.dataset.nuviaTopic
     || new URLSearchParams(location.search).get('topic') || 'jubilacion';
@@ -272,11 +282,21 @@
     normalizeFormAccessibility(main);
     normalizeToggleGroups(main);
     normalizeTabAccessibility(main);
+    formularios?.sincroniza();
+    if (main) {
+      estados?.senalaDestinosPendientes(document.body);
+      estados?.sincronizaAtajos(main);
+    }
   };
 
   // Native details/summary keeps keyboard support without replacing React nodes.
   // Scope events to the main header; breadcrumb menus and content accordions stay independent.
   const dropdownSelector = '.nuvia-site-nav > .nuvia-site-nav__topics';
+  document.addEventListener('click', (event) => {
+    if (event.target.closest?.('a[data-result-anchor][aria-disabled="true"]')) {
+      event.preventDefault(); event.stopImmediatePropagation();
+    }
+  }, true);
   document.addEventListener('toggle', (event) => {
     const opened = event.target;
     if (!(opened instanceof Element) || !opened.matches(dropdownSelector) || !opened.open) return;
@@ -312,6 +332,16 @@
   window.addEventListener('hashchange', scheduleSync);
   window.addEventListener('popstate', scheduleSync);
 
-  const observer = new MutationObserver(scheduleSync);
-  observer.observe(document, { childList: true, subtree: true });
+  const observer = new MutationObserver((records) => {
+    // React puede cambiar de capítulo sin añadir nodos. También sincronizar
+    // sus botones cuando cambia la clase activa o aria-current; no observar
+    // aria-pressed, que escribe esta misma capa, ni clases ajenas al grupo.
+    if (records.some((record) => record.type === 'childList'
+      || (record.target instanceof Element
+        && record.target.matches('[data-nuvia-toggle-group="true"] > button')))) scheduleSync();
+  });
+  observer.observe(document, {
+    childList: true, subtree: true, attributes: true,
+    attributeFilter: ['class', 'aria-current'],
+  });
 })();

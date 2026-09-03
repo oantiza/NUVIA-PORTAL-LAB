@@ -19,6 +19,8 @@
  * Nunca EODHD desde el navegador; nunca la base profesional; nunca Auth.
  */
 
+import { idActual, idsEquivalentes, catalogoActual } from './nuvia-identidades.js';
+
 export const PROYECTO = { id: 'nuvia-family-wealth' };
 
 export const URL_DOCUMENTOS = `https://firestore.googleapis.com/v1/projects/${PROYECTO.id}/databases/(default)/documents`;
@@ -111,9 +113,9 @@ export function buscaEnCatalogo(items, consulta, { tipos = null, limite = 12 } =
   if (!q) return { activos: [], total: 0 };
   const palabras = q.split(/\s+/).filter(Boolean);
   const tiposOk = tipos ? new Set(tipos.map((t) => String(t).toUpperCase())) : null;
-  const coincidencias = (items || []).filter((a) => {
+  const coincidencias = catalogoActual(items || []).filter((a) => {
     if (tiposOk && !tiposOk.has(String(a.instrument_type || '').toUpperCase())) return false;
-    const texto = normaliza([a.display_name, a.isin, a.ticker, a.asset_id].filter(Boolean).join(' '));
+    const texto = normaliza([a.display_name, a.isin, a.ticker, ...idsEquivalentes(a.asset_id)].filter(Boolean).join(' '));
     return palabras.every((p) => texto.includes(p));
   });
   // Coincidencia exacta de ISIN o ticker primero; después el orden del catálogo.
@@ -129,6 +131,14 @@ export function buscaEnCatalogo(items, consulta, { tipos = null, limite = 12 } =
 export function fichaParaModulos(doc) {
   if (!doc) return null;
   const ex = doc.exposures || null;
+  const distribucion = (valor) => {
+    if (!valor || typeof valor !== 'object' || Array.isArray(valor)) return null;
+    const pesos = Object.values(valor);
+    return pesos.length && pesos.every((p) => Number.isFinite(p) && p >= 0) && pesos.some((p) => p > 0) ? valor : null;
+  };
+  const sectors = distribucion(ex?.sectors);
+  const equityRegions = distribucion(ex?.regions);
+  const equity = ex?.asset_mix?.equity;
   return {
     asset_id: doc.asset_id,
     identity: {
@@ -148,8 +158,8 @@ export function fichaParaModulos(doc) {
     metrics: doc.metrics || null,
     history: doc.history || null,
     quality: doc.quality || null,
-    pms_exposure: ex?.asset_mix ? { equity: ex.asset_mix.equity ?? 0 } : null,
-    exposure_detail: ex && (ex.sectors || ex.regions) ? { sectors: ex.sectors || null, equity_regions: ex.regions || null } : null,
+    pms_exposure: Number.isFinite(equity) && equity >= 0 && equity <= 1 ? { equity } : null,
+    exposure_detail: sectors || equityRegions ? { sectors, equity_regions: equityRegions } : null,
     fundamentals_summary: null,
     performance_preview: null,
   };
@@ -269,7 +279,7 @@ export function creaClienteMaestra({
     return salida;
   }
 
-  /* ── Catálogo: manifiesto + trozos, una vez; caché por updated_at ── */
+  /* ── Catálogo: caché por updated_at; revalidado antes de consultar series ── */
 
   let catalogoEnCurso = null;
   let catalogoMemoria = null;
@@ -283,12 +293,21 @@ export function creaClienteMaestra({
     return null;
   }
 
-  async function catalogo() {
-    if (catalogoMemoria) return catalogoMemoria;
+  async function catalogo({ refrescar = false } = {}) {
+    if (catalogoMemoria && !refrescar && !catalogoEnCurso) return catalogoMemoria;
     if (!catalogoEnCurso) {
       catalogoEnCurso = (async () => {
         const manifiesto = await lee('catalog_manifest/public');
         if (!manifiesto) throw Object.assign(new Error('El catálogo de la alfa aún no está publicado.'), { codigo: 'SIN_CATALOGO' });
+        if (catalogoMemoria && catalogoMemoria.manifiesto.updated_at !== manifiesto.updated_at) {
+          cacheBusquedas.clear();
+          cacheFichas.clear();
+          catalogoMemoria = null;
+        }
+        if (manifiesto.updated_at && catalogoMemoria?.manifiesto.updated_at === manifiesto.updated_at) {
+          catalogoMemoria = { ...catalogoMemoria, manifiesto };
+          return catalogoMemoria;
+        }
         const cache = leeCatalogoCache();
         if (cache && cache.updated_at === manifiesto.updated_at) {
           catalogoMemoria = { manifiesto, items: cache.items };
@@ -302,20 +321,23 @@ export function creaClienteMaestra({
         catalogoMemoria = { manifiesto, items };
         return catalogoMemoria;
       })();
-      catalogoEnCurso.catch(() => { catalogoEnCurso = null; });
+      // Liberar también al acertar: otra consulta de series debe revalidar.
+      catalogoEnCurso.then(() => { catalogoEnCurso = null; }, () => { catalogoEnCurso = null; });
     }
     return catalogoEnCurso;
   }
 
   /** Manifiesto del catálogo (fecha de datos, total). */
   async function manifiesto() { return (await catalogo()).manifiesto; }
+  /** Versión ya validada: permite invalidar las cachés de las vistas consumidoras. */
+  function revisionDatos() { return catalogoMemoria?.manifiesto.updated_at ?? null; }
 
   /** ¿Están estos identificadores en el catálogo de la alfa? {id: boolean}. */
-  async function enCatalogo(ids) {
-    const { items } = await catalogo();
-    const presentes = new Set(items.map((a) => a.asset_id));
+  async function enCatalogo(ids, { refrescar = false } = {}) {
+    const { items } = await catalogo({ refrescar });
+    const presentes = new Set(items.map((a) => idActual(a.asset_id)));
     const salida = {};
-    for (const id of ids || []) salida[id] = presentes.has(id);
+    for (const id of ids || []) salida[id] = presentes.has(idActual(id));
     return salida;
   }
 
@@ -338,9 +360,11 @@ export function creaClienteMaestra({
   function detalleActivo(assetId) {
     const id = String(assetId || '');
     if (!cacheFichas.has(id)) {
-      const promesa = lee(`assets/${id}`).then((doc) => {
+      const promesa = lee(`assets/${idActual(id)}`).then((doc) => {
         if (!doc) { const e = new Error('Ese activo no está en la alfa.'); e.codigo = 'NOT_FOUND'; throw e; }
-        return fichaParaModulos(doc);
+        const ficha = fichaParaModulos(doc);
+        // Mantener la clave que usa la cartera para sus pesos; no reescribirla.
+        return idActual(id) === id ? ficha : { ...ficha, asset_id: id, canonical_asset_id: doc.asset_id };
       });
       promesa.catch(() => cacheFichas.delete(id));
       cacheFichas.set(id, promesa);
@@ -350,11 +374,11 @@ export function creaClienteMaestra({
 
   /* ── Series: documentos por año; los años cerrados se cachean en el navegador ── */
 
-  function leeSerieCache(id, anio) {
-    if (!almacen) return null;
+  function leeSerieCache(id, anio, revision) {
+    if (!almacen || !revision) return null;
     try {
       const s = JSON.parse(almacen.getItem(`${PREFIJO_SERIES}${id}.${anio}`) || 'null');
-      if (s && Array.isArray(s.points)) return s;
+      if (s && s.revision === revision && Array.isArray(s.points)) return s;
     } catch { /* ilegible */ }
     return null;
   }
@@ -365,6 +389,10 @@ export function creaClienteMaestra({
   }
 
   async function seriesRebasadas(ids) {
+    if (!ids.length) return { dates: [], series: [] };
+    const { manifiesto } = await catalogo({ refrescar: true });
+    const revision = typeof manifiesto.updated_at === 'string' && manifiesto.updated_at
+      ? `${proyecto.id}:${manifiesto.updated_at}` : null;
     const hoy = hoyIso();
     const anioActual = Number(hoy.slice(0, 4));
     const anios = aniosDeVentana(hoy);
@@ -373,18 +401,18 @@ export function creaClienteMaestra({
     for (const id of ids) {
       porActivo[id] = [];
       for (const anio of anios) {
-        const cache = anio < anioActual ? leeSerieCache(id, anio) : null;
+        const cache = anio < anioActual ? leeSerieCache(id, anio, revision) : null;
         if (cache) porActivo[id].push(...cache.points);
-        else pendientes.push({ id, anio, ruta: `assets/${id}/series/${anio}` });
+        else pendientes.push({ id, anio, ruta: `assets/${idActual(id)}/series/${anio}` });
       }
     }
     if (pendientes.length) {
-      const docs = await lote(pendientes.map((p) => p.ruta));
+      const docs = await lote([...new Set(pendientes.map((p) => p.ruta))]);
       for (const p of pendientes) {
         const serie = docs[p.ruta];
         if (!serie?.points) continue;
         porActivo[p.id].push(...serie.points);
-        if (p.anio < anioActual) guardaSerieCache(p.id, p.anio, { points: serie.points });
+        if (p.anio < anioActual && revision) guardaSerieCache(p.id, p.anio, { revision, points: serie.points });
       }
     }
     const desde = `${anioActual - ANIOS_VENTANA}${hoy.slice(4)}`;
@@ -394,12 +422,12 @@ export function creaClienteMaestra({
   /* ── Desgloses ── */
 
   async function desgloseDe(id) {
-    return lee(`assets/${id}/holdings/latest`);
+    return lee(`assets/${idActual(id)}/holdings/latest`);
   }
 
   async function desglosesDe(ids) {
-    const rutas = ids.map((id) => `assets/${id}/holdings/latest`);
-    const docs = await lote(rutas);
+    const rutas = ids.map((id) => `assets/${idActual(id)}/holdings/latest`);
+    const docs = await lote([...new Set(rutas)]);
     const holdings = {};
     ids.forEach((id, i) => { holdings[id] = docs[rutas[i]] || null; });
     return { holdings };
@@ -442,7 +470,7 @@ export function creaClienteMaestra({
     listaCarterasNube: noDisponible('listaCarterasNube'),
     leeCarteraNube: noDisponible('leeCarteraNube'),
     borraCarteraNube: noDisponible('borraCarteraNube'),
-    detalleActivo, manifiesto, enCatalogo, seriesRebasadas,
+    detalleActivo, manifiesto, revisionDatos, enCatalogo, seriesRebasadas,
   };
 }
 

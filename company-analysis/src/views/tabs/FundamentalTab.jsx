@@ -3,67 +3,69 @@ import { KpiGrid, Kpi, Section } from '../../components/Kpi.jsx';
 import { DualBars } from '../../components/SvgCharts.jsx';
 import IndicatorInfo from '../../components/IndicatorInfo.jsx';
 import { fmtBig, fmtNum, fmtPct, fmtRatio, fmtDate, clsPN, pct100 } from '../../lib/format.js';
+import { financialNumber as N, marginPercent } from '../../lib/financial.js';
 
-const N = (x) => (x == null || x === 'NA' ? null : Number(x));
-
-function yearlyRows(fund, statement, fields) {
+function yearlyRows(fund, statement, fields, limit) {
   const y = fund?.Financials?.[statement]?.yearly || {};
-  return Object.keys(y).sort().map((date) => {
+  return Object.keys(y).sort().slice(-limit).map((date) => {
     const row = { date, label: date.slice(0, 4) };
     for (const f of fields) row[f] = N(y[date][f]);
     return row;
   });
 }
 
-export default function FundamentalTab({ fund }) {
+export default function FundamentalTab({ fund, historicalOnly = false, yearlyLimit = Infinity }) {
   const h = fund?.Highlights || {};
   const v = fund?.Valuation || {};
   const ss = fund?.SharesStats || {};
   const sd = fund?.SplitsDividends || {};
   const g = fund?.General || {};
-  const currency = fund?.Financials?.Income_Statement?.currency_symbol || g.CurrencyCode;
+  const currency = fund?.Financials?.Income_Statement?.currency_symbol || (historicalOnly ? null : g.CurrencyCode);
+  const balanceCurrency = fund?.Financials?.Balance_Sheet?.currency_symbol || (historicalOnly ? null : currency);
+  const cashCurrency = fund?.Financials?.Cash_Flow?.currency_symbol || (historicalOnly ? null : currency);
 
-  const income = yearlyRows(fund, 'Income_Statement', ['totalRevenue', 'grossProfit', 'operatingIncome', 'netIncome', 'ebitda']);
-  const balance = yearlyRows(fund, 'Balance_Sheet', ['totalAssets', 'totalLiab', 'totalStockholderEquity', 'cash', 'netDebt', 'shortLongTermDebtTotal']);
-  const cashflow = yearlyRows(fund, 'Cash_Flow', ['totalCashFromOperatingActivities', 'capitalExpenditures', 'freeCashFlow', 'dividendsPaid']);
+  const income = yearlyRows(fund, 'Income_Statement', ['totalRevenue', 'grossProfit', 'operatingIncome', 'netIncome', 'ebitda'], yearlyLimit);
+  const balance = yearlyRows(fund, 'Balance_Sheet', ['totalAssets', 'totalLiab', 'totalStockholderEquity', 'cash', 'netDebt', 'shortLongTermDebtTotal'], yearlyLimit);
+  const cashflow = yearlyRows(fund, 'Cash_Flow', ['totalCashFromOperatingActivities', 'capitalExpenditures', 'freeCashFlow', 'dividendsPaid'], yearlyLimit);
 
-  const earnHist = Object.values(fund?.Earnings?.History || {})
+  const earnHist = Object.values(historicalOnly ? {} : fund?.Earnings?.History || {})
     .filter((e) => e?.epsActual != null)
     .sort((a, b) => (a.reportDate < b.reportDate ? 1 : -1))
     .slice(0, 8);
 
-  const instituciones = Object.values(fund?.Holders?.Institutions || {}).slice(0, 8);
+  const instituciones = Object.values(historicalOnly ? {} : fund?.Holders?.Institutions || {}).slice(0, 8);
 
   return (
     <>
       <Section eyebrow="Valoración" title="Múltiplos">
         <KpiGrid>
           <Kpi label="PER (ttm)" value={fmtRatio(N(h.PERatio))} />
-          <Kpi label="PER estimado" value={fmtRatio(N(v.ForwardPE))} />
-          <Kpi label="PEG" value={fmtRatio(N(h.PEGRatio))} />
+          {!historicalOnly && <Kpi label="PER estimado" value={fmtRatio(N(v.ForwardPE))} />}
+          {!historicalOnly && <Kpi label="PEG" value={fmtRatio(N(h.PEGRatio))} />}
           <Kpi label="Precio / Ventas" value={fmtRatio(N(v.PriceSalesTTM))} />
           <Kpi label="Precio / Valor contable" value={fmtRatio(N(v.PriceBookMRQ))} />
-          <Kpi label="EV" value={fmtBig(N(v.EnterpriseValue), currency)} />
+          {!historicalOnly && <Kpi label="EV" value={fmtBig(N(v.EnterpriseValue), currency)} />}
           <Kpi label="EV / Ventas" value={fmtRatio(N(v.EnterpriseValueRevenue))} />
           <Kpi label="EV / EBITDA" value={fmtRatio(N(v.EnterpriseValueEbitda))} />
         </KpiGrid>
       </Section>
 
-      <Section eyebrow="Rentabilidad y crecimiento" title="Calidad del negocio">
+      <Section eyebrow="Rentabilidad y crecimiento" title="Márgenes y resultados">
         <KpiGrid>
-          <Kpi label="Margen bruto (ttm)" value={h.GrossProfitTTM && h.RevenueTTM ? fmtPct((N(h.GrossProfitTTM) / N(h.RevenueTTM)) * 100, 1, false) : '—'} />
+          <Kpi label="Margen bruto (ttm)" value={fmtPct(marginPercent(h.GrossProfitTTM, h.RevenueTTM), 1, false)} />
           <Kpi label="Margen operativo" value={fmtPct(pct100(h.OperatingMarginTTM), 1, false)} />
           <Kpi label="Margen neto" value={fmtPct(pct100(h.ProfitMargin), 1, false)} />
           <Kpi label="ROE" value={fmtPct(pct100(h.ReturnOnEquityTTM), 1, false)} />
           <Kpi label="ROA" value={fmtPct(pct100(h.ReturnOnAssetsTTM), 1, false)} />
           <Kpi label="Crec. ingresos (a/a)" value={fmtPct(pct100(h.QuarterlyRevenueGrowthYOY), 1)} cls={clsPN(pct100(h.QuarterlyRevenueGrowthYOY))} />
           <Kpi label="Crec. beneficio (a/a)" value={fmtPct(pct100(h.QuarterlyEarningsGrowthYOY), 1)} cls={clsPN(pct100(h.QuarterlyEarningsGrowthYOY))} />
-          <Kpi label="BPA (ttm)" value={h.EarningsShare != null ? fmtNum(N(h.EarningsShare), 2) : '—'} sub={h.EPSEstimateNextYear ? `Est. próx. año ${fmtNum(N(h.EPSEstimateNextYear), 2)}` : null} />
+          {!historicalOnly && <Kpi label="BPA (ttm)" value={h.EarningsShare != null ? fmtNum(N(h.EarningsShare), 2) : '—'} sub={h.EPSEstimateNextYear ? `Est. próx. año ${fmtNum(N(h.EPSEstimateNextYear), 2)}` : null} />}
         </KpiGrid>
       </Section>
 
       {income.length > 0 && (
         <Section eyebrow="Cuenta de resultados" title="Ingresos y beneficio">
+          <p className="tiny">Divisa del estado: {currency || 'no informada'}. Margen neto = beneficio neto / ingresos × 100; no se calcula si falta un dato.</p>
           <div className="grid2">
             <div className="card">
               <DualBars
@@ -84,7 +86,7 @@ export default function FundamentalTab({ fund }) {
                       <td className="num">{fmtBig(r.ebitda, currency)}</td>
                       <td className="num">{fmtBig(r.operatingIncome, currency)}</td>
                       <td className={`num ${clsPN(r.netIncome)}`}>{fmtBig(r.netIncome, currency)}</td>
-                      <td className="num">{r.totalRevenue ? fmtPct((r.netIncome / r.totalRevenue) * 100, 1, false) : '—'}</td>
+                      <td className="num">{fmtPct(marginPercent(r.netIncome, r.totalRevenue), 1, false)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -98,6 +100,7 @@ export default function FundamentalTab({ fund }) {
         {balance.length > 0 && (
           <div className="card" style={{ overflowX: 'auto' }}>
             <div className="eyebrow" style={{ marginBottom: 10 }}>Balance</div>
+            <p className="tiny">Divisa del estado: {balanceCurrency || 'no informada'}.</p>
             <table className="tbl">
               <thead>
                 <tr><th className="l">Ejercicio</th><th><IndicatorInfo name="Activos" /></th><th><IndicatorInfo name="Patrimonio" /></th><th><IndicatorInfo name="Caja" /></th><th><IndicatorInfo name="Deuda neta" /></th></tr>
@@ -106,10 +109,10 @@ export default function FundamentalTab({ fund }) {
                 {[...balance].reverse().map((r) => (
                   <tr key={r.date}>
                     <td className="l">{r.label}</td>
-                    <td className="num">{fmtBig(r.totalAssets, currency)}</td>
-                    <td className="num">{fmtBig(r.totalStockholderEquity, currency)}</td>
-                    <td className="num">{fmtBig(r.cash, currency)}</td>
-                    <td className="num">{fmtBig(r.netDebt, currency)}</td>
+                    <td className="num">{fmtBig(r.totalAssets, balanceCurrency)}</td>
+                    <td className="num">{fmtBig(r.totalStockholderEquity, balanceCurrency)}</td>
+                    <td className="num">{fmtBig(r.cash, balanceCurrency)}</td>
+                    <td className="num">{fmtBig(r.netDebt, balanceCurrency)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -119,6 +122,7 @@ export default function FundamentalTab({ fund }) {
         {cashflow.length > 0 && (
           <div className="card" style={{ overflowX: 'auto' }}>
             <div className="eyebrow" style={{ marginBottom: 10 }}>Flujos de caja</div>
+            <p className="tiny">Divisa del estado: {cashCurrency || 'no informada'}.</p>
             <table className="tbl">
               <thead>
                 <tr><th className="l">Ejercicio</th><th><IndicatorInfo name="Flujo operativo" /></th><th><IndicatorInfo name="Capex" /></th><th><IndicatorInfo name="FCF" /></th><th><IndicatorInfo name="Dividendos" /></th></tr>
@@ -127,10 +131,10 @@ export default function FundamentalTab({ fund }) {
                 {[...cashflow].reverse().map((r) => (
                   <tr key={r.date}>
                     <td className="l">{r.label}</td>
-                    <td className="num">{fmtBig(r.totalCashFromOperatingActivities, currency)}</td>
-                    <td className="num">{fmtBig(r.capitalExpenditures, currency)}</td>
-                    <td className={`num ${clsPN(r.freeCashFlow)}`}>{fmtBig(r.freeCashFlow, currency)}</td>
-                    <td className="num">{fmtBig(r.dividendsPaid, currency)}</td>
+                    <td className="num">{fmtBig(r.totalCashFromOperatingActivities, cashCurrency)}</td>
+                    <td className="num">{fmtBig(r.capitalExpenditures, cashCurrency)}</td>
+                    <td className={`num ${clsPN(r.freeCashFlow)}`}>{fmtBig(r.freeCashFlow, cashCurrency)}</td>
+                    <td className="num">{fmtBig(r.dividendsPaid, cashCurrency)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -140,7 +144,7 @@ export default function FundamentalTab({ fund }) {
       </div>
 
       <div className="grid2 section">
-        <div className="card">
+        {!historicalOnly && <div className="card">
           <div className="eyebrow" style={{ marginBottom: 10 }}>Dividendos</div>
           <table className="tbl">
             <tbody>
@@ -151,7 +155,7 @@ export default function FundamentalTab({ fund }) {
               <tr><td className="l">Ex-dividendo</td><td className="num">{fmtDate(sd.ExDividendDate)}</td></tr>
             </tbody>
           </table>
-        </div>
+        </div>}
 
         <div className="card">
           <div className="eyebrow" style={{ marginBottom: 10 }}>Accionariado</div>
@@ -204,9 +208,11 @@ export default function FundamentalTab({ fund }) {
       )}
 
       <p className="note section">
-        Fundamentales de EODHD, actualizados como máximo cada 7 días en caché. Los importes se muestran
-        en {currency || 'divisa local'}; «mm» = miles de millones. Las estimaciones futuras son datos de
-        terceros y se identifican como tales; NUVIA no las convierte en un veredicto.
+        {historicalOnly
+          ? 'Fuente: EODHD, copia local sin refresco automático. Se muestran hasta los últimos cinco ejercicios disponibles de cada estado; pueden diferir entre sí. Los ratios TTM corresponden a los últimos doce meses del proveedor, no necesariamente al último ejercicio anual. Sin estimaciones futuras. Se omiten EV monetario, capitalización y BPA agregado hasta confirmar su moneda específica. '
+          : 'Fundamentales de EODHD. Las estimaciones futuras son datos de terceros; NUVIA no las convierte en un veredicto. '}
+        «—» = dato no disponible; k = miles, M = millones, mm = miles de millones, B = billones.
+        Las divisas de los estados se identifican por separado. Las cifras no califican el atractivo de la empresa.
       </p>
     </>
   );

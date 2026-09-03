@@ -31,7 +31,10 @@ const server = createServer(async (request, response) => {
     await access(filePath);
     response.writeHead(200, {
       'Content-Type': mimeTypes[extname(filePath).toLowerCase()] || 'application/octet-stream',
-      'Cache-Control': 'no-store'
+      'Cache-Control': 'no-store',
+      ...(process.env.NUVIA_PREVIEW_OFFLINE === '1' ? {
+        'Content-Security-Policy': "default-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-src 'self'; form-action 'none'"
+      } : {})
     });
     createReadStream(filePath).pipe(response);
   } catch {

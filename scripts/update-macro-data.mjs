@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { eurostatObservations, ecbObservations } from './official-observations.mjs';
 
 const root = resolve(process.cwd());
 const dataPath = resolve(root, 'data/daily-content.json');
@@ -64,10 +65,7 @@ async function eurostatSeries(dataset, filters) {
   const timeIndex = payload.dimension?.time?.category?.index;
   if (!timeIndex || !payload.value) throw new Error(`Respuesta incompleta de Eurostat para ${dataset}`);
 
-  const observations = Object.entries(timeIndex)
-    .map(([period, index]) => ({ period, value: Number(payload.value[String(index)]) }))
-    .filter(({ value }) => Number.isFinite(value))
-    .sort((a, b) => timeIndex[a.period] - timeIndex[b.period]);
+  const observations = eurostatObservations(payload);
 
   if (observations.length < 2) throw new Error(`Eurostat no devolvió dos observaciones para ${dataset}`);
   return {
@@ -103,11 +101,7 @@ async function ecbSeries(seriesKey, lastObservations = 10) {
   const url = `https://data-api.ecb.europa.eu/service/data/FM/${seriesKey}?format=csvdata&lastNObservations=${lastObservations}`;
   const rows = (await fetchText(url)).trim().split(/\r?\n/).map(parseCsvRow);
   const header = rows.shift();
-  const timeColumn = header.indexOf('TIME_PERIOD');
-  const valueColumn = header.indexOf('OBS_VALUE');
-  const observations = rows
-    .map((row) => ({ period: row[timeColumn], value: Number(row[valueColumn]) }))
-    .filter(({ period, value }) => period && Number.isFinite(value));
+  const observations = ecbObservations(header, rows);
   if (observations.length < 2) throw new Error(`El BCE no devolvió datos suficientes para ${seriesKey}`);
   return { current: observations.at(-1), previous: observations.at(-2) };
 }
@@ -137,7 +131,7 @@ existing.macroIndicatorsUpdatedAt = checkedLabel;
 existing.dailyMacroIndicators = [
   {
     id: 'inflation-spain',
-    label: 'IPC España',
+    label: 'IPCA España',
     value: number(inflationSpain.current.value),
     period: `${periodLabel(inflationSpain.current.period)} · interanual`,
     ...movement(inflationSpain.current.value, inflationSpain.previous.value),

@@ -35,8 +35,12 @@ export const NOTA_ANALISIS_CERRADO = 'En esta versión alfa el análisis ampliad
   + 'abierto para cualquiera; si no aparece, la base de datos no ha respondido.';
 
 export const FUENTE_ANALISIS = 'Fichas y desgloses de la base de datos NUVIA '
-  + 'a su último cierre; el ahorro por diversificar sale del mismo historial '
-  + 'de 3 años de la tabla de métricas.';
+  + 'a su último cierre; diversificación y frontera usan las mismas series '
+  + 'de 3 años que la tabla, pero un modelo con pesos constantes.';
+
+export const TEXTO_HISTORIAL = 'Historial sin rebalanceo: se aplica el reparto '
+  + 'inicial y después los pesos cambian con los precios. La tabla y la evolución '
+  + 'miden esa trayectoria; la frontera utiliza otro método, con pesos constantes.';
 
 /** Qué añade el nivel suscriptor, dicho al registrado sin empujar (paso 33).
  *  La suscripción aún no puede contratarse y se dice tal cual. */
@@ -46,11 +50,24 @@ export const NOTA_ANALISIS_SUSCRIPTOR = 'El nivel suscriptor —aún no abierto 
   + 'simulación y la matriz de correlaciones, con hasta 20 posiciones.';
 
 /** Qué es la frontera, en llano y sin previsión (bases §2). */
-export const TEXTO_FRONTERA = 'La curva une, a cada nivel de riesgo, la mezcla '
-  + 'de estos mismos activos que más rentó en el historial de 3 años; cualquier '
-  + 'otra mezcla quedó por debajo de la curva. Tu combinación se calcula con la '
-  + 'misma rentabilidad, volatilidad y correlaciones, para que la comparación sea '
-  + 'coherente. Describe ese historial, no el futuro.';
+export const TEXTO_FRONTERA = 'Frontera aproximada a partir de 4.000 mezclas '
+  + 'de estos activos, con pesos constantes y datos del historial común de 3 años. '
+  + 'El riesgo usa sus volatilidades y correlaciones; la rentabilidad del modelo '
+  + 'es la media ponderada de las rentabilidades compuestas anualizadas de cada activo. '
+  + 'No es la rentabilidad realizada de una cartera sin rebalanceo ni de una '
+  + 'estrategia rebalanceada. El punto de tu combinación usa el mismo modelo que '
+  + 'la curva, no el método de la tabla anterior. Describe el modelo, no el futuro.';
+
+/** Dos resultados distintos, sin sustituir ni forzar la igualdad de ninguno. */
+export function filasComparacionMetodos(metricas, punto) {
+  return [
+    { metodo: 'Historial sin rebalanceo', rentabilidad: metricas?.rentabilidadAnualizada, volatilidad: metricas?.volatilidad },
+    { metodo: 'Modelo con pesos constantes', rentabilidad: punto?.rentabilidad, volatilidad: punto?.volatilidad },
+  ].map(fila => ({ ...fila,
+    rentabilidad: Number.isFinite(fila.rentabilidad) ? fila.rentabilidad : null,
+    volatilidad: Number.isFinite(fila.volatilidad) ? fila.volatilidad : null,
+  }));
+}
 
 /** Qué es la proyección: simulación con supuestos a la vista, nunca previsión. */
 export const TEXTO_PROYECCION = 'Simulación de 4.000 trayectorias a pasos '
@@ -129,10 +146,11 @@ export function ahorroDeSeries(series, pesos) {
 /** Lectura llana del ahorro: la cifra y qué significa, sin aconsejar. */
 export function textoAhorro(a) {
   if (!a) return null;
-  return `Estos activos, juntos, se han movido con una volatilidad del `
-    + `${pct(a.volatilidad)}. Si subieran y bajaran todos a la vez habría sido `
+  return `Con pesos constantes, el modelo calcula una volatilidad del `
+    + `${pct(a.volatilidad)}. Si todos los activos se movieran a la vez sería `
     + `del ${pct(a.sinDiversificar)}: la diferencia, `
-    + `${pct(a.ahorro)}, es lo que ha aportado diversificar en esta combinación.`;
+    + `${pct(a.ahorro)}, es el efecto de diversificar dentro de ese modelo. `
+    + 'No mide la trayectoria sin rebalanceo del resumen.';
 }
 
 /**
@@ -689,20 +707,25 @@ function filaRiesgoConPeso(nombre, aportacion, peso) {
   return item;
 }
 
-const cacheDetalles = new Map(); // asset_id -> promesa de ficha (o null)
-const cacheHoldings = new Map(); // clave ids ordenados -> promesa {id: doc|null}
-
-function detalleDe(datos, id) {
-  if (!cacheDetalles.has(id)) {
-    const promesa = datos.detalleActivo(id).catch(() => null);
-    cacheDetalles.set(id, promesa);
-  }
-  return cacheDetalles.get(id);
+export function detalleDe(datos, id) {
+  // El cliente ya cachea y renueva las fichas por versión; una segunda
+  // caché permanente aquí ocultaría las correcciones y fijaría los errores.
+  return datos.detalleActivo(id).catch(() => null);
 }
 
-const cacheHoldingsUno = new Map(); // asset_id -> promesa de doc|null
+const cachesDesglose = new WeakMap();
+function cachesDe(datos) {
+  const revision = datos.revisionDatos?.() ?? null;
+  let cache = cachesDesglose.get(datos);
+  if (!cache || cache.revision !== revision) {
+    cache = { revision, uno: new Map(), lotes: new Map() };
+    cachesDesglose.set(datos, cache);
+  }
+  return cache;
+}
 
 function holdingsUno(datos, id) {
+  const cacheHoldingsUno = cachesDe(datos).uno;
   if (!cacheHoldingsUno.has(id)) {
     const promesa = datos.llama('get_asset_holdings', { asset_id: id }).catch(() => null);
     promesa.then((r) => { if (r === null) cacheHoldingsUno.delete(id); });
@@ -711,7 +734,8 @@ function holdingsUno(datos, id) {
   return cacheHoldingsUno.get(id);
 }
 
-function holdingsDe(datos, ids) {
+export function holdingsDe(datos, ids) {
+  const cacheHoldings = cachesDe(datos).lotes;
   const clave = [...ids].sort().join('|');
   if (!cacheHoldings.has(clave)) {
     const promesa = datos.llama('get_asset_holdings_batch', { asset_ids: ids })
@@ -738,8 +762,8 @@ function holdingsDe(datos, ids) {
  * suscriptor añade un control para recorrer la frontera y ver el reparto
  * de cada punto (la parte interactiva, guía paso 1).
  */
-function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) {
-  const bloque = grupo('Todas las mezclas posibles y su frontera', TEXTO_FRONTERA);
+function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo, metricas }) {
+  const bloque = grupo('Modelo de pesos constantes y su frontera', TEXTO_FRONTERA);
   bloque.classList.add('nv-analisis__grupo--rendimiento');
 
   const activos = activosParaFrontera(series, pesos);
@@ -759,6 +783,27 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) 
     return bloque;
   }
   const puntoActual = puntoCarteraFrontera(activos, pesos);
+  const comparacion = el('table', { class: 'nv-table' });
+  comparacion.append(el('caption', {}, 'Dos métodos, los mismos datos'));
+  const cabeceraComparacion = el('thead');
+  const filaCabecera = el('tr');
+  for (const titulo of ['Método', 'Rentabilidad anual*', 'Oscilación anual']) {
+    filaCabecera.append(el('th', { scope: 'col' }, titulo));
+  }
+  cabeceraComparacion.append(filaCabecera);
+  const cuerpoComparacion = el('tbody');
+  for (const fila of filasComparacionMetodos(metricas, puntoActual)) {
+    const tr = el('tr');
+    tr.append(el('th', { scope: 'row' }, fila.metodo),
+      el('td', {}, pct(fila.rentabilidad)), el('td', {}, pct(fila.volatilidad)));
+    cuerpoComparacion.append(tr);
+  }
+  comparacion.append(cabeceraComparacion, cuerpoComparacion);
+  const tablaScroll = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': 'Dos métodos, los mismos datos' });
+  tablaScroll.append(comparacion);
+  bloque.append(tablaScroll, el('p', { class: 'nv-cons__nota' },
+    '* En el historial: rentabilidad compuesta de la cartera. En el modelo: media ponderada de las rentabilidades compuestas de cada activo. '
+    + 'Ambas se anualizan con 252 observaciones por año. Las diferencias son de método, no de precios ni de reparto inicial. Un guion indica dato no disponible.'));
   const arcoDatos = envolventeFrontera(f.nube, puntoActual);
 
   /* Panel ancho, escalas redondas y una rejilla muy discreta. El punto de la
@@ -851,15 +896,8 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) 
   const senalados = Number.isFinite(tasaSinRiesgo)
     ? puntosSenalados(arcoDatos, tasaSinRiesgo)
     : null;
-  const rotulo = (cx, cy, texto, dy = 5) => {
-    const anclaIzq = cx > W - der - 150;
-    svg.append(svgEl('text', {
-      x: (anclaIzq ? cx - 13 : cx + 13).toFixed(1),
-      y: (cy + dy).toFixed(1),
-      'text-anchor': anclaIzq ? 'end' : 'start',
-      class: 'nv-grafico__rotulo',
-    }, texto));
-  };
+  const rotulos = [];
+  const rotulo = (cx, cy, texto, dy = 5) => rotulos.push({ cx, cy, texto, deseada: cy + dy });
   if (senalados) {
     const mr = senalados.menorRiesgo;
     const ms = senalados.mayorSharpe;
@@ -882,6 +920,18 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) 
     svg.append(svgEl('circle', { cx: cx.toFixed(1), cy: cy.toFixed(1), r: 7, class: 'nv-frontera__mi-punto' }));
     rotulo(cx, cy, 'Tu combinación');
   }
+  // Separar solo las etiquetas; puntos, curva y pesos conservan sus coordenadas.
+  const alturasRotulos = separaVerticalmente(rotulos.map(r => r.deseada), 24, arriba + 14, H - abajo - 8);
+  rotulos.forEach((r, i) => {
+    const anclaIzq = r.cx > W - der - 150;
+    const tx = anclaIzq ? r.cx - 13 : r.cx + 13;
+    if (Math.abs(alturasRotulos[i] - r.deseada) > 1) svg.append(svgEl('line', {
+      x1: r.cx, y1: r.cy, x2: tx, y2: alturasRotulos[i] - 4, class: 'nv-grafico__rejilla',
+    }));
+    svg.append(svgEl('text', { x: tx.toFixed(1), y: alturasRotulos[i].toFixed(1),
+      'text-anchor': anclaIzq ? 'end' : 'start', class: 'nv-grafico__rotulo',
+    }, r.texto));
+  });
 
   const cifras = [];
   if (puntoActual) {
@@ -925,10 +975,10 @@ function grupoFrontera({ series, pesos, interactiva, nombreDe, tasaSinRiesgo }) 
   }
   bloque.append(panelGrafico(svg, filaDeCifras(cifras)));
   bloque.append(el('p', { class: 'nv-cons__nota' },
-    'El Sharpe usa la rentabilidad y la oscilación anualizadas de estos 3 años y descuenta '
-    + 'el €STR diario del BCE compuesto sobre la misma ventana: '
-    + '«mayor Sharpe» señala la mezcla del historial que más rentó por cada punto de movimiento, y '
-    + '«menor riesgo», la que menos se movió. Describen ese historial, no el futuro.'));
+    'El Sharpe del modelo usa la media ponderada de rentabilidades anualizadas y el riesgo por covarianzas; descuenta '
+    + 'el €STR diario del BCE compuesto sobre la misma ventana. '
+    + '«Mayor Sharpe» y «menor riesgo» identifican extremos de las mezclas muestreadas bajo esos supuestos, '
+    + 'no un resultado exacto sobre todas las combinaciones. No son el Sharpe realizado de la tabla ni una previsión.'));
   if (!puntoActual) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
       'Tu combinación no tiene historial común suficiente para marcarla.'));
@@ -994,7 +1044,8 @@ function grupoRiesgoPorPosicion({ series, pesos, nombreDe }) {
   const contribuciones = contribucionesRiesgo(series, pesos);
   if (!contribuciones) return null;
   const bloque = grupo('Qué posición puso más riesgo',
-    'No es lo mismo que el peso: una posición pequeña que se mueve mucho puede aportar '
+    'Aportaciones al riesgo del modelo con pesos constantes, no de la trayectoria sin rebalanceo. '
+    + 'No es lo mismo que el peso: una posición pequeña que se mueve mucho puede aportar '
     + 'más movimiento que una grande y tranquila. La marca fina señala cuánto pesa cada una.');
   bloque.classList.add('nv-analisis__grupo--riesgo');
   const lista = el('ul', { class: 'nv-analisis__filas nv-riesgo' });
@@ -1008,15 +1059,15 @@ function grupoRiesgoPorPosicion({ series, pesos, nombreDe }) {
   bloque.append(lista);
   if (contribuciones.some((c) => c.porcentaje < 0)) {
     bloque.append(el('p', { class: 'nv-cons__nota' },
-      'Una cifra negativa significa que esa posición amortiguó el movimiento del conjunto en ese historial.'));
+      'Una cifra negativa significa que esa posición reduce el riesgo del conjunto en este modelo.'));
   }
   const principales = contribuciones.slice(0, Math.min(2, contribuciones.length));
   const aportacionPrincipal = principales.reduce((s, c) => s + c.porcentaje, 0);
   const pesoPrincipal = principales.reduce((s, c) => s + (Number(pesos[c.id]) || 0), 0);
   const lectura = el('p', { class: 'nv-analisis__conclusion' });
   lectura.append(
-    el('strong', {}, `Las dos primeras posiciones aportaron ${pct(aportacionPrincipal / 100, 0)} del movimiento y pesan ${pct(pesoPrincipal, 0)}.`),
-    document.createTextNode(' La barra muestra la aportación; la marca fina, el peso. Describe el historial, no el futuro.'),
+    el('strong', {}, `En este modelo, las dos primeras posiciones aportan ${pct(aportacionPrincipal / 100, 0)} del riesgo y pesan ${pct(pesoPrincipal, 0)}.`),
+    document.createTextNode(' La barra muestra la aportación; la marca fina, el peso constante. No describe una operación ni el futuro.'),
   );
   bloque.append(lectura);
   return bloque;
@@ -1104,7 +1155,7 @@ function grupoProyeccion(metricas) {
     tbody.append(tr);
   }
   tabla.append(thead, tbody);
-  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+  const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
   envoltorio.append(tabla);
   bloque.append(envoltorio);
   bloque.append(el('p', { class: 'nv-cons__nota' }, TEXTO_PROYECCION));
@@ -1296,7 +1347,7 @@ function grupoCorrelaciones(series, pesos, nombreDe) {
       tbody.append(tr);
     }
     tabla.append(thead, tbody);
-    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
     envoltorio.append(tabla);
     pliegue.append(envoltorio);
     bloque.append(pliegue);
@@ -1389,7 +1440,7 @@ export async function montaAnalisis(raiz, {
   /* Frontera (paso 33): estática con la cartera marcada para el registrado,
      con recorrido interactivo para el suscriptor. Sin red: series ya cargadas. */
   objetivo.riesgo.append(grupoFrontera({
-    series, pesos, interactiva: esSuscriptor, nombreDe, tasaSinRiesgo,
+    series, pesos, interactiva: esSuscriptor, nombreDe, tasaSinRiesgo, metricas,
   }));
 
   /* Mapa riesgo-retorno frente a perfiles de referencia (Fase 7). */
@@ -1494,7 +1545,7 @@ export async function montaAnalisis(raiz, {
           tbody.append(tr);
         });
         tabla.append(thead, tbody);
-        const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+        const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': tabla.caption?.textContent || 'Tabla de datos del análisis' });
         envoltorio.append(tabla);
         const listaFondos = el('ol', { class: 'nv-mriesgo__lista' });
         conDatos.forEach((id, i) => {

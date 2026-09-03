@@ -38,9 +38,21 @@ import { createServer } from 'node:http';
 import { extname } from 'node:path';
 import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
+import { SURFACE_CONTRACT } from './nuvia-visual-contract.mjs';
+import { checkNavigationAndCards } from './check-navigation-cards.mjs';
+import { checkFormControls } from './check-form-controls.mjs';
+import { checkTablesAndResults } from './check-tables-results.mjs';
+import { checkNoticeStates } from './check-notice-states.mjs';
+import { checkFamilyReview } from './check-family-review.mjs';
+import { checkPatrimonioEntry } from './check-patrimonio-entry.mjs';
+import { checkEconomiaEntry } from './check-economia-entry.mjs';
+import { checkWellbeingEntry } from './check-wellbeing-entry.mjs';
+import { checkAcademyEntry } from './check-academy-entry.mjs';
+import { checkReadingsEntry } from './check-readings-entry.mjs';
 
 const raiz = resolve(process.argv[2] || '.');
 const ANCHOS = (process.argv[3] || '1440').split(',').map(Number);
+const SIN_RED_EXTERNA = process.env.NUVIA_RENDER_OFFLINE === '1';
 const ESCALA = [12, 14, 16, 18, 22, 28, 36];
 
 /* Contenido que tiene que estar presente después de arrancar. La auditoría
@@ -61,7 +73,14 @@ const CONTENIDO = {
   'academia.html':         [['.ac-strong', 1], ['.viv-pill', 2], ['.ac-x10', 1]],
   'academia.html?tab=activos': [['.ac-subtab', 3], ['[role="tabpanel"]', 1]],
   'academia.html?tab=glosario': [['.ac-tab', 2], ['[role="tabpanel"]', 1]],
-  'temas.html':            [['.tm-card__title', 3]],
+  'academia.html?tab=cursos': [['.ac-x21', 1]],
+  'academia.html?tab=esenciales': [['h2', 1]],
+  'academia.html?tab=fundamentos': [['.ac-history-chart', 1]],
+  'academia.html?tab=calculadora': [['.ac-compound-chart', 1], ['.ac-compound-chart__plot > span', 5]],
+  'jubilacion.html#resultados': [['#resultados', 1], ['.jub-chart polyline', 4]],
+  'mercados.html?vista=informes': [['.markets-archive__empty', 1]],
+  'temas.html':            [['#patrimonio-ambitos', 1], ['[data-patrimonio-area]', 4]],
+  'temas.html?topic=jubilacion': [['#herramientas .tm-card__title', 3]],
   'temas.html?topic=bienestar': [['#tema-titulo', 1], ['.tm-wellbeing', 1], ['.tm-pillar', 5]],
   'temas.html?topic=planificacion-patrimonial': [['#tema-titulo', 1], ['.tm-pills .viv-pill', 4], ['.tm-card__title', 3]],
   'guia-calendario.html':  [['.gt-title', 1]],
@@ -72,36 +91,24 @@ const CONTENIDO = {
   'que-es-nuvia.html':     [['#que-nuvia-title', 1], ['.about-world__item', 5], ['.about-value', 4]],
 };
 
-/* Errores de consola conocidos, con su recuento exacto.
-
-   El navegador analiza la plantilla en crudo antes de que el runtime la
-   sustituya, y un points="{{ … }}" o un d="{{ … }}" dentro de un <svg> le hace
-   quejarse. No afecta a nada: el gráfico se pinta bien en cuanto React entrega
-   los valores. Pero veinte errores permanentes son veinte sitios donde puede
-   esconderse uno nuevo, así que se cuentan: si aparece otro, o si estos
-   cambian de número, la auditoría falla.
-
-   Para quitarlos habría que cambiar cómo se escriben los gráficos, no la hoja
-   de estilo: la sintaxis del runtime obliga a poner la interpolación en el
-   atributo. */
+/* Las interpolaciones SVG usan sc-camel-points / sc-camel-d, alias que el
+   runtime ya convierte al atributo real. El navegador no intenta interpretar
+   las llaves antes del render. Cualquier mensaje SVG vuelve a ser una regresión. */
 const RUIDO_CONOCIDO = /<(polyline|polygon|path|circle|rect|line)>\s+attribute\s+(points|d|cx|cy|r|x|y)\b/i;
 const RUIDO_EXTERNO = /ERR_TUNNEL|ERR_BLOCKED|ERR_NAME|Failed to load resource|tradingview|fonts\.googleapis|identitytoolkit|Permissions policy violation: compute-pressure is not allowed in this document/i;
-const ERRORES_ESPERADOS = {
-  'academia.html': 10,
-  'academia.html?tab=activos': 10,
-  'academia.html?tab=glosario': 10,
-  'jubilacion.html': 4,
-  'fiscalidad.html': 1,
-};
+const ERRORES_ESPERADOS = {};
 
 const PAGINAS_BASE = [
   'index.html', 'mercados.html', 'cartera.html', 'academia.html', 'curso.html',
   'academia.html?tab=activos', 'academia.html?tab=glosario',
   'lecturas.html', 'vivienda.html', 'fiscalidad.html', 'jubilacion.html',
-  'temas.html', 'temas.html?topic=bienestar', 'temas.html?topic=planificacion-patrimonial',
+  'temas.html', 'temas.html?topic=jubilacion', 'temas.html?topic=bienestar', 'temas.html?topic=planificacion-patrimonial',
   'guia-calendario.html', 'guia-ahorro.html', 'guia-sucesiones.html',
   'guia-planificacion.html', 'guia-fiscal.html', 'sistema-visual.html',
   'que-es-nuvia.html', 'mercados.html?vista=cotizaciones', 'cartera.html?vista=models',
+  'academia.html?tab=cursos', 'academia.html?tab=esenciales',
+  'academia.html?tab=fundamentos', 'academia.html?tab=calculadora',
+  'jubilacion.html#resultados', 'mercados.html?vista=informes',
 ];
 const filtroPaginas = (process.argv[4] || '').split(',').map((item) => item.trim()).filter(Boolean);
 const PAGINAS = filtroPaginas.length ? PAGINAS_BASE.filter((pagina) => filtroPaginas.includes(pagina)) : PAGINAS_BASE;
@@ -132,7 +139,7 @@ const servidor = createServer(async (req, res) => {
 await new Promise((ok) => servidor.listen(0, '127.0.0.1', ok));
 const base = `http://127.0.0.1:${servidor.address().port}/`;
 
-const MEDIR = (ESC) => {
+const MEDIR = ({ ESC, surfaces }) => {
   const cv = document.createElement('canvas'); cv.width = cv.height = 1;
   const cx = cv.getContext('2d', { willReadFrequently: true });
   const cache = new Map();
@@ -162,7 +169,7 @@ const MEDIR = (ESC) => {
     }
     return acc;
   }
-  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [], sinFoco: [], estadosSinSemantica: [], tablists: [], externos: [] };
+  const salida = { textos: [], pequenos: [], escala: {}, desbordes: [], fugas: {}, colisiones: [], sinNombre: [], ayudasSueltas: [], sinFoco: [], estadosSinSemantica: [], tablists: [], externos: [], estructura: [], superficies: [] };
   let n = 0;
   document.querySelectorAll('body *').forEach((el) => {
     const cs = getComputedStyle(el);
@@ -312,6 +319,46 @@ const MEDIR = (ESC) => {
       if (!target || !document.getElementById(target)) salida.tablists.push(`${tab.textContent.trim().slice(0, 35)} sin panel asociado`);
     });
   });
+  /* 4A-2: los tamaños correctos no bastan si los bordes no se alinean o la
+     cascada agranda una sección compacta. Medimos cajas reales, no tokens. */
+  const viewport = document.documentElement.clientWidth;
+  document.querySelectorAll('.nv-container, .nuvia-analysis-content, .nuvia-analysis-hero__inner, .nuvia-site-header__inner, .nuvia-site-footer__inner').forEach((el) => {
+    const box = el.getBoundingClientRect();
+    if (!box.width || !box.height || el.parentElement?.closest('.nv-container')) return;
+    const isHeader = el.matches('.nuvia-site-header__inner');
+    const gutter = innerWidth <= (isHeader ? 1319 : 1120) ? 28 : 48;
+    const expected = Math.min(1240, viewport - 2 * gutter);
+    if (Math.abs(box.width - expected) > 1 || Math.abs(box.left - (viewport - expected) / 2) > 1) {
+      salida.estructura.push(`${el.className}: ancho ${box.width.toFixed(1)} y borde ${box.left.toFixed(1)}; se esperan ${expected} y ${((viewport - expected) / 2).toFixed(1)}`);
+    }
+    if (el.matches('.nuvia-analysis-hero__inner') && parseFloat(getComputedStyle(el).paddingLeft) !== 0) {
+      salida.estructura.push('Cartera: el relleno lateral del hero desplaza el texto respecto al laboratorio');
+    }
+  });
+  document.querySelectorAll('.nv-section--tight').forEach((el) => {
+    if (!el.getBoundingClientRect().height) return;
+    const cs = getComputedStyle(el);
+    if (parseFloat(cs.paddingTop) !== 48 || parseFloat(cs.paddingBottom) !== 48) {
+      salida.estructura.push(`sección compacta: ${cs.paddingTop}/${cs.paddingBottom}; se esperan 48px/48px`);
+    }
+  });
+  /* 4A-3: comparar el valor pintado con el rol, resolviendo las variables en
+     el mismo ámbito del elemento. La sonda no participa en el layout. */
+  for (const [selector, property, expected, pseudo] of surfaces) {
+    for (const el of document.querySelectorAll(selector)) {
+      const box = el.getBoundingClientRect();
+      if (!box.width || !box.height) continue;
+      const actual = getComputedStyle(el, pseudo)[property];
+      const probe = document.createElement('span');
+      probe.style.cssText = 'position:absolute;display:none;';
+      probe.style[property] = expected;
+      el.append(probe);
+      try {
+        const resolved = getComputedStyle(probe)[property];
+        if (actual !== resolved) salida.superficies.push(`${selector}${pseudo || ''}: ${property} ${actual}; se espera ${resolved}`);
+      } finally { probe.remove(); }
+    }
+  }
   return salida;
 };
 
@@ -331,8 +378,16 @@ if (!navegador) {
 }
 
 const problemas = [];
+if (SIN_RED_EXTERNA) console.log('Auditoría aislada: conexiones externas bloqueadas; no valida servicios remotos.');
 for (const ancho of ANCHOS) {
-  const ctx = await navegador.newContext({ viewport: { width: ancho, height: 1000 } });
+  const ctx = await navegador.newContext({ viewport: { width: ancho, height: 1000 }, serviceWorkers: SIN_RED_EXTERNA ? 'block' : 'allow' });
+  if (SIN_RED_EXTERNA) {
+    await ctx.route('**/*', (route) => {
+      const url = new URL(route.request().url());
+      return url.origin === new URL(base).origin ? route.continue() : route.abort('blockedbyclient');
+    });
+    await ctx.routeWebSocket('**/*', (socket) => socket.close());
+  }
   const p = await ctx.newPage();
   for (const pag of PAGINAS) {
     const consola = [];
@@ -341,16 +396,32 @@ for (const ancho of ANCHOS) {
     p.on('console', anotar); p.on('pageerror', anotarError);
     await p.goto(base + pag, { waitUntil: 'load', timeout: 60000 });
     await p.waitForTimeout(4200);
+    // Escenario de prueba local: los resultados existen solo tras calcular.
+    if (pag === 'jubilacion.html#resultados') {
+      await p.getByRole('button', {name:'Ver mi estimación de jubilación →', exact:true}).click();
+      await p.locator('#resultados .jub-chart').waitFor({state:'visible'});
+    }
     p.off('console', anotar); p.off('pageerror', anotarError);
     const ruido = consola.filter((t) => RUIDO_CONOCIDO.test(t));
     const nuevos = consola.filter((t) => !RUIDO_CONOCIDO.test(t));
-    const esperados = ERRORES_ESPERADOS[pag] || 0;
+    const esperados = ERRORES_ESPERADOS[pag] ?? ERRORES_ESPERADOS[pag.split(/[?#]/)[0]] ?? 0;
     const desvio = ruido.length !== esperados
       ? [`el ruido conocido de plantilla pasó de ${esperados} a ${ruido.length} errores`]
       : [];
+    // No basta con callar la consola: todas las formas dinámicas deben conservar
+    // su geometría numérica después de resolver las interpolaciones.
+    const svgProblems = await p.locator('svg polyline, svg polygon, svg path').evaluateAll(nodes => nodes.flatMap(node => {
+      const attribute = node.tagName.toLowerCase() === 'path' ? 'd' : 'points';
+      const value = node.getAttribute(attribute);
+      if (node.hasAttribute(`sc-camel-${attribute}`) || value?.includes('{{')) return ['Geometría SVG sin resolver'];
+      if (node.matches('.ac-history-chart polyline, .ac-compound-chart polyline, .ac-compound-chart polygon, .jub-chart polyline')
+        && (!value || !value.trim().split(/[\s,]+/).every(part => Number.isFinite(Number(part))))) return ['Serie del gráfico sin coordenadas numéricas'];
+      return [];
+    }));
+    nuevos.push(...svgProblems);
     await p.keyboard.press('Tab');
     await p.keyboard.press('Shift+Tab');
-    const r = await p.evaluate(MEDIR, ESCALA);
+    const r = await p.evaluate(MEDIR, { ESC: ESCALA, surfaces: SURFACE_CONTRACT });
     const fallos = [];
     for (const it of r.textos) {
       let bg = it.bg;
@@ -385,6 +456,18 @@ for (const ancho of ANCHOS) {
     }
     const escala = Object.entries(r.escala);
     const fugas = Object.entries(r.fugas);
+    // Comprobar cada componente en su vista de entrada. Las pruebas genéricas
+    // siguientes cambian pestañas y pueden desmontar las tablas y los filtros.
+    const interactionProblems = await checkNavigationAndCards(p, pag).catch((error) => [error.message]);
+    interactionProblems.push(...await checkFormControls(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkTablesAndResults(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkNoticeStates(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkFamilyReview(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkPatrimonioEntry(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkEconomiaEntry(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkWellbeingEntry(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkAcademyEntry(p, pag).catch((error) => [error.message]));
+    interactionProblems.push(...await checkReadingsEntry(p, pag).catch((error) => [error.message]));
     const keyboardTabProblems = await p.evaluate(async () => {
       const visible = (element) => {
         const box = element.getBoundingClientRect();
@@ -421,10 +504,10 @@ for (const ancho of ANCHOS) {
         const groups = [...document.querySelectorAll('[data-nuvia-toggle-group="true"]')].filter(visible);
         const group = groups[groupIndex];
         if (!group) continue;
-        // Patrimonio mezcla selectores internos con accesos a páginas distintas.
-        // Su semántica se audita arriba, pero aquí no se pulsa para no abandonar
-        // la página a mitad de la evaluación del navegador.
-        if (group.matches('.tm-pills')) continue;
+        // Patrimonio y la vuelta a noticias pueden navegar a otro documento.
+        // Sus recorridos y estados se prueban arriba mediante Playwright,
+        // fuera de evaluate, para poder esperar la navegación real.
+        if (group.matches('.tm-pills,.markets-viewnav')) continue;
         const buttons = [...group.querySelectorAll(':scope > button')].filter((button) => visible(button) && !button.disabled);
         if (buttons.length < 2) continue;
         const currentIndex = buttons.findIndex((button) => button.getAttribute('aria-pressed') === 'true');
@@ -473,8 +556,9 @@ for (const ancho of ANCHOS) {
       return problems;
     });
     r.externos.push(...externalContentProblems);
-    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + r.sinFoco.length + r.estadosSinSemantica.length + r.tablists.length + r.externos.length + faltan.length + nuevos.length + desvio.length;
-    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  cabecera:${r.colisiones.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  foco:${r.sinFoco.length}  estados:${r.estadosSinSemantica.length}  tabs:${r.tablists.length}  externos:${r.externos.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    const total = fallos.length + r.pequenos.length + escala.length + r.desbordes.length + fugas.length + r.colisiones.length + r.sinNombre.length + r.ayudasSueltas.length + r.sinFoco.length + r.estadosSinSemantica.length + r.tablists.length + r.externos.length + r.estructura.length + r.superficies.length + interactionProblems.length + faltan.length + nuevos.length + desvio.length;
+    console.log(`${total ? '  ✗ ' : '  OK'} ${ancho}px  ${pag.padEnd(34)} AA:${fallos.length}  <12px:${r.pequenos.length}  escala:${escala.length}  desbordes:${r.desbordes.length}  estructura:${r.estructura.length}  superficies:${r.superficies.length}  cabecera:${r.colisiones.length}  interacción:${interactionProblems.length}  controles:${r.sinNombre.length}  ayudas:${r.ayudasSueltas.length}  foco:${r.sinFoco.length}  estados:${r.estadosSinSemantica.length}  tabs:${r.tablists.length}  externos:${r.externos.length}  fugas:${fugas.length}  contenido:${faltan.length ? faltan.length + ' ausente' : 'ok'}  consola:${nuevos.length ? nuevos.length + ' nuevos' : (esperados ? esperados + ' conocidos' : 'limpia')}`);
+    for (const x of interactionProblems) problemas.push(`${pag} @${ancho} · interacción: ${x}`);
     for (const x of faltan) problemas.push(`${pag} @${ancho} · falta contenido ${x}`);
     for (const x of nuevos) problemas.push(`${pag} @${ancho} · error de consola nuevo: ${x}`);
     for (const x of desvio) problemas.push(`${pag} @${ancho} · ${x}`);
@@ -489,6 +573,8 @@ for (const ancho of ANCHOS) {
     for (const x of r.estadosSinSemantica) problemas.push(`${pag} @${ancho} · estado interactivo sin semántica: ${x}`);
     for (const x of r.tablists) problemas.push(`${pag} @${ancho} · pestañas: ${x}`);
     for (const x of r.externos) problemas.push(`${pag} @${ancho} · contenido externo: ${x}`);
+    for (const x of r.estructura) problemas.push(`${pag} @${ancho} · estructura: ${x}`);
+    for (const x of r.superficies) problemas.push(`${pag} @${ancho} · superficie: ${x}`);
     for (const [k, v] of fugas) problemas.push(`${pag} @${ancho} · fuga del envoltorio ×${v} ${k}`);
   }
   await ctx.close();
@@ -499,4 +585,4 @@ servidor.close();
 if (problemas.length) {
   throw new Error(`La página pintada no cumple:\n${problemas.join('\n')}`);
 }
-console.log(`\nRender verificado: ${PAGINAS.length} páginas a ${ANCHOS.join(' y ')} px, sin fallos de contraste, tipografía, desborde ni fugas.`);
+console.log(`\nRender verificado: ${PAGINAS.length} páginas a ${ANCHOS.join(' y ')} px, sin fallos de contraste, tipografía, estructura, superficies, desborde ni fugas.`);

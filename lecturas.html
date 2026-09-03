@@ -70,6 +70,7 @@
         <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -105,15 +106,7 @@
 <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
           <ol>
             <li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li>
-            <li><details class="nuvia-site-nav__topics">
-              <summary>Academia NUVIA</summary>
-              <div class="nuvia-site-nav__menu">
-                <a href="academia.html">Academia Nuvia</a>
-                <a href="curso.html">Curso · Dinero con criterio</a>
-                <a href="lecturas.html">Lecturas con criterio</a>
-              </div>
-            </details></li>
-            <li><span aria-current="page">Lecturas con criterio</span></li>
+            <li><span aria-current="page">Lecturas con Criterio</span></li>
           </ol>
         </nav>
       </div>
@@ -133,19 +126,31 @@
 
 
     <!-- ══ SELECCIÓN ═════════════════════════════════════════════════════════
-         Cuatro fichas en orden. La numeración se mantiene porque la selección
-         está ordenada: no es adorno.
+         Cuatro fichas: el número identifica su lugar en el catálogo,
+         no una puntuación ni una prioridad de lectura.
          ═══════════════════════════════════════════════════════════════════ -->
     <section id="seleccion-lecturas" data-screen-label="Bloques editoriales"
              class="nv-section" aria-labelledby="titulo-seleccion">
       <div class="nv-container">
-        <h2 id="titulo-seleccion" class="nv-visually-hidden">Selección de lecturas</h2>
+        <div class="lecturas-intro">
+          <h2 id="titulo-seleccion">Cuatro libros para empezar</h2>
+          <p>Una selección inicial sobre dinero, inversión y comportamiento. Libros para comprender ideas y contrastar perspectivas; el catálogo todavía no cubre todos los temas de NUVIA.</p>
+          <nav class="lecturas-section-nav" aria-label="Dentro de Lecturas">
+            <a href="#criterios-lecturas">Cómo seleccionamos</a>
+            <a href="#comunidad-lecturas">La futura comunidad</a>
+          </nav>
+        </div>
+        <div class="lecturas-filters" role="group" aria-label="Filtrar lecturas por tema">
+          <button type="button" class="nv-btn nv-btn--secondary" data-reading-filter="todos" aria-pressed="true" aria-controls="catalogo-lecturas">Todos · 4</button>
+          <button type="button" class="nv-btn nv-btn--secondary" data-reading-filter="comportamiento" aria-pressed="false" aria-controls="catalogo-lecturas">Comportamiento y decisiones · 2</button>
+          <button type="button" class="nv-btn nv-btn--secondary" data-reading-filter="inversion" aria-pressed="false" aria-controls="catalogo-lecturas">Inversión y empresas · 2</button>
+        </div>
+        <p id="lecturas-result-count" class="lecturas-catalog-note" role="status" aria-live="polite" aria-atomic="true">Mostrando 4 de 4 libros · Todos</p>
+        <p class="lecturas-catalog-note">La numeración identifica las fichas; no indica una clasificación de calidad ni un orden obligatorio.</p>
 
-        <div class="lecturas-grid">
+        <div class="lecturas-grid" id="catalogo-lecturas">
 
-          <article class="lecturas-card" data-book-id="psicologia-dinero" tabindex="0" role="button"
-                   aria-haspopup="dialog" aria-controls="lecturas-book-dialog"
-                   aria-label="Abrir ficha de La psicología del dinero">
+          <article class="lecturas-card" data-book-id="psicologia-dinero" data-book-theme="comportamiento">
             <div class="lecturas-card__cover">
               <img src="src/assets/lecturas/la-psicologia-del-dinero.jpg"
                    alt="Portada de La psicología del dinero, de Morgan Housel"
@@ -158,15 +163,13 @@
               <p class="lecturas-card__author">Morgan Housel</p>
               <p class="lecturas-card__summary">Cómo la paciencia, las experiencias personales y el comportamiento influyen en nuestras decisiones sobre el dinero.</p>
               <div class="lecturas-card__meta">
-                <button class="lecturas-summary-button" type="button">Abrir ficha</button>
+                <button class="lecturas-summary-button" type="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de La psicología del dinero">Abrir ficha</button>
                 <a class="lecturas-store-link" href="https://www.casadellibro.com/libro-la-psicologia-del-dinero-como-piensan-los-ricos/9788408268130/13344376" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
               </div>
             </div>
           </article>
 
-          <article class="lecturas-card" data-book-id="inversor-inteligente" tabindex="0" role="button"
-                   aria-haspopup="dialog" aria-controls="lecturas-book-dialog"
-                   aria-label="Abrir ficha de El inversor inteligente">
+          <article class="lecturas-card" data-book-id="inversor-inteligente" data-book-theme="inversion">
             <div class="lecturas-card__cover">
               <img src="src/assets/lecturas/el-inversor-inteligente.webp"
                    alt="Portada de El inversor inteligente, de Benjamin Graham"
@@ -179,15 +182,13 @@
               <p class="lecturas-card__author">Benjamin Graham</p>
               <p class="lecturas-card__summary">Un clásico para comprender el valor, el margen de seguridad y la importancia de mantener una estrategia disciplinada.</p>
               <div class="lecturas-card__meta">
-                <button class="lecturas-summary-button" type="button">Abrir ficha</button>
+                <button class="lecturas-summary-button" type="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de El inversor inteligente">Abrir ficha</button>
                 <a class="lecturas-store-link" href="https://www.casadellibro.com/libro-el-inversor-inteligente/9788423420971/13083916" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
               </div>
             </div>
           </article>
 
-          <article class="lecturas-card" data-book-id="wall-street" tabindex="0" role="button"
-                   aria-haspopup="dialog" aria-controls="lecturas-book-dialog"
-                   aria-label="Abrir ficha de Un paso por delante de Wall Street">
+          <article class="lecturas-card" data-book-id="wall-street" data-book-theme="inversion">
             <div class="lecturas-card__cover">
               <img src="src/assets/lecturas/un-paso-por-delante-wall-street.webp"
                    alt="Portada de Un paso por delante de Wall Street, de Peter Lynch"
@@ -198,17 +199,15 @@
               <p class="lecturas-card__category">Empresas e inversión</p>
               <h3 class="lecturas-card__title">Un paso por delante de Wall Street</h3>
               <p class="lecturas-card__author">Peter Lynch</p>
-              <p class="lecturas-card__summary">Una mirada práctica para observar negocios cotidianos, investigar lo que entendemos y distinguir una historia atractiva de una buena inversión.</p>
+              <p class="lecturas-card__summary">Una introducción al enfoque de Peter Lynch sobre la observación de negocios y el análisis de empresas.</p>
               <div class="lecturas-card__meta">
-                <button class="lecturas-summary-button" type="button">Abrir ficha</button>
+                <button class="lecturas-summary-button" type="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de Un paso por delante de Wall Street">Abrir ficha</button>
                 <a class="lecturas-store-link" href="https://www.casadellibro.com/libro-un-paso-por-delante-de-wall-street-renovacion/9788423440610/18067472" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
               </div>
             </div>
           </article>
 
-          <article class="lecturas-card" data-book-id="pensar-rapido" tabindex="0" role="button"
-                   aria-haspopup="dialog" aria-controls="lecturas-book-dialog"
-                   aria-label="Abrir ficha de Pensar rápido, pensar despacio">
+          <article class="lecturas-card" data-book-id="pensar-rapido" data-book-theme="comportamiento">
             <div class="lecturas-card__cover">
               <img src="src/assets/lecturas/pensar-rapido-pensar-despacio.webp"
                    alt="Portada de Pensar rápido, pensar despacio, de Daniel Kahneman"
@@ -221,7 +220,7 @@
               <p class="lecturas-card__author">Daniel Kahneman</p>
               <p class="lecturas-card__summary">Claves para reconocer sesgos, entender cuándo domina la intuición y tomar decisiones más conscientes ante la incertidumbre.</p>
               <div class="lecturas-card__meta">
-                <button class="lecturas-summary-button" type="button">Abrir ficha</button>
+                <button class="lecturas-summary-button" type="button" aria-haspopup="dialog" aria-controls="lecturas-book-dialog" aria-label="Abrir ficha de Pensar rápido, pensar despacio">Abrir ficha</button>
                 <a class="lecturas-store-link" href="https://www.casadellibro.com/libro-pensar-rapido-pensar-despacio/9788483068618/1989599" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
               </div>
             </div>
@@ -231,6 +230,45 @@
       </div>
     </section>
 
+
+    <section id="criterios-lecturas" class="nv-section lecturas-editorial" aria-labelledby="titulo-criterios-lecturas">
+      <div class="nv-container">
+        <p class="nv-eyebrow">El sentido de la selección</p>
+        <h2 id="titulo-criterios-lecturas">Leer para desarrollar criterio propio</h2>
+        <p class="lecturas-editorial-lead">Este espacio reúne lecturas de no ficción vinculadas con economía, patrimonio, comportamiento, bienestar, aprendizaje y decisiones de largo plazo. No es un catálogo general de literatura.</p>
+        <div class="lecturas-criteria-grid">
+          <article>
+            <h3>Relación con NUVIA</h3>
+            <p>Cada lectura debe ayudar a comprender alguno de esos temas. La selección actual se concentra en inversión y comportamiento; las demás áreas se ampliarán con nuevas fichas.</p>
+          </article>
+          <article>
+            <h3>Una aportación explicada</h3>
+            <p>En cada ficha encontrarás qué trata el libro, por qué está aquí y la fuente editorial consultada. El motivo de inclusión es un criterio editorial de NUVIA, no una valoración de sus lectores.</p>
+          </article>
+          <article>
+            <h3>Lectura crítica y con contexto</h3>
+            <p>Una obra aporta la perspectiva de su autor, no una verdad definitiva. Sus ejemplos, fechas y supuestos importan. Incluirla no convierte sus propuestas en instrucciones de NUVIA para invertir o cuidar la salud.</p>
+          </article>
+        </div>
+        <div class="lecturas-editorial-note">
+          <h3>Qué ofrecen estas fichas</h3>
+          <p>Una presentación breve, no el texto completo ni una reseña exhaustiva. Las sinopsis se han contrastado con las editoriales; eso no certifica la vigencia de todas las afirmaciones de los libros.</p>
+          <p>Los enlaces de consulta y de librería llevan a webs externas. Las ediciones pueden ser distintas; comprueba sus datos antes de elegir una. NUVIA no tramita compras desde esta página.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="comunidad-lecturas" class="nv-section lecturas-editorial" aria-labelledby="titulo-comunidad-lecturas">
+      <div class="nv-container">
+        <div class="lecturas-community">
+          <span class="nv-tag nv-tag--pending">En preparación</span>
+          <h2 id="titulo-comunidad-lecturas">Un lugar para compartir lecturas</h2>
+          <p>La idea es poder comentar libros leídos, proponer títulos, preguntar por una materia y conversar con otros lectores.</p>
+          <p>Las opiniones, propuestas, votaciones y el foro todavía no están disponibles. Esta página no recoge aportaciones ni crea perfiles de lectores. Su puesta en marcha necesitará reglas de participación, moderación y protección de datos.</p>
+          <a href="#seleccion-lecturas">Volver al catálogo <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </section>
 
     <!-- Ficha ampliada. Los identificadores y las clases son ganchos del script
          de más abajo: no se renombran. -->
@@ -245,8 +283,14 @@
           <h2 class="lecturas-dialog-title" id="lecturas-dialog-title"></h2>
           <p class="lecturas-dialog-author" id="lecturas-dialog-author"></p>
           <div class="lecturas-dialog-summary" id="lecturas-dialog-summary"></div>
-          <h3 class="lecturas-dialog-heading">Ideas principales</h3>
+          <h3 class="lecturas-dialog-heading">Temas de la obra</h3>
           <ul class="lecturas-dialog-points" id="lecturas-dialog-points"></ul>
+          <h3 class="lecturas-dialog-heading">Por qué está en NUVIA</h3>
+          <p class="lecturas-dialog-note" id="lecturas-dialog-reason"></p>
+          <h3 class="lecturas-dialog-heading">Para leer con perspectiva</h3>
+          <p class="lecturas-dialog-note" id="lecturas-dialog-limit"></p>
+          <p class="lecturas-dialog-note"><a id="lecturas-dialog-source" href="" target="_blank" rel="noopener noreferrer">Consultar la ficha editorial ↗</a></p>
+          <p class="lecturas-dialog-note">Sinopsis editorial comprobada el <time datetime="2026-09-02">2 de septiembre de 2026</time>. Presentación breve de NUVIA; no sustituye la lectura de la obra.</p>
           <a class="lecturas-dialog-store" id="lecturas-dialog-store" href="" target="_blank" rel="noopener noreferrer">Ver en Casa del Libro ↗</a>
         </div>
       </div>
@@ -303,7 +347,7 @@
 
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  componentDidMount() { document.title = 'Lecturas con criterio | NUVIA Family Wealth'; }
+  componentDidMount() { document.title = 'NUVIA · Lecturas con Criterio'; }
   renderVals() { return {}; }
 }
 </script>
@@ -317,44 +361,44 @@ const initLecturasBookDialog = (requestedCard = null) => {
       author: 'Morgan Housel',
       category: 'Comportamiento financiero',
       url: 'https://www.casadellibro.com/libro-la-psicologia-del-dinero-como-piensan-los-ricos/9788408268130/13344376',
-      summary: [
-        'Morgan Housel explica que gestionar bien el dinero depende menos de dominar fórmulas que de comprender nuestro comportamiento. Las decisiones financieras están condicionadas por la historia personal, las emociones, el entorno y la idea que cada persona tiene de la seguridad y del éxito.',
-        'A través de historias breves, el libro muestra por qué la paciencia, el ahorro y el interés compuesto suelen ser más decisivos que intentar anticipar cada movimiento del mercado. También invita a definir cuánto es suficiente y a construir una estrategia que podamos mantener durante muchos años.'
-      ],
-      points: ['El comportamiento pesa más que la inteligencia financiera.', 'La paciencia permite que el interés compuesto haga su trabajo.', 'Una buena estrategia debe dejar espacio para la incertidumbre y los errores.']
+      summary: ['Morgan Housel aborda las finanzas personales desde el comportamiento. Su perspectiva relaciona el dinero con las experiencias, los hábitos y la forma de entender la seguridad y el bienestar.'],
+      points: ['Comportamiento y finanzas personales.', 'Hábitos y relación con el dinero.', 'Riqueza y bienestar desde la perspectiva del autor.'],
+      reason: 'Conecta la economía familiar con la forma de pensar y actuar, una de las preguntas centrales de NUVIA.',
+      limit: 'Es una perspectiva divulgativa del autor, no una fórmula para enriquecerse ni una evaluación de tu situación personal.',
+      source: 'https://www.planetadelibros.com/libro-la-psicologia-del-dinero/334390'
     },
     'inversor-inteligente': {
       title: 'El inversor inteligente',
       author: 'Benjamin Graham',
       category: 'Inversión y disciplina',
       url: 'https://www.casadellibro.com/libro-el-inversor-inteligente/9788423420971/13083916',
-      summary: [
-        'Benjamin Graham establece las bases de la inversión en valor y diferencia con claridad invertir de especular. Su propuesta consiste en analizar los activos con criterios objetivos, exigir un precio razonable y evitar que el entusiasmo o el miedo del mercado dicten nuestras decisiones.',
-        'La figura de “el señor Mercado” ayuda a entender que las cotizaciones ofrecen oportunidades, pero no siempre reflejan el valor real. El concepto central es el margen de seguridad: comprar con suficiente distancia entre precio y valor para reducir el impacto de errores e imprevistos.'
-      ],
-      points: ['Distinguir inversión de especulación.', 'Utilizar las fluctuaciones del mercado en lugar de obedecerlas.', 'Exigir siempre un margen de seguridad.']
+      summary: ['Benjamin Graham presenta su enfoque de inversión en valor. La obra permite conocer conceptos como la distinción entre inversión y especulación, el margen de seguridad y la relación entre precio y valor.'],
+      points: ['Inversión en valor en la obra de Graham.', 'Inversión y especulación.', 'El concepto de margen de seguridad.'],
+      reason: 'Aporta contexto para estudiar el lenguaje y la historia de los métodos de inversión, sin elegir activos concretos.',
+      limit: 'Sus ejemplos pertenecen a contextos y ediciones distintos. La ficha editorial enlazada incluye comentarios de Jason Zweig; puede no coincidir con la edición de la librería.',
+      source: 'https://www.planetadelibros.com/libro-el-inversor-inteligente/427153?soporte=427153'
     },
     'wall-street': {
       title: 'Un paso por delante de Wall Street',
       author: 'Peter Lynch',
       category: 'Empresas e inversión',
       url: 'https://www.casadellibro.com/libro-un-paso-por-delante-de-wall-street-renovacion/9788423440610/18067472',
-      summary: [
-        'Peter Lynch sostiene que el inversor particular puede descubrir buenas empresas observando productos, servicios y tendencias que conoce de primera mano. Esa ventaja cotidiana es solo el punto de partida: antes de invertir hay que estudiar el negocio, sus cuentas y sus perspectivas.',
-        'El libro propone clasificar las compañías según su etapa y ritmo de crecimiento, comprobar que la historia de inversión se apoya en datos y mantener una visión de largo plazo. La familiaridad con una empresa nunca sustituye al análisis, pero puede señalar dónde merece la pena investigar.'
-      ],
-      points: ['Observar negocios y productos que entendemos.', 'Comprobar la historia de inversión con cifras y fundamentos.', 'Dar tiempo a las buenas compañías para desarrollar su potencial.']
+      summary: ['Peter Lynch expone su manera de observar negocios y analizar empresas. El libro relaciona experiencias cotidianas con la investigación de información empresarial y financiera.'],
+      points: ['Observación de negocios cotidianos.', 'Información financiera de las empresas.', 'La perspectiva inversora de Peter Lynch.'],
+      reason: 'Sirve como punto de partida para explorar cómo se describe un negocio y qué preguntas plantea su análisis.',
+      limit: 'Los casos ilustran el enfoque de un autor; no constituyen una lista de empresas que NUVIA sugiera comprar hoy ni garantizan resultados.',
+      source: 'https://www.planetadelibros.com/libro-un-paso-por-delante-de-wall-street/319743?soporte=319743'
     },
     'pensar-rapido': {
       title: 'Pensar rápido, pensar despacio',
       author: 'Daniel Kahneman',
       category: 'Decisiones y sesgos',
       url: 'https://www.casadellibro.com/libro-pensar-rapido-pensar-despacio/9788483068618/1989599',
-      summary: [
-        'Daniel Kahneman describe dos formas complementarias de pensar. El sistema rápido responde de manera automática e intuitiva; el sistema lento requiere atención, cálculo y esfuerzo. La intuición resulta útil, pero también puede producir errores previsibles cuando decidimos bajo presión o incertidumbre.',
-        'El recorrido por heurísticas, exceso de confianza, aversión a la pérdida y efectos de encuadre ayuda a reconocer cómo construimos juicios. El objetivo no es eliminar la intuición, sino detectar las situaciones en las que conviene detenerse, contrastar la primera impresión y pensar con mayor cuidado.'
-      ],
-      points: ['Reconocer cuándo domina el pensamiento automático.', 'Identificar sesgos que alteran nuestra percepción del riesgo.', 'Activar una revisión más lenta en decisiones importantes.']
+      summary: ['Daniel Kahneman explica su modelo de pensamiento rápido e intuitivo y pensamiento más lento y deliberado. La obra examina cómo las impresiones y los sesgos influyen en nuestros juicios y decisiones.'],
+      points: ['Intuición y pensamiento deliberado.', 'Sesgos en los juicios.', 'Decisiones bajo incertidumbre.'],
+      reason: 'Amplía la reflexión más allá de las finanzas: conecta comportamiento, aprendizaje y decisiones cotidianas.',
+      limit: 'Es divulgación sobre el pensamiento, no un test psicológico ni consejo sanitario. Esta ficha no revisa individualmente la evidencia de todos sus estudios.',
+      source: 'https://www.penguinlibros.com/es/ciencia-y-tecnologia/11422-libro-pensar-rapido-pensar-despacio-9788483068618'
     }
   };
 
@@ -371,6 +415,9 @@ const initLecturasBookDialog = (requestedCard = null) => {
   const dialogAuthor = document.getElementById('lecturas-dialog-author');
   const dialogSummary = document.getElementById('lecturas-dialog-summary');
   const dialogPoints = document.getElementById('lecturas-dialog-points');
+  const dialogReason = document.getElementById('lecturas-dialog-reason');
+  const dialogLimit = document.getElementById('lecturas-dialog-limit');
+  const dialogSource = document.getElementById('lecturas-dialog-source');
   const dialogStore = document.getElementById('lecturas-dialog-store');
   const closeButton = dialog.querySelector('.lecturas-dialog-close');
   let lastCard = null;
@@ -384,6 +431,9 @@ const initLecturasBookDialog = (requestedCard = null) => {
     dialogCategory.textContent = book.category;
     dialogTitle.textContent = book.title;
     dialogAuthor.textContent = book.author;
+    dialogReason.textContent = book.reason;
+    dialogLimit.textContent = book.limit;
+    dialogSource.href = book.source;
     dialogSummary.replaceChildren(...book.summary.map((text) => {
       const paragraph = document.createElement('p');
       paragraph.textContent = text;
@@ -404,20 +454,38 @@ const initLecturasBookDialog = (requestedCard = null) => {
       if (event.target.closest('a, button')) return;
       openBook(card);
     });
-    card.addEventListener('keydown', (event) => {
-      if (event.target !== card || !['Enter', ' '].includes(event.key)) return;
-      event.preventDefault();
-      openBook(card);
-    });
   });
 
-  closeButton.addEventListener('click', () => dialog.close());
-  dialog.addEventListener('click', (event) => {
-    if (event.target === dialog) dialog.close();
+  const restoreFocus = () => lastCard?.querySelector('.lecturas-summary-button')?.focus();
+  const closeBook = () => {
+    dialog.close();
+    restoreFocus();
+  };
+  closeButton.addEventListener('click', closeBook);
+  dialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeBook();
   });
-  dialog.addEventListener('close', () => lastCard?.focus());
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) closeBook();
+  });
+  // El foco se devuelve en closeBook: el evento close llega después y no debe
+  // desplazarlo si el usuario ya ha pasado a otro filtro o control.
   if (requestedCard) openBook(requestedCard);
 };
+
+// Filtro de presentación: no almacena elecciones ni consulta otros servicios.
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-reading-filter]');
+  if (!button) return;
+  const filter = button.dataset.readingFilter;
+  const labels = {todos: 'Todos', comportamiento: 'Comportamiento y decisiones', inversion: 'Inversión y empresas'};
+  if (!Object.hasOwn(labels, filter)) return;
+  const cards = [...document.querySelectorAll('#catalogo-lecturas [data-book-theme]')];
+  for (const card of cards) card.hidden = filter !== 'todos' && card.dataset.bookTheme !== filter;
+  for (const option of document.querySelectorAll('[data-reading-filter]')) option.setAttribute('aria-pressed', String(option === button));
+  document.getElementById('lecturas-result-count').textContent = `Mostrando ${cards.filter(card => !card.hidden).length} de ${cards.length} libros · ${labels[filter]}`;
+});
 
 document.addEventListener('click', (event) => {
   const card = event.target.closest('[data-book-id]');

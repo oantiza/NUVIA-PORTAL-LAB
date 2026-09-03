@@ -127,14 +127,11 @@ if (!portfolioPage.includes('id="vista-models"') || !portfolioPage.includes('vis
 if (!portfolioPage.includes("nivelAnalisis: 'registrada'")) {
   throw new Error('El análisis completo de las carteras modelo sigue oculto para quien no ha iniciado sesión');
 }
-/* Alfa: la vista de empresas está «En preparación»; no se carga ningún iframe
-   ni se referencia company-analysis/ desde la página. */
-if (/company-analysis\//.test(portfolioPage) || /<iframe/i.test(portfolioPage)) {
-  throw new Error('La alfa no publica Análisis y valoración de empresas: cartera.html no debe cargar company-analysis/');
+/* Recuperación autorizada: módulo propio, carga diferida y sin acceso anterior. */
+if (!portfolioPage.includes('id="nuvia-company-frame"') || !portfolioPage.includes('data-src="company-analysis/index.html"')) {
+  throw new Error('La vista de empresas debe cargar la entrada alfa local');
 }
-if (!portfolioPage.includes('id="empresas-en-preparacion"') || !portfolioPage.includes('En preparación')) {
-  throw new Error('La vista de empresas debe mostrarse como «En preparación» en la alfa');
-}
+if (portfolioPage.includes('id="empresas-en-preparacion"')) throw new Error('No debe reaparecer el estado editorial retirado de empresas');
 /* Antes esto se comprobaba en temas.html, pero vivía dentro de un
    <sc-if value="{{ false }}"> que nunca se renderizaba: el contrato validaba
    código muerto. Ahora se comprueba en la navegación común de la portada,

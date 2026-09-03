@@ -51,14 +51,22 @@ jobs:
         # deja claro hasta qué observación llega.
         continue-on-error: true
 
+      - name: Actualizar indicadores macroeconómicos oficiales
+        run: node scripts/update-macro-data.mjs
+        # Solo sustituye la copia cuando se han podido verificar las cinco series.
+        # Un fallo conserva las cifras anteriores y su fecha real de comprobación.
+        continue-on-error: true
+
       - name: Actualizar noticias económicas
         run: node scripts/update-daily-news.mjs
-        # Si los medios o una imagen no responden, se conserva la última
-        # selección editorial verificada incluida en el repositorio.
+        # Si los medios no responden, se conserva la selección del repositorio
+        # con su fecha real. Los contextos temáticos no son resúmenes verificados.
         continue-on-error: true
 
       - name: Construir y validar la web
         run: npm run build
+        env:
+          NUVIA_RENDER_OFFLINE: '1'
 
       - name: Preparar los archivos publicados
         uses: actions/upload-pages-artifact@v3

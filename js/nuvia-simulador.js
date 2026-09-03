@@ -109,7 +109,7 @@ export function montaSimulador(raiz) {
   tabla.append(caption, thead, tbody);
 
   const region = el('div', { class: 'nv-sim-resultados', 'aria-live': 'polite' });
-  const tablaScroll = el('div', { class: 'nv-sim-tabla-scroll' });
+  const tablaScroll = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': 'Métricas estimadas de la combinación elegida' });
   tablaScroll.append(tabla);
   region.append(barra, tablaScroll);
   raiz.append(controles, region, el('p', { class: 'nv-cons__fuente' }, FUENTE_SIMULADOR));

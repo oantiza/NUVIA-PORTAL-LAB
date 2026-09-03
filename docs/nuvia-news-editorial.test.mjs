@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { eligibleNews } from '../scripts/news-editorial.mjs';
 
 const root = resolve(process.argv[2] || '.');
 const read = (path) => readFile(resolve(root, path), 'utf8');
@@ -24,6 +25,11 @@ const validateItem = (item, label) => {
   assert.ok(item?.category?.trim(), `${label}: falta categoría`);
   assert.ok(allowedSources.has(item?.sourceName), `${label}: fuente no inventariada`);
   assert.match(item?.sourceUrl || '', /^https:\/\//, `${label}: la URL de fuente debe usar HTTPS`);
+  assert.equal(eligibleNews({ title: item.title, sourceName: item.sourceName, url: item.sourceUrl,
+    publishedAt: new Date(item.sourcePublishedAtIso || item.publishedAtIso) }, new Date(item.sourcePublishedAtIso || item.publishedAtIso)), true,
+    `${label}: fuente y dominio deben corresponder`);
+  assert.equal(item.contextMode, 'automatic-topic-context', `${label}: debe declarar el origen del contexto`);
+  assert.match(item.summary, /Titular de .*medio de origen/, `${label}: no inventa un resumen del artículo`);
   iso(item?.sourcePublishedAtIso || item?.publishedAtIso, `${label}: publicación`);
   assert.equal(item?.imageUrl, 'src/assets/social/nuvia-social-source-generated-v1.png',
     `${label}: debe usar el activo editorial propio de NUVIA`);
@@ -52,6 +58,7 @@ assert.equal(new Set(titles).size, 4, 'Las cuatro noticias deben tener titular d
 
 assert.match(integration, /sourcePublishedAtIso/, 'La interfaz debe calcular la actualidad desde la publicación real');
 assert.match(integration, /editorialUpdate/, 'La interfaz debe mostrar el estado del intento editorial');
+assert.match(integration, /no resumen ni verifican los artículos/, 'El contexto automático no se presenta como resumen verificado');
 assert.match(markets, /data-news-update-status/, 'Mercados debe reservar un estado visible de actualización');
 assert.match(markets, /data-daily-news="date"[^>]*datetime=/, 'La fecha principal debe usar un elemento time con datetime');
 assert.match(markets, /src\/assets\/social\/nuvia-social-source-generated-v1\.png/,

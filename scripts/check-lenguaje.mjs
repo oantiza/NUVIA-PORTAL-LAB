@@ -77,7 +77,7 @@ const EXIGIDO = [
   ['cartera.html', ['no previsiones', 'pendientes de validación profesional', 'no constituye asesoramiento', 'base de datos NUVIA',
     'Versión alfa de NUVIA', 'Nada de lo que ves es una recomendación']],
   ['js/nuvia-simulador.js', ['supuestos propios de NUVIA']],
-  ['js/nuvia-constructor.js', ['Datos de cierre', 'base de datos NUVIA']],
+  ['js/nuvia-periodo-analisis.js', ['Datos de cierre', 'base de datos NUVIA']],
   /* Paso 28: el registro pide lo mínimo y lo declara; nada de teléfono,
      patrimonio ni cuestionarios de perfil. */
   /* Paso 29: lo opcional es opt-in de verdad; se declara que apagado no

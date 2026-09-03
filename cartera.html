@@ -68,6 +68,7 @@
         <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -100,11 +101,12 @@
         <div class="nuvia-analysis-hero__inner">
           <div>
             <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-              <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Cartera</span></li></ol>
+              <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><a href="mercados.html">Economía y Finanzas</a></li><li><span aria-current="page">Cartera</span></li></ol>
             </nav>
             <p class="nuvia-analysis-eyebrow"><span aria-hidden="true"></span>Analítica NUVIA</p>
             <h1 id="analysis-title">Analítica de cartera</h1>
-            <p class="nuvia-analysis-lead">Un mismo espacio para analizar tu cartera, estudiar composiciones modelo y profundizar en empresas cotizadas.</p>
+            <p class="nuvia-analysis-lead">Dentro de Economía y Finanzas, explora la composición, el riesgo y los escenarios de una cartera. Aquí se reúnen el laboratorio, las composiciones modelo y el análisis de empresas.</p>
+            <p class="nuvia-analysis-availability">Alfa en abierto y sin cuentas. Cartera y fundamentales consultan la base propia. En empresas se identifica cualquier respaldo local, que puede estar desactualizado. Los datos no son en tiempo real. NUVIA muestra información y cálculos, no determina qué inversión elegir.</p>
             <nav class="nuvia-analysis-tabs" aria-label="Vistas de analítica de cartera">
               <a id="vista-portfolio" href="cartera.html?vista=portfolio#laboratorio" aria-current="page">Mi cartera</a>
               <a id="vista-models" href="cartera.html?vista=models#carteras-modelo">Carteras modelo</a>
@@ -130,10 +132,10 @@
             </div>
             <nav class="nv-atajos" aria-label="Secciones del laboratorio">
               <a class="nv-atajos__enlace" href="#fase-01">Tu cartera</a>
-              <a class="nv-atajos__enlace" href="#fase-02">Qué tienes</a>
-              <a class="nv-atajos__enlace" href="#fase-03">Cuánto se mueve</a>
-              <a class="nv-atajos__enlace" href="#fase-04">Apuestas repetidas</a>
-              <a class="nv-atajos__enlace" href="#fase-05">Escenarios</a>
+              <a class="nv-atajos__enlace" data-result-anchor aria-disabled="true" href="#fase-02">Qué tienes</a>
+              <a class="nv-atajos__enlace" data-result-anchor aria-disabled="true" href="#fase-03">Cuánto se mueve</a>
+              <a class="nv-atajos__enlace" data-result-anchor aria-disabled="true" href="#fase-04">Apuestas repetidas</a>
+              <a class="nv-atajos__enlace" data-result-anchor aria-disabled="true" href="#fase-05">Escenarios</a>
             </nav>
           </div>
 
@@ -228,11 +230,8 @@
         </section>
 
         <section id="suite-nuvia" class="nuvia-suite-shell nuvia-suite-shell--companies" aria-label="Análisis y valoración de empresas" hidden>
-          <article class="nv-lab-caja nv-en-preparacion" id="empresas-en-preparacion">
-            <p class="nv-lab-fase__pregunta">Análisis y valoración de empresas</p>
-            <h2>En preparación</h2>
-            <p>Esta vista no forma parte de la versión alfa: se reconstruirá sobre la base de datos propia de NUVIA antes de volver a publicarse. Mientras tanto, el laboratorio de cartera y las carteras modelo funcionan con normalidad.</p>
-          </article>
+          <iframe id="nuvia-company-frame" class="nuvia-company-frame" title="Análisis fundamental de empresas · NUVIA" data-src="company-analysis/index.html" referrerpolicy="same-origin"></iframe>
+          <p><a href="company-analysis/index.html" target="_blank" rel="noopener">Abrir el análisis fundamental en una pestaña independiente ↗</a></p>
         </section>
 
       </div>
@@ -304,13 +303,22 @@ class Component extends DCLogic {
     const modelosVista = document.getElementById('carteras-modelo');
     const shell = document.getElementById('suite-nuvia');
     if (!lab || !modelosVista || !shell) return;
+    const companyFrame = document.getElementById('nuvia-company-frame');
+    this._onCompanyHeight = (event) => {
+      if (event.origin !== window.location.origin || event.source !== companyFrame?.contentWindow || event.data?.type !== 'nuvia-company-height') return;
+      const height = event.data.height;
+      if (typeof height === 'number' && Number.isFinite(height) && height > 0 && height < 100000) companyFrame.style.height = Math.max(720, Math.ceil(height)) + 'px';
+    };
+    window.addEventListener('message', this._onCompanyHeight);
 
     const activaVista = (vista, actualizaUrl = false) => {
-      const elegida = SUITE_TABS.includes(vista) ? vista : 'portfolio';
+      const alias = ['technical', 'fundamental'].includes(vista) ? 'companies' : vista;
+      const elegida = SUITE_TABS.includes(alias) ? alias : 'portfolio';
       document.body.dataset.suiteVista = elegida;
       lab.hidden = elegida !== 'portfolio';
       modelosVista.hidden = elegida !== 'models';
       shell.hidden = elegida !== 'companies';
+      if (elegida === 'companies' && companyFrame && !companyFrame.getAttribute('src')) companyFrame.src = companyFrame.dataset.src;
       SUITE_TABS.forEach((tab) => {
         const boton = document.getElementById('vista-' + tab);
         if (boton) boton.setAttribute('aria-current', tab === elegida ? 'page' : 'false');
@@ -397,6 +405,7 @@ class Component extends DCLogic {
       .catch(() => {});
   }
   componentWillUnmount() {
+    if (this._onCompanyHeight) window.removeEventListener('message', this._onCompanyHeight);
     if (this._onPop) window.removeEventListener('popstate', this._onPop);
   }
   renderVals() { return {}; }

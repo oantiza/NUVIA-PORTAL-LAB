@@ -70,6 +70,7 @@
         <details class="nuvia-site-nav__topics is-active" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -100,7 +101,7 @@
     <section id="vivienda" data-screen-label="Cabecera vivienda" class="nv-hero nv-hero--institutional viv-hero">
       <div class="nv-container">
         <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-          <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Vivienda y coste de vida</span></li></ol>
+          <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><a href="temas.html">Patrimonio</a></li><li><span aria-current="page">Vivienda y coste de vida</span></li></ol>
         </nav>
         <div class="nv-hero__inner"><div>
         <span class="nv-eyebrow nv-eyebrow--on-dark">Tema clave · Vivienda y coste de vida</span>
@@ -216,26 +217,31 @@
             </div>
           </div>
           <div class="viv-table">
-            <p class="viv-table__title">Tabla anual de amortización</p>
-            <div class="viv-table__head">
-              <span class="viv-figure__label">Año</span>
-              <span class="viv-figure__label">Saldo inicial</span>
-              <span class="viv-figure__label">Capital amortizado</span>
-              <span class="viv-figure__label">Intereses</span>
-              <span class="viv-figure__label">Saldo final</span>
-              <span class="viv-figure__label">Tipo medio</span>
+            <p id="viv-amortizacion-title" class="viv-table__title">Tabla anual de amortización</p>
+            <p id="viv-amortizacion-help" class="nv-table-scroll__hint">Importes en euros y tipo medio en porcentaje. Si no cabe completa, desplaza la tabla; con teclado, enfócala y usa las flechas.</p>
+            <div class="nv-table-scroll viv-table__scroll" role="region" tabindex="0" aria-labelledby="viv-amortizacion-title" aria-describedby="viv-amortizacion-help">
+            <div class="viv-table__data" role="table" aria-labelledby="viv-amortizacion-title">
+            <div class="viv-table__head" role="row">
+              <span class="viv-figure__label" role="columnheader">Año</span>
+              <span class="viv-figure__label" role="columnheader">Saldo inicial</span>
+              <span class="viv-figure__label" role="columnheader">Capital amortizado</span>
+              <span class="viv-figure__label" role="columnheader">Intereses</span>
+              <span class="viv-figure__label" role="columnheader">Saldo final</span>
+              <span class="viv-figure__label" role="columnheader">Tipo medio</span>
             </div>
-            <div class="viv-table__body">
+            <div class="viv-table__body" role="rowgroup">
               <sc-for list="{{ filas }}" as="f" hint-placeholder-count="10">
-                <div class="viv-table__row">
-                  <span class="viv-budget-line__value">{{ f.year }}</span>
-                  <span class="viv-budget-line__value">{{ f.inicial }}</span>
-                  <span class="viv-budget-line__value">{{ f.capital }}</span>
-                  <span class="viv-budget-line__value">{{ f.intereses }}</span>
-                  <span class="viv-budget-line__value">{{ f.final }}</span>
-                  <span class="viv-budget-line__value">{{ f.tipo }}</span>
+                <div class="viv-table__row" role="row">
+                  <span class="viv-budget-line__value" role="rowheader">{{ f.year }}</span>
+                  <span class="viv-budget-line__value" role="cell">{{ f.inicial }}</span>
+                  <span class="viv-budget-line__value" role="cell">{{ f.capital }}</span>
+                  <span class="viv-budget-line__value" role="cell">{{ f.intereses }}</span>
+                  <span class="viv-budget-line__value" role="cell">{{ f.final }}</span>
+                  <span class="viv-budget-line__value" role="cell">{{ f.tipo }}</span>
                 </div>
               </sc-for>
+            </div>
+            </div>
             </div>
           </div>
         </div>

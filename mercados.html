@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Noticias financieras, indicadores, cotizaciones y contexto económico de los mercados en NUVIA.">
+<meta name="description" content="Economía y Finanzas en NUVIA: mercados y noticias para comprender el contexto; cartera y analítica descriptiva para explorar composición, riesgo y escenarios.">
 <link rel="canonical" href="https://oantiza.github.io/NUVIA-PORTAL-LAB/mercados.html">
 
 <!-- NUVIA SOCIAL META: START -->
@@ -11,7 +11,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:site_name" content="NUVIA">
 <meta property="og:title" content="NUVIA · Economía y Finanzas">
-<meta property="og:description" content="Noticias financieras, indicadores, cotizaciones y contexto económico de los mercados en NUVIA.">
+<meta property="og:description" content="Economía y Finanzas en NUVIA: mercados y noticias para comprender el contexto; cartera y analítica descriptiva para explorar composición, riesgo y escenarios.">
 <meta property="og:url" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/mercados.html">
 <meta property="og:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta property="og:image:type" content="image/webp">
@@ -20,7 +20,7 @@
 <meta property="og:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NUVIA · Economía y Finanzas">
-<meta name="twitter:description" content="Noticias financieras, indicadores, cotizaciones y contexto económico de los mercados en NUVIA.">
+<meta name="twitter:description" content="Economía y Finanzas en NUVIA: mercados y noticias para comprender el contexto; cartera y analítica descriptiva para explorar composición, riesgo y escenarios.">
 <meta name="twitter:image" content="https://oantiza.github.io/NUVIA-PORTAL-LAB/src/assets/social/nuvia-social-card-2026-v1.webp">
 <meta name="twitter:image:alt" content="NUVIA · Un lugar donde las familias aprenden a entender su dinero">
 <!-- NUVIA SOCIAL META: END -->
@@ -69,6 +69,7 @@
         <details class="nuvia-site-nav__topics" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -98,24 +99,37 @@
   <main id="contenido">
 
     <!-- ══ CABECERA ══════════════════════════════════════════════════════════ -->
-    <section id="mercados" data-screen-label="Cabecera mercados" class="nv-hero nv-hero--institutional">
+    <section id="mercados" data-screen-label="Cabecera Economía y Finanzas" class="nv-hero nv-hero--institutional">
       <div class="nv-container">
         <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-          <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Mercados y noticias</span></li></ol>
+          <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><span aria-current="page">Economía y Finanzas</span></li></ol>
         </nav>
         <div class="nv-hero__inner nv-hero__inner--simple">
           <div>
-            <p class="nv-eyebrow nv-eyebrow--on-dark">Mercados NUVIA</p>
-            <h1>Información financiera y mercados</h1>
+            <p class="nv-eyebrow nv-eyebrow--on-dark">Espacio NUVIA · Contexto y análisis</p>
+            <h1>Economía y Finanzas</h1>
             <p class="nv-hero__lead">
-              Noticias financieras, indicadores, cotizaciones y contexto económico
-              para seguir la actualidad de los mercados.
+              Comprende la actualidad económica y explora la composición, el riesgo
+              y los escenarios de una cartera. Dos ámbitos conectados para desarrollar criterio propio.
             </p>
-            <nav class="markets-viewnav" aria-label="Vistas de mercados">
-              <sc-for list="{{ vistas }}" as="p" hint-placeholder-count="3">
-                <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" class="{{ p.claseTab }}">{{ p.label }}</button>
-              </sc-for>
+            <nav class="markets-space-nav" aria-label="Ámbitos de Economía y Finanzas">
+              <a href="mercados.html#actualidad" data-economia-area="mercados" onClick="{{ abrirActualidad }}">
+                <strong>Mercados y noticias →</strong>
+                <span>Noticias, indicadores y cotizaciones para comprender el contexto.</span>
+              </a>
+              <a href="cartera.html" data-economia-area="cartera">
+                <strong>Cartera y analítica →</strong>
+                <span>Composición, riesgo y escenarios. Incluye el acceso al análisis de empresas.</span>
+              </a>
             </nav>
+            <div id="actualidad" class="markets-area-views">
+              <p id="markets-views-label">Dentro de Mercados y noticias</p>
+              <nav class="markets-viewnav" aria-label="Vistas de mercados" aria-describedby="markets-views-label">
+                <sc-for list="{{ vistas }}" as="p" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ p.abrir }}" aria-current="{{ p.ariaCurrent }}" class="{{ p.claseTab }}">{{ p.label }}</button>
+                </sc-for>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
@@ -135,7 +149,7 @@
             <h2>Principales indicadores macroeconómicos</h2>
             <span class="markets-macro__updated" data-macro-updated>La economía también llega a tu bolsillo</span>
           </div>
-          <div class="markets-macro__grid" aria-label="Indicadores macroeconómicos actualizados">
+          <div class="markets-macro__grid" aria-label="Indicadores macroeconómicos con fecha de referencia">
           <article class="markets-macro__item" data-macro-id="inflation-spain">
             <div class="markets-macro__top">
               <span class="markets-macro__label" data-macro-field="label">IPC España</span>
@@ -228,7 +242,7 @@
           <p>Cotizaciones, una noticia económica seleccionada y tres lecturas que ayudan a entender el contexto.</p>
         </div>
 
-        <p class="markets-news-update" data-news-update-status aria-live="polite">Selección automática con fecha y fuente verificables.</p>
+        <p class="nv-notice markets-news-update" data-news-update-status data-notice-state="unverified" role="status" aria-atomic="true">Selección disponible. Consulta la fecha y la fuente de cada noticia; la actualización aún no se ha comprobado. Los textos explicativos son contexto temático automático; no resumen ni verifican los artículos enlazados.</p>
 
         <div class="markets-overview-grid">
 
@@ -272,7 +286,7 @@
                 </div>
                 <span class="markets-lead-news__category" data-daily-news="category">Tipos de interés y deuda</span>
                 <h3 data-daily-news="title">El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos</h3>
-                <p class="markets-lead-news__summary" data-daily-news="summary">La información económica seleccionada pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.</p>
+                <p class="markets-lead-news__summary" data-daily-news="summary">Consulta la noticia completa en el medio de origen. Los textos de NUVIA aportan contexto general, no un resumen del artículo.</p>
                 <a class="markets-lead-news__link" href="https://www.expansion.com/mercados/cronica-bolsa/2026/09/01/6a966735468aeb3f2f8b457f.html"
                    target="_blank" rel="noreferrer" data-daily-news="source-link">Leer en <span data-daily-news="source-name">Expansión</span> <span aria-hidden="true">→</span></a>
               </div>
@@ -367,7 +381,7 @@
                  width="800" height="600" loading="lazy">
           </div>
           <div class="markets-report__body">
-            <p class="nv-eyebrow">En preparación</p>
+            <p class="nv-tag nv-tag--pending">En preparación</p>
             <h2 id="titulo-informe">Informes de mercado</h2>
             <h3>Una lectura periódica de las variables que ayudan a comprender el contexto económico.</h3>
             <p class="markets-report__lead">Esta sección se publicará cuando exista una edición revisada. Hasta entonces, las noticias y los indicadores anteriores muestran siempre su fecha y su fuente.</p>
@@ -472,17 +486,19 @@
                 <div class="markets-lab__table-title">
                   <div>
                     <h3 id="markets-components-title">{{ tablaCotizacionTitulo }}</h3>
-                    <span class="markets-lab__table-subtitle">{{ resultadoCotizacion }}</span>
+                    <span class="markets-lab__table-subtitle" role="status" aria-atomic="true">{{ resultadoCotizacion }}</span>
                   </div>
                   <span class="markets-lab__stamp">Datos ilustrativos · 12 AGO 2026 · 17:35 CET</span>
                 </div>
-                <div class="markets-lab__table-scroll">
+                <p id="markets-table-help" class="nv-table-scroll__hint markets-lab__scroll-help">Se conservan todas las columnas. Si no caben, desplaza la tabla; con teclado, enfócala y usa las flechas.</p>
+                <div class="markets-lab__table-scroll" role="region" tabindex="0" aria-labelledby="markets-components-title" aria-describedby="markets-table-help">
                   <table>
+                    <caption class="nv-visually-hidden">Cotizaciones ilustrativas: precio, variaciones, peso, volumen y sector</caption>
                     <colgroup>
                       <col class="markets-lab__col-company"><col class="markets-lab__col-price"><col class="markets-lab__col-day"><col class="markets-lab__col-year"><col class="markets-lab__col-weight"><col class="markets-lab__col-volume"><col class="markets-lab__col-sector">
                     </colgroup>
                     <thead class="markets-lab__table-head">
-                      <tr><th>Empresa</th><th>Último</th><th>Día</th><th class="markets-lab__col-year">Año</th><th>Peso</th><th class="markets-lab__col-volume">Volumen</th><th>Sector</th></tr>
+                      <tr><th scope="col">Empresa</th><th scope="col">Último</th><th scope="col">Día</th><th scope="col">Año</th><th scope="col">Peso</th><th scope="col">Volumen</th><th scope="col">Sector</th></tr>
                     </thead>
                     <tbody>
                       <sc-for list="{{ cotizacionesVisibles }}" as="cotizacion" hint-placeholder-count="8">
@@ -498,10 +514,14 @@
                       </sc-for>
                     </tbody>
                   </table>
-                  <sc-if value="{{ sinCotizaciones }}" hint-placeholder-val="{{ false }}">
-                    <div class="markets-lab__empty">No hay compañías que coincidan con la búsqueda y el sector seleccionados.</div>
-                  </sc-if>
                 </div>
+                <sc-if value="{{ sinCotizaciones }}" hint-placeholder-val="{{ false }}">
+                  <div class="nv-notice markets-lab__empty" data-notice-state="empty">
+                    <h4>Sin coincidencias</h4>
+                    <p>No hay compañías que coincidan con la búsqueda y el sector seleccionados. Prueba otro término o quita los filtros.</p>
+                    <button type="button" class="nv-btn nv-btn--secondary" onClick="{{ limpiarFiltrosMercado }}">Limpiar búsqueda y sector</button>
+                  </div>
+                </sc-if>
               </section>
 
               <div class="markets-lab__footer">
@@ -515,6 +535,7 @@
           <!-- Calendario económico -->
           <sc-if value="{{ esCalendarioEconomico }}" hint-placeholder-val="{{ false }}">
             <div class="markets-calendar-panel">
+              <p class="nv-notice markets-calendar-notice" data-notice-state="partial">Calendario de referencia · agosto de 2026. Esta selección es estática; no es una agenda actualizada.</p>
               <div class="markets-calendar-toolbar">
                 <div class="markets-filter-group" aria-label="Periodo del calendario económico">
                   <span class="markets-filter-group__label">Periodo</span>
@@ -560,6 +581,7 @@
           <!-- Calendario de empresas -->
           <sc-if value="{{ esCalendarioEmpresas }}" hint-placeholder-val="{{ false }}">
             <div class="markets-calendar-panel">
+              <p class="nv-notice markets-calendar-notice" data-notice-state="partial">Calendario de referencia · agosto de 2026. Esta selección es estática; no es una agenda actualizada.</p>
               <div class="markets-calendar-toolbar">
                 <div class="markets-filter-group" aria-label="Periodo del calendario de empresas">
                   <span class="markets-filter-group__label">Periodo</span>
@@ -657,7 +679,7 @@
 class Component extends DCLogic {
   state = { vista: 'portada', mercadoVista: 'cotizaciones', agendaPeriodo: 'dia', agendaImpacto: 'todos', empresaTipo: 'todos', indiceMercado: 'ibex', sectorMercado: 'Todos', busquedaMercado: '', temasOpen: false };
   componentDidMount() {
-    document.title = 'Mercados | NUVIA Family Wealth';
+    document.title = 'NUVIA · Economía y Finanzas';
     const p = new URLSearchParams(window.location.search).get('vista');
     const legacy = { diario: 'portada', archivo: 'informes', semanal: 'cotizaciones' };
     const vista = legacy[p] || p;
@@ -666,7 +688,7 @@ class Component extends DCLogic {
   ir(v) { this.setState({ vista: v }); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   renderVals() {
     const vista = this.state.vista;
-    const defs = [['portada', 'Portada'], ['informes', 'Informes'], ['cotizaciones', 'Mercados y cotizaciones']];
+    const defs = [['portada', 'Noticias y contexto'], ['informes', 'Informes'], ['cotizaciones', 'Mercados y cotizaciones']];
     const mercadoVista = this.state.mercadoVista;
     const herramientasDefs = [['cotizaciones', 'Cotizaciones'], ['economico', 'Calendario económico'], ['empresas', 'Calendario de empresas']];
     const ibexCotizaciones = [
@@ -725,18 +747,18 @@ class Component extends DCLogic {
     ];
     const claseFiltro = (activo) => 'markets-filter' + (activo ? ' is-active' : '');
     const eventosEconomicosBase = [
-      { periodos:['dia','semana','mes'], fecha:'Hoy · 11 ago', hora:'12:00', region:'Estados Unidos', titulo:'Índice NFIB de confianza de las pequeñas empresas', detalle:'Julio', impacto:'Medio', impactoId:'medio' },
-      { periodos:['dia','semana','mes'], fecha:'Hoy · 11 ago', hora:'16:00', region:'Estados Unidos', titulo:'Ventas de viviendas existentes', detalle:'Julio', impacto:'Alto', impactoId:'alto' },
+      { periodos:['dia','semana','mes'], fecha:'11 ago 2026', hora:'12:00', region:'Estados Unidos', titulo:'Índice NFIB de confianza de las pequeñas empresas', detalle:'Julio', impacto:'Medio', impactoId:'medio' },
+      { periodos:['dia','semana','mes'], fecha:'11 ago 2026', hora:'16:00', region:'Estados Unidos', titulo:'Ventas de viviendas existentes', detalle:'Julio', impacto:'Alto', impactoId:'alto' },
       { periodos:['semana','mes'], fecha:'Mié · 12 ago', hora:'14:30', region:'Estados Unidos', titulo:'IPC general y subyacente', detalle:'Julio', impacto:'Alto', impactoId:'alto' },
       { periodos:['semana','mes'], fecha:'Vie · 14 ago', hora:'10:00', region:'Eurozona', titulo:'Reservas internacionales y liquidez en divisas del Eurosistema', detalle:'Julio', impacto:'Medio', impactoId:'medio' },
       { periodos:['mes'], fecha:'Mar · 18 ago', hora:'11:05', region:'Alemania', titulo:'Expectativas económicas ZEW', detalle:'Agosto', impacto:'Alto', impactoId:'alto' },
       { periodos:['mes'], fecha:'Jue · 27 ago', hora:'13:30', region:'Eurozona', titulo:'Actas de política monetaria del BCE', detalle:'Reunión de julio', impacto:'Alto', impactoId:'alto' },
     ];
     const eventosEmpresasBase = [
-      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'Hoy · 11 ago', momento:'Antes de apertura', ticker:'CAH', mercado:'NYSE', empresa:'Cardinal Health', detalle:'BPA estimado: 2,42 $' },
-      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'Hoy · 11 ago', momento:'Después del cierre', ticker:'CRWV', mercado:'Nasdaq', empresa:'CoreWeave', detalle:'Ingresos estimados: 2.560 M$' },
-      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'Hoy · 11 ago', momento:'Fecha de pago', ticker:'TXN', mercado:'Nasdaq', empresa:'Texas Instruments', detalle:'Dividendo: 1,42 $ por acción' },
-      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'Hoy · 11 ago', momento:'Fecha de pago', ticker:'NUE', mercado:'NYSE', empresa:'Nucor', detalle:'Dividendo: 0,56 $ por acción' },
+      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'11 ago 2026', momento:'Antes de apertura', ticker:'CAH', mercado:'NYSE', empresa:'Cardinal Health', detalle:'BPA estimado: 2,42 $' },
+      { periodos:['dia','semana','mes'], tipo:'resultados', fecha:'11 ago 2026', momento:'Después del cierre', ticker:'CRWV', mercado:'Nasdaq', empresa:'CoreWeave', detalle:'Ingresos estimados: 2.560 M$' },
+      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'11 ago 2026', momento:'Fecha de pago', ticker:'TXN', mercado:'Nasdaq', empresa:'Texas Instruments', detalle:'Dividendo: 1,42 $ por acción' },
+      { periodos:['dia','semana','mes'], tipo:'dividendos', fecha:'11 ago 2026', momento:'Fecha de pago', ticker:'NUE', mercado:'NYSE', empresa:'Nucor', detalle:'Dividendo: 0,56 $ por acción' },
       { periodos:['semana','mes'], tipo:'resultados', fecha:'Mié · 12 ago', momento:'Después del cierre', ticker:'CSCO', mercado:'Nasdaq', empresa:'Cisco Systems', detalle:'BPA estimado: 1,17 $' },
       { periodos:['semana','mes'], tipo:'dividendos', fecha:'Jue · 13 ago', momento:'Fecha de pago', ticker:'AAPL', mercado:'Nasdaq', empresa:'Apple', detalle:'Dividendo: 0,27 $ por acción' },
       { periodos:['semana','mes'], tipo:'dividendos', fecha:'Vie · 14 ago', momento:'Fecha de pago', ticker:'ABBV', mercado:'NYSE', empresa:'AbbVie', detalle:'Dividendo: 1,73 $ por acción' },
@@ -757,10 +779,18 @@ class Component extends DCLogic {
       vistas: defs.map(([id, label], i) => ({
         label,
         ariaCurrent: id === vista ? 'page' : undefined,
-        abrir: () => this.ir(id),
+        abrir: () => id === 'portada' && this.state.vista !== 'portada' ? window.location.assign('mercados.html') : this.ir(id),
         claseTab: 'markets-viewnav__tab' + (id === vista ? ' is-active' : ''),
       })),
       esPortada: vista === 'portada',
+      abrirActualidad: (event) => {
+        if (this.state.vista === 'portada' || window.location.search) return;
+        // Las pestañas no actualizan la URL. Una recarga local permite que
+        // el arranque habitual vuelva a aplicar fechas y contenido editorial.
+        event.preventDefault();
+        window.history.replaceState(null, '', 'mercados.html#actualidad');
+        window.location.reload();
+      },
       esInformes: vista === 'informes',
       esCotizaciones: vista === 'cotizaciones',
       herramientasMercado: herramientasDefs.map(([id, label], i) => ({
@@ -779,18 +809,23 @@ class Component extends DCLogic {
       resumenesCotizacion,
       busquedaMercado,
       cambiarBusquedaMercado: (e) => this.setState({ busquedaMercado: e.target.value }),
+      limpiarFiltrosMercado: () => {
+        this.setState({ busquedaMercado: '', sectorMercado: 'Todos' });
+        const input = document.querySelector('.markets-lab__search input');
+        if (input) { input.value = ''; input.focus(); }
+      },
       sectoresCotizacion: sectoresDisponibles.map((label) => ({
         label,
         activo: sectorMercado === label,
         abrir: () => this.setState({ sectorMercado: label }),
       })),
       tablaCotizacionTitulo: indiceMercado === 'ibex' ? 'Componentes del IBEX 35' : 'Componentes del EURO STOXX 50',
-      resultadoCotizacion: `${cotizacionesVisibles.length} valores visibles · filtros sobre ${cotizacionesIndice.length} componentes de referencia`,
+      resultadoCotizacion: `${cotizacionesVisibles.length} valores visibles · filtros sobre ${cotizacionesIndice.length} componentes de referencia${cotizacionesVisibles.length === 0 ? '. Sin coincidencias; puedes limpiar la búsqueda y el sector.' : ''}`,
       cotizacionesVisibles,
       sinCotizaciones: cotizacionesVisibles.length === 0,
       esCalendarioEconomico: mercadoVista === 'economico',
       esCalendarioEmpresas: mercadoVista === 'empresas',
-      periodosAgenda: [['dia','Hoy'],['semana','Semana'],['mes','Mes']].map(([id,label]) => ({ label, activo: id === periodo, abrir: () => this.setState({ agendaPeriodo: id }), claseFiltro: claseFiltro(id === periodo) })),
+      periodosAgenda: [['dia','11 ago 2026'],['semana','Semana del 10 ago'],['mes','Agosto 2026']].map(([id,label]) => ({ label, activo: id === periodo, abrir: () => this.setState({ agendaPeriodo: id }), claseFiltro: claseFiltro(id === periodo) })),
       impactosAgenda: [['todos','Todos'],['alto','Alto'],['medio','Medio']].map(([id,label]) => ({ label, activo: id === impacto, abrir: () => this.setState({ agendaImpacto: id }), claseFiltro: claseFiltro(id === impacto) })),
       tiposEmpresa: [['todos','Todos'],['resultados','Resultados'],['dividendos','Dividendos']].map(([id,label]) => ({ label, activo: id === empresaTipo, abrir: () => this.setState({ empresaTipo: id }), claseFiltro: claseFiltro(id === empresaTipo) })),
       eventosEconomicos,

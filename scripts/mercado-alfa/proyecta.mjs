@@ -14,6 +14,7 @@
  */
 
 import { DIVISA_ALFA, claveOrden, sinAcentos } from './universo.mjs';
+import { filaActual, cambioIdentidad, CAMBIOS_IDENTIDAD } from '../../js/nuvia-identidades.js';
 
 export const SCHEMA_VERSION = 'nuvia-alfa-asset.v1';
 export const METODO_METRICAS = 'log-returns diarios sobre adjusted_close; volatilidad = desviación típica muestral × √252; '
@@ -366,6 +367,7 @@ export function divisaConfirmada({ fila, fundamentales, busqueda }) {
  * @returns {{asset:Object|null, series:Array, holdings:Object|null, errores:string[]}}
  */
 export function proyectaActivo({ fila, eod, fundamentales = null, busqueda = null, fetchedAt, updatedAt }) {
+  fila = filaActual(fila);
   const errores = [];
   const tipo = fila.instrument_type;
   const puntos = puntosValidos(eod);
@@ -468,6 +470,11 @@ export function proyectaActivo({ fila, eod, fundamentales = null, busqueda = nul
     updated_at: updatedAt,
   };
 
+  const transition = cambioIdentidad(asset.asset_id);
+  if (transition && asset.asset_id === transition.current && asset.eodhd_symbol === transition.symbol) {
+    asset.identity_transition = { previous_isin: transition.old, current_isin: transition.current,
+      effective_date: transition.effective, source: transition.source, note: transition.note };
+  }
   return { asset, series: seriesPorAnio(fila.asset_id, puntos), holdings, errores: [] };
 }
 
@@ -515,6 +522,10 @@ export function catalogo(assets, updatedAt) {
     universe: 'alfa',
     schema_version: SCHEMA_VERSION,
   };
+  const aliases = Object.fromEntries(CAMBIOS_IDENTIDAD
+    .filter(c => assets.some(a => a.asset_id === c.current && a.eodhd_symbol === c.symbol))
+    .map(c => [c.old, c.current]));
+  if (Object.keys(aliases).length) manifest.identity_aliases = aliases;
   return { chunks, manifest };
 }
 

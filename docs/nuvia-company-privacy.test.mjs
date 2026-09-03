@@ -17,7 +17,7 @@ const theme = hasSource
   ? `${read('company-analysis/src/theme.css')}\n${read('company-analysis/src/theme-b.css')}`
   : builtAssets.filter((file) => file.endsWith('.css')).map((file) => read(`company-analysis/assets/${file}`)).join('\n');
 const chartAndSummary = hasSource
-  ? `${read('company-analysis/src/components/CandleChart.jsx')}\n${read('company-analysis/src/views/tabs/ResumenTab.jsx')}`
+  ? ['main.jsx', 'App.jsx', 'CompanyReport.jsx', 'client.js', 'remote.js'].map(file => read(`company-analysis/src/alfa/${file}`)).join('\n')
   : builtAssets.filter((file) => file.endsWith('.js')).map((file) => read(`company-analysis/assets/${file}`)).join('\n');
 const fonts = read('estilos/nuvia-fonts.css');
 
@@ -38,7 +38,7 @@ assert.doesNotMatch(theme + chartAndSummary, /Roboto Flex/,
   'La copia debe usar Inter, disponible localmente, y no una familia remota');
 assert.doesNotMatch(chartAndSummary, /translateCompanyDescription|translate\.googleapis/i,
   'La descripción no debe enviarse a un traductor no documentado');
-assert.match(chartAndSummary, /Descripción original facilitada por el proveedor/,
-  'La interfaz debe identificar de forma honesta el texto original');
+assert.doesNotMatch(chartAndSummary, /identitytoolkit\.googleapis|securetoken\.googleapis|cloudfunctions\.net|bbdd-activos-financieros|nuvia-market-data|signInWith|setDoc\(/,
+  'La entrada alfa no incluye autenticación, acceso a la base anterior ni escrituras');
 
 console.log(`Módulo de empresas: fuentes locales y descripción sin traducción externa en ${root}.`);

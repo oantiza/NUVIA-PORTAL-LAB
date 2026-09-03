@@ -23,6 +23,10 @@ const expectedGroups = [
     "label": "Patrimonio",
     "children": [
       [
+        "temas.html",
+        "Portada de Patrimonio"
+      ],
+      [
         "vivienda.html",
         "Vivienda y coste de vida"
       ],
@@ -156,8 +160,6 @@ assert.ok(academy.includes("'esenciales'") && academy.includes("'cursos'"), 'Pes
 const portfolio = await read('cartera.html');
 assert.match(portfolio, /id="vista-companies" href="cartera.html\?vista=companies#suite-nuvia"/,
   'Análisis de empresas sigue dentro de Cartera');
-/* Alfa (Entrega 2b): la vista de empresas está «En preparación» y no carga
-   la suite local; vuelve con la base propia. */
-assert.ok(portfolio.includes('id="empresas-en-preparacion"') && !portfolio.includes('company-analysis/'),
-  'La vista de empresas se muestra «En preparación» sin cargar la suite local (alfa)');
+assert.ok(portfolio.includes('id="nuvia-company-frame"') && portfolio.includes('data-src="company-analysis/index.html"') && !portfolio.includes('id="empresas-en-preparacion"'),
+  'La vista de empresas carga el módulo alfa propio por selección del usuario');
 console.log('Navegación: ' + checked + ' cabeceras, destinos y enlaces de regreso correctos.');

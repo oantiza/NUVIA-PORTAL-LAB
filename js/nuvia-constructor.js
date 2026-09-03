@@ -12,8 +12,11 @@
  */
 
 import { maestra, etiquetaTipo } from './nuvia-datos.js';
+import { idActual } from './nuvia-identidades.js';
+import { creaGuardadoLocal, mensajeGuardadoLocal } from './nuvia-guardado-local.js';
+import { fuenteDelAnalisis } from './nuvia-periodo-analisis.js';
 import { metricasDesdeSerie, serieDeCaidas, sharpe, pct, num, DIAS_MERCADO } from './nuvia-cartera.js';
-import { montaAnalisis, perfilesReferencia } from './nuvia-analisis.js?v=20260823-6';
+import { montaAnalisis, perfilesReferencia, TEXTO_HISTORIAL } from './nuvia-analisis.js?v=20260823-6';
 
 /* El límite de posiciones depende del nivel de la sesión (paso 33). */
 
@@ -58,7 +61,7 @@ export const NOTA_NIVEL_SUSCRIPTOR = 'Este es el tope de la herramienta: '
 /** Añade un activo. Devuelve { posiciones, motivo } — motivo explica un rechazo. */
 export function agregaPosicion(posiciones, activo, limite = MAX_POSICIONES) {
   if (!activo?.asset_id) return { posiciones, motivo: 'sin-id' };
-  if (posiciones.some((p) => p.activo.asset_id === activo.asset_id)) {
+  if (posiciones.some((p) => idActual(p.activo.asset_id) === idActual(activo.asset_id))) {
     return { posiciones, motivo: 'repetido' };
   }
   if (posiciones.length >= limite) {
@@ -658,7 +661,9 @@ export function carteraParaGuardar(nombre, posiciones) {
  */
 export function agregaCartera(lista, cartera) {
   if (!cartera.posiciones?.length) return { lista, motivo: 'sin-posiciones' };
-  const nombre = cartera.nombre || `Cartera ${lista.length + 1}`;
+  let numero = lista.length + 1;
+  while (!cartera.nombre && lista.some((c) => c.nombre === `Cartera ${numero}`)) numero++;
+  const nombre = cartera.nombre || `Cartera ${numero}`;
   const definitiva = { ...cartera, nombre };
   const indice = lista.findIndex((c) => c.nombre === nombre);
   if (indice >= 0) {
@@ -836,6 +841,34 @@ function donutTiposActivo(partes) {
   return bloque;
 }
 
+/** Comparte solo solicitudes simultáneas, nunca una serie resuelta de otra carga. */
+export function creaConsultaSeries(datos) {
+  const enCurso = new Map();
+  return (ids) => {
+    const clave = [...ids].sort().join('|');
+    if (!enCurso.has(clave)) {
+      const promesa = datos.llama('get_price_series', { asset_ids: ids, frequency: 'DAILY', window: '3Y' });
+      enCurso.set(clave, promesa);
+      promesa.then(() => enCurso.delete(clave), () => enCurso.delete(clave));
+    }
+    return enCurso.get(clave);
+  };
+}
+
+/**
+ * Aviso, no bloqueo (orden del fundador, 03-09-2026): si a una composición fija le
+ * falta historial, se dice qué falta y el análisis continúa con el resto.
+ */
+export function avisoHistorialFijo(posiciones, series) {
+  const validas = new Set((series || []).filter((s) => Array.isArray(s.values) && s.values.length >= 2
+    && s.values.every((v) => Number.isFinite(v) && v > 0)).map((s) => s.asset_id));
+  const faltan = posiciones.filter((p) => !validas.has(p.activo.asset_id));
+  return faltan.length ? 'Sin historial suficiente para toda la composición: '
+    + faltan.map((p) => p.activo.display_name || p.activo.asset_id).join(', ')
+    + '. Esas posiciones quedan fuera del cálculo y el reparto se recalcula entre las restantes; '
+    + 'los pesos publicados de la composición no cambian.' : '';
+}
+
 export function montaConstructor(raiz, {
   cliente = null,
   posicionesIniciales = [],
@@ -843,15 +876,17 @@ export function montaConstructor(raiz, {
   destinoAnalisis = null,
   prefijoId = '',
   nivelAnalisis = null,
+  almacenamientoLocal = null,
 } = {}) {
   if (!raiz) return null;
   const datos = cliente || maestra();
+  const guardadoLocal = creaGuardadoLocal(almacenamientoLocal ? () => almacenamientoLocal : undefined);
 
   let posiciones = (posicionesIniciales || []).map((p) => ({
     activo: { ...(p.activo || {}) },
     bruto: Number(p.bruto) || 0,
   }));
-  const cacheSeries = new Map(); // clave (ids ordenados) -> promesa del payload
+  const seriesDelConjunto = creaConsultaSeries(datos);
   let generacion = 0;
   let benchmarkElegido = '';
   let ofertaMigracionDescartada = false; // «ahora no» de la migración (paso 31)
@@ -920,6 +955,7 @@ export function montaConstructor(raiz, {
     if (estadoNodo) estadoNodo.textContent = mensaje;
   }
 
+  // Adaptadores heredados de la cuenta, inactiva en la alfa; no se usan en el guardado local.
   function leeGuardadas() {
     try {
       const crudo = JSON.parse(localStorage.getItem(CLAVE_CARTERAS) || '[]');
@@ -946,16 +982,35 @@ export function montaConstructor(raiz, {
     const botonGuardar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__boton-guardar' }, 'Guardar en este navegador');
     formulario.append(campoNombre, botonGuardar);
     const estadoGuardado = el('p', { class: 'nv-cons__estado', role: 'status' });
+    const reintentar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__reintentar-guardado' }, 'Volver a comprobar las carteras guardadas');
+    reintentar.hidden = true;
     /* La lista, plegada para no comerse la página (encargo 21-08). */
     const listaGuardadas = el('ul', { class: 'nv-cons__guardadas' });
     const resumenGuardadas = el('summary', {}, 'Ver tus carteras guardadas');
     const pliegueGuardadas = el('details', { class: 'nv-analisis__despliegue nv-cons__pliegue' });
     pliegueGuardadas.append(resumenGuardadas, listaGuardadas);
-    guardadoRaiz.append(formulario, estadoGuardado, pliegueGuardadas);
+    guardadoRaiz.append(formulario, estadoGuardado, reintentar, pliegueGuardadas);
+    let lectura = null;
+
+    function muestraError(resultado, accion) {
+      pinta();
+      estadoGuardado.textContent = mensajeGuardadoLocal(resultado.motivo, accion);
+      reintentar.hidden = false;
+    }
 
     function pinta() {
-      const carteras = leeGuardadas();
+      lectura = guardadoLocal.lee();
       listaGuardadas.textContent = '';
+      botonGuardar.disabled = !lectura.ok;
+      reintentar.hidden = lectura.ok;
+      if (!lectura.ok) {
+        pliegueGuardadas.hidden = true;
+        botonGuardar.textContent = 'Guardado no disponible';
+        estadoGuardado.textContent = mensajeGuardadoLocal(lectura.motivo);
+        return;
+      }
+      const carteras = lectura.lista;
+      const instantanea = lectura;
       pliegueGuardadas.hidden = !carteras.length;
       resumenGuardadas.textContent = `Ver tus carteras guardadas (${carteras.length})`;
       for (const [indice, cartera] of carteras.entries()) {
@@ -967,13 +1022,16 @@ export function montaConstructor(raiz, {
         );
         const cargar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Cargar');
         cargar.addEventListener('click', () => {
+          const actual = guardadoLocal.comprueba(instantanea);
+          if (!actual.ok) { muestraError(actual, 'cargar'); return; }
           cargaPosiciones(
             cartera.posiciones.map((p) => ({ activo: { ...p.activo }, bruto: Number(p.bruto) || 0 })),
             `Cartera «${cartera.nombre}» cargada.`, estadoGuardado);
         });
         const borrar = el('button', { type: 'button', class: 'nv-btn nv-btn--soft nv-cons__guardada-boton' }, 'Borrar');
         borrar.addEventListener('click', () => {
-          escribeGuardadas(borraCartera(leeGuardadas(), indice));
+          const resultado = guardadoLocal.escribe(borraCartera(carteras, indice), instantanea);
+          if (!resultado.ok) { muestraError(resultado, 'borrar'); return; }
           pinta();
           estadoGuardado.textContent = `Cartera «${cartera.nombre}» borrada de este navegador.`;
         });
@@ -984,7 +1042,9 @@ export function montaConstructor(raiz, {
     }
 
     botonGuardar.addEventListener('click', () => {
-      const { lista: nuevas, motivo } = agregaCartera(leeGuardadas(), carteraParaGuardar(inputNombre.value, posiciones));
+      const actual = guardadoLocal.comprueba(lectura);
+      if (!actual.ok) { muestraError(actual, 'guardar'); return; }
+      const { lista: nuevas, motivo } = agregaCartera(actual.lista, carteraParaGuardar(inputNombre.value, posiciones));
       if (motivo === 'sin-posiciones') {
         estadoGuardado.textContent = 'No hay nada que guardar todavía: añade algún activo primero.';
         return;
@@ -993,13 +1053,19 @@ export function montaConstructor(raiz, {
         estadoGuardado.textContent = `Este navegador guarda hasta ${MAX_CARTERAS} carteras. Borra alguna para guardar esta.`;
         return;
       }
-      escribeGuardadas(nuevas);
+      const resultado = guardadoLocal.escribe(nuevas, actual);
+      if (!resultado.ok) { muestraError(resultado, 'guardar'); return; }
       pinta();
       const nombre = nuevas[nuevas.length - 1]?.nombre;
       estadoGuardado.textContent = motivo === 'reemplazada'
         ? `Cartera «${inputNombre.value.trim()}» actualizada.`
         : `Cartera guardada${nombre ? ` como «${nombre}»` : ''}.`;
       inputNombre.value = '';
+    });
+
+    reintentar.addEventListener('click', () => {
+      pinta();
+      if (lectura.ok) estadoGuardado.textContent = 'Lista de carteras comprobada. Ya puedes guardar o cargar una cartera.';
     });
 
     pinta();
@@ -1153,18 +1219,6 @@ export function montaConstructor(raiz, {
   });
   if (editable) pintaGuardado();
 
-  function seriesDelConjunto(ids) {
-    const clave = [...ids].sort().join('|');
-    if (!cacheSeries.has(clave)) {
-      const promesa = datos.llama('get_price_series', {
-        asset_ids: ids, frequency: 'DAILY', window: '3Y',
-      });
-      promesa.catch(() => cacheSeries.delete(clave));
-      cacheSeries.set(clave, promesa);
-    }
-    return cacheSeries.get(clave);
-  }
-
   /* La lista se presenta como se enseñaría una cartera: activo, peso y
    *  capital en columnas, una posición bajo otra, con una barra fina que
    *  dibuja el peso. El peso se edita en su propia casilla. */
@@ -1222,6 +1276,8 @@ export function montaConstructor(raiz, {
   }
 
   async function recalcula() {
+    // También una cartera vacía sustituye a la solicitud anterior.
+    const mia = ++generacion;
     const limite = limiteActual();
     const esNivelAdmin = nivelActual() === 'admin';
     contador.textContent = posiciones.length ? textoContador(posiciones.length, limite) : '';
@@ -1235,7 +1291,8 @@ export function montaConstructor(raiz, {
       return;
     }
     const ids = posiciones.map((p) => p.activo.asset_id);
-    const mia = ++generacion;
+    // Las cifras previas no corresponden a esta composición mientras carga.
+    resultados.textContent = '';
     let payload;
     let estrBce = null;
     try {
@@ -1270,7 +1327,11 @@ export function montaConstructor(raiz, {
 
     const partes = [];
     if (excluidos.length) {
-      partes.push(`Sin historial suficiente en la base de datos: ${excluidos.map((p) => p.activo.display_name || p.activo.asset_id).join(', ')}. No entra en el cálculo.`);
+      // Composición fija: se declara además que el reparto se recalcula. Nunca se
+      // bloquea el análisis por esto (orden del fundador, 03-09-2026).
+      partes.push(editable
+        ? `Sin historial suficiente en la base de datos: ${excluidos.map((p) => p.activo.display_name || p.activo.asset_id).join(', ')}. No entra en el cálculo.`
+        : avisoHistorialFijo(posiciones, series));
     }
     estado.textContent = partes.join(' ');
 
@@ -1343,6 +1404,7 @@ export function montaConstructor(raiz, {
       posiciones: Object.keys(pesos).length,
     }));
     cajaRiesgo.append(el('h3', { class: 'nv-cons__subtitulo' }, 'Métricas del historial común de 3 años'));
+    cajaRiesgo.append(el('p', { class: 'nv-cons__nota' }, TEXTO_HISTORIAL));
 
     const tabla = el('table', { class: 'nv-table nv-sim-tabla' });
     tabla.append(el('caption', { class: 'nv-visually-hidden' }, 'Métricas históricas de la combinación elegida'));
@@ -1362,7 +1424,7 @@ export function montaConstructor(raiz, {
           : 'No se ha podido cruzar el historial de la cartera con la serie diaria del €STR del BCE.'),
     );
     tabla.append(thead, tbody);
-    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll' });
+    const envoltorio = el('div', { class: 'nv-sim-tabla-scroll', role: 'region', tabindex: '0', 'aria-label': 'Métricas históricas de la combinación elegida' });
     envoltorio.append(tabla);
     cajaRiesgo.append(envoltorio);
 
@@ -1378,9 +1440,8 @@ export function montaConstructor(raiz, {
     });
     if (evolucion) cajaRiesgo.append(evolucion);
 
-    const fecha = fechaCorta(payload?.coverage?.last_date);
     cajaRiesgo.append(el('p', { class: 'nv-cons__fuente' },
-      `Datos de cierre${fecha ? ` del ${fecha}` : ''}, base de datos NUVIA. Ventana de 3 años, en euros. ${m.observaciones} observaciones.`));
+      fuenteDelAnalisis(fechasComunes, m.observaciones)));
     if (Number.isFinite(tasaSinRiesgo)) {
       const fuenteBce = el('p', { class: 'nv-cons__fuente' });
       fuenteBce.append(

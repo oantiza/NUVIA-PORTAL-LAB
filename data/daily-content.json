@@ -1,112 +1,104 @@
 {
-  "synchronizedAt": "2026-09-02T03:58:17.282Z",
+  "synchronizedAt": "2026-09-03T14:19:55.160Z",
   "sourceRepository": "NUVIA-PORTAL-LAB",
   "dailyEconomicNews": {
-    "selectionDate": "2 de septiembre de 2026",
+    "selectionDate": "3 de septiembre de 2026",
     "freshnessStatus": "today",
-    "sourcePublishedAt": "2 de septiembre de 2026",
-    "sourcePublishedAtIso": "2026-09-02T00:02:30.000Z",
-    "selectedAt": "2026-09-02T03:58:17.282Z",
+    "sourcePublishedAt": "3 de septiembre de 2026",
+    "sourcePublishedAtIso": "2026-09-03T13:32:01.000Z",
+    "selectedAt": "2026-09-03T14:19:55.160Z",
     "sourceName": "Expansión",
-    "sourceUrl": "https://www.expansion.com/economia/financial-times/2026/09/02/6a971422e5fdea64518b4580.html",
+    "sourceUrl": "https://www.expansion.com/mercados/euribor/2026/09/03/6a98064a468aebab738b457a.html",
     "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
     "imageAlt": "",
     "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
-    "title": "Cómo entender la actual paradoja de los bonos y las acciones",
-    "summary": "La información económica seleccionada pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos. NUVIA incorpora esta noticia de Expansión como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.",
+    "title": "Euríbor hoy, 2 de septiembre: El Euríbor diario se sitúa hoy en 3,068%, lo que confirma la tendencia al alza respecto a la media mensual",
+    "summary": "Titular de Expansión. Consulta la noticia completa en el medio de origen.",
+    "contextMode": "automatic-topic-context",
     "category": "Tipos de interés y deuda",
-    "context": "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía.",
-    "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+    "context": "Contexto temático automático de NUVIA: no resume ni verifica el artículo enlazado. Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía.",
+    "whyItMatters": "Contexto temático automático de NUVIA: no resume ni verifica el artículo enlazado. Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
     "impactPoints": [
-      "Puede modificar cuotas, nuevas financiaciones y rentabilidad del ahorro conservador.",
-      "Afecta de forma diferente a bonos, bolsa, divisas y activos inmobiliarios.",
-      "Ayuda a revisar plazos y riesgos sin reaccionar a una sola sesión de mercado."
+      "Contexto general: Puede modificar cuotas, nuevas financiaciones y rentabilidad del ahorro conservador.",
+      "Contexto general: Afecta de forma diferente a bonos, bolsa, divisas y activos inmobiliarios.",
+      "Contexto general: Ayuda a revisar plazos y riesgos sin reaccionar a una sola sesión de mercado."
     ]
   },
   "secondaryEconomicNews": [
     {
       "id": "market-brief-1",
-      "category": "Tipos de interés y deuda",
-      "title": "El Ibex cae a los 19.800 puntos en el estreno de septiembre, presionado por los bonos",
-      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "category": "Inflación y coste de vida",
+      "title": "Tres pilares de la Bolsa para contrarrestar la presión de deuda y petróleo",
+      "summary": "Titular de Expansión. Consulta la noticia completa en el medio de origen.",
+      "contextMode": "automatic-topic-context",
       "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
       "imageAlt": "",
       "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
-        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
-        "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
+        "Contexto temático automático de NUVIA: no resume ni verifica el artículo enlazado.",
+        "La inflación afecta al presupuesto cotidiano y a la rentabilidad real del ahorro. También condiciona la respuesta de los bancos centrales y el coste de la financiación."
       ],
-      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
-      "publishedAt": "1 sept 2026",
-      "publishedAtIso": "2026-09-01T20:08:26.000Z",
-      "selectedAt": "2026-09-02T03:58:17.282Z",
+      "whyItMatters": "Contexto general: Para construir patrimonio importa lo que el dinero permite comprar después de la inflación. Por eso conviene distinguir entre rentabilidad nominal, rentabilidad real y necesidades de liquidez.",
+      "publishedAt": "3 sept 2026",
+      "publishedAtIso": "2026-09-02T22:26:55.000Z",
+      "selectedAt": "2026-09-03T14:19:55.160Z",
       "sourceName": "Expansión",
-      "sourceUrl": "https://www.expansion.com/mercados/cronica-bolsa/2026/09/01/6a966735468aeb3f2f8b457f.html"
+      "sourceUrl": "https://www.expansion.com/mercados/2026/09/03/6a980d50e5fdea70788b4579.html"
     },
     {
       "id": "market-brief-2",
       "category": "Tipos de interés y deuda",
-      "title": "Los intereses de la deuda amenazan la Bolsa con nuevos máximos",
-      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "title": "Cómo va a reaccionar la Bolsa si la Fed inicia un ciclo alcista de los tipos",
+      "summary": "Titular de Expansión. Consulta la noticia completa en el medio de origen.",
+      "contextMode": "automatic-topic-context",
       "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
       "imageAlt": "",
       "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
-        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+        "Contexto temático automático de NUVIA: no resume ni verifica el artículo enlazado.",
         "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
-      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
-      "publishedAt": "1 sept 2026",
-      "publishedAtIso": "2026-09-01T10:46:02.000Z",
-      "selectedAt": "2026-09-02T03:58:17.282Z",
+      "whyItMatters": "Contexto general: Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+      "publishedAt": "2 sept 2026",
+      "publishedAtIso": "2026-09-02T18:32:06.000Z",
+      "selectedAt": "2026-09-03T14:19:55.160Z",
       "sourceName": "Expansión",
-      "sourceUrl": "https://www.expansion.com/mercados/2026/09/01/6a96a2b2e5fdea156a8b4579.html"
+      "sourceUrl": "https://www.expansion.com/mercados/2026/09/02/6a984030e5fdeaf10a8b4582.html"
     },
     {
       "id": "market-brief-3",
       "category": "Tipos de interés y deuda",
-      "title": "Los mercados afrontan una nueva ola de subidas de tipos",
-      "summary": "La actualidad pone el foco en el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+      "title": "Los intereses de la deuda amenazan la Bolsa con nuevos máximos",
+      "summary": "Titular de Expansión. Consulta la noticia completa en el medio de origen.",
+      "contextMode": "automatic-topic-context",
       "imageUrl": "src/assets/social/nuvia-social-source-generated-v1.png",
       "imageAlt": "",
       "imageProvenance": "Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.",
       "body": [
-        "La información publicada por Expansión aborda el coste del dinero, la remuneración del ahorro y la valoración de los activos.",
+        "Contexto temático automático de NUVIA: no resume ni verifica el artículo enlazado.",
         "Los tipos se transmiten a hipotecas, crédito, depósitos, bonos y valoraciones bursátiles. Sus efectos suelen aparecer con distinta velocidad en cada parte de la economía."
       ],
-      "whyItMatters": "Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
-      "publishedAt": "31 ago 2026",
-      "publishedAtIso": "2026-08-31T12:47:36.000Z",
-      "selectedAt": "2026-09-02T03:58:17.282Z",
+      "whyItMatters": "Contexto general: Una decisión de tipos puede mejorar la remuneración del efectivo y, al mismo tiempo, encarecer la deuda. La lectura patrimonial debe considerar ambos lados del balance familiar.",
+      "publishedAt": "1 sept 2026",
+      "publishedAtIso": "2026-09-01T10:46:02.000Z",
+      "selectedAt": "2026-09-03T14:19:55.160Z",
       "sourceName": "Expansión",
-      "sourceUrl": "https://www.expansion.com/mercados/2026/08/31/6a953606e5fdea35598b4595.html"
+      "sourceUrl": "https://www.expansion.com/mercados/2026/09/01/6a96a2b2e5fdea156a8b4579.html"
     }
   ],
-  "macroIndicatorsUpdatedAt": "14 de agosto de 2026",
+  "macroIndicatorsUpdatedAt": "3 de septiembre de 2026",
   "dailyMacroIndicators": [
     {
       "id": "inflation-spain",
-      "label": "IPC España",
-      "value": "3,6%",
-      "period": "Julio · interanual",
-      "change": "Sube 0,4 pp",
-      "direction": "up",
-      "context": "El dato definitivo incorpora más presión de carburantes y electricidad de la anticipada.",
-      "sourceName": "INE",
-      "sourceUrl": "https://www.ine.es/dyngs/Prensa/IPC0726.htm",
-      "referenceDate": "13 ago 2026"
-    },
-    {
-      "id": "euribor",
-      "label": "Euríbor a 1 año",
-      "value": "2,86%",
-      "period": "julio 2026 · media mensual",
-      "change": "Sube 0,06 pp",
-      "direction": "up",
-      "context": "Última media mensual disponible del Euríbor a 12 meses, referencia habitual de las hipotecas variables.",
-      "sourceName": "BCE · Refinitiv",
-      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
-      "referenceDate": "dato julio 2026"
+      "label": "IPCA España",
+      "value": "3,0%",
+      "period": "diciembre 2025 · interanual",
+      "change": "Baja 0,2 pp",
+      "direction": "down",
+      "context": "Última variación interanual oficial del índice armonizado de precios de consumo.",
+      "sourceName": "Eurostat",
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_manr/default/table?lang=es",
+      "referenceDate": "dato diciembre 2025"
     },
     {
       "id": "ecb-rate",
@@ -115,10 +107,22 @@
       "period": "Facilidad de depósito",
       "change": "Sin cambios",
       "direction": "stable",
-      "context": "Referencia para el coste del dinero, el ahorro y la financiación.",
+      "context": "Tipo oficial que remunera los depósitos de las entidades de crédito en el BCE.",
       "sourceName": "BCE",
-      "sourceUrl": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260723~29f24d99bc.en.html",
-      "referenceDate": "23 jul 2026"
+      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.D.U2.EUR.4F.KR.DFR.LEV",
+      "referenceDate": "dato 3 sept 2026"
+    },
+    {
+      "id": "euribor",
+      "label": "Euríbor a 1 año",
+      "value": "2,95%",
+      "period": "agosto 2026 · media mensual",
+      "change": "Sube 0,1 pp",
+      "direction": "up",
+      "context": "Última media mensual disponible del Euríbor a 12 meses, referencia habitual de las hipotecas variables.",
+      "sourceName": "BCE · Refinitiv",
+      "sourceUrl": "https://data.ecb.europa.eu/data/datasets/FM/FM.M.U2.EUR.RT.MM.EURIBOR1YD_.HSTA",
+      "referenceDate": "dato agosto 2026"
     },
     {
       "id": "gdp-spain",
@@ -127,36 +131,38 @@
       "period": "2T 2026 · trimestral",
       "change": "Acelera 0,1 pp",
       "direction": "up",
-      "context": "La actividad avanzó apoyada por consumo, inversión y servicios.",
-      "sourceName": "INE",
-      "sourceUrl": "https://www.ine.es/dyngs/Prensa/avCNTR2T26.htm",
-      "referenceDate": "30 jul 2026"
+      "context": "Última variación trimestral oficial del PIB real, corregida de estacionalidad.",
+      "sourceName": "Eurostat",
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table?lang=es",
+      "referenceDate": "dato 2T 2026"
     },
     {
       "id": "unemployment-spain",
       "label": "Paro España",
-      "value": "9,87%",
-      "period": "2T 2026",
-      "change": "Baja 0,96 pp",
+      "value": "10,0%",
+      "period": "julio 2026 · desestacionalizado",
+      "change": "Baja 0,1 pp",
       "direction": "down",
-      "context": "El empleo aumentó en 486.000 personas durante el trimestre.",
-      "sourceName": "INE · EPA",
-      "sourceUrl": "https://www.ine.es/dyngs/Prensa/es/EPA2T26.htm",
-      "referenceDate": "28 jul 2026"
+      "context": "Última tasa de paro mensual armonizada y corregida de estacionalidad.",
+      "sourceName": "Eurostat",
+      "sourceUrl": "https://ec.europa.eu/eurostat/databrowser/view/une_rt_m/default/table?lang=es",
+      "referenceDate": "dato julio 2026"
     }
   ],
-  "dailyEconomicNewsCheckedAt": "2026-09-02T03:58:17.282Z",
+  "dailyEconomicNewsCheckedAt": "2026-09-03T14:19:55.160Z",
   "editorialUpdate": {
-    "lastAttemptAt": "2026-09-02T03:58:17.282Z",
-    "lastSuccessAt": "2026-09-02T03:58:17.282Z",
+    "lastAttemptAt": "2026-09-03T14:19:55.160Z",
+    "lastSuccessAt": "2026-09-03T14:19:55.160Z",
     "status": "ok",
     "selectionMode": "automatic",
+    "contextMode": "automatic-topic-context",
     "successfulFeeds": [
       "EL PAÍS Economía",
       "Expansión"
     ],
     "failedFeeds": [],
-    "candidateCount": 19,
+    "candidateCount": 18,
     "maximumSourceAgeHours": 72
-  }
+  },
+  "macroIndicatorsCheckedAt": "2026-09-03T06:54:39.099Z"
 }

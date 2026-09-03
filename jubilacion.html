@@ -70,6 +70,7 @@
         <details class="nuvia-site-nav__topics is-active" data-nav-area="patrimonio">
           <summary>Patrimonio</summary>
           <div class="nuvia-site-nav__menu">
+            <a href="temas.html">Portada de Patrimonio</a>
             <a href="vivienda.html">Vivienda y coste de vida</a>
             <a href="jubilacion.html">Jubilación</a>
             <a href="fiscalidad.html">Impuestos</a>
@@ -101,7 +102,7 @@
       <div class="nv-container">
       <div class="nv-hero__inner nv-hero__inner--simple"><div>
 <nav class="nv-breadcrumb" aria-label="Ruta de navegación">
-        <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><a href="temas.html">Temas clave</a></li><li><span aria-current="page">Jubilación</span></li></ol>
+        <ol><li><a href="index.html" data-main-menu-return>Volver al menú principal</a></li><li><a href="temas.html">Patrimonio</a></li><li><span aria-current="page">Jubilación</span></li></ol>
       </nav>
       <div class="jub-hero__grid">
         <div>
@@ -521,10 +522,10 @@
               <line x1="46" y1="180" x2="632" y2="180" stroke="currentColor" stroke-width="1" class="jub-chart__axis"></line>
               <line x1="46" y1="95" x2="632" y2="95" stroke="currentColor" stroke-width="1" class="jub-chart__grid"></line>
               <line x1="46" y1="10" x2="632" y2="10" stroke="currentColor" stroke-width="1" class="jub-chart__grid"></line>
-              <polyline points="{{ lineaConservador }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--prudente"></polyline>
-              <polyline points="{{ lineaOptimista }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--favorable"></polyline>
-              <polyline points="{{ lineaEstres }}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round" class="jub-chart__line jub-chart__line--estres"></polyline>
-              <polyline points="{{ lineaBase }}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" class="jub-chart__line jub-chart__line--base"></polyline>
+              <polyline sc-camel-points="{{ lineaConservador }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--prudente"></polyline>
+              <polyline sc-camel-points="{{ lineaOptimista }}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="jub-chart__line jub-chart__line--favorable"></polyline>
+              <polyline sc-camel-points="{{ lineaEstres }}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="5 4" stroke-linecap="round" class="jub-chart__line jub-chart__line--estres"></polyline>
+              <polyline sc-camel-points="{{ lineaBase }}" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" class="jub-chart__line jub-chart__line--base"></polyline>
             </svg>
               </div>
             </div>
@@ -706,7 +707,7 @@ class Component extends DCLogic {
   }
   componentDidMount() { document.title = 'Simulador de jubilación | NUVIA Family Wealth'; }
   s() { return this.state.s || this.defaults(); }
-  upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }), errores: [] }); }
+  upd(k, val) { this.setState({ s: Object.assign({}, this.s(), { [k]: val }), errores: [], plan: null }); }
   scrollA(id) { setTimeout(() => { const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 76, behavior: 'smooth' }); }, 60); }
   fmt(x) { return new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 }).format(Math.round(x)); }
   linea(points, maxY, years) {
@@ -728,7 +729,7 @@ class Component extends DCLogic {
     }));
     const setPayout = (value) => {
       const pct = value === 'capital' ? 100 : value === 'rent' ? 0 : (s.epsvCapitalPct > 0 && s.epsvCapitalPct < 100 ? s.epsvCapitalPct : 50);
-      this.setState({ s: Object.assign({}, s, { epsvPayout: value, epsvCapitalPct: pct }), errores: [] });
+      this.setState({ s: Object.assign({}, s, { epsvPayout: value, epsvCapitalPct: pct }), errores: [], plan: null });
     };
     const plan = this.state.plan;
     const vals = {
@@ -751,12 +752,12 @@ class Component extends DCLogic {
       errores: this.state.errores,
       hayErrores: this.state.errores.length > 0,
       hayPlan: !!plan,
-      vaciarPatrimonio: () => this.setState({ s: Object.assign({}, s, { cashValue:0, fundsValue:0, fundsCost:0, sharesValue:0, sharesCost:0, depositsValue:0, insuranceValue:0, insuranceCost:0 }), errores: [] }),
-      cargarDFB: () => this.setState({ s: this.dfbCase(), errores: [] }),
+      vaciarPatrimonio: () => this.setState({ s: Object.assign({}, s, { cashValue:0, fundsValue:0, fundsCost:0, sharesValue:0, sharesCost:0, depositsValue:0, insuranceValue:0, insuranceCost:0 }), errores: [], plan: null }),
+      cargarDFB: () => this.setState({ s: this.dfbCase(), errores: [], plan: null }),
       restablecer: () => this.setState({ s: this.defaults(), errores: [], plan: null }),
       calcular: () => {
         const errs = eng.validate(s);
-        if (errs.length) { this.setState({ errores: errs }); this.scrollA('errores'); return; }
+        if (errs.length) { this.setState({ errores: errs, plan: null }); this.scrollA('errores'); return; }
         this.setState({ errores: [], plan: eng.calculatePlan(s) });
         this.scrollA('resultados');
       },

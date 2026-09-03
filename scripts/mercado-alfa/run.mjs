@@ -15,14 +15,15 @@
  *
  * Carpeta de trabajo (ignorada por git): output/mercado-alfa/
  *   crudo/{symbol}.eod.json, .fundamentals.json, .search.json   caché cruda (fuente de verdad de los precios)
- *   publicable/assets/{id}.json, series/{id}/{año}.json, holdings/{id}.json, catalog/…
+ *   publicable/actual.json selecciona una generación completa y validada.
+ *   publicable/generaciones/{id}/assets/…, series/…, holdings/…, catalog/…
  *   informe-descarga.txt, resumen-proyeccion.json, resumen-publicacion.json
  *
  * Documentación: docs/INFORME_PARA_CODEX_BASE_DATOS_ALFA_20260902.md (§4–§7)
  * y docs/PENDIENTE_ALFA_NUVIA_20260902.md (§4).
  */
 
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -30,12 +31,12 @@ import { leeCsv, validaUniverso, REFERENCIA_OBLIGATORIA } from './universo.mjs';
 import { creaClienteEodhd, candidatoEnEuros } from './eodhd.mjs';
 import { proyectaActivo, catalogo, fusionaEod, clavesProhibidasEn, SCHEMA_VERSION, diaIso } from './proyecta.mjs';
 import { commitLotes, tokenGcloud, leeDocumento, listaIds, PROYECTO_ALFA } from './firestore-rest.mjs';
+import { creaGeneracion, cargaPublicable as leePublicable } from './publicable.mjs';
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const CSV = join(RAIZ, 'universo', 'universo-alfa.csv');
 const SALIDA = join(RAIZ, 'output', 'mercado-alfa');
 const CRUDO = join(SALIDA, 'crudo');
-const PUBLICABLE = join(SALIDA, 'publicable');
 const DESDE_POR_DEFECTO = '2021-01-01';
 const DIAS_REFRESCO = 12;
 
@@ -163,12 +164,11 @@ async function descargar({ soloPrecios, desde }) {
 
 /* ───────────────────────── proyectar ───────────────────────── */
 
-function proyectar() {
-  const filas = universo();
-  const updatedAt = ahoraIso();
+export function proyectar({ filas = universo(), salida = SALIDA, updatedAt = ahoraIso() } = {}) {
+  const CRUDO = join(salida, 'crudo');
   const assets = [];
   const resumen = { updated_at: updatedAt, schema_version: SCHEMA_VERSION, ok: [], excluidos: [], series: 0, holdings: 0 };
-  mkdirSync(PUBLICABLE, { recursive: true });
+  const generacion = creaGeneracion(salida);
   for (const f of filas) {
     if (!f.eodhd_symbol) { resumen.excluidos.push({ asset_id: f.asset_id, motivo: 'sin eodhd_symbol en el CSV' }); continue; }
     const base = join(CRUDO, seguro(f.eodhd_symbol));
@@ -181,19 +181,21 @@ function proyectar() {
     if (!r.asset) { resumen.excluidos.push({ asset_id: f.asset_id, motivo: r.errores.join('; ') }); continue; }
     const prohibidas = clavesProhibidasEn({ asset: r.asset, holdings: r.holdings });
     if (prohibidas.length) { resumen.excluidos.push({ asset_id: f.asset_id, motivo: `claves prohibidas: ${prohibidas.join(', ')}` }); continue; }
-    escribeJson(join(PUBLICABLE, 'assets', `${f.asset_id}.json`), r.asset);
-    for (const s of r.series) escribeJson(join(PUBLICABLE, 'series', f.asset_id, `${s.year}.json`), s);
-    if (r.holdings) escribeJson(join(PUBLICABLE, 'holdings', `${f.asset_id}.json`), r.holdings);
+    generacion.escribe(`assets/${f.asset_id}.json`, r.asset);
+    for (const s of r.series) generacion.escribe(`series/${f.asset_id}/${s.year}.json`, s);
+    if (r.holdings) generacion.escribe(`holdings/${f.asset_id}.json`, r.holdings);
     resumen.series += r.series.length;
     if (r.holdings) resumen.holdings += 1;
     resumen.ok.push(f.asset_id);
     assets.push(r.asset);
   }
   const { chunks, manifest } = catalogo(assets, updatedAt);
-  for (const c of chunks) escribeJson(join(PUBLICABLE, 'catalog', `chunk-${c.id}.json`), { items: c.items, n: c.n });
-  escribeJson(join(PUBLICABLE, 'catalog', 'manifest.json'), manifest);
+  for (const c of chunks) generacion.escribe(`catalog/chunk-${c.id}.json`, { items: c.items, n: c.n });
+  generacion.escribe('catalog/manifest.json', manifest);
   resumen.chunks = chunks.length;
-  escribeJson(join(SALIDA, 'resumen-proyeccion.json'), resumen);
+  const idGeneracion = generacion.termina(resumen);
+  escribeJson(join(salida, 'resumen-proyeccion.json'), resumen);
+  console.log(`Generación local seleccionada: ${idGeneracion} (las anteriores se conservan)`);
   console.log(`Proyectados ${resumen.ok.length} activos · ${resumen.series} series · ${resumen.holdings} desgloses · ${chunks.length} trozo(s) de catálogo · datos hasta ${manifest.prices_last_date}`);
   if (resumen.excluidos.length) {
     const sinCache = resumen.excluidos.filter((e) => e.motivo.startsWith('sin descarga'));
@@ -209,35 +211,13 @@ function proyectar() {
 
 /* ───────────────────────── publicar ───────────────────────── */
 
-function cargaPublicable() {
-  const docs = { assets: [], series: [], holdings: [], chunks: [], manifest: null };
-  const dirAssets = join(PUBLICABLE, 'assets');
-  if (!existsSync(dirAssets)) throw new Error('No hay nada publicable: ejecuta proyectar');
-  for (const fich of readdirSync(dirAssets)) {
-    const asset = leeJson(join(dirAssets, fich));
-    docs.assets.push({ ruta: `assets/${asset.asset_id}`, objeto: asset });
-    const dirSeries = join(PUBLICABLE, 'series', asset.asset_id);
-    if (existsSync(dirSeries)) {
-      for (const s of readdirSync(dirSeries)) {
-        const serie = leeJson(join(dirSeries, s));
-        docs.series.push({ ruta: `assets/${asset.asset_id}/series/${serie.year}`, objeto: serie });
-      }
-    }
-    const rutaH = join(PUBLICABLE, 'holdings', `${asset.asset_id}.json`);
-    if (existsSync(rutaH)) docs.holdings.push({ ruta: `assets/${asset.asset_id}/holdings/latest`, objeto: leeJson(rutaH) });
-  }
-  const dirCat = join(PUBLICABLE, 'catalog');
-  for (const fich of readdirSync(dirCat)) {
-    if (fich === 'manifest.json') docs.manifest = leeJson(join(dirCat, fich));
-    else docs.chunks.push({ ruta: `catalog_chunks/${fich.replace('chunk-', '').replace('.json', '')}`, objeto: leeJson(join(dirCat, fich)) });
-  }
-  if (!docs.manifest) throw new Error('Falta catalog/manifest.json');
-  return docs;
+export function cargaPublicable(salida = SALIDA) {
+  return leePublicable(salida);
 }
 
 async function publicar({ dryRun, forzar, retirados }) {
   const docs = cargaPublicable();
-  const resumenProy = leeJson(join(SALIDA, 'resumen-proyeccion.json'), {});
+  const resumenProy = docs.resumen;
   const ids = new Set(docs.assets.map((d) => d.objeto.asset_id));
   for (const ref of REFERENCIA_OBLIGATORIA) {
     if (!ids.has(ref)) throw new Error(`Falta el instrumento de referencia ${ref} en lo publicable; no se publica.`);
@@ -316,4 +296,6 @@ async function main() {
   }
 }
 
-main().catch((e) => { console.error(`Error: ${e.message}`); process.exit(1); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((e) => { console.error(`Error: ${e.message}`); process.exit(1); });
+}

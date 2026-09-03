@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { eligibleNews, newsAttribution, CONTEXT_NOTICE } from './news-editorial.mjs';
 
 const root = resolve(process.cwd());
 const dataPath = resolve(root, 'data/daily-content.json');
@@ -191,7 +192,6 @@ const existing = JSON.parse(await readFile(dataPath, 'utf8'));
 let feedReport = [];
 
 try {
-  const maximumAge = 72 * 60 * 60 * 1000;
   const results = await Promise.allSettled(feeds.map(readFeed));
   feedReport = results.map((result, index) => ({
     name: feeds[index].name,
@@ -203,10 +203,10 @@ try {
   .map((item) => ({
     ...item,
     relevance: relevanceScore(item.title),
-    ageHours: Math.max(0, (checkedAt - item.publishedAt) / 3_600_000),
+    ageHours: (checkedAt - item.publishedAt) / 3_600_000,
   }))
   .filter((item) => item.relevance >= 4
-    && checkedAt - item.publishedAt <= maximumAge
+    && eligibleNews(item, checkedAt)
     && !excludedPattern.test(item.title)
     && !excludedUrlPattern.test(item.url))
   .map((item) => ({ ...item, editorialScore: item.relevance * 10 - item.ageHours }))
@@ -255,15 +255,16 @@ const secondaryNews = preparedSecondaryNews.map(({ candidate, editorial: itemEdi
     id: `market-brief-${slot}`,
     category: itemEditorial.category,
     title: candidate.title,
-    summary: `La actualidad pone el foco en ${itemEditorial.focus}.`,
+    summary: newsAttribution(candidate.sourceName),
+    contextMode: 'automatic-topic-context',
     imageUrl: editorialImageUrl,
     imageAlt: '',
     imageProvenance: 'Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.',
     body: [
-      `La información publicada por ${candidate.sourceName} aborda ${itemEditorial.focus}.`,
+      CONTEXT_NOTICE,
       itemEditorial.context,
     ],
-    whyItMatters: itemEditorial.whyItMatters,
+    whyItMatters: `Contexto general: ${itemEditorial.whyItMatters}`,
     publishedAt: formatShortDate(candidate.publishedAt),
     publishedAtIso: candidate.publishedAt.toISOString(),
     selectedAt: checkedAt.toISOString(),
@@ -280,6 +281,7 @@ existing.editorialUpdate = {
   lastSuccessAt: checkedAt.toISOString(),
   status: feedReport.some((feed) => feed.status === 'failed') ? 'degraded' : 'ok',
   selectionMode: 'automatic',
+  contextMode: 'automatic-topic-context',
   successfulFeeds: feedReport.filter((feed) => feed.status === 'ok').map((feed) => feed.name),
   failedFeeds: feedReport.filter((feed) => feed.status === 'failed').map((feed) => feed.name),
   candidateCount: candidates.length,
@@ -297,11 +299,12 @@ existing.dailyEconomicNews = {
   imageAlt: '',
   imageProvenance: 'Activo editorial propio de NUVIA; imagen decorativa generada y documentada en src/assets/social/README.md.',
   title: selected.title,
-  summary: `La información económica seleccionada pone el foco en ${editorial.focus}. NUVIA incorpora esta noticia de ${selected.sourceName} como punto de partida para interpretar la actualidad sin perder de vista las decisiones patrimoniales de largo plazo.`,
+  summary: newsAttribution(selected.sourceName),
+  contextMode: 'automatic-topic-context',
   category: editorial.category,
-  context: editorial.context,
-  whyItMatters: editorial.whyItMatters,
-  impactPoints: editorial.impactPoints,
+  context: `${CONTEXT_NOTICE} ${editorial.context}`,
+  whyItMatters: `${CONTEXT_NOTICE} ${editorial.whyItMatters}`,
+  impactPoints: editorial.impactPoints.map(point => `Contexto general: ${point}`),
 };
 existing.secondaryEconomicNews = secondaryNews;
 
