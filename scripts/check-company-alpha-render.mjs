@@ -8,6 +8,9 @@ import { chromium } from 'playwright';
 import { BASE, wire, fixtureDocuments, fixtureDividendDates } from '../docs/fixtures/fundamentales-remote.mjs';
 import { entradaActual } from '../js/nuvia-identidades.js';
 import { earningsWindow } from '../company-analysis/alfa/earnings-window.mjs';
+import { technicalAnalysis } from '../company-analysis/alfa/technical.mjs';
+import {bundle} from './mercado-alfa/ohlcv-load.mjs';
+import {technicalOhlcv} from '../company-analysis/alfa/ohlcv.mjs';
 
 const root = resolve('company-analysis/build');
 const output = resolve('output/cierre-alfa/fundamentales');
@@ -16,6 +19,15 @@ const pdf = process.argv.includes('--pdf') || extendedPdf;
 const snapshot = JSON.parse(await readFile(resolve('company-analysis/public/data/fundamentals.json'), 'utf8'));
 snapshot.entries = snapshot.entries.map(entradaActual);
 const iberdrola = snapshot.entries.find(e => e.symbol === 'IBE.MC');
+// Serie sintética, solo en memoria: nunca se escribe en la base ni en el catálogo.
+const pricePoints = [];
+for (let day = new Date('2021-01-04T00:00:00Z'); day <= new Date('2026-09-02T00:00:00Z'); day.setUTCDate(day.getUTCDate() + 1)) {
+  if ([0, 6].includes(day.getUTCDay())) continue;
+  pricePoints.push({ date: day.toISOString().slice(0, 10), value: 100 + pricePoints.length * .02 + Math.sin(pricePoints.length / 15) });
+}
+const ohlcvPoints = pricePoints.map((p,i)=>({date:p.date,open:p.value*10,high:p.value*10+10,low:p.value*10-10,
+  close:p.value*10,adjusted_close:p.value,volume:i===0?null:i===1?0:100000+i}));
+const ohlcvFixtures = new Map(snapshot.entries.map(e=>[e.isin,bundle(e,{prices:ohlcvPoints,fetchedAt:'2026-09-04T00:00:00Z'})]));
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.woff2': 'font/woff2', '.png': 'image/png' };
 const server = createServer(async (req, res) => {
   try {
@@ -48,8 +60,30 @@ try {
         const path = url.href.slice(BASE.length + 1), isin = path.split('/')[1];
         const entry = snapshot.entries.find(e => e.isin === isin);
         assert.ok(entry, `Petición fuera del índice: ${path}`);
-        assert.ok(path === `assets/${isin}` || path === `assets/${isin}/fundamentals/current` || path === `assets/${isin}/fundamentals/dividends`);
+        assert.ok(path === `assets/${isin}` || path === `assets/${isin}/fundamentals/current` || path === `assets/${isin}/fundamentals/dividends` || /^assets\/[A-Z0-9]+\/series\/\d{4}$/.test(path) || ohlcvFixtures.get(isin).some(d=>d.path===path));
         if (['offline', 'brokenBackup', 'missingBackup', 'heldBackup'].includes(mode)) return route.abort();
+        if(path.includes('/ohlcv')) {
+          if(mode==='ohlcvOffline')return route.fulfill({status:503,json:{}});
+          if(mode==='ohlcvMissing')return route.fulfill({status:404,json:{}});
+          const value=structuredClone(ohlcvFixtures.get(isin).find(d=>d.path===path).value);
+          if(mode==='ohlcvInvalid' && value.points)value.points[0].volume=999;
+          if(mode==='heldOhlcv' && path.endsWith('/2026')) {
+            heldStarted();await new Promise(resolve=>{releaseHeld=resolve;});
+          }
+          return route.fulfill({status:200,json:wire(path,value)}).catch(()=>{});
+        }
+        if (path.includes('/series/')) {
+          if (mode === 'pricesOffline') return route.fulfill({ status: 503, json: {} });
+          if (mode === 'pricesMissing') return route.fulfill({ status: 404, json: {} });
+          const year = Number(path.split('/').at(-1));
+          const points = pricePoints.filter(p => p.date.startsWith(String(year)));
+          const value = { asset_id: entry.assetId, currency: entry.quoteCurrency, year, n: points.length, first_date: points[0].date, last_date: points.at(-1).date, points };
+          if (mode === 'pricesInvalid') value.asset_id = 'NL0000000002';
+          if (mode === 'heldPrices' && year === 2026) {
+            heldStarted(); await new Promise(resolve => { releaseHeld = resolve; });
+          }
+          return route.fulfill({ status: 200, json: wire(path, value) }).catch(() => {});
+        }
         if (path.endsWith('/dividends')) {
           if (mode === 'datesOffline') return route.fulfill({ status: 503, json: {} });
           if (mode === 'datesMissing') return route.fulfill({ status: 404, json: {} });
@@ -62,6 +96,11 @@ try {
           return route.fulfill({ status: 200, json: wire(path, dates) }).catch(() => {});
         }
         const docs = fixtureDocuments(entry, ['ANA.MC', 'AENA.MC', 'FER.MC'].includes(entry.symbol) ? iberdrola.company : entry.company);
+        Object.assign(docs.asset, {
+          updated_at: '2026-09-03T08:00:00Z',
+          source: { system: 'EODHD', symbol: entry.symbol, fetched_at: '2026-09-03T07:00:00Z' },
+          history: { first_date: pricePoints[0].date, last_date: pricePoints.at(-1).date },
+        });
         if (mode === 'missing') docs.fundamental = null;
         const value = path.endsWith('/current') ? docs.fundamental : docs.asset;
         if (mode === 'held' && entry.symbol === 'IBE.MC' && path.endsWith('/current')) {
@@ -268,9 +307,110 @@ try {
       await page.getByRole('combobox', { name: 'Ejercicios' }).selectOption('all');
       await page.pdf({ path: resolve(output, 'PRUEBA_TSK_all.pdf'), preferCSSPageSize: true, printBackground: true });
     }
+    if (process.argv.includes('--pdf-tecnico') && width === 1440) {
+      await page.getByRole('tab', { name: 'Técnico', exact: true }).click();
+      await page.locator('[data-testid="technical-source"]').waitFor();
+      await page.pdf({ path: resolve(output, 'PRUEBA_TECNICO.pdf'), preferCSSPageSize: true, printBackground: true });
+      assert.equal(await page.locator('.alpha-technical-print').evaluateAll(images => images.length===5 && images.every(img => img.naturalWidth > 0)), true, 'Los cinco gráficos se capturan para impresión');
+      assert.equal(await page.locator('.alpha-technical-methods').getAttribute('open'), null, 'La impresión restaura el estado del desplegable');
+      await page.getByRole('tab', { name: 'Resumen', exact: true }).click();
+    }
+    // Técnico es independiente de los fundamentales: incluso sin ficha contable.
+    mode = 'missing';
+    await page.getByRole('button', { name: /Volver a consultar la base|Reintentar consulta/ }).click();
+    await page.getByText('No hay fundamentales cargados para esta identidad en la base propia', { exact: true }).waitFor();
+    assert.equal(await page.getByRole('tab').count(), 4);
+    const beforePrices = reads.length;
+    await page.getByRole('tab', { name: 'Técnico', exact: true }).click();
+    await page.locator('[data-testid="technical-source"]').waitFor();
+    assert.equal(reads.length, beforePrices + 8, 'Solo manifiesto, seis años OHLCV y relectura de versión');
+    assert.equal(await page.locator('.alpha-technical-chart').count(), 5);
+    assert.ok(await page.locator('.alpha-technical-chart canvas').count() >= 5);
+    assert.equal(await page.getByRole('button',{name:'Velas ajustadas',exact:true}).getAttribute('aria-pressed'),'true');
+    await page.getByRole('button',{name:'Línea de cierre',exact:true}).click();
+    assert.match(await page.locator('.alpha-technical-chart').first().innerText(),/Evolución del cierre ajustado/);
+    await page.getByRole('button',{name:'Velas ajustadas',exact:true}).click();
+    assert.doesNotMatch(await page.locator('.alpha-technical').innerText(), /NaN|Infinity/);
+    const expectedTechnical = technicalAnalysis(pricePoints);
+    const expectedOhlcv=technicalOhlcv(ohlcvPoints);
+    assert.equal(await page.locator('.alpha-technical .kpi').filter({has:page.getByText('ATR (14)',{exact:true})}).locator('.v').innerText(),expectedOhlcv.latest.atr.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2}));
+    const displayPercent = value => `${value > 0 ? '+' : ''}${(value * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
+    for (const [label, value] of [
+      ['Volatilidad 30d (anual.)', expectedTechnical.volatility],
+      ['Precio vs SMA 200', expectedTechnical.latest.value / expectedTechnical.latest.sma200 - 1],
+      ['12 meses', expectedTechnical.performance.find(p => p.label === '12 meses').value],
+    ]) {
+      const card = page.locator('.alpha-technical .kpi').filter({ has: page.getByText(label, { exact: true }) });
+      assert.equal(await card.locator('.v').innerText(), displayPercent(value), `${label}: conversión de fracción a porcentaje`);
+    }
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Técnico: desborde a ${width}`);
+    await page.locator('.alpha-technical-chart').first().screenshot({ path: resolve(output, `tecnico-precios-${width}.png`) });
+    await page.locator('.alpha-technical-grid').screenshot({ path: resolve(output, `tecnico-indicadores-${width}.png`) });
+    const oneYear = await page.locator('.alpha-technical-data tbody tr').count();
+    await page.getByRole('button', { name: '5 años', exact: true }).click();
+    assert.ok(await page.locator('.alpha-technical-data tbody tr').count() > oneYear * 4);
+    await page.getByRole('button', { name: '6 meses', exact: true }).click();
+    assert.ok(await page.locator('.alpha-technical-data tbody tr').count() < oneYear);
+    await page.getByRole('button', { name: 'Bandas de Bollinger', exact: true }).click();
+    await page.locator('.alpha-technical-chart .chart-legend').getByText('Banda superior', { exact: true }).waitFor();
+    assert.equal(reads.length, beforePrices + 8, 'Los controles locales no vuelven a descargar precios');
+    await page.locator('.alpha-technical-data summary').click();
+    assert.equal(await page.getByRole('region', { name: 'Datos del análisis técnico' }).getAttribute('tabindex'), '0');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, 'La tabla desplaza dentro de su contenedor');
+    if (width === 1440) {
+      for(const [scenario,message] of [['ohlcvOffline','No se han podido consultar los precios.'],['ohlcvMissing','No hay un historial OHLCV'],['ohlcvInvalid','huella de integridad']]) {
+        mode=scenario;
+        await page.getByRole('button',{name:'Volver a consultar los precios',exact:true}).click();
+        await page.locator('.alpha-technical').getByRole('alert').filter({hasText:message}).waitFor();
+        assert.equal(await page.locator('.alpha-technical-chart').count(),0,'Error explícito, sin mezclar silenciosamente con cierres anteriores');
+      }
+      // La serie anterior permanece disponible incluso si falla OHLCV.
+      await page.getByRole('combobox',{name:'Serie de datos'}).selectOption('legacy');
+      await page.locator('[data-testid="technical-source"]').waitFor();
+      assert.equal(await page.locator('.alpha-technical-chart').count(),3);
+      for (const [scenario, message] of [
+        ['pricesOffline', 'No se han podido consultar los precios.'],
+        ['pricesMissing', 'Falta el documento de precios de'],
+        ['pricesInvalid', 'El documento anual de precios no corresponde'],
+      ]) {
+        mode = scenario;
+        await page.getByRole('button', { name: 'Volver a consultar los precios', exact: true }).click();
+        await page.locator('.alpha-technical').getByRole('alert').filter({ hasText: message }).waitFor();
+        assert.equal(await page.locator('.alpha-technical-chart').count(), 0, 'El reintento no muestra precios anteriores como nuevos');
+      }
+      mode = 'normal';
+      await page.getByRole('button', { name: 'Volver a consultar los precios', exact: true }).click();
+      await page.locator('[data-testid="technical-source"]').waitFor();
+      mode = 'heldPrices';
+      const pricesStarted = new Promise(resolve => { heldStarted = resolve; });
+      await page.getByRole('button', { name: 'Volver a consultar los precios', exact: true }).click();
+      await pricesStarted;
+      await page.getByRole('tab', { name: 'Técnico', exact: true }).focus();
+      await page.keyboard.press('ArrowLeft');
+      assert.equal(await page.getByRole('tab', { name: 'Fundamentales', exact: true }).getAttribute('aria-selected'), 'true');
+      releaseHeld();
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      assert.equal(await page.locator('.alpha-technical').count(), 0, 'Una consulta técnica cancelada no reaparece sobre otra pestaña');
+      mode = 'normal';
+      await page.getByRole('tab',{name:'Técnico',exact:true}).click();
+      await page.locator('[data-testid="technical-source"]').waitFor();
+      mode='heldOhlcv';
+      const ohlcvStarted=new Promise(resolve=>{heldStarted=resolve;});
+      await page.getByRole('button',{name:'Volver a consultar los precios',exact:true}).click();
+      await ohlcvStarted;
+      mode='normal';
+      await page.getByRole('searchbox').fill('AENA.MC');
+      await page.getByRole('button',{name:/AENA.MC/}).click();
+      await page.getByRole('tab',{name:'Técnico',exact:true}).click();
+      await page.locator('[data-testid="technical-source"]').waitFor();
+      releaseHeld();
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      assert.match(await page.locator('.alpha-company').innerText(),/AENA.MC/);
+      assert.equal(await page.locator('.alpha-technical-chart').count(),5);
+    }
     assert.deepEqual(errors, [], `Errores JS a ${width}`);
     assert.deepEqual(requests, [], `Peticiones externas a ${width}`);
-    console.log(`OK fundamentales ${width}px: informe, selector, fechas, base simulada, identidades migradas, ausencia; cero desbordes, errores o red externa. ${width === 1440 ? 'Respaldo, reintento, cancelación y aislamiento de fechas comprobados.' : ''}`);
+    console.log(`OK módulo ${width}px: fundamentales, fechas y técnico con cinco gráficos, velas/línea, ATR, volumen, periodos, Bollinger y tabla; cero desbordes, errores o red externa. ${width === 1440 ? 'Respaldo, dos series, reintento, cancelación y aislamiento comprobados.' : ''}`);
     await context.close();
   }
 } finally {

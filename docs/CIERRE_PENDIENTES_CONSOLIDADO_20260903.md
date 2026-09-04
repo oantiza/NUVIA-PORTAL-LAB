@@ -3,6 +3,11 @@
 Fecha: 03-09-2026. Orden: «termina todo lo pendiente». Documento operativo;
 no sustituye las decisiones del fundador ni autoriza escrituras o publicación.
 
+> **Ampliación posterior a P5:** detectada la ausencia de Técnico en la entrada
+> alfa. Se recupera localmente con los cierres ajustados existentes (P7). Esta
+> recuperación todavía no está confirmada en Git ni publicada. El cierre de P5
+> acredita su entrega, no la equivalencia completa con el módulo antiguo.
+
 > **Última revisión:** P5 confirmada, integrada en `main` y publicada en GitHub
 > Pages. La reconstrucción limpia ampliada superó todas las puertas y produjo 164
 > archivos idénticos a `dist`; la comprobación remota confirmó portada, noticias,
@@ -382,6 +387,46 @@ precios ni pesos, ocultar paneles o falsear cifras para eliminar la discrepancia
 Además se conserva un fallo inicial de preparación de Bolsa mundial que no volvió
 a reproducirse tras recargar. Las fichas y el recorrido posterior respondieron:
 no se atribuye una causa ni una reparación demostrada a ese incidente aislado.
+
+### P7 · Análisis técnico: recuperación local y datos pendientes
+
+Por orden «hazlo», integrada la cuarta pestaña de la alfa: cierres ajustados,
+SMA 50/200, RSI 14, MACD 12/26/9, Bollinger y métricas históricas. Periodos de
+seis meses, uno, tres y cinco años, con cobertura real y tabla accesible.
+El lector usa únicamente GET de la base propia y no depende de que exista una
+ficha fundamental. No conecta con la API autenticada del módulo antiguo.
+
+La base conserva cierres ajustados, no OHLCV. Velas, volumen y ATR siguen
+pendientes de incorporar los datos necesarios con autorización específica del
+fundador. No se generan velas ficticias ni se equiparan cierres con máximos o
+mínimos intradiarios. No se ha escrito en Firebase ni en el backend.
+
+La implementación y la validación local constan en
+[Recuperación del técnico](RECUPERACION_TECNICO_ALFA_20260903.md).
+Confirmación e integración/publicación de esta nueva tanda: pendientes.
+
+Actualización 04-09-2026: [preparación OHLCV y autorización de carga](PREPARACION_OHLCV_ALFA_20260904.md).
+Código puro y auditoría local listos, 53 cachés comprobadas, 66 pruebas del
+módulo correctas. No se ha realizado la carga ni conectado las velas a la interfaz.
+
+Actualización posterior 04-09-2026: **carga autorizada y verificada** en
+[acta de carga OHLCV](CARGA_OHLCV_ALFA_20260904.md). Las 73 empresas disponen
+de 104.356 registros hasta 03-09-2026, en 506 documentos nuevos. Los 584
+documentos protegidos no cambiaron. La ausencia de datos queda resuelta;
+continúa pendiente conectar velas, volumen y ATR a la interfaz y validar esa
+integración. El aviso local se corrige para reflejar esa diferencia. Sin publicación.
+
+Actualización de integración 04-09-2026: **velas, volumen y ATR conectados** en
+la copia local. Selector OHLCV/cierres anteriores, cinco gráficos y tabla de
+originales y derivados; 76 pruebas, lectura completa de las 73 empresas y
+regresión de cinco anchos. Véase [acta de integración](INTEGRACION_TECNICO_OHLCV_ALFA_20260904.md).
+La integración visual deja de estar pendiente. La publicación de esta tanda
+sigue pendiente; no se ha ejecutado por la orden de continuar el desarrollo.
+
+Orden posterior de 04-09-2026: «Dale» autoriza confirmar y publicar esta tanda
+de Técnico en GitHub Pages. Se ejecuta desde la carpeta oficial, conservando los
+datos y sin despliegue de Firebase. El resultado se comprueba en Actions y en
+producción; esta anotación registra la autorización, no anticipa el resultado.
 
 ## 6. Secuencia de entrega ejecutada
 

@@ -26,7 +26,7 @@ function decode(value, depth = 0) {
   }));
   throw failure('format', 'Tipo de datos no válido.');
 }
-async function getDocument(path, { fetchFn, signal }) {
+export async function getDocument(path, { fetchFn, signal }) {
   const response = await fetchFn(`${FUNDAMENTALS_BASE}/${path}`, {
     method: 'GET', signal, credentials: 'omit', cache: 'no-store', redirect: 'error', referrerPolicy: 'no-referrer',
   });

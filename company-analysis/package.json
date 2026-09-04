@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:local": "vite --config vite.local.config.js",
     "check:regulatory": "node ../scripts/check-company-regulatory.mjs",
-    "build": "npm run check:regulatory && node --test ../docs/nuvia-fundamentales-alfa.test.mjs ../docs/nuvia-fundamentales-remote.test.mjs ../docs/nuvia-fundamentales-index.test.mjs ../docs/nuvia-fundamentales-metadata.test.mjs ../docs/nuvia-dividend-dates.test.mjs ../docs/nuvia-dividend-ui.test.mjs && vite build",
+    "build": "npm run check:regulatory && node --test ../docs/nuvia-fundamentales-alfa.test.mjs ../docs/nuvia-fundamentales-remote.test.mjs ../docs/nuvia-fundamentales-index.test.mjs ../docs/nuvia-fundamentales-metadata.test.mjs ../docs/nuvia-dividend-dates.test.mjs ../docs/nuvia-dividend-ui.test.mjs ../docs/nuvia-tecnico-alfa.test.mjs ../docs/nuvia-ohlcv-preparation.test.mjs ../docs/nuvia-ohlcv-load.test.mjs ../docs/nuvia-ohlcv-reader.test.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

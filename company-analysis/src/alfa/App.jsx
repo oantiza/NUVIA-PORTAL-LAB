@@ -6,10 +6,11 @@ import { entradaActual, cambioIdentidad } from '../../../js/nuvia-identidades.js
 import { CompanySummary, CompanyRatios, CompanyStatements, CompanyOwnership, CompanySnapshot } from './CompanyReport.jsx';
 import { fmtDate } from '../lib/format.js';
 import CompanyDividendDates from './CompanyDividendDates.jsx';
+import CompanyTechnical from './CompanyTechnical.jsx';
 import { displayWarnings } from '../../alfa/metadata.mjs';
 import { companyDisplayName } from '../../alfa/display-name.mjs';
 
-const tabs = ['Resumen', 'Fundamentales', 'Informe'];
+const tabs = ['Resumen', 'Fundamentales', 'Técnico', 'Informe'];
 export default function AlphaApp() {
   const [snapshot, setSnapshot] = useState(null), [error, setError] = useState(''), [retry, setRetry] = useState(0);
   const [query, setQuery] = useState(''), [symbol, setSymbol] = useState(() => new URLSearchParams(location.search).get('symbol') || '');
@@ -53,8 +54,8 @@ export default function AlphaApp() {
   return <div className="alpha-root">
     <header className="alpha-hero">
       <p className="eyebrow">NUVIA · Economía y Finanzas</p>
-      <h1>Análisis fundamental</h1><p>Comprender una empresa a través de sus cifras.</p>
-      <p className="alpha-source">Alfa · Sin cuentas · Fundamentales de EODHD en la base propia de NUVIA. Se consulta la última carga disponible al elegir una empresa; no son datos en tiempo real.</p>
+      <h1>Análisis de empresas</h1><p>Comprender una empresa a través de sus cifras y su historial de precios.</p>
+      <p className="alpha-source">Alfa · Sin cuentas · Fundamentales y precios históricos de EODHD en la base propia de NUVIA. Se consulta la última carga disponible; no son datos en tiempo real.</p>
     </header>
     <main className="main">
       <section className="alpha-picker screen-only" aria-labelledby="alpha-search-title">
@@ -88,7 +89,17 @@ export default function AlphaApp() {
           <p>{entry.state === 'isin_conflict' ? `ISIN del catálogo: ${entry.isin}. Archivo: ${entry.identityCandidates.map(c => `${c.symbol} · ${c.isin || 'sin ISIN'}`).join('; ')}. La decisión sobre esta identidad está pendiente de consulta al fundador; no se cambia el universo.` : 'Esto no demuestra que el proveedor no tenga cobertura. Puede haber una carga o revisión de identidad pendiente. No se sustituyen las cifras por ceros ni por las de otra empresa.'}</p>
           <button className="alpha-button" onClick={() => setCompanyRetry(n => n + 1)}>Reintentar consulta</button>
         </div>}
-        {company && <>
+        <div className="alpha-toolbar screen-only">
+          <div className="tabs" role="tablist" aria-label="Contenido de la empresa">{tabs.map((name, index) => <button role="tab" id={`alpha-tab-${index}`} key={name} className={`tab${tab === name ? ' active' : ''}`} aria-selected={tab === name} aria-controls="alpha-panel" tabIndex={tab === name ? 0 : -1} onClick={() => setTab(name)} onKeyDown={e => {
+            const next = e.key === 'ArrowRight' ? (index + 1) % tabs.length : e.key === 'ArrowLeft' ? (index + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
+            if (next !== null) { e.preventDefault(); setTab(tabs[next]); document.getElementById(`alpha-tab-${next}`)?.focus(); }
+          }}>{name}</button>)}</div>
+          {tab !== 'Técnico' && <label>Ejercicios <select value={limit} onChange={e => setLimit(e.target.value)}><option value="5">Últimos 5</option><option value="10">Últimos 10</option><option value="all">Todos los disponibles</option></select></label>}
+          <button type="button" className="alpha-button" onClick={() => window.print()}>Imprimir / guardar PDF</button>
+        </div>
+        <div id="alpha-panel" role="tabpanel" aria-labelledby={`alpha-tab-${tabs.indexOf(tab)}`} tabIndex={0}>
+        {tab === 'Técnico' && <CompanyTechnical key={entry.assetId} entry={entry} />}
+        {company && <div className={tab === 'Técnico' ? 'print-only' : ''}>
           <aside className="alpha-notice" aria-label="Procedencia y límites">
             <p><strong>{current.origin === 'database' ? 'Consulta desde la base propia.' : 'Respaldo local · Sin verificar en la base.'}</strong></p>
             {current.notice && <p role="status">{current.notice}</p>}
@@ -98,21 +109,14 @@ export default function AlphaApp() {
             <details className="screen-only"><summary>Monedas, escalas y otras limitaciones ({warnings.length})</summary><ul>{warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul></details>
             <ul className="print-only">{warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul>
           </aside>
-          <div className="alpha-toolbar screen-only">
-            <div className="tabs" role="tablist" aria-label="Contenido de la empresa">{tabs.map((name, index) => <button role="tab" id={`alpha-tab-${index}`} key={name} className={`tab${tab === name ? ' active' : ''}`} aria-selected={tab === name} aria-controls="alpha-panel" tabIndex={tab === name ? 0 : -1} onClick={() => setTab(name)} onKeyDown={e => {
-              const next = e.key === 'ArrowRight' ? (index + 1) % tabs.length : e.key === 'ArrowLeft' ? (index + tabs.length - 1) % tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
-              if (next !== null) { e.preventDefault(); setTab(tabs[next]); document.getElementById(`alpha-tab-${next}`)?.focus(); }
-            }}>{name}</button>)}</div>
-            <label>Ejercicios <select value={limit} onChange={e => setLimit(e.target.value)}><option value="5">Últimos 5</option><option value="10">Últimos 10</option><option value="all">Todos los disponibles</option></select></label>
-            <button type="button" className="alpha-button" onClick={() => window.print()}>Imprimir / guardar PDF</button>
-          </div>
-          <div id="alpha-panel" role="tabpanel" aria-labelledby={`alpha-tab-${tabs.indexOf(tab)}`} tabIndex={0}>
+          <div>
             <div className={tab === 'Fundamentales' ? 'print-only' : ''}><CompanySummary company={company} /></div>
             <CompanyRatios company={company} />
             <CompanyDividendDates key={entry.assetId} entry={entry} />
             <div className={tab === 'Resumen' ? 'print-only' : ''}><CompanyStatements company={company} limit={limit} /><CompanySnapshot company={company} limit={limit} /><CompanyOwnership company={company} /></div>
           </div>
-        </>}
+        </div>}
+        </div>
       </article>}
       <footer className="note section">NUVIA informa, explica y calcula. Tú comprendes y decides. «—» = dato ausente. k = mil; M = millón; mm = mil millones; B = billón. Estas abreviaturas describen el número recibido. No son una acreditación de su escala contable ni una recomendación de inversión.</footer>
     </main>
