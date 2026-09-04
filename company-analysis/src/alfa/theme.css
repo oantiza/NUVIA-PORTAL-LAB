@@ -18,8 +18,11 @@
 .alpha-notice p:first-child { margin-top: 0; }
 .alpha-notice summary { cursor: pointer; }
 .alpha-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin: 24px 0; }
-.alpha-toolbar .tabs { flex: 1; margin: 0; }
-.alpha-toolbar .tab { font-size: 14px; letter-spacing: .01em; text-transform: none; white-space: nowrap; }
+.alpha-toolbar .tabs { position: static; flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 0; margin: 0; padding: 0; min-width: 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; overflow: visible; }
+.alpha-toolbar .tab { flex: 0 0 auto; min-width: max-content; min-height: 44px; padding: 12px 20px; font-size: 14px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; border: 0; border-bottom: 2px solid transparent; border-radius: 0; }
+.alpha-toolbar .tab.active { color: #913652; background: transparent; border-bottom-color: #a6385b; }
+.alpha-toolbar .tab:hover { color: var(--navy); background: #edf0f4; }
+.alpha-toolbar > label { margin-left: auto; }
 .alpha-toolbar label { display: flex; align-items: center; gap: 8px; }
 .alpha-toolbar select, .alpha-button { color: var(--navy); background: white; border: 1px solid #9caec2; border-radius: 8px; padding: 10px 12px; font: inherit; cursor: pointer; }
 .alpha-root .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -61,6 +64,32 @@
 .alpha-technical-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .alpha-technical-methods, .alpha-technical-data { border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin: 20px 0; line-height: 1.7; }
 .alpha-technical summary { cursor: pointer; font-weight: 600; }
+/* Estética editorial solicitada: paneles blancos, filetes finos y cifras compactas.
+   Alcance exclusivo de la copia alfa; sin cambios en el resto del portal. */
+.alpha-root { --paper: #f4f6f8; --line: #d5dfe9; background: var(--paper); }
+.alpha-root .sec-title { font-family: var(--nv-font-serif); font-weight: 400; }
+.alpha-root .eyebrow { color: #80602c; font-weight: 500; }
+.alpha-root .kpis { gap: 1px; padding: 1px; background: var(--line); }
+.alpha-root .kpi { border: 0; border-radius: 0; box-shadow: none; }
+.alpha-root .kpi .v { font-family: var(--nv-font-serif); }
+.alpha-root .alpha-table, .alpha-root .alpha-dividend-grid > div { border-radius: 0; }
+.alpha-root .alpha-notice { background: #f8f7f3; border: 0; border-left: 2px solid #9b7942; border-radius: 0; padding: 12px 16px; font-size: 14px; }
+.alpha-root .note { background: transparent; border: 0; border-left: 2px solid #9b7942; border-radius: 0; padding: 4px 12px; box-shadow: none; }
+.alpha-root .alpha-button, .alpha-root .alpha-toolbar select { border-radius: 2px; font-size: 14px; }
+.alpha-chart-tools { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 24px; margin-top: 28px; }
+.alpha-chart-heading { margin-right: auto; }
+.alpha-chart-heading h3 { font-family: var(--nv-font-serif); font-size: 24px; font-weight: 400; margin: 4px 0 0; }
+.alpha-chart-tools .alpha-technical-controls { margin: 0; }
+.alpha-technical .alpha-technical-controls { gap: 8px; margin: 16px 0; }
+.alpha-technical-controls .alpha-button { padding: 8px 12px; min-height: 36px; }
+.alpha-technical-controls [aria-pressed=true] { background: white; color: #913652; border-color: #a6385b; }
+.alpha-technical-chart { border-radius: 0; padding: 22px; box-shadow: 0 10px 24px rgba(25, 42, 60, .08); margin: 20px 0; }
+.alpha-technical-chart figcaption { font-size: 14px; font-weight: 500; color: #765623; letter-spacing: .04em; }
+.alpha-technical-chart .chart-legend { gap: 10px 20px; font-size: 14px; }
+.alpha-technical-grid .alpha-technical-chart { margin: 0; }
+.alpha-technical-grid { margin: 24px 0; }
+.alpha-chart-credit { margin: 24px 0; border-left: 2px solid #9b7942; padding-left: 12px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.alpha-chart-credit a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 1199px) { .alpha-technical-grid { grid-template-columns: minmax(0, 1fr); } }
 @media print {
   .alpha-technical > .section { break-inside: auto !important; }

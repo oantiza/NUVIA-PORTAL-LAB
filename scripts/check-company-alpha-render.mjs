@@ -143,6 +143,18 @@ try {
     await page.getByRole('tab', { name: 'Informe', exact: true }).click();
     await page.getByRole('combobox', { name: 'Ejercicios' }).selectOption('all');
     await page.evaluate(() => document.fonts.ready);
+    // Test the text itself, not just page overflow: a tab can overflow its own button.
+    for (const tabName of ['Resumen', 'Fundamentales', 'Informe']) {
+      await page.getByRole('tab', { name: tabName, exact: true }).click();
+      const tabProblems = await page.getByRole('tab').evaluateAll(tabs => tabs.flatMap(tab => {
+        const range = document.createRange(); range.selectNodeContents(tab);
+        const text = range.getBoundingClientRect(), box = tab.getBoundingClientRect();
+        const style = getComputedStyle(tab);
+        return text.left < box.left + parseFloat(style.paddingLeft) - 1 || text.right > box.right - parseFloat(style.paddingRight) + 1
+          ? [tab.textContent] : [];
+      }));
+      assert.deepEqual(tabProblems, [], `Texto de las cuatro pestañas completo en ${tabName} a ${width}px`);
+    }
     assert.equal(await page.locator('table').count(), 4);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false, `Desborde a ${width}`);
     const text = await page.locator('main').innerText();
@@ -311,7 +323,7 @@ try {
       await page.getByRole('tab', { name: 'Técnico', exact: true }).click();
       await page.locator('[data-testid="technical-source"]').waitFor();
       await page.pdf({ path: resolve(output, 'PRUEBA_TECNICO.pdf'), preferCSSPageSize: true, printBackground: true });
-      assert.equal(await page.locator('.alpha-technical-print').evaluateAll(images => images.length===5 && images.every(img => img.naturalWidth > 0)), true, 'Los cinco gráficos se capturan para impresión');
+      assert.equal(await page.locator('.alpha-technical-print').evaluateAll(images => images.length===4 && images.every(img => img.naturalWidth > 0)), true, 'Los cuatro gráficos, incluido precio con volumen, se capturan para impresión');
       assert.equal(await page.locator('.alpha-technical-methods').getAttribute('open'), null, 'La impresión restaura el estado del desplegable');
       await page.getByRole('tab', { name: 'Resumen', exact: true }).click();
     }
@@ -324,7 +336,14 @@ try {
     await page.getByRole('tab', { name: 'Técnico', exact: true }).click();
     await page.locator('[data-testid="technical-source"]').waitFor();
     assert.equal(reads.length, beforePrices + 8, 'Solo manifiesto, seis años OHLCV y relectura de versión');
-    assert.equal(await page.locator('.alpha-technical-chart').count(), 5);
+    assert.equal(await page.locator('.alpha-technical-chart').count(), 4);
+    assert.equal(await page.locator('.alpha-price-volume').count(), 1, 'Volumen integrado bajo el precio');
+    assert.equal(await page.locator('.alpha-technical-chart a').count(), 0, 'Sin logos/enlaces superpuestos dentro de los gráficos');
+    const attribution = page.locator('.alpha-chart-credit');
+    assert.equal(await attribution.count(), 1);
+    assert.equal(await attribution.getByRole('link', { name: 'TradingView Lightweight Charts™', exact: true }).getAttribute('href'), 'https://www.tradingview.com/');
+    const notice = await page.request.get(new URL(await attribution.getByRole('link', { name: 'Aviso de atribución' }).getAttribute('href'), base).href);
+    assert.equal(notice.status(), 200); assert.match(await notice.text(), /Copyright.*2024 TradingView/);
     const kpiProblems = await page.locator('.alpha-technical .kpi').evaluateAll(cards => cards.flatMap(card => {
       const problems = [], value = card.querySelector('.v'), label = card.querySelector('.k');
       const vs = getComputedStyle(value), ls = getComputedStyle(label), cs = getComputedStyle(card);
@@ -416,11 +435,11 @@ try {
       releaseHeld();
       await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
       assert.match(await page.locator('.alpha-company').innerText(),/AENA.MC/);
-      assert.equal(await page.locator('.alpha-technical-chart').count(),5);
+      assert.equal(await page.locator('.alpha-technical-chart').count(),4);
     }
     assert.deepEqual(errors, [], `Errores JS a ${width}`);
     assert.deepEqual(requests, [], `Peticiones externas a ${width}`);
-    console.log(`OK módulo ${width}px: fundamentales, fechas y técnico con cinco gráficos, velas/línea, ATR, volumen, periodos, Bollinger y tabla; cero desbordes, errores o red externa. ${width === 1440 ? 'Respaldo, dos series, reintento, cancelación y aislamiento comprobados.' : ''}`);
+    console.log(`OK módulo ${width}px: pestañas completas, cuatro gráficos, volumen integrado, crédito común, fundamentales, fechas, ATR, periodos y tabla; cero desbordes, errores o red externa. ${width === 1440 ? 'Respaldo, dos series, reintento, cancelación y aislamiento comprobados.' : ''}`);
     await context.close();
   }
 } finally {

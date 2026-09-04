@@ -4,16 +4,17 @@ import { readOhlcv } from './ohlcv.js';
 import { technicalOhlcv } from '../../alfa/ohlcv.mjs';
 import { technicalAnalysis, yearsBefore, daysBefore } from '../../alfa/technical.mjs';
 import TechnicalChart from './TechnicalChart.jsx';
+import chartNoticeUrl from '../../public/lightweight-charts-NOTICE.txt?url&no-inline';
+import chartLicenseUrl from '../../public/lightweight-charts-LICENSE.txt?url&no-inline';
 import { Section, Kpi, KpiGrid } from '../components/Kpi.jsx';
 import { fmtNum, fmtPct, fmtDate } from '../lib/format.js';
 
 const RANGES = [['6m', '6 meses'], ['1y', '1 año'], ['3y', '3 años'], ['5y', '5 años']];
-const PRICE = [{ key: 'value', label: 'Cierre ajustado', color: '#102c50' }, { key: 'sma50', label: 'SMA 50', color: '#2b7284' }, { key: 'sma200', label: 'SMA 200', color: '#946822' }];
+const PRICE = [{ key: 'value', label: 'Cierre ajustado', color: '#102c50' }, { key: 'sma50', label: 'SMA 50', color: '#3979bf' }, { key: 'sma200', label: 'SMA 200', color: '#896325' }];
 const BANDS = [{ key: 'upper', label: 'Banda superior', color: '#745a9b' }, { key: 'lower', label: 'Banda inferior', color: '#745a9b' }];
 const RSI = [{ key: 'rsi', label: 'RSI (14)', color: '#946822' }];
 const MACD = [{ key: 'macd', label: 'MACD (12, 26)', color: '#2b7284' }, { key: 'signal', label: 'Media de referencia (9)', color: '#946822' }, { key: 'histogram', label: 'Diferencia', color: '#a7b6c6', histogram: true }];
 const CANDLE = {key:'candle',label:'Velas ajustadas · serie derivada',color:'#102c50',candlestick:true};
-const VOLUME = [{key:'volume',label:'Volumen del proveedor · ajustado por splits',color:'#2b7284',histogram:true}];
 const ATR = [{key:'atr',label:'ATR de Wilder (14)',color:'#745a9b'}];
 const LEVELS = [30, 70], NONE = [];
 const number = v => Number.isFinite(v) ? fmtNum(v, 2) : '—';
@@ -66,6 +67,8 @@ export default function CompanyTechnical({ entry }) {
           {' '}Consulta al proveedor: {fmtDate(data.fetchedAt)}.{!isOhlcv && <> Actualización de la ficha: {fmtDate(data.loadedAt)}.</>} No son cotizaciones en tiempo real.</p>
         {isOhlcv ? <p className="alpha-notice">Velas ajustadas: serie derivada de los precios originales mediante el factor cierre ajustado / cierre original. No son precios negociados. Línea, medias, RSI, MACD, Bollinger y ATR usan esta misma descarga; no se mezclan con la serie de cierres anteriores.</p>
           : <p className="alpha-notice">Serie de cierres anteriores: conserva su propia fecha y sus datos originales. Para consultar velas, volumen y ATR, elige «Histórico OHLCV» en el selector.</p>}
+        <div className="alpha-chart-tools">
+        <div className="alpha-chart-heading"><div className="eyebrow">Precio · {RANGES.find(([key]) => key === range)[1]}</div><h3>Evolución</h3></div>
         {isOhlcv && <div className="alpha-technical-controls screen-only" role="group" aria-label="Representación del precio">
           <button className="alpha-button" aria-pressed={style === 'candles'} onClick={() => setStyle('candles')}>Velas ajustadas</button>
           <button className="alpha-button" aria-pressed={style === 'line'} onClick={() => setStyle('line')}>Línea de cierre</button>
@@ -74,18 +77,21 @@ export default function CompanyTechnical({ entry }) {
           {RANGES.map(([key, label]) => <button type="button" className="alpha-button" key={key} aria-pressed={range === key} onClick={() => setRange(key)}>{label}</button>)}
           <button type="button" className="alpha-button" aria-pressed={bands} onClick={() => setBands(v => !v)}>Bandas de Bollinger</button>
         </div>
+        </div>
         <p>Intervalo solicitado: {RANGES.find(([key]) => key === range)[1]}. Datos mostrados: {fmtDate(rows[0]?.date)} — {fmtDate(latest.date)} · {rows.length} observaciones · {data.currency}.
           {data.points[0].date > target && ' El historial disponible es más corto que el intervalo solicitado.'}</p>
         {analysis.gaps.length > 0 && <p className="alpha-notice">Se observan {analysis.gaps.length} saltos de más de diez días naturales en el historial. Los indicadores se reinician después de cada salto; no se imputan sesiones ni se conectan los tramos del gráfico.</p>}
-        <TechnicalChart rows={rows} series={priceSeries} title={`${isOhlcv && style === 'candles' ? 'Velas ajustadas · serie derivada' : 'Evolución del cierre ajustado'} · ${data.currency}`} levels={NONE} height={360} />
-        {isOhlcv && style === 'candles' && <p className="note">Vela azul: cierre igual o superior a la apertura; violeta: cierre inferior a la apertura. Los colores describen la sesión, no una señal.</p>}
+        <TechnicalChart rows={rows} series={priceSeries} title={`${isOhlcv && style === 'candles' ? 'Velas ajustadas · serie derivada' : 'Evolución del cierre ajustado'} · ${data.currency}`} levels={NONE} height={460} volume={isOhlcv} />
+        {isOhlcv && <p className="note">Verde: cierre igual o superior a la apertura; rojo: cierre inferior a la apertura. Los colores de las velas y del volumen describen la sesión, no una señal. El volumen usa una escala independiente en la franja inferior.</p>}
         <p className="note screen-only">Arrastra para desplazarte y usa la rueda o el gesto de ampliación para examinar el gráfico. La tabla inferior ofrece los mismos datos.</p>
         <div className="alpha-technical-grid">
-          {isOhlcv && <TechnicalChart rows={rows} series={VOLUME} title="Volumen diario · acciones, ajustado por splits" levels={NONE} />}
-          {isOhlcv && <TechnicalChart rows={rows} series={ATR} title={`ATR (14) · rango de velas ajustadas · ${data.currency}`} levels={NONE} />}
           <TechnicalChart rows={rows} series={RSI} title="RSI (14) · Referencias de escala 30 y 70" levels={LEVELS} />
           <TechnicalChart rows={rows} series={MACD} title="MACD · Medias exponenciales 12, 26 y 9" levels={NONE} />
         </div>
+        {isOhlcv && <TechnicalChart rows={rows} series={ATR} title={`ATR (14) · rango de velas ajustadas · ${data.currency}`} levels={NONE} height={180} />}
+        <p className="alpha-chart-credit">Gráficos: <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView Lightweight Charts™</a>
+          {' '}· Copyright (с) 2024 TradingView, Inc. · Datos: EODHD.
+          {' '}<a href={chartNoticeUrl}>Aviso de atribución</a> · <a href={chartLicenseUrl}>Licencia</a>.</p>
         <Section eyebrow={`Última observación · ${fmtDate(latest.date)}`} title="Indicadores históricos">
           <KpiGrid>
             <Kpi label="Cierre ajustado" value={number(latest.value)} sub={data.currency} />
