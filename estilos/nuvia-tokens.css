@@ -331,8 +331,12 @@
   --nv-table-cell-y: var(--nv-space-3);
   --nv-table-cell-x: var(--nv-space-4);
   --nv-table-reading-width: 720px;
-  --nv-result-value: var(--nv-title-md);
-  --nv-result-value-compact: var(--nv-title-sm);
+  /* KPI independientes de los títulos: no crecen con el hero ni la pantalla. */
+  --nv-result-value: var(--nv-title-sm);
+  --nv-result-value-compact: var(--nv-body-lg);
+  --nv-result-label: var(--nv-body-sm);
+  --nv-result-weight: var(--nv-weight-title);
+  --nv-result-padding: var(--nv-space-3) var(--nv-space-4);
   --nv-result-line-height: 1.2;
 
   --nv-shadow-sm: 0 1px 2px rgba(6, 23, 47, .06), 0 0 0 1px rgba(11, 35, 71, .06);

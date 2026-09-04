@@ -36,9 +36,10 @@ export async function checkTablesAndResults(page, route) {
         for(const cell of table.querySelectorAll('tr > :nth-child(3)')) if(getComputedStyle(cell).textAlign!=='left')out.push('La explicación del laboratorio se alinea como una cifra');
       }
     }
-    for(const value of [...document.querySelectorAll('.curso-resultado strong,.nv-lab-resumen__valor')].filter(visible)) {
+    for(const value of [...document.querySelectorAll('.curso-resultado strong,.nv-lab-resumen__valor,.markets-macro__value,.markets-lab__summary-value strong,.viv-figure__value,.jub-figure__value,p.gu-figure,.gp-figure,.gp-figure--xl,.ac-x55')].filter(visible)) {
       const s=getComputedStyle(value);
-      if(s.fontSize!=='28px'||!s.fontVariantNumeric.includes('tabular-nums'))out.push('Resultado fuera del rol tipográfico común');
+      if(!['18px','22px'].includes(s.fontSize))out.push('KPI fuera de la escala compacta: '+value.className+' '+s.fontSize);
+      if(value.matches('.curso-resultado strong,.nv-lab-resumen__valor')&&!s.fontVariantNumeric.includes('tabular-nums'))out.push('Resultado sin cifras tabulares');
       if(value.scrollWidth>value.clientWidth+1)out.push('Resultado recortado');
     }
     return [...new Set(out)];

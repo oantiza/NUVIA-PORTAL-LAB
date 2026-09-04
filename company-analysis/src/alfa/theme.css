@@ -23,9 +23,11 @@
 .alpha-toolbar label { display: flex; align-items: center; gap: 8px; }
 .alpha-toolbar select, .alpha-button { color: var(--navy); background: white; border: 1px solid #9caec2; border-radius: 8px; padding: 10px 12px; font: inherit; cursor: pointer; }
 .alpha-root .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.alpha-root .kpi { min-width: 0; }
-.alpha-root .kpi .v { overflow-wrap: anywhere; font-size: var(--nv-title-md); }
-.alpha-root .kpi .k, .alpha-root .note { font-size: 14px; }
+.alpha-root .kpi { min-width: 0; min-height: 0; padding: var(--nv-result-padding); }
+.alpha-root .kpi .v { overflow-wrap: anywhere; font-size: var(--nv-result-value); font-weight: var(--nv-result-weight); line-height: var(--nv-result-line-height); margin-top: var(--nv-space-1); }
+.alpha-root .kpi .k { font-size: var(--nv-result-label); font-weight: var(--nv-result-weight); letter-spacing: normal; text-transform: none; line-height: 1.4; }
+.alpha-root .kpi .s { font-size: var(--nv-body-sm); line-height: 1.4; }
+.alpha-root .note { font-size: 14px; }
 .alpha-root .tiny, .alpha-root .chart-legend { font-size: var(--nv-body-sm); }
 .alpha-root .sec-title { font-size: var(--nv-title-md); font-family: var(--nv-font-sans); }
 .alpha-table { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: white; padding: 16px; }
@@ -41,9 +43,9 @@
 .alpha-root :focus-visible { outline: 3px solid #6a7b2d; outline-offset: 3px; }
 .print-only { display: none; }
 .alpha-dividend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
-.alpha-dividend-grid > div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.alpha-dividend-grid > div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: var(--nv-result-padding); min-width: 0; }
 .alpha-dividend-grid dt { font-size: 14px; font-weight: 600; color: var(--muted); }
-.alpha-dividend-grid dd { margin: 8px 0 0; font-size: var(--nv-title-md); font-weight: 600; overflow-wrap: anywhere; }
+.alpha-dividend-grid dd { margin: 8px 0 0; font-size: var(--nv-result-value-compact); font-weight: var(--nv-result-weight); overflow-wrap: anywhere; }
 .alpha-dividend-grid .alpha-date-context { font-size: 14px; font-weight: 400; line-height: 1.6; }
 .alpha-dividend-source { overflow-wrap: anywhere; }
 .alpha-technical { min-width: 0; }

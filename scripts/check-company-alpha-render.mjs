@@ -325,6 +325,16 @@ try {
     await page.locator('[data-testid="technical-source"]').waitFor();
     assert.equal(reads.length, beforePrices + 8, 'Solo manifiesto, seis años OHLCV y relectura de versión');
     assert.equal(await page.locator('.alpha-technical-chart').count(), 5);
+    const kpiProblems = await page.locator('.alpha-technical .kpi').evaluateAll(cards => cards.flatMap(card => {
+      const problems = [], value = card.querySelector('.v'), label = card.querySelector('.k');
+      const vs = getComputedStyle(value), ls = getComputedStyle(label), cs = getComputedStyle(card);
+      if (vs.fontSize !== '22px' || vs.fontWeight !== '500') problems.push('Cifra fuera de escala');
+      if (ls.fontSize !== '14px' || ls.textTransform !== 'none' || ls.fontWeight !== '500') problems.push('Etiqueta desproporcionada');
+      if (cs.minHeight !== '0px' || cs.paddingTop !== '12px') problems.push('Tarjeta con altura o espaciado excesivo');
+      for (const el of [card,value,label]) if (el.scrollWidth > el.clientWidth + 1) problems.push('KPI recortado');
+      return problems;
+    }));
+    assert.deepEqual(kpiProblems, [], `KPI compactos, completos y legibles a ${width}px`);
     assert.ok(await page.locator('.alpha-technical-chart canvas').count() >= 5);
     assert.equal(await page.getByRole('button',{name:'Velas ajustadas',exact:true}).getAttribute('aria-pressed'),'true');
     await page.getByRole('button',{name:'Línea de cierre',exact:true}).click();
