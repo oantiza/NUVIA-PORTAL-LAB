@@ -7778,6 +7778,7 @@
 .jub-grid-2 { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: var(--nv-space-5); margin-bottom: var(--nv-space-5); }
 .jub-grid-3 { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr) minmax(0, .7fr); gap: var(--nv-space-5); }
 .jub-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--nv-space-5); }
+.jub-card__head:has(> .jub-step-num) { justify-content: flex-start; }
 
 /* ── Tablet ─────────────────────────────────────────────────────────────── */
 

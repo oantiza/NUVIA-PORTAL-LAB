@@ -161,7 +161,7 @@
           </div>
         </header>
         <div class="jub-card__body">
-          <div class="jub-grid-4">
+          <div class="jub-grid-4 nv-aligned-fields">
             <div>
               <label for="age" class="nv-field__label">Edad actual</label>
               <div class="nv-field__box"><input id="age" name="age" type="number" min="40" max="95" defaultValue="{{ v.age }}" onChange="{{ setNum }}"><span class="nv-field__unit">años</span></div>
@@ -311,7 +311,7 @@
               </sc-for>
             </div>
             <sc-if value="{{ dmQuick }}" hint-placeholder-val="{{ false }}">
-              <div class="jub-grid-3">
+              <div class="jub-grid-3 nv-aligned-fields">
                 <label class="jub-check">
                   <input type="checkbox" name="entityNoBreakdown" checked="{{ v.entityNoBreakdown }}" onChange="{{ setChk }}" class="jub-check__input">
                   <span class="jub-note"><strong class="jub-row__name">Confirmo que la entidad no facilita el desglose</strong>Se aplicará una estimación fiscal: 1 % por año con un máximo del 35 %, o 25 % si tampoco conoces la antigüedad.</span>
@@ -383,7 +383,7 @@
             </label>
           </div>
 
-          <div class="jub-block jub-grid-2">
+          <div class="jub-block jub-grid-2 nv-aligned-fields">
             <div>
               <label for="epsvRentQualification" class="nv-field__label">Tipo de renta formalizada con la EPSV</label>
               <select class="nv-select" id="epsvRentQualification" name="epsvRentQualification" value="{{ v.epsvRentQualification }}" onChange="{{ setStr }}">
@@ -415,7 +415,7 @@
           </div>
         </header>
         <div class="jub-card__body">
-          <div class="jub-grid-4">
+          <div class="jub-grid-4 nv-aligned-fields">
             <div>
               <label for="expectedReturn" class="nv-field__label">Rentabilidad anual estimada</label>
               <div class="nv-field__box"><input id="expectedReturn" name="expectedReturn" type="number" min="-2" max="12" step="0.1" defaultValue="{{ v.expectedReturn }}" onChange="{{ setNum }}"><span class="nv-field__unit">%</span></div>

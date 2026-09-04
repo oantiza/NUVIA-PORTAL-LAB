@@ -1198,6 +1198,29 @@
   gap: var(--nv-space-4);
 }
 
+/* Filas de formulario: etiqueta, control y ayudas comparten las mismas líneas
+   de cuadrícula. La etiqueta más larga determina la altura, sin recortar texto
+   ni desplazar el campo por la presencia/ausencia de notas de ayuda.
+   Los sc-if son envoltorios display:contents del motor de plantillas. */
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > *,
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > sc-if > * {
+  grid-row: span 4;
+}
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > :has(> label + :is(.nv-field__box, .nv-select)),
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > sc-if > :has(> label + :is(.nv-field__box, .nv-select)) {
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  min-width: 0;
+}
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > :has(> label) > label,
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) > sc-if > :has(> label) > label {
+  align-self: start;
+}
+:is(.nv-fields:has(> .nv-field), .nv-aligned-fields) :is(.nv-field__box, .nv-select) {
+  align-self: start;
+}
+
 
 
 /* Desplegable suelto, fuera de .nv-field__box. Sin esta regla el select se

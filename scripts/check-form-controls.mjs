@@ -1,4 +1,5 @@
 /* Presentación de controles existentes. No envía formularios ni toca datos. */
+import { inspectFieldAlignment } from './check-field-alignment.mjs';
 export const BUTTONS = '.nv-btn, .curso-btn-outline, .curso-btn-calcular, .curso-btn-marcar, .curso-btn-quiz, .curso-btn-reset';
 export const FIELDS = '.nv-field__box, .nv-select, .curso-campo__input input, .gt-campo select, .gt-campo input';
 
@@ -54,5 +55,7 @@ export async function checkFormControls(page, route) {
     await page.waitForTimeout(250);
     if (!await invalid.evaluate(el=>getComputedStyle(el.closest('.nv-field__box')).borderColor === getComputedStyle(document.querySelector('#sample-error')).color)) problems.push('El error pierde su borde al recibir foco/puntero');
   }
+  const alignment = await inspectFieldAlignment(page);
+  problems.push(...alignment.problems.map(row => `Campos desalineados: ${row.fields.map(f=>f.id || f.label).join(', ')}`));
   return problems;
 }
